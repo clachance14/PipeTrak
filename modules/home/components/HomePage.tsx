@@ -1,4 +1,5 @@
 import { Button, ColorModeToggle } from '@common';
+import { NewsletterSection } from '@newsletter/client';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -18,6 +19,7 @@ export function HomePage() {
       <NavBar />
       <Hero />
       <Features />
+      <NewsletterSection />
 
       <div className="min-h-screen bg-white py-8 dark:bg-zinc-900 dark:text-white">
         <div className="container">

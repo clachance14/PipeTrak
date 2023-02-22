@@ -8,7 +8,7 @@ import { Button } from '../../common/components';
 
 export default function Features() {
   return (
-    <nav className="bg-white py-24 dark:bg-zinc-900 dark:text-white">
+    <section className="bg-white py-24 dark:bg-zinc-900 dark:text-white">
       <div className="container">
         {/* Section header */}
         <div className="text-center">
@@ -106,6 +106,6 @@ export default function Features() {
           </div>
         </div>
       </div>
-    </nav>
+    </section>
   );
 }
