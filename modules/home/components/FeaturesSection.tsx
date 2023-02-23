@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import { FiCloud, FiMousePointer, FiPaperclip, FiPhone, FiStar, FiUpload } from 'react-icons/fi';
 
-import feature1Image from '../../../public/feature-1.svg';
-import feature2Image from '../../../public/feature-2.svg';
-import feature3Image from '../../../public/feature-3.svg';
 import { Button } from '../../common/client';
+import heroDarkImage from '/public/hero-dark.svg';
+import heroImage from '/public/hero.svg';
 
 export function FeaturesSection() {
   return (
@@ -18,8 +17,9 @@ export function FeaturesSection() {
 
         {/* Feature 1 */}
         <div className="mt-20 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="p-6">
-            <Image src={feature1Image} alt="Feature 1" />
+          <div>
+            <Image src={heroImage} className="block dark:hidden" alt="Feature 1" />
+            <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 1" />
           </div>
 
           <div>
@@ -33,12 +33,12 @@ export function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiStar className="text-3xl text-[#6C63FF]" />
+                <FiStar className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiMousePointer className="text-3xl text-[#6C63FF]" />
+                <FiMousePointer className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
@@ -48,8 +48,9 @@ export function FeaturesSection() {
 
         {/* Feature 2 */}
         <div className="mt-24 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="p-6 lg:order-2">
-            <Image src={feature2Image} alt="Feature 2" />
+          <div className="lg:order-2">
+            <Image src={heroImage} className="block dark:hidden" alt="Feature 2" />
+            <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 2" />
           </div>
 
           <div className="lg:order-1">
@@ -63,12 +64,12 @@ export function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiUpload className="text-3xl text-[#6C63FF]" />
+                <FiUpload className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiCloud className="text-3xl text-[#6C63FF]" />
+                <FiCloud className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
@@ -78,8 +79,9 @@ export function FeaturesSection() {
 
         {/* Feature 3 */}
         <div className="mt-24 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="p-6">
-            <Image src={feature3Image} alt="Feature 2" />
+          <div>
+            <Image src={heroImage} className="block dark:hidden" alt="Feature 3" />
+            <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 3" />
           </div>
 
           <div>
@@ -93,12 +95,12 @@ export function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiPhone className="text-3xl text-[#6C63FF]" />
+                <FiPhone className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <FiPaperclip className="text-3xl text-[#6C63FF]" />
+                <FiPaperclip className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-70">This is a brilliant benefit.</p>
               </div>
