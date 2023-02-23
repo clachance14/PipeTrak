@@ -1,4 +1,4 @@
-import { Button, Logo } from '@common';
+import { Button, Logo } from '@common/client';
 import { useSession } from 'next-auth/react';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';

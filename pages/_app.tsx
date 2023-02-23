@@ -1,4 +1,5 @@
-import { ProgressBar, trpc } from '@common';
+import { ProgressBar } from '@common/client';
+import { trpc } from '@common/server';
 import { Manrope } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { appWithTranslation } from 'next-i18next';

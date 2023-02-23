@@ -1,11 +1,9 @@
-import { Button } from '@common';
-import { signOut, useSession } from 'next-auth/react';
+import { Button } from '@common/client';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { AppLayout } from '../../common/components/AppLayout';
+import { AppLayout } from '../../common/client/components/AppLayout';
 
 export function DashboardPage() {
-  const { data: session } = useSession();
-
   return (
     <AppLayout>
       <p className="mt-4">Welcome to the dashboard</p>

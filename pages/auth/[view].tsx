@@ -1,5 +1,6 @@
-import { AuthPage, AuthView } from '@auth';
+import { AuthPage } from '@auth/client';
 import { authOptions } from '@auth/server';
+import { AuthView } from '@auth/types';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';

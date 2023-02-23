@@ -1,4 +1,4 @@
-import { Button } from '@common';
+import { Button } from '@common/client';
 import Image from 'next/image';
 
 import heroImage from '../../../public/hero-image.svg';

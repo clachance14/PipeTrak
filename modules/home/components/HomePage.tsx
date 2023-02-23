@@ -1,4 +1,4 @@
-import { Button, ColorModeToggle } from '@common';
+import { Button, ColorModeToggle } from '@common/client';
 import { NewsletterSection } from '@newsletter/client';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';

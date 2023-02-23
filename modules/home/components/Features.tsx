@@ -4,7 +4,7 @@ import { FiCloud, FiMousePointer, FiPaperclip, FiPhone, FiStar, FiUpload } from 
 import feature1Image from '../../../public/feature-1.svg';
 import feature2Image from '../../../public/feature-2.svg';
 import feature3Image from '../../../public/feature-3.svg';
-import { Button } from '../../common/components';
+import { Button } from '../../common/client';
 
 export default function Features() {
   return (
@@ -18,7 +18,7 @@ export default function Features() {
 
         {/* Feature 1 */}
         <div className="mt-20 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="">
+          <div className="p-6">
             <Image src={feature1Image} alt="Feature 1" />
           </div>
 
@@ -48,7 +48,7 @@ export default function Features() {
 
         {/* Feature 2 */}
         <div className="mt-24 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="lg:order-2">
+          <div className="p-6 lg:order-2">
             <Image src={feature2Image} alt="Feature 2" />
           </div>
 
@@ -78,7 +78,7 @@ export default function Features() {
 
         {/* Feature 3 */}
         <div className="mt-24 grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="">
+          <div className="p-6">
             <Image src={feature3Image} alt="Feature 2" />
           </div>
 

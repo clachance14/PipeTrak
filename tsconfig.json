@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,33 +15,13 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@home": [
-        "./modules/home"
-      ],
-      "@common": [
-        "./modules/common"
-      ],
-      "@auth": [
-        "./modules/auth"
-      ],
-      "@auth/*": [
-        "./modules/auth/*"
-      ],
-      "@email/*": [
-        "./modules/email/*"
-      ],
-      "@newsletter/*": [
-        "./modules/newsletter/*"
-      ]
+      "@home": ["./modules/home"],
+      "@common/*": ["./modules/common/*"],
+      "@auth/*": ["./modules/auth/*"],
+      "@email/*": ["./modules/email/*"],
+      "@newsletter/*": ["./modules/newsletter/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", ".next"]
 }
