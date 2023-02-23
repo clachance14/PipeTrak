@@ -3,11 +3,11 @@ import Image from 'next/image';
 
 import heroImage from '../../../public/hero-image.svg';
 
-export default function Hero() {
+export function HeroSection() {
   return (
     <nav className="bg-gradient-to-b from-white to-zinc-50 py-24  dark:from-zinc-900 dark:to-zinc-800 dark:text-white">
       <div className="container text-center">
-        <h1 className="text-5xl font-bold lg:text-6xl">Welcome to your new SaaS</h1>
+        <h1 className="text-5xl font-bold lg:text-6xl">Your revolutionary SaaS</h1>
 
         <p className="mt-3 text-lg opacity-70">
           This is a demo application built with supastarter. <br />

@@ -9,5 +9,13 @@
     "dashboard": "Dashboard",
     "signIn": "Sign in",
     "signOut": "Sign out"
+  },
+  "footer": {
+    "blog": "Blog",
+    "features": "Features",
+    "pricing": "Pricing",
+    "privacyPolicy": "Privacy policy",
+    "termsOfService": "Terms of service",
+    "contactUs": "Contact us"
   }
 }

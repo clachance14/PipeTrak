@@ -6,7 +6,7 @@ import feature2Image from '../../../public/feature-2.svg';
 import feature3Image from '../../../public/feature-3.svg';
 import { Button } from '../../common/client';
 
-export default function Features() {
+export function FeaturesSection() {
   return (
     <section className="bg-white py-24 dark:bg-zinc-900 dark:text-white">
       <div className="container">

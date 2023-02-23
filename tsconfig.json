@@ -17,6 +17,7 @@
     "paths": {
       "@home": ["./modules/home"],
       "@common/*": ["./modules/common/*"],
+      "@admin/*": ["./modules/admin/*"],
       "@auth/*": ["./modules/auth/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"]

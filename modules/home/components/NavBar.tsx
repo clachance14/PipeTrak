@@ -1,9 +1,9 @@
-import { Button, Logo } from '@common/client';
+import { Button, ColorModeToggle, Logo } from '@common/client';
 import { useSession } from 'next-auth/react';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 
-export default function NavBar() {
+export function NavBar() {
   const { t } = useTranslation('common');
   const { data: session } = useSession();
 
@@ -25,9 +25,13 @@ export default function NavBar() {
             Pricing
           </a>
 
-          <Button as={Link} href={session ? '/dashboard' : '/auth/signin'} intent="primary-ghost" size="small">
-            {t(session ? 'menu.dashboard' : 'menu.signIn')}
-          </Button>
+          <div className="flex items-center justify-end gap-3">
+            <ColorModeToggle />
+
+            <Button as={Link} href={session ? '/dashboard' : '/auth/signin'} intent="primary-ghost" size="small">
+              {t(session ? 'menu.dashboard' : 'menu.signIn')}
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
