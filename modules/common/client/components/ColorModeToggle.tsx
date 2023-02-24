@@ -42,12 +42,7 @@ export function ColorModeToggle() {
 
   return (
     <div>
-      <Button
-        intent="primary-outline"
-        size="small"
-        onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
-        {...api.triggerProps}
-      >
+      <Button intent="primary-outline" size="small" {...api.triggerProps}>
         {isClientSide && resolvedTheme === 'light' ? <FiSun /> : <FiMoon />}
       </Button>
 

@@ -1,5 +1,5 @@
 import { AuthPage } from '@auth/client';
-import { authOptions } from '@auth/server';
+import { getAuthOptions } from '@auth/server';
 import { AuthView } from '@auth/types';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale,
       },
     };
 
-  const session = await getServerSession(req, res, authOptions);
+  const session = await getServerSession(req, res, getAuthOptions(req));
 
   // if user is not logged in and tries to access reset-password page, redirect to signin page
   if (!session && view === 'reset-password')

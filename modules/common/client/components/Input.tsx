@@ -26,6 +26,7 @@ export const input = cva('input', {
   compoundVariants: [
     {
       className: [
+        'border',
         'border-zinc-300',
         'w-full',
         'bg-transparent',
@@ -49,7 +50,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
 
 // eslint-disable-next-line react/display-name
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, size, status, htmlSize, ...props }, ref) => (
-    <input className={input({ size, status, className })} size={htmlSize} ref={ref} {...props} />
+  ({ className, size, status, htmlSize, type, ...props }, ref) => (
+    <input type={type ?? 'text'} className={input({ size, status, className })} size={htmlSize} ref={ref} {...props} />
   )
 );

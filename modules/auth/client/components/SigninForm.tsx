@@ -40,7 +40,7 @@ export function SigninForm() {
         });
 
         if (response?.error) {
-          setError('serverError', { type: 'invalid' });
+          setError('serverError', { type: response.error ?? 'invalid' });
           return;
         }
 
@@ -75,9 +75,19 @@ export function SigninForm() {
           {isSubmitted && errors.serverError && (
             <Hint
               status="error"
-              title={isPasswordSignin ? t('form.errors.invalidCredentials.title') : t('form.errors.linkNotSent.title')}
+              title={
+                isPasswordSignin
+                  ? errors.serverError.type === 'emailNotVerified'
+                    ? t('form.errors.emailNotVerified.title')
+                    : t('form.errors.invalidCredentials.title')
+                  : t('form.errors.linkNotSent.title')
+              }
               message={
-                isPasswordSignin ? t('form.errors.invalidCredentials.message') : t('form.errors.linkNotSent.message')
+                isPasswordSignin
+                  ? errors.serverError.type === 'emailNotVerified'
+                    ? t('form.errors.emailNotVerified.message')
+                    : t('form.errors.invalidCredentials.message')
+                  : t('form.errors.linkNotSent.message')
               }
               icon={<FiAlertTriangle />}
             />

@@ -1,6 +1,7 @@
 import { sendEmail } from '@email/lib/send';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { verify } from 'argon2';
+import { IncomingMessage } from 'http';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import EmailProvider, { SendVerificationRequestParams } from 'next-auth/providers/email';
@@ -29,6 +30,11 @@ const sendVerificationRequest = async ({ identifier: email, url, provider }: Sen
       context.resetUrl = url;
       subject = `Reset your password`;
       break;
+    case 'change-email':
+      templateId = 'change-email';
+      context.confirmationUrl = url;
+      subject = `Confirm your new email`;
+      break;
     case 'create-account':
       subject = `Create an account for ${process.env.NEXTAUTH_URL}`;
       text = `Create an account for ${process.env.NEXTAUTH_URL} here: ${url}`;
@@ -55,7 +61,7 @@ const sendVerificationRequest = async ({ identifier: email, url, provider }: Sen
   }
 };
 
-export const authOptions: AuthOptions = {
+export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
   pages: {
     signIn: '/auth/signin',
     signOut: '/',
@@ -86,6 +92,10 @@ export const authOptions: AuthOptions = {
       id: 'create-account',
       sendVerificationRequest,
     }),
+    EmailProvider({
+      id: 'change-email',
+      sendVerificationRequest,
+    }),
     CredentialsProvider({
       type: 'credentials',
       credentials: {
@@ -105,7 +115,9 @@ export const authOptions: AuthOptions = {
 
         // if the user does not exist or the password is not set or the email is not verified
         // don't return an error to prevent user enumeration
-        if (!user || !user.password || !user.emailVerified) throw new Error('invalidCredentials');
+        if (!user || !user.password) throw new Error('invalidCredentials');
+
+        if (!user.emailVerified) throw new Error('emailNotVerified');
 
         // verify the password
         const isValid = await verify(user.password, credentials.password);
@@ -121,34 +133,33 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  // callbacks: {
-  //   async signIn({ user }) {
-  //     if (isCredentialsSignin && user) {
-  //       const sessionToken = generateSessionToken();
-  //       const expires = new Date(Date.now() + SESSION_EXPIRATION);
+  callbacks: {
+    session: async ({ session, token }) => {
+      session.user = {
+        ...session.user,
+        id: token.uid as string,
+        name: (token.name as string) ?? session.user.name,
+      };
 
-  //       await adapter.createSession({
-  //         sessionToken,
-  //         userId: user.id,
-  //         expires,
-  //       });
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      // if we are updating the session, we load the user data from the database and pass it to the token
+      if (req.url?.endsWith('/session?update')) {
+        const currentUserData = await prisma.user.findFirst({
+          where: {
+            id: token.uid as string,
+          },
+        });
+        token.name = currentUserData?.name;
+      }
 
-  //       const cookies = new Cookies(req, res);
+      // on initial token creation we add the user id to the token
+      if (user) {
+        token.uid = user.id;
+      }
 
-  //       cookies.set('next-auth.session-token', sessionToken, {
-  //         expires,
-  //       });
-  //     }
-
-  //     return true;
-  //   },
-  // },
-  // jwt: {
-  //   encode: async (params) => {
-  //     return isCredentialsSignin ? new Cookies(req, res).get('next-auth.session-token') ?? '' : encode(params);
-  //   },
-  //   decode: async (params) => {
-  //     return isCredentialsSignin ? null : decode(params);
-  //   },
-  // },
-};
+      return token;
+    },
+  },
+});

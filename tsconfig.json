@@ -18,6 +18,7 @@
       "@home": ["./modules/home"],
       "@common/*": ["./modules/common/*"],
       "@admin/*": ["./modules/admin/*"],
+      "@dashboard/*": ["./modules/dashboard/*"],
       "@auth/*": ["./modules/auth/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"]

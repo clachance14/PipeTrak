@@ -2,11 +2,11 @@ import { Button } from '@common/client';
 
 export function HeroSection() {
   return (
-    <nav className="bg-gradient-to-b from-white to-zinc-50 pt-32 pb-16  dark:from-zinc-900 dark:to-zinc-800 dark:text-white">
+    <nav className="bg-gradient-to-b from-white to-zinc-50 pt-32 pb-16 dark:from-zinc-900 dark:to-[#111] dark:text-white">
       <div className="container text-center">
         <h1 className="text-5xl font-bold lg:text-7xl">
           Your{' '}
-          <span className="bg-gradient-to-br from-blue-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0px_4px_24px_rgba(59,130,246,0.4)]">
+          <span className="bg-gradient-to-b from-blue-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0px_4px_24px_rgba(59,130,246,0.4)]">
             revolutionary
           </span>{' '}
           SaaS
