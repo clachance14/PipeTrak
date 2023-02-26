@@ -9,7 +9,7 @@ export function HomePage() {
   return (
     <>
       <Head>
-        <title>aviato.</title>
+        <title>supastarter.nextjs.</title>
       </Head>
 
       <NavBar />

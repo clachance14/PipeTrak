@@ -20,7 +20,7 @@ export function AuthPage({ view }: { view: 'signin' | 'signup' | 'forgot-passwor
     if (session && view !== 'reset-password') router.push('/dashboard');
   }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pageTitle = `${view === 'signin' ? 'Sign in' : 'Sign up'} - aviato.`;
+  const pageTitle = `${view === 'signin' ? 'Sign in' : 'Sign up'} - supastarter.nextjs`;
 
   return (
     <>

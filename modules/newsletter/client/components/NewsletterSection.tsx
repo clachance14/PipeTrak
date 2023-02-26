@@ -9,7 +9,7 @@ export function NewsletterSection() {
         <div className="mb-12 text-center">
           <FiKey className="mx-auto mb-3 w-auto text-5xl text-blue-500" />
           <h1 className="text-4xl font-bold lg:text-5xl">Get early access</h1>
-          <p className="mt-3 text-lg opacity-70">Be among the first to get access to aviato.</p>
+          <p className="mt-3 text-lg opacity-70">Be among the first to get access to supastarter.nextjs.</p>
         </div>
 
         <div className="mx-auto max-w-lg">
