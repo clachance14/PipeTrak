@@ -16,7 +16,7 @@ export function ColorModeToggle() {
       id: '1',
       'aria-label': 'Color mode',
       value: { colorScheme: theme as string },
-      onValuesChange: ({ value }) => setTheme(value as string),
+      onValueChange: ({ value }) => setTheme(value as string),
       loop: true,
     })
   );
