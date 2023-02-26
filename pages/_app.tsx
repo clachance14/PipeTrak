@@ -1,5 +1,6 @@
-import { ProgressBar } from '@common/client';
+import { ProgressBar, ToastProvider } from '@common/client';
 import { trpc } from '@common/server';
+import { ConsentBanner } from '@consent-banner/client';
 import { Manrope } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { appWithTranslation } from 'next-i18next';
@@ -24,9 +25,13 @@ function App({ Component, pageProps }: AppProps) {
       <ThemeProvider forcedTheme={(Component as any).theme || undefined} attribute="class">
         <ProgressBar />
         <SessionProvider>
-          <Component {...pageProps} />
+          <ToastProvider>
+            <Component {...pageProps} />
+          </ToastProvider>
         </SessionProvider>
       </ThemeProvider>
+
+      <ConsentBanner />
     </>
   );
 }

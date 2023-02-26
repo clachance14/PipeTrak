@@ -60,6 +60,7 @@ export const button = cva('button', {
       twitter: ['bg-[#1DA1F2]', 'text-white', 'border-transparent', 'hover:bg-[#1A94E0]'],
     },
     size: {
+      xsmall: ['text-xs', 'py-1', 'px-2', 'rounded-lg', 'h-8'],
       small: ['text-sm', 'py-2', 'px-4', 'rounded-lg', 'h-10'],
       medium: ['text-base', 'py-3', 'px-6', 'rounded-xl', 'h-12'],
       large: ['text-lg', 'py-4', 'px-8', 'rounded-2xl', 'h-14'],

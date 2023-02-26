@@ -21,7 +21,8 @@
       "@dashboard/*": ["./modules/dashboard/*"],
       "@auth/*": ["./modules/auth/*"],
       "@email/*": ["./modules/email/*"],
-      "@newsletter/*": ["./modules/newsletter/*"]
+      "@newsletter/*": ["./modules/newsletter/*"],
+      "@consent-banner/*": ["./modules/consent-banner/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

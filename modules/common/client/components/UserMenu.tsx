@@ -13,6 +13,9 @@ export function UserMenu() {
       id: '1',
       'aria-label': 'User menu',
       loop: true,
+      positioning: {
+        placement: 'top-end',
+      },
     })
   );
   const api = menu.connect(state, send, normalizeProps);

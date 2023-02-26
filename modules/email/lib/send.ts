@@ -2,6 +2,9 @@ import nodemailer from 'nodemailer';
 import { parseMjmlTemplate } from './templates';
 
 // we initialize the nodemailer config onceso we can use it in the callbacks
+/* 
+  TODO: move this to a config file 
+*/
 export const mailConfig = {
   server: {
     host: process.env.MAIL_HOST as string,

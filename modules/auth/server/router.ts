@@ -61,6 +61,14 @@ export const authRouter = {
         });
       }
 
+      // check password strength
+      if (password.length < 8) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Password too short.',
+        });
+      }
+
       const { id } = session.user;
 
       const user = await prisma.user.findFirst({

@@ -61,7 +61,7 @@ export function SigninForm() {
         <br />
         {t('signin.dontHaveAnAccount')} <Link href="/auth/signup">{t('signin.createAnAccount')} &rarr;</Link>
       </p>
-      {isSubmitted && isSubmitSuccessful ? (
+      {isSubmitted && isSubmitSuccessful && !isPasswordSignin ? (
         <Hint
           status="success"
           title={t('form.success.linkSent.title')}

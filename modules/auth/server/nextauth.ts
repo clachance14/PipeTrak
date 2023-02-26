@@ -151,6 +151,7 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
             id: token.uid as string,
           },
         });
+
         token.name = currentUserData?.name;
       }
 
