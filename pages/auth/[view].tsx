@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale,
 
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ['auth'])),
+      ...(await serverSideTranslations(locale!, ['common', 'auth'])),
       view,
     },
   };
