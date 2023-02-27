@@ -1,5 +1,5 @@
 import { BlogPostPage } from '@blog/client';
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug;
@@ -19,9 +19,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export const getStaticPaths = async () => {
+const demoPosts = ['first-post', 'second-post'];
+
+export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
   return {
-    paths: [{ params: { slug: 'first-post' } }, { params: { slug: 'second-post' } }],
+    paths:
+      locales
+        ?.map((locale) => {
+          const isDefaultLocale = locale === defaultLocale;
+          return demoPosts.map((slug) => ({ params: { slug }, locale: isDefaultLocale ? undefined : locale }));
+        })
+        .flat() || [],
     fallback: false,
   };
 };
