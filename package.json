@@ -25,7 +25,7 @@
     "@trpc/server": "^10.9.0",
     "@zag-js/menu": "^0.3.12",
     "@zag-js/react": "^0.3.10",
-    "@zag-js/toast": "^0.2.13",
+    "@zag-js/toast": "^0.2.14",
     "argon2": "^0.30.3",
     "class-variance-authority": "^0.4.0",
     "cookies": "^0.8.0",
