@@ -40,12 +40,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale,
 
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ['common', 'auth'])),
+      ...(await serverSideTranslations(locale!, ['auth'])),
       view,
     },
   };
 };
 
-const AuthActionPage = ({ view }: { view: AuthView }) => <AuthPage view={view} />;
-
-export default AuthActionPage;
+export default AuthPage;
