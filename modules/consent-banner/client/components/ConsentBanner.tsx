@@ -26,7 +26,7 @@ export function ConsentBanner() {
 
   return (
     <div className="bottom fixed right-4 bottom-4 max-w-md">
-      <div className="flex gap-4 rounded-xl border bg-white p-6 shadow-xl">
+      <div className="flex gap-4 rounded-xl border bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-800">
         <RxCookie className="block flex-shrink-0 text-5xl text-blue-500" />
         <div>
           <p className="text-sm leading-normal">

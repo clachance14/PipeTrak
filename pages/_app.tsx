@@ -1,11 +1,11 @@
 import { ProgressBar, ToastProvider } from '@common/client';
 import { trpc } from '@common/server';
 import { ConsentBanner } from '@consent-banner/client';
-import { Manrope } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
+import { Manrope } from 'next/font/google';
 import '../styles/globals.scss';
 
 // import lexend font with @next/font

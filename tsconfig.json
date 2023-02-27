@@ -19,6 +19,7 @@
       "@common/*": ["./modules/common/*"],
       "@admin/*": ["./modules/admin/*"],
       "@dashboard/*": ["./modules/dashboard/*"],
+      "@blog/*": ["./modules/blog/*"],
       "@auth/*": ["./modules/auth/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"],

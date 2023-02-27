@@ -25,6 +25,10 @@ export function NavBar() {
             Pricing
           </a>
 
+          <Link href="/blog" className="block px-3 py-2">
+            Blog
+          </Link>
+
           <div className="flex items-center justify-end gap-3">
             <ColorModeToggle />
 
