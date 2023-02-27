@@ -1,10 +1,10 @@
-import { UserMenu } from '@common/client/components/UserMenu';
+import { UserMenu } from '@common/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useCallback } from 'react';
 import { FiGrid, FiUsers, FiX } from 'react-icons/fi';
-import { Button } from './Button';
 import { Logo } from './Logo';
+import { Button } from './primitives/Button';
 
 const menuItems = [
   {

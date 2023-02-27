@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { useTheme } from 'next-themes';
 import { FiHardDrive, FiMoon, FiSun } from 'react-icons/fi';
 import { useIsClient } from 'usehooks-ts';
-import { Button } from './Button';
+import { Button } from './primitives/Button';
 
 export function ColorModeToggle() {
   const { t } = useTranslation('common');

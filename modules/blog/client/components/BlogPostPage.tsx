@@ -1,3 +1,4 @@
+import { BlogLayout } from '@blog/client/components/BlogLayout';
 import Link from 'next/link';
 
 interface Props {
@@ -6,9 +7,9 @@ interface Props {
 
 export function BlogPostPage(props: Props) {
   return (
-    <div>
+    <BlogLayout>
       <Link href="/blog">Back to blog</Link>
       <h1>{props.title}</h1>
-    </div>
+    </BlogLayout>
   );
 }

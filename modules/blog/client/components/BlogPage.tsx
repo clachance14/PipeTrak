@@ -1,10 +1,9 @@
+import { BlogLayout } from '@blog/client/components/BlogLayout';
 import Link from 'next/link';
 
 export function BlogPage() {
   return (
-    <div>
-      <h1>Blog</h1>
-
+    <BlogLayout>
       <ul>
         <li>
           <Link href="/blog/first-post">First post</Link>
@@ -13,6 +12,6 @@ export function BlogPage() {
           <Link href="/blog/second-post">Second post</Link>
         </li>
       </ul>
-    </div>
+    </BlogLayout>
   );
 }

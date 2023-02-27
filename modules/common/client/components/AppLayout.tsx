@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { AppSidebar } from './AppSidebar';
-import { Button } from './Button';
+import { Button } from './primitives/Button';
 
 export function AppLayout({ children }: PropsWithChildren<{}>) {
   const router = useRouter();

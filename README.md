@@ -1,4 +1,5 @@
-<img src="./public/supastarter.svg" alt="supastarter" width="280px" />
+<img src="./public/supastarter-logo-light.svg#gh-light-mode-only" alt="supastarter" width="300px" />
+<img src="./public/supastarter-logo-dark.svg#gh-dark-mode-only" alt="supastarter" width="300px" />
 
 # supastarter – next.js
 

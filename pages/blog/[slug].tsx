@@ -1,7 +1,8 @@
 import { BlogPostPage } from '@blog/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const slug = params?.slug;
 
   if (!slug)
@@ -15,6 +16,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       title: slug,
+      ...(await serverSideTranslations(locale!, ['common', 'blog'])),
     },
   };
 };
