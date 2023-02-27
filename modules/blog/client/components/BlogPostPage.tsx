@@ -5,7 +5,6 @@ interface Props {
 }
 
 export function BlogPostPage(props: Props) {
-  console.log(props);
   return (
     <div>
       <Link href="/blog">Back to blog</Link>
