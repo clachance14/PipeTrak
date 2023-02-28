@@ -1,10 +1,10 @@
 export type BlogPost = {
-  id: string;
   slug: string;
   title: string;
   excerpt?: string;
+  contentType: 'mdx' | 'html';
   content: string;
-  author: {
+  author?: {
     name: string;
     link?: string;
     image?: string;

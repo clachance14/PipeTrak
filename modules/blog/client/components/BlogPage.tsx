@@ -1,7 +1,8 @@
 import { BlogLayout } from '@blog/client/components/BlogLayout';
+import { BlogPost } from '@blog/types';
 import Link from 'next/link';
 
-export function BlogPage() {
+export function BlogPage({ posts }: { posts: BlogPost[] }) {
   return (
     <BlogLayout>
       <ul>

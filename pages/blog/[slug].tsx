@@ -1,6 +1,8 @@
 import { BlogPostPage } from '@blog/client';
+import { getPostBySlug, getPostSlugs } from '@blog/server/mdx';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serialize } from 'next-mdx-remote/serialize';
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const slug = params?.slug;
@@ -13,23 +15,26 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       },
     };
 
+  const post = await getPostBySlug(slug as string);
+
   return {
     props: {
-      title: slug,
+      post,
+      mdxSource: post?.contentType === 'mdx' ? await serialize(post.content) : undefined,
       ...(await serverSideTranslations(locale!, ['common', 'blog'])),
     },
   };
 };
 
-const demoPosts = ['first-post', 'second-post'];
-
 export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
+  const postSlugs = await getPostSlugs();
+
   return {
     paths:
       locales
         ?.map((locale) => {
           const isDefaultLocale = locale === defaultLocale;
-          return demoPosts.map((slug) => ({ params: { slug }, locale: isDefaultLocale ? undefined : locale }));
+          return postSlugs.map((slug) => ({ params: { slug }, locale: isDefaultLocale ? undefined : locale }));
         })
         .flat() || [],
     fallback: false,
