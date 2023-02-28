@@ -13,17 +13,17 @@ export function NavBar() {
         <Logo />
 
         <div className="flex items-center justify-end gap-4">
-          <a href="#" className="block px-3 py-2">
+          <Link href="/#" className="block px-3 py-2">
             Home
-          </a>
+          </Link>
 
-          <a href="#features" className="block px-3 py-2">
+          <Link href="/#features" className="block px-3 py-2">
             Features
-          </a>
+          </Link>
 
-          <a href="#pricing" className="block px-3 py-2">
+          <Link href="/#pricing" className="block px-3 py-2">
             Pricing
-          </a>
+          </Link>
 
           <Link href="/blog" className="block px-3 py-2">
             Blog
