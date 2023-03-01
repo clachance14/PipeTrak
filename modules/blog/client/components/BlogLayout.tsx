@@ -6,10 +6,7 @@ export function BlogLayout({ children }: PropsWithChildren<{}>) {
     <div>
       <NavBar />
       <main className="py-12">
-        <div className="container">
-          <h1>Blog</h1>
-          {children}
-        </div>
+        <div className="container max-w-2xl">{children}</div>
       </main>
     </div>
   );

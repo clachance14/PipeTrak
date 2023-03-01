@@ -1,36 +1,66 @@
+import { readdir, readFile } from 'fs/promises';
+import matter from 'gray-matter';
+import sizeOf from 'image-size';
+import { isAbsolute, join } from 'path';
+import appConfig from '../../../../config';
 import { BlogPost } from '../../types';
 
-const posts: BlogPost[] = [
-  {
-    slug: 'first-post',
-    title: 'First Post',
-    createdAt: '2020-01-01',
-    excerpt: 'This is my first post',
-    content: `# First Post
+const CONTENT_PATH = appConfig.blog.contentPath;
 
-This is my first post`,
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const fileContent = await readFile(join(CONTENT_PATH, `${slug}.mdx`), 'utf8');
+
+  if (!fileContent) return null;
+
+  const { content, data: frontMatter } = matter(fileContent);
+
+  return {
+    slug,
+    content,
     contentType: 'mdx',
-  },
-  {
-    slug: 'second-post',
-    title: 'Second Post',
-    createdAt: '2020-01-02',
-    excerpt: 'This is my second post',
-    content: `# Second Post
-
-This is my second post and with some more content`,
-    contentType: 'mdx',
-  },
-];
-
-export async function getPostBySlug(slug: string) {
-  return posts.find((post) => post.slug === slug);
+    createdAt: frontMatter.createdAt ?? null,
+    title: frontMatter.title,
+    excerpt: frontMatter.excerpt ?? null,
+    tags: frontMatter.tags ?? [],
+    published: frontMatter.published ?? false,
+    author: {
+      name: frontMatter.authorName ?? null,
+      image: frontMatter.authorImage ?? null,
+      link: frontMatter.authorLink ?? null,
+    },
+  };
 }
 
-export function getPosts() {
-  return posts;
+export async function getPostSlugs(): Promise<string[]> {
+  const slugs: string[] = [];
+  try {
+    const files = await readdir(join(process.cwd(), CONTENT_PATH));
+
+    files.forEach((file) => {
+      if (!file.endsWith('.mdx')) return;
+
+      slugs.push(file.replace('.mdx', ''));
+    });
+  } catch {
+    console.error(`Could not read posts directory ${CONTENT_PATH}`);
+  }
+
+  return slugs;
 }
 
-export function getPostSlugs() {
-  return posts.map((post) => post.slug);
+export async function getPosts(): Promise<BlogPost[]> {
+  const slugs = await getPostSlugs();
+  return (await Promise.all(slugs.map(async (slug) => await getPostBySlug(slug)))).filter(
+    (entry) => entry !== null
+  ) as BlogPost[];
+}
+
+export function getImageSize(src: string, dir?: string) {
+  const absolutePathRegex = /^(?:[a-z]+:)?\/\//;
+  if (absolutePathRegex.exec(src)) return;
+
+  const shouldJoin = !isAbsolute(src) || src.startsWith('/');
+  if (dir && shouldJoin) src = join(dir, src);
+
+  return sizeOf(src);
 }

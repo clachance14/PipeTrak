@@ -12,7 +12,7 @@ export function FeaturesSection() {
         {/* Section header */}
         <div className="text-center">
           <h1 className="text-4xl font-bold lg:text-5xl">Features your clients will love</h1>
-          <p className="mt-3 text-lg opacity-70">In this section you can showcase the features of your SaaS.</p>
+          <p className="mt-3 text-lg opacity-50">In this section you can showcase the features of your SaaS.</p>
         </div>
 
         {/* Feature 1 */}
@@ -24,7 +24,7 @@ export function FeaturesSection() {
 
           <div>
             <h3 className="text-2xl font-bold">Feature A</h3>
-            <p className="mt-1 opacity-70">
+            <p className="mt-1 opacity-50">
               This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.
             </p>
             <Button intent="primary-ghost" className="mt-3" size="small">
@@ -35,12 +35,12 @@ export function FeaturesSection() {
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiStar className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiMousePointer className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ export function FeaturesSection() {
 
           <div className="lg:order-1">
             <h3 className="text-2xl font-bold">Feature B</h3>
-            <p className="mt-1 opacity-70">
+            <p className="mt-1 opacity-50">
               This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.
             </p>
             <Button intent="primary-ghost" className="mt-3" size="small">
@@ -66,12 +66,12 @@ export function FeaturesSection() {
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiUpload className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiCloud className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export function FeaturesSection() {
 
           <div>
             <h3 className="text-2xl font-bold">Feature C</h3>
-            <p className="mt-1 opacity-70">
+            <p className="mt-1 opacity-50">
               This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.
             </p>
             <Button intent="primary-ghost" className="mt-3" size="small">
@@ -97,12 +97,12 @@ export function FeaturesSection() {
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiPhone className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
                 <FiPaperclip className="text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
-                <p className="opacity-70">This is a brilliant benefit.</p>
+                <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
             </div>
           </div>

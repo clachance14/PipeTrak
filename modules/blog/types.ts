@@ -10,4 +10,7 @@ export type BlogPost = {
     image?: string;
   };
   createdAt: string;
+  tags?: string[];
+  published?: boolean;
+  image?: string;
 };
