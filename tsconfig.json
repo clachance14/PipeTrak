@@ -15,12 +15,13 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@home": ["./modules/home"],
       "@common/*": ["./modules/common/*"],
+      "@auth/*": ["./modules/auth/*"],
+      "@workspaces/*": ["./modules/workspaces/*"],
       "@admin/*": ["./modules/admin/*"],
+      "@home": ["./modules/home"],
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
-      "@auth/*": ["./modules/auth/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"],
       "@consent-banner/*": ["./modules/consent-banner/*"]

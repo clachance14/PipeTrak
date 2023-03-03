@@ -1,4 +1,5 @@
 import { UserMenu } from '@common/client';
+import { WorkspacesSelect } from '@workspaces/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useCallback } from 'react';
@@ -38,7 +39,11 @@ export function AppSidebar({ isExpanded, onClose }: PropsWithChildren<{ isExpand
         </Button>
       </div>
 
-      <ul className="mt-6 list-none px-4">
+      <div className="mt-3 px-6">
+        <WorkspacesSelect />
+      </div>
+
+      <ul className="mt-6 list-none px-6">
         {menuItems.map((menuItem) => (
           <li key={menuItem.href}>
             <Link

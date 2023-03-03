@@ -1,11 +1,25 @@
+import { Logo } from '@common/client/components/Logo';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { AppSidebar } from './AppSidebar';
 import { Button } from './primitives/Button';
 
+function Loading() {
+  return (
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="animate-pulse">
+        <Logo />
+      </div>
+    </div>
+  );
+}
+
 export function AppLayout({ children }: PropsWithChildren<{}>) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
 
   useEffect(() => {
@@ -17,6 +31,13 @@ export function AppLayout({ children }: PropsWithChildren<{}>) {
   }, []);
 
   useEffect(() => setSidebarExpanded(false), [router.asPath]);
+
+  // wait for session to be loaded and add timeout to avoid flickering
+  useEffect(() => {
+    if (session) setTimeout(() => setLoading(false), 1000);
+  }, [session]);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex">

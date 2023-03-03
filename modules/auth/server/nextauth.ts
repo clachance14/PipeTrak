@@ -139,7 +139,10 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
         ...session.user,
         id: token.uid as string,
         name: (token.name as string) ?? session.user.name,
+        workspaceId: (token.workspaceId as string) ?? session.user.workspaceId ?? (token.uid as string),
       };
+
+      console.log('session', session.user);
 
       return session;
     },
@@ -153,6 +156,31 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
         });
 
         token.name = currentUserData?.name;
+      }
+
+      // change the workspace
+      if (req.url?.includes('/session?workspaceId=')) {
+        const workspaceId = req.url.split('?workspaceId=')[1];
+        const userId = token.uid as string;
+
+        if (workspaceId === userId) {
+          token.workspaceId = workspaceId;
+        } else {
+          const workspace = await prisma.workspace.findFirst({
+            where: {
+              id: workspaceId,
+              members: {
+                some: {
+                  id: user?.id,
+                },
+              },
+            },
+          });
+
+          if (!workspace) throw new Error('Workspace not found');
+
+          token.workspaceId = workspace.id;
+        }
       }
 
       // on initial token creation we add the user id to the token
