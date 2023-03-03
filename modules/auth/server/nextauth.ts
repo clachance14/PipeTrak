@@ -142,8 +142,6 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
         workspaceId: (token.workspaceId as string) ?? session.user.workspaceId ?? (token.uid as string),
       };
 
-      console.log('session', session.user);
-
       return session;
     },
     jwt: async ({ user, token }) => {
