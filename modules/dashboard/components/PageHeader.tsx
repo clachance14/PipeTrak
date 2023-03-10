@@ -2,18 +2,22 @@
 
 import ColorModeToggle from '@common/components/ColorModeToggle';
 import Button from '@common/components/primitives/Button';
+import { isSidebarExpanded } from '@common/state';
+import { useAtom } from 'jotai';
 import { FiMenu } from 'react-icons/fi';
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  const [sidebarExpanded, setSidebarExpanded] = useAtom(isSidebarExpanded);
+
   return (
-    <div className="w-full border-b py-4 px-6 dark:border-zinc-800">
-      <div className="container flex items-start justify-between">
+    <div className="w-full border-b  dark:border-zinc-800">
+      <div className="container flex items-start justify-between py-6">
         <div>
           <Button
             intent="primary-outline"
             size="small"
-            className="px-4 lg:hidden"
-            // onClick={() => setSidebarExpanded(!sidebarExpanded)}
+            className="mb-4 px-4 lg:hidden"
+            onClick={() => setSidebarExpanded(true)}
           >
             <span className="sr-only">Toggle sidebar</span>
             <FiMenu />

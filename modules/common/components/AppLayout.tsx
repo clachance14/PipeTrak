@@ -1,8 +1,10 @@
 'use client';
 
+import { isSidebarExpanded } from '@common/state';
+import { useAtom } from 'jotai';
 import { User } from 'next-auth';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import AppSidebar from './AppSidebar';
 
 export default function AppLayout({
@@ -12,7 +14,7 @@ export default function AppLayout({
   selectedWorkspace,
 }: PropsWithChildren<{ user: User; workspaces: { id: string; name: string }[]; selectedWorkspace: string }>) {
   const selectedSegment = useSelectedLayoutSegment();
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [sidebarExpanded, setSidebarExpanded] = useAtom(isSidebarExpanded);
 
   useEffect(() => {
     const handleResize = () => window.innerWidth <= 1024 && setSidebarExpanded(false);
@@ -29,7 +31,6 @@ export default function AppLayout({
         workspaces={workspaces}
         selectedWorkspace={selectedWorkspace}
         user={user}
-        onClose={() => setSidebarExpanded(false)}
       />
       <main className="min-h-screen flex-1 bg-white transition-all duration-300 ease-in-out dark:bg-zinc-900 lg:pl-[280px]">
         {children}

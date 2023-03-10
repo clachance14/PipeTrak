@@ -3,12 +3,14 @@
 import Logo from '@common/components/Logo';
 import Button from '@common/components/primitives/Button';
 import UserMenu from '@common/components/UserMenu';
+import { isSidebarExpanded } from '@common/state';
 import WorkspacesSelect from '@workspaces/components/WorkspaceSelect';
+import { useSetAtom } from 'jotai';
 import { User } from 'next-auth';
 import { Link } from 'next-intl';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { PropsWithChildren, useCallback } from 'react';
-import { FiGrid, FiUsers, FiX } from 'react-icons/fi';
+import { FiArchive, FiGrid, FiX } from 'react-icons/fi';
 
 const menuItems = [
   {
@@ -18,10 +20,10 @@ const menuItems = [
     icon: FiGrid,
   },
   {
-    label: 'Clients',
-    href: '/dashboard/clients',
-    segment: 'clients',
-    icon: FiUsers,
+    label: 'Projects',
+    href: '/dashboard/projects',
+    segment: 'projects',
+    icon: FiArchive,
   },
 ];
 
@@ -40,6 +42,7 @@ export default function AppSidebar({
 }>) {
   const selectedSegment = useSelectedLayoutSegment();
   const positionClass = isExpanded ? 'left-0' : '-left-[280px] lg:left-0';
+  const setSidebarExpanded = useSetAtom(isSidebarExpanded);
 
   const isActiveMenuItem = useCallback((segment: string | null) => selectedSegment === segment, [selectedSegment]);
 
@@ -48,16 +51,16 @@ export default function AppSidebar({
       className={`fixed top-0 ${positionClass} z-40 h-screen w-[280px] border-r bg-white transition-all duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-900`}
     >
       <div className="flex justify-end px-6 py-2 lg:hidden">
-        <Button intent="primary-outline" size="small" onClick={() => onClose?.()}>
+        <Button intent="primary-outline" size="small" onClick={() => setSidebarExpanded(false)}>
           <span className="sr-only">Toggle sidebar</span>
           <FiX />
         </Button>
       </div>
-      <div className="p-8">
+      <div className="p-6">
         <Logo />
       </div>
 
-      <div className="mt-3 px-6">
+      <div className="px-6">
         <WorkspacesSelect workspaces={workspaces} selectedWorkspace={selectedWorkspace} />
       </div>
 

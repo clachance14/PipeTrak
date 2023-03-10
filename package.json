@@ -35,6 +35,7 @@
     "cookies": "^0.8.0",
     "gray-matter": "^4.0.3",
     "image-size": "^1.0.2",
+    "jotai": "^2.0.3",
     "mjml": "^4.13.0",
     "next": "^13.2.4-canary.8",
     "next-auth": "^4.19.2",

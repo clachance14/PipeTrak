@@ -5,12 +5,13 @@ import { normalizeProps, useMachine } from '@zag-js/react';
 import { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useId } from 'react';
 import { FiChevronDown, FiLogOut, FiSettings, FiUser } from 'react-icons/fi';
 
 export default function UserMenu({ user }: { user: User }) {
   const [state, send] = useMachine(
     menu.machine({
-      id: '1',
+      id: useId(),
       'aria-label': 'User menu',
       loop: true,
       positioning: {

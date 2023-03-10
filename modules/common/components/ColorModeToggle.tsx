@@ -5,6 +5,7 @@ import * as menu from '@zag-js/menu';
 import { normalizeProps, useMachine } from '@zag-js/react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import { useId } from 'react';
 import { FiHardDrive, FiMoon, FiSun } from 'react-icons/fi';
 import { useIsClient } from 'usehooks-ts';
 
@@ -15,7 +16,7 @@ export default function ColorModeToggle() {
 
   const [state, send] = useMachine(
     menu.machine({
-      id: '1',
+      id: useId(),
       'aria-label': 'Color mode',
       value: { colorScheme: theme as string },
       onValueChange: ({ value }) => setTheme(value as string),
