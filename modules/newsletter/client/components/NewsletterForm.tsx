@@ -1,4 +1,7 @@
-import { Button, Input } from '@common/client';
+'use client';
+
+import Button from '@common/components/primitives/Button';
+import Input from '@common/components/primitives/Input';
 
 export function NewsletterForm() {
   return (

@@ -1,4 +1,4 @@
-import { Button } from '@common/client';
+import Button from '@common/components/primitives/Button';
 import { useEffect, useState } from 'react';
 import { RxCookie } from 'react-icons/rx';
 

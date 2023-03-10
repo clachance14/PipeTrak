@@ -1,0 +1,35 @@
+import Button from '@common/components/primitives/Button';
+import React from 'react';
+
+export default function SettingsBlock({
+  children,
+  title,
+  onSubmit,
+  isSubmitting,
+  isSubmitDisabled,
+}: {
+  onSubmit: () => void;
+  title: string;
+  children: React.ReactNode;
+  isSubmitting: boolean;
+  isSubmitDisabled?: boolean;
+}) {
+  return (
+    <form
+      className="overflow-hidden rounded-xl border-2 p-6 dark:border-zinc-800"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+        // changeNameMutation.mutate({ name });
+      }}
+    >
+      <h2 className="mb-3 text-2xl font-semibold">{title}</h2>
+      {children}
+      <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t  px-6 py-3 dark:border-zinc-800 ">
+        <Button type="submit" size="small" isLoading={isSubmitting} disabled={isSubmitDisabled}>
+          Save
+        </Button>
+      </div>
+    </form>
+  );
+}

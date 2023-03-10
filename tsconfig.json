@@ -18,15 +18,19 @@
       "@common/*": ["./modules/common/*"],
       "@auth/*": ["./modules/auth/*"],
       "@workspaces/*": ["./modules/workspaces/*"],
-      "@admin/*": ["./modules/admin/*"],
-      "@home": ["./modules/home"],
+      "@home/*": ["./modules/home/*"],
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"],
       "@consent-banner/*": ["./modules/consent-banner/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", ".next"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next", "_pages", "cypress"]
 }

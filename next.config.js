@@ -1,11 +1,16 @@
-/** @type {import('next').NextConfig} */
+// @ts-check
 
-const { i18n } = require('./next-i18next.config');
+// @ts-ignore
+const withNextIntl = require('next-intl/plugin')('./i18n.ts');
 
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  i18n,
-};
+/**
+ * @type {import('next').NextConfig}
+ **/
+const nextConfig = withNextIntl({
+  experimental: {
+    appDir: true,
+    serverComponentsExternalPackages: ['mjml'],
+  },
+});
 
 module.exports = nextConfig;

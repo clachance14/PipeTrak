@@ -1,13 +1,13 @@
+import { SessionAction } from '@auth/types';
 import { sendEmail } from '@email/lib/send';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { verify } from 'argon2';
-import { IncomingMessage } from 'http';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import EmailProvider, { SendVerificationRequestParams } from 'next-auth/providers/email';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-import prisma from '../../common/server/prisma/prisma';
+import prisma from '../../../prisma/prisma';
 
 // we use the prisma adapter to store the session in the database
 // https://next-auth.js.org/adapters/prisma
@@ -61,7 +61,7 @@ const sendVerificationRequest = async ({ identifier: email, url, provider }: Sen
   }
 };
 
-export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
+export const getAuthOptions = (params?: { action?: SessionAction; workspaceId?: string }): AuthOptions => ({
   pages: {
     signIn: '/auth/signin',
     signOut: '/',
@@ -145,8 +145,9 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
       return session;
     },
     jwt: async ({ user, token }) => {
+      const { action, workspaceId } = params ?? {};
       // if we are updating the session, we load the user data from the database and pass it to the token
-      if (req.url?.endsWith('/session?update')) {
+      if (action === 'updateSession') {
         const currentUserData = await prisma.user.findFirst({
           where: {
             id: token.uid as string,
@@ -157,8 +158,7 @@ export const getAuthOptions = (req: IncomingMessage): AuthOptions => ({
       }
 
       // change the workspace
-      if (req.url?.includes('/session?workspaceId=')) {
-        const workspaceId = req.url.split('?workspaceId=')[1];
+      if (action === 'switchWorkspace' && workspaceId) {
         const userId = token.uid as string;
 
         if (workspaceId === userId) {

@@ -1,8 +1,8 @@
-import prisma from '@common/server/prisma/prisma';
 import { TRPCError } from '@trpc/server';
 import { hash } from 'argon2';
 import z from 'zod';
-import { procedure } from '../../common/trpc';
+import prisma from '../../../prisma/prisma';
+import { procedure } from '../../../trpc';
 
 export const authRouter = {
   /*

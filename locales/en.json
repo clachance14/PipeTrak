@@ -1,0 +1,127 @@
+{
+  "auth": {
+    "backToHomepage": "Back to homepage",
+    "forgotPassword": {
+      "backToSignin": "Back to signin",
+      "message": "Please enter your email address and we will send you a link to reset your password.",
+      "title": "Forgot your password?"
+    },
+    "form": {
+      "errors": {
+        "emailNotVerified": {
+          "message": "Please verify your email before signing in. Check your inbox for the verification mail.",
+          "title": "Email not verified"
+        },
+        "invalidCredentials": {
+          "message": "We are sorry, but the credentials you entered are invalid. Please try again.",
+          "title": "Invalid credentials"
+        },
+        "linkNotSent": {
+          "message": "We are sorry, but we were unable to send you a link to reset your password. Please try again later.",
+          "title": "Link not sent"
+        },
+        "passwordNotUpdate": {
+          "message": "We are sorry, but we were unable to update your password. Please try again later.",
+          "title": "Password not updated"
+        },
+        "signupFailed": {
+          "message": "We are sorry, but we were unable to create your account. Please try again later.",
+          "title": "Could not create account"
+        }
+      },
+      "fields": {
+        "email": "Email",
+        "name": "Name",
+        "password": "Password"
+      },
+      "forgotPassword": "Forgot password?",
+      "forgotPasswordButton": "Send link",
+      "resetPasswordButton": "Save new password",
+      "signinButton": "Sign in",
+      "signupButton": "Create account"
+    },
+    "resetPassword": {
+      "backToSignin": "Back to signin",
+      "message": "Enter your new password to update your account.",
+      "title": "Reset your password"
+    },
+    "signin": {
+      "createAnAccount": "Create an account",
+      "dontHaveAnAccount": "Don't have an account yet?",
+      "email": "Email",
+      "forgotPassword": "Forgot password?",
+      "hints": {
+        "linkSent": {
+          "message": "We have sent you a link to continue. Please check your inbox.",
+          "title": "Link sent"
+        },
+        "verifyEmail": {
+          "message": "We have sent you a link to verify your email. Please check your inbox.",
+          "title": "Verify your email"
+        }
+      },
+      "password": "Password",
+      "submit": "Sign in",
+      "subtitle": "Please enter your credentials to sign in.",
+      "title": "Welcome back"
+    },
+    "signup": {
+      "alreadyHaveAccount": "Already have an account?",
+      "message": "We are happy that you want to join us. Please fill in the form below to create your account.",
+      "signIn": "Sign in",
+      "email": "Email",
+      "name": "Name",
+      "password": "Password",
+      "submit": "Create account",
+      "title": "Create an account"
+    }
+  },
+  "blog": {
+    "pageDescription": "Read about the latest news and updates here.",
+    "pageTitle": "Blog"
+  },
+  "common": {
+    "colorMode": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    },
+    "footer": {
+      "blog": "Blog",
+      "contactUs": "Contact us",
+      "features": "Features",
+      "pricing": "Pricing",
+      "privacyPolicy": "Privacy policy",
+      "termsOfService": "Terms of service"
+    },
+    "hello": "Hello",
+    "menu": {
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "signIn": "Sign in",
+      "signOut": "Sign out"
+    }
+  },
+  "home": {},
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your settings",
+    "account": {
+      "changeEmail": {
+        "description": "Enter a new email and click save to update it.",
+        "note": "You will need to verify your new email address before you can sign in again.",
+        "title": "Your email"
+      },
+      "changeName": {
+        "title": "Your name"
+      },
+      "changePassword": {
+        "description": "To change your password, enter the new one below and click save.",
+        "note": "Please enter at least 8 characters.",
+        "title": "Your password"
+      },
+      "save": "Save",
+      "title": "Account"
+    }
+  }
+}

@@ -1,18 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './modules/**/*.{js,ts,jsx,tsx}'],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './modules/**/*.{js,ts,jsx,tsx}'],
   darkMode: ['class'],
   theme: {
     container: {
       center: true,
       padding: '2rem',
-      screens: {
-        md: '640px',
-        lg: '1024px',
-        xl: '1024px',
-        '2xl': '1024px',
-      },
     },
     extend: {
       fontFamily: {
@@ -41,4 +35,7 @@ module.exports = {
     }),
     require('@tailwindcss/typography'),
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };

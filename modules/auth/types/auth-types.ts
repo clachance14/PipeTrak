@@ -17,3 +17,5 @@ export type SocialSigninProvider =
   | 'twitch'
   | 'twitter'
   | 'workos';
+
+export type SessionAction = 'updateSession' | 'switchWorkspace';

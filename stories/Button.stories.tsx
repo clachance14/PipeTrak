@@ -1,8 +1,7 @@
 // Button.stories.ts|tsx
 
+import Button from '@common/components/primitives/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-
-import { Button } from '@common/client';
 
 export default {
   title: 'Button',

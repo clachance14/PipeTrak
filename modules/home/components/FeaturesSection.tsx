@@ -1,7 +1,7 @@
+import Button from '@common/components/primitives/Button';
 import Image from 'next/image';
 import { FiCloud, FiMousePointer, FiPaperclip, FiPhone, FiStar, FiUpload } from 'react-icons/fi';
 
-import { Button } from '../../common/client';
 import heroDarkImage from '/public/hero-dark.svg';
 import heroImage from '/public/hero.svg';
 

@@ -1,4 +1,4 @@
-import { Button } from '@common/client';
+import Button from '@common/components/primitives/Button';
 
 export function HeroSection() {
   return (

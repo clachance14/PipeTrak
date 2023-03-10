@@ -1,10 +1,9 @@
 import { BlogLayout } from '@blog/client/components/BlogLayout';
 import { PostListItem } from '@blog/client/components/PostListItem';
 import { BlogPost } from '@blog/types';
-import { useTranslation } from 'next-i18next';
 
 export function BlogPage({ posts }: { posts: BlogPost[] }) {
-  const { t } = useTranslation('blog');
+  const t = (key: string) => key; // TODO: useTranslation()
 
   return (
     <BlogLayout>
