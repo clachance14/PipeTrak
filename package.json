@@ -35,7 +35,7 @@
     "class-variance-authority": "^0.4.0",
     "cookies": "^0.8.0",
     "gray-matter": "^4.0.3",
-    "i18next": "^22.4.10",
+    "i18next": "^22.4.11",
     "image-size": "^1.0.2",
     "jotai": "^2.0.3",
     "mjml": "^4.13.0",
