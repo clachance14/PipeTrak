@@ -1,24 +1,38 @@
-import { mdxComponents } from '@blog/client/lib/mdx';
-import { BlogPost } from '@blog/types';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { mdxComponents } from '@blog/mdx/client';
+import { getPostBySlug } from '@blog/mdx/server';
+import { Link } from 'next-intl';
+import { redirect } from 'next-intl/server';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { BlogLayout } from './BlogLayout';
+import { Suspense } from 'react';
 
-interface Props {
-  post: BlogPost;
-  mdxSource?: MDXRemoteSerializeResult;
-}
+// export async function generateStaticParams() {
+//   const slugs = await getPostSlugs();
+//   const locales = appConfig.i18n.locales;
 
-export function BlogPostPage({ post, mdxSource }: Props) {
-  const { locale } = useRouter();
-  const { title, contentType, content, excerpt, author, slug, createdAt, tags } = post;
+//   return locales
+//     .map((locale) =>
+//       slugs.map((slug) => ({
+//         slug,
+//         locale,
+//       }))
+//     )
+//     .flat();
+// }
 
-  const formattedDate = new Date(createdAt).toLocaleDateString(locale);
+export default async function BlogPostPage({ params }: { params: { slug: string; locale: string } }) {
+  const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    redirect('/blog');
+  }
+
+  const { title, contentType, content, author, createdAt, tags } = post;
+
+  const formattedDate = new Date(createdAt).toLocaleDateString(params.locale);
 
   return (
-    <BlogLayout>
+    <div>
       <div className="mb-8">
         <Link href="/blog">&larr; Back to blog</Link>
       </div>
@@ -55,12 +69,15 @@ export function BlogPostPage({ post, mdxSource }: Props) {
       </div>
 
       <div className="prose prose-zinc dark:prose-invert">
-        {contentType === 'mdx' && mdxSource ? (
-          <MDXRemote {...mdxSource} components={mdxComponents} />
+        {contentType === 'mdx' ? (
+          <Suspense>
+            {/* @ts-ignore */}
+            <MDXRemote source={content} components={mdxComponents} />
+          </Suspense>
         ) : (
           <div dangerouslySetInnerHTML={{ __html: content }}></div>
         )}
       </div>
-    </BlogLayout>
+    </div>
   );
 }

@@ -4,17 +4,21 @@ import { SocialSigninButton } from '@auth/components/SocialSigninButton';
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
-import { SessionProvider, signIn } from 'next-auth/react';
-import { useLocalizedRouter } from 'next-intl';
+import { BuiltInProviderType } from 'next-auth/providers';
+import { ClientSafeProvider, SessionProvider, signIn } from 'next-auth/react';
+import { useLocalizedRouter } from 'next-intl/client';
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiMail } from 'react-icons/fi';
+import appConfig from '../../../config';
 import SigninModeSwitch, { SigninMode } from './SigninModeSwitch';
 
 export function SigninForm({
   labels,
+  providers,
 }: {
+  providers: Record<string, ClientSafeProvider> | null;
   labels: {
     email: string;
     password: string;
@@ -56,7 +60,7 @@ export function SigninForm({
         const response = await signIn(isPasswordSignin ? 'credentials' : 'email', {
           email,
           password,
-          callbackUrl: '/',
+          callbackUrl: appConfig.auth.redirectAfterSignin,
           redirect: false,
         });
 
@@ -66,7 +70,7 @@ export function SigninForm({
         }
 
         if (isPasswordSignin) {
-          router.push('/dashboard');
+          router.push(appConfig.auth.redirectAfterSignin);
         }
       } catch (e) {
         setError('serverError', { type: 'linkNotSent' });
@@ -141,8 +145,19 @@ export function SigninForm({
       <hr className="my-8 border-black border-opacity-5 dark:border-white dark:border-opacity-5" />
 
       <div className="flex w-full flex-col gap-2 sm:flex-row">
-        <SocialSigninButton provider="google" onClick={() => signIn('google')} />
-        <SocialSigninButton provider="twitter" onClick={() => signIn('twitter')} />
+        {Object.values(providers ?? {})
+          .filter((provider) => provider.type === 'oauth')
+          .map((provider) => (
+            <SocialSigninButton
+              key={provider.id}
+              provider={provider.id as BuiltInProviderType}
+              onClick={() =>
+                signIn(provider.id, {
+                  callbackUrl: appConfig.auth.redirectAfterSignin,
+                })
+              }
+            />
+          ))}
       </div>
     </SessionProvider>
   );

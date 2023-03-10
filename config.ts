@@ -6,6 +6,9 @@ export const appConfig = {
   blog: {
     contentPath: 'content/blog',
   },
+  auth: {
+    redirectAfterSignin: '/dashboard',
+  },
 };
 
 export type Locale = (typeof appConfig)['i18n']['locales'][number];

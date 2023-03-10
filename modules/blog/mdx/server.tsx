@@ -2,8 +2,8 @@ import { readdir, readFile } from 'fs/promises';
 import matter from 'gray-matter';
 import sizeOf from 'image-size';
 import { isAbsolute, join } from 'path';
-import appConfig from '../../../../config';
-import { BlogPost } from '../../types';
+import appConfig from '../../../config';
+import { BlogPost } from '../types';
 
 const CONTENT_PATH = appConfig.blog.contentPath;
 

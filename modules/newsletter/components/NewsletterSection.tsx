@@ -1,7 +1,7 @@
-import { NewsletterForm } from '@newsletter/client/components/NewsletterForm';
+import NewsletterForm from '@newsletter/components/NewsletterForm';
 import { FiKey } from 'react-icons/fi';
 
-export function NewsletterSection() {
+export default function NewsletterSection() {
   return (
     <section className="bg-blue-500 bg-opacity-5 py-24 dark:text-white">
       <div className="container">

@@ -1,9 +1,17 @@
 import SignupForm from '@auth/components/SignupForm';
+import { getUser } from '@auth/server/user';
 import { TrpcProvider } from '@common/client/ClientProvider';
-import { Link, useTranslations } from 'next-intl';
+import { Link } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 
-export default function SignupPage() {
-  const t = useTranslations('auth.signup');
+export default async function SignupPage() {
+  const t = await getTranslations('auth.signup');
+  const user = await getUser();
+
+  if (user) {
+    redirect('/dashboard');
+  }
 
   return (
     <div>

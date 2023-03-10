@@ -5,7 +5,7 @@ import { FiCloud, FiMousePointer, FiPaperclip, FiPhone, FiStar, FiUpload } from 
 import heroDarkImage from '/public/hero-dark.svg';
 import heroImage from '/public/hero.svg';
 
-export function FeaturesSection() {
+export default function FeaturesSection() {
   return (
     <section className="bg-white py-24 dark:bg-zinc-900 dark:text-white">
       <div className="container">

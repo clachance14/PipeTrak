@@ -1,17 +1,17 @@
 import { button } from '@common/components/primitives/Button';
+import { BuiltInProviderType } from 'next-auth/providers';
 import { useMemo } from 'react';
 import { FaApple, FaDiscord, FaGithub, FaGoogle, FaTwitter } from 'react-icons/fa';
-import { SocialSigninProvider } from '../types';
 
 export function SocialSigninButton({
   provider,
   className,
   ...rest
-}: { provider: SocialSigninProvider } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: { provider: BuiltInProviderType } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const providers = useMemo<
     Partial<
       Record<
-        SocialSigninProvider,
+        BuiltInProviderType,
         {
           name: string;
           icon?: React.ReactElement;

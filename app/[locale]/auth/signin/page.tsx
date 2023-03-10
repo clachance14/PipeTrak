@@ -1,8 +1,17 @@
 import { SigninForm } from '@auth/components/SigninForm';
-import { Link, useTranslations } from 'next-intl';
+import { getUser } from '@auth/server/user';
+import { getProviders } from 'next-auth/react';
+import { Link } from 'next-intl';
+import { getTranslations, redirect } from 'next-intl/server';
 
-export default function SigninPage() {
-  const t = useTranslations('auth.signin');
+export default async function SigninPage() {
+  const t = await getTranslations('auth.signin');
+  const user = await getUser();
+  const providers = await getProviders();
+
+  if (user) {
+    redirect('/dashboard');
+  }
 
   return (
     <>
@@ -13,6 +22,7 @@ export default function SigninPage() {
         {t('dontHaveAnAccount')} <Link href="/auth/signup">{t('createAnAccount')} &rarr;</Link>
       </p>
       <SigninForm
+        providers={providers}
         labels={{
           email: t('email'),
           password: t('password'),

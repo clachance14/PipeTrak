@@ -3,7 +3,7 @@ import Button from '@common/components/primitives/Button';
 import { Link, useTranslations } from 'next-intl';
 import Logo from './Logo';
 
-export function NavBar() {
+export default function NavBar() {
   const t = useTranslations('common');
   // const session = await getServerSession(getAuthOptions())
   const session = null;

@@ -1,6 +1,6 @@
 import { Providers } from '@common/components/Providers';
 import { pick } from '@common/utils/helper';
-import { ConsentBanner } from '@consent-banner/client';
+import ConsentBanner from '@consent-banner/components/ConsentBanner';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { Manrope } from 'next/font/google';
 import { notFound } from 'next/navigation';

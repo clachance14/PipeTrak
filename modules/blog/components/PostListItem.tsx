@@ -1,14 +1,13 @@
+'use client';
+
 import { BlogPost } from '@blog/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 export function PostListItem({ post }: { post: BlogPost }) {
   const { title, excerpt, author, slug, createdAt, tags } = post;
 
-  const { locale } = useRouter();
-
-  const formattedDate = new Date(createdAt).toLocaleDateString(locale);
+  const formattedDate = new Date(createdAt).toLocaleDateString('en');
 
   return (
     <div className="rounded-xl border p-6 dark:border-zinc-800">

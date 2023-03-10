@@ -1,13 +1,7 @@
+import { Link } from 'next-intl';
 import Image from 'next/image';
-import Link from 'next/link';
 
-/*
-    Image
-  */
 const CustomImage = (props: any) => <Image {...props} alt={props.alt} loading="lazy" />;
-/*
-    Link
-  */
 
 const CustomLink = (props: any) => {
   const href = props.href;

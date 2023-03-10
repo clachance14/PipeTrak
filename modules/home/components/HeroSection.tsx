@@ -1,6 +1,6 @@
 import Button from '@common/components/primitives/Button';
 
-export function HeroSection() {
+export default function HeroSection() {
   return (
     <nav className="bg-gradient-to-b from-white to-zinc-50 pt-32 pb-16 dark:from-zinc-900 dark:to-[#111] dark:text-white">
       <div className="container text-center">

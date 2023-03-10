@@ -1,26 +1,26 @@
+'use client';
+
 import Button from '@common/components/primitives/Button';
+import { getCookie, setCookie } from '@common/utils/cookies';
 import { useEffect, useState } from 'react';
 import { RxCookie } from 'react-icons/rx';
 
-export function ConsentBanner() {
+export default function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const consent = localStorage.getItem('consent');
-    if (consent === 'true') return;
-    setShowBanner(true);
+    if (!getCookie('consent')) setShowBanner(true);
   }, []);
 
   if (!showBanner) return null;
 
   const handleAllow = () => {
-    localStorage.setItem('consent', 'true');
+    setCookie('consent', 'true', 30);
     setShowBanner(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('consent', 'false');
+    setCookie('consent', 'true', 1);
     setShowBanner(false);
   };
 
