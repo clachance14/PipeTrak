@@ -1,3 +1,4 @@
+import { PageHeader } from '@dashboard/components/PageHeader';
 import { TabGroup } from '@dashboard/components/TabGroup';
 import { getTranslations } from 'next-intl/server';
 import { PropsWithChildren } from 'react';
@@ -7,12 +8,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren<{}>
 
   return (
     <div>
-      <div className="mb-8 border-b pb-3 dark:border-zinc-800">
-        <h2 className="mt-4 text-3xl font-bold">{t('title')}</h2>
-        <p className="mt-1 opacity-75">{t('subtitle')}</p>
-      </div>
+      <PageHeader title={t('title')} subtitle={t('subtitle')} />
 
-      <div className="mb-6">
+      <div className="container py-6">
         <TabGroup
           items={['account', 'billing', 'workspaces'].map((segment) => ({
             label: t(`${segment}.title` as any),
@@ -20,9 +18,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren<{}>
             segment,
           }))}
         />
-      </div>
 
-      {children}
+        {children}
+      </div>
     </div>
   );
 }

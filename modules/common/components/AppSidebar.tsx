@@ -53,7 +53,7 @@ export default function AppSidebar({
           <FiX />
         </Button>
       </div>
-      <div className=" p-6">
+      <div className="p-8">
         <Logo />
       </div>
 

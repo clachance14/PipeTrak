@@ -16,10 +16,12 @@ export default async function Dashboard() {
         <p className="mt-1 opacity-75">See the latest stats of your awesome business.</p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <StatsTile title="New client" value={344} valueFormat="number" trend={0.12} />
-        <StatsTile title="Revenue" value={5243} valueFormat="currency" trend={0.6} />
-        <StatsTile title="Churn" value={0.03} valueFormat="percentage" trend={-0.3} />
+      <div className="container">
+        <div className="grid gap-4 lg:grid-cols-3">
+          <StatsTile title="New client" value={344} valueFormat="number" trend={0.12} />
+          <StatsTile title="Revenue" value={5243} valueFormat="currency" trend={0.6} />
+          <StatsTile title="Churn" value={0.03} valueFormat="percentage" trend={-0.3} />
+        </div>
       </div>
     </div>
   );
