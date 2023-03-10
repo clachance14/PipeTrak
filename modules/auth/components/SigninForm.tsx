@@ -66,7 +66,7 @@ export function SigninForm({
         }
 
         if (isPasswordSignin) {
-          router.push('/');
+          router.push('/dashboard');
         }
       } catch (e) {
         setError('serverError', { type: 'linkNotSent' });
