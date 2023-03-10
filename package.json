@@ -73,7 +73,7 @@
     "@types/cookies": "^0.7.7",
     "@types/mjml": "^4.7.0",
     "@types/negotiator": "^0.6.1",
-    "@types/node": "18.14.2",
+    "@types/node": "18.15.0",
     "@types/nodemailer": "^6.4.7",
     "@types/react": "18.0.28",
     "autoprefixer": "^10.4.13",
