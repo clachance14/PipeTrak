@@ -7,7 +7,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import EmailProvider, { SendVerificationRequestParams } from 'next-auth/providers/email';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-import prisma from '../../../prisma/prisma';
+import prisma from './prisma/prisma';
 
 // we use the prisma adapter to store the session in the database
 // https://next-auth.js.org/adapters/prisma

@@ -1,6 +1,6 @@
 import SignupForm from '@auth/components/SignupForm';
-import { getUser } from '@auth/server/user';
-import { TrpcProvider } from '@common/client/ClientProvider';
+import { getUser } from '@auth/server';
+import TrpcProvider from '@common/components/TrpcProvider';
 import { Link } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';

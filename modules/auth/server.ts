@@ -1,8 +1,15 @@
+import { getServerSession } from 'next-auth';
+import { getAuthOptions } from '../../nextauth.config';
+
 import { TRPCError } from '@trpc/server';
 import { hash } from 'argon2';
 import z from 'zod';
-import prisma from '../../../prisma/prisma';
-import { procedure } from '../../../trpc';
+import prisma from '../../prisma/prisma';
+import { procedure } from '../../trpc';
+
+export async function getUser() {
+  return (await getServerSession(getAuthOptions()))?.user ?? null;
+}
 
 export const authRouter = {
   /*

@@ -1,5 +1,5 @@
 import { SigninForm } from '@auth/components/SigninForm';
-import { getUser } from '@auth/server/user';
+import { getUser } from '@auth/server';
 import { getProviders } from 'next-auth/react';
 import { Link } from 'next-intl';
 import { getTranslations, redirect } from 'next-intl/server';

@@ -21,6 +21,7 @@
       "@home/*": ["./modules/home/*"],
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
+      "@settings/*": ["./modules/settings/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"],
       "@consent-banner/*": ["./modules/consent-banner/*"]

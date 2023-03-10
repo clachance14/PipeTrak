@@ -1,4 +1,3 @@
-import { trpc } from '@common/client/trpc';
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
@@ -7,6 +6,7 @@ import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { trpc } from '../../../trpc/client';
 
 export function ResetPasswordForm() {
   const t = (key: string) => key;

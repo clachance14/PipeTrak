@@ -1,9 +1,9 @@
-import { getUser } from '@auth/server/user';
-import { TrpcProvider } from '@common/client/ClientProvider';
+import { getUser } from '@auth/server';
+import TrpcProvider from '@common/components/TrpcProvider';
+import ChangeEmailForm from '@settings/components/ChangeEmail';
+import ChangeNameForm from '@settings/components/ChangeNameForm';
+import ChangePasswordForm from '@settings/components/ChangePassword';
 import { redirect } from 'next-intl/server';
-import ChangeEmailForm from '../../../../../modules/settings/components/ChangeEmail';
-import ChangeNameForm from '../../../../../modules/settings/components/ChangeNameForm';
-import ChangePasswordForm from '../../../../../modules/settings/components/ChangePassword';
 
 export default async function AccountSettingsPage() {
   const user = await getUser();

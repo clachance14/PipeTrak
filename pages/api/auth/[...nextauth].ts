@@ -1,7 +1,7 @@
-import { getAuthOptions } from '@auth/server';
 import { SessionAction } from '@auth/types';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
+import { getAuthOptions } from '../../../nextauth.config';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   let action: SessionAction | undefined = undefined,

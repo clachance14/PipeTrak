@@ -1,4 +1,4 @@
-import { getUser } from '@auth/server/user';
+import { getUser } from '@auth/server';
 import { Link } from 'next-intl';
 import { redirect } from 'next-intl/server';
 

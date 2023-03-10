@@ -1,4 +1,4 @@
-import { getUser } from '@auth/server/user';
+import { getUser } from '@auth/server';
 import { StatsTile } from '@dashboard/components/StatsTile';
 import { redirect } from 'next-intl/server';
 

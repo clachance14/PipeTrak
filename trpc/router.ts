@@ -1,5 +1,5 @@
 import { authRouter } from '@auth/server';
-import { router } from '../../../../trpc';
+import { router } from '../trpc';
 
 export const appRouter = router({
   ...authRouter,

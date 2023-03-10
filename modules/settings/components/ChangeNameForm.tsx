@@ -1,10 +1,10 @@
 'use client';
 
-import { trpc } from '@common/client/trpc';
 import Input from '@common/components/primitives/Input';
 import { User } from 'next-auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { trpc } from '../../../trpc/client';
 import SettingsBlock from './SettingsBlock';
 
 export default function ChangeNameForm({ user }: { user: User }) {

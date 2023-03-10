@@ -1,6 +1,5 @@
 'use client';
 
-import { trpc } from '@common/client/trpc';
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
@@ -8,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiMail } from 'react-icons/fi';
+import { trpc } from '../../../trpc/client';
 
 export default function SignupForm({
   labels,

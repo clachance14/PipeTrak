@@ -1,4 +1,4 @@
-import { getUser } from '@auth/server/user';
+import { getUser } from '@auth/server';
 import AppLayout from '@common/components/AppLayout';
 import { getWorkspaces } from '@workspaces/server';
 import { redirect } from 'next-intl/server';

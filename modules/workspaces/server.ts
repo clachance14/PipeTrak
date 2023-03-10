@@ -1,5 +1,5 @@
-import { getUser } from '@auth/server/user';
-import prisma from '../../../prisma/prisma';
+import { getUser } from '@auth/server';
+import prisma from '../../prisma/prisma';
 
 export async function getWorkspaces() {
   const user = await getUser();
