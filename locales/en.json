@@ -67,11 +67,11 @@
     },
     "signup": {
       "alreadyHaveAccount": "Already have an account?",
-      "message": "We are happy that you want to join us. Please fill in the form below to create your account.",
-      "signIn": "Sign in",
       "email": "Email",
+      "message": "We are happy that you want to join us. Please fill in the form below to create your account.",
       "name": "Name",
       "password": "Password",
+      "signIn": "Sign in",
       "submit": "Create account",
       "title": "Create an account"
     }
@@ -104,8 +104,6 @@
   },
   "home": {},
   "settings": {
-    "title": "Settings",
-    "subtitle": "Manage your settings",
     "account": {
       "changeEmail": {
         "description": "Enter a new email and click save to update it.",
@@ -122,6 +120,14 @@
       },
       "save": "Save",
       "title": "Account"
+    },
+    "billing": {
+      "title": "Billing"
+    },
+    "subtitle": "Manage your settings",
+    "title": "Settings",
+    "workspaces": {
+      "title": "Workspaces"
     }
   }
 }

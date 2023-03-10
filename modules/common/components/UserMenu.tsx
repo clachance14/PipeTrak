@@ -43,7 +43,7 @@ export default function UserMenu({ user }: { user: User }) {
               {...api.getItemProps({
                 id: 'settings',
               })}
-              href="/dashboard/settings"
+              href="/dashboard/settings/account"
               className="flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic text-zinc-700 hover:no-underline data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:text-zinc-300 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white"
             >
               <FiSettings /> Settings

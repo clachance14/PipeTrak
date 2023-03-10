@@ -1,9 +1,10 @@
-import { Link } from 'next-intl';
+import { TabGroup } from '@dashboard/components/TabGroup';
 import { getTranslations } from 'next-intl/server';
 import { PropsWithChildren } from 'react';
 
 export default async function SettingsLayout({ children }: PropsWithChildren<{}>) {
   const t = await getTranslations('settings');
+
   return (
     <div>
       <div className="mb-8 border-b pb-3 dark:border-zinc-800">
@@ -11,14 +12,15 @@ export default async function SettingsLayout({ children }: PropsWithChildren<{}>
         <p className="mt-1 opacity-75">{t('subtitle')}</p>
       </div>
 
-      <ul>
-        <li>
-          <Link href="/dashboard/settings/account">{t('account.title')}</Link>
-        </li>
-        <li>
-          <Link href="/dashboard/settings/workspaces">Workspaces</Link>
-        </li>
-      </ul>
+      <div className="mb-6">
+        <TabGroup
+          items={['account', 'billing', 'workspaces'].map((segment) => ({
+            label: t(`${segment}.title` as any),
+            href: `/dashboard/settings/${segment}`,
+            segment,
+          }))}
+        />
+      </div>
 
       {children}
     </div>

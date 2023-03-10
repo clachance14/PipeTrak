@@ -1,5 +1,6 @@
 'use client';
 
+import ColorModeToggle from '@common/components/ColorModeToggle';
 import Button from '@common/components/primitives/Button';
 import { User } from 'next-auth';
 import { useSelectedLayoutSegment } from 'next/navigation';
@@ -31,18 +32,25 @@ export default function AppLayout({
         workspaces={workspaces}
         selectedWorkspace={selectedWorkspace}
         user={user}
+        onClose={() => setSidebarExpanded(false)}
       />
       <main className="min-h-screen flex-1 bg-white transition-all duration-300 ease-in-out dark:bg-zinc-900 lg:pl-[280px]">
-        <div className="flex h-16 w-full justify-between border-b py-3 px-6 dark:border-zinc-800 lg:hidden">
-          <Button
-            intent="primary-outline"
-            size="small"
-            className="px-4 lg:hidden"
-            onClick={() => setSidebarExpanded(!sidebarExpanded)}
-          >
-            <span className="sr-only">Toggle sidebar</span>
-            {sidebarExpanded ? <FiX /> : <FiMenu />}
-          </Button>
+        <div className="flex h-16 w-full justify-between border-b py-2 px-6 dark:border-zinc-800">
+          <div>
+            <Button
+              intent="primary-outline"
+              size="small"
+              className="px-4 lg:hidden"
+              onClick={() => setSidebarExpanded(!sidebarExpanded)}
+            >
+              <span className="sr-only">Toggle sidebar</span>
+              {sidebarExpanded ? <FiX /> : <FiMenu />}
+            </Button>
+          </div>
+
+          <div className="flex items-center">
+            <ColorModeToggle />
+          </div>
         </div>
 
         <div className="container py-6">{children}</div>

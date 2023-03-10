@@ -47,13 +47,14 @@ export default function AppSidebar({
     <nav
       className={`fixed top-0 ${positionClass} z-40 h-screen w-[280px] border-r bg-white transition-all duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-900`}
     >
-      <div className="flex justify-between p-6">
-        <Logo />
-
-        <Button intent="primary-outline" size="small" className="lg:hidden" onClick={() => onClose?.()}>
+      <div className="flex justify-end px-6 py-2 lg:hidden">
+        <Button intent="primary-outline" size="small" onClick={() => onClose?.()}>
           <span className="sr-only">Toggle sidebar</span>
           <FiX />
         </Button>
+      </div>
+      <div className=" p-6">
+        <Logo />
       </div>
 
       <div className="mt-3 px-6">
