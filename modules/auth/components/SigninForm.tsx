@@ -5,8 +5,8 @@ import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
 import { SessionProvider, signIn } from 'next-auth/react';
+import { useLocalizedRouter } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiMail } from 'react-icons/fi';
@@ -28,7 +28,7 @@ export function SigninForm({
   };
 }) {
   const t = (key: string) => key;
-  const router = useRouter();
+  const router = useLocalizedRouter();
   const [signinMode, setSigninMode] = useState(SigninMode.MagicLink);
 
   const isPasswordSignin = signinMode === SigninMode.Password;
