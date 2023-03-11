@@ -22,6 +22,7 @@
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
       "@settings/*": ["./modules/settings/*"],
+      "@projects/*": ["./modules/projects/*"],
       "@email/*": ["./modules/email/*"],
       "@newsletter/*": ["./modules/newsletter/*"],
       "@consent-banner/*": ["./modules/consent-banner/*"]

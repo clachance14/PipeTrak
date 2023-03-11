@@ -45,6 +45,32 @@ CREATE TABLE "VerificationToken" (
     "expires" TIMESTAMP(3) NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Workspace" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "image" TEXT,
+
+    CONSTRAINT "Workspace_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Project" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "userId" TEXT NOT NULL,
+    "workspaceId" TEXT,
+
+    CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_UserToWorkspace" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE INDEX "Account_userId_idx" ON "Account"("userId");
 
@@ -66,8 +92,26 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_UserToWorkspace_AB_unique" ON "_UserToWorkspace"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_UserToWorkspace_B_index" ON "_UserToWorkspace"("B");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Project" ADD CONSTRAINT "Project_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Project" ADD CONSTRAINT "Project_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_UserToWorkspace" ADD CONSTRAINT "_UserToWorkspace_A_fkey" FOREIGN KEY ("A") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_UserToWorkspace" ADD CONSTRAINT "_UserToWorkspace_B_fkey" FOREIGN KEY ("B") REFERENCES "Workspace"("id") ON DELETE CASCADE ON UPDATE CASCADE;

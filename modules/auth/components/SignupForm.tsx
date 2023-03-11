@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiMail } from 'react-icons/fi';
+import appConfig from '../../../config';
 import { trpc } from '../../../trpc/client';
 
 export default function SignupForm({
@@ -41,7 +42,7 @@ export default function SignupForm({
     handleSubmit(async ({ email, password, name }) => {
       try {
         await signUpMutation.mutateAsync({ email, password, name });
-        await signIn('create-account', { email, callbackUrl: '/', redirect: false });
+        await signIn('create-account', { email, callbackUrl: appConfig.auth.redirectAfterSignin, redirect: false });
       } catch (e) {
         setError('serverError', { type: 'invalid' });
       }

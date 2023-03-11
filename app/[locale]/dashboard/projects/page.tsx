@@ -1,21 +1,16 @@
-import { getUser } from '@auth/server';
 import { PageHeader } from '@dashboard/components/PageHeader';
-import { Link } from 'next-intl';
-import { redirect } from 'next-intl/server';
+import ProjectTable from '@projects/components/ProjectTable';
+import { getProjects } from '@projects/server';
 
-export default async function Dashboard() {
-  const user = await getUser();
-
-  if (!user) {
-    redirect('/auth/sigin');
-  }
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <div>
       <PageHeader title="Projects" subtitle="Manage your projects" />
 
       <div className="container py-6">
-        <Link href="/dashboard">Home</Link>
+        <ProjectTable projects={projects} />
       </div>
     </div>
   );

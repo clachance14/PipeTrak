@@ -47,6 +47,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   workspaces    Workspace[]
+  projects      Project[]
 }
 
 model VerificationToken {
@@ -58,8 +59,19 @@ model VerificationToken {
 }
 
 model Workspace {
-  id      String  @id @default(cuid())
-  name    String
-  image   String?
-  members User[]
+  id       String    @id @default(cuid())
+  name     String
+  image    String?
+  members  User[]
+  projects Project[]
+}
+
+model Project {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspaceId String?
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 }
