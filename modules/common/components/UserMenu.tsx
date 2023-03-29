@@ -4,9 +4,8 @@ import * as menu from '@zag-js/menu';
 import { normalizeProps, useMachine } from '@zag-js/react';
 import { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
-import Link from 'next/link';
 import { useId } from 'react';
-import { FiChevronDown, FiLogOut, FiSettings, FiUser } from 'react-icons/fi';
+import { FiChevronDown, FiLogOut, FiUser } from 'react-icons/fi';
 
 export default function UserMenu({ user }: { user: User }) {
   const [state, send] = useMachine(
@@ -39,23 +38,16 @@ export default function UserMenu({ user }: { user: User }) {
           className="rounded-lg border border-zinc-200 bg-white p-1 text-zinc-600 shadow-sm focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400"
           {...api.contentProps}
         >
-          <li className="">
-            <Link
-              {...api.getItemProps({
-                id: 'settings',
-              })}
-              href="/dashboard/settings/account"
-              className="flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic text-zinc-700 hover:no-underline data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:text-zinc-300 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white"
-            >
-              <FiSettings /> Settings
-            </Link>
-          </li>
           <li
             className="flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic text-zinc-700 data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:text-zinc-300 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white"
             {...api.getItemProps({
               id: 'logout',
             })}
-            onClick={() => signOut()}
+            onClick={() =>
+              signOut({
+                callbackUrl: '/',
+              })
+            }
           >
             <FiLogOut /> Logout
           </li>

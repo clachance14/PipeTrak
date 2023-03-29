@@ -1,3 +1,12 @@
+import PricingTable from '../../../../../modules/billing/components/PricingTable';
+import { getAllPlans } from '../../../../../modules/billing/lemonsqueezy';
+
 export default async function BillingSettingsPage() {
-  return <div className="grid gap-6">billing settings</div>;
+  const plans = await getAllPlans();
+
+  return (
+    <div>
+      <PricingTable plans={plans} />
+    </div>
+  );
 }

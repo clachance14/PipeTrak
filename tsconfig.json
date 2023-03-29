@@ -19,6 +19,7 @@
       "@auth/*": ["./modules/auth/*"],
       "@workspaces/*": ["./modules/workspaces/*"],
       "@home/*": ["./modules/home/*"],
+      "@billing/*": ["./modules/billing/*"],
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
       "@settings/*": ["./modules/settings/*"],

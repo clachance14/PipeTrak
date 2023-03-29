@@ -10,7 +10,7 @@ import { User } from 'next-auth';
 import { Link } from 'next-intl';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { PropsWithChildren, useCallback } from 'react';
-import { FiArchive, FiGrid, FiX } from 'react-icons/fi';
+import { FiArchive, FiGrid, FiSettings, FiX } from 'react-icons/fi';
 
 const menuItems = [
   {
@@ -24,6 +24,12 @@ const menuItems = [
     href: '/dashboard/projects',
     segment: 'projects',
     icon: FiArchive,
+  },
+  {
+    label: 'Settings',
+    href: '/dashboard/settings',
+    segment: 'settings',
+    icon: FiSettings,
   },
 ];
 

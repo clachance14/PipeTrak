@@ -16,9 +16,11 @@ import SigninModeSwitch, { SigninMode } from './SigninModeSwitch';
 
 export function SigninForm({
   labels,
+  redirectTo,
   providers,
 }: {
   providers: Record<string, ClientSafeProvider> | null;
+  redirectTo?: string | null;
   labels: {
     email: string;
     password: string;
@@ -60,7 +62,7 @@ export function SigninForm({
         const response = await signIn(isPasswordSignin ? 'credentials' : 'email', {
           email,
           password,
-          callbackUrl: appConfig.auth.redirectAfterSignin,
+          callbackUrl: redirectTo ?? appConfig.auth.redirectAfterSignin,
           redirect: false,
         });
 

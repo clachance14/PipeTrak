@@ -1,5 +1,4 @@
 import { getUser } from '@auth/server';
-import TrpcProvider from '@common/components/TrpcProvider';
 import ChangeEmailForm from '@settings/components/ChangeEmail';
 import ChangeNameForm from '@settings/components/ChangeNameForm';
 import ChangePasswordForm from '@settings/components/ChangePassword';
@@ -14,11 +13,9 @@ export default async function AccountSettingsPage() {
 
   return (
     <div className="grid gap-6">
-      <TrpcProvider>
-        <ChangeNameForm user={user} />
-        <ChangeEmailForm user={user} />
-        <ChangePasswordForm />
-      </TrpcProvider>
+      <ChangeNameForm user={user} />
+      <ChangeEmailForm user={user} />
+      <ChangePasswordForm />
     </div>
   );
 }

@@ -17,6 +17,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren<{}>
             href: `/dashboard/settings/${segment}`,
             segment,
           }))}
+          className="mb-6"
         />
 
         {children}

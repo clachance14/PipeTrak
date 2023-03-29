@@ -1,6 +1,5 @@
 import SignupForm from '@auth/components/SignupForm';
 import { getUser } from '@auth/server';
-import TrpcProvider from '@common/components/TrpcProvider';
 import { Link } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
@@ -21,16 +20,14 @@ export default async function SignupPage() {
         {t('message')} {t('alreadyHaveAccount')} <Link href="/auth/signin">{t('signIn')} &rarr;</Link>
       </p>
 
-      <TrpcProvider>
-        <SignupForm
-          labels={{
-            name: t('name'),
-            email: t('email'),
-            password: t('password'),
-            submit: t('submit'),
-          }}
-        />
-      </TrpcProvider>
+      <SignupForm
+        labels={{
+          name: t('name'),
+          email: t('email'),
+          password: t('password'),
+          submit: t('submit'),
+        }}
+      />
     </div>
   );
 }

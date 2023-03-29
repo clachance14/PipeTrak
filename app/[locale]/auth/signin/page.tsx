@@ -4,13 +4,15 @@ import { getProviders } from 'next-auth/react';
 import { Link } from 'next-intl';
 import { getTranslations, redirect } from 'next-intl/server';
 
-export default async function SigninPage() {
+export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
   const t = await getTranslations('auth.signin');
   const user = await getUser();
   const providers = await getProviders();
 
+  const { redirectTo } = searchParams;
+
   if (user) {
-    redirect('/dashboard');
+    redirect(redirectTo ?? '/dashboard');
   }
 
   return (
@@ -23,6 +25,7 @@ export default async function SigninPage() {
       </p>
       <SigninForm
         providers={providers}
+        redirectTo={redirectTo}
         labels={{
           email: t('email'),
           password: t('password'),
