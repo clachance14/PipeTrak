@@ -25,7 +25,7 @@
     "@tanstack/react-table": "^8.7.9",
     "@trpc/client": "^10.14.1",
     "@trpc/next": "^10.18.0",
-    "@trpc/react-query": "^10.14.1",
+    "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.14.1",
     "@zag-js/menu": "^0.3.12",
     "@zag-js/react": "^0.3.10",
