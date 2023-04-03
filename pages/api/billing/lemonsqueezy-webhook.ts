@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log('event_name', event_name);
   console.log('data', data);
+  console.log('custom_data', custom_data);
 
   switch (event_name) {
     case 'subscription_created':
@@ -43,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'subscription_cancelled':
     case 'subscription_expired':
     case 'subscription_resumed':
-      updateUserSubscription({
+      await updateUserSubscription({
         userId: custom_data?.user_id,
         customerId: data.attributes.customer_id,
         planId: data.attributes.product_id,
