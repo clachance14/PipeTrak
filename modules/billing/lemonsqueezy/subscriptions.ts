@@ -86,22 +86,17 @@ export async function createCheckoutLink(params: {
 
 export async function updateUserSubscription(
   subscription: Omit<Subscription, 'id'> & {
-    customerId?: string;
     userId?: string;
   }
 ) {
-  if (!subscription.customerId && !subscription.userId) {
+  if (!subscription.userId) {
     throw new Error('Either customerId or userId must be provided');
   }
 
   const existingSubscription = await prisma.subscription.findFirst({
-    where: subscription.userId
-      ? {
-          userId: subscription.userId,
-        }
-      : {
-          customerId: subscription.customerId,
-        },
+    where: {
+      userId: subscription.userId,
+    },
   });
 
   if (existingSubscription) {

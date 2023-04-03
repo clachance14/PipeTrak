@@ -46,9 +46,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'subscription_resumed':
       await updateUserSubscription({
         userId: custom_data?.user_id,
-        customerId: data.attributes.customer_id,
-        planId: data.attributes.product_id,
-        variantId: data.attributes.variant_id,
+        customerId: String(data.attributes.customer_id),
+        planId: String(data.attributes.product_id),
+        variantId: String(data.attributes.variant_id),
         status: data.attributes.status,
       });
       break;
