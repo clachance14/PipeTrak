@@ -7,9 +7,10 @@ import { notFound } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 import '../../styles/globals.scss';
 
-const manrope = Manrope({
-  variable: '--font-manrope',
+const sansFont = Manrope({
+  variable: '--font-sans',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export default async function RootLayout({ children, params }: PropsWithChildren<{ params: { locale: string } }>) {
@@ -21,7 +22,7 @@ export default async function RootLayout({ children, params }: PropsWithChildren
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${manrope.variable} font-sans`}>
+      <body className={`${sansFont.variable} font-sans`}>
         <Providers>
           <NextIntlClientProvider locale={locale} messages={pick(messages, ['common'])}>
             {children}

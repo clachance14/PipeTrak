@@ -10,8 +10,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['var(--font-manrope)', 'sans-serif'],
-        serif: ['var(--font-manrope)', 'serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
       },
     },
   },
