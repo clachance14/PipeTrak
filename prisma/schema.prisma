@@ -60,13 +60,15 @@ model VerificationToken {
 }
 
 model Subscription {
-  id         String @id @default(cuid())
-  userId     String
-  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  customerId String
-  status     String
-  planId     String
-  variantId  String
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId      String
+  subscriptionId  String
+  status          String
+  planId          String
+  variantId       String
+  nextPaymentDate DateTime?
 }
 
 model Workspace {

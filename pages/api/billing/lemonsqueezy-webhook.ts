@@ -50,6 +50,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         planId: String(data.attributes.product_id),
         variantId: String(data.attributes.variant_id),
         status: data.attributes.status,
+        subscriptionId: String(data.id),
+        nextPaymentDate: new Date(data.attributes.trial_ends_at ?? data.attributes.renews_at),
       });
       break;
   }

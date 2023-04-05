@@ -136,7 +136,7 @@
           "on_trial": "Trialing",
           "paused": "Paused"
         },
-        "updateBillingDetails": "Update your billing details",
+        "updateBillingDetails": "Update billing details",
         "year": "year",
         "yearly": "Yearly",
         "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})"
