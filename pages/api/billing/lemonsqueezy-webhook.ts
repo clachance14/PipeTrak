@@ -1,4 +1,4 @@
-import { updateUserSubscription } from '@billing/lemonsqueezy';
+import { updateUserSubscription } from '@billing/server';
 import { createHmac, timingSafeEqual } from 'crypto';
 import { buffer } from 'micro';
 import { NextApiRequest, NextApiResponse } from 'next';

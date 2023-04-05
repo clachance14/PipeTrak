@@ -1,6 +1,4 @@
-import { Subscription } from '@prisma/client';
 import { User } from 'next-auth';
-import prisma from '../../../prisma/prisma';
 import { SubscriptionPlan } from '../types';
 import { lemonsqueezyApi } from './api-client';
 
@@ -82,39 +80,4 @@ export async function createCheckoutLink(params: {
   });
 
   return response.data.attributes.url;
-}
-
-export async function updateUserSubscription(
-  subscription: Omit<Subscription, 'id'> & {
-    userId?: string;
-  }
-) {
-  if (!subscription.userId) {
-    throw new Error('Either customerId or userId must be provided');
-  }
-
-  const existingSubscription = await prisma.subscription.findFirst({
-    where: {
-      userId: subscription.userId,
-    },
-  });
-
-  if (existingSubscription) {
-    await prisma.subscription.update({
-      where: {
-        id: existingSubscription.id,
-      },
-      data: {
-        ...subscription,
-      },
-    });
-
-    return;
-  }
-
-  await prisma.subscription.create({
-    data: {
-      ...subscription,
-    },
-  });
 }

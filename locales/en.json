@@ -122,6 +122,25 @@
       "title": "Account"
     },
     "billing": {
+      "subscription": {
+        "cancel": "Cancel your subscription",
+        "currentSubscription": "Your current subscription",
+        "month": "month",
+        "monthly": "Monthly",
+        "nextPayment": "The next payment will be on <strong>{date}</strong>",
+        "pauseSubscription": "Pause your subscription",
+        "resumeSubscription": "Resume your subscription",
+        "status": {
+          "active": "Active",
+          "canceled": "Canceled",
+          "on_trial": "Trialing",
+          "paused": "Paused"
+        },
+        "updateBillingDetails": "Update your billing details",
+        "year": "year",
+        "yearly": "Yearly",
+        "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})"
+      },
       "title": "Billing"
     },
     "subtitle": "Manage your settings",

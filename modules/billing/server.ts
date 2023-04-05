@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import z from 'zod';
 import { procedure } from '../../trpc';
 import { createCheckoutLink, getAllPlans } from './lemonsqueezy';
+import { getUserSubscription, updateUserSubscription } from './shared/subscriptions';
 
 const billingRouter = {
   createCheckoutLink: procedure
@@ -27,4 +28,4 @@ const billingRouter = {
     }),
 };
 
-export { billingRouter, getAllPlans, createCheckoutLink };
+export { billingRouter, getAllPlans, createCheckoutLink, updateUserSubscription, getUserSubscription };

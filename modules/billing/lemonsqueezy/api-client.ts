@@ -1,4 +1,4 @@
-import { createApiFetch } from '../lib/api-client';
+import { createApiFetch } from '../shared/api-client';
 
 export const lemonsqueezyApi = createApiFetch({
   baseUrl: 'https://api.lemonsqueezy.com/v1',
