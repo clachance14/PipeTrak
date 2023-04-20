@@ -75,7 +75,7 @@ export default function AppSidebar({
           <li key={menuItem.href}>
             <Link
               href={menuItem.href}
-              className={`flex items-center gap-3 rounded-xl px-4 py-3 hover:text-black hover:no-underline dark:hover:text-white ${
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 hover:text-black hover:no-underline focus:no-underline dark:hover:text-white ${
                 isActiveMenuItem(menuItem.segment)
                   ? 'bg-zinc-100 font-bold text-black dark:bg-zinc-800 dark:text-white'
                   : ''

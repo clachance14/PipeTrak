@@ -22,7 +22,7 @@ export function TabGroup({
         <Link
           key={item.href}
           href={item.href}
-          className={`-mb-[2px] block border-b-2 px-6 py-3 hover:no-underline ${
+          className={`-mb-[2px] block border-b-2 px-6 py-3 hover:no-underline focus:no-underline ${
             item === activeItem ? 'border-blue-500 font-bold dark:text-white' : 'border-transparent'
           }`}
         >

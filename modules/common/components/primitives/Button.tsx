@@ -103,6 +103,7 @@ export const button = cva('button', {
 
 interface ButtonProps<T extends React.ElementType> extends VariantProps<typeof button> {
   isLoading?: boolean;
+  isDisabled?: boolean;
   as?: T;
 }
 
@@ -112,6 +113,7 @@ export default function Button<T extends React.ElementType = 'button'>({
   intent,
   size,
   isLoading,
+  isDisabled,
   as,
   ...props
 }: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) {
@@ -119,7 +121,7 @@ export default function Button<T extends React.ElementType = 'button'>({
   return (
     <Component
       className={button({ intent, size, className })}
-      disabled={isLoading ?? props.disabled ?? false}
+      disabled={isLoading || isDisabled || props.disabled || false}
       {...props}
     >
       {isLoading ? <FiLoader className="animate-spin" /> : children}
