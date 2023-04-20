@@ -41,8 +41,9 @@ export async function createCheckoutLink(params: {
   storeId: string | number;
   variantIds: (number | string)[];
   user: User;
+  redirectUrl?: string;
 }): Promise<string> {
-  const { variantIds, user, storeId } = params;
+  const { variantIds, user, storeId, redirectUrl } = params;
 
   const response = await lemonsqueezyApi('/checkouts', {
     method: 'POST',
@@ -52,6 +53,7 @@ export async function createCheckoutLink(params: {
         attributes: {
           product_options: {
             enabled_variants: variantIds,
+            redirect_url: redirectUrl,
           },
           checkout_data: {
             email: user.email,
@@ -80,4 +82,20 @@ export async function createCheckoutLink(params: {
   });
 
   return response.data.attributes.url;
+}
+
+export async function createCustomerPortalLink(params: { subscriptionId: string }): Promise<string> {
+  const { subscriptionId } = params;
+
+  const response = await lemonsqueezyApi(`/subscriptions/${subscriptionId}`);
+
+  return response.data.attributes.urls.update_payment_method;
+}
+
+export async function cancelSubscription(params: { subscriptionId: string }): Promise<void> {
+  const { subscriptionId } = params;
+
+  await lemonsqueezyApi(`/subscriptions/${subscriptionId}`, {
+    method: 'DELETE',
+  });
 }

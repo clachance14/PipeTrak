@@ -1,15 +1,25 @@
 'use client';
 
 import Button from '@common/components/primitives/Button';
-import { User } from 'next-auth';
+import { Subscription } from '@prisma/client';
 import { useState } from 'react';
 import { SubscriptionPlan } from '../types';
 
-export default function PricingTable({ plans, user }: { plans: SubscriptionPlan[]; user?: User }) {
+export default function PricingTable({
+  plans,
+  userSubscription,
+}: {
+  plans: SubscriptionPlan[];
+  userSubscription?: Subscription | null;
+}) {
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan | null>(null);
 
   const getCheckoutLink = (params: { variantIds: number[]; storeId: string }) => {
     return `/billing/checkout?variantIds=${params.variantIds.join(',')}&storeId=${params.storeId}`;
+  };
+
+  const isActiveSubscription = (plan: SubscriptionPlan) => {
+    return userSubscription?.planId === plan.id;
   };
 
   return (
@@ -39,14 +49,19 @@ export default function PricingTable({ plans, user }: { plans: SubscriptionPlan[
               </strong>
 
               <Button
-                as="a"
-                href={getCheckoutLink({
-                  variantIds: plan.variants.map((variant) => Number(variant.id)),
-                  storeId: plan.storeId,
-                })}
+                as={isActiveSubscription(plan) ? 'button' : 'a'}
+                isDisabled={isActiveSubscription(plan)}
+                {...(!isActiveSubscription(plan)
+                  ? {
+                      href: getCheckoutLink({
+                        variantIds: plan.variants.map((variant) => Number(variant.id)),
+                        storeId: plan.storeId,
+                      }),
+                    }
+                  : {})}
                 className="mt-4 w-full"
               >
-                Subscribe
+                {isActiveSubscription(plan) ? 'Current Plan' : userSubscription ? 'Switch to this plan' : 'Subscribe'}
               </Button>
             </div>
           );

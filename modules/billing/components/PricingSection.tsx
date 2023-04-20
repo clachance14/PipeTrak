@@ -1,8 +1,14 @@
-import { User } from 'next-auth';
+import { Subscription } from '@prisma/client';
 import { SubscriptionPlan } from '../types';
 import PricingTable from './PricingTable';
 
-export default function PricingSection({ plans, user }: { plans: SubscriptionPlan[]; user?: User }) {
+export default function PricingSection({
+  plans,
+  userSubscription,
+}: {
+  plans: SubscriptionPlan[];
+  userSubscription?: Subscription | null;
+}) {
   return (
     <div className="py-16">
       <div className="container">
@@ -11,7 +17,7 @@ export default function PricingSection({ plans, user }: { plans: SubscriptionPla
           <p className="mt-3 text-lg opacity-50">We have the right plan for every need.</p>
         </div>
 
-        <PricingTable plans={plans} user={user} />
+        <PricingTable plans={plans} userSubscription={userSubscription} />
       </div>
     </div>
   );

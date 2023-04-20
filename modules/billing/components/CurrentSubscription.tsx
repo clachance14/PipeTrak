@@ -1,7 +1,8 @@
+import CancelSubscriptionButton from '@billing/components/CancelSubscriptionButton';
 import Button from '@common/components/primitives/Button';
 import { Subscription } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
-import { FiCreditCard, FiPause, FiX } from 'react-icons/fi';
+import { FiCreditCard } from 'react-icons/fi';
 import { SubscriptionPlan } from '../types';
 
 export default async function CurrentSubscription({
@@ -13,11 +14,10 @@ export default async function CurrentSubscription({
   userSubscription: Subscription;
   className?: string;
 }) {
+  const { status, nextPaymentDate, planId, variantId, subscriptionId } = userSubscription;
   const t = await getTranslations('settings.billing');
-  const userSubscriptionPlan = plans.find((plan) => plan.id === userSubscription?.planId);
-  const userSubscriptionVariant = userSubscriptionPlan?.variants.find(
-    (variant) => variant.id === userSubscription?.variantId
-  );
+  const userSubscriptionPlan = plans.find((plan) => plan.id === planId);
+  const userSubscriptionVariant = userSubscriptionPlan?.variants.find((variant) => variant.id === variantId);
 
   if (!userSubscriptionPlan || !userSubscriptionVariant) return null;
 
@@ -42,21 +42,21 @@ export default async function CurrentSubscription({
               </h4>
               <span
                 className={`inline-block rounded-full px-2 py-0.5 text-sm leading-tight ${
-                  ['on_trial', 'active'].includes(userSubscription.status)
+                  ['on_trial', 'active'].includes(status)
                     ? 'bg-emerald-500 bg-opacity-10 text-emerald-500'
                     : 'bg-rose-500 bg-opacity-10 text-rose-500'
                 }`}
               >
-                {t(`subscription.status.${userSubscription.status}` as any)}
+                {t(`subscription.status.${status}` as any)}
               </span>
             </div>
 
-            {userSubscription.nextPaymentDate && (
+            {nextPaymentDate && (
               <p className="mt-1 text-zinc-500">
-                {t.rich('subscription.nextPayment', {
+                {t.rich(status === 'cancelled' ? 'subscription.endsOn' : 'subscription.nextPayment', {
                   date: Intl.DateTimeFormat('en-US', {
                     dateStyle: 'medium',
-                  }).format(userSubscription.nextPaymentDate),
+                  }).format(nextPaymentDate),
                   // @ts-ignore
                   strong: (text: string) => <strong>{text}</strong>,
                 })}
@@ -65,23 +65,21 @@ export default async function CurrentSubscription({
 
             <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3 dark:border-zinc-800">
               <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
-                <div className="flex-1">
-                  <Button intent="primary-ghost" size="small" className="w-full md:w-auto">
+                <div>
+                  <Button
+                    as="a"
+                    href={`/billing/customer-portal?subscriptionId=${subscriptionId}`}
+                    intent="primary-ghost"
+                    size="small"
+                    className="w-full md:w-auto"
+                  >
                     <FiCreditCard />
                     {t('subscription.updateBillingDetails')}
                   </Button>
                 </div>
 
                 <div className="flex flex-col gap-3 md:flex-row">
-                  <Button intent="primary-outline" size="small">
-                    <FiPause />
-                    {t('subscription.pauseSubscription')}
-                  </Button>
-
-                  <Button intent="primary-outline" size="small">
-                    <FiX />
-                    {t('subscription.cancel')}
-                  </Button>
+                  <CancelSubscriptionButton subscriptionId={subscriptionId} label={t('subscription.cancel')} />
                 </div>
               </div>
             </div>
