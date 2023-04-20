@@ -7,8 +7,6 @@ import { getAuthOptions } from '../../../../nextauth.config';
 export async function GET(req: NextRequest) {
   const session = await getServerSession(getAuthOptions());
 
-  console.log();
-
   const searchParams = new URLSearchParams(req.nextUrl.search);
 
   const variantIds = (searchParams.get('variantIds') ?? '')
@@ -24,15 +22,14 @@ export async function GET(req: NextRequest) {
   }
 
   if (!variantIds.length || !storeId) {
-    return NextResponse.redirect('/dashboard/settings/billing');
+    return NextResponse.redirect(`${getBaseUrl()}/dashboard/settings/billing`);
   }
-
-  console.log('we are getting here', variantIds, storeId);
 
   const checkoutLink = await createCheckoutLink({
     variantIds,
     storeId,
     user: session.user,
+    redirectUrl: `${getBaseUrl()}/dashboard/settings/billing`,
   });
 
   return NextResponse.redirect(checkoutLink, {
