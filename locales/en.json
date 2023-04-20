@@ -128,11 +128,12 @@
         "month": "month",
         "monthly": "Monthly",
         "nextPayment": "The next payment will be on <strong>{date}</strong>",
+        "endsOn": "Your subscription ends on <strong>{date}</strong>",
         "pauseSubscription": "Pause your subscription",
         "resumeSubscription": "Resume your subscription",
         "status": {
           "active": "Active",
-          "canceled": "Canceled",
+          "cancelled": "Cancelled",
           "on_trial": "Trialing",
           "paused": "Paused"
         },
