@@ -2,10 +2,8 @@ import { ForgotPasswordForm } from '@auth/components/ForgotPasswordForm';
 import Link from 'next-intl/link';
 import { getTranslations } from 'next-intl/server';
 
-export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
+export default async function ForgotPasswordPage() {
   const t = await getTranslations('auth.forgotPassword');
-
-  const { redirectTo } = searchParams;
 
   return (
     <>

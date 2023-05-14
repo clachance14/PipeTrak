@@ -1,4 +1,4 @@
-import { send } from '@email/provider/plunk';
+import { send } from '@email/provider/nodemailer';
 import { parseMjmlTemplate } from './templates';
 
 export async function sendEmail(params: {

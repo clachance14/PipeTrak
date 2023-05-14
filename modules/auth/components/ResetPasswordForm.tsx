@@ -1,15 +1,28 @@
+'use client';
+
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next-intl/client';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { trpc } from '../../../trpc/client';
 
-export function ResetPasswordForm() {
-  const t = (key: string) => key;
+export function ResetPasswordForm({
+  labels,
+}: {
+  labels: {
+    newPassword: string;
+    submit: string;
+    hints: {
+      passwordNotUpdated: {
+        title: string;
+        message: string;
+      };
+    };
+  };
+}) {
   const router = useRouter();
   const updatePasswordMutation = trpc.changePassword.useMutation();
 
@@ -39,16 +52,10 @@ export function ResetPasswordForm() {
 
   return (
     <>
-      <h1 className="mt-6 text-3xl font-extrabold">{t('resetPassword.title')}</h1>
-
-      <p className="mt-4 text-zinc-500">
-        {t('resetPassword.message')} <Link href="/auth/signin">{t('resetPassword.backToSignin')} &rarr;</Link>
-      </p>
-
       <form className="mt-6 flex flex-col items-stretch gap-6" onSubmit={onSubmit}>
         <div>
           <label htmlFor="password" className="mb-1 block font-semibold">
-            {t('form.fields.password')}
+            {labels.newPassword}
           </label>
           <Input
             id="password"
@@ -62,13 +69,13 @@ export function ResetPasswordForm() {
         {isSubmitted && errors.serverError && (
           <Hint
             status="error"
-            title={t('form.errors.passwordNotUpdated.title')}
-            message={t('form.errors.passwordNotUpdated.message')}
+            title={labels.hints.passwordNotUpdated.title}
+            message={labels.hints.passwordNotUpdated.message}
             icon={<FiAlertTriangle />}
           />
         )}
 
-        <Button isLoading={isSubmitting}>{t('form.resetPasswordButton')}</Button>
+        <Button isLoading={isSubmitting}>{labels.submit}</Button>
       </form>
     </>
   );

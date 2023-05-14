@@ -21,7 +21,15 @@
     "resetPassword": {
       "backToSignin": "Back to signin",
       "message": "Enter your new password to update your account.",
-      "title": "Reset your password"
+      "title": "Reset your password",
+      "newPassword": "New password",
+      "submit": "Update password",
+      "hints": {
+        "passwordNotUpdated": {
+          "message": "We are sorry, but we were unable to update your password. Please try again later.",
+          "title": "Password not updated"
+        }
+      }
     },
     "signin": {
       "createAnAccount": "Create an account",
@@ -90,7 +98,6 @@
       "privacyPolicy": "Privacy policy",
       "termsOfService": "Terms of service"
     },
-    "hello": "Hello",
     "menu": {
       "dashboard": "Dashboard",
       "home": "Home",
@@ -131,7 +138,8 @@
           "active": "Active",
           "cancelled": "Cancelled",
           "on_trial": "Trialing",
-          "paused": "Paused"
+          "paused": "Paused",
+          "expired": "Expired"
         },
         "updateBillingDetails": "Update billing details",
         "year": "year",

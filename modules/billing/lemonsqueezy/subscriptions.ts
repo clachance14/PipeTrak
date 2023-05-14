@@ -1,9 +1,8 @@
 import { User } from 'next-auth';
-import { cache } from 'react';
 import { SubscriptionPlan } from '../types';
 import { lemonsqueezyApi } from './api-client';
 
-export const getAllPlans = cache(async function (): Promise<SubscriptionPlan[]> {
+export const getAllPlans = async function (): Promise<SubscriptionPlan[]> {
   const response = await lemonsqueezyApi('/products?include=variants,store');
 
   return response.data
@@ -36,7 +35,7 @@ export const getAllPlans = cache(async function (): Promise<SubscriptionPlan[]> 
       };
     })
     .filter((product: any) => product.variants.length > 0);
-});
+};
 
 export async function createCheckoutLink(params: {
   storeId: string | number;

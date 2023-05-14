@@ -16,7 +16,7 @@ export default function ChangePasswordForm() {
 
   return (
     <SettingsBlock
-      title="Change email"
+      title="Change password"
       onSubmit={() => changePasswordMutation.mutate({ password })}
       isSubmitting={changePasswordMutation.isLoading}
       isSubmitDisabled={!password || password.length < 8}

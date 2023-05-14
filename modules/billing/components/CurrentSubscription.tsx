@@ -21,6 +21,8 @@ export default async function CurrentSubscription({
 
   if (!userSubscriptionPlan || !userSubscriptionVariant) return null;
 
+  const hasActiveSubscription = !['expired', 'cancelled'].includes(status);
+
   return (
     <div className={`${className}`}>
       <div className="rounded-xl border-2 p-6 dark:border-zinc-800">
@@ -53,7 +55,7 @@ export default async function CurrentSubscription({
 
             {nextPaymentDate && (
               <p className="mt-1 text-zinc-500">
-                {t.rich(status === 'cancelled' ? 'subscription.endsOn' : 'subscription.nextPayment', {
+                {t.rich(!hasActiveSubscription ? 'subscription.endsOn' : 'subscription.nextPayment', {
                   date: Intl.DateTimeFormat('en-US', {
                     dateStyle: 'medium',
                   }).format(nextPaymentDate),
@@ -79,7 +81,9 @@ export default async function CurrentSubscription({
                 </div>
 
                 <div className="flex flex-col gap-3 md:flex-row">
-                  <CancelSubscriptionButton subscriptionId={subscriptionId} label={t('subscription.cancel')} />
+                  {hasActiveSubscription && (
+                    <CancelSubscriptionButton subscriptionId={subscriptionId} label={t('subscription.cancel')} />
+                  )}
                 </div>
               </div>
             </div>

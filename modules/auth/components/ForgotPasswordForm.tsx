@@ -75,8 +75,8 @@ export function ForgotPasswordForm({
           {isSubmitted && errors.serverError && (
             <Hint
               status="error"
-              title={labels.hints.linkSent.title}
-              message={labels.hints.linkSent.message}
+              title={labels.hints.linkNotSent.title}
+              message={labels.hints.linkNotSent.message}
               icon={<FiAlertTriangle />}
             />
           )}
