@@ -1,6 +1,6 @@
 import { mdxComponents } from '@blog/mdx/client';
 import { getPostBySlug } from '@blog/mdx/server';
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import { redirect } from 'next-intl/server';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';

@@ -1,4 +1,4 @@
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import Image from 'next/image';
 
 const CustomImage = (props: any) => <Image {...props} alt={props.alt} loading="lazy" />;

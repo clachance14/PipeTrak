@@ -5,7 +5,7 @@ import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
 import { SessionProvider, signIn } from 'next-auth/react';
-import { useLocalizedRouter } from 'next-intl/client';
+import { useRouter } from 'next-intl/client';
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,10 +30,22 @@ export function SigninForm({
         title: string;
         message: string;
       };
+      emailNotVerified: {
+        title: string;
+        message: string;
+      };
+      invalidCredentials: {
+        title: string;
+        message: string;
+      };
+      linkNotSent: {
+        title: string;
+        message: string;
+      };
     };
   };
 }) {
-  const router = useLocalizedRouter();
+  const router = useRouter();
   const [signinMode, setSigninMode] = useState(SigninMode.MagicLink);
 
   const isPasswordSignin = signinMode === SigninMode.Password;
@@ -98,16 +110,16 @@ export function SigninForm({
               title={
                 isPasswordSignin
                   ? errors.serverError.type === 'emailNotVerified'
-                    ? t('form.errors.emailNotVerified.title')
-                    : t('form.errors.invalidCredentials.title')
-                  : t('form.errors.linkNotSent.title')
+                    ? labels.hints.emailNotVerified.title
+                    : labels.hints.invalidCredentials.title
+                  : labels.hints.linkNotSent.title
               }
               message={
                 isPasswordSignin
                   ? errors.serverError.type === 'emailNotVerified'
-                    ? t('form.errors.emailNotVerified.message')
-                    : t('form.errors.invalidCredentials.message')
-                  : t('form.errors.linkNotSent.message')
+                    ? labels.hints.emailNotVerified.message
+                    : labels.hints.invalidCredentials.message
+                  : labels.hints.linkNotSent.message
               }
               icon={<FiAlertTriangle />}
             />

@@ -1,4 +1,4 @@
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 
 export default function Logo({ link }: { link?: string }) {
   return (

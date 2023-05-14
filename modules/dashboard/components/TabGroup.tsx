@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { useMemo } from 'react';
 

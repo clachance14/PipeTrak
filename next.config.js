@@ -8,7 +8,6 @@ const withNextIntl = require('next-intl/plugin')('./i18n.ts');
  **/
 const nextConfig = withNextIntl({
   experimental: {
-    appDir: true,
     serverComponentsExternalPackages: ['mjml'],
   },
 });

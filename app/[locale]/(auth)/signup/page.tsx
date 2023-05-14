@@ -1,5 +1,5 @@
 import SignupForm from '@auth/components/SignupForm';
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import { getTranslations } from 'next-intl/server';
 
 export default async function SignupPage() {

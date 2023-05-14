@@ -2,7 +2,7 @@
 
 import Button from '@common/components/primitives/Button';
 import { useSession } from 'next-auth/react';
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 
 export default function UserButton({
   labels,

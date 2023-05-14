@@ -7,7 +7,7 @@ import { isSidebarExpanded } from '@common/state';
 import WorkspacesSelect from '@workspaces/components/WorkspaceSelect';
 import { useSetAtom } from 'jotai';
 import { User } from 'next-auth';
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { PropsWithChildren, useCallback } from 'react';
 import { FiArchive, FiGrid, FiSettings, FiX } from 'react-icons/fi';

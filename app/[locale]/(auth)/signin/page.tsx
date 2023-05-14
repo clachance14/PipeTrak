@@ -1,5 +1,5 @@
 import { SigninForm } from '@auth/components/SigninForm';
-import { Link } from 'next-intl';
+import Link from 'next-intl/link';
 import { getTranslations } from 'next-intl/server';
 import { getAuthOptions } from '../../../../nextauth.config';
 
@@ -31,6 +31,18 @@ export default async function SigninPage({ searchParams }: { searchParams: { red
             linkSent: {
               title: t('hints.linkSent.title'),
               message: t('hints.linkSent.message'),
+            },
+            linkNotSent: {
+              title: t('hints.linkNotSent.title'),
+              message: t('hints.linkNotSent.message'),
+            },
+            invalidCredentials: {
+              title: t('hints.invalidCredentials.title'),
+              message: t('hints.invalidCredentials.message'),
+            },
+            emailNotVerified: {
+              title: t('hints.emailNotVerified.title'),
+              message: t('hints.emailNotVerified.message'),
             },
           },
         }}
