@@ -63,9 +63,9 @@ const sendVerificationRequest = async ({ identifier: email, url, provider }: Sen
 
 export const getAuthOptions = (params?: { action?: SessionAction; workspaceId?: string }): AuthOptions => ({
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/signin',
     signOut: '/',
-    newUser: '/auth/signup',
+    newUser: '/signup',
   },
   adapter,
   session: {

@@ -1,15 +1,31 @@
+'use client';
+
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
 import { signIn } from 'next-auth/react';
-import Link from 'next/link';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAlertTriangle, FiMail, FiSend } from 'react-icons/fi';
 
-export function ForgotPasswordForm() {
-  const t = (key: string) => key;
-
+export function ForgotPasswordForm({
+  labels,
+}: {
+  labels: {
+    email: string;
+    submit: string;
+    hints: {
+      linkSent: {
+        title: string;
+        message: string;
+      };
+      linkNotSent: {
+        title: string;
+        message: string;
+      };
+    };
+  };
+}) {
   const {
     register,
     handleSubmit,
@@ -27,7 +43,7 @@ export function ForgotPasswordForm() {
       try {
         const response = await signIn('forgot-password', {
           email,
-          callbackUrl: '/auth/reset-password',
+          callbackUrl: '/reset-password',
           redirect: false,
         });
 
@@ -40,24 +56,18 @@ export function ForgotPasswordForm() {
 
   return (
     <>
-      <h1 className="mt-6 text-3xl font-extrabold">{t('forgotPassword.title')}</h1>
-
-      <p className="mt-4 mb-6 text-zinc-500">
-        {t('forgotPassword.message')} <Link href="/auth/signin">{t('forgotPassword.backToSignin')} &rarr;</Link>
-      </p>
-
       {isSubmitted && isSubmitSuccessful ? (
         <Hint
           status="success"
-          title={t('form.success.linkSent.title')}
-          message={t('form.success.linkSent.message')}
+          title={labels.hints.linkSent.title}
+          message={labels.hints.linkSent.message}
           icon={<FiMail />}
         />
       ) : (
         <form className="flex flex-col items-stretch gap-6" onSubmit={onSubmit}>
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
-              {t('form.fields.email')}
+              {labels.email}
             </label>
             <Input type="email" {...register('email', { required: true })} required autoComplete="email" />
           </div>
@@ -65,14 +75,14 @@ export function ForgotPasswordForm() {
           {isSubmitted && errors.serverError && (
             <Hint
               status="error"
-              title={t('form.errors.linkNotSent.title')}
-              message={t('form.errors.linkNotSent.message')}
+              title={labels.hints.linkSent.title}
+              message={labels.hints.linkSent.message}
               icon={<FiAlertTriangle />}
             />
           )}
 
           <Button isLoading={isSubmitting}>
-            <FiSend /> {t('form.forgotPasswordButton')}
+            <FiSend /> {labels.submit}
           </Button>
         </form>
       )}

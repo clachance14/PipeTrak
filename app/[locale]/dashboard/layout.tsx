@@ -9,7 +9,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren<{}
   const user = await getUser();
 
   if (!user) {
-    redirect('/auth/signin');
+    redirect('/signin');
   }
 
   const selectedWorkspace = workspaces.find((workspace) => workspace.id === user.workspaceId)!;

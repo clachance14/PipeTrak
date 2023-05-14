@@ -18,7 +18,7 @@ export const config = {
 //     },
 //   },
 //   pages: {
-//     signIn: '/auth/signin',
+//     signIn: '/signin',
 //   },
 
 // })

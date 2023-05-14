@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
   if (!session) {
     return NextResponse.redirect(
-      `${getBaseUrl()}/auth/signin?redirectTo=${encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search)}`
+      `${getBaseUrl()}/signin?redirectTo=${encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search)}`
     );
   }
 

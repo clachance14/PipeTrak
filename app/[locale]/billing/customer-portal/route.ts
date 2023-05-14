@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const subscriptionId = searchParams.get('subscriptionId') ?? '';
 
   if (!session) {
-    return NextResponse.redirect(`${getBaseUrl()}/auth/signin`);
+    return NextResponse.redirect(`${getBaseUrl()}/signin`);
   }
 
   if (!subscriptionId) {

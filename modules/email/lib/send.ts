@@ -1,4 +1,4 @@
-import { send } from '@email/provider/nodemailer';
+import { send } from '@email/provider/plunk';
 import { parseMjmlTemplate } from './templates';
 
 export async function sendEmail(params: {
@@ -34,6 +34,7 @@ export async function sendEmail(params: {
       text,
       html,
     });
+    return true;
   } catch (e) {
     console.error(e);
     return false;

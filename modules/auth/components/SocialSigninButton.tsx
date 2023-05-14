@@ -7,7 +7,7 @@ export function SocialSigninButton({
   provider,
   className,
   ...rest
-}: { provider: BuiltInProviderType } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: { provider: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const providers = useMemo<
     Partial<
       Record<
@@ -44,7 +44,10 @@ export function SocialSigninButton({
     []
   );
 
-  const providerData = useMemo(() => providers[provider], [provider, providers]);
+  const providerData = useMemo(
+    () => (provider in providers ? providers[provider as keyof typeof providers] : null),
+    [provider, providers]
+  );
 
   if (!providerData) {
     return null;

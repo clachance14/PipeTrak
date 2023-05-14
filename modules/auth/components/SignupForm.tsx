@@ -18,10 +18,18 @@ export default function SignupForm({
     email: string;
     password: string;
     submit: string;
+    hints: {
+      signupFailed: {
+        title: string;
+        message: string;
+      };
+      verifyEmail: {
+        title: string;
+        message: string;
+      };
+    };
   };
 }) {
-  const t = (key: string) => key;
-
   const signUpMutation = trpc.signUp.useMutation();
 
   const {
@@ -54,8 +62,8 @@ export default function SignupForm({
       {isSubmitted && isSubmitSuccessful ? (
         <Hint
           status="success"
-          title={t('form.success.verifyEmail.title')}
-          message={t('form.success.verifyEmail.message')}
+          title={labels.hints.verifyEmail.title}
+          message={labels.hints.verifyEmail.message}
           icon={<FiMail />}
         />
       ) : (
@@ -63,8 +71,8 @@ export default function SignupForm({
           {isSubmitted && errors.serverError && (
             <Hint
               status="error"
-              title={t('form.errors.signupFailed.title')}
-              message={t('form.errors.signupFailed.message')}
+              title={labels.hints.signupFailed.title}
+              message={labels.hints.signupFailed.message}
               icon={<FiAlertTriangle />}
             />
           )}

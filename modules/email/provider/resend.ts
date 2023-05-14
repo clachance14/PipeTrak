@@ -1,30 +1,31 @@
 import { SendEmailHandler } from '@email/types';
 import appConfig from '../../../config';
 
-const plunkApiKey = process.env.PLUNK_API_KEY;
+const resendApiKey = process.env.RESEND_API_KEY;
 
-if (!plunkApiKey) {
-  throw new Error('Plunk API key not found');
+if (!resendApiKey) {
+  throw new Error('Resend API key not found');
 }
 
 const { nodemailer: mailConfig, from } = appConfig.email;
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
-  const response = await fetch('https://api.useplunk.com/v1/send', {
+  const response = await fetch('https://api.resend.com/email', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${plunkApiKey}`,
+      Authorization: `Bearer ${resendApiKey}`,
     },
     body: JSON.stringify({
       to,
       from,
       subject,
-      body: html,
+      html,
     }),
   });
 
+  console.log(await response.json());
   if (!response.ok) {
-    throw new Error('Could not send email ', await response.json());
+    throw new Error('Failed to send email');
   }
 };

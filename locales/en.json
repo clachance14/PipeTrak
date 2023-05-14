@@ -3,42 +3,20 @@
     "backToHomepage": "Back to homepage",
     "forgotPassword": {
       "backToSignin": "Back to signin",
-      "message": "Please enter your email address and we will send you a link to reset your password.",
-      "title": "Forgot your password?"
-    },
-    "form": {
-      "errors": {
-        "emailNotVerified": {
-          "message": "Please verify your email before signing in. Check your inbox for the verification mail.",
-          "title": "Email not verified"
-        },
-        "invalidCredentials": {
-          "message": "We are sorry, but the credentials you entered are invalid. Please try again.",
-          "title": "Invalid credentials"
-        },
+      "email": "Email",
+      "hints": {
         "linkNotSent": {
           "message": "We are sorry, but we were unable to send you a link to reset your password. Please try again later.",
           "title": "Link not sent"
         },
-        "passwordNotUpdate": {
-          "message": "We are sorry, but we were unable to update your password. Please try again later.",
-          "title": "Password not updated"
-        },
-        "signupFailed": {
-          "message": "We are sorry, but we were unable to create your account. Please try again later.",
-          "title": "Could not create account"
+        "linkSent": {
+          "message": "We have sent you a link to continue. Please check your inbox.",
+          "title": "Link sent"
         }
       },
-      "fields": {
-        "email": "Email",
-        "name": "Name",
-        "password": "Password"
-      },
-      "forgotPassword": "Forgot password?",
-      "forgotPasswordButton": "Send link",
-      "resetPasswordButton": "Save new password",
-      "signinButton": "Sign in",
-      "signupButton": "Create account"
+      "message": "Please enter your email address and we will send you a link to reset your password.",
+      "submit": "Send link",
+      "title": "Forgot your password?"
     },
     "resetPassword": {
       "backToSignin": "Back to signin",
@@ -51,13 +29,17 @@
       "email": "Email",
       "forgotPassword": "Forgot password?",
       "hints": {
+        "invalidCredentials": {
+          "message": "We are sorry, but the credentials you entered are invalid. Please try again.",
+          "title": "Invalid credentials"
+        },
+        "emailNotVerified": {
+          "message": "Please verify your email before signing in. Check your inbox for the verification mail.",
+          "title": "Email not verified"
+        },
         "linkSent": {
           "message": "We have sent you a link to continue. Please check your inbox.",
           "title": "Link sent"
-        },
-        "verifyEmail": {
-          "message": "We have sent you a link to verify your email. Please check your inbox.",
-          "title": "Verify your email"
         }
       },
       "password": "Password",
@@ -73,7 +55,17 @@
       "password": "Password",
       "signIn": "Sign in",
       "submit": "Create account",
-      "title": "Create an account"
+      "title": "Create an account",
+      "hints": {
+        "signupFailed": {
+          "message": "We are sorry, but we were unable to create your account. Please try again later.",
+          "title": "Could not create account"
+        },
+        "verifyEmail": {
+          "message": "We have sent you a link to verify your email. Please check your inbox.",
+          "title": "Verify your email"
+        }
+      }
     }
   },
   "blog": {
@@ -125,10 +117,10 @@
       "subscription": {
         "cancel": "Cancel your subscription",
         "currentSubscription": "Your current subscription",
+        "endsOn": "Your subscription ends on <strong>{date}</strong>",
         "month": "month",
         "monthly": "Monthly",
         "nextPayment": "The next payment will be on <strong>{date}</strong>",
-        "endsOn": "Your subscription ends on <strong>{date}</strong>",
         "pauseSubscription": "Pause your subscription",
         "resumeSubscription": "Resume your subscription",
         "status": {

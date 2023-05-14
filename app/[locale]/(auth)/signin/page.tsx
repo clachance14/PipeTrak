@@ -1,35 +1,32 @@
 import { SigninForm } from '@auth/components/SigninForm';
-import { getUser } from '@auth/server';
-import { getProviders } from 'next-auth/react';
 import { Link } from 'next-intl';
-import { getTranslations, redirect } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
+import { getAuthOptions } from '../../../../nextauth.config';
 
 export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
   const t = await getTranslations('auth.signin');
-  const user = await getUser();
-  const providers = await getProviders();
+  const oAuthProviders = getAuthOptions()
+    .providers.filter((provider) => provider.type === 'oauth')
+    .map((provider) => provider.id);
 
   const { redirectTo } = searchParams;
 
-  if (user) {
-    redirect(redirectTo ?? '/dashboard');
-  }
-
   return (
     <>
-      <h1 className="mt-6 text-3xl font-extrabold">{t('title')}</h1>
+      <h1 className="text-3xl font-extrabold">{t('title')}</h1>
       <p className="mt-4 mb-6 text-zinc-500">
         {t('subtitle')}
         <br />
-        {t('dontHaveAnAccount')} <Link href="/auth/signup">{t('createAnAccount')} &rarr;</Link>
+        {t('dontHaveAnAccount')} <Link href="/signup">{t('createAnAccount')} &rarr;</Link>
       </p>
       <SigninForm
-        providers={providers}
+        providers={oAuthProviders}
         redirectTo={redirectTo}
         labels={{
           email: t('email'),
           password: t('password'),
           submit: t('submit'),
+          forgotPassword: t('forgotPassword'),
           hints: {
             linkSent: {
               title: t('hints.linkSent.title'),

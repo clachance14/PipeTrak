@@ -4,8 +4,7 @@ import { SocialSigninButton } from '@auth/components/SocialSigninButton';
 import Button from '@common/components/primitives/Button';
 import Hint from '@common/components/primitives/Hint';
 import Input from '@common/components/primitives/Input';
-import { BuiltInProviderType } from 'next-auth/providers';
-import { ClientSafeProvider, SessionProvider, signIn } from 'next-auth/react';
+import { SessionProvider, signIn } from 'next-auth/react';
 import { useLocalizedRouter } from 'next-intl/client';
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
@@ -19,12 +18,13 @@ export function SigninForm({
   redirectTo,
   providers,
 }: {
-  providers: Record<string, ClientSafeProvider> | null;
+  providers: string[];
   redirectTo?: string | null;
   labels: {
     email: string;
     password: string;
     submit: string;
+    forgotPassword: string;
     hints: {
       linkSent: {
         title: string;
@@ -33,7 +33,6 @@ export function SigninForm({
     };
   };
 }) {
-  const t = (key: string) => key;
   const router = useLocalizedRouter();
   const [signinMode, setSigninMode] = useState(SigninMode.MagicLink);
 
@@ -133,7 +132,7 @@ export function SigninForm({
                 autoComplete="current-password"
               />
               <div className="mt-1 text-right text-sm">
-                <Link href="/auth/forgot-password">{t('form.forgotPassword')}</Link>
+                <Link href="/forgot-password">{labels.forgotPassword}</Link>
               </div>
             </div>
           )}
@@ -147,19 +146,17 @@ export function SigninForm({
       <hr className="my-8 border-black border-opacity-5 dark:border-white dark:border-opacity-5" />
 
       <div className="flex w-full flex-col gap-2 sm:flex-row">
-        {Object.values(providers ?? {})
-          .filter((provider) => provider.type === 'oauth')
-          .map((provider) => (
-            <SocialSigninButton
-              key={provider.id}
-              provider={provider.id as BuiltInProviderType}
-              onClick={() =>
-                signIn(provider.id, {
-                  callbackUrl: appConfig.auth.redirectAfterSignin,
-                })
-              }
-            />
-          ))}
+        {providers.map((providerId) => (
+          <SocialSigninButton
+            key={providerId}
+            provider={providerId}
+            onClick={() =>
+              signIn(providerId, {
+                callbackUrl: appConfig.auth.redirectAfterSignin,
+              })
+            }
+          />
+        ))}
       </div>
     </SessionProvider>
   );

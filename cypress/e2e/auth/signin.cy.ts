@@ -1,6 +1,6 @@
 describe('authentication', () => {
   beforeEach(() => {
-    cy.visit('/auth/signin');
+    cy.visit('/signin');
 
     // hide the cookie banner
     cy.get('button').contains('Allow').click();

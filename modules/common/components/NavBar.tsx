@@ -1,5 +1,5 @@
 import ColorModeToggle from '@common/components/ColorModeToggle';
-import Button from '@common/components/primitives/Button';
+import UserButton from '@common/components/UserButton';
 import { Link, useTranslations } from 'next-intl';
 import Logo from './Logo';
 
@@ -33,9 +33,7 @@ export default function NavBar() {
           <div className="ml-3 flex items-center justify-end gap-3">
             <ColorModeToggle />
 
-            <Button as={Link} href={session ? '/dashboard' : '/auth/signin'} intent="primary-ghost" size="small">
-              {t(session ? 'menu.dashboard' : 'menu.signIn')}
-            </Button>
+            <UserButton labels={{ dashboard: t('menu.dashboard'), signIn: t('menu.signIn') }} />
           </div>
         </div>
       </div>
