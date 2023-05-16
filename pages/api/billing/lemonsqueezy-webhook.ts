@@ -34,10 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     meta: { event_name, custom_data },
   } = body;
 
-  console.log('event_name', event_name);
-  console.log('data', data);
-  console.log('custom_data', custom_data);
-
   switch (event_name) {
     case 'subscription_created':
     case 'subscription_updated':
