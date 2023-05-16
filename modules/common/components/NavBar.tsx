@@ -1,12 +1,11 @@
 import ColorModeToggle from '@common/components/ColorModeToggle';
 import UserButton from '@common/components/UserButton';
-import { Link, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
+import Link from 'next-intl/link';
 import Logo from './Logo';
 
 export default function NavBar() {
   const t = useTranslations('common');
-  // const session = await getServerSession(getAuthOptions())
-  const session = null;
 
   return (
     <nav className="bg-white py-4 dark:bg-zinc-900 dark:text-white">
