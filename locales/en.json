@@ -153,5 +153,17 @@
     "workspaces": {
       "title": "Workspaces"
     }
+  },
+  "newsletter": {
+    "title": "Get early access",
+    "subtitle": "Be among the first to get access to supastarter.nextjs.",
+    "email": "Email",
+    "submit": "Subscribe",
+    "hints": {
+      "success": {
+        "message": "Thank you for subscribing to our newsletter. We will keep you posted.",
+        "title": "Subscribed"
+      }
+    }
   }
 }
