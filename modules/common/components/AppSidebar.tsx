@@ -27,7 +27,7 @@ const menuItems = [
   },
   {
     label: 'Settings',
-    href: '/dashboard/settings',
+    href: '/dashboard/settings/account',
     segment: 'settings',
     icon: FiSettings,
   },
