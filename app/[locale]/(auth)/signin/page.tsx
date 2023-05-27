@@ -1,10 +1,10 @@
 import { SigninForm } from '@auth/components/SigninForm';
+import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
-import { getTranslations } from 'next-intl/server';
 import { getAuthOptions } from '../../../../nextauth.config';
 
 export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
-  const t = await getTranslations('auth.signin');
+  const t = useTranslations('auth.signin');
   const oAuthProviders = getAuthOptions()
     .providers.filter((provider) => provider.type === 'oauth')
     .map((provider) => provider.id);

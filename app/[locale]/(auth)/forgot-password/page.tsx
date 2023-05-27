@@ -1,9 +1,9 @@
 import { ForgotPasswordForm } from '@auth/components/ForgotPasswordForm';
+import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
-import { getTranslations } from 'next-intl/server';
 
 export default async function ForgotPasswordPage() {
-  const t = await getTranslations('auth.forgotPassword');
+  const t = useTranslations('auth.forgotPassword');
 
   return (
     <>

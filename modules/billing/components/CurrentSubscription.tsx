@@ -1,7 +1,7 @@
 import CancelSubscriptionButton from '@billing/components/CancelSubscriptionButton';
 import { Subscription } from '@prisma/client';
 import { Button, Icon } from '@ui/components';
-import { getTranslations } from 'next-intl/server';
+import { useFormatter, useTranslations } from 'next-intl';
 import { SubscriptionPlan } from '../types';
 
 export default async function CurrentSubscription({
@@ -13,8 +13,9 @@ export default async function CurrentSubscription({
   userSubscription: Subscription;
   className?: string;
 }) {
+  const format = useFormatter();
   const { status, nextPaymentDate, planId, variantId, subscriptionId } = userSubscription;
-  const t = await getTranslations('settings.billing');
+  const t = useTranslations('settings.billing');
   const userSubscriptionPlan = plans.find((plan) => plan.id === planId);
   const userSubscriptionVariant = userSubscriptionPlan?.variants.find((variant) => variant.id === variantId);
 
@@ -34,10 +35,10 @@ export default async function CurrentSubscription({
                 <span className="text-blue-500">{userSubscriptionPlan.name} </span>
                 <small>
                   (
-                  {Intl.NumberFormat('en-US', {
+                  {format.number(userSubscriptionVariant.price / 100, {
                     style: 'currency',
                     currency: userSubscriptionPlan.currency,
-                  }).format(userSubscriptionVariant.price / 100)}
+                  })}
                   /{t(`subscription.${userSubscriptionVariant.interval}` as any)})
                 </small>
               </h4>
@@ -55,9 +56,9 @@ export default async function CurrentSubscription({
             {nextPaymentDate && (
               <p className="mt-1 text-zinc-500">
                 {t.rich(!hasActiveSubscription ? 'subscription.endsOn' : 'subscription.nextPayment', {
-                  date: Intl.DateTimeFormat('en-US', {
+                  date: format.dateTime(nextPaymentDate, {
                     dateStyle: 'medium',
-                  }).format(nextPaymentDate),
+                  }),
                   // @ts-ignore
                   strong: (text: string) => <strong>{text}</strong>,
                 })}

@@ -1,10 +1,10 @@
 import { PageHeader } from '@dashboard/components/PageHeader';
 import { TabGroup } from '@dashboard/components/TabGroup';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import { PropsWithChildren } from 'react';
 
 export default async function SettingsLayout({ children }: PropsWithChildren<{}>) {
-  const t = await getTranslations('settings');
+  const t = useTranslations('settings');
 
   return (
     <div>

@@ -1,15 +1,15 @@
 import SignupForm from '@auth/components/SignupForm';
+import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
-import { getTranslations } from 'next-intl/server';
 
 export default async function SignupPage() {
-  const t = await getTranslations('auth.signup');
+  const t = useTranslations('auth.signup');
 
   return (
     <div>
       <h1 className="text-3xl font-bold">{t('title')}</h1>
 
-      <p className="mt-2 mb-6 text-zinc-500">
+      <p className="mb-6 mt-2 text-zinc-500">
         {t('message')} {t('alreadyHaveAccount')} <Link href="/signin">{t('signIn')} &rarr;</Link>
       </p>
 

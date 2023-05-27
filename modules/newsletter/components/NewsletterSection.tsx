@@ -1,9 +1,9 @@
 import NewsletterForm from '@newsletter/components/NewsletterForm';
 import { Icon } from '@ui/components';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
-export default async function NewsletterSection() {
-  const t = await getTranslations('newsletter');
+export default function NewsletterSection() {
+  const t = useTranslations('newsletter');
   return (
     <section className="bg-blue-500 bg-opacity-5 py-24 dark:text-white">
       <div className="container">
