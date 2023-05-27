@@ -56,11 +56,8 @@ export default async function CurrentSubscription({
             {nextPaymentDate && (
               <p className="mt-1 text-zinc-500">
                 {t.rich(!hasActiveSubscription ? 'subscription.endsOn' : 'subscription.nextPayment', {
-                  date: format.dateTime(nextPaymentDate, {
-                    dateStyle: 'medium',
-                  }),
-                  // @ts-ignore
-                  strong: (text: string) => <strong>{text}</strong>,
+                  nextPaymentDate,
+                  strong: (text) => <strong>{text}</strong>,
                 })}
               </p>
             )}
