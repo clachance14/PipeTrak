@@ -1,12 +1,9 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
-import Hint from '@common/components/primitives/Hint';
-import Input from '@common/components/primitives/Input';
+import { Button, Hint, Icon, Input } from '@ui/components';
 import { useRouter } from 'next-intl/client';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiAlertTriangle } from 'react-icons/fi';
 import { trpc } from '../../../trpc/client';
 
 export function ResetPasswordForm({
@@ -71,7 +68,7 @@ export function ResetPasswordForm({
             status="error"
             title={labels.hints.passwordNotUpdated.title}
             message={labels.hints.passwordNotUpdated.message}
-            icon={<FiAlertTriangle />}
+            icon={<Icon.error className="h-4 w-4" />}
           />
         )}
 

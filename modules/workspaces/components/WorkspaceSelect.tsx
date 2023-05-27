@@ -1,6 +1,6 @@
 'use client';
 
-import Select from '@common/components/primitives/Select';
+import { Select } from '@ui/components';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -15,8 +15,9 @@ export default function WorkspacesSelect({
   const [workspaceId, setWorkspaceId] = useState<string | undefined>(selectedWorkspace);
 
   const onChange = async (value: string) => {
-    setWorkspaceId(value);
+    console.log('onchange', value, workspaceId);
     if (value && value !== workspaceId) {
+      setWorkspaceId(value);
       await fetch('/api/auth/session?workspaceId=' + value);
       router.refresh();
     }

@@ -8,7 +8,7 @@ export default async function ForgotPasswordPage() {
   return (
     <>
       <h1 className="text-3xl font-extrabold">{t('title')}</h1>
-      <p className="mt-4 mb-6 text-zinc-500">
+      <p className="mb-6 mt-4 text-zinc-500">
         {t('message')} <Link href="/signup">{t('backToSignin')} &rarr;</Link>
       </p>
       <ForgotPasswordForm

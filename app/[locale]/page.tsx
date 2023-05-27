@@ -19,6 +19,7 @@ export default async function HomePage() {
       <HeroSection />
       <FeaturesSection />
       <PricingSection plans={plans} />
+      {/* @ts-expect-error Server Component */}
       <NewsletterSection />
       <Footer />
     </>

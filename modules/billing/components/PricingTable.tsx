@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
 import { Subscription } from '@prisma/client';
+import { Button } from '@ui/components';
 import { useState } from 'react';
 import { SubscriptionPlan } from '../types';
 

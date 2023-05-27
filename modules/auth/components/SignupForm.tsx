@@ -1,14 +1,11 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
-import Hint from '@common/components/primitives/Hint';
-import Input from '@common/components/primitives/Input';
+import { Button, Hint, Icon, Input } from '@ui/components';
 import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiAlertTriangle, FiMail } from 'react-icons/fi';
-import appConfig from '../../../config';
 import { trpc } from '../../../trpc/client';
+import { config } from '../config';
 
 export default function SignupForm({
   labels,
@@ -50,7 +47,7 @@ export default function SignupForm({
     handleSubmit(async ({ email, password, name }) => {
       try {
         await signUpMutation.mutateAsync({ email, password, name });
-        await signIn('create-account', { email, callbackUrl: appConfig.auth.redirectAfterSignin, redirect: false });
+        await signIn('create-account', { email, callbackUrl: config.redirectAfterSignin, redirect: false });
       } catch (e) {
         setError('serverError', { type: 'invalid' });
       }
@@ -64,7 +61,7 @@ export default function SignupForm({
           status="success"
           title={labels.hints.verifyEmail.title}
           message={labels.hints.verifyEmail.message}
-          icon={<FiMail />}
+          icon={<Icon.mail className="h-4 w-4" />}
         />
       ) : (
         <form className="flex flex-col items-stretch gap-6" onSubmit={onSubmit}>
@@ -73,7 +70,7 @@ export default function SignupForm({
               status="error"
               title={labels.hints.signupFailed.title}
               message={labels.hints.signupFailed.message}
-              icon={<FiAlertTriangle />}
+              icon={<Icon.error className="h-4 w-4" />}
             />
           )}
 

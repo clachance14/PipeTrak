@@ -1,9 +1,8 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
 import { getCookie, setCookie } from '@common/utils/cookies';
+import { Button, Icon } from '@ui/components';
 import { useEffect, useState } from 'react';
-import { RxCookie } from 'react-icons/rx';
 
 export default function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
@@ -25,9 +24,9 @@ export default function ConsentBanner() {
   };
 
   return (
-    <div className="bottom fixed right-4 bottom-4 max-w-md">
+    <div className="bottom fixed bottom-4 right-4 max-w-md">
       <div className="flex gap-4 rounded-xl border bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-800">
-        <RxCookie className="block flex-shrink-0 text-5xl text-blue-500" />
+        <Icon.cookies className="block h-4 w-4 flex-shrink-0 text-5xl text-blue-500" />
         <div>
           <p className="text-sm leading-normal">
             We use tracking cookies to understand how you use the product and help us improve it. Please accept cookies

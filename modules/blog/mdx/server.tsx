@@ -2,10 +2,10 @@ import { readdir, readFile } from 'fs/promises';
 import matter from 'gray-matter';
 import sizeOf from 'image-size';
 import { isAbsolute, join } from 'path';
-import appConfig from '../../../config';
+import { config } from '../config';
 import { BlogPost } from '../types';
 
-const CONTENT_PATH = appConfig.blog.contentPath;
+const CONTENT_PATH = config.contentPath;
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const fileContent = await readFile(join(CONTENT_PATH, `${slug}.mdx`), 'utf8');

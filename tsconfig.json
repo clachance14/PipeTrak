@@ -20,6 +20,7 @@
       "@workspaces/*": ["./modules/workspaces/*"],
       "@home/*": ["./modules/home/*"],
       "@billing/*": ["./modules/billing/*"],
+      "@ui/*": ["./modules/ui/*"],
       "@dashboard/*": ["./modules/dashboard/*"],
       "@blog/*": ["./modules/blog/*"],
       "@settings/*": ["./modules/settings/*"],

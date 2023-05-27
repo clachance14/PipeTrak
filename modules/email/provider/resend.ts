@@ -1,5 +1,5 @@
 import { SendEmailHandler } from '@email/types';
-import appConfig from '../../../config';
+import { config } from '../config';
 
 const resendApiKey = process.env.RESEND_API_KEY;
 
@@ -7,7 +7,7 @@ if (!resendApiKey) {
   throw new Error('Resend API key not found');
 }
 
-const { nodemailer: mailConfig, from } = appConfig.email;
+const { from } = config;
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
   const response = await fetch('https://api.resend.com/email', {

@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string;
           <p className="text-sm opacity-30">{formattedDate}</p>
 
           {tags && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-1 flex-wrap gap-2">
               {tags.map((tag) => (
                 <span key={tag} className="text-xs font-semibold uppercase tracking-wider text-blue-500">
                   #{tag}

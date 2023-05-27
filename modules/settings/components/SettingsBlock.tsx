@@ -1,4 +1,4 @@
-import Button from '@common/components/primitives/Button';
+import { Button } from '@ui/components';
 import React from 'react';
 
 export default function SettingsBlock({

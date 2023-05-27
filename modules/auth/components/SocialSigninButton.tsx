@@ -1,7 +1,6 @@
-import { button } from '@common/components/primitives/Button';
+import { Icon, button } from '@ui/components';
 import { BuiltInProviderType } from 'next-auth/providers';
 import { useMemo } from 'react';
-import { FaApple, FaDiscord, FaGithub, FaGoogle, FaTwitter } from 'react-icons/fa';
 
 export function SocialSigninButton({
   provider,
@@ -22,23 +21,19 @@ export function SocialSigninButton({
     () => ({
       google: {
         name: 'Google',
-        icon: <FaGoogle />,
+        icon: <Icon.google className="h-4 w-4" />,
       },
       apple: {
         name: 'Apple',
-        icon: <FaApple />,
+        icon: <Icon.apple className="h-4 w-4" />,
       },
       github: {
         name: 'Github',
-        icon: <FaGithub />,
+        icon: <Icon.github className="h-4 w-4" />,
       },
       twitter: {
         name: 'Twitter',
-        icon: <FaTwitter />,
-      },
-      discord: {
-        name: 'Discord',
-        icon: <FaDiscord />,
+        icon: <Icon.twitter className="h-4 w-4" />,
       },
     }),
     []

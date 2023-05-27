@@ -1,10 +1,9 @@
 'use client';
 
 import ColorModeToggle from '@common/components/ColorModeToggle';
-import Button from '@common/components/primitives/Button';
 import { isSidebarExpanded } from '@common/state';
+import { Button, Icon } from '@ui/components';
 import { useAtom } from 'jotai';
-import { FiMenu } from 'react-icons/fi';
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   const [sidebarExpanded, setSidebarExpanded] = useAtom(isSidebarExpanded);
@@ -20,7 +19,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
             onClick={() => setSidebarExpanded(true)}
           >
             <span className="sr-only">Toggle sidebar</span>
-            <FiMenu />
+            <Icon.menu className="h-4 w-4" />
           </Button>
 
           <div className="">

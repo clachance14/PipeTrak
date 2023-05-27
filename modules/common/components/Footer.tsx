@@ -1,11 +1,12 @@
 import { useTranslations } from 'next-intl';
+import Link from 'next-intl/link';
 import Logo from './Logo';
 
 export default function Footer() {
   const t = useTranslations('common');
 
   return (
-    <footer className="bg-white py-12 text-gray-600 dark:bg-zinc-900 dark:text-zinc-300">
+    <footer className="border-t border-zinc-50 py-12 text-gray-600 dark:border-zinc-900 dark:text-zinc-300">
       <div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div>
           <Logo />
@@ -13,9 +14,9 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <a href="#" className="block">
+          <Link href="/blog" className="block">
             {t('footer.blog')}
-          </a>
+          </Link>
 
           <a href="#" className="block">
             {t('footer.features')}

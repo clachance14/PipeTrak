@@ -1,8 +1,7 @@
 'use client';
 
-import Input from '@common/components/primitives/Input';
+import { Icon, Input } from '@ui/components';
 import React from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 export default function PasswordInput({
   value,
@@ -14,6 +13,7 @@ export default function PasswordInput({
   className?: string;
 }) {
   const [showPassword, setShowPassword] = React.useState(false);
+
   return (
     <div className={`relative ${className}`}>
       <Input
@@ -26,7 +26,7 @@ export default function PasswordInput({
         onClick={() => setShowPassword(!showPassword)}
         className="absolute inset-y-0 right-0 flex items-center pr-4 text-xl text-blue-500"
       >
-        {showPassword ? <FiEyeOff /> : <FiEye />}
+        {showPassword ? <Icon.hide className="h-4 w-4" /> : <Icon.show className="h-4 w-4" />}
       </button>
     </div>
   );

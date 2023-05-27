@@ -1,9 +1,9 @@
-import { FiLoader } from 'react-icons/fi';
+import { Icon } from '@ui/components';
 
 export default function PageLoader() {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <FiLoader className="animate-spin text-3xl text-blue-400" />
+      <Icon.spinner className="h-4 w-4 animate-spin text-3xl text-blue-400" />
     </div>
   );
 }

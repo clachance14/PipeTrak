@@ -5,7 +5,7 @@ import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { Manrope } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { PropsWithChildren } from 'react';
-import '../../styles/globals.scss';
+import '../../styles/globals.css';
 
 const sansFont = Manrope({
   variable: '--font-sans',

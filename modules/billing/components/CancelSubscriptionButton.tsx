@@ -1,8 +1,7 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
+import { Button, Icon } from '@ui/components';
 import { useRouter } from 'next/navigation';
-import { FiX } from 'react-icons/fi';
 import { trpc } from '../../../trpc/client';
 
 export default function CancelSubscriptionButton({ subscriptionId, label }: { subscriptionId: string; label: string }) {
@@ -21,7 +20,7 @@ export default function CancelSubscriptionButton({ subscriptionId, label }: { su
       size="small"
       onClick={() => cancelSubscription()}
     >
-      <FiX />
+      <Icon.close className="h-4 w-4" />
       {label}
     </Button>
   );

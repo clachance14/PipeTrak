@@ -1,8 +1,7 @@
 import CancelSubscriptionButton from '@billing/components/CancelSubscriptionButton';
-import Button from '@common/components/primitives/Button';
 import { Subscription } from '@prisma/client';
+import { Button, Icon } from '@ui/components';
 import { getTranslations } from 'next-intl/server';
-import { FiCreditCard } from 'react-icons/fi';
 import { SubscriptionPlan } from '../types';
 
 export default async function CurrentSubscription({
@@ -75,7 +74,7 @@ export default async function CurrentSubscription({
                     size="small"
                     className="w-full md:w-auto"
                   >
-                    <FiCreditCard />
+                    <Icon.creditCard className="h-4 w-4" />
                     {t('subscription.updateBillingDetails')}
                   </Button>
                 </div>

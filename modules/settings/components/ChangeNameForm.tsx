@@ -1,6 +1,6 @@
 'use client';
 
-import Input from '@common/components/primitives/Input';
+import { Input } from '@ui/components';
 import { User } from 'next-auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

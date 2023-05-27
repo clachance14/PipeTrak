@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
+import { Button } from '@ui/components';
 import { useSession } from 'next-auth/react';
 import Link from 'next-intl/link';
 

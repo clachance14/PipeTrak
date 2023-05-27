@@ -1,11 +1,8 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
-import Hint from '@common/components/primitives/Hint';
-import Input from '@common/components/primitives/Input';
 import { saveEmail } from '@newsletter/server/actions';
+import { Button, Hint, Icon, Input } from '@ui/components';
 import { useForm } from 'react-hook-form';
-import { FiCheckCircle } from 'react-icons/fi';
 
 export default function NewsletterForm({
   labels,
@@ -32,7 +29,7 @@ export default function NewsletterForm({
       status="success"
       title={labels.hints.success.title}
       message={labels.hints.success.message}
-      icon={<FiCheckCircle />}
+      icon={<Icon.success className="h-4 w-4" />}
     />
   ) : (
     <form

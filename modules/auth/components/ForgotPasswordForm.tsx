@@ -1,12 +1,10 @@
 'use client';
 
-import Button from '@common/components/primitives/Button';
-import Hint from '@common/components/primitives/Hint';
-import Input from '@common/components/primitives/Input';
+import { Button, Hint, Icon, Input } from '@ui/components';
+
 import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiAlertTriangle, FiMail, FiSend } from 'react-icons/fi';
 
 export function ForgotPasswordForm({
   labels,
@@ -61,7 +59,7 @@ export function ForgotPasswordForm({
           status="success"
           title={labels.hints.linkSent.title}
           message={labels.hints.linkSent.message}
-          icon={<FiMail />}
+          icon={<Icon.mail className="h-4 w-4" />}
         />
       ) : (
         <form className="flex flex-col items-stretch gap-6" onSubmit={onSubmit}>
@@ -77,12 +75,12 @@ export function ForgotPasswordForm({
               status="error"
               title={labels.hints.linkNotSent.title}
               message={labels.hints.linkNotSent.message}
-              icon={<FiAlertTriangle />}
+              icon={<Icon.warning className="h-4 w-4" />}
             />
           )}
 
           <Button isLoading={isSubmitting}>
-            <FiSend /> {labels.submit}
+            <Icon.submit className="h-4 w-4" /> {labels.submit}
           </Button>
         </form>
       )}

@@ -1,8 +1,8 @@
 import { SendEmailHandler } from '@email/types';
 import nodemailer from 'nodemailer';
-import appConfig from '../../../config';
+import { config } from '../config';
 
-const { nodemailer: mailConfig, from } = appConfig.email;
+const { nodemailer: mailConfig, from } = config;
 
 // create the transporter
 const transporter = nodemailer.createTransport({
