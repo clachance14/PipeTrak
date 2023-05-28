@@ -11,7 +11,7 @@ export async function generateMetadata() {
   };
 }
 
-export default async function SignupPage() {
+export default function SignupPage() {
   const t = useTranslations('auth.signup');
 
   return (

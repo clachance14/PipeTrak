@@ -2,7 +2,7 @@ import { ResetPasswordForm } from '@auth/components/ResetPasswordForm';
 import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
 
-export default async function ResetPasswordPage() {
+export default function ResetPasswordPage() {
   const t = useTranslations('auth.resetPassword');
 
   return (

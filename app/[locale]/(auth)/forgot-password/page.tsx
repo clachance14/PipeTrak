@@ -2,7 +2,7 @@ import { ForgotPasswordForm } from '@auth/components/ForgotPasswordForm';
 import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
 
-export default async function ForgotPasswordPage() {
+export default function ForgotPasswordPage() {
   const t = useTranslations('auth.forgotPassword');
 
   return (

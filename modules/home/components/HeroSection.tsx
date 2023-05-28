@@ -23,7 +23,9 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-32 px-8 text-center">
-          <h5 className="text-sm font-semibold uppercase tracking-wider opacity-30">Used by these awesome companies</h5>
+          <h5 className="text-sm font-semibold uppercase tracking-wider opacity-30">
+            Built & shipped with these awesome tools
+          </h5>
 
           <div className="mt-6 flex items-center justify-center gap-8 text-zinc-500">
             {/* Vercel logo */}

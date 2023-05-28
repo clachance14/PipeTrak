@@ -12,7 +12,7 @@ export async function generateMetadata() {
   };
 }
 
-export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
+export default function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
   const t = useTranslations('auth.signin');
   const oAuthProviders = getAuthOptions()
     .providers.filter((provider) => provider.type === 'oauth')
