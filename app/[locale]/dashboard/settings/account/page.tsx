@@ -2,7 +2,15 @@ import { getUser } from '@auth/server';
 import ChangeEmailForm from '@settings/components/ChangeEmail';
 import ChangeNameForm from '@settings/components/ChangeNameForm';
 import ChangePasswordForm from '@settings/components/ChangePassword';
-import { redirect } from 'next-intl/server';
+import { getTranslations, redirect } from 'next-intl/server';
+
+export async function generateMetadata() {
+  const t = await getTranslations('settings.account');
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function AccountSettingsPage() {
   const user = await getUser();

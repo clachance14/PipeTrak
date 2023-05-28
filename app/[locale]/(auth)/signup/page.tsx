@@ -1,6 +1,15 @@
 import SignupForm from '@auth/components/SignupForm';
 import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata() {
+  const t = await getTranslations('auth.signup');
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function SignupPage() {
   const t = useTranslations('auth.signup');

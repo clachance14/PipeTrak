@@ -1,11 +1,20 @@
 import { Providers } from '@common/components/Providers';
 import { pick } from '@common/utils/helper';
 import ConsentBanner from '@consent-banner/components/ConsentBanner';
+import { Metadata } from 'next';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { Manrope } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 import '../../styles/globals.css';
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'supastarter.nextjs Demo',
+    default: 'supastarter.nextjs Demo',
+    template: '%s | supastarter.nextjs Demo',
+  },
+};
 
 const sansFont = Manrope({
   variable: '--font-sans',

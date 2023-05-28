@@ -1,6 +1,15 @@
 import CurrentSubscription from '@billing/components/CurrentSubscription';
 import PricingTable from '@billing/components/PricingTable';
 import { getAllPlans, getUserSubscription } from '@billing/server';
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata() {
+  const t = await getTranslations('settings.billing');
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function BillingSettingsPage() {
   const plans = await getAllPlans();

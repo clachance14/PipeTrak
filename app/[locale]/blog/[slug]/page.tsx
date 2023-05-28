@@ -1,7 +1,7 @@
 import { mdxComponents } from '@blog/mdx/client';
 import { getPostBySlug } from '@blog/mdx/server';
 import Link from 'next-intl/link';
-import { redirect } from 'next-intl/server';
+import { getTranslations, redirect } from 'next-intl/server';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import { Suspense } from 'react';
@@ -20,8 +20,22 @@ import { Suspense } from 'react';
 //     .flat();
 // }
 
-export default async function BlogPostPage({ params }: { params: { slug: string; locale: string } }) {
-  const post = await getPostBySlug(params.slug);
+interface Params {
+  slug: string;
+  locale: string;
+}
+
+export async function generateMetadata({ params: { slug } }: { params: Params }) {
+  const post = await getPostBySlug(slug);
+  const t = await getTranslations('blog');
+
+  return {
+    title: `${post?.title} | ${t('title')}`,
+  };
+}
+
+export default async function BlogPostPage({ params: { slug, locale } }: { params: Params }) {
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     redirect('/blog');
@@ -29,7 +43,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string;
 
   const { title, contentType, content, author, createdAt, tags } = post;
 
-  const formattedDate = new Date(createdAt).toLocaleDateString(params.locale);
+  const formattedDate = new Date(createdAt).toLocaleDateString(locale);
 
   return (
     <div>

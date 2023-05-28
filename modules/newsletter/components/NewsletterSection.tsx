@@ -9,7 +9,7 @@ export default function NewsletterSection() {
       <div className="container">
         {/* Section header */}
         <div className="mb-12 text-center">
-          <Icon.key className="mx-auto mb-3 w-auto text-5xl text-blue-500" />
+          <Icon.key className="mx-auto mb-3 h-12 w-12 text-blue-500" />
           <h1 className="text-4xl font-bold lg:text-5xl">{t('title')}</h1>
           <p className="mt-3 text-lg opacity-70">{t('subtitle')}</p>
         </div>

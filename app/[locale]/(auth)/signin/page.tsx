@@ -1,7 +1,16 @@
 import { SigninForm } from '@auth/components/SigninForm';
 import { useTranslations } from 'next-intl';
 import Link from 'next-intl/link';
+import { getTranslations } from 'next-intl/server';
 import { getAuthOptions } from '../../../../nextauth.config';
+
+export async function generateMetadata() {
+  const t = await getTranslations('auth.signin');
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function SigninPage({ searchParams }: { searchParams: { redirectTo?: string } }) {
   const t = useTranslations('auth.signin');

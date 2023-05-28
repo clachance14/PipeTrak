@@ -32,12 +32,12 @@ export default function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.star className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.star className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="w4-rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.pointer className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.pointer className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
@@ -63,12 +63,12 @@ export default function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.upload className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.upload className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.cloud className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.cloud className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
@@ -94,12 +94,12 @@ export default function FeaturesSection() {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.phone className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.phone className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 1</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>
               <div className="rounded-xl border p-4 dark:border-zinc-700">
-                <Icon.paperclip className="h-4 w-4 text-3xl text-blue-500" />
+                <Icon.paperclip className="h-6 w-6 text-3xl text-blue-500" />
                 <strong className="mt-2 block">Benefit 2</strong>
                 <p className="opacity-50">This is a brilliant benefit.</p>
               </div>

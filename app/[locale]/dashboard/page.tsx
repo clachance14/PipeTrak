@@ -1,7 +1,15 @@
 import { getUser } from '@auth/server';
 import { PageHeader } from '@dashboard/components/PageHeader';
 import { StatsTile } from '@dashboard/components/StatsTile';
-import { redirect } from 'next-intl/server';
+import { getTranslations, redirect } from 'next-intl/server';
+
+export async function generateMetadata() {
+  const t = await getTranslations('dashboard');
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function Dashboard() {
   const user = await getUser();
