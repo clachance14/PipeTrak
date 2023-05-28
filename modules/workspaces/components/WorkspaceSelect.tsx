@@ -15,7 +15,6 @@ export default function WorkspacesSelect({
   const [workspaceId, setWorkspaceId] = useState<string | undefined>(selectedWorkspace);
 
   const onChange = async (value: string) => {
-    console.log('onchange', value, workspaceId);
     if (value && value !== workspaceId) {
       setWorkspaceId(value);
       await fetch('/api/auth/session?workspaceId=' + value);
