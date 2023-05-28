@@ -3,7 +3,7 @@ import { TabGroup } from '@dashboard/components/TabGroup';
 import { useTranslations } from 'next-intl';
 import { PropsWithChildren } from 'react';
 
-export default async function SettingsLayout({ children }: PropsWithChildren<{}>) {
+export default function SettingsLayout({ children }: PropsWithChildren<{}>) {
   const t = useTranslations('settings');
 
   return (

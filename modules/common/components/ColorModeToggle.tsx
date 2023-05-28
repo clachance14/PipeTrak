@@ -4,12 +4,16 @@ import { Menu, MenuContent, MenuOptionItem, MenuPositioner, MenuTrigger } from '
 import { Button, Icon } from '@ui/components';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import { useState } from 'react';
 import { useIsClient } from 'usehooks-ts';
 
 export default function ColorModeToggle() {
   const t = useTranslations('common.colorMode');
   const { resolvedTheme, setTheme, theme } = useTheme();
   const isClientSide = useIsClient();
+  const [value, setValue] = useState<Record<string, string>>({
+    colorScheme: theme ?? 'system',
+  });
 
   const colorModeOptions = [
     {
@@ -30,7 +34,14 @@ export default function ColorModeToggle() {
   ];
 
   return (
-    <Menu onValueChange={({ value }) => setTheme(value as string)} loop>
+    <Menu
+      value={value}
+      onValueChange={({ value }) => {
+        setTheme(value as string);
+        setValue({ colorScheme: value as string });
+      }}
+      loop
+    >
       <MenuTrigger asChild>
         <Button intent="primary-outline" size="small">
           {isClientSide && resolvedTheme === 'light' ? (

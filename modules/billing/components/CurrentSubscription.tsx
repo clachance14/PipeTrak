@@ -4,7 +4,7 @@ import { Button, Icon } from '@ui/components';
 import { useFormatter, useTranslations } from 'next-intl';
 import { SubscriptionPlan } from '../types';
 
-export default async function CurrentSubscription({
+export default function CurrentSubscription({
   plans,
   userSubscription,
   className,

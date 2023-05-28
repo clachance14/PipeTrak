@@ -8,10 +8,7 @@ export default async function BillingSettingsPage() {
 
   return (
     <div>
-      {userSubscription && (
-        /* @ts-expect-error Async Server Component */
-        <CurrentSubscription {...{ plans, userSubscription }} className="mb-8" />
-      )}
+      {userSubscription && <CurrentSubscription {...{ plans, userSubscription }} className="mb-8" />}
       <PricingTable plans={plans} userSubscription={userSubscription} />
     </div>
   );
