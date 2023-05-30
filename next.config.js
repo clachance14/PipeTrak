@@ -1,16 +1,14 @@
-// @ts-check
-
-// @ts-ignore
 const withNextIntl = require('next-intl/plugin')('./i18n.ts');
+const { withContentlayer } = require('next-contentlayer');
 
 /**
  * @type {import('next').NextConfig}
  **/
-const nextConfig = withNextIntl({
+const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['mjml'],
     serverActions: true,
   },
-});
+};
 
-module.exports = nextConfig;
+module.exports = withNextIntl(withContentlayer(nextConfig));

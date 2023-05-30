@@ -6,9 +6,7 @@ export default function BlogPage({ children }: PropsWithChildren<{}>) {
   return (
     <div>
       <NavBar />
-      <main className="py-12">
-        <div className="container max-w-2xl">{children}</div>
-      </main>
+      <main className="py-12">{children}</main>
       <Footer />
     </div>
   );

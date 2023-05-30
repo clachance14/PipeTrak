@@ -1,6 +1,6 @@
-import BlogPageHeader from '@blog/components/BlogPageHeader';
+import BlogPageHeader from '@blog/components/PageHeader';
 import { PostListItem } from '@blog/components/PostListItem';
-import { getPosts } from '@blog/mdx/server';
+import { allBlogPosts } from 'contentlayer/generated';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata() {
@@ -12,14 +12,12 @@ export async function generateMetadata() {
 }
 
 export default async function BlogPage() {
-  const posts = await getPosts();
-
   return (
-    <div>
+    <div className="container max-w-5xl">
       <BlogPageHeader />
-      <div className="grid gap-4">
-        {posts.map((post) => (
-          <PostListItem post={post} key={post.slug} />
+      <div className="grid gap-4 md:grid-cols-2">
+        {allBlogPosts.map((post) => (
+          <PostListItem post={post} key={post._id} />
         ))}
       </div>
     </div>
