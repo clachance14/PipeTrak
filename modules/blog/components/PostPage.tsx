@@ -1,3 +1,4 @@
+import { mdxComponents } from '@blog/utils/mdx-components';
 import { BlogPost } from 'contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { useFormatter } from 'next-intl';
@@ -60,7 +61,7 @@ export default function PostPage({ post }: { post: BlogPost }) {
       )}
 
       <div className="prose prose-zinc mt-6 dark:prose-invert">
-        <MDXContent />
+        <MDXContent components={mdxComponents} />
       </div>
     </div>
   );
