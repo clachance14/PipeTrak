@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Hint, Icon, Input } from '@ui/components';
+import { getBaseUrl } from 'config';
 import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
@@ -47,7 +48,11 @@ export default function SignupForm({
     handleSubmit(async ({ email, password, name }) => {
       try {
         await signUpMutation.mutateAsync({ email, password, name });
-        await signIn('create-account', { email, callbackUrl: config.redirectAfterSignin, redirect: false });
+        await signIn('create-account', {
+          email,
+          callbackUrl: `${getBaseUrl()}${config.redirectAfterSignin}`,
+          redirect: false,
+        });
       } catch (e) {
         setError('serverError', { type: 'invalid' });
       }
