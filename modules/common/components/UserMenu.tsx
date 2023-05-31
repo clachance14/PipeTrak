@@ -4,13 +4,23 @@ import { Menu, MenuContent, MenuItem, MenuPositioner, MenuTrigger } from '@ark-u
 import { Icon } from '@ui/components';
 import { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function UserMenu({ user }: { user: User }) {
   return (
     <Menu positioning={{ placement: 'top-end' }}>
       <MenuTrigger className="flex w-full items-center gap-2 border-none bg-transparent p-0">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 bg-opacity-10 text-2xl text-blue-500">
-          <Icon.user className="h-4 w-4" />
+        <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-blue-500 bg-opacity-10 text-2xl text-blue-500">
+          {user.image ? (
+            <Image
+              src={user.image}
+              alt={user.name ?? ''}
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
+            />
+          ) : (
+            <Icon.user className="h-4 w-4" />
+          )}
         </span>
         <span className="block flex-1 text-left leading-none">
           <strong className="block text-sm">{user.name}</strong>

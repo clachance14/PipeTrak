@@ -50,7 +50,7 @@ export function SocialSigninButton({
 
   return (
     <button type="button" className={button({ intent: provider as any, size: 'small', className: 'w-full' })} {...rest}>
-      {providerData.icon && <i className="mr-2 text-lg">{providerData.icon}</i>}
+      {providerData.icon && <i className="mr-2">{providerData.icon}</i>}
       Continue with {providerData.name}
     </button>
   );

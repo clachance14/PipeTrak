@@ -1,3 +1,4 @@
+import { config } from '@auth/config';
 import { SessionAction } from '@auth/types';
 import { sendEmail } from '@email/lib/send';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
@@ -65,7 +66,7 @@ export const getAuthOptions = (params?: { action?: SessionAction; workspaceId?: 
   pages: {
     signIn: '/signin',
     signOut: '/',
-    newUser: '/signup',
+    newUser: config.redirectAfterSignin,
   },
   adapter,
   session: {
@@ -80,6 +81,13 @@ export const getAuthOptions = (params?: { action?: SessionAction; workspaceId?: 
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
     EmailProvider({
       sendVerificationRequest,
