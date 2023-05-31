@@ -53,7 +53,7 @@ export default function AppSidebar({
 
   return (
     <nav
-      className={`fixed top-0 ${positionClass} z-40 h-screen w-[280px] border-r bg-white transition-all duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-900`}
+      className={`fixed top-0 ${positionClass} z-40 h-screen w-[280px] border-r border-zinc-100 bg-white transition-all duration-300 ease-in-out dark:border-zinc-800`}
     >
       <div className="flex justify-end px-6 py-2 lg:hidden">
         <Button intent="primary-outline" size="small" onClick={() => setSidebarExpanded(false)}>
@@ -75,12 +75,14 @@ export default function AppSidebar({
             <Link
               href={menuItem.href}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 hover:text-black hover:no-underline focus:no-underline dark:hover:text-white ${
-                isActiveMenuItem(menuItem.segment)
-                  ? 'bg-zinc-100 font-bold text-black dark:bg-zinc-800 dark:text-white'
-                  : ''
+                isActiveMenuItem(menuItem.segment) ? 'bg-blue-500/10 font-bold text-black dark:text-white' : ''
               }`}
             >
-              <menuItem.icon className="h-6 w-6 transform" />
+              <menuItem.icon
+                className={`h-6 w-6 transform ${
+                  isActiveMenuItem(menuItem.segment) ? 'text-blue-500' : 'text-black/50 dark:text-white/50'
+                }`}
+              />
               <span>{menuItem.label}</span>
             </Link>
           </li>

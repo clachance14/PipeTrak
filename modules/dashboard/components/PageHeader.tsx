@@ -9,7 +9,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
   const [sidebarExpanded, setSidebarExpanded] = useAtom(isSidebarExpanded);
 
   return (
-    <div className="w-full border-b  dark:border-zinc-800">
+    <div className="w-full border-b border-zinc-100 dark:border-zinc-800">
       <div className="container flex items-start justify-between py-6">
         <div>
           <Button
@@ -23,8 +23,8 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
           </Button>
 
           <div className="">
-            <h2 className="text-2xl font-bold">{title}</h2>
-            <p className="mt-1 opacity-75">{subtitle}</p>
+            <h2 className="text-2xl font-bold lg:text-3xl">{title}</h2>
+            <p className="mt-1 opacity-50">{subtitle}</p>
           </div>
         </div>
 
