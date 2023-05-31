@@ -2,7 +2,6 @@
 
 import { SocialSigninButton } from '@auth/components/SocialSigninButton';
 import { Button, Hint, Icon, Input } from '@ui/components';
-import { getBaseUrl } from 'config';
 import { SessionProvider, signIn } from 'next-auth/react';
 import { useRouter } from 'next-intl/client';
 import Link from 'next/link';
@@ -71,7 +70,7 @@ export function SigninForm({
         const response = await signIn(isPasswordSignin ? 'credentials' : 'email', {
           email,
           password,
-          callbackUrl: `${getBaseUrl()}${redirectTo ?? config.redirectAfterSignin}`,
+          callbackUrl: redirectTo ?? config.redirectAfterSignin,
           redirect: false,
         });
 
@@ -162,7 +161,7 @@ export function SigninForm({
             provider={providerId}
             onClick={() =>
               signIn(providerId, {
-                callbackUrl: `${getBaseUrl()}${config.redirectAfterSignin}`,
+                callbackUrl: config.redirectAfterSignin,
               })
             }
           />
