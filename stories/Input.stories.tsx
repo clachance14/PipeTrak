@@ -11,13 +11,4 @@ export default meta;
 
 type Story = StoryObj<typeof Input>;
 
-export const input: Story = {
-  argTypes: {
-    size: {
-      name: 'Size',
-    },
-  },
-  args: {
-    size: 'medium',
-  },
-};
+export const input: Story = {};
