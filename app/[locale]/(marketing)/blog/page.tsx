@@ -13,7 +13,7 @@ export async function generateMetadata() {
 
 export default async function BlogPage() {
   return (
-    <div className="container max-w-5xl">
+    <div className="container max-w-5xl py-12">
       <BlogPageHeader />
       <div className="grid gap-4 md:grid-cols-2">
         {allBlogPosts.map((post) => (

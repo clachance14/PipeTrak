@@ -11,7 +11,7 @@ export default function PostPage({ post }: { post: BlogPost }) {
   const MDXContent = useMDXComponent(body.code);
 
   return (
-    <div className="container max-w-2xl">
+    <div className="container max-w-2xl py-12">
       <div className="mb-8">
         <Link href="/blog">&larr; Back to blog</Link>
       </div>

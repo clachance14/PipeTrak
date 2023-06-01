@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 export default function NewsletterSection() {
   const t = useTranslations('newsletter');
   return (
-    <section className="bg-blue-500 bg-opacity-5 py-24 dark:text-white">
+    <section className="border-t py-24 dark:text-white">
       <div className="container">
         {/* Section header */}
         <div className="mb-12 text-center">

@@ -1,7 +1,3 @@
-import PricingSection from '@billing/components/PricingSection';
-import { getAllPlans } from '@billing/server';
-import Footer from '@common/components/Footer';
-import NavBar from '@common/components/NavBar';
 import FeaturesSection from '@home/components/FeaturesSection';
 import HeroSection from '@home/components/HeroSection';
 import NewsletterSection from '@newsletter/components/NewsletterSection';
@@ -16,16 +12,11 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const plans = await getAllPlans();
-
   return (
     <>
-      <NavBar />
       <HeroSection />
       <FeaturesSection />
-      <PricingSection plans={plans} />
       <NewsletterSection />
-      <Footer />
     </>
   );
 }

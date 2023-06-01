@@ -111,6 +111,9 @@
   "home": {
     "title": "Home"
   },
+  "pricing": {
+    "title": "Pricing"
+  },
   "newsletter": {
     "email": "Email",
     "hints": {

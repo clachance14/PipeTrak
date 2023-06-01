@@ -21,7 +21,7 @@ export default function NavBar() {
             Features
           </Link>
 
-          <Link href="/#pricing" className="block px-3 py-2">
+          <Link href="/pricing" className="block px-3 py-2">
             Pricing
           </Link>
 
