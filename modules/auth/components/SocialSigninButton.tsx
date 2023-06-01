@@ -1,3 +1,5 @@
+'use client';
+
 import { Icon, button } from '@ui/components';
 import { BuiltInProviderType } from 'next-auth/providers';
 import { useMemo } from 'react';
