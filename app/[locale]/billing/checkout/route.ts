@@ -1,8 +1,8 @@
+import { getAuthOptions } from '@auth/providers/nextauth';
 import { createCheckoutLink } from '@billing/server';
+import { getBaseUrl } from '@common/lib';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { getBaseUrl } from '../../../../config';
-import { getAuthOptions } from '../../../../nextauth.config';
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(getAuthOptions());

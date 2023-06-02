@@ -1,4 +1,4 @@
-import Footer from '@common/components/Footer';
+import { Footer } from '@common/components';
 import NavBar from '@common/components/NavBar';
 import { PropsWithChildren } from 'react';
 

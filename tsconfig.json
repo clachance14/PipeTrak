@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,19 +16,21 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@common/*": ["./modules/common/*"],
-      "@auth/*": ["./modules/auth/*"],
-      "@workspaces/*": ["./modules/workspaces/*"],
-      "@home/*": ["./modules/home/*"],
-      "@billing/*": ["./modules/billing/*"],
-      "@ui/*": ["./modules/ui/*"],
-      "@dashboard/*": ["./modules/dashboard/*"],
-      "@blog/*": ["./modules/blog/*"],
-      "@settings/*": ["./modules/settings/*"],
-      "@projects/*": ["./modules/projects/*"],
-      "@email/*": ["./modules/email/*"],
-      "@newsletter/*": ["./modules/newsletter/*"],
-      "@consent-banner/*": ["./modules/consent-banner/*"],
+      "@common/*": ["features/common/*"],
+      "@database/*": ["features/database/*"],
+      "@i18n/*": ["features/i18n/*"],
+      "@auth/*": ["features/auth/*"],
+      "@workspaces/*": ["features/workspaces/*"],
+      "@landingpage/*": ["features/landingpage/*"],
+      "@billing/*": ["features/billing/*"],
+      "@ui/*": ["features/ui/*"],
+      "@dashboard/*": ["features/dashboard/*"],
+      "@blog/*": ["features/blog/*"],
+      "@settings/*": ["features/settings/*"],
+      "@projects/*": ["features/projects/*"],
+      "@email/*": ["features/email/*"],
+      "@newsletter/*": ["features/newsletter/*"],
+      "@consent-banner/*": ["features/consent-banner/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "plugins": [
@@ -37,6 +39,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", ".next", "cypress"]
 }

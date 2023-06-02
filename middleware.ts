@@ -1,8 +1,8 @@
+import { config as i18nConfig } from '@i18n/config';
 import createIntlMiddleware from 'next-intl/middleware';
-import appConfig from './config';
 
 export default createIntlMiddleware({
-  ...appConfig.i18n,
+  ...i18nConfig,
 });
 
 export const config = {

@@ -1,5 +1,5 @@
-import FeaturesSection from '@home/components/FeaturesSection';
-import HeroSection from '@home/components/HeroSection';
+import FeaturesSection from '@landingpage/components/FeaturesSection';
+import HeroSection from '@landingpage/components/HeroSection';
 import NewsletterSection from '@newsletter/components/NewsletterSection';
 import { getTranslations } from 'next-intl/server';
 

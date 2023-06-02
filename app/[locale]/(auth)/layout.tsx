@@ -1,4 +1,4 @@
-import ColorModeToggle from '@common/components/ColorModeToggle';
+import { ColorModeToggle } from '@common/components/client';
 import Logo from '@common/components/Logo';
 import { PropsWithChildren } from 'react';
 

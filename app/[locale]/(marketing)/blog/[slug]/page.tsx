@@ -2,20 +2,6 @@ import PostPage from '@blog/components/PostPage';
 import { allBlogPosts } from 'contentlayer/generated';
 import { getTranslations, redirect } from 'next-intl/server';
 
-// export async function generateStaticParams() {
-//   const slugs = await getPostSlugs();
-//   const locales = appConfig.i18n.locales;
-
-//   return locales
-//     .map((locale) =>
-//       slugs.map((slug) => ({
-//         slug,
-//         locale,
-//       }))
-//     )
-//     .flat();
-// }
-
 interface Params {
   slug: string;
   locale: string;

@@ -1,4 +1,4 @@
-const withNextIntl = require('next-intl/plugin')('./i18n.ts');
+const withNextIntl = require('next-intl/plugin')('./features/i18n/next-intl.config.ts');
 const { withContentlayer } = require('next-contentlayer');
 
 /**
