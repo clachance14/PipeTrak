@@ -1,10 +1,10 @@
 'use client';
 
+import { trpc } from '@backend/trpc/client';
 import { Button, Hint, Icon, Input } from '@ui/components';
 import { useRouter } from 'next-intl/client';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import { trpc } from '../../database/trpc/client';
 
 export function ResetPasswordForm({
   labels,

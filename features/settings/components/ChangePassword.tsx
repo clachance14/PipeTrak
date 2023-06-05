@@ -1,8 +1,8 @@
 'use client';
 
 import PasswordInput from '@auth/components/PasswordInput';
+import { trpc } from '@backend/trpc/client';
 import { useState } from 'react';
-import { trpc } from '../../database/trpc/client';
 import SettingsBlock from './SettingsBlock';
 
 export default function ChangePasswordForm() {

@@ -1,11 +1,11 @@
 'use client';
 
+import { trpc } from '@backend/trpc/client';
 import { Input } from '@ui/components';
 import { User } from 'next-auth';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { trpc } from '../../database/trpc/client';
 import SettingsBlock from './SettingsBlock';
 
 export default function ChangeEmailForm({ user }: { user: User }) {

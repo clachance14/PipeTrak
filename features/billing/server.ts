@@ -1,6 +1,6 @@
+import { procedure } from '@backend/trpc/instance';
 import { prisma } from '@database/prisma';
 import { TRPCError } from '@trpc/server';
-import { procedure } from 'trpc';
 import z from 'zod';
 import { cancelSubscription, createCheckoutLink, createCustomerPortalLink, getAllPlans } from './lemonsqueezy';
 import { getUserSubscription, updateUserSubscription } from './shared/subscriptions';

@@ -1,7 +1,7 @@
 'use client';
 
+import { trpc } from '@backend/trpc/client';
 import { getBaseUrl } from '@common/lib';
-import { trpc } from '@database/trpc/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { useState } from 'react';

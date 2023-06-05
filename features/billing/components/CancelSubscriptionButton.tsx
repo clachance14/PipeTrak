@@ -1,8 +1,8 @@
 'use client';
 
+import { trpc } from '@backend/trpc/client';
 import { Button, Icon } from '@ui/components';
 import { useRouter } from 'next/navigation';
-import { trpc } from '../../database/trpc/client';
 
 export default function CancelSubscriptionButton({ subscriptionId, label }: { subscriptionId: string; label: string }) {
   const router = useRouter();

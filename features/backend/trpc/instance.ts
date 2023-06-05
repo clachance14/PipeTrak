@@ -1,4 +1,4 @@
-import { Context } from '@database/trpc/context';
+import { Context } from '@backend/trpc/context';
 import { initTRPC } from '@trpc/server';
 
 const t = initTRPC.context<Context>().create();

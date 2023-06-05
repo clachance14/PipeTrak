@@ -1,6 +1,6 @@
 import { authRouter } from '@auth/server';
 import { billingRouter } from '@billing/server';
-import { router } from '../../../../trpc';
+import { router } from './instance';
 
 export const appRouter = router({
   ...authRouter,

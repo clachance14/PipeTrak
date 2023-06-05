@@ -1,10 +1,10 @@
 'use client';
 
+import { trpc } from '@backend/trpc/client';
 import { Button, Hint, Icon, Input } from '@ui/components';
 import { signIn } from 'next-auth/react';
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import { trpc } from '../../database/trpc/client';
 import { config } from '../config';
 
 export default function SignupForm({
@@ -15,6 +15,7 @@ export default function SignupForm({
     email: string;
     password: string;
     submit: string;
+    passwordHint: string;
     hints: {
       signupFailed: {
         title: string;
@@ -46,7 +47,8 @@ export default function SignupForm({
     clearErrors('serverError');
     handleSubmit(async ({ email, password, name }) => {
       try {
-        await signUpMutation.mutateAsync({ email, password, name });
+        const response = await signUpMutation.mutateAsync({ email, password, name });
+        console.log('hey response', response);
         await signIn('create-account', {
           email,
           callbackUrl: config.redirectAfterSignin,
@@ -82,21 +84,40 @@ export default function SignupForm({
             <label htmlFor="email" className="mb-1 block font-semibold">
               {labels.name} *
             </label>
-            <Input type="text" {...register('name', { required: true })} required autoComplete="name" />
+            <Input
+              status={errors.name ? 'error' : 'default'}
+              type="text"
+              {...register('name', { required: true })}
+              required
+              autoComplete="name"
+            />
           </div>
 
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
               {labels.email} *
             </label>
-            <Input type="email" {...register('email', { required: true })} required autoComplete="email" />
+            <Input
+              status={errors.email ? 'error' : 'default'}
+              type="email"
+              {...register('email', { required: true })}
+              required
+              autoComplete="email"
+            />
           </div>
 
           <div>
             <label htmlFor="password" className="mb-1 block font-semibold">
               {labels.password} *
             </label>
-            <Input type="password" {...register('password', { required: true })} required autoComplete="new-password" />
+            <Input
+              status={errors.password ? 'error' : 'default'}
+              type="password"
+              {...register('password', { required: true })}
+              required
+              autoComplete="new-password"
+            />
+            <small className="italic opacity-50">{labels.passwordHint}</small>
           </div>
 
           <Button isLoading={isSubmitting}>{labels.submit} &rarr;</Button>

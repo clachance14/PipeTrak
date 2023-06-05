@@ -27,6 +27,7 @@ export default function SignupPage() {
           name: t('name'),
           email: t('email'),
           password: t('password'),
+          passwordHint: t('passwordHint'),
           submit: t('submit'),
           hints: {
             signupFailed: {

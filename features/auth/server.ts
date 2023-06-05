@@ -1,10 +1,10 @@
 import { getServerSession } from 'next-auth';
 
 import { getAuthOptions } from '@auth/providers/nextauth';
+import { procedure } from '@backend/trpc/instance';
 import { prisma } from '@database/prisma';
 import { TRPCError } from '@trpc/server';
 import { hash } from 'argon2';
-import { procedure } from 'trpc';
 import z from 'zod';
 
 export async function getUser() {
@@ -18,9 +18,9 @@ export const authRouter = {
   signUp: procedure
     .input(
       z.object({
-        email: z.string(),
-        password: z.string(),
-        name: z.string(),
+        email: z.string().email(),
+        password: z.string().min(8),
+        name: z.string().min(3),
       })
     )
     .mutation(async ({ input: { email, password, name } }) => {
