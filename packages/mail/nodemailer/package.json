@@ -1,0 +1,15 @@
+{
+  "name": "mail-nodemailer",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "20.2.5",
+    "eslint-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.3"
+  }
+}

@@ -1,0 +1,18 @@
+packages:
+  - apps/marketing
+  - apps/saas
+  - packages/auth/base
+  - packages/auth/nextauth
+  - packages/config/eslint-custom
+  - packages/config/tailwind
+  - packages/config/tsconfig
+  - packages/database/base
+  - packages/database/prisma
+  - packages/billing/base
+  - packages/billing/lemonsqueezy
+  - packages/mail/base
+  - packages/mail/plunk
+  - packages/mail/nodemailer
+  - packages/i18n
+  - packages/common
+  - packages/ui
