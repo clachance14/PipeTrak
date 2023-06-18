@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white font-medium dark:bg-zinc-900;
+  }
+  a {
+    @apply text-zinc-950 text-opacity-75 dark:text-white dark:text-opacity-75;
+  }
+  a:hover {
+    @apply underline;
+  }
+  a:focus {
+    @apply underline;
+  }
+}
