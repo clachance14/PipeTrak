@@ -1,1 +1,1 @@
-export { send } from "mail-plunk";
+export * from "mail-nodemailer";

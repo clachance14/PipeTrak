@@ -1,10 +1,9 @@
-const sharedConfig = require("tailwind");
-
 module.exports = {
-  presets: [sharedConfig],
+  presets: [require("tailwind-config")],
   content: [
     "./app/**/*.tsx",
     "./components/**/*.tsx",
     "../../packages/ui/components/**/*.tsx",
+    "../../packages/auth/ui/components/**/*.tsx",
   ],
 };

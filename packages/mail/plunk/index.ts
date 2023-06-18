@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { config } from "../config";
 import { SendEmailHandler } from "../types";
 
@@ -25,6 +26,7 @@ export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Could not send email ", await response.json());
+    console.error(await response.json());
+    throw new Error("Could not send email");
   }
 };

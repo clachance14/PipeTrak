@@ -5,7 +5,8 @@
   "types": "./index.ts",
   "license": "MIT",
   "devDependencies": {
-    "eslint-custom": "workspace:*",
+    "@types/react": "18.2.9",
+    "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
@@ -13,6 +14,10 @@
     "database": "workspace:*",
     "mail": "workspace:*",
     "next": "^13.4.6",
-    "next-auth": "^4.22.1"
+    "next-auth": "^4.22.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "auth-ui": "workspace:*"
   }
 }

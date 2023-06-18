@@ -3,8 +3,9 @@ packages:
   - apps/saas
   - packages/auth/base
   - packages/auth/nextauth
-  - packages/config/eslint-custom
-  - packages/config/tailwind
+  - packages/auth/ui
+  - packages/config/eslint-config-custom
+  - packages/config/tailwind-config
   - packages/config/tsconfig
   - packages/database/base
   - packages/database/prisma

@@ -1,24 +1,12 @@
-import { readFileSync } from "fs";
-import mjml2html from "mjml";
-import { join } from "path";
+import { renderAsync } from "@react-email/render";
+import { emails } from "../emails";
 
-export async function parseMjmlTemplate(templateId: string) {
-  // get file content from url
-  const file = join(
-    process.cwd(),
-    "public",
-    "mail-templates",
-    `${templateId}.mjml`,
-  );
-  const fileContent = readFileSync(file, "utf8");
-
-  // parse file content with mjml and return the html
-  const { html, errors } = mjml2html(fileContent);
-
-  if (errors.length) {
-    console.error(errors);
-    return null;
-  }
-
-  return html;
+export async function getTemplate<Template extends keyof typeof emails>(
+  templateId: Template,
+  context: Parameters<typeof emails[Template]>[0],
+) {
+  const email = await emails[templateId](context);
+  const html = await renderAsync(email);
+  const text = await renderAsync(email, { plainText: true });
+  return { html, text };
 }

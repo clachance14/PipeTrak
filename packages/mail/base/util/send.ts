@@ -1,29 +1,16 @@
+import { emails } from "../emails";
 import { send } from "./provider";
+import { getTemplate } from "./templates";
 
 export async function sendEmail(params: {
   to: string;
   subject: string;
-  text: string;
-  html?: string;
-  templateId?: string;
-  context?: Record<string, unknown>;
+  templateId: keyof typeof emails;
+  context: Parameters<typeof emails[keyof typeof emails]>[0];
 }) {
-  const { to, subject, text, context, templateId } = params;
-  let { html } = params;
+  const { to, subject, templateId, context } = params;
 
-  // check if a template id is provided
-  // if (templateId) {
-  //   // if so, we use the template id to get the mjml template
-  //   const template = await parseMjmlTemplate(templateId);
-  //   html = template ?? html;
-  // }
-
-  // replace the placeholders in the html with the context
-  if (context) {
-    Object.keys(context).forEach((key) => {
-      html = html?.replaceAll(`{{${key}}}`, context[key] as string);
-    });
-  }
+  const { html, text } = await getTemplate(templateId, context);
 
   try {
     // send the email

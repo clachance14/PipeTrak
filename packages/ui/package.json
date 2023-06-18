@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@types/react": "18.2.9",
-    "eslint-custom": "workspace:*",
-    "tailwind": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*"
   },
   "dependencies": {

@@ -6,7 +6,10 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "20.2.5",
-    "eslint-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.1"
   }
 }

@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@types/accept-language-parser": "^1.5.3",
-    "eslint-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   },
   "dependencies": {

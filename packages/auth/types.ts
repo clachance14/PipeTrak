@@ -1,8 +1,40 @@
-export type AuthView =
-  | "signin"
-  | "signup"
-  | "forgot-password"
-  | "reset-password";
+export enum AuthView {
+  SignIn = "signin",
+  SignUp = "signup",
+  ForgotPassword = "forgot-password",
+  ResetPassword = "reset-password",
+}
+
+export type AuthPaths = Record<`${AuthView}`, string>;
+
+export type AuthComponent = (props: {
+  view?: AuthView;
+  paths: AuthPaths;
+}) => JSX.Element;
+
+export type AuthHandlerReturnType = Promise<void | {
+  error: {
+    type: string;
+    message: string;
+  };
+}>;
+
+export type SignInHandler = (
+  params:
+    | {
+        method: "email";
+        email: string;
+      }
+    | {
+        method: "password";
+        email: string;
+        password: string;
+      }
+    | {
+        method: "oauth";
+        provider: string;
+      },
+) => AuthHandlerReturnType;
 
 export type SocialSigninProvider =
   | "apple"
@@ -23,24 +55,3 @@ export type SocialSigninProvider =
   | "workos";
 
 export type SessionAction = "updateSession" | "switchWorkspace";
-
-// api for auth module
-
-export type AuthProviderClientApi = {
-  signInWithPassword: (
-    email: string,
-    password: string,
-    options?: { callbackUrl?: string },
-  ) => Promise<void | { error: unknown }>;
-  signInWithEmail: (
-    email: string,
-    options?: { callbackUrl?: string },
-  ) => Promise<void | { error: unknown }>;
-  signInWithOAuth: (
-    provider: string,
-    options?: { callbackUrl?: string },
-  ) => Promise<void | { error: unknown }>;
-  signOut: (options?: {
-    callbackUrl?: string;
-  }) => Promise<void | { error: unknown }>;
-};
