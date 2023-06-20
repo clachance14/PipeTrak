@@ -1,3 +1,5 @@
+import { TrpcProvider } from "api/client";
+import { AuthProvider } from "auth/client";
 import { Providers } from "common/components";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -25,7 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sansFont.variable} font-sans`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <AuthProvider>
+            <TrpcProvider>{children}</TrpcProvider>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

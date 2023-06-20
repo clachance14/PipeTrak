@@ -1,7 +1,7 @@
 import { Button } from "@react-email/button";
 import { Html } from "@react-email/html";
 
-export default function MagicLink({ url }: { url: string }) {
+export default function MagicLink({ url }: { url: string }): JSX.Element {
   return (
     <Html>
       <Button

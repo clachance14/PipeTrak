@@ -1,18 +1,19 @@
-import { getUser } from "auth";
+import { getUserSession } from "auth";
+import TestComponent from "./TestComponent";
 
 export default async function Home() {
-  const user = await getUser();
+  const session = await getUserSession();
+
+  if (!session) {
+    return <div>Not logged in</div>;
+  }
+
+  const { user } = session;
 
   return (
     <main>
       Hello {user.name}
-      {/* {user ? (
-        <Button onClick={() => signOut()}>Sign out</Button>
-      ) : (
-        <Button as={Link} href="/signin">
-          Sign in
-        </Button>
-      )} */}
+      <TestComponent userName={user.name} />
     </main>
   );
 }

@@ -7,8 +7,9 @@
     "next-translate": "2.3.0-canary.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.44.3",
-    "ui": "workspace:*"
+    "react-hook-form": "^7.43.9",
+    "ui": "workspace:*",
+    "api": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "20.2.5",

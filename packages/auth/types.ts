@@ -10,7 +10,7 @@ export type AuthPaths = Record<`${AuthView}`, string>;
 export type AuthComponent = (props: {
   view?: AuthView;
   paths: AuthPaths;
-}) => JSX.Element;
+}) => JSX.Element | null;
 
 export type AuthHandlerReturnType = Promise<void | {
   error: {
@@ -36,6 +36,12 @@ export type SignInHandler = (
       },
 ) => AuthHandlerReturnType;
 
+export type SignUpHandler = (params: {
+  email: string;
+  password: string;
+  name: string;
+}) => AuthHandlerReturnType;
+
 export type SocialSigninProvider =
   | "apple"
   | "azure"
@@ -54,4 +60,16 @@ export type SocialSigninProvider =
   | "twitter"
   | "workos";
 
-export type SessionAction = "updateSession" | "switchWorkspace";
+export type UserSession = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+};
+
+export type UseAuthActions = () => {
+  signIn: SignInHandler;
+  signUp: SignUpHandler;
+  signOut: () => Promise<void>;
+};

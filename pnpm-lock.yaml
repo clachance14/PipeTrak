@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -114,9 +118,12 @@ importers:
 
   apps/saas:
     dependencies:
+      api:
+        specifier: workspace:*
+        version: link:../../packages/api
       auth:
         specifier: workspace:*
-        version: link:../../packages/auth/base
+        version: link:../../packages/auth/server/base
       common:
         specifier: workspace:*
         version: link:../../packages/common
@@ -136,7 +143,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ^7.44.3
+        specifier: ^7.43.9
         version: 7.44.3(react@18.2.0)
       ui:
         specifier: workspace:*
@@ -176,33 +183,88 @@ importers:
         specifier: 5.1.3
         version: 5.1.3
 
-  packages/auth/base:
+  packages/api:
     dependencies:
-      auth-nextauth:
+      '@tanstack/react-query':
+        specifier: ^4.29.14
+        version: 4.29.14(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: ^10.31.0
+        version: 10.31.0(@trpc/server@10.31.0)
+      '@trpc/next':
+        specifier: ^10.31.0
+        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/react-query@10.31.0)(@trpc/server@10.31.0)(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/react-query':
+        specifier: ^10.31.0
+        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server':
+        specifier: ^10.31.0
+        version: 10.31.0
+      auth:
         specifier: workspace:*
-        version: link:../nextauth
-    devDependencies:
-      eslint-config-custom:
+        version: link:../auth/server/base
+      common:
         specifier: workspace:*
-        version: link:../../config/eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../../config/tsconfig
-
-  packages/auth/nextauth:
-    dependencies:
-      '@next-auth/prisma-adapter':
-        specifier: ^1.0.7
-        version: 1.0.7(@prisma/client@4.15.0)(next-auth@4.22.1)
-      auth-ui:
-        specifier: workspace:*
-        version: link:../ui
+        version: link:../common
       database:
         specifier: workspace:*
-        version: link:../../database/base
-      mail:
+        version: link:../database/base
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.9
+        version: 18.2.9
+      eslint-config-custom:
         specifier: workspace:*
-        version: link:../../mail/base
+        version: link:../config/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../config/tsconfig
+
+  packages/auth/client/base:
+    dependencies:
+      auth-client-nextauth:
+        specifier: workspace:*
+        version: link:../nextauth
+      next:
+        specifier: ^13.4.6
+        version: 13.4.6(@babel/core@7.22.5)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.43.9
+        version: 7.44.3(react@18.2.0)
+      ui:
+        specifier: workspace:*
+        version: link:../../../ui
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.9
+        version: 18.2.9
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../../config/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../../config/tsconfig
+
+  packages/auth/client/nextauth:
+    dependencies:
+      api:
+        specifier: workspace:*
+        version: link:../../../api
       next:
         specifier: ^13.4.6
         version: 13.4.6(@babel/core@7.22.5)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
@@ -216,7 +278,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ^7.44.3
+        specifier: ^7.43.9
         version: 7.44.3(react@18.2.0)
     devDependencies:
       '@types/react':
@@ -224,16 +286,41 @@ importers:
         version: 18.2.9
       eslint-config-custom:
         specifier: workspace:*
-        version: link:../../config/eslint-config-custom
+        version: link:../../../config/eslint-config-custom
       tsconfig:
         specifier: workspace:*
-        version: link:../../config/tsconfig
+        version: link:../../../config/tsconfig
 
-  packages/auth/ui:
+  packages/auth/server/base:
     dependencies:
+      auth-nextauth:
+        specifier: workspace:*
+        version: link:../nextauth
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../../config/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../../config/tsconfig
+
+  packages/auth/server/nextauth:
+    dependencies:
+      '@next-auth/prisma-adapter':
+        specifier: ^1.0.7
+        version: 1.0.7(@prisma/client@4.15.0)(next-auth@4.22.1)
+      database:
+        specifier: workspace:*
+        version: link:../../../database/base
+      mail:
+        specifier: workspace:*
+        version: link:../../../mail/base
       next:
         specifier: ^13.4.6
         version: 13.4.6(@babel/core@7.22.5)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next-auth:
+        specifier: ^4.22.1
+        version: 4.22.1(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -241,27 +328,24 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ^7.44.3
+        specifier: ^7.43.9
         version: 7.44.3(react@18.2.0)
-      ui:
-        specifier: workspace:*
-        version: link:../../ui
     devDependencies:
       '@types/react':
         specifier: 18.2.9
         version: 18.2.9
       eslint-config-custom:
         specifier: workspace:*
-        version: link:../../config/eslint-config-custom
+        version: link:../../../config/eslint-config-custom
       tsconfig:
         specifier: workspace:*
-        version: link:../../config/tsconfig
+        version: link:../../../config/tsconfig
 
   packages/billing/base:
     dependencies:
       auth:
         specifier: workspace:*
-        version: link:../../auth/base
+        version: link:../../auth/server/base
       billing-lemonsqueezy:
         specifier: workspace:*
         version: link:../lemonsqueezy
@@ -312,6 +396,9 @@ importers:
         specifier: ^2.9.1
         version: 2.9.1(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
+      '@types/node':
+        specifier: 20.2.5
+        version: 20.2.5
       '@types/react':
         specifier: 18.2.9
         version: 18.2.9
@@ -2223,6 +2310,77 @@ packages:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.3.2
     dev: true
+
+  /@tanstack/query-core@4.29.14:
+    resolution: {integrity: sha512-ElEAahtLWA7Y7c2Haw10KdEf2tx+XZl/Z8dmyWxZehxWK3TPL5qtXtb7kUEhvt/8u2cSP62fLxgh2qqzMMGnDQ==}
+    dev: false
+
+  /@tanstack/react-query@4.29.14(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-wh4bd/QIy85YgTDBtj/7/9ZkpRX41QdZuUL8xKoSzuMCukXvAE1/oJ4p0F15lqQq9W3g2pgcbr2Aa+CNvqABhg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.29.14
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@trpc/client@10.31.0(@trpc/server@10.31.0):
+    resolution: {integrity: sha512-VCqbJEvFJb8C4hQFw7AD+dkQTjgEdV/QAzO4D+/cX5e93u5NpfNXI+PKS0QFXwG/zqgwQwVV6OkYc/D/MFwA6g==}
+    peerDependencies:
+      '@trpc/server': 10.31.0
+    dependencies:
+      '@trpc/server': 10.31.0
+    dev: false
+
+  /@trpc/next@10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/react-query@10.31.0)(@trpc/server@10.31.0)(next@13.4.6)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-BZtZr7UKAs0tUTreCsYhy+/HjFNFl5KBwBS+Li6pCv9GwqCDqpoivesQz7LltO4Y4lOLXLm9tXQXtS1gfmF9yg==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.31.0
+      '@trpc/react-query': 10.31.0
+      '@trpc/server': 10.31.0
+      next: '*'
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.31.0(@trpc/server@10.31.0)
+      '@trpc/react-query': 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 10.31.0
+      next: 13.4.6(@babel/core@7.22.5)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-ssr-prepass: 1.5.0(react@18.2.0)
+    dev: false
+
+  /@trpc/react-query@10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+M8sIsbf6e4H5XYvHlzDqhaf+ybfUigA/9OL3wXRp2vXhCedEiIERCnwNuHWFDRASl9vjOcM33AuJ4sbOOINEA==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.31.0
+      '@trpc/server': 10.31.0
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.31.0(@trpc/server@10.31.0)
+      '@trpc/server': 10.31.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@trpc/server@10.31.0:
+    resolution: {integrity: sha512-9EnRTSDE9nF11LZsvSOqNKqkRYzHqFX4ch5AJ6VIu8uta2vxVTN4FxxsNRSOluTzVYZDeaCISbwmOJ5iihCCIg==}
+    dev: false
 
   /@types/accept-language-parser@1.5.3:
     resolution: {integrity: sha512-S8oM29O6nnRC3/+rwYV7GBYIIgNIZ52PCxqBG7OuItq9oATnYWy8FfeLKwvq5F7pIYjeeBSCI7y+l+Z9UEQpVQ==}
@@ -7255,6 +7413,14 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
+  /react-ssr-prepass@1.5.0(react@18.2.0):
+    resolution: {integrity: sha512-yFNHrlVEReVYKsLI5lF05tZoHveA5pGzjFbFJY/3pOqqjGOmMmqx83N4hIjN2n6E1AOa+eQEUxs3CgRnPmT0RQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -8197,6 +8363,14 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.3.0
+    dev: false
+
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /usehooks-ts@2.9.1(react-dom@18.2.0)(react@18.2.0):

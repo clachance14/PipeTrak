@@ -1,9 +1,11 @@
 packages:
   - apps/marketing
   - apps/saas
-  - packages/auth/base
-  - packages/auth/nextauth
-  - packages/auth/ui
+  - packages/api
+  - packages/auth/server/base
+  - packages/auth/server/nextauth
+  - packages/auth/client/base
+  - packages/auth/client/nextauth
   - packages/config/eslint-config-custom
   - packages/config/tailwind-config
   - packages/config/tsconfig
