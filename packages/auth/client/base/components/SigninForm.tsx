@@ -1,10 +1,13 @@
 "use client";
 
+import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
-import { AuthPaths, SignInHandler } from "../../types";
+import { config } from "../../../config";
+import { AuthPaths } from "../../../types";
 import SigninModeSwitch, { SigninMode } from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 
@@ -43,17 +46,13 @@ const labels = {
 type SigninFormValues = {
   email: string;
   password?: string;
-  serverError?: void;
 };
 
-export function SigninForm({
-  onSignIn,
-  paths,
-}: {
-  onSignIn: SignInHandler;
-  paths: AuthPaths;
-}) {
+export function SigninForm({ paths }: { paths: AuthPaths }) {
+  const { signIn } = useAuthActions();
   const [signinMode, setSigninMode] = useState(SigninMode.MagicLink);
+  const [serverError, setServerError] = useState<null | string>(null);
+  const router = useRouter();
 
   const oAuthProviders = [
     { type: "oauth", id: "google" },
@@ -67,43 +66,43 @@ export function SigninForm({
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { isSubmitting, errors, isSubmitted, isSubmitSuccessful },
   } = useForm<SigninFormValues>({});
 
   useEffect(() => {
-    clearErrors("serverError");
-  }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
+    setServerError(null);
+  }, [signinMode]);
 
   const onSubmit: SubmitHandler<SigninFormValues> = async ({
     email,
     password,
   }) => {
-    clearErrors("serverError");
+    setServerError(null);
     try {
       let response;
       if (isPasswordSignin) {
         if (!password) return;
 
-        response = await onSignIn({
+        response = await signIn({
           method: "password",
           email,
           password,
         });
       } else {
-        response = await onSignIn({
+        response = await signIn({
           method: "email",
           email,
         });
       }
 
       if (response?.error) {
-        setError("serverError", { type: "invalid" });
+        setServerError(response.error.message);
         return;
       }
+
+      router.replace(config.redirectAfterSignin);
     } catch (e) {
-      setError("serverError", { type: "linkNotSent" });
+      setServerError("Could not sign in. Please try again later.");
     }
   };
 
@@ -130,23 +129,10 @@ export function SigninForm({
         >
           <SigninModeSwitch activeMode={signinMode} onChange={setSigninMode} />
 
-          {isSubmitted && errors.serverError && (
+          {isSubmitted && serverError && (
             <Hint
               status="error"
-              title={
-                isPasswordSignin
-                  ? errors.serverError.type === "emailNotVerified"
-                    ? labels.hints.emailNotVerified.title
-                    : labels.hints.invalidCredentials.title
-                  : labels.hints.linkNotSent.title
-              }
-              message={
-                isPasswordSignin
-                  ? errors.serverError.type === "emailNotVerified"
-                    ? labels.hints.emailNotVerified.message
-                    : labels.hints.invalidCredentials.message
-                  : labels.hints.linkNotSent.message
-              }
+              message={serverError}
               icon={<Icon.error className="h-4 w-4" />}
             />
           )}
@@ -196,7 +182,7 @@ export function SigninForm({
             key={providerId}
             provider={providerId}
             onClick={() =>
-              onSignIn({
+              signIn({
                 method: "oauth",
                 provider: providerId,
                 // callbackUrl: config.redirectAfterSignin,

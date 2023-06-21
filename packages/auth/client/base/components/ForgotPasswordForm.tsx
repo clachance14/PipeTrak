@@ -5,7 +5,7 @@ import { Button, Hint, Icon, Input } from "ui";
 import Link from "next/link";
 import { FormEvent } from "react";
 import { useForm } from "react-hook-form";
-import { AuthPaths } from "../../types";
+import { AuthPaths } from "../../../types";
 
 const labels = {
   backToSignin: "Back to signin",

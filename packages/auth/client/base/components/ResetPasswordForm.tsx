@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
-import { AuthPaths } from "../../types";
+import { AuthPaths } from "../../../types";
 
 const labels = {
   backToSignin: "Back to signin",

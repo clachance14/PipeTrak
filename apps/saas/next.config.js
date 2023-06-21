@@ -1,4 +1,7 @@
+const withNextTranslate = require("next-translate-plugin");
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   transpilePackages: ["ui"],
   images: {
@@ -9,4 +12,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextTranslate(nextConfig);

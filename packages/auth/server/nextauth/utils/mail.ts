@@ -6,10 +6,7 @@ export const sendVerificationMail = async ({
   identifier: email,
   url,
   provider,
-}: SendVerificationRequestParams) => {
-  let subject = "",
-    text = "",
-    html = "";
+}: SendVerificationRequestParams & { name?: string }) => {
   let sent = false;
 
   switch (provider.id) {
@@ -30,9 +27,12 @@ export const sendVerificationMail = async ({
       });
       break;
     case "create-account":
-      subject = `Create an account for ${process.env.NEXTAUTH_URL}`;
-      text = `Create an account for ${process.env.NEXTAUTH_URL} here: ${url}`;
-      html = `<p>Create an account for <a href="${process.env.NEXTAUTH_URL}">${process.env.NEXTAUTH_URL}</a> here: <a href="${url}">${url}</a></p>`;
+      sent = await sendEmail({
+        to: email,
+        subject: "Welcome to supastarter",
+        templateId: "newUser",
+        context: { url },
+      });
       break;
     default:
       sent = await sendEmail({

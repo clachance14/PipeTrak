@@ -1,10 +1,11 @@
 "use client";
 
-import { trpc } from "api/client";
+import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
-import { AuthPaths } from "../../types";
+import { AuthPaths } from "../../../types";
 
 const labels = {
   alreadyHaveAccount: "Already have an account?",
@@ -35,12 +36,10 @@ interface SignupFormValues {
   email: string;
   password: string;
   name: string;
-  serverError?: void;
 }
 
 export function SignupForm({ paths }: { paths: AuthPaths }) {
-  const signUpMutation = trpc.signUp.useMutation();
-
+  const { signUp } = useAuthActions();
   const {
     register,
     handleSubmit,
@@ -48,27 +47,26 @@ export function SignupForm({ paths }: { paths: AuthPaths }) {
     clearErrors,
     formState: { isSubmitting, isSubmitted, isSubmitSuccessful, errors },
   } = useForm<SignupFormValues>();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<SignupFormValues> = async ({
     email,
     password,
     name,
   }) => {
-    clearErrors("serverError");
+    setServerError(null);
     try {
-      const response = await signUpMutation.mutateAsync({
+      const response = await signUp({
         email,
         password,
         name,
       });
-      console.log("hey response", response);
-      // await signIn('create-account', {
-      //   email,
-      //   callbackUrl: config.redirectAfterSignin,
-      //   redirect: false,
-      // });
+
+      if (response?.error) {
+        setServerError(response.error.message);
+      }
     } catch (e) {
-      setError("serverError", { type: "invalid" });
+      setServerError("Count not create account.");
     }
   };
 
@@ -92,11 +90,10 @@ export function SignupForm({ paths }: { paths: AuthPaths }) {
           className="flex flex-col items-stretch gap-6"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {isSubmitted && errors.serverError && (
+          {isSubmitted && serverError && (
             <Hint
               status="error"
-              title={labels.hints.signupFailed.title}
-              message={labels.hints.signupFailed.message}
+              message={serverError}
               icon={<Icon.error className="h-4 w-4" />}
             />
           )}
@@ -137,7 +134,6 @@ export function SignupForm({ paths }: { paths: AuthPaths }) {
               {...register("password", { required: true, minLength: 8 })}
               required
               autoComplete="new-password"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,48}$"
             />
             <small className="italic opacity-50">{labels.passwordHint}</small>
           </div>

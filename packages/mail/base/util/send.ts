@@ -6,7 +6,7 @@ export async function sendEmail(params: {
   to: string;
   subject: string;
   templateId: keyof typeof emails;
-  context: Parameters<typeof emails[keyof typeof emails]>[0];
+  context?: Parameters<(typeof emails)[keyof typeof emails]>[0];
 }) {
   const { to, subject, templateId, context } = params;
 

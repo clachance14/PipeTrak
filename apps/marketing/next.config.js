@@ -6,4 +6,4 @@ const nextConfig = {
   transpilePackages: ["ui"],
 };
 
-module.exports = withContentlayer(nextConfig);
+module.exports = withNextTranslate(withContentlayer(nextConfig));

@@ -4,6 +4,8 @@ import { PropsWithChildren } from "react";
 import { UseAuthActions } from "../../types";
 
 export const useAuthActions: UseAuthActions = () => {
+  const signupMutation = trpc.signUp.useMutation();
+
   return {
     signIn: async (params) => {
       const { method } = params;
@@ -58,12 +60,27 @@ export const useAuthActions: UseAuthActions = () => {
 
     signUp: async (params) => {
       const { email, password, name } = params;
-      const response = await signIn("credentials", {
-        email,
-        password,
-      });
+      try {
+        await signupMutation.mutateAsync({
+          email,
+          password,
+          name,
+        });
 
-      trpc;
+        await signIn("create-account", {
+          email,
+          // callbackUrl: config.redirectAfterSignin,
+          redirect: false,
+        });
+      } catch (e) {
+        console.error(e);
+        return {
+          error: {
+            type: "invalid",
+            message: "Could not create user",
+          },
+        };
+      }
     },
 
     signOut,

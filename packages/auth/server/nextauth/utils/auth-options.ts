@@ -4,15 +4,11 @@ import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { config } from "../../../config";
-import { SessionAction } from "../../../types";
-import { adapter, getUserByEmail, getUserById } from "./database";
+import { adapter, getUserByEmail } from "./database";
 import { verify } from "./hash";
 import { sendVerificationMail } from "./mail";
 
-export const getAuthOptions = (params?: {
-  action?: SessionAction;
-  workspaceId?: string;
-}): AuthOptions => ({
+export const getAuthOptions = (): AuthOptions => ({
   pages: {
     signIn: "/signin",
     signOut: "/",
@@ -102,13 +98,13 @@ export const getAuthOptions = (params?: {
       return session;
     },
     jwt: async ({ user, token }) => {
-      const { action, workspaceId } = params ?? {};
+      // const { action, workspaceId } = params ?? {};
       // if we are updating the session, we load the user data from the database and pass it to the token
-      if (action === "updateSession") {
-        const currentUserData = await getUserById(token.uid as string);
+      // if (action === "updateSession") {
+      //   const currentUserData = await getUserById(token.uid as string);
 
-        token.name = currentUserData?.name;
-      }
+      //   token.name = currentUserData?.name;
+      // }
 
       // change the workspace
       //   if (action === 'switchWorkspace' && workspaceId) {
