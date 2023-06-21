@@ -4,8 +4,10 @@ packages:
   - packages/api
   - packages/auth/server/base
   - packages/auth/server/nextauth
+  - packages/auth/server/supabase
   - packages/auth/client/base
   - packages/auth/client/nextauth
+  - packages/auth/client/supabase
   - packages/config/eslint-config-custom
   - packages/config/tailwind-config
   - packages/config/tsconfig
