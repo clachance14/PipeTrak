@@ -2,7 +2,7 @@ import { allPosts } from "contentlayer/generated";
 import useTranslation from "next-translate/useTranslation";
 import { PostListItem } from "./PostListItem";
 
-export async function generateMetadata({ params: { lang } }) {
+export async function generateMetadata() {
   const { t } = useTranslation("blog");
   return {
     title: t("title"),

@@ -23,34 +23,31 @@ export function handleLanguageDetection(
     locales: string[];
   },
 ) {
-  // first we get the lang that should be used
-  // by 1. checking the query params
-  //    2. checking the cookie
-  //    3. using the accept-language header
-  //    4. using the default locale
-
-  const browserLang = getBrowserLanguage(
-    acceptLangHeader ?? "",
-    locales,
-    defaultLocale,
+  const pathname = req.nextUrl.pathname;
+  const pathnameIsMissingLocale = locales.every(
+    (locale) =>
+      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
-  const langParam = req.nextUrl.searchParams.get("lang");
-  const langCookie = req.cookies.get("lang")?.value;
-  const lang = langParam || langCookie || browserLang || defaultLocale;
-  const response = NextResponse.next();
 
-  if (!lang) {
-    return response;
-  }
+  console.log(pathname, pathnameIsMissingLocale);
 
-  if (lang !== langCookie) {
+  if (pathnameIsMissingLocale) {
+    const browserLang = getBrowserLanguage(
+      acceptLangHeader ?? "",
+      locales,
+      defaultLocale,
+    );
+
+    const langCookie = req.cookies.get("lang")?.value;
+    const lang = langCookie || browserLang || defaultLocale;
+    const response = NextResponse.next();
+
+    console.log("new language", lang);
+
     response.cookies.set("lang", lang);
-  }
+    const redirectUrl = new URL(`/${lang}${pathname}`, req.url);
+    console.log("redirecting to", redirectUrl.href);
 
-  if (!langParam && lang !== defaultLocale) {
-    req.nextUrl.searchParams.set("lang", lang);
-    return NextResponse.redirect(req.nextUrl);
+    // return NextResponse.redirect(redirectUrl);
   }
-
-  return response;
 }

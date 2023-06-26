@@ -1,6 +1,6 @@
 import { handleLanguageDetection } from "i18n/utils";
 import { NextRequest } from "next/server";
-import i18n from "../apps/marketing/i18n.json";
+import i18n from "./i18n";
 
 export function middleware(req: NextRequest) {
   const response = handleLanguageDetection(req, {
