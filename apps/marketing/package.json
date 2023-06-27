@@ -9,6 +9,7 @@
     "mail": "workspace:*",
     "next": "13.4.6",
     "next-contentlayer": "^0.3.3",
+    "next-intl": "3.0.0-beta.5",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

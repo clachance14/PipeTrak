@@ -1,4 +1,4 @@
-const withNextTranslate = require("next-translate-plugin");
+const withNextIntl = require("next-intl/plugin")("./i18n.ts");
 
 /** @type {import('next').NextConfig} */
 
@@ -8,8 +8,8 @@ const nextConfig = {
     domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
   },
   experimental: {
-    serverComponentsExternalPackages: ["mjml"],
+    serverActions: true,
   },
 };
 
-module.exports = withNextTranslate(nextConfig);
+module.exports = withNextIntl(nextConfig);

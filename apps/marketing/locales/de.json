@@ -1,0 +1,12 @@
+{
+  "common": {
+    "menu": {
+      "blog": "Blog",
+      "pricing": "Preise"
+    }
+  },
+  "blog": {
+    "title": "Mein toller Blog",
+    "description": "In diesem Blog schreibe ich über alles mögliche."
+  }
+}

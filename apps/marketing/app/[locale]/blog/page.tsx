@@ -1,16 +1,18 @@
 import { allPosts } from "contentlayer/generated";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
+import { getTranslator } from "next-intl/server";
 import { PostListItem } from "./PostListItem";
 
-export async function generateMetadata() {
-  const { t } = useTranslation("blog");
+export async function generateMetadata({ params: { locale } }) {
+  const t = await getTranslator(locale, "blog");
   return {
     title: t("title"),
   };
 }
 
-export default async function BlogListPage() {
-  const { t } = useTranslation("blog");
+export default function BlogListPage() {
+  const t = useTranslations("blog");
+
   return (
     <div className="container max-w-5xl py-24">
       <div className="mb-12 pt-8 text-center">

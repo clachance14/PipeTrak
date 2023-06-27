@@ -1,4 +1,5 @@
-const withNextTranslate = require("next-translate-plugin");
+const withNextIntl = require("next-intl/plugin")("./i18n.ts");
+
 const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
@@ -9,4 +10,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextTranslate(withContentlayer(nextConfig));
+module.exports = withNextIntl(withContentlayer(nextConfig));

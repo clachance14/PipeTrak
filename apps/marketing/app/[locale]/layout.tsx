@@ -1,10 +1,10 @@
 import { Footer, NavBar } from "@components";
 import { Providers } from "common/components";
 import { Metadata } from "next";
-import useTranslation from "next-translate/useTranslation";
+import { useLocale } from "next-intl";
+import { getTranslator } from "next-intl/server";
 import { Inter } from "next/font/google";
-import { redirect } from "next/navigation";
-import i18n from "../../i18n";
+import { notFound } from "next/navigation";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -21,15 +21,20 @@ const sansFont = Inter({
   display: "swap",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { locale: string };
 }) {
-  const { lang } = useTranslation();
+  const locale = useLocale();
+  const t = await getTranslator(locale, "common");
 
-  // Redirect to default locale if lang is not supported. /second-page -> /en/second-page
-  if (!i18n.locales.includes(lang)) redirect(`/${i18n.defaultLocale}/${lang}`);
+  // Show a 404 error if the user requests an unknown locale
+  if (params.locale !== locale) {
+    notFound();
+  }
 
   return (
     <html lang="en">
@@ -38,11 +43,11 @@ export default function RootLayout({
           <NavBar
             menuItems={[
               {
-                label: "Pricing",
+                label: t("menu.pricing"),
                 href: "/pricing",
               },
               {
-                label: "Blog",
+                label: t("menu.blog"),
                 href: "/blog",
               },
             ]}

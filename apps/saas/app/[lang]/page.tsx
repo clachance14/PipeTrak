@@ -1,9 +1,9 @@
 import { getUserSession } from "auth";
-import useTranslation from "next-translate/useTranslation";
+import { getTranslator } from "next-intl/server";
 import TestComponent from "./TestComponent";
 
-export async function generateMetadata() {
-  const { t } = useTranslation();
+export async function generateMetadata({ params: { locale } }) {
+  const t = await getTranslator(locale);
 
   return {
     title: t("helloWorld"),
