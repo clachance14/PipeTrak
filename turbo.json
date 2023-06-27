@@ -1,6 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "PORT",
+    "VERCEL_URL",
+    "GITHUB_ID",
+    "GITHUB_SECRET",
+    "GOOGLE_ID",
+    "GOOGLE_SECRET"
+  ],
   "pipeline": {
     "db:generate": {
       "cache": false

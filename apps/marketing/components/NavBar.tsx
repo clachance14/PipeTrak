@@ -1,5 +1,6 @@
 import { ColorModeToggle } from "common/components/ColorModeToggle";
-import Link from "next/link";
+import { useLocale } from "next-intl";
+import Link from "next-intl/link";
 import { Button, Logo } from "ui";
 
 export function NavBar({
@@ -14,6 +15,7 @@ export function NavBar({
     href: string;
   }>;
 }) {
+  const locale = useLocale();
   return (
     <nav className="absolute top-0 left-0 w-full bg-transparent py-4 dark:text-white">
       <div className="container flex items-center justify-between">
@@ -36,8 +38,8 @@ export function NavBar({
             <ColorModeToggle />
 
             <Button
-              as={Link}
-              href="/signin"
+              as="a"
+              href={`${process.env.NEXT_PUBLIC_SAAS_BASE_URL}/${locale}/auth/signin`}
               intent="primary-ghost"
               size="small"
             >

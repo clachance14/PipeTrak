@@ -8,6 +8,7 @@
     "lint": "eslint \"**/*.ts*\""
   },
   "devDependencies": {
+    "@types/node": "20.2.5",
     "@types/react": "18.2.9",
     "class-variance-authority": "^0.6.0",
     "eslint-config-custom": "workspace:*",

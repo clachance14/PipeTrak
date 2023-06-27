@@ -4,6 +4,6 @@ module.exports = {
     "./app/**/*.tsx",
     "./components/**/*.tsx",
     "../../packages/ui/components/**/*.tsx",
-    "../../packages/auth/ui/components/**/*.tsx",
+    "../../packages/auth/client/base/components/**/*.tsx",
   ],
 };

@@ -1,0 +1,26 @@
+{
+  "common": {
+    "menu": {
+      "blog": "Blog",
+      "pricing": "Pricing"
+    }
+  },
+  "blog": {
+    "title": "My awesome blog",
+    "description": "Read the latest news from our company"
+  },
+  "home": {
+    "newsletter": {
+      "email": "Email",
+      "hints": {
+        "success": {
+          "message": "Thank you for subscribing to our newsletter. We will keep you posted.",
+          "title": "Subscribed"
+        }
+      },
+      "submit": "Subscribe",
+      "subtitle": "Be among the first to get access to supastarter.nextjs.",
+      "title": "Get early access"
+    }
+  }
+}
