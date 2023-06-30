@@ -48,7 +48,7 @@ export function StatsTile({
     return `${trend >= 0 ? "+" : ""}${format.number(trend, {
       style: "percent",
     })}`;
-  }, [trend]);
+  }, [trend, format]);
 
   return (
     <div className="rounded-xl bg-zinc-50 p-6 dark:bg-zinc-800">

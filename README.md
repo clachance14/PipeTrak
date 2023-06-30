@@ -3,7 +3,7 @@
 
 # supastarter – next.js
 
-supastarter is the ultimate starter kit SaaS applications. 
+supastarter is the ultimate starter kit for production-ready, scalable SaaS applications. 
 
 The goal of it is to provide a scalable and production-ready template that can be fully customized to your needs, while still being easy to use and maintain. It also is structured in a modular way, so we can implemented multiple providers for different features (like payments, auth, analytics, etc.) and you can choose features and providers you want to use.
 

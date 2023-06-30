@@ -112,5 +112,5 @@ export const useUser = (): null | UserSession["user"] => {
 
   if (!session.data?.user) return null;
 
-  return session.data.user;
+  return session.data.user as UserSession["user"];
 };

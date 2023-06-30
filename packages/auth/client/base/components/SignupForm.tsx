@@ -43,8 +43,6 @@ export function SignupForm({ paths }: { paths: AuthPaths }) {
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { isSubmitting, isSubmitted, isSubmitSuccessful, errors },
   } = useForm<SignupFormValues>();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -62,7 +60,7 @@ export function SignupForm({ paths }: { paths: AuthPaths }) {
         name,
       });
 
-      if (response?.error) {
+      if (response && "error" in response) {
         setServerError(response.error.message);
       }
     } catch (e) {

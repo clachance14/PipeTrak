@@ -1,9 +1,7 @@
+import { appConfig } from "@config";
 import createMiddleware from "next-intl/middleware";
 
-export default createMiddleware({
-  locales: ["en", "de"],
-  defaultLocale: "en",
-});
+export default createMiddleware(appConfig.i18n);
 
 export const config = {
   matcher: ["/((?!api|_next|.*\\..*).*)"],

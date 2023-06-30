@@ -56,7 +56,7 @@ export function ForgotPasswordForm({ paths }: { paths: AuthPaths }) {
       const response = await forgotPassword({
         email,
       });
-      if (response?.error) {
+      if (response && "error" in response) {
         setServerError(response.error.message);
         return;
       }

@@ -10,7 +10,7 @@ export async function updateUserSubscription(
   subscription: Omit<Subscription, "id"> & {
     userId?: string;
   },
-) {
+): Promise<void | Subscription> {
   if (!subscription.userId) {
     throw new Error("Either customerId or userId must be provided");
   }
@@ -26,7 +26,7 @@ export async function updateUserSubscription(
   await createSubscription(subscription);
 }
 
-export const getUserSubscription = async () => {
+export const getUserSubscription = async (): Promise<Subscription | null> => {
   const session = await getUserSession();
 
   if (!session) {

@@ -1,4 +1,4 @@
-import type ForgotPassword from "emails/ForgotPassword";
+import type ForgotPassword from "./ForgotPassword";
 import type MagicLink from "./MagicLink";
 import type NewUser from "./NewUser";
 

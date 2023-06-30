@@ -1,7 +1,10 @@
 import { TRPCError, initTRPC } from "@trpc/server";
-import { Context } from "util/context";
+import superjson from "superjson";
+import { Context } from "../util/context";
 
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<Context>().create({
+  transformer: superjson,
+});
 
 const isAuthenticated = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {

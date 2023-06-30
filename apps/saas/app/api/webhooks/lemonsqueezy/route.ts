@@ -2,12 +2,13 @@ import { updateUserSubscription } from "billing/subscriptions";
 import { createHmac, timingSafeEqual } from "crypto";
 import { headers } from "next/headers";
 
-const lemonsqueezySigningSecret = process.env
-  .LEMONSQUEEZY_SIGNING_SECRET as string;
-if (!lemonsqueezySigningSecret)
-  throw new Error("Missing env for lemonsqueezy signing secret");
-
 export async function POST(req: Request) {
+  const lemonsqueezySigningSecret = process.env
+    .LEMONSQUEEZY_SIGNING_SECRET as string;
+
+  if (!lemonsqueezySigningSecret)
+    throw new Error("Missing env for lemonsqueezy signing secret");
+
   try {
     const text = await req.text();
     const hmac = createHmac("sha256", lemonsqueezySigningSecret);

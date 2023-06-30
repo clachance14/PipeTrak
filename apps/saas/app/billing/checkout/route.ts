@@ -1,23 +1,24 @@
-import { getAuthOptions } from '@auth/providers/nextauth';
-import { createCheckoutLink } from '@billing/server';
-import { getBaseUrl } from '@common/lib';
-import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { getUserSession } from "auth";
+import { createCheckoutLink } from "billing/subscriptions";
+import { getBaseUrl } from "common/util";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(getAuthOptions());
+  const session = await getUserSession();
 
   const searchParams = new URLSearchParams(req.nextUrl.search);
 
-  const variantIds = (searchParams.get('variantIds') ?? '')
-    .split(',')
+  const variantIds = (searchParams.get("variantIds") ?? "")
+    .split(",")
     .filter((id) => !!id)
     .map((id) => parseInt(id, 10));
-  const storeId = searchParams.get('storeId');
+  const storeId = searchParams.get("storeId");
 
   if (!session) {
     return NextResponse.redirect(
-      `${getBaseUrl()}/signin?redirectTo=${encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search)}`
+      `${getBaseUrl()}/signin?redirectTo=${encodeURIComponent(
+        req.nextUrl.pathname + req.nextUrl.search,
+      )}`,
     );
   }
 
@@ -28,7 +29,7 @@ export async function GET(req: NextRequest) {
   const checkoutLink = await createCheckoutLink({
     variantIds,
     storeId,
-    user: session.user,
+    userData: session.user,
     redirectUrl: `${getBaseUrl()}/dashboard/settings/billing`,
   });
 

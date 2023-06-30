@@ -8,7 +8,9 @@
     "GITHUB_SECRET",
     "GOOGLE_ID",
     "GOOGLE_SECRET",
-    "NEXT_PUBLIC_SAAS_BASE_URL"
+    "NEXT_PUBLIC_MARKETING_URL",
+    "NEXT_PUBLIC_SAAS_BASE_URL",
+    "LEMONSQUEEZY_SIGNING_SECRET"
   ],
   "pipeline": {
     "db:generate": {

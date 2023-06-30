@@ -4,15 +4,10 @@
     "source.organizeImports": true
   },
   "tailwindCSS.experimental.classRegex": [
-    [
-      "cva\\(([^)]*)\\)",
-      "[\"'`]([^\"'`]*).*?[\"'`]"
-    ]
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "i18n-ally.localesPaths": [
-    "public/locales"
-  ],
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "i18n-ally.localesPaths": ["public/locales"],
   "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true

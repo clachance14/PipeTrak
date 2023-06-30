@@ -97,7 +97,7 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
         });
       }
 
-      if (response?.error) {
+      if (response && "error" in response) {
         setServerError(response.error.message);
         return;
       }

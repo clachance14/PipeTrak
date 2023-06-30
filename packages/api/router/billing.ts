@@ -5,8 +5,8 @@ import {
   updateUserSubscription,
 } from "billing/subscriptions";
 import { getSubscriptionById } from "database";
-import { protectedProcedure } from "util/trpc";
 import { z } from "zod";
+import { protectedProcedure } from "../util/trpc";
 
 export const billingRouter = {
   createCheckoutLink: protectedProcedure

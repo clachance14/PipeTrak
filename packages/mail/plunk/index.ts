@@ -2,15 +2,15 @@ import fetch from "node-fetch";
 import { config } from "../config";
 import { SendEmailHandler } from "../types";
 
-const plunkApiKey = process.env.PLUNK_API_KEY;
-
-if (!plunkApiKey) {
-  throw new Error("Plunk API key not found");
-}
-
 const { from } = config;
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
+  const plunkApiKey = process.env.PLUNK_API_KEY;
+
+  if (!plunkApiKey) {
+    throw new Error("Plunk API key not found");
+  }
+
   const response = await fetch("https://api.useplunk.com/v1/send", {
     method: "POST",
     headers: {
@@ -22,6 +22,7 @@ export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
       from,
       subject,
       body: html,
+      text,
     }),
   });
 

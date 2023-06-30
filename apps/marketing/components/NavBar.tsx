@@ -1,5 +1,6 @@
 "use client";
 
+import { appConfig } from "@config";
 import { ColorModeToggle, LocaleSwitch } from "common/components";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next-intl/client";
@@ -44,18 +45,8 @@ export function NavBar({
           <div className="ml-3 flex items-center justify-end gap-3">
             <ColorModeToggle />
             <LocaleSwitch
-              localeOptions={[
-                {
-                  value: "en",
-                  label: t("locales.en"),
-                },
-                {
-                  value: "de",
-                  label: t("locales.de"),
-                },
-              ]}
+              locales={appConfig.i18n.locales}
               currentLocale={locale}
-              onChange={(locale) => router.replace(`/${locale}/${pathname}`)}
             />
 
             <Button

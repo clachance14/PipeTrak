@@ -1,14 +1,13 @@
-import { getAuthOptions } from '@auth/providers/nextauth';
-import { createCustomerPortalLink } from '@billing/server';
-import { getBaseUrl } from '@common/lib';
-import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { getUserSession } from "auth";
+import { createCustomerPortalLink } from "billing/subscriptions";
+import { getBaseUrl } from "common/util";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(getAuthOptions());
+  const session = await getUserSession();
 
   const searchParams = new URLSearchParams(req.nextUrl.search);
-  const subscriptionId = searchParams.get('subscriptionId') ?? '';
+  const subscriptionId = searchParams.get("subscriptionId") ?? "";
 
   if (!session) {
     return NextResponse.redirect(`${getBaseUrl()}/signin`);
