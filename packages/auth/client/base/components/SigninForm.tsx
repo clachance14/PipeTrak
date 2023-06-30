@@ -66,10 +66,12 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors, isSubmitted, isSubmitSuccessful },
+    reset,
+    formState: { isSubmitting, isSubmitted, isSubmitSuccessful },
   } = useForm<SigninFormValues>({});
 
   useEffect(() => {
+    reset();
     setServerError(null);
   }, [signinMode]);
 

@@ -10,6 +10,7 @@ import {
   CreditCard,
   Eye,
   EyeOff,
+  Globe,
   Grid,
   HardDrive,
   Info,
@@ -30,7 +31,7 @@ import {
   Upload,
   User,
   X,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface IconProps {
   className?: string;
@@ -68,6 +69,7 @@ export const Icon = {
   upload: Upload,
   phone: Phone,
   key: Key,
+  language: Globe,
 
   // social icons
   google: ({ ...props }: IconProps) => (

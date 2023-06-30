@@ -1,7 +1,7 @@
 import { Footer, NavBar } from "@components";
 import { Providers } from "common/components";
 import { Metadata } from "next";
-import { useLocale } from "next-intl";
+import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getTranslator } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -35,26 +35,29 @@ export default async function RootLayout({
   if (params.locale !== locale) {
     notFound();
   }
+  const messages = (await import(`../../locales/${locale}.json`)).default;
 
   return (
     <html lang="en">
       <body className={`${sansFont.variable} font-sans`}>
         <Providers>
-          <NavBar
-            menuItems={[
-              {
-                label: t("menu.pricing"),
-                href: "/pricing",
-              },
-              {
-                label: t("menu.blog"),
-                href: "/blog",
-              },
-            ]}
-            labels={{ signIn: "Sign in" }}
-          />
-          {children}
-          <Footer />
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <NavBar
+              menuItems={[
+                {
+                  label: t("menu.pricing"),
+                  href: "/pricing",
+                },
+                {
+                  label: t("menu.blog"),
+                  href: "/blog",
+                },
+              ]}
+              labels={{ signIn: "Sign in" }}
+            />
+            {children}
+            <Footer />
+          </NextIntlClientProvider>
         </Providers>
       </body>
     </html>

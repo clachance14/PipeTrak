@@ -5,7 +5,6 @@
     "common": "workspace:*",
     "contentlayer": "^0.3.3",
     "date-fns": "^2.30.0",
-    "i18n": "workspace:*",
     "mail": "workspace:*",
     "next": "13.4.6",
     "next-contentlayer": "^0.3.3",

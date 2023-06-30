@@ -6,6 +6,7 @@
     "@trpc/react-query": "^10.31.0",
     "@trpc/server": "^10.31.0",
     "auth": "workspace:*",
+    "billing": "workspace:*",
     "common": "workspace:*",
     "database": "workspace:*",
     "react": "18.2.0",

@@ -1,3 +1,3 @@
 export * from "./ColorModeToggle";
-export * from "./LanguageSwitch";
+export * from "./LocaleSwitch";
 export * from "./Providers";

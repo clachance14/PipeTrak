@@ -3,7 +3,7 @@
 import React from "react";
 import { Icon, Input } from "../";
 
-export default function PasswordInput({
+export function PasswordInput({
   value,
   onChange,
   className,

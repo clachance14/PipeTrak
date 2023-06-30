@@ -1,5 +1,8 @@
-import { ColorModeToggle } from "common/components/ColorModeToggle";
-import { useLocale } from "next-intl";
+"use client";
+
+import { ColorModeToggle, LocaleSwitch } from "common/components";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next-intl/client";
 import Link from "next-intl/link";
 import { Button, Logo } from "ui";
 
@@ -16,6 +19,10 @@ export function NavBar({
   }>;
 }) {
   const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations("common");
+
   return (
     <nav className="absolute top-0 left-0 w-full bg-transparent py-4 dark:text-white">
       <div className="container flex items-center justify-between">
@@ -36,6 +43,20 @@ export function NavBar({
 
           <div className="ml-3 flex items-center justify-end gap-3">
             <ColorModeToggle />
+            <LocaleSwitch
+              localeOptions={[
+                {
+                  value: "en",
+                  label: t("locales.en"),
+                },
+                {
+                  value: "de",
+                  label: t("locales.de"),
+                },
+              ]}
+              currentLocale={locale}
+              onChange={(locale) => router.replace(`/${locale}/${pathname}`)}
+            />
 
             <Button
               as="a"

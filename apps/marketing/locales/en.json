@@ -3,6 +3,10 @@
     "menu": {
       "blog": "Blog",
       "pricing": "Pricing"
+    },
+    "locales": {
+      "en": "English",
+      "de": "German"
     }
   },
   "blog": {

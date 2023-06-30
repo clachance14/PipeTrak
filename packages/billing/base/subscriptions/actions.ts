@@ -1,5 +1,10 @@
-import { getUser } from "auth";
-import { getSubscriptionByUserId, Subscription } from "database";
+import { getUserSession } from "auth";
+import {
+  createSubscription,
+  getSubscriptionByUserId,
+  Subscription,
+  updateSubscription,
+} from "database";
 
 export async function updateUserSubscription(
   subscription: Omit<Subscription, "id"> & {
@@ -15,37 +20,20 @@ export async function updateUserSubscription(
   );
 
   if (existingSubscription) {
-    await prisma.subscription.update({
-      where: {
-        id: existingSubscription.id,
-      },
-      data: {
-        ...subscription,
-      },
-    });
-
-    return;
+    return await updateSubscription(subscription);
   }
 
-  await prisma.subscription.create({
-    data: {
-      ...subscription,
-    },
-  });
+  await createSubscription(subscription);
 }
 
 export const getUserSubscription = async () => {
-  const user = await getUser();
+  const session = await getUserSession();
 
-  if (!user) {
+  if (!session) {
     return null;
   }
 
-  const subscription = await prisma.subscription.findFirst({
-    where: {
-      userId: user.id,
-    },
-  });
+  const { user } = session;
 
-  return subscription;
+  return await getSubscriptionByUserId(user.id);
 };

@@ -3,10 +3,28 @@
     "menu": {
       "blog": "Blog",
       "pricing": "Preise"
+    },
+    "locales": {
+      "en": "Englisch",
+      "de": "Deutsch"
     }
   },
   "blog": {
     "title": "Mein toller Blog",
     "description": "In diesem Blog schreibe ich über alles mögliche."
+  },
+  "home": {
+    "newsletter": {
+      "email": "E-Mail",
+      "hints": {
+        "success": {
+          "message": "Vielen Dank für Ihr Interesse! Du erhälst in Kürze eine E-Mail mit weiteren Informationen.",
+          "title": "Abonniert!"
+        }
+      },
+      "submit": "Abonnieren",
+      "subtitle": "Be among the first to get access to supastarter.nextjs.",
+      "title": "Get early access"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { trpc } from "api/client";
-import { SessionProvider, signIn, signOut } from "next-auth/react";
+import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 import { PropsWithChildren } from "react";
-import { UseAuthActions } from "../../types";
+import { UseAuthActions, UserSession } from "../../types";
 
 export const useAuthActions: UseAuthActions = () => {
   const signupMutation = trpc.signUp.useMutation();
@@ -23,7 +23,7 @@ export const useAuthActions: UseAuthActions = () => {
           return {
             error: {
               type: "invalid",
-              message: response.error,
+              message: "Invalid email or password",
             },
           };
       } else if (method === "email") {
@@ -38,7 +38,7 @@ export const useAuthActions: UseAuthActions = () => {
           return {
             error: {
               type: "invalid",
-              message: response.error,
+              message: "Could not send email",
             },
           };
       } else if (method === "oauth") {
@@ -52,10 +52,26 @@ export const useAuthActions: UseAuthActions = () => {
           return {
             error: {
               type: "invalid",
-              message: response.error,
+              message: "Could not sign in",
             },
           };
       }
+    },
+
+    forgotPassword: async ({ email }) => {
+      const response = await signIn("forgot-password", {
+        email,
+        callbackUrl: "/",
+        redirect: false,
+      });
+
+      if (response?.error)
+        return {
+          error: {
+            type: "invalid",
+            message: "Could not send email",
+          },
+        };
     },
 
     signUp: async (params) => {
@@ -90,3 +106,11 @@ export const useAuthActions: UseAuthActions = () => {
 export function AuthProvider({ children }: PropsWithChildren<{}>) {
   return <SessionProvider>{children}</SessionProvider>;
 }
+
+export const useUser = (): null | UserSession["user"] => {
+  const session = useSession();
+
+  if (!session.data?.user) return null;
+
+  return session.data.user;
+};

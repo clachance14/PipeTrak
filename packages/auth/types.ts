@@ -71,5 +71,6 @@ export type UserSession = {
 export type UseAuthActions = () => {
   signIn: SignInHandler;
   signUp: SignUpHandler;
+  forgotPassword: (params: { email: string }) => AuthHandlerReturnType;
   signOut: () => Promise<void>;
 };

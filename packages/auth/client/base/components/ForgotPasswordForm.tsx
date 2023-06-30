@@ -2,9 +2,12 @@
 
 import { Button, Hint, Icon, Input } from "ui";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
-import { FormEvent } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 import { AuthPaths } from "../../../types";
 
 const labels = {
@@ -27,32 +30,39 @@ const labels = {
   title: "Forgot your password?",
 };
 
+const formSchema = z.object({
+  email: z.string().email(),
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
 export function ForgotPasswordForm({ paths }: { paths: AuthPaths }) {
+  const { forgotPassword } = useAuthActions();
+  const [serverError, setServerError] = useState<null | string>(null);
+
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
-    formState: { isSubmitting, isSubmitSuccessful, isSubmitted, errors },
+    formState: { isSubmitting, isSubmitSuccessful, isSubmitted },
   } = useForm<{
     email: string;
     serverError: void;
-  }>();
+  }>({
+    resolver: zodResolver(formSchema),
+  });
 
-  const onSubmit = (e: FormEvent) => {
-    clearErrors("serverError");
-    handleSubmit(async () => {
-      // try {
-      //   const response = await signIn("forgot-password", {
-      //     email,
-      //     callbackUrl: "/reset-password",
-      //     redirect: false,
-      //   });
-      //   if (response?.error) setError("serverError", { type: "linkNotSent" });
-      // } catch (e) {
-      //   setError("serverError", { type: "linkNotSent" });
-      // }
-    })(e);
+  const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
+    try {
+      const response = await forgotPassword({
+        email,
+      });
+      if (response?.error) {
+        setServerError(response.error.message);
+        return;
+      }
+    } catch (e) {
+      setServerError("Could not send reset email");
+    }
   };
 
   return (
@@ -70,7 +80,10 @@ export function ForgotPasswordForm({ paths }: { paths: AuthPaths }) {
           icon={<Icon.mail className="h-4 w-4" />}
         />
       ) : (
-        <form className="flex flex-col items-stretch gap-6" onSubmit={onSubmit}>
+        <form
+          className="flex flex-col items-stretch gap-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
               {labels.email}
@@ -83,11 +96,10 @@ export function ForgotPasswordForm({ paths }: { paths: AuthPaths }) {
             />
           </div>
 
-          {isSubmitted && errors.serverError && (
+          {isSubmitted && serverError && (
             <Hint
               status="error"
-              title={labels.hints.linkNotSent.title}
-              message={labels.hints.linkNotSent.message}
+              message={serverError}
               icon={<Icon.warning className="h-4 w-4" />}
             />
           )}

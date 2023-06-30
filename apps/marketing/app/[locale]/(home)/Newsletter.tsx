@@ -13,6 +13,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function Newsletter() {
   const t = useTranslations("home");
+
   const {
     handleSubmit,
     register,
@@ -26,7 +27,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="border-t py-24 dark:text-white">
+    <section className="border-t py-24 dark:border-zinc-800 dark:text-white">
       <div className="container">
         <div className="mb-12 text-center">
           <Icon.key className="text-primary-500 mx-auto mb-3 h-12 w-12" />
@@ -53,7 +54,12 @@ export function Newsletter() {
                   placeholder={t("newsletter.email")}
                   {...register("email")}
                 />
-                <Button type="submit" className="ml-4" isLoading={isSubmitting}>
+                <Button
+                  type="submit"
+                  size="large"
+                  className="ml-4"
+                  isLoading={isSubmitting}
+                >
                   {t("newsletter.submit")}
                 </Button>
               </div>

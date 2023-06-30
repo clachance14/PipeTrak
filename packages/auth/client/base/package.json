@@ -10,11 +10,13 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
+    "auth-client-nextauth": "workspace:*",
     "next": "^13.4.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "ui": "workspace:*",
-    "auth-client-nextauth": "workspace:*"
+    "zod": "^3.21.4"
   }
 }

@@ -1,12 +1,9 @@
 {
-  "common": {
-    "menu": {
-      "blog": "Blog",
-      "pricing": "Preise"
-    }
+  "dashboard": {
+    "title": "Dashboard"
   },
-  "blog": {
-    "title": "Mein toller Blog",
-    "description": "In diesem Blog schreibe ich über alles mögliche."
+  "settings": {
+    "title": "Einstellungen",
+    "sbutitle": "Hier kannst du deine Einstellungen ändern"
   }
 }
