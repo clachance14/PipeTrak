@@ -1,3 +1,5 @@
+import { env } from "../env.mjs";
+
 export function createApiFetch(config: {
   baseUrl: string;
   fetchOptions?: RequestInit;
@@ -24,13 +26,11 @@ export function createApiFetch(config: {
 }
 
 export const lemonsqueezyApi = (() => {
-  const apiKey = "asdf";
-
   return createApiFetch({
     baseUrl: "https://api.lemonsqueezy.com/v1",
     fetchOptions: {
       headers: new Headers({
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${env.LEMONSQUEEZY_API_KEY}`,
         Accept: "application/vnd.api+json",
         "Content-Type": "application/vnd.api+json",
       }),

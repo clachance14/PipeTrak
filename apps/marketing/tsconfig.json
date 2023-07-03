@@ -12,8 +12,11 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
     ".next/types/**/*.ts",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
+    "env.mjs"
   ],
   "exclude": ["node_modules"]
 }

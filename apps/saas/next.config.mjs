@@ -1,5 +1,6 @@
+import nextIntlPlugin from "next-intl/plugin";
 import "./env.mjs";
-const withNextIntl = require("next-intl/plugin")("./i18n.ts");
+const withNextIntl = nextIntlPlugin("./i18n.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,4 +13,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+export default withNextIntl(nextConfig);

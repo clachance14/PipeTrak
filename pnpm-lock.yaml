@@ -172,6 +172,9 @@ importers:
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
     devDependencies:
       '@types/node':
         specifier: 20.2.5
