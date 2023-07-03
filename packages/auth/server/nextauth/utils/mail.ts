@@ -14,7 +14,7 @@ export const sendVerificationMail = async ({
       sent = await sendEmail({
         to: email,
         subject: "Reset your password",
-        templateId: "magicLink",
+        templateId: "forgotPassword",
         context: { url },
       });
       break;

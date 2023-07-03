@@ -15,7 +15,7 @@ export default function ActionBlock({
 }) {
   return (
     <form
-      className="overflow-hidden rounded-xl border-2 p-6 dark:border-zinc-800"
+      className="overflow-hidden rounded-xl border bg-white p-6 dark:border-zinc-700 dark:bg-zinc-800"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
@@ -26,7 +26,6 @@ export default function ActionBlock({
       <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t  px-6 py-3 dark:border-zinc-800 ">
         <Button
           type="submit"
-          size="small"
           isLoading={isSubmitting}
           disabled={isSubmitDisabled}
         >

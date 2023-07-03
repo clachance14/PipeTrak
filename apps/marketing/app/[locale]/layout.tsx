@@ -3,7 +3,7 @@ import { Providers } from "common/components";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getTranslator } from "next-intl/server";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sansFont = Inter({
+const sansFont = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
