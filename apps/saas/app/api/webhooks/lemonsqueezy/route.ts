@@ -1,13 +1,10 @@
 import { updateUserSubscription } from "billing/subscriptions";
 import { createHmac, timingSafeEqual } from "crypto";
 import { headers } from "next/headers";
+import { env } from "../../../../env.mjs";
 
 export async function POST(req: Request) {
-  const lemonsqueezySigningSecret = process.env
-    .LEMONSQUEEZY_SIGNING_SECRET as string;
-
-  if (!lemonsqueezySigningSecret)
-    throw new Error("Missing env for lemonsqueezy signing secret");
+  const lemonsqueezySigningSecret = env.LEMONSQUEEZY_SIGNING_SECRET;
 
   try {
     const text = await req.text();
@@ -52,14 +49,12 @@ export async function POST(req: Request) {
         throw new Error(`🤷‍♀️ Unhandled event: ${eventName}`);
     }
   } catch (error: unknown) {
-    if (error instanceof Error)
-      return new Response(`Webhook error: ${error.message}`, {
+    return new Response(
+      `Webhook error: ${error instanceof Error ? error.message : ""}`,
+      {
         status: 400,
-      });
-
-    return new Response("Webhook error", {
-      status: 400,
-    });
+      },
+    );
   }
 
   return new Response(null, {

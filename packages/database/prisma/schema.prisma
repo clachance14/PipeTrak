@@ -1,10 +1,12 @@
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("MIGRATION_DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 model Account {
@@ -46,8 +48,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  workspaces    Workspace[]
-  projects      Project[]
   subscriptions Subscription[]
 }
 
@@ -69,22 +69,4 @@ model Subscription {
   planId          String
   variantId       String
   nextPaymentDate DateTime?
-}
-
-model Workspace {
-  id       String    @id @default(cuid())
-  name     String
-  image    String?
-  members  User[]
-  projects Project[]
-}
-
-model Project {
-  id          String     @id @default(cuid())
-  title       String
-  description String?
-  userId      String
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspaceId String?
-  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 }

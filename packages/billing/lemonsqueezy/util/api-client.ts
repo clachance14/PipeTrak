@@ -24,11 +24,7 @@ export function createApiFetch(config: {
 }
 
 export const lemonsqueezyApi = (() => {
-  const apiKey = process.env.LEMONSQUEEZY_API_KEY;
-
-  if (!apiKey) {
-    throw new Error("Environment variable LEMONSQUEEZY_API_KEY is not defined");
-  }
+  const apiKey = "asdf";
 
   return createApiFetch({
     baseUrl: "https://api.lemonsqueezy.com/v1",

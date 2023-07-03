@@ -7,8 +7,33 @@
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
   "typescript.preferences.importModuleSpecifier": "shortest",
-  "i18n-ally.localesPaths": ["public/locales"],
-  "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.workingDirectories": [
+    {
+      "pattern": "apps/*/"
+    },
+    "packages/api",
+    "packages/auth-client",
+    "packages/auth",
+    "packages/api",
+    "packages/auth/server/base",
+    "packages/auth/server/nextauth",
+    "packages/auth/server/supabase",
+    "packages/auth/client/base",
+    "packages/auth/client/nextauth",
+    "packages/auth/client/supabase",
+    "packages/config/eslint-config-custom",
+    "packages/config/tailwind-config",
+    "packages/config/tsconfig",
+    "packages/database/base",
+    "packages/database/prisma",
+    "packages/billing/base",
+    "packages/billing/lemonsqueezy",
+    "packages/mail/base",
+    "packages/mail/plunk",
+    "packages/mail/nodemailer",
+    "packages/common",
+    "packages/ui"
+  ]
 }

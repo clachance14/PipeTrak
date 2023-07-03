@@ -4,6 +4,7 @@ import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { config } from "../../../config";
+import { env } from "../env.mjs";
 import { adapter, getUserByEmail } from "./database";
 import { verify } from "./hash";
 import { sendVerificationMail } from "./mail";
@@ -21,12 +22,12 @@ export const getAuthOptions = (): AuthOptions => ({
   },
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: env.GITHUB_ID,
+      clientSecret: env.GITHUB_SECRET,
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: env.GOOGLE_ID,
+      clientSecret: env.GOOGLE_SECRET,
       authorization: {
         params: {
           prompt: "consent",

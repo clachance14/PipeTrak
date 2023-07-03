@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next-intl/client";
 import Link from "next-intl/link";
 import { Button, Logo } from "ui";
+import { env } from "../env.mjs";
 
 export function NavBar({
   labels,
@@ -51,7 +52,7 @@ export function NavBar({
 
             <Button
               as="a"
-              href={`${process.env.NEXT_PUBLIC_SAAS_BASE_URL}/${locale}/auth/signin`}
+              href={`${env.NEXT_PUBLIC_SAAS_URL}/${locale}/auth/signin`}
               intent="primary-ghost"
               size="small"
             >

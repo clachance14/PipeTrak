@@ -13,7 +13,7 @@
   "name": "database-prisma",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "dotenv -c -e ../../../.env -- prisma db push --skip-generate"
   },
   "types": "./index.ts",
   "version": "0.1.0"
