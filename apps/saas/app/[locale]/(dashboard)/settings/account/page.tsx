@@ -1,6 +1,5 @@
 import { getUserSession } from "auth";
 import { getTranslator, redirect } from "next-intl/server";
-import ChangeEmailForm from "./ChangeEmail";
 import ChangeNameForm from "./ChangeNameForm";
 import ChangePasswordForm from "./ChangePassword";
 
@@ -22,7 +21,6 @@ export default async function AccountSettingsPage() {
   return (
     <div className="grid gap-6">
       <ChangeNameForm initialValue={session.user.name} />
-      <ChangeEmailForm initialValue={session.user.email} />
       <ChangePasswordForm />
     </div>
   );

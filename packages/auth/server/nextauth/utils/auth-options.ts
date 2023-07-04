@@ -98,38 +98,11 @@ export const getAuthOptions = (): AuthOptions => ({
 
       return session;
     },
-    jwt: async ({ user, token }) => {
-      // const { action, workspaceId } = params ?? {};
-      // if we are updating the session, we load the user data from the database and pass it to the token
-      // if (action === "updateSession") {
-      //   const currentUserData = await getUserById(token.uid as string);
-
-      //   token.name = currentUserData?.name;
-      // }
-
-      // change the workspace
-      //   if (action === 'switchWorkspace' && workspaceId) {
-      //     const userId = token.uid as string;
-
-      //     if (workspaceId === userId) {
-      //       token.workspaceId = workspaceId;
-      //     } else {
-      //       const workspace = await prisma.workspace.findFirst({
-      //         where: {
-      //           id: workspaceId,
-      //           members: {
-      //             some: {
-      //               id: user?.id,
-      //             },
-      //           },
-      //         },
-      //       });
-
-      //       if (!workspace) throw new Error('Workspace not found');
-
-      //       token.workspaceId = workspace.id;
-      //     }
-      //   }
+    jwt: async ({ user, token, trigger, session }) => {
+      if (trigger === "update") {
+        if (session.name) token.name = session.name;
+        if (session.email) token.email = session.email;
+      }
 
       // on initial token creation we add the user id to the token
       if (user) {

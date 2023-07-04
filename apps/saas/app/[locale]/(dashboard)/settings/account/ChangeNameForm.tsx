@@ -2,22 +2,32 @@
 
 import ActionBlock from "@components/ActionBlock";
 import { trpc } from "api/client";
+import { useAuthActions } from "auth-client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Input } from "ui";
+import { Input, useToast } from "ui";
 
 export default function ChangeNameForm({
   initialValue,
 }: {
   initialValue: string;
 }) {
+  const { updateSession } = useAuthActions();
   const [name, setName] = useState(initialValue ?? "");
   const router = useRouter();
+  const toast = useToast();
+  const t = useTranslations("settings");
 
   const changeNameMutation = trpc.changeName.useMutation({
     onSuccess: async () => {
-      await fetch("/api/auth/session?update");
+      await updateSession({ name });
       router.refresh();
+      toast.create({
+        type: "success",
+        title: t("notifications.nameUpdated"),
+        placement: "top-end",
+      });
     },
   });
 
