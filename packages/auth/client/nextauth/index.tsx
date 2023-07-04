@@ -5,6 +5,7 @@ import { UseAuthActions, UserSession } from "../../types";
 
 export const useAuthActions: UseAuthActions = () => {
   const signupMutation = trpc.signUp.useMutation();
+  const { update } = useSession();
 
   return {
     signIn: async (params) => {
@@ -61,7 +62,7 @@ export const useAuthActions: UseAuthActions = () => {
     forgotPassword: async ({ email }) => {
       const response = await signIn("forgot-password", {
         email,
-        callbackUrl: "/",
+        callbackUrl: "/settings/account",
         redirect: false,
       });
 
@@ -100,6 +101,10 @@ export const useAuthActions: UseAuthActions = () => {
     },
 
     signOut,
+
+    updateSession: async (user) => {
+      await update(user);
+    },
   };
 };
 
