@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
+import { ToastProvider } from "ui";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -43,7 +44,7 @@ export default async function RootLayout({
           <AuthProvider>
             <TrpcProvider>
               <NextIntlClientProvider locale={locale} messages={messages}>
-                {children}
+                <ToastProvider>{children}</ToastProvider>
               </NextIntlClientProvider>
             </TrpcProvider>
           </AuthProvider>
