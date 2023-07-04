@@ -10,6 +10,7 @@ export type AuthPaths = Record<`${AuthView}`, string>;
 export type AuthComponent = (props: {
   view?: AuthView;
   paths: AuthPaths;
+  redirectIfAuthenticated?: string;
 }) => JSX.Element | null;
 
 export type AuthHandlerReturnType = Promise<void | {
@@ -73,4 +74,5 @@ export type UseAuthActions = () => {
   signUp: SignUpHandler;
   forgotPassword: (params: { email: string }) => AuthHandlerReturnType;
   signOut: () => Promise<void>;
+  updateSession: (session: Partial<UserSession["user"]>) => Promise<void>;
 };

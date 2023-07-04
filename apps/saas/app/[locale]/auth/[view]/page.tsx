@@ -25,6 +25,7 @@ export default function AuthPage({
   return (
     <Auth
       view={view}
+      redirectIfAuthenticated="/"
       paths={{
         signin: `/${locale}/auth/signin`,
         signup: `/${locale}/auth/signup`,

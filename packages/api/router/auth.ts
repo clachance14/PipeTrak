@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { getUserSession } from "auth";
 import {
   createUser,
   getUserByEmail,
@@ -9,7 +8,7 @@ import {
 } from "database";
 import { z } from "zod";
 import { hash } from "../util/hash";
-import { publicProcedure } from "../util/trpc";
+import { protectedProcedure, publicProcedure } from "../util/trpc";
 
 export const authRouter = {
   /*
@@ -53,28 +52,11 @@ export const authRouter = {
   changePassword: publicProcedure
     .input(
       z.object({
-        password: z.string(),
+        password: z.string().min(8),
       }),
     )
-    .mutation(async ({ input: { password } }) => {
-      const session = { user: { id: "1" } };
-
-      if (!session) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Not logged in.",
-        });
-      }
-
-      // check password strength
-      if (password.length < 8) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Password too short.",
-        });
-      }
-
-      const { id } = session.user;
+    .mutation(async ({ input: { password }, ctx: { session } }) => {
+      const { id } = session!.user;
 
       const user = await getUserById(id);
 
@@ -96,23 +78,14 @@ export const authRouter = {
   /*
    * This mutation is used to change the email address of the user.
    */
-  changeName: publicProcedure
+  changeName: protectedProcedure
     .input(
       z.object({
         name: z.string(),
       }),
     )
-    .mutation(async ({ input: { name } }) => {
-      const session = await getUserSession();
-
-      if (!session) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Not logged in.",
-        });
-      }
-
-      const { id } = session.user;
+    .mutation(async ({ input: { name }, ctx: { session } }) => {
+      const { id } = session!.user;
 
       const user = getUserById(id);
 
@@ -140,17 +113,8 @@ export const authRouter = {
         email: z.string(),
       }),
     )
-    .mutation(async ({ input: { email } }) => {
-      const session = { user: { id: "1" } };
-
-      if (!session) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Not logged in.",
-        });
-      }
-
-      const { id } = session.user;
+    .mutation(async ({ input: { email }, ctx: { session } }) => {
+      const { id } = session!.user;
 
       const user = await getUserById(id);
 
