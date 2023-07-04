@@ -1,8 +1,8 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-import { Button, Icon } from 'ui';
-import heroDarkImage from '/public/images/hero-dark.svg';
-import heroImage from '/public/images/hero.svg';
+import { Button, Icon } from "ui";
+import heroDarkImage from "/public/images/hero-dark.svg";
+import heroImage from "/public/images/hero.svg";
 
 export function Features() {
   return (
@@ -10,36 +10,48 @@ export function Features() {
       <div className="container">
         {/* Section header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold lg:text-5xl">Features your clients will love</h1>
-          <p className="mt-3 text-lg opacity-50">In this section you can showcase the features of your SaaS.</p>
+          <h1 className="text-4xl font-bold lg:text-5xl">
+            Features your clients will love
+          </h1>
+          <p className="mt-3 text-lg opacity-50">
+            In this section you can showcase the features of your SaaS.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-16 lg:gap-32 mt-20">
+        <div className="mt-20 grid grid-cols-1 gap-16 lg:gap-8">
           {/* Feature 1 */}
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-br p-8 lg:grid-cols-2 lg:gap-16">
             <div>
-              <Image src={heroImage} className="block dark:hidden" alt="Feature 1" />
-              <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 1" />
+              <Image
+                src={heroImage}
+                className="block dark:hidden"
+                alt="Feature 1"
+              />
+              <Image
+                src={heroDarkImage}
+                className="hidden dark:block"
+                alt="Feature 1"
+              />
             </div>
 
             <div>
-              <h3 className="text-2xl font-bold">Feature A</h3>
+              <h3 className="text-3xl font-bold">Feature A</h3>
               <p className="mt-1 opacity-50">
-                This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy
-                text.
+                This is a brilliant feature. And below you can see some reasons
+                why. This is basically just a dummy text.
               </p>
               <Button intent="primary-ghost" className="mt-3" size="small">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.star className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.star className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
-                <div className="w4-rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.pointer className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.pointer className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
@@ -48,30 +60,38 @@ export function Features() {
           </div>
 
           {/* Feature 2 */}
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-tl p-8 lg:grid-cols-2 lg:gap-16">
             <div className="lg:order-2">
-              <Image src={heroImage} className="block dark:hidden" alt="Feature 2" />
-              <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 2" />
+              <Image
+                src={heroImage}
+                className="block dark:hidden"
+                alt="Feature 2"
+              />
+              <Image
+                src={heroDarkImage}
+                className="hidden dark:block"
+                alt="Feature 2"
+              />
             </div>
 
             <div className="lg:order-1">
-              <h3 className="text-2xl font-bold">Feature B</h3>
+              <h3 className="text-3xl font-bold">Feature B</h3>
               <p className="mt-1 opacity-50">
-                This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy
-                text.
+                This is a brilliant feature. And below you can see some reasons
+                why. This is basically just a dummy text.
               </p>
               <Button intent="primary-ghost" className="mt-3" size="small">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.upload className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.upload className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
-                <div className="rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.cloud className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.cloud className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
@@ -80,30 +100,38 @@ export function Features() {
           </div>
 
           {/* Feature 3 */}
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-br p-8 lg:grid-cols-2 lg:gap-16">
             <div>
-              <Image src={heroImage} className="block dark:hidden" alt="Feature 3" />
-              <Image src={heroDarkImage} className="hidden dark:block" alt="Feature 3" />
+              <Image
+                src={heroImage}
+                className="block dark:hidden"
+                alt="Feature 3"
+              />
+              <Image
+                src={heroDarkImage}
+                className="hidden dark:block"
+                alt="Feature 3"
+              />
             </div>
 
             <div>
-              <h3 className="text-2xl font-bold">Feature C</h3>
+              <h3 className="text-3xl font-bold">Feature C</h3>
               <p className="mt-1 opacity-50">
-                This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy
-                text.
+                This is a brilliant feature. And below you can see some reasons
+                why. This is basically just a dummy text.
               </p>
               <Button intent="primary-ghost" className="mt-3" size="small">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.phone className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.phone className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
-                <div className="rounded-xl border p-4 dark:border-zinc-700">
-                  <Icon.paperclip className="h-6 w-6 text-3xl text-primary-500" />
+                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
+                  <Icon.paperclip className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-50">This is a brilliant benefit.</p>
                 </div>
