@@ -123,10 +123,10 @@ export const button = cva(
         ],
       },
       size: {
-        xsmall: ["text-xs", "py-0.5", "px-2", "rounded-full", "h-6"],
-        small: ["text-sm", "py-1", "px-3", "rounded-full", "h-8"],
-        medium: ["text-base", "py-2", "px-4", "rounded-full", "h-10"],
-        large: ["text-lg", "py-4", "px-6", "rounded-full", "h-12"],
+        xsmall: ["text-xs", "py-0.5", "px-2", "rounded-sm", "h-6"],
+        small: ["text-sm", "py-1", "px-3", "rounded-md", "h-8"],
+        medium: ["text-base", "py-2", "px-4", "rounded-lg", "h-10"],
+        large: ["text-lg", "py-4", "px-6", "rounded-xl", "h-12"],
       },
     },
     defaultVariants: {

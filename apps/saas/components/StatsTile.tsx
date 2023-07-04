@@ -51,7 +51,7 @@ export function StatsTile({
   }, [trend, format]);
 
   return (
-    <div className="dark:bg-zinc-950 rounded-xl bg-white p-6">
+    <div className="dark:bg-zinc-950 rounded-xl border bg-white p-6 dark:border-zinc-800">
       <h4 className="text-sm opacity-50">{title}</h4>
       <div className="flex items-center justify-between">
         <strong className="text-2xl font-bold">

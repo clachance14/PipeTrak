@@ -13,6 +13,7 @@ import {
   Globe,
   Grid,
   HardDrive,
+  Home,
   Info,
   Key,
   Loader,
@@ -70,6 +71,7 @@ export const Icon = {
   phone: Phone,
   key: Key,
   language: Globe,
+  home: Home,
 
   // social icons
   google: ({ ...props }: IconProps) => (
