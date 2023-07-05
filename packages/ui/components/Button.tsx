@@ -5,7 +5,7 @@ import { Icon } from "./Icon";
 export const button = cva(
   [
     "font-semibold",
-    "border-2",
+    "border",
     "hover:no-underline",
     // alignment inside button
     "flex",
