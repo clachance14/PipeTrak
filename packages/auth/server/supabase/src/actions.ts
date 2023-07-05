@@ -81,7 +81,7 @@ export const updateUserName = async (name: string) => {
 
   const { error } = await supabaseClient.auth.updateUser({
     data: {
-      name,
+      full_name: name,
     },
   });
 
