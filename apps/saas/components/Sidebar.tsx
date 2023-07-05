@@ -2,6 +2,7 @@
 
 import UserMenu from "@components/UserMenu";
 import { appConfig } from "@config";
+import { env } from "@env.mjs";
 import { sidebarExpanded as sidebarExpandedAtom } from "@state/ui";
 import { useUser } from "auth-client";
 import { ColorModeToggle, LocaleSwitch } from "common/components";
@@ -49,7 +50,7 @@ export function Sidebar({}: PropsWithChildren<{}>) {
 
   return (
     <nav
-      className={`dark:bg-zinc-950 fixed top-0 bg-white ${positionClass} z-40 h-screen w-[280px] shadow-[0_0_16px_rgba(0,0,0,0.025)] transition-all duration-300 ease-in-out`}
+      className={`fixed top-0 bg-white dark:bg-zinc-950 ${positionClass} z-40 h-screen w-[280px] shadow-[0_0_16px_rgba(0,0,0,0.025)] transition-all duration-300 ease-in-out`}
     >
       <div className="flex justify-end px-6 py-2 lg:hidden">
         <Button
@@ -62,21 +63,19 @@ export function Sidebar({}: PropsWithChildren<{}>) {
         </Button>
       </div>
       <div className="p-6">
-        <Logo />
+        <a href={env.NEXT_PUBLIC_MARKETING_URL} className="!no-underline">
+          <Logo />
+        </a>
       </div>
-
-      {/* <div className="px-6">
-        <WorkspacesSelect workspaces={workspaces} selectedWorkspace={selectedWorkspace} />
-      </div> */}
 
       <ul className="mt-4 list-none px-6">
         {menuItems.map((menuItem) => (
           <li key={menuItem.href}>
             <Link
               href={menuItem.href}
-              className={`hover:text-zinc-950 flex items-center gap-3 rounded-xl px-4 py-3 hover:no-underline focus:no-underline dark:hover:text-white ${
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 hover:text-zinc-950 hover:no-underline focus:no-underline dark:hover:text-white ${
                 isActiveMenuItem(menuItem.segment)
-                  ? "bg-primary-500/10 text-zinc-950 font-bold dark:text-white"
+                  ? "bg-primary-500/10 font-bold text-zinc-950 dark:text-white"
                   : ""
               }`}
             >
