@@ -1,3 +1,3 @@
-# auth-nextauth
+# auth-supabase
 
-A provider package for [NextAuth.js](https://next-auth.js.org/). This is references in the common `auth` package.
+A provider package for [Supabase](https://supabase.com). This is references in the common `auth` package.

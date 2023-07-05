@@ -9,6 +9,6 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
-    "auth-nextauth": "workspace:*"
+    "auth-supabase": "workspace:*"
   }
 }

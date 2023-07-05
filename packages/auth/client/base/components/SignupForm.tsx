@@ -1,11 +1,11 @@
 "use client";
 
-import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
 import { AuthPaths } from "../../../types";
+import { useAuthActions } from "../provider";
 
 const labels = {
   alreadyHaveAccount: "Already have an account?",

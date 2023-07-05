@@ -61,12 +61,14 @@ export type SocialSigninProvider =
   | "twitter"
   | "workos";
 
+export type User = {
+  id: string;
+  email: string;
+  name: string;
+};
+
 export type UserSession = {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
+  user: User;
 };
 
 export type UseAuthActions = () => {
@@ -75,4 +77,15 @@ export type UseAuthActions = () => {
   forgotPassword: (params: { email: string }) => AuthHandlerReturnType;
   signOut: () => Promise<void>;
   updateSession: (session: Partial<UserSession["user"]>) => Promise<void>;
+};
+
+export type AuthApiResolvers = {
+  signUp: (params: {
+    email: string;
+    password: string;
+    name: string;
+  }) => AuthHandlerReturnType;
+  changePassword: (params: { password: string }) => AuthHandlerReturnType;
+  changeEmail: (params: { email: string }) => AuthHandlerReturnType;
+  changeName: (params: { name: string }) => AuthHandlerReturnType;
 };

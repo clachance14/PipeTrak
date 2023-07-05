@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
 import { config } from "../../../config";
 import { AuthPaths } from "../../../types";
+import { useAuthActions } from "../provider";
 import SigninModeSwitch, { SigninMode } from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 
@@ -176,7 +176,7 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
         </form>
       )}
 
-      <hr className="border-zinc-950 my-8 border-opacity-5 dark:border-white dark:border-opacity-5" />
+      <hr className="my-8 border-zinc-950 border-opacity-5 dark:border-white dark:border-opacity-5" />
 
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         {oAuthProviders.map((providerId) => (

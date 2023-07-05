@@ -3,12 +3,12 @@
 import { Button, Hint, Icon, Input } from "ui";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthActions } from "auth-client-nextauth";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { AuthPaths } from "../../../types";
+import { useAuthActions } from "../provider";
 
 const labels = {
   backToSignin: "Back to signin",

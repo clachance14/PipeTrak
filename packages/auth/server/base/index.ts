@@ -1,2 +1,2 @@
-export * from "auth-nextauth";
+export * from "auth-supabase";
 export * from "../../types";

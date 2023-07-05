@@ -1,1 +1,1 @@
-export * from "auth-nextauth/middleware";
+export * from "auth-supabase/middleware";

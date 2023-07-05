@@ -1,1 +1,1 @@
-export * from "auth-client-nextauth";
+export * from "auth-client-supabase";

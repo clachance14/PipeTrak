@@ -17,7 +17,6 @@ export default async function BillingSettingsPage() {
   const plans = await getAllPlans();
 
   const userSubscription = await getSubscriptionByUserId(session!.user.id);
-  console.log(plans);
 
   return (
     <div>
