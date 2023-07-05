@@ -3,6 +3,7 @@ import {
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { trpc } from "api/client";
+import { useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { UseAuthActions, UserSession } from "../../types";
 
@@ -11,6 +12,7 @@ const callbackEndpoint = `/api/auth/supabase/callback`;
 export const useAuthActions: UseAuthActions = () => {
   const signupMutation = trpc.signUp.useMutation();
   const { auth } = createClientComponentClient();
+  const router = useRouter();
 
   return {
     signIn: async (params) => {
@@ -110,6 +112,7 @@ export const useAuthActions: UseAuthActions = () => {
 
     signOut: async () => {
       await auth.signOut();
+      router.push("/auth/signin");
     },
 
     updateSession: async (user) => {
@@ -145,6 +148,8 @@ export const useUser = (): null | UserSession["user"] => {
           setUser(session?.user ? mapUser(session.user) : null);
         } else if (event === "SIGNED_OUT") {
           setUser(null);
+        } else if (event === "USER_UPDATED") {
+          setUser(session?.user ? mapUser(session.user) : null);
         }
       },
     );
