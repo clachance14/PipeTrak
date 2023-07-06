@@ -3,7 +3,7 @@ import { AuthProvider } from "auth-client";
 import { Providers } from "common/components";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { ToastProvider } from "ui";
 import "../globals.css";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sansFont = Manrope({
+const sansFont = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -39,7 +39,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${sansFont.variable} font-sans`}>
+      <body className={`${sansFont.variable} font-sans dark:bg-zinc-900`}>
         <Providers>
           <AuthProvider>
             <TrpcProvider>

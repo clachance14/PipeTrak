@@ -15,7 +15,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "ui": "workspace:*",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "api": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

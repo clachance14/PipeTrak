@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex bg-white dark:bg-zinc-950">
+    <div className="flex">
       <Sidebar />
       <main className="min-h-screen flex-1 transition-all duration-300 ease-in-out lg:ml-[280px]">
         {children}

@@ -25,6 +25,7 @@ export type SignInHandler = (
     | {
         method: "email";
         email: string;
+        redirectTo?: string;
       }
     | {
         method: "password";

@@ -15,7 +15,7 @@ export default function ActionBlock({
 }) {
   return (
     <form
-      className="overflow-hidden rounded-xl border bg-white p-6 dark:border-zinc-700 dark:bg-zinc-800"
+      className="overflow-hidden rounded-xl border bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();

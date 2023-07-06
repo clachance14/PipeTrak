@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Hint, Icon, Input } from "ui";
@@ -53,6 +53,10 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
   const [signinMode, setSigninMode] = useState(SigninMode.MagicLink);
   const [serverError, setServerError] = useState<null | string>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const redirectTo =
+    searchParams.get("redirectTo") ?? config.redirectAfterSignin;
 
   const oAuthProviders = [
     { type: "oauth", id: "google" },
@@ -94,6 +98,7 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
         response = await signIn({
           method: "email",
           email,
+          redirectTo,
         });
       }
 
@@ -101,8 +106,6 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
         setServerError(response.error.message);
         return;
       }
-
-      router.replace(config.redirectAfterSignin);
     } catch (e) {
       setServerError("Could not sign in. Please try again later.");
     }

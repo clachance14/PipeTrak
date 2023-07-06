@@ -34,11 +34,11 @@ export const useAuthActions: UseAuthActions = () => {
             },
           };
       } else if (method === "email") {
-        const { email } = params;
+        const { email, redirectTo } = params;
         try {
           await magicLinkMutation.mutateAsync({
             email,
-            redirectTo: `${location.origin}`,
+            redirectTo: redirectTo ?? `${location.origin}`,
           });
         } catch (e) {
           return {

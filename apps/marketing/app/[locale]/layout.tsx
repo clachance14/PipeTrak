@@ -3,7 +3,7 @@ import { Providers } from "common/components";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getTranslator } from "next-intl/server";
-import { Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sansFont = Manrope({
+const sansFont = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -39,7 +39,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${sansFont.variable} font-sans`}>
+      <body className={`${sansFont.variable} font-sans dark:bg-zinc-900`}>
         <Providers>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <NavBar

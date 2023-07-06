@@ -11,7 +11,7 @@ module.exports = {
         md: "100%",
         lg: "100%",
         xl: "100%",
-        "2xl": "64rem",
+        "2xl": "72rem",
       },
     },
     extend: {

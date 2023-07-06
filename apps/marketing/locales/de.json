@@ -13,6 +13,10 @@
     "title": "Mein toller Blog",
     "description": "In diesem Blog schreibe ich über alles mögliche."
   },
+  "pricing": {
+    "title": "Preise",
+    "description": "Wähle das passende Paket für dich aus."
+  },
   "home": {
     "newsletter": {
       "email": "E-Mail",

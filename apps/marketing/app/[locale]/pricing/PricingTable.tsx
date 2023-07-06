@@ -1,5 +1,6 @@
 "use client";
 
+import { env } from "@env.mjs";
 import { SubscriptionPlan } from "billing/subscriptions";
 import { useState } from "react";
 import { Button } from "ui";
@@ -58,18 +59,9 @@ export default function PricingTable({
               </strong>
 
               <Button
-                as={isActiveSubscription(plan) ? "button" : "a"}
+                as="a"
                 isDisabled={isActiveSubscription(plan)}
-                {...(!isActiveSubscription(plan)
-                  ? {
-                      href: getCheckoutLink({
-                        variantIds: plan.variants.map((variant) =>
-                          Number(variant.id),
-                        ),
-                        storeId: plan.storeId,
-                      }),
-                    }
-                  : {})}
+                href={`${env.NEXT_PUBLIC_SAAS_URL}/settings/billing`}
                 className="mt-4 w-full"
               >
                 {isActiveSubscription(plan)

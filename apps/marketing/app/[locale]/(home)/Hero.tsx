@@ -1,25 +1,14 @@
-import { Button, Icon } from "ui";
+import { Button } from "ui";
 
 export function Hero() {
   return (
-    <nav className="to-primary-100 dark:to-primary-950 bg-gradient-to-tr from-white pb-16 pt-48 dark:from-zinc-900 dark:text-white">
+    <nav className="border-b pb-24 pt-64 dark:border-zinc-800">
       <div className="container text-center">
-        <div className="mb-3 flex justify-center">
-          <h5 className="bg-primary-500/10 text-primary-500 flex items-center justify-center rounded-full px-3 py-2 text-xs font-semibold">
-            <Icon.star className="mr-2 block h-4 w-4" /> Built with the ultimate
-            SaaS starter kit
-          </h5>
-        </div>
-
         <h1 className="text-5xl font-bold lg:text-7xl">
-          Your{" "}
-          <span className="from-primary-500 to-primary-600 bg-gradient-to-b bg-clip-text text-transparent drop-shadow-[0px_4px_24px_rgba(59,130,246,0.4)]">
-            revolutionary
-          </span>{" "}
-          SaaS
+          Your revolutionary SaaS
         </h1>
 
-        <p className="mt-5 text-lg opacity-50">
+        <p className="mt-5 text-lg opacity-75">
           This is a demo application built with supastarter. <br />
           It will save you a lot of time and effort building your next SaaS.
         </p>

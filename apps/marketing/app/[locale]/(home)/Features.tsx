@@ -13,15 +13,15 @@ export function Features() {
           <h1 className="text-4xl font-bold lg:text-5xl">
             Features your clients will love
           </h1>
-          <p className="mt-3 text-lg opacity-50">
+          <p className="mt-3 text-lg opacity-70">
             In this section you can showcase the features of your SaaS.
           </p>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-16 lg:gap-8">
+        <div className="mt-20 grid grid-cols-1 gap-16">
           {/* Feature 1 */}
-          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-br p-8 lg:grid-cols-2 lg:gap-16">
-            <div>
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <div className="rounded-2xl bg-orange-500/10 p-12">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -36,11 +36,11 @@ export function Features() {
 
             <div>
               <h3 className="text-3xl font-bold">Feature A</h3>
-              <p className="mt-1 opacity-50">
+              <p className="mt-2 leading-normal opacity-70">
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-3" size="small">
+              <Button intent="primary-ghost" className="mt-4">
                 Learn more &rarr;
               </Button>
 
@@ -48,20 +48,20 @@ export function Features() {
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.star className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.pointer className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Feature 2 */}
-          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-tl p-8 lg:grid-cols-2 lg:gap-16">
-            <div className="lg:order-2">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <div className="rounded-2xl bg-blue-500/10 p-12 lg:order-2">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -76,11 +76,11 @@ export function Features() {
 
             <div className="lg:order-1">
               <h3 className="text-3xl font-bold">Feature B</h3>
-              <p className="mt-1 opacity-50">
+              <p className="mt-2 leading-normal opacity-70">
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-3" size="small">
+              <Button intent="primary-ghost" className="mt-4">
                 Learn more &rarr;
               </Button>
 
@@ -88,20 +88,20 @@ export function Features() {
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.upload className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.cloud className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Feature 3 */}
-          <div className="from-primary-500/10 to-primary-500/5 grid items-center gap-8 rounded-2xl bg-gradient-to-br p-8 lg:grid-cols-2 lg:gap-16">
-            <div>
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <div className="rounded-2xl bg-green-500/10 p-12 ">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -116,11 +116,11 @@ export function Features() {
 
             <div>
               <h3 className="text-3xl font-bold">Feature C</h3>
-              <p className="mt-1 opacity-50">
+              <p className="mt-2 leading-normal opacity-70">
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-3" size="small">
+              <Button intent="primary-ghost" className="mt-4">
                 Learn more &rarr;
               </Button>
 
@@ -128,12 +128,12 @@ export function Features() {
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.phone className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
                   <Icon.paperclip className="text-primary-500 h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
-                  <p className="opacity-50">This is a brilliant benefit.</p>
+                  <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
               </div>
             </div>

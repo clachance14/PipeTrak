@@ -13,6 +13,10 @@
     "title": "My awesome blog",
     "description": "Read the latest news from our company"
   },
+  "pricing": {
+    "title": "Pricing",
+    "description": "Choose the plan that works best for you."
+  },
   "home": {
     "newsletter": {
       "email": "Email",
