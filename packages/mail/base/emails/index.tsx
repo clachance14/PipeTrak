@@ -1,13 +1,11 @@
-import type ForgotPassword from "./ForgotPassword";
-import type MagicLink from "./MagicLink";
-import type NewUser from "./NewUser";
+import { ForgotPassword } from "./ForgotPassword";
+import { MagicLink } from "./MagicLink";
+import { NewUser } from "./NewUser";
+import { NewsletterSignup } from "./NewsletterSignup";
 
-export const emails = {
-  magicLink: (props: Parameters<typeof MagicLink>[0]) =>
-    import("./MagicLink").then((m) => m.default(props)),
-  forgotPassword: (props: Parameters<typeof ForgotPassword>[0]) =>
-    import("./ForgotPassword").then((m) => m.default(props)),
-  newUser: (props: Parameters<typeof NewUser>[0]) =>
-    import("./NewUser").then((m) => m.default(props)),
-  newsletterSignup: () => import("./NewsletterSignup").then((m) => m.default()),
+export const mailTemplates = {
+  magicLink: MagicLink,
+  forgotPassword: ForgotPassword,
+  newUser: NewUser,
+  newsletterSignup: NewsletterSignup,
 };

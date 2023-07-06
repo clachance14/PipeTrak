@@ -11,6 +11,7 @@ const callbackEndpoint = `/api/auth/supabase/callback`;
 
 export const useAuthActions: UseAuthActions = () => {
   const signupMutation = trpc.signUp.useMutation();
+  const magicLinkMutation = trpc.magicLink.useMutation();
   const { auth } = createClientComponentClient();
   const router = useRouter();
 
@@ -34,20 +35,19 @@ export const useAuthActions: UseAuthActions = () => {
           };
       } else if (method === "email") {
         const { email } = params;
-        const response = await auth.signInWithOtp({
-          email,
-          options: {
-            emailRedirectTo: `${location.origin}${callbackEndpoint}`,
-          },
-        });
-
-        if (response?.error)
+        try {
+          await magicLinkMutation.mutateAsync({
+            email,
+            redirectTo: `${location.origin}`,
+          });
+        } catch (e) {
           return {
             error: {
               type: "invalid",
               message: "Could not send email",
             },
           };
+        }
       } else if (method === "oauth") {
         const { provider } = params;
         const response = await auth.signInWithOAuth({

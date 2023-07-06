@@ -2,6 +2,8 @@ import { TRPCError } from "@trpc/server";
 import {
   createUser,
   getUserByEmail,
+  sendMagicLink,
+  sendPasswordResetLink,
   updateUserEmail,
   updateUserName,
   updateUserPassword,
@@ -10,6 +12,26 @@ import { z } from "zod";
 import { protectedProcedure, publicProcedure } from "../util/trpc";
 
 export const authRouter = {
+  magicLink: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        redirectTo: z.string().url(),
+      }),
+    )
+    .mutation(async ({ input: { email, redirectTo } }) => {
+      await sendMagicLink({ email, redirectTo });
+    }),
+  forgotPassword: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        redirectTo: z.string().url(),
+      }),
+    )
+    .mutation(async ({ input: { email, redirectTo } }) => {
+      await sendPasswordResetLink({ email, redirectTo });
+    }),
   signUp: publicProcedure
     .input(
       z.object({

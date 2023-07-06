@@ -4,7 +4,7 @@ import { Html } from "@react-email/html";
 import { Text } from "@react-email/text";
 import PrimaryButton from "./components/PrimaryButton";
 
-export default function NewUser({ url }: { url: string }): JSX.Element {
+export function NewUser({ url }: { url: string }): JSX.Element {
   return (
     <Html>
       <Container>
@@ -18,3 +18,8 @@ export default function NewUser({ url }: { url: string }): JSX.Element {
     </Html>
   );
 }
+
+NewUser.subjects = {
+  en: "Welcome to supastarter!",
+  de: "Willkommen bei supastarter!",
+};

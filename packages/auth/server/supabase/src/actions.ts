@@ -58,10 +58,72 @@ export const createUser = async (payload: {
   await sendEmail({
     templateId: "newUser",
     to: payload.email,
-    subject: "Welcome to the supastarter",
+    context: {
+      url: data.properties.action_link,
+    },
   });
 
   return mapSupabaseUserToUser(data.user);
+};
+
+export const sendMagicLink = async ({
+  email,
+  redirectTo,
+}: {
+  email: string;
+  redirectTo: string;
+}): Promise<void> => {
+  const supabaseClient = createSupabaseAdminClient();
+
+  const { data, error } = await supabaseClient.auth.admin.generateLink({
+    type: "magiclink",
+    email,
+    options: {
+      redirectTo,
+    },
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  await sendEmail({
+    templateId: "magicLink",
+    to: email,
+    context: {
+      url: data.properties.action_link,
+    },
+  });
+};
+
+export const sendPasswordResetLink = async ({
+  email,
+  redirectTo,
+}: {
+  email: string;
+  redirectTo: string;
+}) => {
+  const supabaseClient = createSupabaseAdminClient();
+
+  const { data, error } = await supabaseClient.auth.admin.generateLink({
+    type: "recovery",
+    email,
+    options: {
+      redirectTo,
+    },
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  await sendEmail({
+    templateId: "forgotPassword",
+    to: email,
+    context: {
+      url: data.properties.action_link,
+    },
+  });
 };
 
 export const updateUserEmail = async (email: string) => {

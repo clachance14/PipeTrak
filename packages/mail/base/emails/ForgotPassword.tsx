@@ -3,7 +3,7 @@ import { Html } from "@react-email/html";
 import { Text } from "@react-email/text";
 import PrimaryButton from "./components/PrimaryButton";
 
-export default function ForgotPassword({ url }: { url: string }): JSX.Element {
+export function ForgotPassword({ url }: { url: string }): JSX.Element {
   return (
     <Html>
       <Heading>Reset your password</Heading>
@@ -15,3 +15,8 @@ export default function ForgotPassword({ url }: { url: string }): JSX.Element {
     </Html>
   );
 }
+
+ForgotPassword.subjects = {
+  en: "Reset your password",
+  de: "Setzen Sie Ihr Passwort zurück",
+};

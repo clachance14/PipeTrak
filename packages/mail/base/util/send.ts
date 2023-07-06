@@ -1,16 +1,21 @@
-import { emails } from "../emails";
+import { mailTemplates } from "../emails";
 import { send } from "./provider";
 import { getTemplate } from "./templates";
 
-export async function sendEmail(params: {
+export async function sendEmail<
+  TemplateId extends keyof typeof mailTemplates,
+>(params: {
   to: string;
-  subject: string;
-  templateId: keyof typeof emails;
-  context?: Parameters<(typeof emails)[keyof typeof emails]>[0];
+  templateId: TemplateId;
+  context?: Parameters<(typeof mailTemplates)[TemplateId]>[0];
 }) {
-  const { to, subject, templateId, context } = params;
+  const { to, templateId, context } = params;
 
-  const { html, text } = await getTemplate(templateId, context);
+  const { html, text, subject } = await getTemplate({
+    templateId,
+    context,
+    locale: "en",
+  });
 
   try {
     // send the email

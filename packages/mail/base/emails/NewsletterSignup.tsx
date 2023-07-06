@@ -3,7 +3,7 @@ import { Heading } from "@react-email/heading";
 import { Html } from "@react-email/html";
 import { Text } from "@react-email/text";
 
-export default function NewsletterSignup(): JSX.Element {
+export function NewsletterSignup(): JSX.Element {
   return (
     <Html>
       <Container>
@@ -13,3 +13,8 @@ export default function NewsletterSignup(): JSX.Element {
     </Html>
   );
 }
+
+NewsletterSignup.subjects = {
+  en: "Welcome to our newsletter!",
+  de: "Willkommen bei unserem Newsletter!",
+};
