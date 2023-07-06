@@ -489,6 +489,25 @@ importers:
         specifier: workspace:*
         version: link:../../config/tsconfig
 
+  packages/billing/stripe:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.1.3)(zod@3.21.4)
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@types/node':
+        specifier: 20.2.5
+        version: 20.2.5
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../config/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+
   packages/common:
     dependencies:
       '@ark-ui/react':

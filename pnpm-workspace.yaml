@@ -15,6 +15,7 @@ packages:
   - packages/database/prisma
   - packages/billing/base
   - packages/billing/lemonsqueezy
+  - packages/billing/stripe
   - packages/mail/base
   - packages/mail/plunk
   - packages/mail/nodemailer
