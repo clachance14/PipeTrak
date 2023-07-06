@@ -50,7 +50,7 @@ export function Sidebar({}: PropsWithChildren<{}>) {
 
   return (
     <nav
-      className={`fixed top-0 bg-white dark:bg-zinc-950 ${positionClass} z-40 h-screen w-[280px] shadow-[0_0_16px_rgba(0,0,0,0.025)] transition-all duration-300 ease-in-out`}
+      className={`fixed top-0 bg-white dark:bg-zinc-950 ${positionClass} z-40 h-screen w-[280px] border-r transition-all duration-300 ease-in-out dark:border-zinc-900`}
     >
       <div className="flex justify-end px-6 py-2 lg:hidden">
         <Button
