@@ -39,7 +39,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${sansFont.variable} font-sans dark:bg-zinc-900`}>
+      <body
+        className={`${sansFont.variable} bg-zinc-50 font-sans dark:bg-zinc-950`}
+      >
         <Providers>
           <AuthProvider>
             <TrpcProvider>

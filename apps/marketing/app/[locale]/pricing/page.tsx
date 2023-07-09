@@ -1,6 +1,6 @@
 import { getAllPlans } from "billing/subscriptions";
 import { getTranslator } from "next-intl/server";
-import PricingTable from "./PricingTable";
+import { PricingTable } from "./PricingTable";
 
 export default async function PricingPage({
   params: { locale },
@@ -12,7 +12,7 @@ export default async function PricingPage({
 
   return (
     <main>
-      <div className="px-8 pb-24 pt-36">
+      <div className="px-8 pb-24 pt-48">
         <div className="container">
           <div className="mb-12 text-center">
             <h1 className="text-4xl font-bold lg:text-5xl">{t("title")}</h1>

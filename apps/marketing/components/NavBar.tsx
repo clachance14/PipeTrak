@@ -41,12 +41,12 @@ export function NavBar({
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-white/80 backdrop-blur-lg dark:bg-zinc-900/80 dark:text-white`}
     >
-      <div className="inset-0 bottom-auto bg-blue-500/10 px-8 py-4 text-center text-sm text-blue-950/75 dark:text-blue-100/75">
+      <div className="bg-primary-500/10 text-primary-950/75 dark:text-primary-100/75 inset-0 bottom-auto px-8 py-4 text-center text-sm">
         <strong>New:</strong> In this banner you can show your awesome new
         feature
       </div>
-      <div className="flex items-center justify-between gap-6 px-12 py-8">
-        <div className="flex justify-start">
+      <div className="flex items-center justify-stretch gap-6 px-12 py-8">
+        <div className="flex flex-1 justify-start">
           <Link
             href="/"
             className="block hover:no-underline active:no-underline"
@@ -55,7 +55,7 @@ export function NavBar({
           </Link>
         </div>
 
-        <div className="flex items-center justify-end">
+        <div className="flex flex-1 items-center justify-center">
           {menuItems.map((menuItem) => (
             <Link
               key={menuItem.href}
@@ -67,7 +67,7 @@ export function NavBar({
           ))}
         </div>
 
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex flex-1 items-center justify-end gap-3">
           <ColorModeToggle />
           <LocaleSwitch
             locales={appConfig.i18n.locales}

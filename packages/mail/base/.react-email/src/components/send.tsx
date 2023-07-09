@@ -88,7 +88,7 @@ export const Send = ({ markup }: { markup: string }) => {
             />
             <input
               type="checkbox"
-              className="appearance-none checked:bg-blue-500"
+              className="appearance-none checked:bg-primary-500"
             />
             <div className="flex items-center justify-between">
               <Text className="inline-block" size="1">

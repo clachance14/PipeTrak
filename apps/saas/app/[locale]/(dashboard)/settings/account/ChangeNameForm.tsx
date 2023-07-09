@@ -33,7 +33,7 @@ export default function ChangeNameForm({
 
   return (
     <ActionBlock
-      title="Change name"
+      title={t("account.changeName.title")}
       onSubmit={() => changeNameMutation.mutate({ name })}
       isSubmitting={changeNameMutation.isLoading}
       isSubmitDisabled={!name || name.length < 3 || name === initialValue}

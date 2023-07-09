@@ -12,14 +12,14 @@ export const billingRouter = {
   createCheckoutLink: protectedProcedure
     .input(
       z.object({
-        variantIds: z.array(z.number()),
-        storeId: z.string(),
+        planId: z.string(),
+        variantId: z.string(),
       }),
     )
-    .mutation(async ({ input: { variantIds, storeId }, ctx: { session } }) => {
+    .mutation(async ({ input: { planId, variantId }, ctx: { session } }) => {
       return await createCheckoutLink({
-        variantIds,
-        storeId,
+        planId,
+        variantId,
         userData: session!.user,
       });
     }),

@@ -9,12 +9,8 @@ import { ColorModeToggle, LocaleSwitch } from "common/components";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
-import {
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegment,
-} from "next/navigation";
-import { PropsWithChildren, useCallback } from "react";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import { PropsWithChildren, useCallback, useEffect } from "react";
 import { Button, Icon, Logo } from "ui";
 
 const menuItems = [
@@ -37,11 +33,24 @@ export function Sidebar({}: PropsWithChildren<{}>) {
   const locale = useLocale();
   const t = useTranslations("common");
   const pathname = usePathname();
-  const router = useRouter();
 
   const [sidebarExpanded, setSidebarExpanded] = useAtom(sidebarExpandedAtom);
   const selectedSegment = useSelectedLayoutSegment();
   const positionClass = sidebarExpanded ? "left-0" : "-left-[280px] lg:left-0";
+
+  // Close sidebar on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setSidebarExpanded(false);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Close sidebar on route change
+  useEffect(() => setSidebarExpanded(false), [pathname]);
 
   const isActiveMenuItem = useCallback(
     (segment: string | null) => selectedSegment === segment,
@@ -50,9 +59,9 @@ export function Sidebar({}: PropsWithChildren<{}>) {
 
   return (
     <nav
-      className={`fixed top-0 bg-white dark:bg-zinc-900 ${positionClass} z-40 h-screen w-[280px] border-r transition-all duration-300 ease-in-out dark:border-zinc-800`}
+      className={`fixed top-0 ${positionClass} z-40 h-screen w-[300px] transition-all duration-300 ease-in-out`}
     >
-      <div className="flex justify-end px-6 py-2 lg:hidden">
+      <div className="flex justify-end px-8 py-2 lg:hidden">
         <Button
           intent="primary-outline"
           size="small"
@@ -62,20 +71,20 @@ export function Sidebar({}: PropsWithChildren<{}>) {
           <Icon.close className="h-4 w-4" />
         </Button>
       </div>
-      <div className="p-6">
+      <div className="p-8">
         <a href={env.NEXT_PUBLIC_MARKETING_URL} className="!no-underline">
           <Logo />
         </a>
       </div>
 
-      <ul className="mt-4 list-none px-6">
+      <ul className="mt-4 list-none px-8">
         {menuItems.map((menuItem) => (
           <li key={menuItem.href}>
             <Link
               href={menuItem.href}
-              className={`flex items-center gap-3 rounded-xl px-4 py-3 hover:text-zinc-950 hover:no-underline focus:no-underline dark:hover:text-white ${
+              className={`flex items-center gap-3 py-3 hover:text-zinc-950 hover:no-underline focus:no-underline dark:hover:text-white ${
                 isActiveMenuItem(menuItem.segment)
-                  ? "bg-primary-500/10 font-bold text-zinc-950 dark:text-white"
+                  ? "font-bold text-zinc-950 dark:text-white"
                   : ""
               }`}
             >
@@ -93,7 +102,7 @@ export function Sidebar({}: PropsWithChildren<{}>) {
       </ul>
 
       {user && (
-        <div className="absolute bottom-0 w-full p-6">
+        <div className="absolute bottom-0 w-full p-8">
           <div className="mb-4 flex justify-end gap-4">
             <LocaleSwitch
               locales={appConfig.i18n.locales}

@@ -15,7 +15,10 @@
   },
   "pricing": {
     "title": "Pricing",
-    "description": "Choose the plan that works best for you."
+    "description": "Choose the plan that works best for you.",
+    "yearly": "Yearly",
+    "monthly": "Monthly",
+    "subscribe": "Subscribe"
   },
   "home": {
     "newsletter": {

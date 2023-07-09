@@ -44,14 +44,14 @@ export function LocaleSwitch({
       loop
     >
       <MenuTrigger asChild>
-        <Button intent="primary-outline" size="small">
+        <Button intent="primary-outline" size="medium">
           <Icon.language className="h-4 w-4" />
         </Button>
       </MenuTrigger>
 
       {isClientSide && (
         <MenuPositioner>
-          <MenuContent className="rounded-lg bg-white p-1 text-zinc-600 shadow-xl ring-black focus:outline-none dark:bg-zinc-900 dark:text-zinc-400">
+          <MenuContent className="rounded-lg bg-white p-1 text-zinc-600 shadow-xl ring-1 ring-black/10 focus:outline-none dark:bg-zinc-900 dark:text-zinc-400 dark:ring-white/10">
             {locales.map((locale) => {
               return (
                 <MenuOptionItem
@@ -59,7 +59,7 @@ export function LocaleSwitch({
                   name="locale"
                   type="radio"
                   value={locale}
-                  className="data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic"
+                  className="flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white"
                 >
                   {locale in localeLabels
                     ? localeLabels[locale as keyof typeof localeLabels]

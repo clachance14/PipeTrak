@@ -2,6 +2,7 @@
 
 import { useFormatter } from "next-intl";
 import { useMemo } from "react";
+import { Badge } from "ui";
 
 interface Props {
   title: string;
@@ -59,15 +60,9 @@ export function StatsTile({
           {context && <small>{context}</small>}
         </strong>
         {trend && (
-          <span
-            className={`block rounded-full px-2 py-0.5 text-sm leading-tight ${
-              trend > 0
-                ? "bg-emerald-500 bg-opacity-10 text-emerald-500"
-                : "bg-rose-500 bg-opacity-10 text-rose-500"
-            }`}
-          >
+          <Badge status={trend > 0 ? "success" : "error"}>
             {formattedTrend}
-          </span>
+          </Badge>
         )}
       </div>
     </div>

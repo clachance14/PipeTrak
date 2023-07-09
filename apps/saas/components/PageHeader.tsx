@@ -14,7 +14,7 @@ export function PageHeader({
   const [sidebarExpanded, setSidebarExpanded] = useAtom(sidebarExpandedAtom);
 
   return (
-    <div className="container py-6">
+    <div className="container">
       <div className="">
         <div className="flex items-start justify-between ">
           <div>

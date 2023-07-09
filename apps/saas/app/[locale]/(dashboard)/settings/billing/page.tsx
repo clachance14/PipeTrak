@@ -3,6 +3,7 @@ import { getAllPlans } from "billing/subscriptions";
 import { getSubscriptionByUserId } from "database";
 import { getTranslator } from "next-intl/server";
 import CurrentSubscription from "./CurrentSubscription";
+import UpgradePlan from "./UpgradePlan";
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslator(locale, "settings.billing");
@@ -12,21 +13,25 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function BillingSettingsPage() {
+export default async function BillingSettingsPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
   const session = await getUserSession();
+  const t = await getTranslator(locale, "settings.billing");
   const plans = await getAllPlans();
 
   const userSubscription = await getSubscriptionByUserId(session!.user.id);
 
   return (
     <div>
-      {userSubscription && (
-        <CurrentSubscription
-          {...{ plans, userSubscription }}
-          className="mb-8"
-        />
-      )}
-      {/* <PricingTable plans={plans} userSubscription={userSubscription} /> */}
+      <CurrentSubscription
+        plans={plans}
+        userSubscription={userSubscription}
+        className="mb-8"
+      />
+      <UpgradePlan plans={plans} activePlanId={userSubscription?.planId} />
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function Features() {
         <div className="mt-20 grid grid-cols-1 gap-16">
           {/* Feature 1 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="rounded-2xl bg-orange-500/10 p-12">
+            <div className="bg-primary-500/10 rounded-2xl p-12">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -61,7 +61,7 @@ export function Features() {
 
           {/* Feature 2 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="rounded-2xl bg-blue-500/10 p-12 lg:order-2">
+            <div className="bg-primary-500/10 rounded-2xl p-12 lg:order-2">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -101,7 +101,7 @@ export function Features() {
 
           {/* Feature 3 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="rounded-2xl bg-green-500/10 p-12 ">
+            <div className="bg-primary-500/10 rounded-2xl p-12 ">
               <Image
                 src={heroImage}
                 className="block dark:hidden"

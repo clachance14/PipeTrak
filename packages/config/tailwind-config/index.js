@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 module.exports = {
   darkMode: ["class"],
   theme: {
@@ -23,17 +22,28 @@ module.exports = {
       },
       colors: {
         primary: {
-          50: "#eff6ff",
-          100: "#dceafd",
-          200: "#c1dafc",
-          300: "#96c4fa",
-          400: "#64a4f6",
-          500: "#3f81f2",
-          600: "#1f5be5",
-          700: "#214ed4",
-          800: "#2141ac",
-          900: "#213a87",
-          950: "#182553",
+          // 50: "#fefdfa",
+          // 100: "#fefcfa",
+          // 200: "#fcf2e8",
+          // 300: "#f6d6b7",
+          // 400: "#eebc86",
+          // 500: "#e9aa63",
+          // 600: "#e0a052",
+          // 700: "#d89031",
+          // 800: "#bb8130",
+          // 900: "#9e712e",
+          // 950: "#6f4f1b",
+          50: "#eef0ff",
+          100: "#e0e3ff",
+          200: "#c7cbfe",
+          300: "#a5a9fc",
+          400: "#8581f8",
+          500: "#7263f1",
+          600: "#6346e5",
+          700: "#5638ca",
+          800: "#4630a3",
+          900: "#342871",
+          950: "#241b4b",
         },
       },
     },
@@ -43,5 +53,6 @@ module.exports = {
       strategy: "base",
     }),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/container-queries"),
   ],
 };

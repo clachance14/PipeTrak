@@ -47,7 +47,7 @@ export function ColorModeToggle() {
       loop
     >
       <MenuTrigger asChild>
-        <Button intent="primary-outline" size="small">
+        <Button intent="primary-outline" size="medium">
           {isClientSide && resolvedTheme === "light" ? (
             <Icon.lightMode className="h-4 w-4" />
           ) : (
@@ -58,14 +58,14 @@ export function ColorModeToggle() {
 
       {isClientSide && (
         <MenuPositioner>
-          <MenuContent className="rounded-lg bg-white p-1 text-zinc-600 shadow-xl ring-black focus:outline-none dark:bg-zinc-900 dark:text-zinc-400">
+          <MenuContent className="rounded-lg bg-white p-1 text-zinc-600 shadow-xl ring-1 ring-black/10 focus:outline-none dark:bg-zinc-900 dark:text-zinc-400 dark:ring-white/10">
             {colorModeOptions.map((option) => (
               <MenuOptionItem
                 key={option.value}
                 name="colorScheme"
                 type="radio"
                 value={option.value}
-                className="data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic"
+                className="flex cursor-pointer items-center justify-start gap-3 rounded-md px-4 py-1.5 not-italic data-[focus]:bg-zinc-100 data-[checked]:font-bold data-[checked]:text-zinc-900 dark:data-[focus]:bg-zinc-800 dark:data-[checked]:text-white"
               >
                 {option.icon} {option.label}
               </MenuOptionItem>

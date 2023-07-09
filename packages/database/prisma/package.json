@@ -13,7 +13,7 @@
   "name": "database-prisma",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "dotenv -c -e ../../../.env -- prisma db push --skip-generate"
+    "db:push": "dotenv -c -e ../../../.env -- prisma db push --skip-generate --schema=./schema-supabase-auth.prisma"
   },
   "types": "./index.ts",
   "version": "0.1.0"

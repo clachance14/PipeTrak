@@ -99,15 +99,15 @@
       "privacyPolicy": "Privacy policy",
       "termsOfService": "Terms of service"
     },
+    "locales": {
+      "de": "Deutsch",
+      "en": "English"
+    },
     "menu": {
       "dashboard": "Dashboard",
       "home": "Home",
       "signIn": "Sign in",
       "signOut": "Sign out"
-    },
-    "locales": {
-      "en": "English",
-      "de": "Deutsch"
     }
   },
   "dashboard": {
@@ -152,8 +152,12 @@
     "billing": {
       "subscription": {
         "cancel": "Cancel your subscription",
+        "currentPlan": "Your current plan",
         "currentSubscription": "Your current subscription",
         "endsOn": "Your subscription ends on <strong>{nextPaymentDate, date, medium}</strong>",
+        "freePlan": {
+          "title": "Free"
+        },
         "month": "month",
         "monthly": "Monthly",
         "nextPayment": "The next payment will be on <strong>{nextPaymentDate, date, medium}</strong>",
@@ -166,18 +170,21 @@
           "on_trial": "Trialing",
           "paused": "Paused"
         },
+        "subscribe": "Subscribe",
+        "switchToPlan": "Switch to this plan",
         "updateBillingDetails": "Update billing details",
+        "upgradePlan": "Upgrade your plan",
         "year": "year",
         "yearly": "Yearly",
         "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})"
       },
       "title": "Billing"
     },
-    "subtitle": "Manage your settings",
-    "title": "Settings",
     "notifications": {
-      "nameUpdated": "Your name has been updated.",
-      "emailUpdated": "Your email has been updated."
-    }
+      "emailUpdated": "Your email has been updated.",
+      "nameUpdated": "Your name has been updated."
+    },
+    "subtitle": "Manage your settings",
+    "title": "Settings"
   }
 }

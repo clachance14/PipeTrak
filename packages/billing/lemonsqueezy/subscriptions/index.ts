@@ -5,6 +5,7 @@ import {
   GetAllPlans,
   SubscriptionPlan,
 } from "../../types";
+import { env } from "../env.mjs";
 import { lemonsqueezyApi } from "../util/api-client";
 
 const getAllPlans: GetAllPlans = async function () {
@@ -45,9 +46,8 @@ const getAllPlans: GetAllPlans = async function () {
 };
 
 const createCheckoutLink: CreateCheckoutLink = async function ({
-  variantIds,
+  variantId,
   userData,
-  storeId,
   redirectUrl,
 }) {
   const response = await lemonsqueezyApi("/checkouts", {
@@ -57,7 +57,7 @@ const createCheckoutLink: CreateCheckoutLink = async function ({
         type: "checkouts",
         attributes: {
           product_options: {
-            enabled_variants: variantIds,
+            enabled_variants: [variantId],
             redirect_url: redirectUrl,
           },
           checkout_data: {
@@ -72,13 +72,13 @@ const createCheckoutLink: CreateCheckoutLink = async function ({
           store: {
             data: {
               type: "stores",
-              id: String(storeId),
+              id: String(env.LEMONSQUEEZY_STORE_ID),
             },
           },
           variant: {
             data: {
               type: "variants",
-              id: String(variantIds[0]),
+              id: String(variantId),
             },
           },
         },

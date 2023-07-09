@@ -2,10 +2,12 @@
 
 import ActionBlock from "@components/ActionBlock";
 import { trpc } from "api/client";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PasswordInput } from "ui";
 
 export default function ChangePasswordForm() {
+  const t = useTranslations("settings");
   const [password, setPassword] = useState("");
 
   const changePasswordMutation = trpc.changePassword.useMutation({
@@ -16,7 +18,7 @@ export default function ChangePasswordForm() {
 
   return (
     <ActionBlock
-      title="Change password"
+      title={t("account.changePassword.title")}
       onSubmit={() => changePasswordMutation.mutate({ password })}
       isSubmitting={changePasswordMutation.isLoading}
       isSubmitDisabled={!password || password.length < 8}

@@ -19,11 +19,16 @@ export async function updateUserSubscription(
     subscription.userId,
   );
 
-  if (existingSubscription) {
-    return await updateSubscription(subscription);
-  }
+  try {
+    if (existingSubscription) {
+      return await updateSubscription(subscription);
+    }
 
-  await createSubscription(subscription);
+    await createSubscription(subscription);
+  } catch (e) {
+    console.error(e);
+    throw new Error("Could not upsert subscription");
+  }
 }
 
 export const getUserSubscription = async (): Promise<Subscription | null> => {

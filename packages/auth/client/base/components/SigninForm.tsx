@@ -132,7 +132,10 @@ export function SigninForm({ paths }: { paths: AuthPaths }) {
           className="flex flex-col items-stretch gap-6"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <SigninModeSwitch activeMode={signinMode} onChange={setSigninMode} />
+          <SigninModeSwitch
+            activeMode={signinMode}
+            onChange={(value) => setSigninMode(value as SigninMode)}
+          />
 
           {isSubmitted && serverError && (
             <Hint

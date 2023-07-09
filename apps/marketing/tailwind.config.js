@@ -4,5 +4,6 @@ module.exports = {
     "./app/**/*.tsx",
     "./components/**/*.tsx",
     "../../packages/ui/**/*.tsx",
+    "../../common/components/**/*.tsx",
   ],
 };

@@ -3,8 +3,8 @@
 export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
 
 export type CreateCheckoutLink = (params: {
-  storeId: string | number;
-  variantIds: (number | string)[];
+  planId: string;
+  variantId: string;
   userData: {
     email: string;
     name: string;
@@ -26,7 +26,7 @@ export interface SubscriptionPlan {
   name: string;
   description?: string;
   currency: string;
-  storeId: string;
+  storeId?: string;
   variants: SubscriptionPlanVariant[];
 }
 
@@ -35,5 +35,5 @@ export interface SubscriptionPlanVariant {
   price: number;
   interval: string;
   interval_count: number;
-  checkoutLink: string;
+  checkoutLink?: string;
 }
