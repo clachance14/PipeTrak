@@ -1,9 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [
-    ".",
-    "../types.ts",
-    "../../../apps/saas/app/[locale]/(dashboard)/settings/billing/CurrentSubscription.tsx"
-  ],
+  "include": [".", "../types.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }

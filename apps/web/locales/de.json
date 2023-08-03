@@ -1,0 +1,90 @@
+{
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "settings": {
+    "account": {
+      "changeEmail": {
+        "description": "Gib eine neue E-Mail ein und klicke auf Speichern.",
+        "note": "Du wirst deine neue E-Mail bestätigen müssen, bevor sie aktiviert wird.",
+        "title": "Deine E-Mail"
+      },
+      "changeName": {
+        "title": "Dein Name"
+      },
+      "changePassword": {
+        "description": "Um dein Passwort zu ändern, gib dein neues Passwort ein und klicke auf Speichern.",
+        "note": "Bitte gib mindestens 8 Zeichen ein.",
+        "title": "Dein Passwort"
+      },
+      "save": "Speichern",
+      "title": "Account"
+    },
+    "billing": {
+      "subscription": {
+        "freePlan": {
+          "title": "Free"
+        },
+        "upgradePlan": "Upgrade deinen Plan",
+        "cancel": "Abonnement kündigen",
+        "currentSubscription": "Dein aktuelles Abonnement",
+        "endsOn": "Dein Abonnement endet am <strong>{nextPaymentDate, date, medium}</strong>",
+        "month": "Monat",
+        "monthly": "monatlich",
+        "nextPayment": "Deine nächste Zahlung ist am <strong>{nextPaymentDate, date, medium}</strong> fällig",
+        "pauseSubscription": "Abonnement pausieren",
+        "resumeSubscription": "Abonnement fortsetzen",
+        "status": {
+          "active": "Aktiv",
+          "cancelled": "Gekündigt",
+          "expired": "Ausgelaufen",
+          "on_trial": "In der Testphase",
+          "paused": "Pausiert"
+        },
+        "updateBillingDetails": "Zahlungsdetails aktualisieren",
+        "year": "Jahr",
+        "yearly": "jöhrlich",
+        "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert."
+      },
+      "title": "Zahlung"
+    },
+    "notifications": {
+      "emailUpdated": "Deine E-Mail wurde geändert.",
+      "nameUpdated": "Dein Name wurde geändert."
+    },
+    "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
+    "title": "Einstellungen"
+  },
+  "common": {
+    "menu": {
+      "blog": "Blog",
+      "pricing": "Preise"
+    },
+    "locales": {
+      "en": "Englisch",
+      "de": "Deutsch"
+    }
+  },
+  "blog": {
+    "title": "Mein toller Blog",
+    "description": "In diesem Blog schreibe ich über alles mögliche."
+  },
+  "pricing": {
+    "title": "Preise",
+    "description": "Wähle das passende Paket für dich aus."
+  },
+  "home": {
+    "newsletter": {
+      "email": "E-Mail",
+      "hints": {
+        "success": {
+          "message": "Vielen Dank für Ihr Interesse! Du erhälst in Kürze eine E-Mail mit weiteren Informationen.",
+          "title": "Abonniert!"
+        }
+      },
+      "submit": "Abonnieren",
+      "subtitle": "Be among the first to get access to supastarter.nextjs.",
+      "title": "Get early access"
+    }
+  }
+}

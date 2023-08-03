@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "@tanstack/react-query": "^4.29.14",
+    "@trpc/client": "^10.31.0",
+    "@trpc/next": "^10.31.0",
+    "@trpc/react-query": "^10.31.0",
+    "@trpc/server": "^10.31.0",
+    "auth": "workspace:*",
+    "billing": "workspace:*",
+    "common": "workspace:*",
+    "database": "workspace:*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "superjson": "^1.12.4",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.9",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "license": "MIT",
+  "main": "./index.tsx",
+  "name": "trpc",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "types": "./**/.tsx",
+  "version": "0.0.0"
+}
