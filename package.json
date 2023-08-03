@@ -1,11 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "pnpm prisma:generate && dotenv -c -- turbo build",
-    "dev": "pnpm prisma:generate && dotenv -c -- turbo dev --concurrency 25",
-    "prisma:generate": "prisma generate",
-    "prisma:push": "dotenv -c -- prisma db push --skip-generate",
-    "prisma:studio": "dotenv -c -- prisma studio",
+    "build": "dotenv -c -- turbo build",
+    "dev": "dotenv -c -- turbo dev --concurrency 25",
     "lint": "turbo lint",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -20,7 +17,6 @@
   "packageManager": "pnpm@8.3.0",
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
-    "prisma": "^5.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0"
   }
 }

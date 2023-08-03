@@ -1,5 +1,5 @@
 import { Subscription } from "@prisma/client";
-import { prisma } from "../util/client";
+import { prisma } from "../prisma/client";
 
 export type { Subscription } from "@prisma/client";
 
