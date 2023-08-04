@@ -1,8 +1,8 @@
 "use client";
 
-import { trpc } from "api/client";
 import { SubscriptionPlan } from "billing/subscriptions";
 import { useTranslations } from "next-intl";
+import { trpc } from "trpc/client/nextjs";
 import { PricingTable } from "ui/marketing";
 
 export default function UpgradePlan({

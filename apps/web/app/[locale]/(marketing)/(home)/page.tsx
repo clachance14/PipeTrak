@@ -4,7 +4,7 @@ import { Hero } from "./Hero";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-white dark:bg-zinc-900">
       <Hero />
       <Features />
       <Newsletter />

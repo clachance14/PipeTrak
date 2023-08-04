@@ -1,7 +1,7 @@
 "use client";
 
-import { trpc } from "api/client";
 import { useRouter } from "next/navigation";
+import { trpc } from "trpc/client/nextjs";
 import { Button, Icon } from "ui";
 
 export default function CancelSubscriptionButton({

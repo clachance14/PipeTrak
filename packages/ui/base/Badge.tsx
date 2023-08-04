@@ -1,22 +1,27 @@
-import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
 
-export const badge = cva(
-  ["inline-block", "rounded-full", "px-3", "py-1", "text-sm", "leading-tight"],
-  {
-    variants: {
-      status: {
-        success: ["bg-emerald-500/10", "text-emerald-500"],
-        info: ["bg-primary-500/10", "text-primary-500"],
-        warning: ["bg-amber-500/10", "text-amber-500"],
-        error: ["bg-rose-500/10", "text-rose-500"],
-      },
-    },
-    defaultVariants: {
-      status: "info",
+export const badge = tv({
+  base: [
+    "inline-block",
+    "rounded-full",
+    "px-3",
+    "py-1",
+    "text-sm",
+    "leading-tight",
+  ],
+  variants: {
+    status: {
+      success: ["bg-emerald-500/10", "text-emerald-500"],
+      info: ["bg-primary-500/10", "text-primary-500"],
+      warning: ["bg-amber-500/10", "text-amber-500"],
+      error: ["bg-rose-500/10", "text-rose-500"],
     },
   },
-);
+  defaultVariants: {
+    status: "info",
+  },
+});
 
 export type BadgeProps = React.HtmlHTMLAttributes<HTMLDivElement> &
   VariantProps<typeof badge>;

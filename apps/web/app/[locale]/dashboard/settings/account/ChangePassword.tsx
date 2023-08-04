@@ -1,9 +1,9 @@
 "use client";
 
 import ActionBlock from "@components/ActionBlock";
-import { trpc } from "api/client";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { trpc } from "trpc/client/nextjs";
 import { PasswordInput } from "ui";
 
 export default function ChangePasswordForm() {

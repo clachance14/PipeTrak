@@ -14,7 +14,7 @@ export default function SettingsLayout({ children }: PropsWithChildren<{}>) {
         <TabGroup
           items={["account", "billing"].map((segment) => ({
             label: t(`${segment}.title` as any),
-            href: `/settings/${segment}`,
+            href: `${segment}`,
             segment,
           }))}
           className="mb-6"

@@ -3,7 +3,6 @@
 import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
 import UserMenu from "@components/UserMenu";
 import { appConfig } from "@config";
-import { env } from "@env.mjs";
 import { useUser } from "auth-client";
 import { ColorModeToggle, LocaleSwitch } from "common/components";
 import { useAtom } from "jotai";
@@ -16,13 +15,13 @@ import { Button, Icon, Logo } from "ui";
 const menuItems = [
   {
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     segment: null,
     icon: Icon.grid,
   },
   {
     label: "Settings",
-    href: "/settings/account",
+    href: "/dashboard/settings/account",
     segment: "settings",
     icon: Icon.settings,
   },
@@ -72,9 +71,9 @@ export function Sidebar({}: PropsWithChildren<{}>) {
         </Button>
       </div>
       <div className="p-8">
-        <a href={env.NEXT_PUBLIC_MARKETING_URL} className="!no-underline">
+        <Link href="/" className="!no-underline">
           <Logo />
-        </a>
+        </Link>
       </div>
 
       <ul className="mt-4 list-none px-8">

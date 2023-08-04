@@ -5,7 +5,7 @@ export type { Subscription } from "@prisma/client";
 
 export const getSubscriptionByUserId = async (
   userId: string,
-): Promise<Subscription> => {
+): Promise<Subscription | null> => {
   return prisma.subscription.findFirst({
     where: {
       userId: userId,
@@ -15,7 +15,7 @@ export const getSubscriptionByUserId = async (
 
 export const getSubscriptionById = async (
   subscriptionId: string,
-): Promise<Subscription> => {
+): Promise<Subscription | null> => {
   return prisma.subscription.findFirst({
     where: {
       subscriptionId,

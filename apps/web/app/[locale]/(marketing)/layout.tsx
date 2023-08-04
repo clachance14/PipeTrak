@@ -18,7 +18,7 @@ export default function MarketingLayout({ children }: PropsWithChildren) {
             href: "/blog",
           },
         ]}
-        labels={{ signIn: "Sign in" }}
+        labels={{ signIn: "Sign in", dashboard: "Dashboard" }}
       />
       {children}
       <Footer />

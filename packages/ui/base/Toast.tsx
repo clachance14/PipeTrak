@@ -10,11 +10,11 @@ import {
   ToastTitle,
   useToast,
 } from "@ark-ui/react";
-import { cva } from "class-variance-authority";
 import { PropsWithChildren } from "react";
+import { tv } from "tailwind-variants";
 import { Icon } from "./Icon";
 
-const toastTypeClasses = cva("toastTitle", {
+const toastTypeClasses = tv({
   variants: {
     type: {
       success: ["text-emerald-500"],

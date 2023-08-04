@@ -1,12 +1,9 @@
-import { AuthProvider } from "auth-client";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { TrpcProvider } from "trpc/client/nextjs";
-import { ToastProvider } from "ui";
 import "../globals.css";
+import ClientProviders from "./ClientProviders";
 
 export const metadata: Metadata = {
   title: {
@@ -42,15 +39,9 @@ export default async function RootLayout({
       <body
         className={`${sansFont.variable} bg-zinc-50 font-sans dark:bg-zinc-950`}
       >
-        <ThemeProvider attribute="class">
-          <AuthProvider>
-            <TrpcProvider>
-              <NextIntlClientProvider locale={locale} messages={messages}>
-                <ToastProvider>{children}</ToastProvider>
-              </NextIntlClientProvider>
-            </TrpcProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ClientProviders>{children}</ClientProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

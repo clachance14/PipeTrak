@@ -15,7 +15,7 @@ export function Hero() {
 
         <div className="mt-6 flex items-center justify-center gap-3">
           <Button size="large">Get started &rarr;</Button>
-          <Button size="large" intent="primary-ghost">
+          <Button size="large" intent="primary-outline">
             Documentation
           </Button>
         </div>

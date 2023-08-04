@@ -1,9 +1,8 @@
 import { ColorModeToggle } from "common/components";
 import { useLocale } from "next-intl";
+import Link from "next-intl/link";
 import { PropsWithChildren } from "react";
 import { Logo } from "ui";
-
-const marketingUrl = process.env.NEXT_PUBLIC_MARKETING_URL;
 
 export default function AuthLayout({ children }: PropsWithChildren<{}>) {
   const locale = useLocale();
@@ -14,9 +13,9 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
         <div className="container">
           <div className="mx-auto grid w-full max-w-xl gap-6">
             <div className="flex items-center justify-between">
-              <a href={`${marketingUrl}/${locale}`} className="block">
+              <Link href="/" className="block">
                 <Logo />
-              </a>
+              </Link>
               <ColorModeToggle />
             </div>
 

@@ -38,7 +38,9 @@ const labels = {
   },
   password: "Password",
   submit: "Sign in",
-  subtitle: "Please enter your credentials to sign in.",
+  sendMagicLink: "Send magic link",
+  subtitle:
+    "Choose a provider to log in with or enter your credentials to continue.",
   title: "Welcome back",
 };
 
@@ -46,6 +48,8 @@ type SigninFormValues = {
   email: string;
   password?: string;
 };
+
+const oAuthProviders = ["google", "github"];
 
 export function LoginForm() {
   const { signIn } = useAuthActions();
@@ -56,13 +60,6 @@ export function LoginForm() {
 
   const redirectTo =
     searchParams.get("redirectTo") ?? appConfig.auth.redirectAfterLogin;
-
-  const oAuthProviders = [
-    { type: "oauth", id: "google" },
-    { type: "oauth", id: "github" },
-  ]
-    .filter((provider) => provider.type === "oauth")
-    .map((provider) => provider.id);
 
   const isPasswordSignin = signinMode === SigninMode.Password;
 
@@ -113,12 +110,25 @@ export function LoginForm() {
   return (
     <div>
       <h1 className="text-3xl font-extrabold">{labels.title}</h1>
-      <p className="mb-6 mt-4 text-zinc-500">
-        {labels.subtitle}
-        <br />
-        {labels.dontHaveAnAccount}{" "}
-        <Link href="/auth/signup">{labels.createAnAccount} &rarr;</Link>
-      </p>
+      <p className="mb-6 mt-4 text-zinc-500">{labels.subtitle}</p>
+
+      <div className="space-y-3">
+        {oAuthProviders.map((providerId) => (
+          <SocialSigninButton
+            key={providerId}
+            provider={providerId}
+            onClick={() =>
+              signIn({
+                method: "oauth",
+                provider: providerId,
+              })
+            }
+          />
+        ))}
+      </div>
+
+      <hr className="my-8 border-zinc-950 border-opacity-5 dark:border-white dark:border-opacity-5" />
+
       {isSubmitted && isSubmitSuccessful && !isPasswordSignin ? (
         <Hint
           status="success"
@@ -127,15 +137,11 @@ export function LoginForm() {
           icon={<Icon.mail className="h-4 w-4" />}
         />
       ) : (
-        <form
-          className="flex flex-col items-stretch gap-6"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <SigninModeSwitch
             activeMode={signinMode}
             onChange={(value) => setSigninMode(value as SigninMode)}
           />
-
           {isSubmitted && serverError && (
             <Hint
               status="error"
@@ -143,7 +149,6 @@ export function LoginForm() {
               icon={<Icon.error className="h-4 w-4" />}
             />
           )}
-
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
               {labels.email}
@@ -155,7 +160,6 @@ export function LoginForm() {
               autoComplete="email"
             />
           </div>
-
           {signinMode === "password" && (
             <div>
               <label htmlFor="password" className="mb-1 block font-semibold">
@@ -174,30 +178,18 @@ export function LoginForm() {
               </div>
             </div>
           )}
-
-          <Button type="submit" isLoading={isSubmitting}>
-            {labels.submit}
+          <Button className="w-full" type="submit" isLoading={isSubmitting}>
+            {signinMode === SigninMode.MagicLink
+              ? labels.sendMagicLink
+              : labels.submit}
           </Button>
+
+          <div>
+            {labels.dontHaveAnAccount}{" "}
+            <Link href="/auth/signup">{labels.createAnAccount} &rarr;</Link>
+          </div>
         </form>
       )}
-
-      <hr className="my-8 border-zinc-950 border-opacity-5 dark:border-white dark:border-opacity-5" />
-
-      <div className="flex w-full flex-col gap-2 sm:flex-row">
-        {oAuthProviders.map((providerId) => (
-          <SocialSigninButton
-            key={providerId}
-            provider={providerId}
-            onClick={() =>
-              signIn({
-                method: "oauth",
-                provider: providerId,
-                // callbackUrl: config.redirectAfterSignin,
-              })
-            }
-          />
-        ))}
-      </div>
     </div>
   );
 }
