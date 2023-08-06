@@ -1,5 +1,4 @@
-import { Subscription } from "@prisma/client";
-import { SubscriptionPlan } from "billing/subscriptions";
+import { Subscription, SubscriptionPlan } from "billing/subscriptions";
 import { useFormatter, useTranslations } from "next-intl";
 import { Badge, Button, Icon } from "ui";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
