@@ -13,9 +13,9 @@
   "main": "./index.ts",
   "name": "database",
   "scripts": {
-    "db:generate": "prisma generate --schema ./prisma/schema.prisma",
-    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema ./prisma/schema.prisma",
-    "db:studio": "dotenv -c -e ../../.env -- prisma studio --schema ./prisma/schema.prisma"
+    "db:generate": "prisma generate",
+    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate",
+    "db:studio": "dotenv -c -e ../../.env -- prisma studio"
   },
   "types": "./index.ts",
   "version": "0.1.0"
