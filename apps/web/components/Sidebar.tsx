@@ -46,10 +46,10 @@ export function Sidebar({}: PropsWithChildren<{}>) {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Close sidebar on route change
-  useEffect(() => setSidebarExpanded(false), [pathname]);
+  useEffect(() => setSidebarExpanded(false), [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isActiveMenuItem = useCallback(
     (segment: string | null) => selectedSegment === segment,

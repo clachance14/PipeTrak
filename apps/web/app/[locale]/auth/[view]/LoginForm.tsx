@@ -73,7 +73,7 @@ export function LoginForm() {
   useEffect(() => {
     reset();
     setServerError(null);
-  }, [signinMode]);
+  }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit: SubmitHandler<SigninFormValues> = async ({
     email,
