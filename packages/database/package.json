@@ -1,21 +1,21 @@
 {
   "dependencies": {
-    "@prisma/client": "^5.0.0"
+    "@prisma/client": "^5.1.1"
   },
   "devDependencies": {
     "@types/node": "20.2.5",
     "dotenv-cli": "^7.2.1",
-    "prisma": "^5.0.0",
-    "typescript": "^5.1.3",
-    "tsconfig": "workspace:*"
+    "prisma": "^5.1.1",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.3"
   },
   "license": "MIT",
   "main": "./index.ts",
   "name": "database",
   "scripts": {
-    "db:generate": "prisma generate",
-    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate",
-    "db:studio": "dotenv -c -e ../../.env -- prisma studio"
+    "db:generate": "prisma generate --schema ./prisma/schema.prisma",
+    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema ./prisma/schema.prisma",
+    "db:studio": "dotenv -c -e ../../.env -- prisma studio --schema ./prisma/schema.prisma"
   },
   "types": "./index.ts",
   "version": "0.1.0"
