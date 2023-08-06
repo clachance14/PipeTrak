@@ -16,7 +16,7 @@
   ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^db:generate", "^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "check-types": {},
