@@ -51,7 +51,7 @@ export function LocaleSwitch({
 
       {isClientSide && (
         <MenuPositioner>
-          <MenuContent className="rounded-lg bg-white p-1 text-zinc-600 shadow-xl ring-1 ring-black/10 focus:outline-none dark:bg-zinc-900 dark:text-zinc-400 dark:ring-white/10">
+          <MenuContent className="rounded-lg border bg-white p-1 text-zinc-600 shadow-sm focus:outline-none dark:bg-zinc-900">
             {locales.map((locale) => {
               return (
                 <MenuOptionItem

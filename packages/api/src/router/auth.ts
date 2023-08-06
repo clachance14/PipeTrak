@@ -9,7 +9,7 @@ import {
   updateUserPassword,
 } from "auth";
 import { z } from "zod";
-import { protectedProcedure, publicProcedure } from "..";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = {
   magicLink: publicProcedure

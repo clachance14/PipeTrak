@@ -7,7 +7,7 @@ import { PropsWithChildren, useState } from "react";
 import superjson from "superjson";
 import { trpc } from "./trpc-client";
 
-export function TrpcProvider({ children }: PropsWithChildren<{}>) {
+export function ApiClientProvider({ children }: PropsWithChildren<{}>) {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({

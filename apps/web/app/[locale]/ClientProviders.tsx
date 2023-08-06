@@ -1,18 +1,18 @@
 "use client";
 
+import { ApiClientProvider } from "api/client/nextjs";
 import { AuthProvider } from "auth-client";
 import { ThemeProvider } from "next-themes";
 import { PropsWithChildren } from "react";
-import { TrpcProvider } from "trpc/client/nextjs";
 import { ToastProvider } from "ui";
 
 export default function ClientProviders({ children }: PropsWithChildren) {
   return (
     <ThemeProvider attribute="class">
       <AuthProvider>
-        <TrpcProvider>
+        <ApiClientProvider>
           <ToastProvider>{children}</ToastProvider>
-        </TrpcProvider>
+        </ApiClientProvider>
       </AuthProvider>
     </ThemeProvider>
   );

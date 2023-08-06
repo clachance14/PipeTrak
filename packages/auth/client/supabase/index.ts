@@ -2,9 +2,9 @@ import {
   User,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
+import { trpc } from "api/client/nextjs";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { trpc } from "trpc/client/nextjs";
 import { UseAuthActions, UserSession } from "../../types";
 
 const callbackEndpoint = `/api/auth/supabase/callback`;

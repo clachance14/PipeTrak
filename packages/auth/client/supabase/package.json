@@ -16,6 +16,6 @@
     "encoding": "^0.1.13",
     "mail": "workspace:*",
     "next": "^13.4.6",
-    "trpc": "workspace:*"
+    "api": "workspace:*"
   }
 }

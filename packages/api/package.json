@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "main": "./index.tsx",
-  "name": "trpc",
+  "name": "api",
   "scripts": {
     "lint": "eslint \"**/*.ts*\""
   },

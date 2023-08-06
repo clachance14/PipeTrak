@@ -1,11 +1,11 @@
 "use client";
 
 import ActionBlock from "@components/ActionBlock";
+import { trpc } from "api/client/nextjs";
 import { useAuthActions } from "auth-client";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { trpc } from "trpc/client/nextjs";
 import { Input, useToast } from "ui";
 
 export default function ChangeNameForm({

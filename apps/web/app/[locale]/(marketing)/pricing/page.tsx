@@ -1,4 +1,4 @@
-import { getAllPlans } from "billing/subscriptions";
+import { apiCaller } from "api";
 import { getTranslator } from "next-intl/server";
 import { PricingTable } from "./PricingTable";
 
@@ -7,7 +7,7 @@ export default async function PricingPage({
 }: {
   params: { locale: string };
 }) {
-  const plans = await getAllPlans();
+  const plans = await apiCaller.plans();
   const t = await getTranslator(locale, "pricing");
 
   return (

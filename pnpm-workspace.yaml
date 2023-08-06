@@ -16,4 +16,4 @@ packages:
   - packages/mail/nodemailer
   - packages/common
   - packages/ui
-  - packages/trpc
+  - packages/api

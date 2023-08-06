@@ -2,13 +2,17 @@ import { TRPCError } from "@trpc/server";
 import {
   cancelSubscription,
   createCheckoutLink,
+  getAllPlans,
   updateUserSubscription,
 } from "billing/subscriptions";
 import { getSubscriptionById } from "database";
 import { z } from "zod";
-import { protectedProcedure } from "..";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const billingRouter = {
+  plans: publicProcedure.query(async () => {
+    return await getAllPlans();
+  }),
   createCheckoutLink: protectedProcedure
     .input(
       z.object({

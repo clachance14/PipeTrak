@@ -1,3 +1,4 @@
 "use client";
-export * from "./TrpcProvider";
+
+export * from "./ApiClientProvider";
 export * from "./trpc-client";
