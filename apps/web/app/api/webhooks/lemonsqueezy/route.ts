@@ -1,7 +1,7 @@
+import { env } from "@env.mjs";
 import { updateUserSubscription } from "billing/subscriptions";
 import { createHmac, timingSafeEqual } from "crypto";
 import { headers } from "next/headers";
-import { env } from "../../../api/env.mjs";
 
 export async function POST(req: Request) {
   const lemonsqueezySigningSecret = env.LEMONSQUEEZY_SIGNING_SECRET;
