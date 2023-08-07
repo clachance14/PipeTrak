@@ -2,7 +2,7 @@ import { Button } from "ui";
 
 export function Hero() {
   return (
-    <nav className="border-b pb-24 pt-64 dark:border-zinc-800">
+    <nav className="to-primary-50 border-b bg-gradient-to-b from-white py-24 dark:border-zinc-800">
       <div className="container text-center">
         <h1 className="text-5xl font-bold lg:text-7xl">
           Your revolutionary SaaS

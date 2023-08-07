@@ -27,12 +27,13 @@ export function PricingTable({
   labels: {
     yearly: string;
     monthly: string;
+    month: string;
+    year: string;
     subscribe: string;
     currentPlan?: string;
     switchToPlan?: string;
   };
 }) {
-  // const isClient = useIsClient();
   const [interval, setInterval] = useState<"month" | "year">("month");
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
@@ -42,7 +43,7 @@ export function PricingTable({
 
   return (
     <div className="@container">
-      <div className="flex justify-start">
+      <div className="flex justify-center">
         <Switch
           options={[
             { label: labels.monthly, value: "month" },
@@ -86,6 +87,7 @@ export function PricingTable({
                   style: "currency",
                   currency: plan.currency,
                 }).format(variant.price / 100)}
+                <span className="text-sm"> / {labels[interval]}</span>
               </strong>
 
               <Button

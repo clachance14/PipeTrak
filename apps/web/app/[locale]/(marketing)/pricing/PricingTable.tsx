@@ -13,6 +13,8 @@ export function PricingTable({ plans }: { plans: SubscriptionPlan[] }) {
         window.location.href = `/settings/billing`;
       }}
       labels={{
+        year: t("year"),
+        month: t("month"),
         yearly: t("yearly"),
         monthly: t("monthly"),
         subscribe: t("subscribe"),

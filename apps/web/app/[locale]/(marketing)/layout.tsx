@@ -20,7 +20,7 @@ export default function MarketingLayout({ children }: PropsWithChildren) {
         ]}
         labels={{ signIn: "Sign in", dashboard: "Dashboard" }}
       />
-      <main className="bg-white dark:bg-zinc-900">{children}</main>
+      <main className="bg-white pt-32 dark:bg-zinc-900">{children}</main>
       <Footer />
     </div>
   );

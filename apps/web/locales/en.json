@@ -127,8 +127,10 @@
   "pricing": {
     "description": "Choose the plan that works best for you.",
     "monthly": "Monthly",
+    "month": "month",
     "subscribe": "Subscribe",
     "title": "Pricing",
+    "year": "year",
     "yearly": "Yearly"
   },
   "settings": {

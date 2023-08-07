@@ -14,7 +14,7 @@ export default function BlogListPage() {
   const t = useTranslations("blog");
 
   return (
-    <div className="container max-w-5xl py-24">
+    <div className="container max-w-5xl pb-24">
       <div className="mb-12 pt-8 text-center">
         <h1 className="mb-2 text-5xl font-bold">{t("title")}</h1>
         <p className="text-lg opacity-50">{t("description")}</p>

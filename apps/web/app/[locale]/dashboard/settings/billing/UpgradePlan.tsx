@@ -34,6 +34,8 @@ export default function UpgradePlan({
           currentPlan: t("subscription.currentPlan"),
           yearly: t("subscription.yearly"),
           monthly: t("subscription.monthly"),
+          year: t("subscription.year"),
+          month: t("subscription.month"),
           subscribe: t("subscription.subscribe"),
           switchToPlan: t("subscription.switchToPlan"),
         }}
