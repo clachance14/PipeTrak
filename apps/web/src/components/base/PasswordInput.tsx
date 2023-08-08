@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Icon, Input } from "../ui";
+import { Icon, Input } from ".";
 
 export function PasswordInput({
   value,

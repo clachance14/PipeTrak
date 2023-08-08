@@ -1,12 +1,13 @@
 "use client";
 
 import { Button, Logo } from "@/components";
-import { appConfig } from "@config";
-import { useUser } from "auth-client-web";
-import { ColorModeToggle, LocaleSwitch } from "common-web/components";
+import { useUser } from "@/lib/auth";
+import { appConfig } from "config";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { useEffect, useState } from "react";
+import { ColorModeToggle } from "../../_components/ColorModeToggle";
+import { LocaleSwitch } from "../../_components/LocaleSwitch";
 import Banner from "./Banner";
 
 export function NavBar({

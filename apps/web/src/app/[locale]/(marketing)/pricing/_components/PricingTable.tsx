@@ -1,8 +1,8 @@
 "use client";
 
-import { SubscriptionPlan } from "billing/subscriptions";
+import { PricingTable as PricingTablePrimitive } from "@/components/marketing";
+import { type SubscriptionPlan } from "api";
 import { useTranslations } from "next-intl";
-import { PricingTable as PricingTablePrimitive } from "ui-web/marketing";
 
 export function PricingTable({ plans }: { plans: SubscriptionPlan[] }) {
   const t = useTranslations("pricing");

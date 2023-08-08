@@ -1,6 +1,6 @@
 "use server";
 
-import { sendEmail } from "../../../../../../../packages/mail";
+import { sendEmail } from "mail";
 
 export async function saveEmail(email: string) {
   await sendEmail({

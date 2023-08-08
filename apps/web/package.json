@@ -6,6 +6,7 @@
     "@t3-oss/env-nextjs": "^0.6.0",
     "@tanstack/react-query": "^4.29.14",
     "api": "workspace:*",
+    "database": "workspace:*",
     "contentlayer": "^0.3.4",
     "jotai": "^2.2.1",
     "mail": "workspace:*",
@@ -16,6 +17,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
+    "tailwind-variants": "^0.1.13",
     "zod": "^3.21.4"
   },
   "devDependencies": {

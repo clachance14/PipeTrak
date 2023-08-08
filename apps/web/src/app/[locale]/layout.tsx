@@ -32,7 +32,7 @@ export default async function RootLayout({
   if (params.locale !== locale) {
     notFound();
   }
-  const messages = (await import(`../../locales/${locale}.json`)).default;
+  const messages = (await import(`../../../locales/${locale}.json`)).default;
 
   return (
     <html lang={locale}>
