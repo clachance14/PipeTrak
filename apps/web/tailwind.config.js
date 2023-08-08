@@ -1,4 +1,4 @@
 module.exports = {
   presets: [require("tailwind-config")],
-  content: ["./src/**/*.tsx"],
+  content: ["./app/**/*.tsx", "./components/**/*.tsx"],
 };
