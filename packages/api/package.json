@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "@prisma/client": "^5.1.1",
+    "@supabase/supabase-js": "^2.32.0",
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "@tanstack/react-query": "^4.29.14",
+    "@trpc/client": "^10.31.0",
+    "@trpc/next": "^10.31.0",
+    "@trpc/react-query": "^10.31.0",
+    "@trpc/server": "^10.31.0",
+    "database": "workspace:*",
+    "next": "13.4.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "superjson": "^1.12.4",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.9",
+    "eslint-config-custom": "workspace:*",
+    "prisma": "^5.1.1",
+    "tsconfig": "workspace:*"
+  },
+  "license": "MIT",
+  "main": "./index.tsx",
+  "name": "api",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "db:generate": "prisma generate",
+    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate",
+    "db:studio": "dotenv -c -e ../../.env -- prisma studio"
+  },
+  "types": "./**/.tsx",
+  "version": "0.0.0"
+}

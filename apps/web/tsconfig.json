@@ -4,7 +4,7 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@*": ["*"],
+      "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
@@ -15,9 +15,7 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    ".contentlayer/generated",
-    "next.config.js",
-    "../../packages/frontend/web/auth/src/components/Auth.tsx"
+    ".contentlayer/generated"
   ],
   "exclude": ["node_modules"]
 }

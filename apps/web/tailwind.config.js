@@ -1,5 +1,5 @@
 module.exports = {
-  presets: [require("@supastarter/frontend/shared/tailwind")],
+  presets: [require("tailwind-config")],
   content: [
     "./app/**/*.tsx",
     "./components/**/*.tsx",
