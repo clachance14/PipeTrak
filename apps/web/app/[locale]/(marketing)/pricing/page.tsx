@@ -1,4 +1,4 @@
-import { apiCaller } from "api";
+import { apiCaller } from "@supastarter/backend/api";
 import { getTranslator } from "next-intl/server";
 import { PricingTable } from "./PricingTable";
 

@@ -1,12 +1,15 @@
 "use client";
 
 import { appConfig } from "@config";
-import { useUser } from "auth-client";
-import { ColorModeToggle, LocaleSwitch } from "common/components";
+import { useUser } from "@supastarter/frontend/web/auth";
+import {
+  ColorModeToggle,
+  LocaleSwitch,
+} from "@supastarter/frontend/web/common/components";
+import { Button, Logo } from "@supastarter/frontend/web/ui";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { useEffect, useState } from "react";
-import { Button, Logo } from "ui";
 import Banner from "./Banner";
 
 export function NavBar({
@@ -22,7 +25,7 @@ export function NavBar({
     href: string;
   }>;
 }) {
-  const user = useUser();
+  const { user } = useUser();
   const locale = useLocale();
   const [isTop, setIsTop] = useState(true);
 

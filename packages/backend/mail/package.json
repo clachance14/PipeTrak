@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@react-email/button": "^0.0.9",
+    "@react-email/container": "^0.0.8",
+    "@react-email/heading": "^0.0.8",
+    "@react-email/html": "^0.0.4",
+    "@react-email/render": "^0.0.7",
+    "@react-email/text": "^0.0.5",
+    "mjml": "^4.14.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-email": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/mjml": "^4.7.1",
+    "@types/node": "20.2.5",
+    "@types/nodemailer": "^6.4.9",
+    "@types/react": "18.2.9",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "license": "MIT",
+  "main": "./index.ts",
+  "name": "@supastarter/backend/mail",
+  "scripts": {},
+  "types": "./index.ts",
+  "version": "0.1.0"
+}

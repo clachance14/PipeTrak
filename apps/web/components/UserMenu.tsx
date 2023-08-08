@@ -7,10 +7,10 @@ import {
   MenuPositioner,
   MenuTrigger,
 } from "@ark-ui/react";
-import { useAuthActions } from "auth-client";
+import { signOut } from "@supastarter/frontend/web/auth";
+import { Icon } from "@supastarter/frontend/web/ui";
 import Link from "next-intl/link";
 import Image from "next/image";
-import { Icon } from "ui";
 
 export default function UserMenu({
   email,
@@ -21,8 +21,6 @@ export default function UserMenu({
   name: string;
   image?: string;
 }) {
-  const { signOut } = useAuthActions();
-
   return (
     <Menu positioning={{ placement: "top-end" }}>
       <MenuTrigger className="flex w-full items-center gap-2 border-none bg-transparent p-0">

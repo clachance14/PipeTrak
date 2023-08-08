@@ -1,6 +1,6 @@
 import { Presence } from "@ark-ui/react";
+import { Button, Icon } from "@supastarter/frontend/web/ui";
 import { useEffect, useState } from "react";
-import { Button, Icon } from "ui";
 
 const BANNER_HIDDEN_STORAGE_KEY = "banner-hidden";
 
@@ -8,13 +8,13 @@ export default function Banner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    if (!sessionStorage.getItem(BANNER_HIDDEN_STORAGE_KEY)) {
+    if (!localStorage.getItem(BANNER_HIDDEN_STORAGE_KEY)) {
       setShowBanner(true);
     }
   }, []);
 
   function hideBanner() {
-    sessionStorage.setItem(BANNER_HIDDEN_STORAGE_KEY, "true");
+    localStorage.setItem(BANNER_HIDDEN_STORAGE_KEY, "true");
     setShowBanner(false);
   }
   return (

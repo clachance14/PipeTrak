@@ -1,9 +1,9 @@
 "use client";
 import { saveEmail } from "@app/[locale]/(marketing)/(home)/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Hint, Icon, Input } from "@supastarter/frontend/web/ui";
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button, Hint, Icon, Input } from "ui";
 import * as z from "zod";
 
 const formSchema = z.object({

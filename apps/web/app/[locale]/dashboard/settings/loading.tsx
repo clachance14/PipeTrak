@@ -1,4 +1,4 @@
-import { Icon } from "ui";
+import { Icon } from "@supastarter/frontend/web/ui";
 
 export default function Loading() {
   return (

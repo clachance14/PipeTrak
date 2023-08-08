@@ -1,8 +1,8 @@
 "use client";
 
 import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
+import { Button, Icon } from "@supastarter/frontend/web/ui";
 import { useAtom } from "jotai";
-import { Button, Icon } from "ui";
 
 export function PageHeader({
   title,

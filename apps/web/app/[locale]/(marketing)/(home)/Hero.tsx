@@ -1,4 +1,4 @@
-import { Button } from "ui";
+import { Button } from "@supastarter/frontend/web/ui";
 
 export function Hero() {
   return (

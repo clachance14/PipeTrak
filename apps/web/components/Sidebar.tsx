@@ -3,14 +3,17 @@
 import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
 import UserMenu from "@components/UserMenu";
 import { appConfig } from "@config";
-import { useUser } from "auth-client";
-import { ColorModeToggle, LocaleSwitch } from "common/components";
+import { useUser } from "@supastarter/frontend/web/auth";
+import {
+  ColorModeToggle,
+  LocaleSwitch,
+} from "@supastarter/frontend/web/common/components";
+import { Button, Icon, Logo } from "@supastarter/frontend/web/ui";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
 import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import { PropsWithChildren, useCallback, useEffect } from "react";
-import { Button, Icon, Logo } from "ui";
 
 const menuItems = [
   {
@@ -28,7 +31,7 @@ const menuItems = [
 ];
 
 export function Sidebar({}: PropsWithChildren<{}>) {
-  const user = useUser();
+  const { user } = useUser();
   const locale = useLocale();
   const t = useTranslations("common");
   const pathname = usePathname();

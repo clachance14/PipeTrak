@@ -1,8 +1,8 @@
-import { ColorModeToggle } from "common/components";
+import { ColorModeToggle } from "@supastarter/frontend/web/common/components";
+import { Logo } from "@supastarter/frontend/web/ui";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { PropsWithChildren } from "react";
-import { Logo } from "ui";
 
 export default function AuthLayout({ children }: PropsWithChildren<{}>) {
   const locale = useLocale();

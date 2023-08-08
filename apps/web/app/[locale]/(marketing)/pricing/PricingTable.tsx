@@ -1,8 +1,8 @@
 "use client";
 
-import { SubscriptionPlan } from "billing/subscriptions";
+import { SubscriptionPlan } from "@supastarter/backend/billing/subscriptions";
+import { PricingTable as PricingTablePrimitive } from "@supastarter/frontend/web/ui/marketing";
 import { useTranslations } from "next-intl";
-import { PricingTable as PricingTablePrimitive } from "ui/marketing";
 
 export function PricingTable({ plans }: { plans: SubscriptionPlan[] }) {
   const t = useTranslations("pricing");

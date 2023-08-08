@@ -1,0 +1,20 @@
+{
+  "name": "@supastarter/backend/auth",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.7.2",
+    "@supabase/supabase-js": "^2.26.0",
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "@supastarter/backend/database": "workspace:*",
+    "@supastarter/backend/mail": "workspace:*",
+    "next": "^13.4.6",
+    "zod": "^3.21.4"
+  }
+}

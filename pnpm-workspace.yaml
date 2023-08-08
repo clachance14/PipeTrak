@@ -1,19 +1,15 @@
 packages:
   - apps/web
-  - packages/auth/server/base
-  - packages/auth/server/supabase
-  - packages/auth/client/base
-  - packages/auth/client/supabase
+  - packages/backend/api
+  - packages/backend/auth
+  - packages/backend/billing/base
+  - packages/backend/billing/lemonsqueezy
+  - packages/backend/database
+  - packages/backend/mail
   - packages/config/eslint-config-custom
-  - packages/config/tailwind-config
   - packages/config/tsconfig
-  - packages/database
-  - packages/billing/base
-  - packages/billing/lemonsqueezy
-  - packages/billing/stripe
-  - packages/mail/base
-  - packages/mail/plunk
-  - packages/mail/nodemailer
-  - packages/common
-  - packages/ui
-  - packages/api
+  - packages/frontend/shared/api
+  - packages/frontend/shared/tailwind
+  - packages/frontend/web/common
+  - packages/frontend/web/ui
+  - packages/frontend/web/auth

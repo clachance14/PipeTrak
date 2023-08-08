@@ -1,6 +1,6 @@
 import { PageHeader } from "@components/PageHeader";
 import { StatsTile } from "@components/StatsTile";
-import { getUserSession } from "auth";
+import { getUserSession } from "@supastarter/backend/auth";
 import { getTranslator } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale } }) {

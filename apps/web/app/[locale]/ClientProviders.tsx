@@ -1,10 +1,10 @@
 "use client";
 
-import { ApiClientProvider } from "api/client/nextjs";
-import { AuthProvider } from "auth-client";
+import { ApiClientProvider } from "@supastarter/frontend/shared/api";
+import { AuthProvider } from "@supastarter/frontend/web/auth";
+import { ToastProvider } from "@supastarter/frontend/web/ui";
 import { ThemeProvider } from "next-themes";
 import { PropsWithChildren } from "react";
-import { ToastProvider } from "ui";
 
 export default function ClientProviders({ children }: PropsWithChildren) {
   return (

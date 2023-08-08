@@ -1,6 +1,9 @@
-import { Subscription, SubscriptionPlan } from "billing/subscriptions";
+import {
+  Subscription,
+  SubscriptionPlan,
+} from "@supastarter/backend/billing/subscriptions";
+import { Badge, Button, Icon } from "@supastarter/frontend/web/ui";
 import { useFormatter, useTranslations } from "next-intl";
-import { Badge, Button, Icon } from "ui";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
 
 export default function CurrentSubscription({

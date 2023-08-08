@@ -1,4 +1,4 @@
-import { getUserSession } from "auth";
+import { getUserSession } from "@supastarter/backend/auth";
 import { getTranslator, redirect } from "next-intl/server";
 import ChangeNameForm from "./ChangeNameForm";
 import ChangePasswordForm from "./ChangePassword";

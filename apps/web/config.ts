@@ -4,6 +4,6 @@ export const appConfig = {
     defaultLocale: "en",
   },
   auth: {
-    redirectAfterLogin: "/",
+    redirectAfterLogin: "/dashboard",
   },
 };

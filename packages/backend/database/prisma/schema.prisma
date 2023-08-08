@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  USER
+  ADMIN
+}
+
+model UserRole {
+  userId String   @id
+  role   RoleType @default(USER)
+}
+
+model UserProfile {
+  userId    String   @id
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Organization {
+  id          String                   @id @default(cuid())
+  name        String
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+  memberships OrganizationMembership[]
+}
+
+enum OrganizationMembershipStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model OrganizationMembership {
+  id             String                       @id @default(cuid())
+  organization   Organization                 @relation(fields: [organizationId], references: [id])
+  organizationId String
+  userId         String
+  status         OrganizationMembershipStatus @default(PENDING)
+  createdAt      DateTime                     @default(now())
+  updatedAt      DateTime                     @updatedAt
+
+  @@unique([organizationId, userId])
+}
+
+model Subscription {
+  id              String    @id @default(cuid())
+  userId          String
+  customerId      String
+  subscriptionId  String
+  status          String
+  planId          String
+  variantId       String
+  nextPaymentDate DateTime?
+}

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Button, Icon } from "ui";
+import { Button, Icon } from "@supastarter/frontend/web/ui";
 import heroDarkImage from "/public/images/hero-dark.svg";
 import heroImage from "/public/images/hero.svg";
 

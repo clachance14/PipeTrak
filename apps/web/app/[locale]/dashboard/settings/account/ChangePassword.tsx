@@ -1,10 +1,10 @@
 "use client";
 
 import ActionBlock from "@components/ActionBlock";
+import { PasswordInput } from "@supastarter/frontend/web/ui";
 import { trpc } from "api/client/nextjs";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { PasswordInput } from "ui";
 
 export default function ChangePasswordForm() {
   const t = useTranslations("settings");

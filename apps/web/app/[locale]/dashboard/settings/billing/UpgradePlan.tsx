@@ -1,9 +1,9 @@
 "use client";
 
-import { trpc } from "api/client/nextjs";
-import { SubscriptionPlan } from "billing/subscriptions";
+import { SubscriptionPlan } from "@supastarter/backend/billing/subscriptions";
+import { apiClient } from "@supastarter/frontend/shared/api";
+import { PricingTable } from "@supastarter/frontend/web/ui/marketing";
 import { useTranslations } from "next-intl";
-import { PricingTable } from "ui/marketing";
 
 export default function UpgradePlan({
   plans,
@@ -12,7 +12,7 @@ export default function UpgradePlan({
   plans: SubscriptionPlan[];
   activePlanId: string;
 }) {
-  const createCheckoutLinkMutation = trpc.createCheckoutLink.useMutation();
+  const createCheckoutLinkMutation = apiClient.createCheckoutLink.useMutation();
   const t = useTranslations("settings.billing");
 
   return (

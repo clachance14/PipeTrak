@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
+    "@supastarter/frontend/shared/api": "workspace:*",
+    "@supastarter/frontend/web/ui": "workspace:*",
+    "next": "^13.4.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.9",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "license": "MIT",
+  "main": "./index.ts",
+  "name": "@supastarter/frontend/web/auth",
+  "types": "./index.ts",
+  "version": "0.1.0"
+}

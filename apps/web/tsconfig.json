@@ -16,7 +16,8 @@
     "**/*.mjs",
     ".next/types/**/*.ts",
     ".contentlayer/generated",
-    "next.config.js"
+    "next.config.js",
+    "../../packages/frontend/web/auth/src/components/Auth.tsx"
   ],
   "exclude": ["node_modules"]
 }

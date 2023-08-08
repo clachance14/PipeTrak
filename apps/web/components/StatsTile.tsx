@@ -1,8 +1,8 @@
 "use client";
 
+import { Badge } from "@supastarter/frontend/web/ui";
 import { useFormatter } from "next-intl";
 import { useMemo } from "react";
-import { Badge } from "ui";
 
 interface Props {
   title: string;

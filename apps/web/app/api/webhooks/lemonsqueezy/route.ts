@@ -1,5 +1,5 @@
 import { env } from "@env.mjs";
-import { updateUserSubscription } from "billing/subscriptions";
+import { updateUserSubscription } from "@supastarter/backend/billing/subscriptions";
 import { createHmac, timingSafeEqual } from "crypto";
 import { headers } from "next/headers";
 

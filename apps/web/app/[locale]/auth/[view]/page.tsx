@@ -1,8 +1,19 @@
-import { Auth, AuthView } from "./Auth";
+import { Auth } from "@supastarter/frontend/web/auth/src/components/Auth";
+import { getTranslator } from "next-intl/server";
+import { AuthView } from "./types";
 
-export async function generateMetadata() {
+export async function generateMetadata({ params: { locale, view } }) {
+  const t = await getTranslator(locale, "auth");
+
+  const pageTitles = {
+    [AuthView.Login]: t("login.title"),
+    [AuthView.SignUp]: t("signup.title"),
+    [AuthView.ForgotPassword]: t("forgotPassword.title"),
+    [AuthView.Callback]: t("callback.title"),
+  };
+
   return {
-    title: "Sign in",
+    title: pageTitles[view],
   };
 }
 

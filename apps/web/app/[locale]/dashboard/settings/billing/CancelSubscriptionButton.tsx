@@ -1,8 +1,8 @@
 "use client";
 
-import { trpc } from "api/client/nextjs";
+import { apiClient } from "@supastarter/frontend/shared/api";
+import { Button, Icon } from "@supastarter/frontend/web/ui";
 import { useRouter } from "next/navigation";
-import { Button, Icon } from "ui";
 
 export default function CancelSubscriptionButton({
   subscriptionId,
@@ -12,7 +12,7 @@ export default function CancelSubscriptionButton({
   label: string;
 }) {
   const router = useRouter();
-  const cancelSubscriptionMutation = trpc.cancelSubscription.useMutation();
+  const cancelSubscriptionMutation = apiClient.cancelSubscription.useMutation();
 
   const cancelSubscription = async () => {
     await cancelSubscriptionMutation.mutateAsync({ subscriptionId });

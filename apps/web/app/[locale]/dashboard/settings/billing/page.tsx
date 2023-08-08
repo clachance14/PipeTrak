@@ -1,6 +1,6 @@
-import { getUserSession } from "auth";
-import { getAllPlans } from "billing/subscriptions";
-import { getSubscriptionByUserId } from "database";
+import { getUserSession } from "@supastarter/backend/auth";
+import { getAllPlans } from "@supastarter/backend/billing/subscriptions";
+import { getSubscriptionByUserId } from "@supastarter/backend/database";
 import { getTranslator } from "next-intl/server";
 import CurrentSubscription from "./CurrentSubscription";
 import UpgradePlan from "./UpgradePlan";
