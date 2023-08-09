@@ -3,6 +3,7 @@ packages:
   - packages/api
   - packages/database
   - packages/mail
+  - packages/mail/.react-email
   - packages/config/eslint-config-custom
   - packages/config/tsconfig
   - packages/config/tailwind

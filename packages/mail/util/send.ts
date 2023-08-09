@@ -1,6 +1,5 @@
-import { mailTemplates } from "../emails";
 import { send } from "./provider";
-import { getTemplate } from "./templates";
+import { getTemplate, type mailTemplates } from "./templates";
 
 export async function sendEmail<
   TemplateId extends keyof typeof mailTemplates,

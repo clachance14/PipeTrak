@@ -13,3 +13,5 @@ MagicLink.subjects = {
   en: "Sign in",
   de: "Anmelden",
 };
+
+export default MagicLink;

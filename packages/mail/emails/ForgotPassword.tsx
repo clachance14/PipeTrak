@@ -1,18 +1,21 @@
-import { Heading } from "@react-email/heading";
-import { Html } from "@react-email/html";
-import { Text } from "@react-email/text";
+import { Container, Heading, Section, Text } from "@react-email/components";
 import PrimaryButton from "./components/PrimaryButton";
+import Wrapper from "./components/Wrapper";
 
 export function ForgotPassword({ url }: { url: string }): JSX.Element {
   return (
-    <Html>
-      <Heading>Reset your password</Heading>
-      <Text>
-        It seems like you forgot your password. Click the link below to sign in
-        and reset your password.
-      </Text>
-      <PrimaryButton href={url}>Reset password &rarr;</PrimaryButton>
-    </Html>
+    <Wrapper>
+      <Section className="bg-white p-8">
+        <Container>
+          <Heading>Reset your password</Heading>
+          <Text>
+            It seems like you forgot your password. Click the link below to sign
+            in and reset your password.
+          </Text>
+          <PrimaryButton href={url}>Reset password &rarr;</PrimaryButton>
+        </Container>
+      </Section>
+    </Wrapper>
   );
 }
 
@@ -20,3 +23,5 @@ ForgotPassword.subjects = {
   en: "Reset your password",
   de: "Setzen Sie Ihr Passwort zurück",
 };
+
+export default ForgotPassword;

@@ -1,5 +1,15 @@
 import { renderAsync } from "@react-email/render";
-import { mailTemplates } from "../emails";
+import { ForgotPassword } from "../emails/ForgotPassword";
+import { MagicLink } from "../emails/MagicLink";
+import { NewUser } from "../emails/NewUser";
+import { NewsletterSignup } from "../emails/NewsletterSignup";
+
+export const mailTemplates = {
+  magicLink: MagicLink,
+  forgotPassword: ForgotPassword,
+  newUser: NewUser,
+  newsletterSignup: NewsletterSignup,
+};
 
 export async function getTemplate<
   TemplateId extends keyof typeof mailTemplates,
