@@ -9,6 +9,7 @@
     "contentlayer": "^0.3.4",
     "database": "workspace:*",
     "jotai": "^2.2.1",
+    "lucide-react": "^0.265.0",
     "mail": "workspace:*",
     "next": "13.4.6",
     "next-contentlayer": "^0.3.4",

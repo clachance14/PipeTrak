@@ -1,12 +1,47 @@
-import { createApiCaller } from "api";
+import { Subscription } from "api";
 import { createHmac, timingSafeEqual } from "crypto";
+import { db } from "database";
 import { env } from "env.mjs";
 import { headers } from "next/headers";
 
+async function updateUserSubscription(
+  subscription: Omit<Subscription, "id"> & {
+    userId?: string;
+  },
+): Promise<void | Subscription> {
+  if (!subscription.userId) {
+    throw new Error("Either customerId or userId must be provided");
+  }
+
+  const existingSubscription = await db.subscription.findFirst({
+    where: {
+      userId: subscription.userId,
+    },
+  });
+
+  try {
+    if (existingSubscription) {
+      return await db.subscription.update({
+        data: subscription,
+        where: {
+          id: existingSubscription.id,
+        },
+      });
+    }
+
+    await db.subscription.create({
+      data: {
+        ...subscription,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    throw new Error("Could not upsert subscription");
+  }
+}
+
 export async function POST(req: Request) {
   const lemonsqueezySigningSecret = env.LEMONSQUEEZY_SIGNING_SECRET;
-
-  const apiCaller = await createApiCaller();
 
   try {
     const text = await req.text();
@@ -35,7 +70,7 @@ export async function POST(req: Request) {
       case "subscription_cancelled":
       case "subscription_expired":
       case "subscription_resumed":
-        await apiCaller.billing.updateUserSubscription({
+        await updateUserSubscription({
           userId: customData?.user_id,
           customerId: String(data.attributes.customer_id),
           planId: String(data.attributes.product_id),
