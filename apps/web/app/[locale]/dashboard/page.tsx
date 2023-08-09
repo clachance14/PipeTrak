@@ -1,24 +1,10 @@
-import { PageHeader } from "@src/components/PageHeader";
-import { StatsTile } from "@src/components/StatsTile";
-import { getUserSession } from "auth";
-import { getTranslator } from "next-intl/server";
-
-export async function generateMetadata({ params: { locale } }) {
-  const t = await getTranslator(locale, "dashboard");
-
-  return {
-    title: t("title"),
-  };
-}
+import { PageHeader, StatsTile } from "@components";
+import { createApiCaller } from "api";
 
 export default async function Home() {
-  const session = await getUserSession();
-
-  if (!session) {
-    return <div>Not logged in</div>;
-  }
-
-  const { user } = session;
+  const apiCaller = await createApiCaller();
+  const user = await apiCaller.user.info();
+  const user2 = await apiCaller.user.info();
 
   return (
     <div>

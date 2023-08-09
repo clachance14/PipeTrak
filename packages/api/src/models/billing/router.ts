@@ -98,4 +98,14 @@ export const billingRouter = router({
 
       return true;
     }),
+
+  userSubscription: protectedProcedure.query(async ({ ctx: { user } }) => {
+    const subscription = await db.subscription.findFirst({
+      where: {
+        userId: user!.id,
+      },
+    });
+
+    return subscription;
+  }),
 });

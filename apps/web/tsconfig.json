@@ -4,8 +4,7 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@components": ["/components"],
-      "@lib": ["/lib"],
+      "@*": ["*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

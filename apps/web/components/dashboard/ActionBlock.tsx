@@ -1,6 +1,6 @@
 import { Button } from "@components";
 
-export default function ActionBlock({
+export function ActionBlock({
   children,
   title,
   onSubmit,

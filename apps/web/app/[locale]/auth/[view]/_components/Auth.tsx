@@ -1,7 +1,7 @@
 "use client";
 
-import { appConfig } from "@config";
-import { useUser } from "auth-client-web/src/providers";
+import { useUser } from "@lib/auth";
+import { appConfig } from "config";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AuthView } from "../types";
 import CallbackLoader from "./CallbackLoader";

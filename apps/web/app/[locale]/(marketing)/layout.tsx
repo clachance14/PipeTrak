@@ -1,7 +1,6 @@
+import { Footer, NavBar } from "@components";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
-import { Footer } from "./_components/Footer";
-import { NavBar } from "./_components/NavBar";
 
 export default function MarketingLayout({ children }: PropsWithChildren) {
   const t = useTranslations("common");

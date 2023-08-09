@@ -1,9 +1,9 @@
 "use client";
 
-import { apiClient } from "api-client";
-import { SubscriptionPlan } from "billing/subscriptions";
+import { PricingTable } from "@components";
+import { SubscriptionPlan } from "api";
+import { apiClient } from "api/client";
 import { useTranslations } from "next-intl";
-import { PricingTable } from "ui-web/marketing";
 
 export default function UpgradePlan({
   plans,
@@ -12,7 +12,8 @@ export default function UpgradePlan({
   plans: SubscriptionPlan[];
   activePlanId: string;
 }) {
-  const createCheckoutLinkMutation = apiClient.createCheckoutLink.useMutation();
+  const createCheckoutLinkMutation =
+    apiClient.billing.createCheckoutLink.useMutation();
   const t = useTranslations("settings.billing");
 
   return (

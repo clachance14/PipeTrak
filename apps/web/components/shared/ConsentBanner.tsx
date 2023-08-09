@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, Icon } from "@components";
+import { getCookie, setCookie } from "@lib/util";
 import { useEffect, useState } from "react";
-import { getCookie, setCookie } from "../util/cookies";
 
 export function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);

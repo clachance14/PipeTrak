@@ -1,25 +1,39 @@
 "use client";
 
-import { PasswordInput } from "@components";
-import ActionBlock from "@src/components/ActionBlock";
-import { trpc } from "api/client/nextjs";
+import { ActionBlock, PasswordInput, useToast } from "@components";
+import { updatePassword } from "@lib/auth";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ChangePasswordForm() {
   const t = useTranslations("settings");
+  const toast = useToast();
+  const router = useRouter();
   const [password, setPassword] = useState("");
 
-  const changePasswordMutation = trpc.changePassword.useMutation({
-    onSuccess: async () => {
-      setPassword("");
+  const changePasswordMutation = useMutation(
+    ["changePassword"],
+    async (password: string) => {
+      await updatePassword(password);
     },
-  });
+    {
+      onSuccess: () => {
+        toast.create({
+          type: "success",
+          title: t("notifications.passwordUpdated"),
+          placement: "top-end",
+        });
+        router.refresh();
+      },
+    },
+  );
 
   return (
     <ActionBlock
       title={t("account.changePassword.title")}
-      onSubmit={() => changePasswordMutation.mutate({ password })}
+      onSubmit={() => changePasswordMutation.mutate(password)}
       isSubmitting={changePasswordMutation.isLoading}
       isSubmitDisabled={!password || password.length < 8}
     >

@@ -2,7 +2,7 @@
 
 import { Button, Hint, Icon, Input } from "@components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUp } from "auth-client-web";
+import { signUp } from "@lib/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";

@@ -1,9 +1,8 @@
 "use client";
 
-import { Input, useToast } from "@components";
-import ActionBlock from "@src/components/ActionBlock";
+import { ActionBlock, Input, useToast } from "@components";
+import { updateName } from "@lib/auth";
 import { useMutation } from "@tanstack/react-query";
-import { updateName } from "auth-client-web";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

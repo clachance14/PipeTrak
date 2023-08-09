@@ -1,1 +1,1 @@
-export { getCookie } from "./cookies";
+export * from "./cookies";

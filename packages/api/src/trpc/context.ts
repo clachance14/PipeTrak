@@ -3,6 +3,7 @@ import { getUser } from "../auth";
 
 export async function createContext() {
   const user = await getUser();
+
   return {
     user,
   };

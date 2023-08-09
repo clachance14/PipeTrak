@@ -176,7 +176,8 @@
     },
     "notifications": {
       "emailUpdated": "Your email has been updated.",
-      "nameUpdated": "Your name has been updated."
+      "nameUpdated": "Your name has been updated.",
+      "passwordUpdated": "Your password has been updated."
     },
     "subtitle": "Manage your settings",
     "title": "Settings"

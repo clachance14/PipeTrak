@@ -1,6 +1,6 @@
 "use client";
 
-import { ToastProvider } from "@components/base/Toast";
+import { ToastProvider } from "@components";
 import { AuthProvider } from "@lib/auth";
 import { ApiClientProvider } from "api/client";
 import { ThemeProvider } from "next-themes";

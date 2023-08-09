@@ -1,6 +1,6 @@
 "use client";
 
-import { PricingTable as PricingTablePrimitive } from "@components/marketing";
+import { PricingTable as PricingTablePrimitive } from "@components";
 import { type SubscriptionPlan } from "api";
 import { useTranslations } from "next-intl";
 

@@ -1,4 +1,4 @@
-import { getUserSession } from "auth";
+import { createApiCaller } from "api";
 import { getTranslator, redirect } from "next-intl/server";
 import ChangeNameForm from "./ChangeNameForm";
 import ChangePasswordForm from "./ChangePassword";
@@ -12,15 +12,16 @@ export async function generateMetadata({ params: { locale } }) {
 }
 
 export default async function AccountSettingsPage() {
-  const session = await getUserSession();
+  const apiCaller = await createApiCaller();
+  const user = await apiCaller.user.info();
 
-  if (!session.user) {
+  if (!user) {
     redirect("/signin");
   }
 
   return (
     <div className="grid gap-6">
-      <ChangeNameForm initialValue={session.user.name} />
+      <ChangeNameForm initialValue={user.name} />
       <ChangePasswordForm />
     </div>
   );

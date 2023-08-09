@@ -1,10 +1,12 @@
-import { apiCaller } from "api";
+import { createApiCaller } from "api";
 import { createHmac, timingSafeEqual } from "crypto";
 import { env } from "env.mjs";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
   const lemonsqueezySigningSecret = env.LEMONSQUEEZY_SIGNING_SECRET;
+
+  const apiCaller = await createApiCaller();
 
   try {
     const text = await req.text();
@@ -33,7 +35,7 @@ export async function POST(req: Request) {
       case "subscription_cancelled":
       case "subscription_expired":
       case "subscription_resumed":
-        await apiCaller.updateUserSubscription({
+        await apiCaller.billing.updateUserSubscription({
           userId: customData?.user_id,
           customerId: String(data.attributes.customer_id),
           planId: String(data.attributes.product_id),

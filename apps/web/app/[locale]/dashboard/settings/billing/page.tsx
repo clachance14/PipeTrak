@@ -1,6 +1,4 @@
-import { getUserSession } from "auth";
-import { getAllPlans } from "billing/subscriptions";
-import { getSubscriptionByUserId } from "database";
+import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
 import CurrentSubscription from "./CurrentSubscription";
 import UpgradePlan from "./UpgradePlan";
@@ -18,11 +16,11 @@ export default async function BillingSettingsPage({
 }: {
   params: { locale: string };
 }) {
-  const session = await getUserSession();
+  const apiCaller = await createApiCaller();
   const t = await getTranslator(locale, "settings.billing");
-  const plans = await getAllPlans();
-
-  const userSubscription = await getSubscriptionByUserId(session!.user.id);
+  const user = await apiCaller.user.info();
+  const plans = await apiCaller.billing.plans();
+  const userSubscription = await apiCaller.billing.userSubscription();
 
   return (
     <div>

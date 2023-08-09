@@ -1,5 +1,5 @@
 import { Badge, Button, Icon } from "@components";
-import { Subscription, SubscriptionPlan } from "billing/subscriptions";
+import { Subscription, SubscriptionPlan } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
 

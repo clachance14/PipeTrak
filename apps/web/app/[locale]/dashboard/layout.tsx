@@ -1,6 +1,6 @@
 "use client";
 
-import { Sidebar } from "@src/components/Sidebar";
+import { Sidebar } from "@components";
 import { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren<{}>) {

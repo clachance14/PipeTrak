@@ -1,11 +1,16 @@
 "use client";
 
 import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
-import { Button, Icon, Logo } from "@components";
-import UserMenu from "@components/UserMenu";
+import {
+  Button,
+  ColorModeToggle,
+  Icon,
+  LocaleSwitch,
+  Logo,
+  UserMenu,
+} from "@components";
 import { appConfig } from "@config";
-import { useUser } from "auth-client-web";
-import { ColorModeToggle, LocaleSwitch } from "common-web/components";
+import { useUser } from "@lib/auth";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";

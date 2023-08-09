@@ -8,7 +8,28 @@ import { env } from "./env.mjs";
 const supabaseClient = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
   env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  {
+    auth: {
+      storage: localStorage,
+    },
+  },
 );
+
+export const SUPABASE_ACCESS_TOKEN_COOKIE = "sb:access-token";
+export const SUPABASE_REFRESH_TOKEN_COOKIE = "sb:refresh-token";
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_OUT") {
+    // delete cookies on sign out
+    const expires = new Date(0).toUTCString();
+    document.cookie = `${SUPABASE_ACCESS_TOKEN_COOKIE}=; path=/; expires=${expires}; SameSite=Lax; secure`;
+    document.cookie = `${SUPABASE_REFRESH_TOKEN_COOKIE}=; path=/; expires=${expires}; SameSite=Lax; secure`;
+  } else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+    const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
+    document.cookie = `${SUPABASE_ACCESS_TOKEN_COOKIE}=${session.access_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+    document.cookie = `${SUPABASE_REFRESH_TOKEN_COOKIE}=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+  }
+});
 
 const mapSupabaseUserToUser = (user: SupabaseUser): User => {
   return {

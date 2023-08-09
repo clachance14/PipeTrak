@@ -1,5 +1,4 @@
-import { PageHeader } from "@src/components/PageHeader";
-import { TabGroup } from "@src/components/TabGroup";
+import { PageHeader, TabGroup } from "@components";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 

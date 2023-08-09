@@ -6,27 +6,59 @@ import { env } from "./env.mjs";
 const supabaseClient = createClient(
   env.SUPABASE_URL,
   env.SUPABASE_ADMIN_SECRET,
+  {
+    auth: {
+      persistSession: false,
+    },
+  },
 );
 
-export const getUser = async (): Promise<User | null> => {
-  const accessToken = cookies().get("sb:token")?.value;
-  const refreshToken = cookies().get("sb:refresh_token")?.value;
+const accessTokenCache = new Map<
+  string,
+  {
+    user: User;
+    expiresAt: number;
+  }
+>();
 
-  if (!accessToken || !refreshToken) return null;
+export const getUser = async (): Promise<User | null> => {
+  const access_token = cookies().get("sb:access-token")?.value;
+  const refresh_token = cookies().get("sb:refresh-token")?.value;
+
+  if (!access_token || !refresh_token) {
+    return null;
+  }
+
+  const cachedUser = accessTokenCache.get(access_token);
+
+  if (cachedUser && cachedUser.expiresAt > Date.now()) {
+    return cachedUser.user;
+  }
 
   await supabaseClient.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken,
+    access_token,
+    refresh_token,
   });
-  const session = await supabaseClient.auth.getSession();
-  const user = session.data?.session?.user;
 
-  if (!user) return null;
+  const {
+    data: { user },
+    error,
+  } = await supabaseClient.auth.getUser();
 
-  return {
+  if (error || !user) {
+    return null;
+  }
+
+  const formattedUserObject = {
     id: user.id,
+    name: user.user_metadata?.full_name ?? "",
     email: user.email!,
-    name: user.user_metadata.full_name ?? "",
-    role: "user",
   };
+
+  accessTokenCache.set(access_token, {
+    user: formattedUserObject,
+    expiresAt: Date.now() + 1 * 60 * 1000, // cache for 5 minutes
+  });
+
+  return formattedUserObject;
 };

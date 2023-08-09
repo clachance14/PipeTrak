@@ -3,7 +3,7 @@
 import { Button, Hint, Icon, Input } from "@components";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { forgotPassword } from "auth-client-web";
+import { forgotPassword } from "@lib/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";

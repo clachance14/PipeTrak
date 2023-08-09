@@ -1,3 +1,5 @@
+"use client";
+
 import { Presence } from "@ark-ui/react";
 import { Button, Icon } from "@components";
 import { useEffect, useState } from "react";

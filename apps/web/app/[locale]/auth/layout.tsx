@@ -1,5 +1,4 @@
-import { Logo } from "@components";
-import { ColorModeToggle } from "common-web/components";
+import { ColorModeToggle, Logo } from "@components";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { PropsWithChildren } from "react";

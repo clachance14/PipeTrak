@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Icon } from "@components";
-import { apiClient } from "api-client";
+import { apiClient } from "api/client";
 import { useRouter } from "next/navigation";
 
 export default function CancelSubscriptionButton({
@@ -12,7 +12,8 @@ export default function CancelSubscriptionButton({
   label: string;
 }) {
   const router = useRouter();
-  const cancelSubscriptionMutation = apiClient.cancelSubscription.useMutation();
+  const cancelSubscriptionMutation =
+    apiClient.billing.cancelSubscription.useMutation();
 
   const cancelSubscription = async () => {
     await cancelSubscriptionMutation.mutateAsync({ subscriptionId });

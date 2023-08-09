@@ -8,11 +8,11 @@ import {
   MenuTrigger,
 } from "@ark-ui/react";
 import { Icon } from "@components";
-import { signOut } from "auth-client-web";
+import { signOut } from "@lib/auth";
 import Link from "next-intl/link";
 import Image from "next/image";
 
-export default function UserMenu({
+export function UserMenu({
   email,
   name,
   image,

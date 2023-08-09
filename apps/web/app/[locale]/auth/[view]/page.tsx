@@ -1,5 +1,5 @@
-import { Auth } from "auth-client-web/src/components/Auth";
 import { getTranslator } from "next-intl/server";
+import { Auth } from "./_components/Auth";
 import { AuthView } from "./types";
 
 export async function generateMetadata({ params: { locale, view } }) {
