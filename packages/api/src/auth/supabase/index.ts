@@ -3,15 +3,11 @@ import { cookies } from "next/headers";
 import { User } from "../types";
 import { env } from "./env.mjs";
 
-const supabaseClient = createClient(
-  env.SUPABASE_URL,
-  env.SUPABASE_ADMIN_SECRET,
-  {
-    auth: {
-      persistSession: false,
-    },
+const supabaseClient = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: false,
   },
-);
+});
 
 const accessTokenCache = new Map<
   string,
