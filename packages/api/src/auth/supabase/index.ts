@@ -57,7 +57,7 @@ export const getUser = async (): Promise<User | null> => {
 
   accessTokenCache.set(access_token, {
     user: formattedUserObject,
-    expiresAt: Date.now() + 1 * 60 * 1000, // cache for 5 minutes
+    expiresAt: Date.now() + 60 * 1000, // cache for one minute
   });
 
   return formattedUserObject;
