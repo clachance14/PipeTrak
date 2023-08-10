@@ -8,12 +8,8 @@ export default function Wrapper({ children }: PropsWithChildren) {
     <Html lang="en">
       <Head>
         <Font
-          fontFamily="Roboto"
+          fontFamily="Inter"
           fallbackFontFamily="Arial"
-          webFont={{
-            url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
-            format: "woff2",
-          }}
           fontWeight={400}
           fontStyle="normal"
         />

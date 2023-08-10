@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { getUser, registerAuthEventListener } from "./supabase";
 import { User } from "./types";

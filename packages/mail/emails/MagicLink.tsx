@@ -1,11 +1,16 @@
-import { Html } from "@react-email/html";
+import { Container, Section } from "@react-email/components";
 import PrimaryButton from "./components/PrimaryButton";
+import Wrapper from "./components/Wrapper";
 
 export function MagicLink({ url }: { url: string }): JSX.Element {
   return (
-    <Html>
-      <PrimaryButton href={url}>Sign in</PrimaryButton>
-    </Html>
+    <Wrapper>
+      <Section className="bg-white p-8">
+        <Container>
+          <PrimaryButton href={url}>Sign in</PrimaryButton>
+        </Container>
+      </Section>
+    </Wrapper>
   );
 }
 
