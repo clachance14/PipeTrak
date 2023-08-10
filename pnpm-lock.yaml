@@ -39,6 +39,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.1.1
         version: 3.1.1(react-hook-form@7.43.9)
+      '@supabase/auth-helpers-nextjs':
+        specifier: ^0.7.4
+        version: 0.7.4(@supabase/supabase-js@2.32.0)
       '@supabase/supabase-js':
         specifier: ^2.32.0
         version: 2.32.0(encoding@0.1.13)
@@ -48,12 +51,18 @@ importers:
       '@tanstack/react-query':
         specifier: ^4.29.14
         version: 4.29.14(react-dom@18.2.0)(react@18.2.0)
+      '@types/cookie':
+        specifier: ^0.5.1
+        version: 0.5.1
       api:
         specifier: workspace:*
         version: link:../../packages/api
       contentlayer:
         specifier: ^0.3.4
         version: 0.3.4(esbuild@0.19.0)
+      cookie:
+        specifier: ^0.5.0
+        version: 0.5.0
       database:
         specifier: workspace:*
         version: link:../../packages/database
@@ -133,6 +142,9 @@ importers:
       '@prisma/client':
         specifier: ^5.1.1
         version: 5.1.1(prisma@5.1.1)
+      '@supabase/auth-helpers-nextjs':
+        specifier: ^0.7.4
+        version: 0.7.4(@supabase/supabase-js@2.32.0)
       '@supabase/supabase-js':
         specifier: ^2.32.0
         version: 2.32.0(encoding@0.1.13)
@@ -1918,6 +1930,25 @@ packages:
       selderee: 0.10.0
     dev: false
 
+  /@supabase/auth-helpers-nextjs@0.7.4(@supabase/supabase-js@2.32.0):
+    resolution: {integrity: sha512-MyGCkB7LEDcGrKmesKGjyG54Jlbiss8VGTegrNde/ywXujQyRFnzycijoASDBc6i9SmE7eE1qWBsMr2URb07nw==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.19.0
+    dependencies:
+      '@supabase/auth-helpers-shared': 0.4.1(@supabase/supabase-js@2.32.0)
+      '@supabase/supabase-js': 2.32.0(encoding@0.1.13)
+      set-cookie-parser: 2.6.0
+    dev: false
+
+  /@supabase/auth-helpers-shared@0.4.1(@supabase/supabase-js@2.32.0):
+    resolution: {integrity: sha512-IEDX9JzWkIjQiLUaP4Qy5YDiG0jFQatWfS+jw8cCQs6QfbNdEPd2Y3qonwGHnM90CZom9SvjuylBv2pFVAL7Lw==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.19.0
+    dependencies:
+      '@supabase/supabase-js': 2.32.0(encoding@0.1.13)
+      jose: 4.14.4
+    dev: false
+
   /@supabase/functions-js@2.1.2(encoding@0.1.13):
     resolution: {integrity: sha512-QCR6pwJs9exCl37bmpMisUd6mf+0SUBJ6mUpiAjEkSJ/+xW8TCuO14bvkWHADd5hElJK9MxNlMQXxSA4DRz9nQ==}
     dependencies:
@@ -2105,6 +2136,10 @@ packages:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
     dependencies:
       '@types/estree': 1.0.1
+    dev: false
+
+  /@types/cookie@0.5.1:
+    resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
     dev: false
 
   /@types/debug@4.1.8:
@@ -3384,6 +3419,11 @@ packages:
       - esbuild
       - markdown-wasm
       - supports-color
+    dev: false
+
+  /cookie@0.5.0:
+    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
     dev: false
 
   /copy-anything@3.0.5:
@@ -5197,6 +5237,10 @@ packages:
 
   /jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
+    dev: false
+
+  /jose@4.14.4:
+    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
     dev: false
 
   /jotai@2.2.1(react@18.2.0):
@@ -7041,6 +7085,10 @@ packages:
 
   /server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+    dev: false
+
+  /set-cookie-parser@2.6.0:
+    resolution: {integrity: sha512-RVnVQxTXuerk653XfuliOxBP81Sf0+qfQE73LIYKcyMYHG94AuH0kgrQpRDuTZnSmjpysHmzxJXKNfa6PjFhyQ==}
     dev: false
 
   /setimmediate@1.0.5:
