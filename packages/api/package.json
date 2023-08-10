@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/react": "18.2.9",
+    "encoding": "^0.1.13",
     "eslint-config-custom": "workspace:*",
     "prisma": "^5.1.1",
     "tsconfig": "workspace:*"
