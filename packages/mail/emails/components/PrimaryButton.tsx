@@ -1,4 +1,4 @@
-import { Button } from "@react-email/button";
+import { Button } from "@react-email/components";
 import { PropsWithChildren } from "react";
 
 export default function PrimaryButton({
