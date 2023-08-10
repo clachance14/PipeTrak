@@ -36,6 +36,7 @@
     "export": {
       "outputs": ["out/**"]
     },
-    "lint": {}
+    "lint": {},
+    "storybook": {}
   }
 }

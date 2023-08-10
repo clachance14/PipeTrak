@@ -1,6 +1,5 @@
 const { createContentlayerPlugin } = require("next-contentlayer");
 const nextIntlPlugin = require("next-intl/plugin");
-import("./env.mjs");
 
 const withNextIntl = nextIntlPlugin("./i18n.ts");
 const withContentlayer = createContentlayerPlugin({});
