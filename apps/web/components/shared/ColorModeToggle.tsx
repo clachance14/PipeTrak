@@ -37,7 +37,7 @@ export function ColorModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button variant="ghost" size="icon">
           {resolvedTheme === "light" ? (
             <Icon.lightMode className="h-4 w-4" />
           ) : (
