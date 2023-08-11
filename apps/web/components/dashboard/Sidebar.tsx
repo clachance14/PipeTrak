@@ -66,11 +66,7 @@ export function Sidebar({}: PropsWithChildren<{}>) {
       className={`fixed top-0 ${positionClass} z-40 h-screen w-[300px] transition-all duration-300 ease-in-out`}
     >
       <div className="flex justify-end px-8 py-2 lg:hidden">
-        <Button
-          intent="primary-outline"
-          size="small"
-          onClick={() => setSidebarExpanded(false)}
-        >
+        <Button variant="outline" onClick={() => setSidebarExpanded(false)}>
           <span className="sr-only">Toggle sidebar</span>
           <Icon.close className="h-4 w-4" />
         </Button>
@@ -86,19 +82,13 @@ export function Sidebar({}: PropsWithChildren<{}>) {
           <li key={menuItem.href}>
             <Link
               href={menuItem.href}
-              className={`flex items-center gap-3 py-3 hover:text-zinc-950 hover:no-underline focus:no-underline dark:hover:text-white ${
+              className={`hover:bg-accent hover:text-accent-foreground flex items-center gap-3 py-3 ${
                 isActiveMenuItem(menuItem.segment)
-                  ? "font-bold text-zinc-950 dark:text-white"
+                  ? "bg-accent text-accent-foreground font-bold"
                   : ""
               }`}
             >
-              <menuItem.icon
-                className={`h-6 w-6 transform ${
-                  isActiveMenuItem(menuItem.segment)
-                    ? "text-primary-500"
-                    : "text-zinc-950/50 dark:text-white/50"
-                }`}
-              />
+              <menuItem.icon className="h-4 w-4" />
               <span>{menuItem.label}</span>
             </Link>
           </li>

@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function ChangePasswordForm() {
   const t = useTranslations("settings");
-  const toast = useToast();
+  const { toast } = useToast();
   const router = useRouter();
   const [password, setPassword] = useState("");
 
@@ -20,10 +20,8 @@ export default function ChangePasswordForm() {
     },
     {
       onSuccess: () => {
-        toast.create({
-          type: "success",
+        toast({
           title: t("notifications.passwordUpdated"),
-          placement: "top-end",
         });
         router.refresh();
       },

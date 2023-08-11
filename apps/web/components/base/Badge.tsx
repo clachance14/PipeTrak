@@ -13,7 +13,7 @@ export const badge = tv({
   variants: {
     status: {
       success: ["bg-emerald-500/10", "text-emerald-500"],
-      info: ["bg-primary-500/10", "text-primary-500"],
+      info: ["bg-primary/10", "text-primary"],
       warning: ["bg-amber-500/10", "text-amber-500"],
       error: ["bg-rose-500/10", "text-rose-500"],
     },

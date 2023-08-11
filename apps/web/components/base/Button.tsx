@@ -1,164 +1,53 @@
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Icon } from "./Icon";
+import { Slot } from "@radix-ui/react-slot";
+import * as React from "react";
 
-export const button = tv({
-  base: [
-    "font-semibold",
-    "border",
-    "hover:no-underline",
-    // alignment inside button
-    "flex",
-    "items-center",
-    "gap-2",
-    "justify-center",
-    "leading-normal",
-    // transition
-    "transition-all",
-    "duration-200",
-    "ease-in-out",
-    // focus ring
-    "focus:ring-0",
-    "outline-none",
-    // make sure content doesn't wrap
-    "whitespace-nowrap",
-    // disabled styles
-    "disabled:opacity-50",
-    "disabled:cursor-not-allowed",
-    "disabled:pointer-events-none",
-    // style svg icons inside a button
-    "[&>svg:not(.animate-spin)]:scale-110",
-    // '[&>svg:not(.animate-spin)]:w-[1em]',
-    // '[&>svg:not(.animate-spin)]:h-[1em]',
-  ],
+import { cnBase as cn, tv, type VariantProps } from "tailwind-variants";
+
+const buttonVariants = tv({
+  base: "inline-flex items-center justify-center rounded-full text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   variants: {
-    intent: {
-      primary: [
-        "bg-zinc-800",
-        "text-white",
-        "border-transparent",
-        // hover
-        "hover:bg-zinc-900",
-        // focus
-        "focus:ring-2",
-        "focus:ring-primary-500",
-        "focus:ring-offset-1",
-        "focus:bg-zinc-950",
-        // dark mode
-        "dark:bg-white",
-        "dark:text-zinc-800",
-        "dark:hover:bg-white/80",
-        "dark:focus:bg-white/70",
-      ],
-      "primary-outline": [
-        "bg-transparent",
-        "text-zinc-950",
-        "border-zinc-950/10",
-        // hover
-        "hover:bg-zinc-950/20",
-        // focus
-        "focus:bg-zinc-950/30",
-        "focus:border-zinc-950/30",
-        // dark mode
-        "dark:text-white",
-        "dark:border-white/10",
-        "dark:hover:bg-white/20",
-        "dark:focus:bg-white/30",
-        "dark:focus:border-white/30",
-      ],
-      "primary-ghost": [
-        "bg-transparent",
-        "text-zinc-950",
-        "border-transparent",
-        // hover
-        "hover:bg-zinc-950/10",
-        // focus
-        "focus:bg-zinc-950/20",
-        // dark mode
-        "dark:text-white",
-        "dark:bg-white/5",
-        "dark:hover:bg-white/10",
-        "dark:focus:bg-white/20",
-      ],
-      secondary: [
-        "bg-white",
-        "text-zinc-800",
-        "border-zinc-400",
-        "hover:bg-zinc-100",
-      ],
-      github: [
-        "bg-zinc-900",
-        "text-white",
-        "border-transparent",
-        "hover:bg-zinc-800",
-      ],
-      discord: [
-        "bg-[#7289DA]",
-        "text-white",
-        "border-transparent",
-        "hover:bg-[#5E74C0]",
-      ],
-      google: [
-        "bg-[#4285F4]",
-        "text-white",
-        "border-transparent",
-        "hover:bg-[#357AE8]",
-      ],
-      apple: [
-        "bg-zinc-950",
-        "text-white",
-        "border-transparent",
-        "hover:bg-[#1E1E1E]",
-        "ring-zinc-950",
-      ],
-      twitter: [
-        "bg-[#1DA1F2]",
-        "text-white",
-        "border-transparent",
-        "hover:bg-[#1A94E0]",
-      ],
+    variant: {
+      default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+      destructive:
+        "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+      outline:
+        "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground",
+      secondary:
+        "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+      ghost: "hover:bg-accent hover:text-accent-foreground",
+      link: "text-primary underline-offset-4 hover:underline",
     },
     size: {
-      xsmall: ["text-xs", "py-0.5", "px-2", "rounded-sm", "h-6"],
-      small: ["text-sm", "py-1", "px-3", "rounded-md", "h-8"],
-      medium: ["text-base", "py-2", "px-4", "rounded-lg", "h-10"],
-      large: ["text-lg", "py-4", "px-6", "rounded-xl", "h-12"],
+      default: "h-9 px-4 py-2",
+      sm: "h-8 rounded-full px-3 text-sm",
+      lg: "h-10 rounded-full px-8",
+      icon: "h-9 w-9",
     },
   },
   defaultVariants: {
-    intent: "primary",
-    size: "medium",
+    variant: "default",
+    size: "default",
   },
 });
 
-interface ButtonProps<T extends React.ElementType>
-  extends VariantProps<typeof button> {
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  as?: T;
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
-export function Button<T extends React.ElementType = "button">({
-  className,
-  children,
-  intent,
-  size,
-  isLoading,
-  isDisabled,
-  as,
-  ...props
-}: ButtonProps<T> &
-  Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) {
-  const Component = as ?? "button";
-  return (
-    <Component
-      className={button({ intent, size, className })}
-      disabled={isLoading || isDisabled || props.disabled || false}
-      {...props}
-    >
-      {isLoading ? <Icon.spinner className="h-4 w-4 animate-spin" /> : children}
-    </Component>
-  );
-}
-
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
 Button.displayName = "Button";
+
+export { Button, buttonVariants };

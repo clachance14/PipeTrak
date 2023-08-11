@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="bg-zinc-50 py-12 text-gray-600 dark:bg-zinc-800 dark:text-zinc-300">
+    <footer className="bg-muted text-muted-foreground py-12">
       <div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div>
           <Logo />

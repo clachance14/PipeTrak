@@ -41,7 +41,7 @@ export function NavBar({
 
   return (
     <nav
-      className={`fixed left-0 top-0 z-20 w-full bg-white/80 backdrop-blur-lg dark:bg-zinc-900/80 dark:text-white`}
+      className={`bg-background/80 fixed left-0 top-0 z-20 w-full backdrop-blur-lg`}
     >
       <Banner />
 
@@ -74,12 +74,10 @@ export function NavBar({
             currentLocale={locale}
           />
 
-          <Button
-            as="a"
-            href={user ? "/dashboard" : "/auth/login"}
-            intent="primary-ghost"
-          >
-            {user ? labels.dashboard : labels.signIn}
+          <Button asChild variant="ghost">
+            <Link href={user ? "/dashboard" : "/auth/login"}>
+              {user ? labels.dashboard : labels.signIn}
+            </Link>
           </Button>
         </div>
       </div>

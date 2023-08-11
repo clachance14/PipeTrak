@@ -27,10 +27,10 @@ export function Newsletter() {
   };
 
   return (
-    <section className="border-t py-24 dark:border-zinc-800 dark:text-white">
+    <section className="border-border border-t py-24">
       <div className="container">
         <div className="mb-12 text-center">
-          <Icon.key className="text-primary-500 mx-auto mb-3 h-12 w-12" />
+          <Icon.key className="text-primary mx-auto mb-3 h-12 w-12" />
           <h1 className="text-3xl font-bold lg:text-4xl">
             {t("newsletter.title")}
           </h1>
@@ -43,7 +43,7 @@ export function Newsletter() {
               status="success"
               title={t("newsletter.hints.success.title")}
               message={t("newsletter.hints.success.message")}
-              icon={<Icon.success className="h-4 w-4" />}
+              icon={Icon.success}
             />
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,12 +54,7 @@ export function Newsletter() {
                   placeholder={t("newsletter.email")}
                   {...register("email")}
                 />
-                <Button
-                  type="submit"
-                  size="large"
-                  className="ml-4"
-                  isLoading={isSubmitting}
-                >
+                <Button type="submit" className="ml-4">
                   {t("newsletter.submit")}
                 </Button>
               </div>

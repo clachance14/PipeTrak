@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Switch } from "..";
+import { Button, Tabs, TabsList, TabsTrigger } from "../base";
 
 export function PricingTable({
   plans,
@@ -44,15 +44,16 @@ export function PricingTable({
   return (
     <div className="@container">
       <div className="flex justify-center">
-        <Switch
-          options={[
-            { label: labels.monthly, value: "month" },
-            { label: labels.yearly, value: "year" },
-          ]}
+        <Tabs
           value={interval}
-          onChange={(value) => setInterval(value as typeof interval)}
+          onValueChange={(value) => setInterval(value as typeof interval)}
           className="mb-4"
-        />
+        >
+          <TabsList>
+            <TabsTrigger value="month">{labels.monthly}</TabsTrigger>
+            <TabsTrigger value="year">{labels.yearly}</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
 
       <div className="@md:grid-cols-2 grid gap-4">
@@ -62,27 +63,24 @@ export function PricingTable({
           if (!variant) return null;
 
           return (
-            <div
-              key={plan.id}
-              className="rounded-xl border p-6 dark:border-zinc-700"
-            >
+            <div key={plan.id} className="rounded-xl border p-6">
               <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
               {plan.description && (
                 <div
-                  className="prose mb-2 text-zinc-950/70 dark:text-white/70"
+                  className="prose text-muted-foreground mb-2"
                   dangerouslySetInnerHTML={{ __html: plan.description }}
                 />
               )}
 
               {!!plan.features?.length && (
-                <ul className="mb-4 grid list-disc gap-2 pl-4 text-zinc-500">
+                <ul className="text-muted-foreground mb-4 grid list-disc gap-2 pl-4">
                   {plan.features.map((feature, key) => (
                     <li key={key}>{feature}</li>
                   ))}
                 </ul>
               )}
 
-              <strong className="text-primary-500 text-4xl font-bold">
+              <strong className="text-primary text-4xl font-bold">
                 {Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: plan.currency,
@@ -91,8 +89,8 @@ export function PricingTable({
               </strong>
 
               <Button
-                isDisabled={isActivePlan(plan)}
-                isLoading={selectedPlan === plan.id}
+                disabled={isActivePlan(plan)}
+                // isLoading={selectedPlan === plan.id}
                 className="mt-4 w-full"
                 onClick={async () => {
                   setSelectedPlan(plan.id);

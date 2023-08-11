@@ -1,12 +1,13 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Icon } from "./Icon";
 
 export const hint = tv({
   base: ["px-5", "py-4", "w-full", "rounded-xl"],
   variants: {
     status: {
       success: ["bg-emerald-500/10", "border-emerald-500"],
-      info: ["bg-primary-500/10", "border-primary-500"],
+      info: ["bg-primary/10", "border-primary"],
       warning: ["bg-amber-500/10", "border-amber-500"],
       error: ["bg-rose-500/10", "border-rose-500"],
     },
@@ -80,7 +81,7 @@ export type HintProps = React.HtmlHTMLAttributes<HTMLDivElement> &
   VariantProps<typeof hint> & {
     title?: React.ReactNode;
     message: React.ReactNode;
-    icon?: React.ReactNode;
+    icon?: (typeof Icon)[keyof typeof Icon];
   };
 
 export const Hint = ({
@@ -88,12 +89,13 @@ export const Hint = ({
   status,
   title,
   message,
-  icon,
   ...props
 }: HintProps) => (
   <div className={hint({ status, className })} {...props}>
     <div className="flex items-center gap-4">
-      <div className={hintIcon({ status })}>{icon}</div>
+      <div className={hintIcon({ status })}>
+        <props.icon className="h-6 w-6" />
+      </div>
       <div>
         {title && <strong className={hintTitle({ status })}>{title}</strong>}
         <p className={hintMessage({ status })}>{message}</p>

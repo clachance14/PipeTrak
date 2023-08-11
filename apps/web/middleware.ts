@@ -17,7 +17,9 @@ export default async function middleware(req: NextRequest) {
   // const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
-  await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   // if (isPublicPage) {
   return intlMiddleware(req);

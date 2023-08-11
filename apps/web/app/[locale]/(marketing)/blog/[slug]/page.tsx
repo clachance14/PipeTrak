@@ -42,9 +42,7 @@ export default async function BlogPostPage({
           <Link href="/blog">&larr; Back to blog</Link>
         </div>
 
-        <h1 className="text-4xl font-bold text-zinc-900 dark:text-white">
-          {title}
-        </h1>
+        <h1 className="text-4xl font-bold">{title}</h1>
 
         <div className="mt-4 flex items-center  justify-start gap-6">
           {authorName && (
@@ -77,7 +75,7 @@ export default async function BlogPostPage({
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-primary-500 text-xs font-semibold uppercase tracking-wider"
+                  className="text-primary text-xs font-semibold uppercase tracking-wider"
                 >
                   #{tag}
                 </span>

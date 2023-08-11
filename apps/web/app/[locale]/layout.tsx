@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
-import "../globals.css";
+import "../../styles/globals.css";
 import ClientProviders from "./_components/ClientProviders";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sansFont = Inter({
+const sansFont = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -36,9 +36,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${sansFont.variable} bg-zinc-50 font-sans dark:bg-zinc-950`}
-      >
+      <body className={`${sansFont.variable} bg-background font-sans`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientProviders>{children}</ClientProviders>
         </NextIntlClientProvider>

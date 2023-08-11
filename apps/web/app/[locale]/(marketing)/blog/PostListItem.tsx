@@ -9,7 +9,7 @@ export function PostListItem({ post }: { post: Post }) {
     post;
 
   return (
-    <div className="rounded-2xl border p-6 dark:border-zinc-800 ">
+    <div className="border-border rounded-2xl border p-6 ">
       {image && (
         <div className="relative -m-4 mb-4 aspect-[16/9] overflow-hidden rounded-xl ">
           <Image
@@ -28,7 +28,7 @@ export function PostListItem({ post }: { post: Post }) {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="text-primary-500 text-xs font-semibold uppercase tracking-wider"
+              className="text-primary text-xs font-semibold uppercase tracking-wider"
             >
               #{tag}
             </span>
@@ -36,10 +36,7 @@ export function PostListItem({ post }: { post: Post }) {
         </div>
       )}
 
-      <Link
-        href={url}
-        className="text-xl font-semibold text-zinc-900 dark:text-white"
-      >
+      <Link href={url} className="text-xl font-semibold">
         {title}
       </Link>
       {excerpt && <p className="opacity-50">{excerpt}</p>}

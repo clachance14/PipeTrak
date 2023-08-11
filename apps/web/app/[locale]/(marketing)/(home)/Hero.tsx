@@ -2,7 +2,7 @@ import { Button } from "@components";
 
 export function Hero() {
   return (
-    <nav className="to-primary-50 border-b bg-gradient-to-b from-white py-24 dark:border-zinc-800">
+    <nav className="border-border border-b py-24">
       <div className="container text-center">
         <h1 className="text-5xl font-bold lg:text-7xl">
           Your revolutionary SaaS
@@ -14,18 +14,18 @@ export function Hero() {
         </p>
 
         <div className="mt-6 flex items-center justify-center gap-3">
-          <Button size="large">Get started &rarr;</Button>
-          <Button size="large" intent="primary-outline">
+          <Button size="lg">Get started &rarr;</Button>
+          <Button variant="outline" size="lg">
             Documentation
           </Button>
         </div>
 
         <div className="mt-32 px-8 text-center">
-          <h5 className="text-primary-900/50 dark:text-primary-100/50 text-xs font-semibold uppercase tracking-wider">
+          <h5 className="text-muted-foreground/50 text-xs font-semibold uppercase tracking-wider">
             Built & shipped with these awesome tools
           </h5>
 
-          <div className="text-primary-900/50 dark:text-primary-100/50 mt-4 flex items-center justify-center gap-8">
+          <div className="text-muted-foreground/50 mt-4 flex items-center justify-center gap-8">
             {/* Vercel logo */}
             <div className="aspect-[284/64] h-7 w-auto">
               <svg

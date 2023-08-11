@@ -1,6 +1,6 @@
 "use client";
 
-import { Switch } from "@components";
+import { Tabs, TabsList, TabsTrigger } from "@components";
 
 export default function SigninModeSwitch({
   activeMode,
@@ -23,11 +23,15 @@ export default function SigninModeSwitch({
   ];
 
   return (
-    <Switch
-      options={modes}
-      value={activeMode}
-      onChange={onChange}
-      className={className}
-    />
+    <Tabs value={activeMode} onValueChange={onChange} className={className}>
+      <TabsList className="w-full">
+        <TabsTrigger value="magic-link" className="flex-1">
+          Magic Link
+        </TabsTrigger>
+        <TabsTrigger value="password" className="flex-1">
+          Password
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
   );
 }

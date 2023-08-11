@@ -1,65 +1,25 @@
-import React, { forwardRef } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import React from "react";
 
-export const input = tv({
-  base: [
-    "border",
-    "border-zinc-300",
-    "w-full",
-    "bg-transparent",
-    // focus
-    "focus:ring-1",
-  ],
-  variants: {
-    size: {
-      small: ["text-sm", "py-1.5", "px-3", "rounded-md"],
-      medium: ["text-base", "py-3", "px-4", "rounded-lg"],
-      large: ["text-lg", "py-4", "px-8", "rounded-xl"],
-    },
-    status: {
-      default: [
-        "border-zinc-300",
-        "focus:ring-zinc-400",
-        "focus:border-zinc-400",
-        "focus:ring-zinc-400",
-        "focus:border-zinc-400",
-        "dark:border-zinc-700",
-        "dark:focus:ring-zinc-600",
-        "dark:focus:border-zinc-600",
-      ],
-      error: [
-        "border-rose-600",
-        "focus:ring-rose-600",
-        "focus:border-rose-600",
-      ],
-      success: [
-        "border-green-600",
-        "focus:ring-green-600",
-        "focus:border-green-600",
-      ],
-    },
+import { cnBase as cn } from "tailwind-variants";
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "border-input placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+          className,
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
   },
-  defaultVariants: {
-    size: "medium",
-    status: "default",
-  },
-});
-
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof input> & {
-    htmlSize?: number;
-  };
-
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, size, status, htmlSize, type, ...props }, ref) => (
-    <input
-      type={type ?? "text"}
-      className={input({ size, status, className })}
-      size={htmlSize}
-      ref={ref}
-      {...props}
-    />
-  ),
 );
-
 Input.displayName = "Input";
+
+export { Input };

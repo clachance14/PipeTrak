@@ -35,7 +35,7 @@ export default async function Home() {
           />
         </div>
 
-        <div className="mt-8 flex min-h-[40vh] items-center justify-center rounded-xl bg-zinc-100 p-12 dark:bg-zinc-800">
+        <div className="bg-muted text-muted-foreground mt-8 flex min-h-[40vh] items-center justify-center rounded-xl p-12">
           <div>Here you can add your own content.</div>
         </div>
       </div>

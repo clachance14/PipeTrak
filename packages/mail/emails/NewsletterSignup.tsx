@@ -4,7 +4,7 @@ import Wrapper from "./components/Wrapper";
 export function NewsletterSignup(): JSX.Element {
   return (
     <Wrapper>
-      <Section className="bg-white p-8">
+      <Section className="bg-card p-8">
         <Container>
           <Heading as="h1">Welcome to our newsletter!</Heading>
           <Text>Thank you for signing up for the supastarter newsletter.</Text>

@@ -79,9 +79,9 @@ export function LoginForm() {
   return (
     <div>
       <h1 className="text-3xl font-extrabold">{t("title")}</h1>
-      <p className="mb-6 mt-4 text-zinc-500">{t("subtitle")}</p>
+      <p className="text-muted-foreground mb-6 mt-4">{t("subtitle")}</p>
 
-      <div className="space-y-3">
+      <div className="flex flex-col items-stretch gap-3">
         {oAuthProviders.map((providerId) => (
           <SocialSigninButton
             key={providerId}
@@ -96,27 +96,24 @@ export function LoginForm() {
         ))}
       </div>
 
-      <hr className="my-8 border-zinc-950 border-opacity-5 dark:border-white dark:border-opacity-5" />
+      <hr className="border-border my-8" />
 
       {isSubmitted && isSubmitSuccessful && !isPasswordSignin ? (
         <Hint
           status="success"
           title={t("hints.linkSent.title")}
           message={t("hints.linkSent.message")}
-          icon={<Icon.mail className="h-4 w-4" />}
+          icon={Icon.mail}
         />
       ) : (
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <SigninModeSwitch
+            className="w-full"
             activeMode={signinMode}
             onChange={(value) => setSigninMode(value as typeof signinMode)}
           />
           {isSubmitted && serverError && (
-            <Hint
-              status="error"
-              {...serverError}
-              icon={<Icon.error className="h-4 w-4" />}
-            />
+            <Hint status="error" {...serverError} icon={Icon.error} />
           )}
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
@@ -145,12 +142,14 @@ export function LoginForm() {
               </div>
             </div>
           )}
-          <Button className="w-full" type="submit" isLoading={isSubmitting}>
+          <Button className="w-full" type="submit">
             {isPasswordSignin ? t("submit") : t("sendMagicLink")}
           </Button>
 
           <div>
-            {t("dontHaveAnAccount")}{" "}
+            <span className="text-muted-foreground">
+              {t("dontHaveAnAccount")}{" "}
+            </span>
             <Link href="/auth/signup">{t("createAnAccount")} &rarr;</Link>
           </div>
         </form>

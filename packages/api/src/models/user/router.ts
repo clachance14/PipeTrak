@@ -1,8 +1,8 @@
 import { db } from "database";
-import { protectedProcedure, router } from "../../trpc/base";
+import { protectedProcedure, publicProcedure, router } from "../../trpc/base";
 
 export const userRouter = router({
-  info: protectedProcedure.query(async ({ ctx: { user } }) => {
+  info: publicProcedure.query(async ({ ctx: { user } }) => {
     return user;
   }),
   claims: protectedProcedure.query(async ({ ctx: { user } }) => {

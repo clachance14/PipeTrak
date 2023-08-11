@@ -19,8 +19,7 @@ export function PageHeader({
         <div className="flex items-start justify-between ">
           <div>
             <Button
-              intent="primary-outline"
-              size="small"
+              variant="outline"
               className="mb-4 px-4 lg:hidden"
               onClick={() => setSidebarExpanded(true)}
             >

@@ -25,8 +25,8 @@ export function ConsentBanner() {
 
   return (
     <div className="bottom fixed bottom-4 right-4 max-w-md">
-      <div className="flex gap-4 rounded-xl border bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-800">
-        <Icon.cookies className="text-primary-500 block h-4 w-4 flex-shrink-0 text-5xl" />
+      <div className="bg-card text-card-foreground flex gap-4 rounded-xl border p-6 shadow-xl">
+        <Icon.cookies className="text-primary block h-4 w-4 flex-shrink-0 text-5xl" />
         <div>
           <p className="text-sm leading-normal">
             We use tracking cookies to understand how you use the product and
@@ -34,19 +34,13 @@ export function ConsentBanner() {
           </p>
           <div className="mt-4 flex gap-4">
             <Button
-              size="small"
-              intent="primary-ghost"
+              variant="ghost"
               className="flex-1"
               onClick={() => handleDecline()}
             >
               Decline
             </Button>
-            <Button
-              size="small"
-              intent="primary"
-              className="flex-1"
-              onClick={() => handleAllow()}
-            >
+            <Button className="flex-1" onClick={() => handleAllow()}>
               Allow
             </Button>
           </div>

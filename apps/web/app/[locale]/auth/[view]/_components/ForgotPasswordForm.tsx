@@ -45,7 +45,7 @@ export function ForgotPasswordForm() {
   return (
     <>
       <h1 className="text-3xl font-extrabold">{t("title")}</h1>
-      <p className="mb-6 mt-4 text-zinc-500">
+      <p className="text-muted-foreground mb-6 mt-4">
         {t("message")}{" "}
         <Link href="/auth/login">{t("backToSignin")} &rarr;</Link>
       </p>
@@ -54,7 +54,7 @@ export function ForgotPasswordForm() {
           status="success"
           title={t("hints.linkSent.title")}
           message={t("hints.linkSent.message")}
-          icon={<Icon.mail className="h-4 w-4" />}
+          icon={Icon.mail}
         />
       ) : (
         <form
@@ -74,14 +74,10 @@ export function ForgotPasswordForm() {
           </div>
 
           {isSubmitted && serverError && (
-            <Hint
-              status="error"
-              {...serverError}
-              icon={<Icon.warning className="h-4 w-4" />}
-            />
+            <Hint status="error" {...serverError} icon={Icon.warning} />
           )}
 
-          <Button isLoading={isSubmitting}>
+          <Button>
             <Icon.submit className="h-4 w-4" /> {t("submit")}
           </Button>
         </form>

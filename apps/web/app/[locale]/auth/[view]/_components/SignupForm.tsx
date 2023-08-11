@@ -56,7 +56,7 @@ export function SignupForm() {
     <div>
       <h1 className="text-3xl font-bold">{t("title")}</h1>
 
-      <p className="mb-6 mt-2 text-zinc-500">
+      <p className="text-muted-foreground mb-6 mt-2">
         {t("message")} {t("alreadyHaveAccount")}{" "}
         <Link href="/auth/login">{t("signIn")} &rarr;</Link>
       </p>
@@ -65,7 +65,7 @@ export function SignupForm() {
           status="success"
           title={t("hints.verifyEmail.title")}
           message={t("hints.verifyEmail.message")}
-          icon={<Icon.mail className="h-4 w-4" />}
+          icon={Icon.mail}
         />
       ) : (
         <form
@@ -73,11 +73,7 @@ export function SignupForm() {
           onSubmit={handleSubmit(onSubmit)}
         >
           {isSubmitted && serverError && (
-            <Hint
-              status="error"
-              {...serverError}
-              icon={<Icon.error className="h-4 w-4" />}
-            />
+            <Hint status="error" {...serverError} icon={Icon.error} />
           )}
 
           <div>
@@ -85,7 +81,7 @@ export function SignupForm() {
               {t("name")} *
             </label>
             <Input
-              status={errors.name ? "error" : "default"}
+              // status={errors.name ? "error" : "default"}
               type="text"
               {...register("name", { required: true })}
               required
@@ -98,7 +94,7 @@ export function SignupForm() {
               {t("email")} *
             </label>
             <Input
-              status={errors.email ? "error" : "default"}
+              // status={errors.email ? "error" : "default"}
               type="email"
               {...register("email", { required: true })}
               required
@@ -114,7 +110,7 @@ export function SignupForm() {
               <Input
                 type={showPassword ? "text" : "password"}
                 className="pr-10"
-                status={errors.password ? "error" : "default"}
+                // status={errors.password ? "error" : "default"}
                 {...register("password", { required: true, minLength: 8 })}
                 required
                 autoComplete="new-password"
@@ -122,7 +118,7 @@ export function SignupForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="text-primary-500 absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+                className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
               >
                 {showPassword ? (
                   <Icon.hide className="h-4 w-4" />
@@ -134,7 +130,7 @@ export function SignupForm() {
             <small className="italic opacity-50">{t("passwordHint")}</small>
           </div>
 
-          <Button isLoading={isSubmitting}>{t("submit")} &rarr;</Button>
+          <Button>{t("submit")} &rarr;</Button>
         </form>
       )}
     </div>

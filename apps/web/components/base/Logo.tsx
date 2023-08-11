@@ -1,6 +1,6 @@
 export function Logo() {
   return (
-    <span className="flex items-center font-semibold leading-none text-zinc-950 hover:no-underline focus:no-underline dark:text-white">
+    <span className="text-primary flex items-center font-semibold leading-none">
       <svg className="h-12 w-12" viewBox="0 0 734 635">
         <path
           opacity="0.2"

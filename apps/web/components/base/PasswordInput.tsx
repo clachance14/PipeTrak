@@ -24,7 +24,7 @@ export function PasswordInput({
       />
       <button
         onClick={() => setShowPassword(!showPassword)}
-        className="text-primary-500 absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+        className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
       >
         {showPassword ? (
           <Icon.hide className="h-4 w-4" />

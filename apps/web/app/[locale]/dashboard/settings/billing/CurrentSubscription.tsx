@@ -47,7 +47,7 @@ export default function CurrentSubscription({
 
   return (
     <div className={`${className}`}>
-      <div className="bg-primary-500/10 rounded-xl p-6">
+      <div className="bg-primary/10 rounded-xl p-6">
         <div className="">
           <div>
             <h2 className="mb-3 text-2xl font-semibold">
@@ -80,7 +80,7 @@ export default function CurrentSubscription({
             </div>
 
             {userSubscription?.nextPaymentDate && (
-              <p className="mt-1 text-zinc-500">
+              <p className="text-muted-foreground mt-1">
                 {t.rich(
                   !hasActiveSubscription
                     ? "subscription.endsOn"
@@ -94,18 +94,20 @@ export default function CurrentSubscription({
             )}
 
             {hasActiveSubscription && (
-              <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3 dark:border-zinc-800">
+              <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
                 <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
                   <div>
                     <Button
-                      as="a"
-                      href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
-                      intent="primary-ghost"
-                      size="small"
+                      asChild
+                      variant="ghost"
                       className="w-full md:w-auto"
                     >
-                      <Icon.creditCard className="h-4 w-4" />
-                      {t("subscription.updateBillingDetails")}
+                      <a
+                        href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
+                      >
+                        <Icon.creditCard className="h-4 w-4" />
+                        {t("subscription.updateBillingDetails")}
+                      </a>
                     </Button>
                   </div>
 

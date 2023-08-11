@@ -21,12 +21,7 @@ export default function CancelSubscriptionButton({
   };
 
   return (
-    <Button
-      intent="primary-outline"
-      isLoading={cancelSubscriptionMutation.isLoading}
-      size="small"
-      onClick={() => cancelSubscription()}
-    >
+    <Button variant="outline" onClick={() => cancelSubscription()}>
       <Icon.close className="h-4 w-4" />
       {label}
     </Button>

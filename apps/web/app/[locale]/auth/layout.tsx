@@ -8,9 +8,9 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
 
   return (
     <>
-      <div className="flex min-h-screen place-items-center bg-white dark:bg-zinc-900">
+      <div className="bg-card text-card-foreground flex min-h-screen place-items-center">
         <div className="container">
-          <div className="mx-auto grid w-full max-w-xl gap-6">
+          <div className="mx-auto grid w-full max-w-md gap-6">
             <div className="flex items-center justify-between">
               <Link href="/" className="block">
                 <Logo />
@@ -18,7 +18,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               <ColorModeToggle />
             </div>
 
-            <div className="rounded-2xl border p-8 dark:border-zinc-700">
+            <div className="border-border rounded-2xl border p-8">
               {children}
             </div>
           </div>

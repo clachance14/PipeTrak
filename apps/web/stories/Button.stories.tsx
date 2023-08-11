@@ -17,10 +17,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: "Button",
-    isLoading: false,
-    isDisabled: false,
-    size: "medium",
+    children: "Button",
+    disabled: false,
   },
-  render: ({ label, ...args }) => <Button {...args}>{label}</Button>,
+  render: ({ children, ...args }) => <Button {...args}>{children}</Button>,
 };

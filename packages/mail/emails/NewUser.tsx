@@ -5,7 +5,7 @@ import Wrapper from "./components/Wrapper";
 export function NewUser({ url }: { url: string }): JSX.Element {
   return (
     <Wrapper>
-      <Section className="bg-white p-8">
+      <Section className="bg-card p-8">
         <Container>
           <Heading as="h1">Welcome to supastarter!</Heading>
           <Text>

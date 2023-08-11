@@ -6,45 +6,69 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        sm: "100%",
-        md: "100%",
-        lg: "100%",
-        xl: "100%",
-        "2xl": "72rem",
+        "2xl": "1400px",
       },
     },
     extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: "calc(var(--radius) - 4px)",
+      },
+      borderColor: {
+        DEFAULT: "hsl(var(--border))",
+      },
       fontFamily: {
         sans: ["var(--font-sans)", "sans-serif"],
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
-      },
-      colors: {
-        primary: {
-          // 50: "#fefdfa",
-          // 100: "#fefcfa",
-          // 200: "#fcf2e8",
-          // 300: "#f6d6b7",
-          // 400: "#eebc86",
-          // 500: "#e9aa63",
-          // 600: "#e0a052",
-          // 700: "#d89031",
-          // 800: "#bb8130",
-          // 900: "#9e712e",
-          // 950: "#6f4f1b",
-          50: "#eef0ff",
-          100: "#e0e3ff",
-          200: "#c7cbfe",
-          300: "#a5a9fc",
-          400: "#8581f8",
-          500: "#7263f1",
-          600: "#6346e5",
-          700: "#5638ca",
-          800: "#4630a3",
-          900: "#342871",
-          950: "#241b4b",
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },

@@ -5,7 +5,7 @@ import Wrapper from "./components/Wrapper";
 export function ForgotPassword({ url }: { url: string }): JSX.Element {
   return (
     <Wrapper>
-      <Section className="bg-white p-8">
+      <Section className="bg-card p-8">
         <Container>
           <Heading>Reset your password</Heading>
           <Text>

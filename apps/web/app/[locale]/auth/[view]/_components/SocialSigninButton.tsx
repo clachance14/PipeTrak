@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon, button } from "@components";
+import { Button, Icon } from "@components";
 import { useMemo } from "react";
 
 export function SocialSigninButton({
@@ -14,7 +14,8 @@ export function SocialSigninButton({
         string,
         {
           name: string;
-          icon?: React.ReactElement;
+          icon: React.ReactElement;
+          color: string;
         }
       >
     >
@@ -23,18 +24,22 @@ export function SocialSigninButton({
       google: {
         name: "Google",
         icon: <Icon.google className="h-4 w-4" />,
+        color: "#4285F4",
       },
       apple: {
         name: "Apple",
         icon: <Icon.apple className="h-4 w-4" />,
+        color: "black",
       },
       github: {
         name: "Github",
         icon: <Icon.github className="h-4 w-4" />,
+        color: "black",
       },
       twitter: {
         name: "Twitter",
         icon: <Icon.twitter className="h-4 w-4" />,
+        color: "#1DA1F2",
       },
     }),
     [],
@@ -53,17 +58,13 @@ export function SocialSigninButton({
   }
 
   return (
-    <button
-      type="button"
-      className={button({
-        intent: provider as any,
-        size: "medium",
-        className: "w-full",
-      })}
-      {...rest}
-    >
-      {providerData.icon && <i className="mr-2">{providerData.icon}</i>}
-      Continue with {providerData.name}
-    </button>
+    <Button variant="outline" type="button" {...rest}>
+      {providerData.icon && (
+        <i className="mr-2" style={{ color: providerData.color }}>
+          {providerData.icon}
+        </i>
+      )}
+      Login with {providerData.name}
+    </Button>
   );
 }

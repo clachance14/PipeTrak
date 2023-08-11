@@ -14,7 +14,7 @@ export default function ChangeNameForm({
 }) {
   const [name, setName] = useState(initialValue ?? "");
   const router = useRouter();
-  const toast = useToast();
+  const { toast } = useToast();
   const t = useTranslations("settings");
   const changeNameMutation = useMutation(
     ["changeName"],
@@ -23,10 +23,8 @@ export default function ChangeNameForm({
     },
     {
       onSuccess: () => {
-        toast.create({
-          type: "success",
+        toast({
           title: t("notifications.nameUpdated"),
-          placement: "top-end",
         });
         router.refresh();
       },

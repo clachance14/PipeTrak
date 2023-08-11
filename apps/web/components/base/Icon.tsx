@@ -2,12 +2,15 @@ import {
   AlertCircle,
   AlertTriangle,
   Archive,
+  Check,
   CheckCircle,
   ChevronDown,
+  ChevronRight,
   ChevronUp,
   Cloud,
   Cookie,
   CreditCard,
+  Dot,
   Eye,
   EyeOff,
   Globe,
@@ -60,6 +63,7 @@ export const Icon = {
   user: User,
   chevronDown: ChevronDown,
   chevronUp: ChevronUp,
+  chevronRight: ChevronRight,
   logout: LogOut,
   cookies: Cookie,
   menu: Menu,
@@ -72,6 +76,8 @@ export const Icon = {
   key: Key,
   language: Globe,
   home: Home,
+  check: Check,
+  dot: Dot,
 
   // social icons
   google: ({ ...props }: IconProps) => (

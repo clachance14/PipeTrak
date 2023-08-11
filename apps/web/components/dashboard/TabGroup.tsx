@@ -17,14 +17,14 @@ export function TabGroup({
   }, [items, selectedSegment]);
 
   return (
-    <div className={`flex border-b-2 dark:border-zinc-800 ${className}`}>
+    <div className={`flex border-b-2 ${className}`}>
       {items.map((item) => (
         <Link
           key={item.href}
           href={item.href}
-          className={`-mb-[2px] block border-b-2 px-6 py-3 hover:no-underline focus:no-underline ${
+          className={`-mb-[2px] block border-b-2 px-6 py-3 ${
             item === activeItem
-              ? "border-primary-500 font-bold dark:text-white"
+              ? "border-primary font-bold"
               : "border-transparent"
           }`}
         >

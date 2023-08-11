@@ -6,7 +6,7 @@ import heroImage from "/public/images/hero.svg";
 
 export function Features() {
   return (
-    <section className="bg-white py-24 dark:bg-zinc-900 dark:text-white">
+    <section className="bg-card text-card-foreground py-24">
       <div className="container">
         {/* Section header */}
         <div className="text-center">
@@ -21,7 +21,7 @@ export function Features() {
         <div className="mt-20 grid grid-cols-1 gap-16">
           {/* Feature 1 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary-500/10 rounded-2xl p-12">
+            <div className="bg-primary/10 rounded-2xl p-12">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -40,18 +40,18 @@ export function Features() {
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-4">
+              <Button variant="link" size="sm" className="mt-4 px-0">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.star className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.star className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.pointer className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.pointer className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -61,7 +61,7 @@ export function Features() {
 
           {/* Feature 2 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary-500/10 rounded-2xl p-12 lg:order-2">
+            <div className="bg-primary/10 rounded-2xl p-12 lg:order-2">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -80,18 +80,18 @@ export function Features() {
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-4">
+              <Button variant="link" size="sm" className="mt-4 px-0">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.upload className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.upload className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.cloud className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.cloud className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -101,7 +101,7 @@ export function Features() {
 
           {/* Feature 3 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary-500/10 rounded-2xl p-12 ">
+            <div className="bg-primary/10 rounded-2xl p-12 ">
               <Image
                 src={heroImage}
                 className="block dark:hidden"
@@ -120,18 +120,18 @@ export function Features() {
                 This is a brilliant feature. And below you can see some reasons
                 why. This is basically just a dummy text.
               </p>
-              <Button intent="primary-ghost" className="mt-4">
+              <Button variant="link" size="sm" className="mt-4 px-0">
                 Learn more &rarr;
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.phone className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.phone className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="rounded-xl border border-black/10 p-4 dark:border-white/10">
-                  <Icon.paperclip className="text-primary-500 h-6 w-6 text-3xl" />
+                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                  <Icon.paperclip className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
