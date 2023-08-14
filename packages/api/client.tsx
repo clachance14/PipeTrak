@@ -15,7 +15,7 @@ export function ApiClientProvider({ children }: PropsWithChildren<{}>) {
     apiClient.createClient({
       links: [
         httpBatchLink({
-          url: getBaseUrl() + "/api",
+          url: getBaseUrl() + "/api/trpc",
         }),
       ],
       transformer: superjson,

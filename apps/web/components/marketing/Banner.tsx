@@ -24,9 +24,16 @@ export default function Banner() {
   }
 
   return (
-    <div className="bg-primary/10 text-primary-950/75 dark:text-primary-100/75 inset-0 bottom-auto px-8 py-4 text-center text-sm data-[state='open']:block data-[state='closed']:hidden">
-      <strong>New:</strong> In this banner you can show your awesome new feature
-      <Button variant="link" onClick={hideBanner}>
+    <div className="bg-primary/10 text-foreground relative inset-0 bottom-auto px-8 py-3 text-center text-sm data-[state='open']:block data-[state='closed']:hidden">
+      <div>
+        <strong>New:</strong> In this banner you can show your awesome new
+        feature
+      </div>
+      <Button
+        variant="link"
+        onClick={hideBanner}
+        className="absolute right-1 top-1"
+      >
         <Icon.close />
       </Button>
     </div>

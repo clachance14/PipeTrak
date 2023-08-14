@@ -90,7 +90,7 @@ export function PricingTable({
 
               <Button
                 disabled={isActivePlan(plan)}
-                // isLoading={selectedPlan === plan.id}
+                loading={selectedPlan === plan.id}
                 className="mt-4 w-full"
                 onClick={async () => {
                   setSelectedPlan(plan.id);

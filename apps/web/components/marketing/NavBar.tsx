@@ -1,29 +1,43 @@
 "use client";
 
-import { Button, ColorModeToggle, LocaleSwitch, Logo } from "@components";
+import {
+  Button,
+  ColorModeToggle,
+  Icon,
+  LocaleSwitch,
+  Logo,
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@components";
 import { useUser } from "@lib/auth";
 import { appConfig } from "config";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Banner from "./Banner";
 
-export function NavBar({
-  labels,
-  menuItems,
-}: {
-  labels: {
-    signIn: string;
-    dashboard: string;
-  };
-  menuItems: Array<{
-    label: string;
-    href: string;
-  }>;
-}) {
+export function NavBar() {
+  const t = useTranslations("common");
   const { user } = useUser();
   const locale = useLocale();
   const [isTop, setIsTop] = useState(true);
+  const params = useParams();
+
+  const menuItems: {
+    label: string;
+    href: string;
+  }[] = [
+    {
+      label: t("menu.pricing"),
+      href: `/pricing`,
+    },
+    {
+      label: t("menu.blog"),
+      href: "/blog",
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +59,7 @@ export function NavBar({
     >
       <Banner />
 
-      <div className="flex items-center justify-stretch gap-6 px-12 py-8">
+      <div className="flex items-center justify-stretch gap-6 p-8">
         <div className="flex flex-1 justify-start">
           <Link
             href="/"
@@ -55,7 +69,7 @@ export function NavBar({
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center">
+        <div className="hidden flex-1 items-center justify-center md:flex">
           {menuItems.map((menuItem) => (
             <Link
               key={menuItem.href}
@@ -74,9 +88,33 @@ export function NavBar({
             currentLocale={locale}
           />
 
-          <Button asChild variant="ghost">
-            <Link href={user ? "/dashboard" : "/auth/login"}>
-              {user ? labels.dashboard : labels.signIn}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button className="md:hidden" size="icon" variant="outline">
+                <Icon.menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-[250px]" side="right">
+              <div className="flex flex-col items-center justify-center">
+                {menuItems.map((menuItem) => (
+                  <Link
+                    key={menuItem.href}
+                    href={menuItem.href}
+                    className="block px-3 py-2 text-lg"
+                  >
+                    {menuItem.label}
+                  </Link>
+                ))}
+                <Link href="/dashboard" className="block px-3 py-2 text-lg">
+                  {t("menu.dashboard")}
+                </Link>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <Button className="hidden md:block" asChild variant="ghost">
+            <Link href={user ? "/auth/gateway" : "/auth/login"}>
+              {user ? t("menu.dashboard") : t("menu.login")}
             </Link>
           </Button>
         </div>

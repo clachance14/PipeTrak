@@ -1,8 +1,7 @@
 "use client";
 
 import { useUser } from "@lib/auth";
-import { appConfig } from "config";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { AuthView } from "../types";
 import CallbackLoader from "./CallbackLoader";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
@@ -14,10 +13,14 @@ export const Auth = ({ view }: { view: AuthView }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  if (!Object.keys(AuthView).includes(view)) {
+    redirect("/auth/login");
+  }
+
   const redirectToParam = searchParams.get("redirectTo");
 
   if (loaded && user) {
-    router.replace(redirectToParam ?? appConfig.auth.redirectAfterLogin);
+    router.replace("/auth/gateway");
   }
 
   if (!view) return null;

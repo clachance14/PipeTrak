@@ -39,7 +39,7 @@ export const billingRouter = router({
         },
       });
 
-      if (!subscription || subscription.userId !== user!.id) {
+      if (!subscription || subscription.teamId !== user!.id) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Subscription not found.",
@@ -71,7 +71,7 @@ export const billingRouter = router({
   userSubscription: protectedProcedure.query(async ({ ctx: { user } }) => {
     const subscription = await db.subscription.findFirst({
       where: {
-        userId: user!.id,
+        teamId: user!.id,
       },
     });
 

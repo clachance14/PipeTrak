@@ -1,6 +1,6 @@
 "use client";
 
-import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
+import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/[teamSlug]/dashboard/state";
 import {
   Button,
   ColorModeToggle,
@@ -14,33 +14,36 @@ import { useUser } from "@lib/auth";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useSelectedLayoutSegment,
+} from "next/navigation";
 import { PropsWithChildren, useCallback, useEffect } from "react";
-
-const menuItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    segment: null,
-    icon: Icon.grid,
-  },
-  {
-    label: "Settings",
-    href: "/dashboard/settings/account",
-    segment: "settings",
-    icon: Icon.settings,
-  },
-];
 
 export function Sidebar({}: PropsWithChildren<{}>) {
   const { user } = useUser();
   const locale = useLocale();
-  const t = useTranslations("common");
+  const t = useTranslations("dashboard");
   const pathname = usePathname();
+  const { teamSlug } = useParams();
 
   const [sidebarExpanded, setSidebarExpanded] = useAtom(sidebarExpandedAtom);
   const selectedSegment = useSelectedLayoutSegment();
   const positionClass = sidebarExpanded ? "left-0" : "-left-[280px] lg:left-0";
+
+  const menuItems = [
+    {
+      label: t("menu.dashboard"),
+      href: `/${teamSlug}/dashboard`,
+      icon: Icon.grid,
+    },
+    {
+      label: t("menu.settings"),
+      href: `/${teamSlug}/settings`,
+      icon: Icon.settings,
+    },
+  ];
 
   // Close sidebar on resize
   useEffect(() => {
@@ -57,8 +60,10 @@ export function Sidebar({}: PropsWithChildren<{}>) {
   useEffect(() => setSidebarExpanded(false), [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isActiveMenuItem = useCallback(
-    (segment: string | null) => selectedSegment === segment,
-    [selectedSegment],
+    (href: string | null) => {
+      return pathname.startsWith(href);
+    },
+    [pathname],
   );
 
   return (
@@ -83,12 +88,16 @@ export function Sidebar({}: PropsWithChildren<{}>) {
             <Link
               href={menuItem.href}
               className={`hover:bg-accent hover:text-accent-foreground flex items-center gap-3 py-3 ${
-                isActiveMenuItem(menuItem.segment)
+                isActiveMenuItem(menuItem.href)
                   ? "bg-accent text-accent-foreground font-bold"
                   : ""
               }`}
             >
-              <menuItem.icon className="h-4 w-4" />
+              <menuItem.icon
+                className={`h-4 w-4 ${
+                  isActiveMenuItem(menuItem.href) ? "text-primary" : ""
+                }`}
+              />
               <span>{menuItem.label}</span>
             </Link>
           </li>

@@ -3,12 +3,21 @@ import { createApiCaller } from "api";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-export default async function Layout({ children }: PropsWithChildren<{}>) {
+export default async function Layout({
+  children,
+  params: { teamSlug },
+}: PropsWithChildren<{ params: { teamSlug: string } }>) {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.user.info();
 
   if (!user) {
     redirect("/auth/login");
+  }
+
+  const team = await apiCaller.team.getBySlug({ slug: teamSlug });
+
+  if (!team) {
+    redirect("/");
   }
 
   return (

@@ -13,7 +13,7 @@ export function Hero() {
           It will save you a lot of time and effort building your next SaaS.
         </p>
 
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">
           <Button size="lg">Get started &rarr;</Button>
           <Button variant="outline" size="lg">
             Documentation
@@ -25,9 +25,9 @@ export function Hero() {
             Built & shipped with these awesome tools
           </h5>
 
-          <div className="text-muted-foreground/50 mt-4 flex items-center justify-center gap-8">
+          <div className="text-muted-foreground/50 mt-4 flex flex-col-reverse items-center justify-center gap-4 md:flex-row md:gap-8">
             {/* Vercel logo */}
-            <div className="aspect-[284/64] h-7 w-auto">
+            <div className="aspect-[284/64] h-6 w-auto">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="fill-current"
@@ -39,7 +39,7 @@ export function Hero() {
             </div>
 
             {/* Supabase logo */}
-            <div className="aspect-[581/113] h-8 w-auto">
+            <div className="aspect-[581/113] h-7 w-auto">
               <svg
                 width="100%"
                 viewBox="0 0 581 113"

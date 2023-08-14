@@ -11,7 +11,7 @@ export default function SettingsLayout({ children }: PropsWithChildren<{}>) {
 
       <div className="container py-6">
         <TabGroup
-          items={["account", "billing"].map((segment) => ({
+          items={["account", "team", "billing"].map((segment) => ({
             label: t(`${segment}.title` as any),
             href: `${segment}`,
             segment,

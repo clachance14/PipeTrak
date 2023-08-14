@@ -55,7 +55,7 @@ export default function CurrentSubscription({
             </h2>
 
             <div className="flex items-center gap-2">
-              <h4 className="text-primary-800 dark:text-primary-200 text-xl">
+              <h4 className="text-primary text-xl">
                 <span>{subscriptionPlan.name} </span>
                 <small>
                   (

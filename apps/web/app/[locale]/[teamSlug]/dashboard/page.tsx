@@ -4,7 +4,6 @@ import { createApiCaller } from "api";
 export default async function Home() {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.user.info();
-  const user2 = await apiCaller.user.info();
 
   return (
     <div>

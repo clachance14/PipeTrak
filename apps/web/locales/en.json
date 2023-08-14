@@ -84,11 +84,17 @@
     },
     "menu": {
       "blog": "Blog",
-      "pricing": "Pricing"
+      "pricing": "Pricing",
+      "dashboard": "Dashboard",
+      "login": "Login"
     }
   },
   "dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "menu": {
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    }
   },
   "home": {
     "newsletter": {
@@ -126,6 +132,15 @@
     "yearly": "Yearly"
   },
   "settings": {
+    "team": {
+      "title": "Team",
+      "subtitle": "Manage your team settings and members",
+      "changeName": {
+        "description": "Enter a new name and click save to update it.",
+        "title": "Team name",
+        "teamUrl": "Your team url will be <strong>{url}</strong>."
+      }
+    },
     "account": {
       "changeEmail": {
         "description": "Enter a new email and click save to update it.",
@@ -177,7 +192,9 @@
     "notifications": {
       "emailUpdated": "Your email has been updated.",
       "nameUpdated": "Your name has been updated.",
-      "passwordUpdated": "Your password has been updated."
+      "passwordUpdated": "Your password has been updated.",
+      "teamNameUpdated": "Your team name has been updated.",
+      "teamNameNotUpdated": "We were unable to update your team name. Please try again later."
     },
     "subtitle": "Manage your settings",
     "title": "Settings"

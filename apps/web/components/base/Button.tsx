@@ -2,9 +2,10 @@ import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
 import { cnBase as cn, tv, type VariantProps } from "tailwind-variants";
+import { Icon } from "./Icon";
 
 const buttonVariants = tv({
-  base: "inline-flex items-center justify-center text-md font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  base: "inline-flex items-center justify-center text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -19,7 +20,7 @@ const buttonVariants = tv({
     size: {
       default: "h-9 rounded-full px-4 py-2",
       sm: "h-8 rounded-full px-3 text-sm",
-      lg: "h-10 rounded-full px-8",
+      lg: "h-10 rounded-full px-8 text-base",
       icon: "h-9 w-9 rounded-sm",
     },
   },
@@ -33,17 +34,25 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, children, variant, size, asChild = false, loading, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
+    const disabled = props.disabled || loading;
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={disabled}
         {...props}
-      />
+      >
+        {loading ? <Icon.spinner className="animate-spin" /> : children}
+      </Comp>
     );
   },
 );

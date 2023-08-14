@@ -39,6 +39,9 @@ importers:
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-dialog':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.0.5
         version: 2.0.5(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
@@ -114,9 +117,15 @@ importers:
       react-hook-form:
         specifier: ^7.43.9
         version: 7.43.9(react@18.2.0)
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       tailwind-variants:
         specifier: ^0.1.13
         version: 0.1.13(tailwindcss@3.3.2)
+      tailwindcss-animate:
+        specifier: ^1.0.6
+        version: 1.0.6(tailwindcss@3.3.2)
       usehooks-ts:
         specifier: ^2.9.1
         version: 2.9.1(react-dom@18.2.0)(react@18.2.0)
@@ -232,6 +241,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       superjson:
         specifier: ^1.12.4
         version: 1.12.4
@@ -3605,6 +3617,40 @@ packages:
       '@babel/runtime': 7.22.10
       '@types/react': 18.2.9
       react: 18.2.0
+
+  /@radix-ui/react-dialog@1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-hJtRy/jPULGQZceSAP2Re6/4NpKo8im6V8P2hUqZsdFiSL8l35kYsw3qbRI6Ay5mQd2+wlLqje770eq+RJ3yZg==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.10
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.9)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.9)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.9)(react@18.2.0)
+      '@radix-ui/react-focus-scope': 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.9)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.9)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.9)(react@18.2.0)
+      '@types/react': 18.2.9
+      '@types/react-dom': 18.2.4
+      aria-hidden: 1.2.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.5(@types/react@18.2.9)(react@18.2.0)
+    dev: false
 
   /@radix-ui/react-direction@1.0.1(@types/react@18.2.9)(react@18.2.0):
     resolution: {integrity: sha512-RXcvnXgyvYvBEOhCBuddKecVkoMiI10Jcm5cTI7abJRAHYfFxeu+FBQs/DvdxSYucxR5mna0dNsL6QFlds5TMA==}
@@ -13408,6 +13454,11 @@ packages:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
 
+  /slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
+    dev: false
+
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -13751,7 +13802,6 @@ packages:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
       tailwindcss: 3.3.2
-    dev: true
 
   /tailwindcss@3.2.7(postcss@8.4.21):
     resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}

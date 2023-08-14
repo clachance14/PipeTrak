@@ -7,19 +7,7 @@ export default function MarketingLayout({ children }: PropsWithChildren) {
 
   return (
     <div>
-      <NavBar
-        menuItems={[
-          {
-            label: t("menu.pricing"),
-            href: "/pricing",
-          },
-          {
-            label: t("menu.blog"),
-            href: "/blog",
-          },
-        ]}
-        labels={{ signIn: "Sign in", dashboard: "Dashboard" }}
-      />
+      <NavBar />
       <main className="pt-32">{children}</main>
       <Footer />
     </div>

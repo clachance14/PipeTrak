@@ -6,4 +6,16 @@ export const appConfig = {
   auth: {
     redirectAfterLogin: "/dashboard",
   },
+  marketing: {
+    menu: [
+      {
+        translationKey: "pricing",
+        href: "/pricing",
+      },
+      {
+        translationKey: "blog",
+        href: "/Blog",
+      },
+    ],
+  },
 };

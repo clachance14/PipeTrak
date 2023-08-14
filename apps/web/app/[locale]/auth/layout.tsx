@@ -1,4 +1,5 @@
-import { ColorModeToggle, Logo } from "@components";
+import { ColorModeToggle, LocaleSwitch, Logo } from "@components";
+import { appConfig } from "@config";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { PropsWithChildren } from "react";
@@ -15,7 +16,14 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               <Link href="/" className="block">
                 <Logo />
               </Link>
-              <ColorModeToggle />
+
+              <div className="flex items-center justify-end gap-2">
+                <LocaleSwitch
+                  locales={appConfig.i18n.locales}
+                  currentLocale={locale}
+                />
+                <ColorModeToggle />
+              </div>
             </div>
 
             <div className="border-border rounded-2xl border p-8">

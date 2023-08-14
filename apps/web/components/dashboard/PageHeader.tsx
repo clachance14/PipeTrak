@@ -1,6 +1,6 @@
 "use client";
 
-import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/dashboard/state";
+import { sidebarExpanded as sidebarExpandedAtom } from "@app/[locale]/[teamSlug]/dashboard/state";
 import { Button, Icon } from "@components";
 import { useAtom } from "jotai";
 
