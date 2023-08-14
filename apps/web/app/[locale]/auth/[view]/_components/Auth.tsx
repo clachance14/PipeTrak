@@ -13,8 +13,6 @@ export const Auth = ({ view }: { view: AuthView }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  console.log("view", view, Object.keys(AuthView));
-
   if (!Object.keys(AuthView).includes(view)) {
     router.replace("/auth/login");
   }

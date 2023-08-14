@@ -12,8 +12,6 @@ export async function GET(request: NextRequest) {
 
     if (!claims) throw new Error("No claims for user");
 
-    console.log(claims);
-
     const { teams, user } = claims;
 
     // if user has no teams, we create one for them
