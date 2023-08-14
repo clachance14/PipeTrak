@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
+  ChevronsUpDown,
   Cloud,
   Cookie,
   CreditCard,
@@ -27,6 +28,7 @@ import {
   MousePointer,
   Paperclip,
   Phone,
+  Plus,
   Send,
   Settings,
   Star,
@@ -78,6 +80,8 @@ export const Icon = {
   home: Home,
   check: Check,
   dot: Dot,
+  plus: Plus,
+  select: ChevronsUpDown,
 
   // social icons
   google: ({ ...props }: IconProps) => (

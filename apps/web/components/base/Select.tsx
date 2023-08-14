@@ -1,10 +1,11 @@
 "use client";
 
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as React from "react";
 
 import { cnBase as cn } from "tailwind-variants";
+import { Icon } from "./Icon";
 
 const Select = SelectPrimitive.Root;
 
@@ -26,7 +27,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <CaretSortIcon className="h-4 w-4 opacity-50" />
+      <Icon.select className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));

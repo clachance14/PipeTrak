@@ -15,6 +15,7 @@
     "@tanstack/react-query": "^4.29.14",
     "@types/cookie": "^0.5.1",
     "api": "workspace:*",
+    "boring-avatars": "^1.10.1",
     "contentlayer": "^0.3.4",
     "cookie": "^0.5.0",
     "database": "workspace:*",

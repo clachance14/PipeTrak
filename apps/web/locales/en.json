@@ -94,6 +94,18 @@
     "menu": {
       "dashboard": "Dashboard",
       "settings": "Settings"
+    },
+    "sidebar": {
+      "createTeam": "Create a new team"
+    },
+    "createTeam": {
+      "title": "Create a new team",
+      "name": "Team name",
+      "submit": "Create team",
+      "notifications": {
+        "success": "Your team has been created. You can now invite members.",
+        "error": "We are sorry, but we were unable to create your team. Please try again later."
+      }
     }
   },
   "home": {
