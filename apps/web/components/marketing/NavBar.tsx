@@ -113,7 +113,10 @@ export function NavBar() {
           </Sheet>
 
           <Button className="hidden md:block" asChild variant="ghost">
-            <Link href={user ? "/auth/gateway" : "/auth/login"}>
+            <Link
+              href={user ? "/auth/gateway" : "/auth/login"}
+              prefetch={!user}
+            >
               {user ? t("menu.dashboard") : t("menu.login")}
             </Link>
           </Button>
