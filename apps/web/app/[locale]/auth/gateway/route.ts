@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
       `${requestUrl.origin}/${teams[0].team.slug}/dashboard`,
     );
   } catch (e) {
+    console.error(e);
     return NextResponse.redirect(requestUrl.origin);
   }
 }
