@@ -9,7 +9,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
 
   return (
     <>
-      <div className="bg-card text-card-foreground flex min-h-screen place-items-center">
+      <div className="bg-muted text-foreground flex min-h-screen place-items-center">
         <div className="container">
           <div className="mx-auto grid w-full max-w-md gap-6">
             <div className="flex items-center justify-between">
@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               </div>
             </div>
 
-            <div className="border-border rounded-2xl border p-8">
+            <div className="bg-card text-card-foreground border-border rounded-2xl border p-8">
               {children}
             </div>
           </div>
