@@ -6,16 +6,16 @@ import { headers } from "next/headers";
 
 async function updateUserSubscription(
   subscription: Omit<Subscription, "id"> & {
-    userId?: string;
+    teamId?: string;
   },
 ): Promise<void | Subscription> {
-  if (!subscription.userId) {
+  if (!subscription.teamId) {
     throw new Error("Either customerId or userId must be provided");
   }
 
   const existingSubscription = await db.subscription.findFirst({
     where: {
-      userId: subscription.userId,
+      teamId: subscription.teamId,
     },
   });
 
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       case "subscription_expired":
       case "subscription_resumed":
         await updateUserSubscription({
-          userId: customData?.user_id,
+          teamId: customData?.team_id,
           customerId: String(data.attributes.customer_id),
           planId: String(data.attributes.product_id),
           variantId: String(data.attributes.variant_id),
