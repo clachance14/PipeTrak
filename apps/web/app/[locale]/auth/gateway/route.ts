@@ -1,8 +1,6 @@
 import { createApiCaller } from "api";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "nodejs";
-
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const redirectTo = requestUrl.searchParams.get("redirectTo");
@@ -13,6 +11,8 @@ export async function GET(request: NextRequest) {
     const claims = await apiCaller.user.claims();
 
     if (!claims) throw new Error("No claims for user");
+
+    console.log(claims);
 
     const { teams, user } = claims;
 
