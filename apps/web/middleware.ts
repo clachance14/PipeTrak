@@ -21,6 +21,8 @@ export default async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  console.log("we have session", session);
+
   // if (isPublicPage) {
   return intlMiddleware(req);
   // }
