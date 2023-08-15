@@ -1,5 +1,9 @@
 import { redirect } from "next-intl/server";
 
-export default async function SettingsPage() {
-  redirect("/settings/account");
+export default async function SettingsPage({
+  params: { teamSlug },
+}: {
+  params: { teamSlug: string };
+}) {
+  redirect(`/${teamSlug}/settings/account`);
 }
