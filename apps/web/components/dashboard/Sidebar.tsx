@@ -9,9 +9,8 @@ import {
   UserMenu,
 } from "@components";
 import { appConfig } from "@config";
-import { useUser } from "@lib/auth";
 import { sidebarExpanded as sidebarExpandedAtom } from "@lib/state/dashboard";
-import { Team } from "api";
+import { Team, User } from "api";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
@@ -19,8 +18,10 @@ import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback, useEffect } from "react";
 import { TeamSelect } from "./TeamSelect";
 
-export function Sidebar({ teams }: PropsWithChildren<{ teams: Team[] }>) {
-  const { user } = useUser();
+export function Sidebar({
+  teams,
+  user,
+}: PropsWithChildren<{ teams: Team[]; user: User }>) {
   const locale = useLocale();
   const t = useTranslations("dashboard");
   const pathname = usePathname();
@@ -74,12 +75,14 @@ export function Sidebar({ teams }: PropsWithChildren<{ teams: Team[] }>) {
         </Button>
       </div>
 
-      <div className="p-8">
-        <Link href="/" className="!no-underline">
+      <div className="px-8 pb-4 pt-6">
+        <Link href="/" className="mb-4 block !no-underline">
           <Logo />
         </Link>
 
-        <TeamSelect />
+        <div className="-mx-4">
+          <TeamSelect teams={teams} />
+        </div>
       </div>
 
       <ul className="list-none px-8">

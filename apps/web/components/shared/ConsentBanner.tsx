@@ -1,25 +1,25 @@
 "use client";
 
 import { Button, Icon } from "@components";
-import { getCookie, setCookie } from "@lib/util";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 export function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    if (!getCookie("consent")) setShowBanner(true);
+    if (!Boolean(Cookies.get("consent"))) setShowBanner(true);
   }, []);
 
   if (!showBanner) return null;
 
   const handleAllow = () => {
-    setCookie("consent", "true", 30);
+    Cookies.set("consent", "true", { expires: 30 });
     setShowBanner(false);
   };
 
   const handleDecline = () => {
-    setCookie("consent", "true", 1);
+    Cookies.set("consent", "false", { expires: 30 });
     setShowBanner(false);
   };
 

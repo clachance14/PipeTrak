@@ -12,22 +12,33 @@ import {
   Icon,
 } from "@components";
 import { appConfig } from "@config";
-import { useUser } from "@lib/auth";
 import { createTeamDialogOpen } from "@lib/state/dashboard";
+import { Team } from "api";
 import BoringAvatar from "boring-avatars";
 import { useSetAtom } from "jotai";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
-export function TeamSelect() {
+export function TeamSelect({ teams }: { teams: Team[] }) {
   const t = useTranslations("dashboard");
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
-  const { activeTeam, switchTeam, teams } = useUser();
+  const params = useParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { teamSlug } = params;
+  const activeTeam = teams.find((team) => team.slug === teamSlug);
+
+  const switchTeam = (slug: string) => {
+    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
+    router.replace(pathname.replace(activeTeam.slug, slug));
+  };
 
   if (!activeTeam) return null;
 
   return (
-    <div className="mt-4">
+    <>
       <DropdownMenu>
         <DropdownMenuTrigger className="border-border focus-visible:ring-ring focus-visible:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left outline-none focus-visible:ring-1">
           <div className="flex flex-1 items-center justify-start gap-2 text-sm">
@@ -43,13 +54,13 @@ export function TeamSelect() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
           <DropdownMenuRadioGroup
-            value={activeTeam.id}
-            onValueChange={(value) => switchTeam(value)}
+            value={activeTeam.slug}
+            onValueChange={switchTeam}
           >
             {teams.map((team) => (
               <DropdownMenuRadioItem
                 key={team.id}
-                value={team.id}
+                value={team.slug}
                 className="flex items-center justify-center gap-2"
               >
                 <div className="flex flex-1 items-center justify-start gap-2">
@@ -77,6 +88,6 @@ export function TeamSelect() {
       </DropdownMenu>
 
       <CreateTeamDialog />
-    </div>
+    </>
   );
 }

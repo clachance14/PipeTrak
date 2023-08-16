@@ -18,7 +18,7 @@ import { Banner } from "./Banner";
 
 export function NavBar() {
   const t = useTranslations("common");
-  const { user, teams, activeTeam, loaded: userLoaded } = useUser();
+  const { user, loaded: userLoaded } = useUser();
   const locale = useLocale();
 
   const menuItems: {
@@ -89,8 +89,13 @@ export function NavBar() {
                     {menuItem.label}
                   </Link>
                 ))}
-                <Link href="/dashboard" className="block px-3 py-2 text-lg">
-                  {t("menu.dashboard")}
+
+                <Link
+                  href={hasUser ? `/team-redirect` : "/auth/login"}
+                  className="block px-3 py-2 text-lg"
+                  prefetch={!hasUser}
+                >
+                  {hasUser ? t("menu.dashboard") : t("menu.login")}
                 </Link>
               </div>
             </SheetContent>
@@ -98,11 +103,8 @@ export function NavBar() {
 
           <Button className="hidden md:block" asChild variant="ghost">
             <Link
-              href={
-                hasUser && activeTeam
-                  ? `/${activeTeam.slug}/dashboard`
-                  : "/auth/login"
-              }
+              href={hasUser ? `/team-redirect` : "/auth/login"}
+              prefetch={!hasUser}
             >
               {hasUser ? t("menu.dashboard") : t("menu.login")}
             </Link>

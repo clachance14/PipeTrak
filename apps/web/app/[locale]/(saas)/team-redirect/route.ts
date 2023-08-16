@@ -1,5 +1,8 @@
 import { Team, createApiCaller } from "api";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.nextUrl);
@@ -31,6 +34,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(
         `${requestUrl.origin}/${team.slug}/dashboard`,
       );
+    }
+
+    // check cookie for latest team
+    const teamSlugCookie = cookies().get("team-slug")?.value;
+
+    if (teamSlugCookie) {
+      const team = teams.find((team) => team.slug === teamSlugCookie);
+
+      if (team) {
+        return NextResponse.redirect(
+          `${requestUrl.origin}/${team.slug}/dashboard`,
+        );
+      }
     }
 
     return NextResponse.redirect(
