@@ -42,6 +42,8 @@ export type AuthProviderClientModule = {
         user?: User | null;
       },
     ) => void,
-  ) => void;
+  ) => {
+    unsubscribe: () => void;
+  };
   AuthProvider: FC<PropsWithChildren>;
 };

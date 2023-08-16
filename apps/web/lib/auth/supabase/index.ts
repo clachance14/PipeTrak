@@ -135,7 +135,9 @@ export const updateName: AuthProviderClientModule["updateName"] = async (
 
 export const registerAuthEventListener: AuthProviderClientModule["registerAuthEventListener"] =
   (callback) => {
-    supabaseClient.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN") {
         callback("SIGNED_IN", {
           user: session?.user ? mapSupabaseUserToUser(session.user) : undefined,
@@ -150,6 +152,10 @@ export const registerAuthEventListener: AuthProviderClientModule["registerAuthEv
         });
       }
     });
+
+    return {
+      unsubscribe: subscription?.unsubscribe,
+    };
   };
 
 export const getAuthorizationToken = async () => {

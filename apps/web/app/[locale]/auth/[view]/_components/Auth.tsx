@@ -1,41 +1,51 @@
 "use client";
 
 import { useUser } from "@lib/auth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { AuthView } from "../types";
-import CallbackLoader from "./CallbackLoader";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { LoginForm } from "./LoginForm";
+import { SetupForm } from "./SetupForm";
 import { SignupForm } from "./SignupForm";
 
 export const Auth = ({ view }: { view: AuthView }) => {
-  const { user, loaded } = useUser();
+  const { user, teams, activeTeam, loaded } = useUser();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  if (!Object.keys(AuthView).includes(view)) {
-    router.replace("/auth/login");
-  }
+  useEffect(() => {
+    if (!Object.values(AuthView).includes(view)) {
+      router.replace("/auth/login");
+    }
+  }, [view]);
 
-  const redirectToParam = searchParams.get("redirectTo");
+  useEffect(() => {
+    if (loaded && user) {
+      if (teams.length === 0) {
+        router.replace("/auth/setup");
+        return;
+      }
 
-  if (loaded && user) {
-    router.replace("/auth/gateway");
-  }
-
-  if (!view) return null;
+      if (activeTeam) {
+        router.replace(`/${activeTeam?.slug}/dashboard`);
+      }
+    }
+  }, [loaded, user, teams, activeTeam]);
 
   switch (view) {
-    case "signup":
+    case AuthView.SignUp:
       return <SignupForm />;
 
-    case "forgot-password":
+    case AuthView.ForgotPassword:
       return <ForgotPasswordForm />;
 
-    case "callback":
-      return <CallbackLoader />;
+    case AuthView.Setup:
+      return <SetupForm />;
+
+    case AuthView.Login:
+      return <LoginForm />;
 
     default:
-      return <LoginForm />;
+      return null;
   }
 };

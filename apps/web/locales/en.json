@@ -1,8 +1,8 @@
 {
   "auth": {
-    "callback": {
-      "title": "Login successful",
-      "message": "You are being redirected to the application."
+    "setup": {
+      "title": "Almost done",
+      "subtitle": "Thank you for joining us! To complete your signup, please enter a name for your team. You can change this at any time later."
     },
     "backToHomepage": "Back to homepage",
     "forgotPassword": {
@@ -97,15 +97,6 @@
     },
     "sidebar": {
       "createTeam": "Create a new team"
-    },
-    "createTeam": {
-      "title": "Create a new team",
-      "name": "Team name",
-      "submit": "Create team",
-      "notifications": {
-        "success": "Your team has been created. You can now invite members.",
-        "error": "We are sorry, but we were unable to create your team. Please try again later."
-      }
     }
   },
   "home": {
@@ -210,5 +201,15 @@
     },
     "subtitle": "Manage your settings",
     "title": "Settings"
+  },
+  "createTeam": {
+    "title": "Create a team",
+    "message": "Please create a team to continue.",
+    "name": "Team name",
+    "submit": "Create team",
+    "notifications": {
+      "success": "Your team has been created. You can now invite members.",
+      "error": "We are sorry, but we were unable to create your team. Please try again later."
+    }
   }
 }

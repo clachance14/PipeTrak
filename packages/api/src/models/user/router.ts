@@ -12,14 +12,15 @@ export const userRouter = router({
       },
     });
 
-    const teams = await db.teamMembership.findMany({
+    const teams = await db.team.findMany({
       where: {
-        userId: {
-          contains: user!.id,
+        memberships: {
+          some: {
+            userId: {
+              contains: user!.id,
+            },
+          },
         },
-      },
-      include: {
-        team: true,
       },
     });
 

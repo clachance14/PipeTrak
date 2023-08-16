@@ -12,28 +12,20 @@ import {
   Icon,
 } from "@components";
 import { appConfig } from "@config";
+import { useUser } from "@lib/auth";
 import { createTeamDialogOpen } from "@lib/state/dashboard";
 import { Team } from "api";
 import BoringAvatar from "boring-avatars";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useParams, usePathname, useRouter } from "next/navigation";
-import { useCallback } from "react";
-import CreateTeamDialog from "./CreateTeamDialog";
+import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export default function TeamSelect({ teams }: { teams: Team[] }) {
   const t = useTranslations("dashboard");
-  const pathname = usePathname();
-  const { teamSlug } = useParams();
-  const router = useRouter();
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
+  const { activeTeam, switchTeam } = useUser();
 
-  const activeTeam = teams.find((team) => team.slug === teamSlug);
-
-  const getPathnameWithDifferentTeamSlug = useCallback(
-    (newTeamSlug: string) => pathname.replace(teamSlug, newTeamSlug),
-    [teamSlug, pathname],
-  );
+  if (!activeTeam) return null;
 
   return (
     <div className="mt-4">
@@ -52,15 +44,13 @@ export default function TeamSelect({ teams }: { teams: Team[] }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
           <DropdownMenuRadioGroup
-            value={teamSlug}
-            onValueChange={(value) =>
-              router.replace(getPathnameWithDifferentTeamSlug(value))
-            }
+            value={activeTeam.id}
+            onValueChange={(value) => switchTeam(value)}
           >
             {teams.map((team) => (
               <DropdownMenuRadioItem
                 key={team.id}
-                value={team.slug}
+                value={team.id}
                 className="flex items-center justify-center gap-2"
               >
                 <div className="flex flex-1 items-center justify-start gap-2">

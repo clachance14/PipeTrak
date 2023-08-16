@@ -14,16 +14,12 @@ import { useUser } from "@lib/auth";
 import { appConfig } from "config";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import Banner from "./Banner";
 
 export function NavBar() {
   const t = useTranslations("common");
-  const { user } = useUser();
+  const { user, teams, activeTeam, loaded: userLoaded } = useUser();
   const locale = useLocale();
-  const [isTop, setIsTop] = useState(true);
-  const params = useParams();
 
   const menuItems: {
     label: string;
@@ -39,19 +35,7 @@ export function NavBar() {
     },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsTop(false);
-      } else {
-        setIsTop(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const hasUser = userLoaded && user;
 
   return (
     <nav
@@ -114,10 +98,13 @@ export function NavBar() {
 
           <Button className="hidden md:block" asChild variant="ghost">
             <Link
-              href={user ? "/auth/gateway" : "/auth/login"}
-              prefetch={!user}
+              href={
+                hasUser && activeTeam
+                  ? `/${activeTeam.slug}/dashboard`
+                  : "/auth/login"
+              }
             >
-              {user ? t("menu.dashboard") : t("menu.login")}
+              {hasUser ? t("menu.dashboard") : t("menu.login")}
             </Link>
           </Button>
         </div>

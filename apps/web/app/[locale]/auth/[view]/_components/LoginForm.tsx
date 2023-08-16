@@ -142,7 +142,7 @@ export function LoginForm() {
               </div>
             </div>
           )}
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" loading={isSubmitting}>
             {isPasswordSignin ? t("submit") : t("sendMagicLink")}
           </Button>
 

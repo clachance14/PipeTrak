@@ -9,7 +9,7 @@ export async function generateMetadata({ params: { locale, view } }) {
     [AuthView.Login]: t("login.title"),
     [AuthView.SignUp]: t("signup.title"),
     [AuthView.ForgotPassword]: t("forgotPassword.title"),
-    [AuthView.Callback]: t("callback.title"),
+    [AuthView.Setup]: "",
   };
 
   return {
