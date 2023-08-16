@@ -87,10 +87,8 @@ export function Sidebar({ teams }: PropsWithChildren<{ teams: Team[] }>) {
           <li key={menuItem.href}>
             <Link
               href={menuItem.href}
-              className={`hover:bg-accent hover:text-accent-foreground flex items-center gap-3 py-3 ${
-                isActiveMenuItem(menuItem.href)
-                  ? "bg-accent text-accent-foreground font-bold"
-                  : ""
+              className={`flex items-center gap-3 py-3 ${
+                isActiveMenuItem(menuItem.href) ? "font-bold" : ""
               }`}
             >
               <menuItem.icon
