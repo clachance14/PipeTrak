@@ -54,7 +54,13 @@ export function LoginForm() {
 
   // redirect when user has been loaded
   useEffect(() => {
-    if (user && loaded) router.replace("/team-redirect");
+    if (user && loaded) {
+      if (typeof window !== undefined)
+        window.location.href = new URL(
+          "/team-redirect",
+          window.location.origin,
+        ).toString();
+    }
   }, [user, loaded]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
