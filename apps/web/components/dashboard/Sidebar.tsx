@@ -79,7 +79,7 @@ export function Sidebar({ teams }: PropsWithChildren<{ teams: Team[] }>) {
           <Logo />
         </Link>
 
-        <TeamSelect teams={teams} />
+        <TeamSelect />
       </div>
 
       <ul className="list-none px-8">

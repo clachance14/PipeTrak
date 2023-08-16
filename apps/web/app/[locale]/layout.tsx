@@ -3,7 +3,7 @@ import { NextIntlClientProvider, useLocale } from "next-intl";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../../styles/globals.css";
-import ClientProviders from "./_components/ClientProviders";
+import ClientProviders from "./ClientProviders";
 
 export const metadata: Metadata = {
   title: {

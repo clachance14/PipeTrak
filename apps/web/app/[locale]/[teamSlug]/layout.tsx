@@ -8,7 +8,8 @@ export default async function Layout({
   params: { teamSlug },
 }: PropsWithChildren<{ params: { teamSlug: string } }>) {
   const apiCaller = await createApiCaller();
-  const { user, teams, role } = await apiCaller.user.claims();
+  const user = await apiCaller.user.info();
+  const teams = await apiCaller.user.teams();
 
   if (!user) {
     redirect("/auth/login");

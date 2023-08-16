@@ -14,16 +14,15 @@ import {
 import { appConfig } from "@config";
 import { useUser } from "@lib/auth";
 import { createTeamDialogOpen } from "@lib/state/dashboard";
-import { Team } from "api";
 import BoringAvatar from "boring-avatars";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
-export function TeamSelect({ teams }: { teams: Team[] }) {
+export function TeamSelect() {
   const t = useTranslations("dashboard");
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
-  const { activeTeam, switchTeam } = useUser();
+  const { activeTeam, switchTeam, teams } = useUser();
 
   if (!activeTeam) return null;
 

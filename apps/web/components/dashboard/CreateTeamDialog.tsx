@@ -1,4 +1,6 @@
 "use client";
+
+import { useUser } from "@lib/auth";
 import { createTeamDialogOpen } from "@lib/state/dashboard";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
@@ -10,6 +12,7 @@ export function CreateTeamDialog() {
   const t = useTranslations("createTeam");
   const [open, setOpen] = useAtom(createTeamDialogOpen);
   const router = useRouter();
+  const { switchTeam, reloadTeams } = useUser();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -20,8 +23,9 @@ export function CreateTeamDialog() {
 
         <CreateTeamForm
           isInitialTeam={false}
-          onSuccess={(team) => {
-            router.push(`/${team.slug}/settings/team`);
+          onSuccess={async (team) => {
+            await reloadTeams();
+            switchTeam(team.id);
             setOpen(false);
           }}
         />

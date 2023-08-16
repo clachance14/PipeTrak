@@ -3,10 +3,10 @@
 import { Button, Hint, Icon, Input } from "@components";
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "@lib/auth";
+import { login, useUser } from "@lib/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -24,6 +24,8 @@ const oAuthProviders = ["google", "github"];
 
 export function LoginForm() {
   const t = useTranslations("auth.login");
+  const router = useRouter();
+  const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
   );
@@ -49,6 +51,11 @@ export function LoginForm() {
     reset();
     setServerError(null);
   }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // redirect when user has been loaded
+  useEffect(() => {
+    if (user && loaded) router.replace("/team-redirect");
+  }, [user, loaded]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
     setServerError(null);

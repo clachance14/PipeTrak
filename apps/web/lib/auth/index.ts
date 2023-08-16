@@ -19,10 +19,11 @@ export function useUser() {
   const router = useRouter();
 
   const {
-    data: claims,
-    isFetched: claimsLoaded,
-    remove: removeClaims,
-  } = apiClient.user.claims.useQuery(undefined, {
+    data: teams,
+    isFetched: teamsLoaded,
+    remove: removeTeams,
+    refetch: reloadTeams,
+  } = apiClient.user.teams.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     enabled: !!user,
@@ -39,7 +40,7 @@ export function useUser() {
       setUser(payload?.user ?? null);
 
       if (!payload?.user) {
-        removeClaims();
+        removeTeams();
       }
     });
 
@@ -49,13 +50,13 @@ export function useUser() {
   }, []);
 
   useEffect(() => {
-    if (claims?.teams?.length) {
+    if (teams?.length) {
       const activeTeamCookie = getCookie(ACTIVE_TEAM_ID_COOKIE_KEY);
 
-      let team = claims.teams[0];
+      let team = teams[0];
 
       if (activeTeamCookie)
-        team = claims.teams.find((t) => t.id === activeTeamCookie) ?? team;
+        team = teams.find((t) => t.id === activeTeamCookie) ?? team;
 
       setCookie(ACTIVE_TEAM_ID_COOKIE_KEY, team.id, 30);
       setActiveTeam(team);
@@ -64,12 +65,12 @@ export function useUser() {
     }
 
     setActiveTeam(null);
-  }, [claims?.teams]);
+  }, [teams]);
 
   const switchTeam = (teamId: string) => {
     if (!activeTeam) return;
 
-    const team = claims?.teams?.find((t) => t.id === teamId);
+    const team = teams?.find((t) => t.id === teamId);
 
     if (!team) return;
 
@@ -83,9 +84,10 @@ export function useUser() {
 
   return {
     user,
-    ...claims,
+    teams,
     activeTeam,
     switchTeam,
-    loaded: loaded && claimsLoaded,
+    reloadTeams,
+    loaded: loaded && teamsLoaded,
   };
 }

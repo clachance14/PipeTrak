@@ -42,7 +42,7 @@ enum TeamMembershipStatus {
 
 model TeamMembership {
   id        String               @id @default(cuid())
-  team      Team                 @relation(fields: [teamId], references: [id])
+  team      Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId    String
   userId    String
   status    TeamMembershipStatus @default(PENDING)

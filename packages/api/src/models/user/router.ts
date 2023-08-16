@@ -5,13 +5,18 @@ export const userRouter = router({
   info: publicProcedure.query(async ({ ctx: { user } }) => {
     return user;
   }),
-  claims: protectedProcedure.query(async ({ ctx: { user } }) => {
+
+  role: protectedProcedure.query(async ({ ctx: { user } }) => {
     const role = await db.userRole.findFirst({
       where: {
         userId: user!.id,
       },
     });
 
+    return { role };
+  }),
+
+  teams: protectedProcedure.query(async ({ ctx: { user } }) => {
     const teams = await db.team.findMany({
       where: {
         memberships: {
@@ -24,10 +29,6 @@ export const userRouter = router({
       },
     });
 
-    return {
-      user,
-      role,
-      teams,
-    };
+    return teams;
   }),
 });
