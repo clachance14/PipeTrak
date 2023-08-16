@@ -5,17 +5,18 @@ import { createTRPCReact } from "@trpc/react-query";
 import { PropsWithChildren, useState } from "react";
 import superjson from "superjson";
 import type { AppRouter } from "./src/router";
-import { getBaseUrl } from "./src/util/base-url";
 
 export const apiClient = createTRPCReact<AppRouter>({});
 
 export function ApiClientProvider({ children }: PropsWithChildren<{}>) {
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  console.log("loading base url", baseUrl);
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     apiClient.createClient({
       links: [
         httpBatchLink({
-          url: getBaseUrl() + "/api/trpc",
+          url: baseUrl + "/api/trpc",
         }),
       ],
       transformer: superjson,

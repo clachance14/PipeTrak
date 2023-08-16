@@ -20,7 +20,7 @@ import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
-export default function TeamSelect({ teams }: { teams: Team[] }) {
+export function TeamSelect({ teams }: { teams: Team[] }) {
   const t = useTranslations("dashboard");
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
   const { activeTeam, switchTeam } = useUser();

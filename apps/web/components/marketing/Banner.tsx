@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const BANNER_HIDDEN_STORAGE_KEY = "banner-hidden";
 
-export default function Banner() {
+export function Banner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {

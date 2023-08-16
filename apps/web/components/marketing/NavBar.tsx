@@ -14,7 +14,7 @@ import { useUser } from "@lib/auth";
 import { appConfig } from "config";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
-import Banner from "./Banner";
+import { Banner } from "./Banner";
 
 export function NavBar() {
   const t = useTranslations("common");

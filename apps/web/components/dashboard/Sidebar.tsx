@@ -17,7 +17,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
 import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback, useEffect } from "react";
-import TeamSelect from "./TeamSelect";
+import { TeamSelect } from "./TeamSelect";
 
 export function Sidebar({ teams }: PropsWithChildren<{ teams: Team[] }>) {
   const { user } = useUser();
