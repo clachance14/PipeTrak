@@ -15,6 +15,13 @@ export default async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/auth") && session?.user)
     return NextResponse.redirect(new URL("/team-redirect", req.nextUrl.origin));
 
+  if (req.nextUrl.pathname.startsWith("/team-redirect")) {
+    if (!session?.user)
+      return NextResponse.redirect(new URL("/auth/login", req.nextUrl.origin));
+
+    return NextResponse.next();
+  }
+
   return intlMiddleware(req);
 }
 
