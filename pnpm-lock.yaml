@@ -250,6 +250,9 @@ importers:
       database:
         specifier: workspace:*
         version: link:../database
+      mail:
+        specifier: workspace:*
+        version: link:../mail
       next:
         specifier: 13.4.6
         version: 13.4.6(@babel/core@7.22.10)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)

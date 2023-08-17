@@ -1,10 +1,10 @@
 "use client";
 import { Button, Hint, Icon, Input } from "@components";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { apiClient } from "api/client";
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
-import { saveEmail } from "./_actions";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -13,6 +13,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function Newsletter() {
   const t = useTranslations("home");
+  const newsletterSignupMutation = apiClient.newsletter.signup.useMutation();
 
   const {
     handleSubmit,
@@ -23,7 +24,9 @@ export function Newsletter() {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
-    await saveEmail(email);
+    try {
+      await newsletterSignupMutation.mutateAsync({ email });
+    } catch {}
   };
 
   return (

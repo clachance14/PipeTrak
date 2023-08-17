@@ -16,7 +16,8 @@
     "react-dom": "18.2.0",
     "slugify": "^1.6.6",
     "superjson": "^1.12.4",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "mail": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.9",
