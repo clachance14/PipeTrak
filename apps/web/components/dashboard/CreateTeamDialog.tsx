@@ -1,10 +1,10 @@
 "use client";
 
-import { useUser } from "@lib/auth";
 import { createTeamDialogOpen } from "@lib/state/dashboard";
 import { useAtom } from "jotai";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../base";
 import { CreateTeamForm } from "./CreateTeamForm";
 
@@ -12,7 +12,15 @@ export function CreateTeamDialog() {
   const t = useTranslations("createTeam");
   const [open, setOpen] = useAtom(createTeamDialogOpen);
   const router = useRouter();
-  const { switchTeam, reloadTeams } = useUser();
+  const pathname = usePathname();
+  const params = useParams();
+
+  const { teamSlug } = params;
+
+  const switchTeam = (slug: string) => {
+    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
+    router.replace(pathname.replace(teamSlug, slug));
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -24,8 +32,7 @@ export function CreateTeamDialog() {
         <CreateTeamForm
           isInitialTeam={false}
           onSuccess={async (team) => {
-            await reloadTeams();
-            switchTeam(team.id);
+            switchTeam(team.slug);
             setOpen(false);
           }}
         />
