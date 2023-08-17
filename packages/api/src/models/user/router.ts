@@ -6,16 +6,6 @@ export const userRouter = router({
     return user;
   }),
 
-  role: protectedProcedure.query(async ({ ctx: { user } }) => {
-    const role = await db.userRole.findFirst({
-      where: {
-        userId: user!.id,
-      },
-    });
-
-    return { role };
-  }),
-
   teams: protectedProcedure.query(async ({ ctx: { user } }) => {
     const teams = await db.team.findMany({
       where: {
