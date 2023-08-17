@@ -12,14 +12,12 @@ enum RoleType {
   ADMIN
 }
 
-model UserRole {
-  userId String   @id
-  role   RoleType @default(USER)
-}
-
-model UserProfile {
+model User {
   userId    String   @id
+  email     String
+  name      String?
   avatarUrl String?
+  role      RoleType @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

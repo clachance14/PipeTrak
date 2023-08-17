@@ -1,6 +1,7 @@
 import { db } from "database";
 import slugify from "slugify";
 import { z } from "zod";
+import { getUsersById } from "../../auth";
 import { protectedProcedure, router } from "../../trpc/base";
 
 export const teamRouter = router({
@@ -15,8 +16,22 @@ export const teamRouter = router({
         where: {
           slug,
         },
+        include: {
+          memberships: true,
+        },
       });
-      return team;
+
+      const userIds = team?.memberships.map((m) => m.userId) ?? [];
+      const users = await getUsersById(userIds);
+
+      return {
+        ...team,
+        memberships:
+          team?.memberships.map((m) => ({
+            ...m,
+            user: users.find((u) => u.id === m.userId),
+          })) ?? [],
+      };
     }),
 
   create: protectedProcedure

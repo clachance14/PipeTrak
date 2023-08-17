@@ -1,6 +1,7 @@
 import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
 import ChangeTeamNameForm from "./ChangeTeamNameForm";
+import TeamMembersList from "./TeamMembersList";
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslator(locale, "settings.team");
@@ -23,6 +24,7 @@ export default async function AccountSettingsPage({
   return (
     <div className="grid gap-6">
       <ChangeTeamNameForm initialValue={team.name} teamId={team.id} />
+      <TeamMembersList team={team} memberships={team.memberships} />
     </div>
   );
 }

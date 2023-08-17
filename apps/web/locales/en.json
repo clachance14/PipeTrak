@@ -142,6 +142,10 @@
         "description": "Enter a new name and click save to update it.",
         "title": "Team name",
         "teamUrl": "Your team url will be <strong>{url}</strong>."
+      },
+      "members": {
+        "title": "Members",
+        "invite": "Invite a new member"
       }
     },
     "account": {

@@ -95,7 +95,7 @@ export function Sidebar({
               }`}
             >
               <menuItem.icon
-                className={`h-4 w-4 ${
+                className={`h-4 w-4 shrink-0 ${
                   isActiveMenuItem(menuItem.href) ? "text-primary" : ""
                 }`}
               />
