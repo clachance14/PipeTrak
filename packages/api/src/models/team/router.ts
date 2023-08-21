@@ -139,6 +139,13 @@ export const teamRouter = router({
             email,
             status: "PENDING",
           },
+          include: {
+            team: {
+              select: {
+                name: true,
+              },
+            },
+          },
         });
 
         // get user
@@ -150,6 +157,7 @@ export const teamRouter = router({
             url: `${getBaseUrl()}/auth/signup?invitationCode=${
               newMembership.id
             }`,
+            teamName: newMembership.team.name,
           },
         });
       } catch (e) {

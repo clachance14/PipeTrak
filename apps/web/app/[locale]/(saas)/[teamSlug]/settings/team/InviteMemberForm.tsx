@@ -87,11 +87,11 @@ export default function InviteMemberForm() {
                         defaultValue={field.value}
                       >
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Theme" />
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           {roleOptions.map((option) => (
-                            <SelectItem value={option.value}>
+                            <SelectItem key={option.value} value={option.value}>
                               {option.label}
                             </SelectItem>
                           ))}
