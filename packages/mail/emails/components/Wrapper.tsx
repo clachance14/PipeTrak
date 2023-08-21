@@ -1,7 +1,14 @@
-import { Font, Head, Html, Tailwind } from "@react-email/components";
+import {
+  Container,
+  Font,
+  Head,
+  Html,
+  Section,
+  Tailwind,
+} from "@react-email/components";
 import { PropsWithChildren } from "react";
 
-const { theme } = require("tailwind-config");
+const tailwindConfig = require("tailwind-config");
 
 export default function Wrapper({ children }: PropsWithChildren) {
   return (
@@ -14,7 +21,13 @@ export default function Wrapper({ children }: PropsWithChildren) {
           fontStyle="normal"
         />
       </Head>
-      <Tailwind config={{ theme }}>{children}</Tailwind>
+      <Tailwind config={tailwindConfig}>
+        <Section className="bg-card text-card-foreground p-8">
+          <Container className="border-border rounded-lg border border-solid p-6">
+            {children}
+          </Container>
+        </Section>
+      </Tailwind>
     </Html>
   );
 }

@@ -1,13 +1,15 @@
 "use client";
 
 import { Button, Hint, Icon, Input } from "@components";
+import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUp } from "@lib/auth";
+import { login, signUp } from "@lib/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { SocialSigninButton } from "./SocialSigninButton";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -56,10 +58,25 @@ export function SignupForm() {
     <div>
       <h1 className="text-3xl font-bold">{t("title")}</h1>
 
-      <p className="text-muted-foreground mb-6 mt-2">
-        {t("message")} {t("alreadyHaveAccount")}{" "}
-        <Link href="/auth/login">{t("signIn")} &rarr;</Link>
-      </p>
+      <p className="text-muted-foreground mb-6 mt-2">{t("message")}</p>
+
+      <div className="flex flex-col items-stretch gap-3">
+        {appConfig.auth.oAuthProviders.map((providerId) => (
+          <SocialSigninButton
+            key={providerId}
+            provider={providerId}
+            onClick={() =>
+              login({
+                method: "oauth",
+                provider: providerId,
+              })
+            }
+          />
+        ))}
+      </div>
+
+      <hr className="border-border my-8" />
+
       {isSubmitted && isSubmitSuccessful ? (
         <Hint
           status="success"
@@ -130,7 +147,14 @@ export function SignupForm() {
             <small className="italic opacity-50">{t("passwordHint")}</small>
           </div>
 
-          <Button>{t("submit")} &rarr;</Button>
+          <Button loading={isSubmitting}>{t("submit")} &rarr;</Button>
+
+          <div>
+            <span className="text-muted-foreground">
+              {t("alreadyHaveAccount")}{" "}
+            </span>
+            <Link href="/auth/login">{t("signIn")} &rarr;</Link>
+          </div>
         </form>
       )}
     </div>

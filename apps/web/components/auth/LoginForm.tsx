@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { login, useUser } from "@lib/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,11 +20,8 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const oAuthProviders = ["google", "github"];
-
 export function LoginForm() {
   const t = useTranslations("auth.login");
-  const router = useRouter();
   const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
@@ -95,7 +92,7 @@ export function LoginForm() {
       <p className="text-muted-foreground mb-6 mt-4">{t("subtitle")}</p>
 
       <div className="flex flex-col items-stretch gap-3">
-        {oAuthProviders.map((providerId) => (
+        {appConfig.auth.oAuthProviders.map((providerId) => (
           <SocialSigninButton
             key={providerId}
             provider={providerId}

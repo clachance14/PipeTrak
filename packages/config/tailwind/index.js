@@ -1,3 +1,51 @@
+const lightVariables = {
+  colors: {
+    border: "hsl(214.3 31.8% 91.4%)",
+    input: "hsl(214.3 31.8% 91.4%)",
+    ring: "hsl(146 40% 57%)",
+    background: "#ffffff",
+    foreground: "hsl(222.2 84% 4.9%)",
+    primary: "hsl(146 40% 57%)",
+    "primary-foreground": "#ffffff",
+    secondary: "hsl(210 40% 96.1%)",
+    "secondary-foreground": "hsl(222.2 47.4% 11.2%)",
+    destructive: "hsl(0 84.2% 60.2%)",
+    "destructive-foreground": "hsl(210 40% 98%)",
+    muted: "hsl(210 40% 98.1%)",
+    "muted-foreground": "hsl(215.4 16.3% 46.9%)",
+    accent: "hsl(210 40% 96.1%)",
+    "accent-foreground": "hsl(222.2 47.4% 11.2%)",
+    popover: "#ffffff",
+    "popover-foreground": "hsl(222.2 84% 4.9%)",
+    card: "#ffffff",
+    "card-foreground": "hsl(222.2 84% 4.9%)",
+  },
+};
+
+const darkVariables = {
+  colors: {
+    border: "hsl(217.2 32.6% 20%)",
+    input: "hsl(217.2 32.6% 17.5%)",
+    ring: "hsl(146 43% 65%)",
+    background: "hsl(222.2 84% 4.9%)",
+    foreground: "hsl(210 40% 98%)",
+    primary: "hsl(146 43% 65%)",
+    "primary-foreground": "hsl(146 27% 16%)",
+    secondary: "hsl(217.2 32.6% 17.5%)",
+    "secondary-foreground": "hsl(210 40% 98%)",
+    destructive: "hsl(0 62.8% 30.6%)",
+    "destructive-foreground": "hsl(210 40% 98%)",
+    muted: "hsl(217.2 32.6% 10.5%)",
+    "muted-foreground": "hsl(215 20.2% 65.1%)",
+    accent: "hsl(217.2 32.6% 17.5%)",
+    "accent-foreground": "hsl(210 40% 98%)",
+    popover: "hsl(222.2 84% 4.9%)",
+    "popover-foreground": "hsl(210 40% 98%)",
+    card: "hsl(222.2 84% 4.9%)",
+    "card-foreground": "hsl(210 40% 98%)",
+  },
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -10,50 +58,13 @@ module.exports = {
       },
     },
     extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
       borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
-      },
-      borderColor: {
-        DEFAULT: "hsl(var(--border))",
+        lg: `0.75rem`,
+        md: `calc(0.75rem - 2px)`,
+        sm: "calc(0.75rem - 4px)",
       },
       fontFamily: {
+        // --font-sans is defined as a variable by next/font
         sans: ["var(--font-sans)", "sans-serif"],
       },
       keyframes: {
@@ -70,6 +81,47 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      colors: {
+        border: "var(--colors-border)",
+        input: "var(--colors-input)",
+        ring: "var(--colors-ring)",
+        background: "var(--colors-background)",
+        foreground: "var(--colors-foreground)",
+        primary: {
+          DEFAULT: "var(--colors-primary)",
+          foreground: "var(--colors-primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--colors-secondary)",
+          foreground: "var(--colors-secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--colors-destructive)",
+          foreground: "var(--colors-destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--colors-muted)",
+          foreground: "var(--colors-muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--colors-accent)",
+          foreground: "var(--colors-accent-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--colors-popover)",
+          foreground: "var(--colors-popover-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--colors-card)",
+          foreground: "var(--colors-card-foreground)",
+        },
+      },
+    },
+    variables: {
+      DEFAULT: lightVariables,
+    },
+    darkVariables: {
+      DEFAULT: darkVariables,
     },
   },
   plugins: [
@@ -79,5 +131,6 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
     require("tailwindcss-animate"),
+    require("@mertasan/tailwindcss-variables"),
   ],
 };

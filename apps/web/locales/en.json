@@ -4,6 +4,7 @@
       "title": "Almost done",
       "subtitle": "Thank you for joining us! To complete your signup, please enter a name for your team. You can change this at any time later."
     },
+    "continueWithProvider": "Continue with {provider}",
     "backToHomepage": "Back to homepage",
     "forgotPassword": {
       "backToSignin": "Back to signin",
@@ -145,7 +146,17 @@
       },
       "members": {
         "title": "Members",
-        "invite": "Invite a new member"
+        "invite": "Invite a new member",
+        "inviteMember": {
+          "title": "Invite new member",
+          "email": "Email",
+          "role": "Role",
+          "submit": "Invite"
+        },
+        "roles": {
+          "member": "Member",
+          "owner": "Owner"
+        }
       }
     },
     "account": {

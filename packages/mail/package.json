@@ -21,7 +21,7 @@
   "main": "./index.ts",
   "name": "mail",
   "scripts": {
-    "dev": "email dev --port 3005",
+    "preview": "email dev --port 3005",
     "export": "email export"
   },
   "types": "./index.ts",

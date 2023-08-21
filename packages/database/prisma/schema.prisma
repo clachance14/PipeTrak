@@ -36,14 +36,22 @@ enum TeamMembershipStatus {
   REJECTED
 }
 
+enum TeamMemberRole {
+  MEMBER
+  OWNER
+}
+
 model TeamMembership {
-  id        String               @id @default(cuid())
-  team      Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String
-  userId    String
-  status    TeamMembershipStatus @default(PENDING)
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
+  id             String               @id @default(cuid())
+  team           Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId         String
+  userId         String?
+  email          String?
+  role           TeamMemberRole       @default(MEMBER)
+  status         TeamMembershipStatus @default(PENDING)
+  invitationCode String?              @default(uuid())
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
 
   @@unique([teamId, userId])
 }

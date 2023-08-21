@@ -1,5 +1,5 @@
+import { SignupForm } from "@components/auth";
 import { getTranslator } from "next-intl/server";
-import { SignupForm } from "./SignupForm";
 
 export async function generateMetadata({ params: { locale, view } }) {
   const t = await getTranslator(locale, "auth");

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Icon } from "@components";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 export function SocialSigninButton({
@@ -8,6 +9,7 @@ export function SocialSigninButton({
   className,
   ...rest
 }: { provider: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const t = useTranslations("auth");
   const providers = useMemo<
     Partial<
       Record<
@@ -64,7 +66,7 @@ export function SocialSigninButton({
           {providerData.icon}
         </i>
       )}
-      Login with {providerData.name}
+      {t("continueWithProvider", { provider: providerData.name })}
     </Button>
   );
 }

@@ -63,7 +63,7 @@ export function PricingTable({
           if (!variant) return null;
 
           return (
-            <div key={plan.id} className="rounded-xl border p-6">
+            <div key={plan.id} className="border-border rounded-xl border p-6">
               <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
               {plan.description && (
                 <div

@@ -26,7 +26,10 @@ import {
   TableHeader,
   TableRow,
 } from "@components";
+import { inviteTeamMemberDialogOpen } from "@lib/state/settings";
+import { useSetAtom } from "jotai";
 import { useState } from "react";
+import InviteMemberDialog from "./InviteMemberDialog";
 
 export default function TeamMembersList({
   team,
@@ -38,6 +41,7 @@ export default function TeamMembersList({
   const t = useTranslations("settings.team.members");
   const { toast } = useToast();
   const router = useRouter();
+  const setInviteMemberDialogOpen = useSetAtom(inviteTeamMemberDialogOpen);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -102,10 +106,12 @@ export default function TeamMembersList({
         <h2 className="mb-3 text-2xl font-semibold">{t("title")}</h2>
 
         <div>
-          <Button size="sm">
+          <Button size="sm" onClick={() => setInviteMemberDialogOpen(true)}>
             <Icon.plus className="mr-2 h-4 w-4" />
             {t("invite")}
           </Button>
+
+          <InviteMemberDialog />
         </div>
       </div>
 

@@ -1,5 +1,5 @@
+import { ForgotPasswordForm } from "@components/auth";
 import { getTranslator } from "next-intl/server";
-import { ForgotPasswordForm } from "./ForgotPasswordForm";
 
 export async function generateMetadata({ params: { locale, view } }) {
   const t = await getTranslator(locale, "auth");

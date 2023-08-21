@@ -1,8 +1,7 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { User } from "../types";
-import { env } from "./env.mjs";
+import { createAdminClient, mapSupabaseUser } from "./util";
 
 export const getUser = async (): Promise<User | null> => {
   const supabaseClient = createRouteHandlerClient({ cookies });
@@ -15,25 +14,13 @@ export const getUser = async (): Promise<User | null> => {
 
   const { user } = session;
 
-  const formattedUserObject = {
-    id: user.id,
-    name: user.user_metadata?.full_name ?? "",
-    email: user.email!,
-  };
+  const formattedUserObject = mapSupabaseUser(user);
 
   return formattedUserObject;
 };
 
 export const getUsersById = async (ids: string[]): Promise<User[]> => {
-  const supabaseClient = createClient(
-    env.SUPABASE_URL,
-    env.SUPABASE_SERVICE_ROLE_SECRET,
-    {
-      auth: {
-        persistSession: false,
-      },
-    },
-  );
+  const supabaseClient = createAdminClient();
 
   const users: User[] = [];
 
@@ -43,11 +30,7 @@ export const getUsersById = async (ids: string[]): Promise<User[]> => {
     } = await supabaseClient.auth.admin.getUserById(id);
 
     if (user) {
-      users.push({
-        id: user.id,
-        name: user.user_metadata?.full_name ?? "",
-        email: user.email!,
-      });
+      users.push(mapSupabaseUser(user));
     }
   }
 

@@ -1,8 +1,11 @@
+import { TRPCError } from "@trpc/server";
 import { db } from "database";
+import { sendEmail } from "mail";
 import slugify from "slugify";
 import { z } from "zod";
 import { getUsersById } from "../../auth";
 import { protectedProcedure, router } from "../../trpc/base";
+import { getBaseUrl } from "../../util/base-url";
 
 export const teamRouter = router({
   getBySlug: protectedProcedure
@@ -21,7 +24,11 @@ export const teamRouter = router({
         },
       });
 
-      const userIds = team?.memberships.map((m) => m.userId) ?? [];
+      const userIds =
+        team?.memberships
+          .map((m) => m.userId)
+          .filter((id): id is string => !!id) ?? [];
+
       const users = await getUsersById(userIds);
 
       return {
@@ -99,5 +106,57 @@ export const teamRouter = router({
       });
 
       return team;
+    }),
+
+  inviteMember: protectedProcedure
+    .input(
+      z.object({
+        teamId: z.string(),
+        email: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { teamId, email }, ctx: { user } }) => {
+      // check if user is member of team and is has owner role
+      const ownerMembership = await db.teamMembership.findFirst({
+        where: {
+          teamId: teamId,
+          userId: user!.id,
+          role: "OWNER",
+        },
+      });
+
+      if (!ownerMembership) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "No permission to add a member.",
+        });
+      }
+
+      try {
+        const newMembership = await db.teamMembership.create({
+          data: {
+            teamId: teamId,
+            email,
+            status: "PENDING",
+          },
+        });
+
+        // get user
+
+        await sendEmail({
+          templateId: "teamInvitation",
+          to: email,
+          context: {
+            url: `${getBaseUrl()}/auth/signup?invitationCode=${
+              newMembership.id
+            }`,
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Could not create membership.",
+        });
+      }
     }),
 });
