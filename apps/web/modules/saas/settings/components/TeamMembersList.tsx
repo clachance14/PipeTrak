@@ -35,6 +35,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { UserAvatar } from "@shared/components";
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { inviteTeamMemberDialogOpen } from "../state";
@@ -72,11 +73,17 @@ export function TeamMembersList({
       header: "",
       accessorFn: (row) => row.user,
       cell: ({ row }) => (
-        <div>
-          <strong className="block">{row.original.user?.name}</strong>
-          <small className="text-muted-foreground">
-            {row.original.user?.email ?? row.original.email}
-          </small>
+        <div className="flex items-center gap-2">
+          <UserAvatar
+            name={row.original.user?.name}
+            avatarUrl={row.original.user?.avatarUrl}
+          />
+          <div>
+            <strong className="block">{row.original.user?.name}</strong>
+            <small className="text-muted-foreground">
+              {row.original.user?.email ?? row.original.email}
+            </small>
+          </div>
         </div>
       ),
     },
