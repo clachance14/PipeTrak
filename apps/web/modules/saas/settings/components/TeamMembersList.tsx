@@ -15,8 +15,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@ui/components";
 import { useToast } from "@ui/hooks";
@@ -172,7 +170,7 @@ export function TeamMembersList({
 
       <div className="border-border rounded-md border">
         <Table>
-          <TableHeader>
+          {/* <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -189,7 +187,7 @@ export function TeamMembersList({
                 })}
               </TableRow>
             ))}
-          </TableHeader>
+          </TableHeader> */}
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
