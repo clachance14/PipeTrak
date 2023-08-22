@@ -99,7 +99,9 @@
     },
     "sidebar": {
       "createTeam": "Erstelle ein neues Team"
-    }
+    },
+    "subtitle": "Sehen Sie sich die neuesten Statistiken Ihres großartigen Unternehmens an.",
+    "welcome": "Willkommen {name}!"
   },
   "newsletter": {
     "email": "Email",

@@ -1,16 +1,18 @@
 import { StatsTile } from "@saas/dashboard/components";
 import { PageHeader } from "@saas/shared/components";
 import { createApiCaller } from "api";
+import { getTranslator } from "next-intl/server";
 
-export default async function Home() {
+export default async function Dashboard({ params: { locale } }) {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.user.info();
+  const t = await getTranslator(locale);
 
   return (
     <div>
       <PageHeader
-        title={`Welcome ${user.name}`}
-        subtitle="See the latest stats of your awesome business."
+        title={t("dashboard.welcome", { name: user.name })}
+        subtitle={t("dashboard.subtitle")}
       />
 
       <div className="container py-6">

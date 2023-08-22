@@ -99,7 +99,9 @@
     },
     "sidebar": {
       "createTeam": "Create a new team"
-    }
+    },
+    "welcome": "Welcome {name}!",
+    "subtitle": "See the latest stats of your awesome business."
   },
   "newsletter": {
     "email": "Email",

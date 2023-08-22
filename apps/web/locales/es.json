@@ -97,7 +97,9 @@
     },
     "sidebar": {
       "createTeam": "Crear un nuevo equipo"
-    }
+    },
+    "subtitle": "Vea las últimas estadísticas de su increíble negocio.",
+    "welcome": "¡Bienvenido {name}!"
   },
   "newsletter": {
     "email": "Correo electrónico",
