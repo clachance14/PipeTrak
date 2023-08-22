@@ -78,7 +78,7 @@
     "locales": {},
     "menu": {
       "blog": "Blog",
-      "dashboard": "Armaturenbrett",
+      "dashboard": "Dashboard",
       "login": "Anmeldung",
       "pricing": "Preise"
     }
@@ -94,7 +94,7 @@
   },
   "dashboard": {
     "menu": {
-      "dashboard": "Armaturenbrett",
+      "dashboard": "Dashboard",
       "settings": "Einstellungen"
     },
     "sidebar": {
