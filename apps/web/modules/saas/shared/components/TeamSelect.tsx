@@ -22,7 +22,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export function TeamSelect({ teams }: { teams: Team[] }) {
-  const t = useTranslations("dashboard");
+  const t = useTranslations();
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
   const params = useParams();
   const router = useRouter();
@@ -31,7 +31,7 @@ export function TeamSelect({ teams }: { teams: Team[] }) {
   const activeTeam = teams.find((team) => team.slug === teamSlug);
 
   const switchTeam = (slug: string) => {
-    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
+    Cookies.set("dashboard.team-slug", slug, { path: "/", expires: 30 });
     router.replace(pathname.replace(activeTeam.slug, slug));
   };
 
@@ -81,7 +81,7 @@ export function TeamSelect({ teams }: { teams: Team[] }) {
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setCreateTeamDialogOpen(true)}>
               <Icon.plus className="mr-2 h-4 w-4" />
-              {t("sidebar.createTeam")}
+              {t("dashboard.sidebar.createTeam")}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

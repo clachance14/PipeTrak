@@ -5,7 +5,7 @@ import { type SubscriptionPlan } from "api";
 import { useTranslations } from "next-intl";
 
 export function PricingTable({ plans }: { plans: SubscriptionPlan[] }) {
-  const t = useTranslations("pricing");
+  const t = useTranslations();
   return (
     <PricingTablePrimitive
       plans={plans}
@@ -13,11 +13,11 @@ export function PricingTable({ plans }: { plans: SubscriptionPlan[] }) {
         window.location.href = `/settings/billing`;
       }}
       labels={{
-        year: t("year"),
-        month: t("month"),
-        yearly: t("yearly"),
-        monthly: t("monthly"),
-        subscribe: t("subscribe"),
+        year: t("pricing.year"),
+        month: t("pricing.month"),
+        yearly: t("pricing.yearly"),
+        monthly: t("pricing.monthly"),
+        subscribe: t("pricing.subscribe"),
       }}
     />
   );

@@ -9,7 +9,7 @@ export function SocialSigninButton({
   className,
   ...rest
 }: { provider: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  const t = useTranslations("auth");
+  const t = useTranslations();
   const providers = useMemo<
     Partial<
       Record<
@@ -66,7 +66,7 @@ export function SocialSigninButton({
           {providerData.icon}
         </i>
       )}
-      {t("continueWithProvider", { provider: providerData.name })}
+      {t("auth.continueWithProvider", { provider: providerData.name })}
     </Button>
   );
 }

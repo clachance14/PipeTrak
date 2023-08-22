@@ -47,18 +47,18 @@ export function TeamMembersList({
   team: Team;
   memberships: (TeamMembership & { user?: User })[];
 }) {
-  const t = useTranslations("settings.team.members");
+  const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
   const setInviteMemberDialogOpen = useSetAtom(inviteTeamMemberDialogOpen);
 
   const roleOptions = [
     {
-      label: t("roles.member"),
+      label: t("settings.team.members.roles.member"),
       value: "MEMBER",
     },
     {
-      label: t("roles.owner"),
+      label: t("settings.team.members.roles.owner"),
       value: "OWNER",
     },
   ];
@@ -125,10 +125,10 @@ export function TeamMembersList({
               <DropdownMenuContent>
                 <DropdownMenuItem
                   className="text-destructive"
-                  onClick={() => alert("remove user")}
+                  onClick={() => alert("settings.team.members.remove user")}
                 >
                   <Icon.delete className="mr-2 h-4 w-4" />
-                  {t("removeMember")}
+                  {t("settings.team.members.removeMember")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -156,12 +156,14 @@ export function TeamMembersList({
   return (
     <div className="bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6">
       <div className="flex w-full flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
-        <h2 className="mb-3 text-2xl font-semibold">{t("title")}</h2>
+        <h2 className="mb-3 text-2xl font-semibold">
+          {t("settings.team.members.title")}
+        </h2>
 
         <div>
           <Button size="sm" onClick={() => setInviteMemberDialogOpen(true)}>
             <Icon.plus className="mr-2 h-4 w-4" />
-            {t("invite")}
+            {t("settings.team.members.invite")}
           </Button>
 
           <InviteMemberDialog />

@@ -1,6 +1,13 @@
 {
   "dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "menu": {
+      "dashboard": "Armaturenbrett",
+      "settings": "Einstellungen"
+    },
+    "sidebar": {
+      "createTeam": "Erstelle ein neues Team"
+    }
   },
   "settings": {
     "account": {
@@ -44,21 +51,54 @@
         "updateBillingDetails": "Zahlungsdetails aktualisieren",
         "year": "Jahr",
         "yearly": "jöhrlich",
-        "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert."
+        "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert.",
+        "currentPlan": "Dein aktueller Plan",
+        "subscribe": "Abonnieren",
+        "switchToPlan": "Zu diesem Plan wechseln"
       },
       "title": "Zahlung"
     },
     "notifications": {
       "emailUpdated": "Deine E-Mail wurde geändert.",
-      "nameUpdated": "Dein Name wurde geändert."
+      "nameUpdated": "Dein Name wurde geändert.",
+      "passwordUpdated": "Dein Passwort wurde aktualisiert.",
+      "teamNameNotUpdated": "Wir konnten deinen Teamnamen nicht aktualisieren. \nBitte versuche es später noch einmal.",
+      "teamNameUpdated": "Dein Teamname wurde aktualisiert."
     },
     "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "save": "Speichern",
+    "team": {
+      "changeName": {
+        "description": "Gib einen neuen Namen ein und klicke auf Speichern, um ihn zu aktualisieren.",
+        "teamUrl": "Deine Team-URL lautet <strong>{url}</strong>.",
+        "title": "Teamname"
+      },
+      "members": {
+        "invite": "Lade ein neues Mitglied ein",
+        "inviteMember": {
+          "email": "Email",
+          "role": "Rolle",
+          "submit": "Einladen",
+          "title": "Neues Mitglied einladen"
+        },
+        "removeMember": "Mitglied entfernen",
+        "roles": {
+          "member": "Mitglied",
+          "owner": "Eigentümer"
+        },
+        "title": "Mitglieder"
+      },
+      "subtitle": "Verwalte deine Teameinstellungen und Mitglieder",
+      "title": "Team"
+    }
   },
   "common": {
     "menu": {
       "blog": "Blog",
-      "pricing": "Preise"
+      "pricing": "Preise",
+      "dashboard": "Armaturenbrett",
+      "login": "Anmeldung"
     },
     "locales": {
       "en": "Englisch",
@@ -71,14 +111,19 @@
   },
   "pricing": {
     "title": "Preise",
-    "description": "Wähle das passende Paket für dich aus."
+    "description": "Wähle das passende Paket für dich aus.",
+    "month": "Monat",
+    "monthly": "Monatlich",
+    "subscribe": "Abonnieren",
+    "year": "Jahr",
+    "yearly": "Jährlich"
   },
   "home": {
     "newsletter": {
       "email": "E-Mail",
       "hints": {
         "success": {
-          "message": "Vielen Dank für Ihr Interesse! Du erhälst in Kürze eine E-Mail mit weiteren Informationen.",
+          "message": "Vielen Dank für dein Interesse! Du erhälst in Kürze eine E-Mail mit weiteren Informationen.",
           "title": "Abonniert!"
         }
       },
@@ -86,5 +131,102 @@
       "subtitle": "Be among the first to get access to supastarter.nextjs.",
       "title": "Get early access"
     }
+  },
+  "auth": {
+    "backToHomepage": "Zurück zur Startseite",
+    "continueWithProvider": "Weiter mit {provider}",
+    "forgotPassword": {
+      "backToSignin": "Zurück zum Login",
+      "email": "E-Mail",
+      "hints": {
+        "linkNotSent": {
+          "message": "Es tut uns leid, aber wir konnten deinen keinen Link zum Zurücksetzen des Passworts nicht senden. \nBitte versuche es später noch einmal.",
+          "title": "Link nicht gesendet"
+        },
+        "linkSent": {
+          "message": "Wir haben Ihnen einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
+          "title": "Link gesendet"
+        }
+      },
+      "message": "Bitte gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.",
+      "submit": "Link senden",
+      "title": "Hast du dein Passwort vergessen?"
+    },
+    "login": {
+      "createAnAccount": "Ein Konto erstellen",
+      "dontHaveAnAccount": "Du hast noch kein Konto?",
+      "email": "Email",
+      "forgotPassword": "Passwort vergessen?",
+      "hints": {
+        "emailNotVerified": {
+          "message": "Bitte überprüfe deine E-Mail-Adresse, bevor du dich anmelden. Überprüfe deinen Posteingang auf die Bestätigungsmail.",
+          "title": "E-Mail nicht bestätigt"
+        },
+        "invalidCredentials": {
+          "message": "Es tut uns leid, aber die von Ihnen eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
+          "title": "Ungültige Anmeldeinformationen"
+        },
+        "linkNotSent": {
+          "message": "Es tut uns leid, aber wir konnten Ihnen keinen magischen Link senden. \nBitte versuche es später noch einmal.",
+          "title": "Link nicht gesendet"
+        },
+        "linkSent": {
+          "message": "Wir haben Ihnen einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
+          "title": "Link gesendet"
+        }
+      },
+      "password": "Passwort",
+      "sendMagicLink": "Magischen Link senden",
+      "submit": "anmelden",
+      "subtitle": "Bitte gib deine Zugangsdaten ein, um dich anzumelden.",
+      "title": "Willkommen zurück"
+    },
+    "setup": {
+      "subtitle": "Vielen Dank, dass du dich uns angeschlossen haben! \nUm deine Anmeldung abzuschließen, gib bitte einen Namen für dein Team ein. \nDu kannst dies später jederzeit ändern.",
+      "title": "Fast fertig"
+    },
+    "signup": {
+      "alreadyHaveAccount": "Du hast bereits ein Konto?",
+      "email": "Email",
+      "hints": {
+        "signupFailed": {
+          "message": "Es tut uns leid, aber wir konnten dein Konto nicht erstellen. \nBitte versuche es später noch einmal.",
+          "title": "Konto konnte nicht erstellt werden"
+        },
+        "verifyEmail": {
+          "message": "Wir haben Ihnen einen Link zur Bestätigung deiner E-Mail-Adresse gesendet. \nBitte überprüfe deinen Posteingang.",
+          "title": "Bestätige deine E-Mail"
+        }
+      },
+      "message": "Wir freuen uns, dass du dich uns anschließen möchten. \nBitte fülle das untenstehende Formular aus, um dein Konto zu erstellen.",
+      "name": "Name",
+      "password": "Passwort",
+      "passwordHint": "Bitte gib mindestens 8 Zeichen ein.",
+      "signIn": "Anmelden",
+      "submit": "Benutzerkonto erstellen",
+      "title": "Ein Konto erstellen"
+    }
+  },
+  "createTeam": {
+    "message": "Bitte erstelle ein Team, um fortzufahren.",
+    "name": "Teamname",
+    "notifications": {
+      "error": "Es tut uns leid, aber wir konnten dein Team nicht erstellen. \nBitte versuche es später noch einmal.",
+      "success": "Dein Team wurde erstellt. \nDu kannst jetzt Mitglieder einladen."
+    },
+    "submit": "Team erstellen",
+    "title": "Neues Team erstellen"
+  },
+  "newsletter": {
+    "email": "Email",
+    "hints": {
+      "success": {
+        "message": "Danke, dass du unseren Newsletter abonniert haben. \nWir werden dich auf dem Laufenden halten.",
+        "title": "Gezeichnet"
+      }
+    },
+    "submit": "Abonnieren",
+    "subtitle": "Gehöre zu den Ersten, die Zugriff auf supastarter.nextjs erhalten.",
+    "title": "Erhalte frühen Zugang"
   }
 }

@@ -13,7 +13,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function Newsletter() {
-  const t = useTranslations("home");
+  const t = useTranslations();
   const newsletterSignupMutation = apiClient.newsletter.signup.useMutation();
 
   const {

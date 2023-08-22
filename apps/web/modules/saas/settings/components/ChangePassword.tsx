@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangePasswordForm() {
-  const t = useTranslations("settings");
+  const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ export function ChangePasswordForm() {
     {
       onSuccess: () => {
         toast({
-          title: t("notifications.passwordUpdated"),
+          title: t("settings.notifications.passwordUpdated"),
         });
         router.refresh();
       },
@@ -32,7 +32,7 @@ export function ChangePasswordForm() {
 
   return (
     <ActionBlock
-      title={t("account.changePassword.title")}
+      title={t("settings.account.changePassword.title")}
       onSubmit={() => changePasswordMutation.mutate(password)}
       isSubmitting={changePasswordMutation.isLoading}
       isSubmitDisabled={!password || password.length < 8}

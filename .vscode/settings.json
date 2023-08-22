@@ -19,5 +19,7 @@
     "packages/config/eslint-config-custom",
     "packages/config/tailwind-config",
     "packages/config/tsconfig"
-  ]
+  ],
+  "i18n-ally.localesPaths": ["apps/web/locales"],
+  "i18n-ally.keystyle": "nested"
 }

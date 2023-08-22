@@ -21,7 +21,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
-  const t = useTranslations("auth.login");
+  const t = useTranslations();
   const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
@@ -80,16 +80,18 @@ export function LoginForm() {
       }
     } catch (e) {
       setServerError({
-        title: t("hints.invalidCredentials.title"),
-        message: t("hints.invalidCredentials.message"),
+        title: t("auth.login.hints.invalidCredentials.title"),
+        message: t("auth.login.hints.invalidCredentials.message"),
       });
     }
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-extrabold">{t("title")}</h1>
-      <p className="text-muted-foreground mb-6 mt-4">{t("subtitle")}</p>
+      <h1 className="text-3xl font-extrabold">{t("auth.login.title")}</h1>
+      <p className="text-muted-foreground mb-6 mt-4">
+        {t("auth.login.subtitle")}
+      </p>
 
       <div className="flex flex-col items-stretch gap-3">
         {appConfig.auth.oAuthProviders.map((providerId) => (
@@ -111,8 +113,8 @@ export function LoginForm() {
       {isSubmitted && isSubmitSuccessful && !isPasswordSignin ? (
         <Hint
           status="success"
-          title={t("hints.linkSent.title")}
-          message={t("hints.linkSent.message")}
+          title={t("auth.login.hints.linkSent.title")}
+          message={t("auth.login.hints.linkSent.message")}
           icon={Icon.mail}
         />
       ) : (
@@ -127,7 +129,7 @@ export function LoginForm() {
           )}
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("email")}
+              {t("auth.login.email")}
             </label>
             <Input
               type="email"
@@ -139,7 +141,7 @@ export function LoginForm() {
           {signinMode === "password" && (
             <div>
               <label htmlFor="password" className="mb-1 block font-semibold">
-                {t("password")}
+                {t("auth.login.password")}
               </label>
               <Input
                 type="password"
@@ -148,19 +150,25 @@ export function LoginForm() {
                 autoComplete="current-password"
               />
               <div className="mt-1 text-right text-sm">
-                <Link href="/auth/forgot-password">{t("forgotPassword")}</Link>
+                <Link href="/auth/forgot-password">
+                  {t("auth.login.forgotPassword")}
+                </Link>
               </div>
             </div>
           )}
           <Button className="w-full" type="submit" loading={isSubmitting}>
-            {isPasswordSignin ? t("submit") : t("sendMagicLink")}
+            {isPasswordSignin
+              ? t("auth.login.submit")
+              : t("auth.login.sendMagicLink")}
           </Button>
 
           <div>
             <span className="text-muted-foreground">
-              {t("dontHaveAnAccount")}{" "}
+              {t("auth.login.dontHaveAnAccount")}{" "}
             </span>
-            <Link href="/auth/signup">{t("createAnAccount")} &rarr;</Link>
+            <Link href="/auth/signup">
+              {t("auth.login.createAnAccount")} &rarr;
+            </Link>
           </div>
         </form>
       )}

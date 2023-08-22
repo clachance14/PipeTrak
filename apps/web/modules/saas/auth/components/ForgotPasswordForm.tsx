@@ -17,7 +17,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function ForgotPasswordForm() {
-  const t = useTranslations("auth.forgotPassword");
+  const t = useTranslations();
   const [serverError, setServerError] = useState<null | {
     title: string;
     message: string;
@@ -36,24 +36,28 @@ export function ForgotPasswordForm() {
       await forgotPassword(email);
     } catch (e) {
       setServerError({
-        title: t("hints.linkNotSent.title"),
-        message: t("hints.linkNotSent.message"),
+        title: t("auth.forgotPassword.hints.linkNotSent.title"),
+        message: t("auth.forgotPassword.hints.linkNotSent.message"),
       });
     }
   };
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold">{t("title")}</h1>
+      <h1 className="text-3xl font-extrabold">
+        {t("auth.forgotPassword.title")}
+      </h1>
       <p className="text-muted-foreground mb-6 mt-4">
-        {t("message")}{" "}
-        <Link href="/auth/login">{t("backToSignin")} &rarr;</Link>
+        {t("auth.forgotPassword.message")}{" "}
+        <Link href="/auth/login">
+          {t("auth.forgotPassword.backToSignin")} &rarr;
+        </Link>
       </p>
       {isSubmitted && isSubmitSuccessful ? (
         <Hint
           status="success"
-          title={t("hints.linkSent.title")}
-          message={t("hints.linkSent.message")}
+          title={t("auth.forgotPassword.hints.linkSent.title")}
+          message={t("auth.forgotPassword.hints.linkSent.message")}
           icon={Icon.mail}
         />
       ) : (
@@ -63,7 +67,7 @@ export function ForgotPasswordForm() {
         >
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("email")}
+              {t("auth.forgotPassword.email")}
             </label>
             <Input
               type="email"
@@ -78,7 +82,8 @@ export function ForgotPasswordForm() {
           )}
 
           <Button>
-            <Icon.submit className="h-4 w-4" /> {t("submit")}
+            <Icon.submit className="h-4 w-4" />{" "}
+            {t("auth.forgotPassword.submit")}
           </Button>
         </form>
       )}

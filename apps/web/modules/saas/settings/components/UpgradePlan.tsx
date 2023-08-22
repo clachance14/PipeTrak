@@ -15,10 +15,10 @@ export function UpgradePlan({
 }) {
   const createCheckoutLinkMutation =
     apiClient.billing.createCheckoutLink.useMutation();
-  const t = useTranslations("settings.billing");
+  const t = useTranslations();
 
   return (
-    <ActionBlock title={t("subscription.upgradePlan")}>
+    <ActionBlock title={t("settings.billing.subscription.upgradePlan")}>
       <PricingTable
         plans={plans}
         activePlanId={activePlanId}
@@ -30,13 +30,13 @@ export function UpgradePlan({
           window.location.href = checkoutLink;
         }}
         labels={{
-          currentPlan: t("subscription.currentPlan"),
-          yearly: t("subscription.yearly"),
-          monthly: t("subscription.monthly"),
-          year: t("subscription.year"),
-          month: t("subscription.month"),
-          subscribe: t("subscription.subscribe"),
-          switchToPlan: t("subscription.switchToPlan"),
+          currentPlan: t("settings.billing.subscription.currentPlan"),
+          yearly: t("settings.billing.subscription.yearly"),
+          monthly: t("settings.billing.subscription.monthly"),
+          year: t("settings.billing.subscription.year"),
+          month: t("settings.billing.subscription.month"),
+          subscribe: t("settings.billing.subscription.subscribe"),
+          switchToPlan: t("settings.billing.subscription.switchToPlan"),
         }}
       />
     </ActionBlock>

@@ -13,7 +13,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
   const [name, setName] = useState(initialValue ?? "");
   const router = useRouter();
   const { toast } = useToast();
-  const t = useTranslations("settings");
+  const t = useTranslations();
   const changeNameMutation = useMutation(
     ["changeName"],
     async (name: string) => {
@@ -22,7 +22,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
     {
       onSuccess: () => {
         toast({
-          title: t("notifications.nameUpdated"),
+          title: t("settings.notifications.nameUpdated"),
         });
         router.refresh();
       },
@@ -31,7 +31,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
 
   return (
     <ActionBlock
-      title={t("account.changeName.title")}
+      title={t("settings.account.changeName.title")}
       onSubmit={() => changeNameMutation.mutate(name)}
       isSubmitting={changeNameMutation.isLoading}
       isSubmitDisabled={!name || name.length < 3 || name === initialValue}

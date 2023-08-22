@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@ui/components";
+import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 import { cnBase as cn } from "tailwind-variants";
 
@@ -19,6 +20,7 @@ export function ActionBlock({
   submitLabel?: string;
   className?: string;
 }>) {
+  const t = useTranslations();
   return (
     <form
       className={cn(
@@ -39,7 +41,7 @@ export function ActionBlock({
             disabled={isSubmitDisabled}
             loading={isSubmitting}
           >
-            Save
+            {t("settings.save")}
           </Button>
         </div>
       )}

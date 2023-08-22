@@ -1,11 +1,7 @@
 {
   "auth": {
-    "setup": {
-      "title": "Almost done",
-      "subtitle": "Thank you for joining us! To complete your signup, please enter a name for your team. You can change this at any time later."
-    },
-    "continueWithProvider": "Continue with {provider}",
     "backToHomepage": "Back to homepage",
+    "continueWithProvider": "Continue with {provider}",
     "forgotPassword": {
       "backToSignin": "Back to signin",
       "email": "Email",
@@ -28,7 +24,6 @@
       "dontHaveAnAccount": "Don't have an account yet?",
       "email": "Email",
       "forgotPassword": "Forgot password?",
-      "sendMagicLink": "Send magic link",
       "hints": {
         "emailNotVerified": {
           "message": "Please verify your email before signing in. Check your inbox for the verification mail.",
@@ -48,9 +43,14 @@
         }
       },
       "password": "Password",
+      "sendMagicLink": "Send magic link",
       "submit": "Sign in",
       "subtitle": "Please enter your credentials to sign in.",
       "title": "Welcome back"
+    },
+    "setup": {
+      "subtitle": "Thank you for joining us! To complete your signup, please enter a name for your team. You can change this at any time later.",
+      "title": "Almost done"
     },
     "signup": {
       "alreadyHaveAccount": "Already have an account?",
@@ -85,20 +85,30 @@
     },
     "menu": {
       "blog": "Blog",
-      "pricing": "Pricing",
       "dashboard": "Dashboard",
-      "login": "Login"
+      "login": "Login",
+      "pricing": "Pricing"
     }
   },
+  "createTeam": {
+    "message": "Please create a team to continue.",
+    "name": "Team name",
+    "notifications": {
+      "error": "We are sorry, but we were unable to create your team. Please try again later.",
+      "success": "Your team has been created. You can now invite members."
+    },
+    "submit": "Create team",
+    "title": "Create a team"
+  },
   "dashboard": {
-    "title": "Dashboard",
     "menu": {
       "dashboard": "Dashboard",
       "settings": "Settings"
     },
     "sidebar": {
       "createTeam": "Create a new team"
-    }
+    },
+    "title": "Dashboard"
   },
   "home": {
     "newsletter": {
@@ -128,38 +138,14 @@
   },
   "pricing": {
     "description": "Choose the plan that works best for you.",
-    "monthly": "Monthly",
     "month": "month",
+    "monthly": "Monthly",
     "subscribe": "Subscribe",
     "title": "Pricing",
     "year": "year",
     "yearly": "Yearly"
   },
   "settings": {
-    "team": {
-      "title": "Team",
-      "subtitle": "Manage your team settings and members",
-      "changeName": {
-        "description": "Enter a new name and click save to update it.",
-        "title": "Team name",
-        "teamUrl": "Your team url will be <strong>{url}</strong>."
-      },
-      "members": {
-        "title": "Members",
-        "invite": "Invite a new member",
-        "removeMember": "Remove member",
-        "inviteMember": {
-          "title": "Invite new member",
-          "email": "Email",
-          "role": "Role",
-          "submit": "Invite"
-        },
-        "roles": {
-          "member": "Member",
-          "owner": "Owner"
-        }
-      }
-    },
     "account": {
       "changeEmail": {
         "description": "Enter a new email and click save to update it.",
@@ -212,20 +198,35 @@
       "emailUpdated": "Your email has been updated.",
       "nameUpdated": "Your name has been updated.",
       "passwordUpdated": "Your password has been updated.",
-      "teamNameUpdated": "Your team name has been updated.",
-      "teamNameNotUpdated": "We were unable to update your team name. Please try again later."
+      "teamNameNotUpdated": "We were unable to update your team name. Please try again later.",
+      "teamNameUpdated": "Your team name has been updated."
     },
+    "save": "Save",
     "subtitle": "Manage your settings",
+    "team": {
+      "changeName": {
+        "description": "Enter a new name and click save to update it.",
+        "teamUrl": "Your team url will be <strong>{url}</strong>.",
+        "title": "Team name"
+      },
+      "members": {
+        "invite": "Invite a new member",
+        "inviteMember": {
+          "email": "Email",
+          "role": "Role",
+          "submit": "Invite",
+          "title": "Invite new member"
+        },
+        "removeMember": "Remove member",
+        "roles": {
+          "member": "Member",
+          "owner": "Owner"
+        },
+        "title": "Members"
+      },
+      "subtitle": "Manage your team settings and members",
+      "title": "Team"
+    },
     "title": "Settings"
-  },
-  "createTeam": {
-    "title": "Create a team",
-    "message": "Please create a team to continue.",
-    "name": "Team name",
-    "submit": "Create team",
-    "notifications": {
-      "success": "Your team has been created. You can now invite members.",
-      "error": "We are sorry, but we were unable to create your team. Please try again later."
-    }
   }
 }

@@ -15,7 +15,7 @@ export function ChangeTeamNameForm({
   initialValue: string;
   teamId: string;
 }) {
-  const t = useTranslations("settings");
+  const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
   const [name, setName] = useState(initialValue);
@@ -23,20 +23,20 @@ export function ChangeTeamNameForm({
   const updateTeamMutation = apiClient.team.update.useMutation({
     onSuccess: ({ slug }) => {
       toast({
-        title: t("notifications.teamNameUpdated"),
+        title: t("settings.notifications.teamNameUpdated"),
       });
       router.replace(`/${slug}/settings/team`);
     },
     onError: () => {
       toast({
-        title: t("notifications.teamNameNotUpdated"),
+        title: t("settings.notifications.teamNameNotUpdated"),
       });
     },
   });
 
   return (
     <ActionBlock
-      title={t("team.changeName.title")}
+      title={t("settings.team.changeName.title")}
       onSubmit={() => updateTeamMutation.mutate({ name, id: teamId })}
       isSubmitting={updateTeamMutation.isLoading}
       isSubmitDisabled={!name || name === initialValue}

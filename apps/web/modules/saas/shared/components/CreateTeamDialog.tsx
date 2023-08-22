@@ -14,7 +14,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { CreateTeamForm } from "./CreateTeamForm";
 
 export function CreateTeamDialog() {
-  const t = useTranslations("createTeam");
+  const t = useTranslations();
   const [open, setOpen] = useAtom(createTeamDialogOpen);
   const router = useRouter();
   const pathname = usePathname();
@@ -23,7 +23,7 @@ export function CreateTeamDialog() {
   const { teamSlug } = params;
 
   const switchTeam = (slug: string) => {
-    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
+    Cookies.set("createTeam.team-slug", slug, { path: "/", expires: 30 });
     router.replace(pathname.replace(teamSlug, slug));
   };
 
@@ -31,7 +31,7 @@ export function CreateTeamDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogTitle>{t("createTeam.title")}</DialogTitle>
         </DialogHeader>
 
         <CreateTeamForm

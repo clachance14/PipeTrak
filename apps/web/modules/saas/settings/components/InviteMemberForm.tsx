@@ -27,15 +27,15 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function InviteMemberForm() {
-  const t = useTranslations("settings.team.members");
+  const t = useTranslations();
 
   const roleOptions = [
     {
-      label: t("roles.member"),
+      label: t("settings.team.members.roles.member"),
       value: "MEMBER",
     },
     {
-      label: t("roles.owner"),
+      label: t("settings.team.members.roles.owner"),
       value: "OWNER",
     },
   ];
@@ -61,7 +61,9 @@ export function InviteMemberForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("inviteMember.email")}</FormLabel>
+                    <FormLabel>
+                      {t("settings.team.members.inviteMember.email")}
+                    </FormLabel>
                     <FormControl>
                       <Input type="email" {...field} />
                     </FormControl>
@@ -76,7 +78,9 @@ export function InviteMemberForm() {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("inviteMember.role")}</FormLabel>
+                    <FormLabel>
+                      {t("settings.team.members.inviteMember.role")}
+                    </FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
@@ -101,7 +105,7 @@ export function InviteMemberForm() {
           </div>
 
           <Button className="w-full" type="submit">
-            {t("inviteMember.submit")}
+            {t("settings.team.members.inviteMember.submit")}
           </Button>
         </div>
       </form>

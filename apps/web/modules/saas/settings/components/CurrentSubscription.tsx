@@ -16,11 +16,11 @@ export function CurrentSubscription({
   className?: string;
 }) {
   const format = useFormatter();
-  const t = useTranslations("settings.billing");
+  const t = useTranslations();
 
   const freePlan: SubscriptionPlan = {
     id: "free",
-    name: t("subscription.freePlan.title"),
+    name: t("settings.billing.subscription.freePlan.title"),
     currency: "usd",
     variants: [
       {
@@ -50,7 +50,7 @@ export function CurrentSubscription({
 
   return (
     <ActionBlock
-      title={t("subscription.currentSubscription")}
+      title={t("settings.billing.subscription.currentSubscription")}
       className={className}
     >
       <div className="flex items-center gap-2">
@@ -62,7 +62,11 @@ export function CurrentSubscription({
               style: "currency",
               currency: subscriptionPlan.currency,
             })}
-            /{t(`subscription.${subscriptionVariant.interval}` as any)})
+            /
+            {t(
+              `settings.billing.subscription.${subscriptionVariant.interval}` as any,
+            )}
+            )
           </small>
         </h4>
         {userSubscription?.status && (
@@ -73,7 +77,9 @@ export function CurrentSubscription({
                 : "error"
             }
           >
-            {t(`subscription.status.${userSubscription.status}` as any)}
+            {t(
+              `settings.billing.subscription.status.${userSubscription.status}` as any,
+            )}
           </Badge>
         )}
       </div>
@@ -82,8 +88,8 @@ export function CurrentSubscription({
         <p className="text-muted-foreground mt-1">
           {t.rich(
             !hasActiveSubscription
-              ? "subscription.endsOn"
-              : "subscription.nextPayment",
+              ? "settings.billing.subscription.endsOn"
+              : "settings.billing.subscription.nextPayment",
             {
               nextPaymentDate: userSubscription.nextPaymentDate,
               strong: (text) => <strong>{text}</strong>,
@@ -101,7 +107,7 @@ export function CurrentSubscription({
                   href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
                 >
                   <Icon.creditCard className="h-4 w-4" />
-                  {t("subscription.updateBillingDetails")}
+                  {t("settings.billing.subscription.updateBillingDetails")}
                 </a>
               </Button>
             </div>
@@ -110,7 +116,7 @@ export function CurrentSubscription({
               {hasActiveSubscription && (
                 <CancelSubscriptionButton
                   subscriptionId={userSubscription.subscriptionId}
-                  label={t("subscription.cancel")}
+                  label={t("settings.billing.subscription.cancel")}
                 />
               )}
             </div>

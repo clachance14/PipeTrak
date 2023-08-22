@@ -15,7 +15,7 @@ import Link from "next-intl/link";
 import { Banner } from "./Banner";
 
 export function NavBar() {
-  const t = useTranslations("common");
+  const t = useTranslations();
   const { user, loaded: userLoaded } = useUser();
   const locale = useLocale();
 
@@ -24,11 +24,11 @@ export function NavBar() {
     href: string;
   }[] = [
     {
-      label: t("menu.pricing"),
+      label: t("common.menu.pricing"),
       href: `/pricing`,
     },
     {
-      label: t("menu.blog"),
+      label: t("common.menu.blog"),
       href: "/blog",
     },
   ];
@@ -93,7 +93,9 @@ export function NavBar() {
                   className="block px-3 py-2 text-lg"
                   prefetch={!hasUser}
                 >
-                  {hasUser ? t("menu.dashboard") : t("menu.login")}
+                  {hasUser
+                    ? t("common.menu.dashboard")
+                    : t("common.menu.login")}
                 </Link>
               </div>
             </SheetContent>
@@ -104,7 +106,7 @@ export function NavBar() {
               href={hasUser ? `/team-redirect` : "/auth/login"}
               prefetch={!hasUser}
             >
-              {hasUser ? t("menu.dashboard") : t("menu.login")}
+              {hasUser ? t("common.menu.dashboard") : t("common.menu.login")}
             </Link>
           </Button>
         </div>

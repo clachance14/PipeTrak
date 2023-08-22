@@ -26,7 +26,7 @@ export function CreateTeamForm({
   defaultSlug?: string;
   defaultName?: string;
 }) {
-  const t = useTranslations("createTeam");
+  const t = useTranslations();
   const { toast } = useToast();
 
   const {
@@ -51,13 +51,13 @@ export function CreateTeamForm({
 
       // redirect to team settings page
       toast({
-        title: t("notifications.success"),
+        title: t("createTeam.notifications.success"),
       });
 
       onSuccess(newTeam);
     } catch (e) {
       toast({
-        title: t("notifications.error"),
+        title: t("createTeam.notifications.error"),
         variant: "destructive",
       });
     }
@@ -66,12 +66,14 @@ export function CreateTeamForm({
   return (
     <form onSubmit={onSubmit}>
       <div>
-        <label className="mb-2 block text-sm font-medium">{t("name")}</label>
+        <label className="mb-2 block text-sm font-medium">
+          {t("createTeam.name")}
+        </label>
         <Input type="text" {...register("name", { required: true })} />
       </div>
 
       <Button className="mt-4 w-full" type="submit" loading={isSubmitting}>
-        {t("submit")}
+        {t("createTeam.submit")}
       </Button>
     </form>
   );

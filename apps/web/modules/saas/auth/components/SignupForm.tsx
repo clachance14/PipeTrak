@@ -20,7 +20,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function SignupForm() {
-  const t = useTranslations("auth.signup");
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -48,17 +48,19 @@ export function SignupForm() {
       });
     } catch (e) {
       setServerError({
-        title: t("hints.signupFailed.title"),
-        message: t("hints.signupFailed.message"),
+        title: t("auth.signup.hints.signupFailed.title"),
+        message: t("auth.signup.hints.signupFailed.message"),
       });
     }
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{t("title")}</h1>
+      <h1 className="text-3xl font-bold">{t("auth.signup.title")}</h1>
 
-      <p className="text-muted-foreground mb-6 mt-2">{t("message")}</p>
+      <p className="text-muted-foreground mb-6 mt-2">
+        {t("auth.signup.message")}
+      </p>
 
       <div className="flex flex-col items-stretch gap-3">
         {appConfig.auth.oAuthProviders.map((providerId) => (
@@ -80,8 +82,8 @@ export function SignupForm() {
       {isSubmitted && isSubmitSuccessful ? (
         <Hint
           status="success"
-          title={t("hints.verifyEmail.title")}
-          message={t("hints.verifyEmail.message")}
+          title={t("auth.signup.hints.verifyEmail.title")}
+          message={t("auth.signup.hints.verifyEmail.message")}
           icon={Icon.mail}
         />
       ) : (
@@ -95,7 +97,7 @@ export function SignupForm() {
 
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("name")} *
+              {t("auth.signup.name")} *
             </label>
             <Input
               // status={errors.name ? "error" : "default"}
@@ -108,7 +110,7 @@ export function SignupForm() {
 
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("email")} *
+              {t("auth.signup.email")} *
             </label>
             <Input
               // status={errors.email ? "error" : "default"}
@@ -121,7 +123,7 @@ export function SignupForm() {
 
           <div>
             <label htmlFor="password" className="mb-1 block font-semibold">
-              {t("password")} *
+              {t("auth.signup.password")} *
             </label>
             <div className="relative">
               <Input
@@ -144,16 +146,20 @@ export function SignupForm() {
                 )}
               </button>
             </div>
-            <small className="italic opacity-50">{t("passwordHint")}</small>
+            <small className="italic opacity-50">
+              {t("auth.signup.passwordHint")}
+            </small>
           </div>
 
-          <Button loading={isSubmitting}>{t("submit")} &rarr;</Button>
+          <Button loading={isSubmitting}>
+            {t("auth.signup.submit")} &rarr;
+          </Button>
 
           <div>
             <span className="text-muted-foreground">
-              {t("alreadyHaveAccount")}{" "}
+              {t("auth.signup.alreadyHaveAccount")}{" "}
             </span>
-            <Link href="/auth/login">{t("signIn")} &rarr;</Link>
+            <Link href="/auth/login">{t("auth.signup.signIn")} &rarr;</Link>
           </div>
         </form>
       )}

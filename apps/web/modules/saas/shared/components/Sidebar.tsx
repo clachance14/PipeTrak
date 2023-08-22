@@ -18,7 +18,7 @@ export function Sidebar({
   user,
 }: PropsWithChildren<{ teams: Team[]; user: User }>) {
   const locale = useLocale();
-  const t = useTranslations("dashboard");
+  const t = useTranslations();
   const pathname = usePathname();
   const { teamSlug } = useParams();
 
@@ -27,12 +27,12 @@ export function Sidebar({
 
   const menuItems = [
     {
-      label: t("menu.dashboard"),
+      label: t("dashboard.menu.dashboard"),
       href: `/${teamSlug}/dashboard`,
       icon: Icon.grid,
     },
     {
-      label: t("menu.settings"),
+      label: t("dashboard.menu.settings"),
       href: `/${teamSlug}/settings`,
       icon: Icon.settings,
     },
