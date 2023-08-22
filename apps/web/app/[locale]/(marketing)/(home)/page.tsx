@@ -1,6 +1,4 @@
-import { Features } from "./Features";
-import { Hero } from "./Hero";
-import { Newsletter } from "./Newsletter";
+import { Features, Hero, Newsletter } from "@marketing/home/components";
 
 export default function Home() {
   return (

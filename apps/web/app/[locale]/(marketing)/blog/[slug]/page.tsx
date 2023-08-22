@@ -1,8 +1,8 @@
+import { PostContent } from "@marketing/blog/components";
 import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PostContent } from "./PostContent";
 
 interface Params {
   slug: string;

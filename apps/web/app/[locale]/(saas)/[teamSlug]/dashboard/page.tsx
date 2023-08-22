@@ -1,4 +1,5 @@
-import { PageHeader, StatsTile } from "@components";
+import { StatsTile } from "@saas/dashboard/components";
+import { PageHeader } from "@saas/shared/components";
 import { createApiCaller } from "api";
 
 export default async function Home() {

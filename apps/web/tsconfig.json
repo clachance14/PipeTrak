@@ -4,7 +4,11 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@*": ["*"],
+      "@config": ["./config"],
+      "@marketing/*": ["./modules/marketing/*"],
+      "@saas/*": ["./modules/saas/*"],
+      "@ui/*": ["./modules/ui/*"],
+      "@shared/*": ["./modules/shared/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

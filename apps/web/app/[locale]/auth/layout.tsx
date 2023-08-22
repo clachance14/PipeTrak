@@ -1,5 +1,5 @@
-import { ColorModeToggle, LocaleSwitch, Logo } from "@components";
 import { appConfig } from "@config";
+import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { PropsWithChildren } from "react";

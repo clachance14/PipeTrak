@@ -1,6 +1,6 @@
+import { PricingTable } from "@marketing/pricing/components";
 import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
-import { PricingTable } from "./_components/PricingTable";
 
 export default async function PricingPage({
   params: { locale },
@@ -20,7 +20,9 @@ export default async function PricingPage({
             <p className="mt-3 text-lg opacity-50">{t("description")}</p>
           </div>
 
-          <PricingTable plans={plans} />
+          <div className="container max-w-4xl">
+            <PricingTable plans={plans} />
+          </div>
         </div>
       </div>
     </main>

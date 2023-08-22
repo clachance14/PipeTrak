@@ -1,7 +1,7 @@
+import { PostListItem } from "@marketing/blog/components";
 import { allPosts } from "contentlayer/generated";
 import { useTranslations } from "next-intl";
 import { getTranslator } from "next-intl/server";
-import { PostListItem } from "./PostListItem";
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslator(locale, "blog");

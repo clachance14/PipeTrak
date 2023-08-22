@@ -1,7 +1,6 @@
+import { CurrentSubscription, UpgradePlan } from "@saas/settings/components";
 import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
-import CurrentSubscription from "./CurrentSubscription";
-import UpgradePlan from "./UpgradePlan";
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslator(locale, "settings.billing");

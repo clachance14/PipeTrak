@@ -1,4 +1,4 @@
-import { PageHeader, TabGroup } from "@components";
+import { PageHeader, TabGroup } from "@saas/shared/components";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 

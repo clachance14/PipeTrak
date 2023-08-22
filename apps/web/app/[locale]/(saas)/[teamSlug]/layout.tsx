@@ -1,4 +1,4 @@
-import { Sidebar } from "@components";
+import { Sidebar } from "@saas/shared/components";
 import { createApiCaller } from "api";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
