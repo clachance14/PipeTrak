@@ -1,6 +1,5 @@
 {
   "auth": {
-    "backToHomepage": "Back to homepage",
     "continueWithProvider": "Continue with {provider}",
     "forgotPassword": {
       "backToSignin": "Back to signin",
@@ -48,10 +47,7 @@
       "subtitle": "Please enter your credentials to sign in.",
       "title": "Welcome back"
     },
-    "setup": {
-      "subtitle": "Thank you for joining us! To complete your signup, please enter a name for your team. You can change this at any time later.",
-      "title": "Almost done"
-    },
+    "setup": {},
     "signup": {
       "alreadyHaveAccount": "Already have an account?",
       "email": "Email",
@@ -79,10 +75,7 @@
     "title": "My awesome blog"
   },
   "common": {
-    "locales": {
-      "de": "German",
-      "en": "English"
-    },
+    "locales": {},
     "menu": {
       "blog": "Blog",
       "dashboard": "Dashboard",
@@ -91,7 +84,6 @@
     }
   },
   "createTeam": {
-    "message": "Please create a team to continue.",
     "name": "Team name",
     "notifications": {
       "error": "We are sorry, but we were unable to create your team. Please try again later.",
@@ -107,21 +99,6 @@
     },
     "sidebar": {
       "createTeam": "Create a new team"
-    },
-    "title": "Dashboard"
-  },
-  "home": {
-    "newsletter": {
-      "email": "Email",
-      "hints": {
-        "success": {
-          "message": "Thank you for subscribing to our newsletter. We will keep you posted.",
-          "title": "Subscribed"
-        }
-      },
-      "submit": "Subscribe",
-      "subtitle": "Be among the first to get access to supastarter.nextjs.",
-      "title": "Get early access"
     }
   },
   "newsletter": {
@@ -160,7 +137,6 @@
         "note": "Please enter at least 8 characters.",
         "title": "Your password"
       },
-      "save": "Save",
       "title": "Account"
     },
     "billing": {
