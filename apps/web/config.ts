@@ -1,6 +1,6 @@
 export const appConfig = {
   i18n: {
-    locales: ["en", "de"],
+    locales: ["en", "de", "es"],
     defaultLocale: "en",
   },
   auth: {

@@ -16,7 +16,6 @@ import { useState } from "react";
 const localeLabels = {
   en: "English",
   es: "Español",
-  fr: "Français",
   de: "Deutsch",
 };
 
