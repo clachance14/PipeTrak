@@ -17,7 +17,7 @@ export function TabGroup({
   }, [items, selectedSegment]);
 
   return (
-    <div className={`flex border-b-2 ${className}`}>
+    <div className={`border-border flex border-b-2 ${className}`}>
       {items.map((item) => (
         <Link
           key={item.href}

@@ -1,3 +1,6 @@
+"use client";
+
+import { ActionBlock } from "@saas/shared/components";
 import { Badge, Button, Icon } from "@ui/components";
 import { Subscription, SubscriptionPlan } from "api";
 import { useFormatter, useTranslations } from "next-intl";
@@ -46,85 +49,74 @@ export function CurrentSubscription({
   );
 
   return (
-    <div className={`${className}`}>
-      <div className="bg-primary/10 rounded-xl p-6">
-        <div className="">
-          <div>
-            <h2 className="mb-3 text-2xl font-semibold">
-              {t("subscription.currentSubscription")}
-            </h2>
+    <ActionBlock
+      title={t("subscription.currentSubscription")}
+      className={className}
+    >
+      <div className="flex items-center gap-2">
+        <h4 className="text-primary text-xl">
+          <span>{subscriptionPlan.name} </span>
+          <small>
+            (
+            {format.number(subscriptionVariant.price / 100, {
+              style: "currency",
+              currency: subscriptionPlan.currency,
+            })}
+            /{t(`subscription.${subscriptionVariant.interval}` as any)})
+          </small>
+        </h4>
+        {userSubscription?.status && (
+          <Badge
+            status={
+              ["on_trial", "active"].includes(userSubscription.status)
+                ? "success"
+                : "error"
+            }
+          >
+            {t(`subscription.status.${userSubscription.status}` as any)}
+          </Badge>
+        )}
+      </div>
 
-            <div className="flex items-center gap-2">
-              <h4 className="text-primary text-xl">
-                <span>{subscriptionPlan.name} </span>
-                <small>
-                  (
-                  {format.number(subscriptionVariant.price / 100, {
-                    style: "currency",
-                    currency: subscriptionPlan.currency,
-                  })}
-                  /{t(`subscription.${subscriptionVariant.interval}` as any)})
-                </small>
-              </h4>
-              {userSubscription?.status && (
-                <Badge
-                  status={
-                    ["on_trial", "active"].includes(userSubscription.status)
-                      ? "success"
-                      : "error"
-                  }
+      {userSubscription?.nextPaymentDate && (
+        <p className="text-muted-foreground mt-1">
+          {t.rich(
+            !hasActiveSubscription
+              ? "subscription.endsOn"
+              : "subscription.nextPayment",
+            {
+              nextPaymentDate: userSubscription.nextPaymentDate,
+              strong: (text) => <strong>{text}</strong>,
+            },
+          )}
+        </p>
+      )}
+
+      {hasActiveSubscription && (
+        <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
+          <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
+            <div>
+              <Button asChild variant="ghost" className="w-full md:w-auto">
+                <a
+                  href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
                 >
-                  {t(`subscription.status.${userSubscription.status}` as any)}
-                </Badge>
-              )}
+                  <Icon.creditCard className="h-4 w-4" />
+                  {t("subscription.updateBillingDetails")}
+                </a>
+              </Button>
             </div>
 
-            {userSubscription?.nextPaymentDate && (
-              <p className="text-muted-foreground mt-1">
-                {t.rich(
-                  !hasActiveSubscription
-                    ? "subscription.endsOn"
-                    : "subscription.nextPayment",
-                  {
-                    nextPaymentDate: userSubscription.nextPaymentDate,
-                    strong: (text) => <strong>{text}</strong>,
-                  },
-                )}
-              </p>
-            )}
-
-            {hasActiveSubscription && (
-              <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
-                <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
-                  <div>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="w-full md:w-auto"
-                    >
-                      <a
-                        href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
-                      >
-                        <Icon.creditCard className="h-4 w-4" />
-                        {t("subscription.updateBillingDetails")}
-                      </a>
-                    </Button>
-                  </div>
-
-                  <div className="flex flex-col gap-3 md:flex-row">
-                    {hasActiveSubscription && (
-                      <CancelSubscriptionButton
-                        subscriptionId={userSubscription.subscriptionId}
-                        label={t("subscription.cancel")}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
+            <div className="flex flex-col gap-3 md:flex-row">
+              {hasActiveSubscription && (
+                <CancelSubscriptionButton
+                  subscriptionId={userSubscription.subscriptionId}
+                  label={t("subscription.cancel")}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </ActionBlock>
   );
 }

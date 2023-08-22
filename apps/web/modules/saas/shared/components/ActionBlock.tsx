@@ -1,4 +1,8 @@
+"use client";
+
 import { Button } from "@ui/components";
+import { PropsWithChildren } from "react";
+import { cnBase as cn } from "tailwind-variants";
 
 export function ActionBlock({
   children,
@@ -6,32 +10,39 @@ export function ActionBlock({
   onSubmit,
   isSubmitting,
   isSubmitDisabled,
-}: {
-  onSubmit: () => void;
+  className,
+}: PropsWithChildren<{
+  onSubmit?: () => void;
   title: string;
-  children: React.ReactNode;
-  isSubmitting: boolean;
+  isSubmitting?: boolean;
   isSubmitDisabled?: boolean;
-}) {
+  submitLabel?: string;
+  className?: string;
+}>) {
   return (
     <form
-      className="bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6"
+      className={cn(
+        "bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6",
+        className,
+      )}
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit();
+        onSubmit?.();
       }}
     >
       <h2 className="mb-3 text-2xl font-semibold">{title}</h2>
       {children}
-      <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
-        <Button
-          type="submit"
-          disabled={isSubmitDisabled}
-          loading={isSubmitting}
-        >
-          Save
-        </Button>
-      </div>
+      {typeof onSubmit !== "undefined" && (
+        <div className="border-border -mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
+          <Button
+            type="submit"
+            disabled={isSubmitDisabled}
+            loading={isSubmitting}
+          >
+            Save
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

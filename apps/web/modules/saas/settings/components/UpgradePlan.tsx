@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionBlock } from "@saas/shared/components";
 import { PricingTable } from "@shared/components";
 import { SubscriptionPlan } from "api";
 import { apiClient } from "api/client";
@@ -17,10 +18,7 @@ export function UpgradePlan({
   const t = useTranslations("settings.billing");
 
   return (
-    <>
-      <h3 className="mb-3 text-2xl font-semibold">
-        {t("subscription.upgradePlan")}
-      </h3>
+    <ActionBlock title={t("subscription.upgradePlan")}>
       <PricingTable
         plans={plans}
         activePlanId={activePlanId}
@@ -41,6 +39,6 @@ export function UpgradePlan({
           switchToPlan: t("subscription.switchToPlan"),
         }}
       />
-    </>
+    </ActionBlock>
   );
 }
