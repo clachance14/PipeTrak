@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Hint, Icon } from "@components";
+import { Hint, Icon } from "@ui/components";
 
 const meta = {
   title: "Base/Hint",

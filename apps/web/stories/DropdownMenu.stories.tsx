@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@components";
+} from "@ui/components";
 
 const meta = {
   title: "Base/Dropdown Menu",

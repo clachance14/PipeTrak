@@ -1,4 +1,4 @@
-import { LoginForm } from "@components/auth";
+import { LoginForm } from "@saas/auth/components";
 import { getTranslator } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale, view } }) {
