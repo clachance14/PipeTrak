@@ -2,6 +2,10 @@
 
 import {
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
   Icon,
   Select,
   SelectContent,
@@ -71,8 +75,10 @@ export function TeamMembersList({
       accessorFn: (row) => row.user,
       cell: ({ row }) => (
         <div>
-          <strong>{row.original.user?.name}</strong>
-          <small>{row.original.user?.email ?? row.original.email}</small>
+          <strong className="block">{row.original.user?.name}</strong>
+          <small className="text-muted-foreground">
+            {row.original.user?.email ?? row.original.email}
+          </small>
         </div>
       ),
     },
@@ -98,8 +104,8 @@ export function TeamMembersList({
           //   {badgeLabels[row.original.status]}
           // </Badge>
 
-          <div className="flex flex-row gap-2">
-            <Select>
+          <div className="flex flex-row justify-end gap-2">
+            <Select value={row.original.role} disabled={row.original.isCreator}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -111,6 +117,23 @@ export function TeamMembersList({
                 ))}
               </SelectContent>
             </Select>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost">
+                  <Icon.more />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  className="text-destructive"
+                  onClick={() => alert("remove user")}
+                >
+                  <Icon.delete className="mr-2 h-4 w-4" />
+                  {t("removeMember")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         );
       },

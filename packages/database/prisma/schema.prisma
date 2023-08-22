@@ -50,6 +50,7 @@ model TeamMembership {
   role           TeamMemberRole       @default(MEMBER)
   status         TeamMembershipStatus @default(PENDING)
   invitationCode String?              @default(uuid())
+  isCreator      Boolean              @default(false)
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
 

@@ -147,6 +147,7 @@
       "members": {
         "title": "Members",
         "invite": "Invite a new member",
+        "removeMember": "Remove member",
         "inviteMember": {
           "title": "Invite new member",
           "email": "Email",

@@ -25,6 +25,7 @@ import {
   Mail,
   Menu,
   Moon,
+  MoreVertical,
   MousePointer,
   Paperclip,
   Phone,
@@ -33,6 +34,7 @@ import {
   Settings,
   Star,
   Sun,
+  Trash,
   Twitter,
   Upload,
   User,
@@ -82,6 +84,8 @@ export const Icon = {
   dot: Dot,
   plus: Plus,
   select: ChevronsUpDown,
+  more: MoreVertical,
+  delete: Trash,
 
   // social icons
   google: ({ ...props }: IconProps) => (

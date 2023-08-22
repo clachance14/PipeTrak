@@ -66,6 +66,7 @@ export const teamRouter = router({
           userId: user!.id,
           status: "ACCEPTED",
           role: "OWNER",
+          isCreator: true,
         },
       });
 
