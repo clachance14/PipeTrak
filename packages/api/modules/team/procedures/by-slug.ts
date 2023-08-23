@@ -1,22 +1,16 @@
-import { defineAbilitiesFor } from "@auth";
-import { protectedProcedure } from "@trpc";
 import { TRPCError } from "@trpc/server";
-import { db } from "database";
+import { TeamModel, db } from "database";
 import { z } from "zod";
+import { defineAbilitiesFor } from "../../auth";
+import { protectedProcedure } from "../../trpc";
 
-const TeamBySlugInput = z.object({
-  slug: z.string(),
-});
-
-const TeamBySlugOutput = z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
-});
-
-export const teamBySlugProcedure = protectedProcedure
-  .input(TeamBySlugInput)
-  .output(TeamBySlugOutput)
+export const bySlug = protectedProcedure
+  .input(
+    z.object({
+      slug: z.string(),
+    }),
+  )
+  .output(TeamModel)
   .query(async ({ input: { slug }, ctx: { user } }) => {
     const team = await db.team.findFirst({
       where: {

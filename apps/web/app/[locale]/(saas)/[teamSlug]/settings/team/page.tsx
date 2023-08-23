@@ -16,14 +16,17 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function AccountSettingsPage({
+export default async function TeamSettingsPage({
   params: { teamSlug, locale },
 }: {
   params: { teamSlug: string; locale: string };
 }) {
   const apiCaller = await createApiCaller();
-  const team = await apiCaller.team.getBySlug({
+  const team = await apiCaller.team.bySlug({
     slug: teamSlug,
+  });
+  const memberships = await apiCaller.team.memberships({
+    teamId: team.id,
   });
   const invitations = await apiCaller.team.invitations({
     teamId: team.id,
@@ -45,7 +48,7 @@ export default async function AccountSettingsPage({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="members">
-            <TeamMembersList team={team} memberships={team.memberships} />
+            <TeamMembersList memberships={memberships} />
           </TabsContent>
           <TabsContent value="invitations">
             <TeamInvitationsList invitations={invitations} />

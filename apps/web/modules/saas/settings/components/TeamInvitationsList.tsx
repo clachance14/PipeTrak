@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/components";
-import { TeamInvitation } from "database";
 import { useTranslations } from "next-intl";
 
 import {
@@ -29,20 +28,23 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { ApiOutput } from "api";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
+
+type TeamInvitations = ApiOutput["team"]["invitations"];
 
 export function TeamInvitationsList({
   invitations,
 }: {
-  invitations: TeamInvitation[];
+  invitations: TeamInvitations;
 }) {
   const t = useTranslations();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const columns: ColumnDef<TeamInvitation>[] = [
+  const columns: ColumnDef<TeamInvitations[number]>[] = [
     {
       accessorKey: "email",
       header: "",

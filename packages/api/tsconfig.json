@@ -1,17 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@auth": ["./src/modules/auth"],
-      "@trpc": ["./src/modules/trpc"],
-      "@shared": ["./src/modules/shared"],
-      "@billing": ["./src/modules/billing"],
-      "@newsletter": ["./src/modules/newsletter"],
-      "@team": ["./src/modules/team"],
-      "@user": ["./src/modules/user"]
-    }
-  }
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mjs"],
+  "exclude": ["dist", "build", "node_modules"]
 }

@@ -12,11 +12,8 @@ import {
   TableCell,
   TableRow,
 } from "@ui/components";
-import { useToast } from "@ui/hooks";
-import { User } from "api";
-import { Team, TeamMembership } from "database";
+import { ApiOutput } from "api";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 
 import {
   ColumnDef,
@@ -37,22 +34,20 @@ import { inviteTeamMemberDialogOpen } from "../state";
 import { InviteMemberDialog } from "./InviteMemberDialog";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 
+type TeamMembershipsOutput = ApiOutput["team"]["memberships"];
+
 export function TeamMembersList({
-  team,
   memberships,
 }: {
-  team: Team;
-  memberships: (TeamMembership & { user?: User })[];
+  memberships: TeamMembershipsOutput;
 }) {
   const t = useTranslations();
-  const { toast } = useToast();
-  const router = useRouter();
   const setInviteMemberDialogOpen = useSetAtom(inviteTeamMemberDialogOpen);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const columns: ColumnDef<TeamMembership & { user?: User }>[] = [
+  const columns: ColumnDef<TeamMembershipsOutput[number]>[] = [
     {
       accessorKey: "user",
       header: "",

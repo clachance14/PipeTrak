@@ -17,7 +17,7 @@ export function UserMenu({
   name,
   avatarUrl,
 }: {
-  email: string;
+  email?: string;
   name: string;
   avatarUrl?: string;
 }) {

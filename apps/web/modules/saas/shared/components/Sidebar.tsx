@@ -5,7 +5,7 @@ import { UserMenu } from "@marketing/shared/components";
 import { sidebarExpanded as sidebarExpandedAtom } from "@saas/dashboard/state";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import { Button, Icon } from "@ui/components";
-import { Team, User } from "api";
+import { ApiOutput } from "api";
 import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
@@ -13,10 +13,13 @@ import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback, useEffect } from "react";
 import { TeamSelect } from "./TeamSelect";
 
+type Teams = ApiOutput["user"]["teams"];
+type User = Required<ApiOutput["user"]["info"]>;
+
 export function Sidebar({
   teams,
   user,
-}: PropsWithChildren<{ teams: Team[]; user: User }>) {
+}: PropsWithChildren<{ teams: Teams; user: User }>) {
   const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
@@ -54,7 +57,7 @@ export function Sidebar({
 
   const isActiveMenuItem = useCallback(
     (href: string | null) => {
-      return pathname.startsWith(href);
+      return pathname.includes(href);
     },
     [pathname],
   );

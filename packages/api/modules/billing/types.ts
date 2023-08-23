@@ -1,5 +1,3 @@
-// interfaces for billing providers
-
 export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
 
 export type CreateCheckoutLink = (params: {

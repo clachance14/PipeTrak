@@ -6,7 +6,7 @@
     "lib": ["ES2021", "DOM"],
     "module": "ESNext",
     "target": "ES6",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "allowJs": true,
     "checkJs": true
   }

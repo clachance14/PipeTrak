@@ -1,5 +1,5 @@
-import { protectedProcedure, publicProcedure, router } from "@trpc";
 import { db } from "database";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const userRouter = router({
   info: publicProcedure.query(async ({ ctx: { user } }) => {

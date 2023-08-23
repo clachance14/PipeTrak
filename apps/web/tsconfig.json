@@ -2,7 +2,6 @@
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
-    "baseUrl": ".",
     "paths": {
       "@config": ["./config"],
       "@i18n": ["./i18n"],
@@ -14,7 +13,6 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",

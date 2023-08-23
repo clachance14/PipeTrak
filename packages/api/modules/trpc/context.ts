@@ -1,6 +1,6 @@
-import { getUser } from "@auth";
 import { inferAsyncReturnType } from "@trpc/server";
 import { db } from "database";
+import { getUser } from "../auth";
 
 export async function createContext() {
   const user = await getUser();

@@ -1,7 +1,7 @@
-import { protectedProcedure, publicProcedure, router } from "@trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "database";
 import { z } from "zod";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import {
   cancelSubscription,
   createCheckoutLink,
