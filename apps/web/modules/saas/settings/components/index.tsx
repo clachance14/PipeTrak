@@ -5,5 +5,6 @@ export * from "./ChangeTeamNameForm";
 export * from "./CurrentSubscription";
 export * from "./InviteMemberDialog";
 export * from "./InviteMemberForm";
+export * from "./TeamInvitationsList";
 export * from "./TeamMembersList";
 export * from "./UpgradePlan";

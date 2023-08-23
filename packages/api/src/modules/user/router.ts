@@ -1,8 +1,23 @@
+import { protectedProcedure, publicProcedure, router } from "@trpc";
 import { db } from "database";
-import { protectedProcedure, publicProcedure, router } from "../../trpc/base";
 
 export const userRouter = router({
   info: publicProcedure.query(async ({ ctx: { user } }) => {
+    if (!user) {
+      return null;
+    }
+
+    const data = await db.userProfile.findFirst({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (data) {
+      user.avatarUrl = data.avatarUrl ?? undefined;
+      user.role = data.role ?? "USER";
+    }
+
     return user;
   }),
 

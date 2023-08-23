@@ -4,7 +4,7 @@ import {
   CreateCustomerPortalLink,
   GetAllPlans,
   SubscriptionPlan,
-} from "../types";
+} from "../../types";
 import { env } from "./env.mjs";
 import { lemonsqueezyApi } from "./fetch";
 

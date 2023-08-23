@@ -21,13 +21,14 @@ model UserProfile {
 }
 
 model Team {
-  id           String           @id @default(cuid())
-  name         String
-  slug         String           @unique
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  memberships  TeamMembership[]
-  Subscription Subscription?
+  id             String           @id @default(cuid())
+  name           String
+  slug           String           @unique
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  memberships    TeamMembership[]
+  Subscription   Subscription?
+  TeamInvitation TeamInvitation[]
 }
 
 enum TeamMembershipStatus {
@@ -42,19 +43,28 @@ enum TeamMemberRole {
 }
 
 model TeamMembership {
-  id             String               @id @default(cuid())
-  team           Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId         String
-  userId         String?
-  email          String?
-  role           TeamMemberRole       @default(MEMBER)
-  status         TeamMembershipStatus @default(PENDING)
-  invitationCode String?              @default(uuid())
-  isCreator      Boolean              @default(false)
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt
+  id        String         @id @default(cuid())
+  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId    String
+  userId    String
+  role      TeamMemberRole @default(MEMBER)
+  isCreator Boolean        @default(false)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 
   @@unique([teamId, userId])
+}
+
+model TeamInvitation {
+  id        String         @id @default(cuid())
+  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId    String
+  email     String
+  role      TeamMemberRole @default(MEMBER)
+  createdAt DateTime       @default(now())
+  expiresAt DateTime       @updatedAt
+
+  @@unique([teamId, email])
 }
 
 model Subscription {

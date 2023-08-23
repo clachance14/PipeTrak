@@ -1,45 +1,17 @@
+import { defineAbilitiesFor } from "@auth";
+import { getBaseUrl } from "@shared";
+import { protectedProcedure, router } from "@trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "database";
 import { sendEmail } from "mail";
 import slugify from "slugify";
 import { z } from "zod";
-import { getUsersById } from "../../auth";
-import { protectedProcedure, router } from "../../trpc/base";
-import { getBaseUrl } from "../../util/base-url";
+import { teamBySlugProcedure } from "./procedures/by-slug";
+import { teamMembershipsProcedure } from "./procedures/memberships";
 
 export const teamRouter = router({
-  getBySlug: protectedProcedure
-    .input(
-      z.object({
-        slug: z.string(),
-      }),
-    )
-    .query(async ({ input: { slug }, ctx: { user } }) => {
-      const team = await db.team.findFirst({
-        where: {
-          slug,
-        },
-        include: {
-          memberships: true,
-        },
-      });
-
-      const userIds =
-        team?.memberships
-          .map((m) => m.userId)
-          .filter((id): id is string => !!id) ?? [];
-
-      const users = await getUsersById(userIds);
-
-      return {
-        ...team,
-        memberships:
-          team?.memberships.map((m) => ({
-            ...m,
-            user: users.find((u) => u.id === m.userId),
-          })) ?? [],
-      };
-    }),
+  bySlug: teamBySlugProcedure,
+  memberships: teamMembershipsProcedure,
 
   create: protectedProcedure
     .input(
@@ -64,7 +36,6 @@ export const teamRouter = router({
         data: {
           teamId: team.id,
           userId: user!.id,
-          status: "ACCEPTED",
           role: "OWNER",
           isCreator: true,
         },
@@ -82,16 +53,16 @@ export const teamRouter = router({
       }),
     )
     .mutation(async ({ input: { id, name, slug }, ctx: { user } }) => {
-      // check if user is member of team
-      const membership = await db.teamMembership.findFirst({
-        where: {
-          teamId: id,
-          userId: user!.id,
-        },
+      const abilities = await defineAbilitiesFor({
+        userId: user!.id,
+        teamId: id,
       });
 
-      if (!membership) {
-        throw new Error("User is not a member of this team.");
+      if (!abilities.can("update", "Team")) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "No permission to update this team.",
+        });
       }
 
       const team = await db.team.update({
@@ -115,31 +86,29 @@ export const teamRouter = router({
       z.object({
         teamId: z.string(),
         email: z.string(),
+        role: z.enum(["MEMBER", "OWNER"]),
       }),
     )
-    .mutation(async ({ input: { teamId, email }, ctx: { user } }) => {
-      // check if user is member of team and is has owner role
-      const ownerMembership = await db.teamMembership.findFirst({
-        where: {
-          teamId: teamId,
-          userId: user!.id,
-          role: "OWNER",
-        },
+    .mutation(async ({ input: { teamId, email, role }, ctx: { user } }) => {
+      const abilities = await defineAbilitiesFor({
+        userId: user!.id,
+        teamId,
       });
 
-      if (!ownerMembership) {
+      if (!abilities.can("create", "TeamInvitation")) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "No permission to add a member.",
+          message: "No permission to add a member to this team.",
         });
       }
 
       try {
-        const newMembership = await db.teamMembership.create({
+        const invitation = await db.teamInvitation.create({
           data: {
-            teamId: teamId,
+            teamId,
             email,
-            status: "PENDING",
+            role,
+            expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
           },
           include: {
             team: {
@@ -156,10 +125,8 @@ export const teamRouter = router({
           templateId: "teamInvitation",
           to: email,
           context: {
-            url: `${getBaseUrl()}/auth/signup?invitationCode=${
-              newMembership.id
-            }`,
-            teamName: newMembership.team.name,
+            url: `${getBaseUrl()}/auth/signup?invitationCode=${invitation.id}`,
+            teamName: invitation.team.name,
           },
         });
       } catch (e) {
@@ -168,5 +135,33 @@ export const teamRouter = router({
           message: "Could not create membership.",
         });
       }
+    }),
+
+  invitations: protectedProcedure
+    .input(
+      z.object({
+        teamId: z.string(),
+      }),
+    )
+    .query(async ({ input: { teamId }, ctx: { user } }) => {
+      const abilities = await defineAbilitiesFor({
+        userId: user!.id,
+        teamId,
+      });
+
+      if (!abilities.can("read", "TeamInvitation")) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "No permission to read the invitations for this team.",
+        });
+      }
+
+      const invitations = await db.teamInvitation.findMany({
+        where: {
+          teamId,
+        },
+      });
+
+      return invitations;
     }),
 });

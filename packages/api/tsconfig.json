@@ -3,6 +3,15 @@
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@auth": ["./src/modules/auth"],
+      "@trpc": ["./src/modules/trpc"],
+      "@shared": ["./src/modules/shared"],
+      "@billing": ["./src/modules/billing"],
+      "@newsletter": ["./src/modules/newsletter"],
+      "@team": ["./src/modules/team"],
+      "@user": ["./src/modules/user"]
+    }
   }
 }

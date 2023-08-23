@@ -1,6 +1,6 @@
+import { publicProcedure, router } from "@trpc";
 import { sendEmail } from "mail";
 import { z } from "zod";
-import { publicProcedure, router } from "../../trpc/base";
 
 export const newsletterRouter = router({
   signup: publicProcedure

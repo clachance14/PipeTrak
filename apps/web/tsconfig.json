@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@config": ["./config"],
+      "@i18n": ["./i18n"],
       "@marketing/*": ["./modules/marketing/*"],
       "@saas/*": ["./modules/saas/*"],
       "@ui/*": ["./modules/ui/*"],

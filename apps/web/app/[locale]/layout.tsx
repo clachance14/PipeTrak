@@ -1,3 +1,4 @@
+import { importLocale } from "@i18n";
 import { ClientProviders } from "@shared/components";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
@@ -32,7 +33,7 @@ export default async function RootLayout({
   if (params.locale !== locale) {
     notFound();
   }
-  const messages = (await import(`../../locales/${locale}.json`)).default;
+  const messages = await importLocale(locale);
 
   return (
     <html lang={locale}>

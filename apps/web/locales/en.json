@@ -195,6 +195,13 @@
           "submit": "Invite",
           "title": "Invite new member"
         },
+        "activeMembers": "Active members",
+        "pendingInvitations": "Pending invitations",
+        "invitations": {
+          "email": "Email",
+          "revoke": "Revoke invitation",
+          "empty": "You have not invited any members yet."
+        },
         "removeMember": "Remove member",
         "roles": {
           "member": "Member",

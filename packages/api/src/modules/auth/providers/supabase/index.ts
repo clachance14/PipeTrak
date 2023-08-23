@@ -1,6 +1,6 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { User } from "../types";
+import { User } from "../../types";
 import { createAdminClient, mapSupabaseUser } from "./util";
 
 export const getUser = async (): Promise<User | null> => {

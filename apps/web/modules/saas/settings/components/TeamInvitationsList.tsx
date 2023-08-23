@@ -10,13 +10,12 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
 } from "@ui/components";
-import { useToast } from "@ui/hooks";
-import { User } from "api";
-import { Team, TeamMembership } from "database";
+import { TeamInvitation } from "database";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 
 import {
   ColumnDef,
@@ -30,47 +29,25 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { UserAvatar } from "@shared/components";
-import { useSetAtom } from "jotai";
 import { useState } from "react";
-import { inviteTeamMemberDialogOpen } from "../state";
-import { InviteMemberDialog } from "./InviteMemberDialog";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 
-export function TeamMembersList({
-  team,
-  memberships,
+export function TeamInvitationsList({
+  invitations,
 }: {
-  team: Team;
-  memberships: (TeamMembership & { user?: User })[];
+  invitations: TeamInvitation[];
 }) {
   const t = useTranslations();
-  const { toast } = useToast();
-  const router = useRouter();
-  const setInviteMemberDialogOpen = useSetAtom(inviteTeamMemberDialogOpen);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const columns: ColumnDef<TeamMembership & { user?: User }>[] = [
+  const columns: ColumnDef<TeamInvitation>[] = [
     {
-      accessorKey: "user",
+      accessorKey: "email",
       header: "",
-      accessorFn: (row) => row.user,
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <UserAvatar
-            name={row.original.user?.name}
-            avatarUrl={row.original.user?.avatarUrl}
-          />
-          <div>
-            <strong className="block">{row.original.user?.name}</strong>
-            <small className="text-muted-foreground">
-              {row.original.user?.email}
-            </small>
-          </div>
-        </div>
-      ),
+      accessorFn: (row) => row.email,
+      cell: ({ row }) => <div>{row.original.email}</div>,
     },
     {
       accessorKey: "actions",
@@ -78,11 +55,7 @@ export function TeamMembersList({
       cell: ({ row }) => {
         return (
           <div className="flex flex-row justify-end gap-2">
-            <TeamRoleSelect
-              value={row.original.role}
-              onSelect={() => {}}
-              disabled={row.original.isCreator}
-            />
+            <TeamRoleSelect value={row.original.role} onSelect={() => {}} />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -92,12 +65,10 @@ export function TeamMembersList({
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
-                  disabled={row.original.isCreator}
-                  className="text-destructive"
                   onClick={() => alert("settings.team.members.remove user")}
                 >
                   <Icon.delete className="mr-2 h-4 w-4" />
-                  {t("settings.team.members.removeMember")}
+                  {t("settings.team.members.invitations.revoke")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -108,7 +79,7 @@ export function TeamMembersList({
   ];
 
   const table = useReactTable({
-    data: memberships,
+    data: invitations,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -124,17 +95,32 @@ export function TeamMembersList({
 
   return (
     <div className="bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6">
-      <div className="flex justify-end">
-        <Button size="sm" onClick={() => setInviteMemberDialogOpen(true)}>
-          <Icon.plus className="mr-2 h-4 w-4" />
-          {t("settings.team.members.invite")}
-        </Button>
+      <div className="flex w-full flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
+        <h2 className="mb-3 text-2xl font-semibold">
+          {t("settings.team.members.title")}
+        </h2>
       </div>
-
-      <InviteMemberDialog />
 
       <div className="border-border rounded-md border">
         <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
@@ -158,7 +144,7 @@ export function TeamMembersList({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("settings.team.members.invitations.empty")}
                 </TableCell>
               </TableRow>
             )}
