@@ -1,4 +1,4 @@
-import { Team, createApiCaller } from "api";
+import { ApiOutput, createApiCaller } from "api";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,15 +9,15 @@ export async function GET(request: NextRequest) {
   const apiCaller = await createApiCaller();
 
   try {
-    const user = await apiCaller.user.info();
+    const user = await apiCaller.user.me();
 
     if (!user) throw new Error("Unauthorized");
 
-    const teams = await apiCaller.user.teams();
+    const teams = await apiCaller.user.teams({ userId: user.id });
 
     // if user has no teams, we create one for them
     if (!teams || !teams.length) {
-      let team: Team;
+      let team: ApiOutput["user"]["teams"][number];
       let iteration = 0;
 
       do {

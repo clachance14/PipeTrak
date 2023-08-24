@@ -1,8 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { apiClient } from "api/client";
-import { Button, Hint, Icon, Input } from "modules/ui/components";
+import { apiClient } from "@shared/lib";
+import { Button, Hint, Icon, Input } from "@ui/components";
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";

@@ -6,8 +6,6 @@
     "lib": ["ES2021", "DOM"],
     "module": "ESNext",
     "target": "ES6",
-    "jsx": "preserve",
-    "allowJs": true,
-    "checkJs": true
+    "jsx": "preserve"
   }
 }

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { env } from "./env.mjs";
 
 export function createApiFetch(config: {

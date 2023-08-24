@@ -1,7 +1,7 @@
 import { createContext } from "./context";
-import { appRouter } from "./router";
+import { apiRouter } from "./router";
 
-let caller: ReturnType<typeof appRouter.createCaller> | null = null;
+let caller: ReturnType<typeof apiRouter.createCaller> | null = null;
 
 export const createApiCaller = async () => {
   if (caller) {
@@ -9,6 +9,6 @@ export const createApiCaller = async () => {
   }
 
   const context = await createContext();
-  caller = appRouter.createCaller(context);
+  caller = apiRouter.createCaller(context);
   return caller;
 };

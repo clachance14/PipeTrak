@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
 
 export type CreateCheckoutLink = (params: {
@@ -19,14 +21,24 @@ export type CancelSubscription = (params: {
   subscriptionId: string;
 }) => Promise<void>;
 
-export interface SubscriptionPlan {
-  id: string;
-  name: string;
-  description?: string;
-  currency: string;
-  storeId?: string;
-  variants: SubscriptionPlanVariant[];
-}
+export const SubscriptionPlanModel = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string().optional(),
+  currency: z.string(),
+  storeId: z.string().optional(),
+  variants: z.array(
+    z.object({
+      id: z.string(),
+      price: z.number(),
+      interval: z.string(),
+      interval_count: z.number(),
+      checkout_link: z.string().optional(),
+    }),
+  ),
+});
+
+export type SubscriptionPlan = z.infer<typeof SubscriptionPlanModel>;
 
 export interface SubscriptionPlanVariant {
   id: string | number;

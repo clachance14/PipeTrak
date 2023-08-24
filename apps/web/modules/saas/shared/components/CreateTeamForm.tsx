@@ -1,10 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { apiClient } from "@shared/lib";
 import { Button, Input } from "@ui/components";
 import { useToast } from "@ui/hooks";
-import { Team } from "api";
-import { apiClient } from "api/client";
+import { ApiOutput } from "api";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,7 +22,7 @@ export function CreateTeamForm({
   defaultSlug,
 }: {
   isInitialTeam: boolean;
-  onSuccess: (team: Team) => void;
+  onSuccess: (team: ApiOutput["team"]["create"]) => void;
   defaultSlug?: string;
   defaultName?: string;
 }) {

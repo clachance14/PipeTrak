@@ -44,6 +44,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../../packages/config/tailwind
     devDependencies:
       '@types/node':
         specifier: 18.11.10
@@ -105,6 +108,12 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.9.3
         version: 8.9.3(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: ^10.31.0
+        version: 10.31.0(@trpc/server@10.31.0)
+      '@trpc/react-query':
+        specifier: ^10.31.0
+        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
       '@types/cookie':
         specifier: ^0.5.1
         version: 0.5.1
@@ -159,6 +168,9 @@ importers:
       slugify:
         specifier: ^1.6.6
         version: 1.6.6
+      superjson:
+        specifier: ^1.12.4
+        version: 1.12.4
       tailwind-variants:
         specifier: ^0.1.13
         version: 0.1.13(tailwindcss@3.3.2)
@@ -268,18 +280,6 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.6.0
         version: 0.6.0(typescript@4.9.3)(zod@3.21.4)
-      '@tanstack/react-query':
-        specifier: ^4.29.14
-        version: 4.29.14(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.31.0
-        version: 10.31.0(@trpc/server@10.31.0)
-      '@trpc/next':
-        specifier: ^10.31.0
-        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/react-query@10.31.0)(@trpc/server@10.31.0)(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/react-query':
-        specifier: ^10.31.0
-        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: ^10.31.0
         version: 10.31.0
@@ -6481,27 +6481,6 @@ packages:
       '@trpc/server': 10.31.0
     dependencies:
       '@trpc/server': 10.31.0
-    dev: false
-
-  /@trpc/next@10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/react-query@10.31.0)(@trpc/server@10.31.0)(next@13.4.6)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-BZtZr7UKAs0tUTreCsYhy+/HjFNFl5KBwBS+Li6pCv9GwqCDqpoivesQz7LltO4Y4lOLXLm9tXQXtS1gfmF9yg==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.31.0
-      '@trpc/react-query': 10.31.0
-      '@trpc/server': 10.31.0
-      next: '*'
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.31.0(@trpc/server@10.31.0)
-      '@trpc/react-query': 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server': 10.31.0
-      next: 13.4.6(@babel/core@7.22.10)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-ssr-prepass: 1.5.0(react@18.2.0)
     dev: false
 
   /@trpc/react-query@10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0):
@@ -14543,14 +14522,6 @@ packages:
       tslib: 2.6.2
       use-callback-ref: 1.3.0(@types/react@18.2.9)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.9)(react@18.2.0)
-
-  /react-ssr-prepass@1.5.0(react@18.2.0):
-    resolution: {integrity: sha512-yFNHrlVEReVYKsLI5lF05tZoHveA5pGzjFbFJY/3pOqqjGOmMmqx83N4hIjN2n6E1AOa+eQEUxs3CgRnPmT0RQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.2.9)(react@18.2.0):
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}

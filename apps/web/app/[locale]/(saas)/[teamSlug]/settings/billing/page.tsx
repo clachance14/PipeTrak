@@ -16,9 +16,9 @@ export default async function BillingSettingsPage({
   params: { locale: string };
 }) {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.info();
+  const user = await apiCaller.user.me();
   const plans = await apiCaller.billing.plans();
-  const userSubscription = await apiCaller.billing.userSubscription();
+  const userSubscription = await apiCaller.team.subscription();
 
   return (
     <div>

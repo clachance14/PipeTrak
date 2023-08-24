@@ -2,15 +2,17 @@
 
 import { ActionBlock } from "@saas/shared/components";
 import { PricingTable } from "@shared/components";
-import { SubscriptionPlan } from "api";
-import { apiClient } from "api/client";
+import { apiClient } from "@shared/lib";
+import { ApiOutput } from "api";
 import { useTranslations } from "next-intl";
+
+type SubscriptionPlans = ApiOutput["billing"]["plans"];
 
 export function UpgradePlan({
   plans,
   activePlanId,
 }: {
-  plans: SubscriptionPlan[];
+  plans: SubscriptionPlans;
   activePlanId: string;
 }) {
   const createCheckoutLinkMutation =

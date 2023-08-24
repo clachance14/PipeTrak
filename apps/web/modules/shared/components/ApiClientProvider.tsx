@@ -2,12 +2,9 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
-import { createTRPCReact } from "@trpc/react-query";
 import { PropsWithChildren, useState } from "react";
 import superjson from "superjson";
-import type { AppRouter } from "./modules/trpc";
-
-export const apiClient = createTRPCReact<AppRouter>({});
+import { apiClient } from "../lib";
 
 export function ApiClientProvider({ children }: PropsWithChildren<{}>) {
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";

@@ -5,7 +5,7 @@ import { getTranslator } from "next-intl/server";
 
 export default async function Dashboard({ params: { locale } }) {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.info();
+  const user = await apiCaller.user.me();
   const t = await getTranslator(locale);
 
   return (

@@ -14,7 +14,7 @@ import { PropsWithChildren, useCallback, useEffect } from "react";
 import { TeamSelect } from "./TeamSelect";
 
 type Teams = ApiOutput["user"]["teams"];
-type User = Required<ApiOutput["user"]["info"]>;
+type User = Required<ApiOutput["user"]["me"]>;
 
 export function Sidebar({
   teams,

@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { locale } }) {
 
 export default async function AccountSettingsPage() {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.info();
+  const user = await apiCaller.user.me();
 
   return (
     <div className="grid gap-6">

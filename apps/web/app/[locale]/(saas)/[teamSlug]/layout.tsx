@@ -1,5 +1,5 @@
 import { Sidebar } from "@saas/shared/components";
-import { createApiCaller } from "api";
+import { ApiOutput, createApiCaller } from "api";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -7,13 +7,13 @@ export default async function Layout({
   children,
 }: PropsWithChildren<{ params: { teamSlug: string } }>) {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.info();
+  const user = (await apiCaller.user.me()) as Required<ApiOutput["user"]["me"]>;
 
   if (!user) {
     return redirect("/auth/login");
   }
 
-  const teams = await apiCaller.user.teams();
+  const teams = await apiCaller.user.teams({ userId: user.id });
 
   return (
     <div className="bg-muted flex">

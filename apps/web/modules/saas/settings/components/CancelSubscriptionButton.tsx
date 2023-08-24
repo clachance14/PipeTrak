@@ -1,7 +1,7 @@
 "use client";
 
+import { apiClient } from "@shared/lib";
 import { Button, Icon } from "@ui/components";
-import { apiClient } from "api/client";
 import { useRouter } from "next/navigation";
 
 export function CancelSubscriptionButton({

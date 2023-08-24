@@ -1,15 +1,18 @@
 import type {} from "@prisma/client";
-import { billingRouter } from "../billing";
-import { newsletterRouter } from "../newsletter";
+import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import * as billingProcedures from "../billing/procedures";
+import * as newsletterProcedures from "../newsletter/procedures";
 import * as teamProcedures from "../team/procedures";
 import { router } from "../trpc";
-import { userRouter } from "../user";
+import * as userProcedures from "../user/procedures";
 
-export const appRouter = router({
-  user: userRouter,
-  billing: billingRouter,
+export const apiRouter = router({
+  user: router(userProcedures),
+  billing: router(billingProcedures),
   team: router(teamProcedures),
-  newsletter: newsletterRouter,
+  newsletter: router(newsletterProcedures),
 });
 
-export type AppRouter = typeof appRouter;
+export type ApiRouter = typeof apiRouter;
+export type ApiInput = inferRouterInputs<ApiRouter>;
+export type ApiOutput = inferRouterOutputs<ApiRouter>;

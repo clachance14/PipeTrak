@@ -1,7 +1,12 @@
 "use client";
 
 import { Button, Tabs, TabsList, TabsTrigger } from "@ui/components";
+import { ApiOutput } from "api";
 import { useState } from "react";
+
+type SubscriptionPlan = ApiOutput["billing"]["plans"][number] & {
+  features?: Array<string>;
+};
 
 export function PricingTable({
   plans,
@@ -9,19 +14,7 @@ export function PricingTable({
   onSelectPlan,
   labels,
 }: {
-  plans: Array<{
-    id: string;
-    name: string;
-    description?: string;
-    features?: Array<string>;
-    currency: string;
-    variants: Array<{
-      id: string | number;
-      price: number;
-      interval: string;
-      interval_count: number;
-    }>;
-  }>;
+  plans: SubscriptionPlan[];
   activePlanId?: string;
   onSelectPlan: (planId: string, variantId: string) => void | Promise<void>;
   labels: {
