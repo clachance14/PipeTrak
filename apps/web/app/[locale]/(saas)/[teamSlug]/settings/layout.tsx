@@ -6,13 +6,13 @@ export default function SettingsLayout({ children }: PropsWithChildren<{}>) {
   const t = useTranslations();
 
   return (
-    <div>
+    <div className="container max-w-5xl py-8">
       <PageHeader
         title={t("settings.title")}
         subtitle={t("settings.subtitle")}
       />
 
-      <div className="container py-6">
+      <div className="mt-6">
         <TabGroup
           items={["account", "team", "billing"].map((segment) => ({
             label: t(`settings.${segment}.title` as any),

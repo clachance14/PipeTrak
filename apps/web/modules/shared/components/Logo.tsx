@@ -1,4 +1,10 @@
-export function Logo() {
+export function Logo({
+  className,
+  withLabel = true,
+}: {
+  className?: string;
+  withLabel?: boolean;
+}) {
   return (
     <span className="text-primary flex items-center font-semibold leading-none">
       <svg className="h-10 w-10" viewBox="0 0 734 635">
@@ -19,7 +25,7 @@ export function Logo() {
           fill="currentColor"
         />
       </svg>
-      <span className="ml-3 text-lg">acme</span>
+      {withLabel && <span className="ml-3 text-lg">acme</span>}
     </span>
   );
 }

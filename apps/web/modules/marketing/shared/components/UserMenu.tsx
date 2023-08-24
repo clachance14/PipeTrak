@@ -6,40 +6,49 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   Icon,
 } from "@ui/components";
+import { ApiOutput } from "api";
 import Link from "next-intl/link";
 import { useRouter } from "next/navigation";
 
 export function UserMenu({
-  email,
-  name,
-  avatarUrl,
+  user: { name, email, avatarUrl },
 }: {
-  email?: string;
-  name: string;
-  avatarUrl?: string;
+  user: ApiOutput["user"]["me"];
 }) {
   const router = useRouter();
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex w-full items-center gap-2 border-none bg-transparent p-0">
-        <UserAvatar name={name} avatarUrl={avatarUrl} />
-        <span className="block flex-1 text-left leading-none">
-          <strong className="block text-sm">{name}</strong>
-          <span className="text-xs text-gray-500">{email}</span>
-        </span>
-        <Icon.chevronDown className="h-4 w-4 opacity-30" />
+      <DropdownMenuTrigger asChild>
+        <button className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2">
+          <UserAvatar name={name} avatarUrl={avatarUrl} />
+        </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>
+          {name}
+          <span className="block text-xs font-normal opacity-70">{email}</span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
         <DropdownMenuItem asChild>
-          <Link href="/" target="_blank" rel="noopener noreferrer">
-            <Icon.home className="mr-2 h-4 w-4" /> Homepage
+          <Link href="/">
+            <Icon.settings className="mr-2 h-4 w-4" /> Account settings
           </Link>
         </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <a href="#" target="_blank" rel="noopener noreferrer">
+            <Icon.docs className="mr-2 h-4 w-4" /> Documentation
+          </a>
+        </DropdownMenuItem>
+
         <DropdownMenuItem
           onClick={async () => {
             router.replace("/");

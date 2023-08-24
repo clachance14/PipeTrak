@@ -2,6 +2,7 @@ import {
   AlertCircle,
   AlertTriangle,
   Archive,
+  Book,
   Check,
   CheckCircle,
   ChevronDown,
@@ -86,6 +87,7 @@ export const Icon = {
   select: ChevronsUpDown,
   more: MoreVertical,
   delete: Trash,
+  docs: Book,
 
   // social icons
   google: ({ ...props }: IconProps) => (
