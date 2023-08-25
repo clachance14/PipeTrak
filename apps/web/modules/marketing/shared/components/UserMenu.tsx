@@ -15,12 +15,12 @@ import { ApiOutput } from "api";
 import Link from "next-intl/link";
 import { useRouter } from "next/navigation";
 
-export function UserMenu({
-  user: { name, email, avatarUrl },
-}: {
-  user: ApiOutput["user"]["me"];
-}) {
+export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
   const router = useRouter();
+
+  if (!user) return null;
+
+  const { name, email, avatarUrl } = user;
 
   return (
     <DropdownMenu>

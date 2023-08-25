@@ -12,7 +12,7 @@ import { PropsWithChildren, useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";
 
 type Teams = ApiOutput["user"]["teams"];
-type User = Required<ApiOutput["user"]["me"]>;
+type User = ApiOutput["user"]["me"];
 
 export function NavBar({
   teams,
@@ -38,14 +38,14 @@ export function NavBar({
 
   const isActiveMenuItem = useCallback(
     (href: string | null) => {
-      return pathname.includes(href);
+      return href && pathname.includes(href);
     },
     [pathname],
   );
 
   return (
-    <nav className="border-border bg-card w-full border-b">
-      <div className="container max-w-5xl pb-2 pt-4">
+    <nav className="border-border w-full border-b">
+      <div className="container max-w-5xl pt-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/" className="block">
@@ -78,13 +78,15 @@ export function NavBar({
           )}
         </div>
 
-        <ul className="mt-4 flex list-none items-center justify-start gap-4">
+        <ul className="mt-6 flex list-none items-center justify-start gap-6">
           {menuItems.map((menuItem) => (
             <li key={menuItem.href}>
               <Link
                 href={menuItem.href}
-                className={`flex items-center gap-3 py-3 ${
-                  isActiveMenuItem(menuItem.href) ? "font-bold" : ""
+                className={`flex items-center gap-2 border-b-2 pb-3 ${
+                  isActiveMenuItem(menuItem.href)
+                    ? "border-primary font-bold"
+                    : "border-transparent"
                 }`}
               >
                 <menuItem.icon

@@ -1,6 +1,6 @@
 import { CurrentSubscription, UpgradePlan } from "@saas/settings/components";
 import { createApiCaller } from "api";
-import { getTranslator } from "next-intl/server";
+import { getTranslator, redirect } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslator(locale);
@@ -11,14 +11,19 @@ export async function generateMetadata({ params: { locale } }) {
 }
 
 export default async function BillingSettingsPage({
-  params: { locale },
+  params: { teamSlug },
 }: {
-  params: { locale: string };
+  params: { teamSlug: string };
 }) {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.me();
   const plans = await apiCaller.billing.plans();
-  const userSubscription = await apiCaller.team.subscription();
+  const team = await apiCaller.team.bySlug({ slug: teamSlug });
+
+  if (!team) redirect("/auth/login");
+
+  const userSubscription = await apiCaller.team.subscription({
+    teamId: team.id,
+  });
 
   return (
     <div>

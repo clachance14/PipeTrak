@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
     // if user has no teams, we create one for them
     if (!teams || !teams.length) {
-      let team: ApiOutput["user"]["teams"][number];
+      let team: ApiOutput["user"]["teams"][number] | undefined = undefined;
       let iteration = 0;
 
       do {

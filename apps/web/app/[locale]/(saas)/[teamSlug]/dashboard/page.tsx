@@ -1,5 +1,6 @@
 import { StatsTile } from "@saas/dashboard/components";
 import { PageHeader } from "@saas/shared/components";
+import { Card } from "@ui/components";
 import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
 
@@ -11,7 +12,7 @@ export default async function Dashboard({ params: { locale } }) {
   return (
     <div className="container max-w-5xl py-8">
       <PageHeader
-        title={t("dashboard.welcome", { name: user.name })}
+        title={t("dashboard.welcome", { name: user?.name })}
         subtitle={t("dashboard.subtitle")}
       />
 
@@ -36,9 +37,11 @@ export default async function Dashboard({ params: { locale } }) {
         />
       </div>
 
-      <div className="bg-card text-muted-foreground mt-8 flex min-h-[40vh] items-center justify-center rounded-xl p-12">
-        <div>Here you can add your own content.</div>
-      </div>
+      <Card className="mt-8">
+        <div className="text-muted-foreground flex h-64 items-center justify-center p-8">
+          Here you can add your own content.
+        </div>
+      </Card>
     </div>
   );
 }

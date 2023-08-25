@@ -1,5 +1,6 @@
 "use client";
 
+import { appConfig } from "@config";
 import { useUser } from "@saas/auth";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import {
@@ -9,7 +10,6 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@ui/components";
-import { appConfig } from "config";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
 import { Banner } from "./Banner";

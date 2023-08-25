@@ -11,9 +11,11 @@ export const createCheckoutLink = protectedProcedure
   )
   .output(z.string())
   .mutation(async ({ input: { planId, variantId }, ctx: { user } }) => {
+    if (!user) throw new Error("User not found");
+
     return await createCheckoutLinkResolver({
       planId,
       variantId,
-      userData: user!,
+      userData: user,
     });
   });

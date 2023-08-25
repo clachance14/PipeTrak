@@ -37,6 +37,8 @@ export function TeamSelect({
   const activeTeam = teams.find((team) => team.slug === teamSlug);
 
   const switchTeam = (slug: string) => {
+    if (!activeTeam) return;
+
     Cookies.set("dashboard.team-slug", slug, { path: "/", expires: 30 });
     router.replace(pathname.replace(activeTeam.slug, slug));
   };
@@ -49,7 +51,7 @@ export function TeamSelect({
         <DropdownMenuTrigger className="border-border focus-visible:ring-ring focus-visible:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left outline-none focus-visible:ring-1">
           <div className="flex flex-1 items-center justify-start gap-2 text-sm">
             <BoringAvatar
-              size={20}
+              size={16}
               name={activeTeam.name}
               variant="marble"
               colors={appConfig.teams.avatarColors}

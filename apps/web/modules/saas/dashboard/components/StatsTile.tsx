@@ -1,6 +1,12 @@
 "use client";
 
-import { Badge } from "@ui/components";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@ui/components";
 import { useFormatter } from "next-intl";
 import { useMemo } from "react";
 
@@ -52,19 +58,25 @@ export function StatsTile({
   }, [trend, format]);
 
   return (
-    <div className="bg-card border-border rounded-xl border p-6">
-      <h4 className="text-sm opacity-50">{title}</h4>
-      <div className="flex items-center justify-between">
-        <strong className="text-2xl font-bold">
-          {formattedValue}
-          {context && <small>{context}</small>}
-        </strong>
-        {trend && (
-          <Badge status={trend > 0 ? "success" : "error"}>
-            {formattedTrend}
-          </Badge>
-        )}
-      </div>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-small text-foreground-muted">
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center justify-between">
+          <strong className="text-2xl font-bold">
+            {formattedValue}
+            {context && <small>{context}</small>}
+          </strong>
+          {trend && (
+            <Badge status={trend > 0 ? "success" : "error"}>
+              {formattedTrend}
+            </Badge>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -13,7 +13,7 @@ export function UpgradePlan({
   activePlanId,
 }: {
   plans: SubscriptionPlans;
-  activePlanId: string;
+  activePlanId?: string;
 }) {
   const createCheckoutLinkMutation =
     apiClient.billing.createCheckoutLink.useMutation();

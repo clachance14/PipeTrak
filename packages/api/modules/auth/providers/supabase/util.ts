@@ -1,6 +1,6 @@
 import { User as SupabaseUser, createClient } from "@supabase/supabase-js";
-import { User } from "../types";
-import { env } from "./env.mjs";
+import { User } from "../../types";
+import { env } from "./env";
 
 export function createAdminClient() {
   const supabaseClient = createClient(

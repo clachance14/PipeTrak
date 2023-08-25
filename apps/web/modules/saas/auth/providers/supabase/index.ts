@@ -160,7 +160,7 @@ export const registerAuthEventListener: AuthProviderClientModule["registerAuthEv
 
 export const getAuthorizationToken = async () => {
   const session = await supabaseClient.auth.getSession();
-  return session?.data.session.access_token;
+  return session?.data.session?.access_token;
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({

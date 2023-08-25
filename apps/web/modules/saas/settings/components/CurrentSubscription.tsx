@@ -2,9 +2,11 @@
 
 import { ActionBlock } from "@saas/shared/components";
 import { Badge, Button, Icon } from "@ui/components";
-import { Subscription, SubscriptionPlan } from "api";
+import { ApiOutput } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";
+
+type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
 
 export function CurrentSubscription({
   plans,
@@ -12,7 +14,7 @@ export function CurrentSubscription({
   className,
 }: {
   plans: SubscriptionPlan[];
-  userSubscription?: Subscription;
+  userSubscription?: ApiOutput["team"]["subscription"];
   className?: string;
 }) {
   const format = useFormatter();
@@ -47,6 +49,10 @@ export function CurrentSubscription({
   const subscriptionVariant = subscriptionPlan?.variants.find(
     (variant) => variant.id === activeVariantId,
   );
+
+  if (!subscriptionPlan || !subscriptionVariant) {
+    return null;
+  }
 
   return (
     <ActionBlock

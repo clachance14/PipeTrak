@@ -1,8 +1,7 @@
-import { Subscription } from "api";
 import { createHmac, timingSafeEqual } from "crypto";
-import { db } from "database";
-import { env } from "env.mjs";
+import { Subscription, db } from "database";
 import { headers } from "next/headers";
+import { env } from "../../../../env.mjs";
 
 async function updateUserSubscription(
   subscription: Omit<Subscription, "id"> & {

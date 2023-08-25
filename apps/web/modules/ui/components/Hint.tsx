@@ -94,7 +94,7 @@ export const Hint = ({
   <div className={hint({ status, className })} {...props}>
     <div className="flex items-center gap-4">
       <div className={hintIcon({ status })}>
-        <props.icon className="h-6 w-6" />
+        {props.icon !== undefined && <props.icon className="h-6 w-6" />}
       </div>
       <div>
         {title && <strong className={hintTitle({ status })}>{title}</strong>}

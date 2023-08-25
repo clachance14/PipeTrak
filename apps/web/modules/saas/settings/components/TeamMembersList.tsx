@@ -52,20 +52,21 @@ export function TeamMembersList({
       accessorKey: "user",
       header: "",
       accessorFn: (row) => row.user,
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <UserAvatar
-            name={row.original.user?.name}
-            avatarUrl={row.original.user?.avatarUrl}
-          />
-          <div>
-            <strong className="block">{row.original.user?.name}</strong>
-            <small className="text-muted-foreground">
-              {row.original.user?.email}
-            </small>
+      cell: ({ row }) =>
+        row.original.user ? (
+          <div className="flex items-center gap-2">
+            <UserAvatar
+              name={row.original.user.name}
+              avatarUrl={row.original.user?.avatarUrl}
+            />
+            <div>
+              <strong className="block">{row.original.user.name}</strong>
+              <small className="text-muted-foreground">
+                {row.original.user.email}
+              </small>
+            </div>
           </div>
-        </div>
-      ),
+        ) : null,
     },
     {
       accessorKey: "actions",
