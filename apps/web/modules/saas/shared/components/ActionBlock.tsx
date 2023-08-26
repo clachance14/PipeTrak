@@ -43,7 +43,7 @@ export function ActionBlock({
           {children}
 
           {typeof onSubmit !== "undefined" && (
-            <div className="border-border mt-6 flex justify-end border-t pt-3">
+            <div className=" mt-6 flex justify-end border-t pt-3">
               <Button
                 type="submit"
                 disabled={isSubmitDisabled}

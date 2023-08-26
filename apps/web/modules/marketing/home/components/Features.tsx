@@ -45,12 +45,12 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.star className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.pointer className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
@@ -85,12 +85,12 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.upload className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.cloud className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
@@ -125,12 +125,12 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.phone className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground border-border rounded-xl border p-4">
+                <div className="bg-card text-card-foreground  rounded-xl border p-4">
                   <Icon.paperclip className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>

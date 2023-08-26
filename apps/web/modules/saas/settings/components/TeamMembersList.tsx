@@ -119,7 +119,7 @@ export function TeamMembersList({
   });
 
   return (
-    <div className="bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6">
+    <div className="bg-card text-card-foreground  overflow-hidden rounded-xl border p-6">
       <div className="flex justify-end">
         <Button size="sm" onClick={() => setInviteMemberDialogOpen(true)}>
           <Icon.plus className="mr-2 h-4 w-4" />
@@ -129,7 +129,7 @@ export function TeamMembersList({
 
       <InviteMemberDialog />
 
-      <div className="border-border rounded-md border">
+      <div className=" rounded-md border">
         <Table>
           <TableBody>
             {table.getRowModel().rows?.length ? (

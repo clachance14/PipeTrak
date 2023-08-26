@@ -77,7 +77,7 @@ export function SignupForm() {
         ))}
       </div>
 
-      <hr className="border-border my-8" />
+      <hr className=" my-8" />
 
       {isSubmitted && isSubmitSuccessful ? (
         <Hint

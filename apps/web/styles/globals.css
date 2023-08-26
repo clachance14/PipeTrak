@@ -1,9 +1,9 @@
 @layer base {
-  body {
-    @apply font-normal;
+  * {
+    @apply border-border;
   }
-  a {
-    @apply text-foreground;
+  body {
+    @apply bg-background text-foreground;
   }
 }
 

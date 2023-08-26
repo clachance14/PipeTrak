@@ -44,7 +44,7 @@ export function NavBar({
   );
 
   return (
-    <nav className="border-border w-full border-b">
+    <nav className=" w-full border-b">
       <div className="container max-w-5xl pt-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

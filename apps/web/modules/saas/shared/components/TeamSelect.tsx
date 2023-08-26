@@ -48,7 +48,7 @@ export function TeamSelect({
   return (
     <div className={className}>
       <DropdownMenu>
-        <DropdownMenuTrigger className="border-border focus-visible:ring-ring focus-visible:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left outline-none focus-visible:ring-1">
+        <DropdownMenuTrigger className=" focus-visible:ring-ring focus-visible:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left outline-none focus-visible:ring-1">
           <div className="flex flex-1 items-center justify-start gap-2 text-sm">
             <BoringAvatar
               size={16}

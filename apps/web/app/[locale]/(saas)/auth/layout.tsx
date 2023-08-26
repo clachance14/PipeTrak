@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               </div>
             </div>
 
-            <div className="bg-card text-card-foreground border-border rounded-2xl border p-8">
+            <div className="bg-card text-card-foreground  rounded-2xl border p-8">
               {children}
             </div>
           </div>

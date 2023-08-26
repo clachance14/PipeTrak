@@ -23,7 +23,7 @@ export default function Wrapper({ children }: PropsWithChildren) {
       </Head>
       <Tailwind config={tailwindConfig}>
         <Section className="bg-card text-card-foreground p-8">
-          <Container className="border-border rounded-lg border border-solid p-6">
+          <Container className=" rounded-lg border border-solid p-6">
             {children}
           </Container>
         </Section>

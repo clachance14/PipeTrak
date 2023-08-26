@@ -96,14 +96,14 @@ export function TeamInvitationsList({
   });
 
   return (
-    <div className="bg-card text-card-foreground border-border overflow-hidden rounded-xl border p-6">
+    <div className="bg-card text-card-foreground  overflow-hidden rounded-xl border p-6">
       <div className="flex w-full flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
         <h2 className="mb-3 text-2xl font-semibold">
           {t("settings.team.members.title")}
         </h2>
       </div>
 
-      <div className="border-border rounded-md border">
+      <div className=" rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

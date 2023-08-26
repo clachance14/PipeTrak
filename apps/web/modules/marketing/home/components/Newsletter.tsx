@@ -31,7 +31,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="border-border border-t py-24">
+    <section className=" border-t py-24">
       <div className="container">
         <div className="mb-12 text-center">
           <Icon.key className="text-primary mx-auto mb-3 h-12 w-12" />
