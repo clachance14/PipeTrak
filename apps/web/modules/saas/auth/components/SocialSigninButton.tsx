@@ -62,9 +62,7 @@ export function SocialSigninButton({
   return (
     <Button variant="outline" type="button" {...rest}>
       {providerData.icon && (
-        <i className="mr-2" style={{ color: providerData.color }}>
-          {providerData.icon}
-        </i>
+        <i className="mr-2 opacity-70">{providerData.icon}</i>
       )}
       {t("auth.continueWithProvider", { provider: providerData.name })}
     </Button>

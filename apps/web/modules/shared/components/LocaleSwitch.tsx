@@ -1,5 +1,6 @@
 "use client";
 
+import { appConfig } from "@config";
 import {
   Button,
   DropdownMenu,
@@ -13,11 +14,7 @@ import { usePathname } from "next-intl/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const localeLabels = {
-  en: "English",
-  es: "Español",
-  de: "Deutsch",
-};
+const { localeLabels } = appConfig.i18n;
 
 export function LocaleSwitch({
   locales,

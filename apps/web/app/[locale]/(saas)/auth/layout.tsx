@@ -1,5 +1,6 @@
 import { appConfig } from "@config";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
+import { Card } from "@ui/components";
 import { useLocale } from "next-intl";
 import Link from "next-intl/link";
 import { PropsWithChildren } from "react";
@@ -26,9 +27,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               </div>
             </div>
 
-            <div className="bg-card text-card-foreground  rounded-2xl border p-8">
-              {children}
-            </div>
+            <Card className="p-8">{children}</Card>
           </div>
         </div>
       </div>

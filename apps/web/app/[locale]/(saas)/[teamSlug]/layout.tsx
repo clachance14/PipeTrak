@@ -14,9 +14,9 @@ export default async function Layout({
   const teams = await apiCaller.user.teams({ userId: user.id });
 
   return (
-    <div>
+    <div className="bg-muted min-h-screen">
       <NavBar user={user} teams={teams} />
-      <main className="bg-muted min-h-screen">{children}</main>
+      <main className="bg-muted">{children}</main>
     </div>
   );
 }

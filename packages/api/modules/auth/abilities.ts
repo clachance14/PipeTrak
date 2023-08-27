@@ -31,11 +31,7 @@ export async function defineAbilitiesFor({
     },
   });
 
-  if (!user) {
-    return build();
-  }
-
-  const role: UserRole = user.role ?? "USER";
+  const role: UserRole = user?.role ?? "USER";
 
   /*
     Team permissions

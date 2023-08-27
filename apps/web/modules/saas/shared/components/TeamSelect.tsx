@@ -48,17 +48,19 @@ export function TeamSelect({
   return (
     <div className={className}>
       <DropdownMenu>
-        <DropdownMenuTrigger className=" focus-visible:ring-ring focus-visible:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left outline-none focus-visible:ring-1">
-          <div className="flex flex-1 items-center justify-start gap-2 text-sm">
-            <BoringAvatar
-              size={16}
-              name={activeTeam.name}
-              variant="marble"
-              colors={appConfig.teams.avatarColors}
-            />
-            <span className="flex-1 truncate">{activeTeam.name}</span>
+        <DropdownMenuTrigger className="focus-visible:ring-ring focus-visible:border-primary -ml-2 flex w-full items-center justify-between rounded-md px-2 py-2 text-left outline-none focus-visible:ring-1">
+          <div className="flex items-center justify-start gap-2 text-sm">
+            <span className="hidden lg:block">
+              <BoringAvatar
+                size={16}
+                name={activeTeam.name}
+                variant="marble"
+                colors={appConfig.teams.avatarColors}
+              />
+            </span>
+            <span className="block flex-1 truncate">{activeTeam.name}</span>
+            <Icon.select className="block h-4 w-4 opacity-50" />
           </div>
-          <Icon.select className="ml-1 h-4 w-4 opacity-50" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
           <DropdownMenuRadioGroup

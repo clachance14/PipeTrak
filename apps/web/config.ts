@@ -2,6 +2,11 @@ export const appConfig = {
   i18n: {
     locales: ["en", "de", "es"],
     defaultLocale: "en",
+    localeLabels: {
+      en: "English",
+      es: "Español",
+      de: "Deutsch",
+    },
   },
   auth: {
     redirectAfterLogin: "/dashboard",

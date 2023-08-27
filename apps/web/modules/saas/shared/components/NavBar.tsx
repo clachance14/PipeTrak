@@ -1,11 +1,10 @@
 "use client";
 
-import { appConfig } from "@config";
 import { UserMenu } from "@marketing/shared/components";
-import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
-import { Button, Icon } from "@ui/components";
+import { Logo } from "@shared/components";
+import { Icon } from "@ui/components";
 import { ApiOutput } from "api";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next-intl/link";
 import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback } from "react";
@@ -18,7 +17,6 @@ export function NavBar({
   teams,
   user,
 }: PropsWithChildren<{ teams: Teams; user: User }>) {
-  const locale = useLocale();
   const t = useTranslations();
   const pathname = usePathname();
   const { teamSlug } = useParams();
@@ -44,46 +42,32 @@ export function NavBar({
   );
 
   return (
-    <nav className=" w-full border-b">
-      <div className="container max-w-5xl pt-4">
-        <div className="flex items-center justify-between">
+    <nav className="bg-muted w-full border-b">
+      <div className="container max-w-5xl py-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link href="/" className="block">
               <Logo withLabel={false} />
             </Link>
 
-            <span className="block opacity-30">/</span>
+            <span className="hidden opacity-30 lg:block">
+              <Icon.chevronRight className="h-4 w-4" />
+            </span>
 
             <TeamSelect teams={teams} />
           </div>
 
-          {user && (
-            <div className="flex justify-end gap-4">
-              <LocaleSwitch
-                locales={appConfig.i18n.locales}
-                currentLocale={locale}
-              />
-              <ColorModeToggle />
-
-              <UserMenu user={user} />
-
-              <Button
-                className="lg:hidden"
-                variant="outline"
-                onClick={() => {}}
-              >
-                <Icon.close className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
+          <div className="ml-auto mr-0 flex items-center justify-end gap-4">
+            {user && <UserMenu user={user} />}
+          </div>
         </div>
 
-        <ul className="mt-6 flex list-none items-center justify-start gap-6">
+        <ul className="no-scrollbar -mx-8 -mb-4 mt-6 flex list-none items-center justify-start gap-6 overflow-x-auto px-8 text-sm lg:text-base">
           {menuItems.map((menuItem) => (
             <li key={menuItem.href}>
               <Link
                 href={menuItem.href}
-                className={`flex items-center gap-2 border-b-2 pb-3 ${
+                className={`flex items-center gap-2 border-b-2 px-1 pb-3 ${
                   isActiveMenuItem(menuItem.href)
                     ? "border-primary font-bold"
                     : "border-transparent"
