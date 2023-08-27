@@ -36,7 +36,7 @@ export function Toaster() {
           <Toast key={id} {...props}>
             <div className="flex items-center gap-3">
               {ToastIcon !== undefined && (
-                <ToastIcon className="h-4 w-4 opacity-50" />
+                <ToastIcon className="h-6 w-6 shrink-0 opacity-50" />
               )}
               <div className="grid gap-1">
                 {title && <ToastTitle>{title}</ToastTitle>}
