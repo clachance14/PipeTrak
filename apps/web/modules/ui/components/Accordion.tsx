@@ -3,7 +3,7 @@
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import * as React from "react";
 
-import { cnBase as cn } from "tailwind-variants";
+import { cn } from "@ui/lib/utils";
 import { Icon } from "./Icon";
 
 const Accordion = AccordionPrimitive.Root;

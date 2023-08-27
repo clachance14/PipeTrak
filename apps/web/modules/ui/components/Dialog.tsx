@@ -3,7 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 
-import { cnBase as cn } from "tailwind-variants";
+import { cn } from "@ui/lib/utils";
 import { Icon } from "./Icon";
 
 const Dialog = DialogPrimitive.Root;

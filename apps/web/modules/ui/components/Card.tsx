@@ -1,6 +1,5 @@
+import { cn } from "@ui/lib/utils";
 import * as React from "react";
-
-import { cnBase as cn } from "tailwind-variants";
 
 const Card = React.forwardRef<
   HTMLDivElement,

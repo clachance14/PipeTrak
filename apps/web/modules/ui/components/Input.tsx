@@ -1,6 +1,5 @@
+import { cn } from "@ui/lib/utils";
 import React from "react";
-
-import { cnBase as cn } from "tailwind-variants";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}

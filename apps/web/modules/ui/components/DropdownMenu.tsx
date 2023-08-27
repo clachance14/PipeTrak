@@ -3,7 +3,7 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import * as React from "react";
 
-import { cnBase as cn } from "tailwind-variants";
+import { cn } from "@ui/lib/utils";
 import { Icon } from "./Icon";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;

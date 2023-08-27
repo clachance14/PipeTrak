@@ -59,10 +59,8 @@ export function StatsTile({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-small text-foreground-muted">
-          {title}
-        </CardTitle>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-muted-foreground text-sm">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">

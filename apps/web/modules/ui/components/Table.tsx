@@ -1,5 +1,5 @@
+import { cn } from "@ui/lib/utils";
 import * as React from "react";
-import { cnBase as cn } from "tailwind-variants";
 
 const Table = React.forwardRef<
   HTMLTableElement,

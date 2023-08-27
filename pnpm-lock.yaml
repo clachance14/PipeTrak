@@ -123,6 +123,12 @@ importers:
       boring-avatars:
         specifier: ^1.10.1
         version: 1.10.1
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
       contentlayer:
         specifier: ^0.3.4
         version: 0.3.4(esbuild@0.19.2)
@@ -171,9 +177,9 @@ importers:
       superjson:
         specifier: ^1.12.4
         version: 1.12.4
-      tailwind-variants:
-        specifier: ^0.1.13
-        version: 0.1.13(tailwindcss@3.3.2)
+      tailwind-merge:
+        specifier: ^1.14.0
+        version: 1.14.0
       tailwindcss-animate:
         specifier: ^1.0.6
         version: 1.0.6(tailwindcss@3.3.2)
@@ -8078,6 +8084,12 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
+  /class-variance-authority@0.7.0:
+    resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
+    dependencies:
+      clsx: 2.0.0
+    dev: false
+
   /clean-css@5.3.2:
     resolution: {integrity: sha512-JVJbM+f3d3Q704rF4bqQ5UUyTtuJ0JRKNbTKVEeujCCBoMdkEi+V+e8oktO9qGQNSvHrFTM6JZRXrUvGR1czww==}
     engines: {node: '>= 10.0'}
@@ -15633,16 +15645,6 @@ packages:
 
   /tailwind-merge@1.14.0:
     resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
-    dev: false
-
-  /tailwind-variants@0.1.13(tailwindcss@3.3.2):
-    resolution: {integrity: sha512-G2M7M74hjq0nAo6QdEfUJgF+0t9DecFUw91GC1P9YTnwMcfB3uChT5U5e2DuNU42xoOz15lzo7r0mPdMzZkylg==}
-    engines: {node: '>=16.x', pnpm: '>=7.x'}
-    peerDependencies:
-      tailwindcss: '*'
-    dependencies:
-      tailwind-merge: 1.14.0
-      tailwindcss: 3.3.2
     dev: false
 
   /tailwindcss-animate@1.0.6(tailwindcss@3.3.2):
