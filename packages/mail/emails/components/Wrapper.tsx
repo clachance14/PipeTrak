@@ -7,6 +7,7 @@ import {
   Tailwind,
 } from "@react-email/components";
 import { PropsWithChildren } from "react";
+import { Logo } from "./Logo";
 
 const tailwindConfig = require("tailwind-config");
 
@@ -22,8 +23,9 @@ export default function Wrapper({ children }: PropsWithChildren) {
         />
       </Head>
       <Tailwind config={tailwindConfig}>
-        <Section className="bg-card text-card-foreground p-8">
-          <Container className=" rounded-lg border border-solid p-6">
+        <Section className="bg-card text-card-foreground p-1">
+          <Container className="border-border rounded-lg border border-solid p-6">
+            <Logo />
             {children}
           </Container>
         </Section>
