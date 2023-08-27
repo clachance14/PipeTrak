@@ -58,7 +58,7 @@ export function CreateTeamForm({
     } catch (e) {
       toast({
         title: t("createTeam.notifications.error"),
-        variant: "destructive",
+        variant: "error",
       });
     }
   });

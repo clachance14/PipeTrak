@@ -193,7 +193,17 @@
           "email": "Email",
           "role": "Role",
           "submit": "Invite",
-          "title": "Invite new member"
+          "title": "Invite new member",
+          "notifications": {
+            "error": {
+              "title": "Could not invite member",
+              "description": "We were unable to invite the member. Please try again later."
+            },
+            "success": {
+              "title": "Member invited",
+              "description": "The member has been invited."
+            }
+          }
         },
         "activeMembers": "Active members",
         "pendingInvitations": "Pending invitations",

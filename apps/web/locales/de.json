@@ -193,14 +193,31 @@
           "email": "Email",
           "role": "Rolle",
           "submit": "Einladen",
-          "title": "Neues Mitglied einladen"
+          "title": "Neues Mitglied einladen",
+          "notifications": {
+            "error": {
+              "description": "Wir konnten das Mitglied nicht einladen. \nBitte versuchen Sie es später noch einmal.",
+              "title": "Mitglied konnte nicht eingeladen werden"
+            },
+            "success": {
+              "description": "Das Mitglied wurde eingeladen.",
+              "title": "Mitglied eingeladen"
+            }
+          }
         },
         "removeMember": "Mitglied entfernen",
         "roles": {
           "member": "Mitglied",
           "owner": "Eigentümer"
         },
-        "title": "Mitglieder"
+        "title": "Mitglieder",
+        "activeMembers": "Aktive Mitglieder",
+        "invitations": {
+          "email": "Email",
+          "empty": "Sie haben noch keine Mitglieder eingeladen.",
+          "revoke": "Einladung widerrufen"
+        },
+        "pendingInvitations": "Ausstehende Einladungen"
       },
       "subtitle": "Verwalte deine Teameinstellungen und Mitglieder",
       "title": "Team"

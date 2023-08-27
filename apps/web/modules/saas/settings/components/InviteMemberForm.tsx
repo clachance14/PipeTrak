@@ -1,8 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { apiClient } from "@shared/lib";
 import {
   Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
   Form,
   FormControl,
   FormField,
@@ -15,8 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/components";
+import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -26,8 +34,11 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function InviteMemberForm() {
+export function InviteMemberForm({ teamId }: { teamId: string }) {
   const t = useTranslations();
+  const router = useRouter();
+  const { toast } = useToast();
+  const inviteMemberMutation = apiClient.team.inviteMember.useMutation();
 
   const roleOptions = [
     {
@@ -48,67 +59,118 @@ export function InviteMemberForm() {
     },
   });
 
-  const onSubmit = () => {};
+  useEffect(() => {
+    toast({
+      title: t(
+        "settings.team.members.inviteMember.notifications.success.title",
+      ),
+      description: t(
+        "settings.team.members.inviteMember.notifications.success.description",
+      ),
+      variant: "success",
+    });
+  }, []);
+
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    try {
+      await inviteMemberMutation.mutateAsync({
+        ...values,
+        teamId,
+      });
+      router.refresh();
+      form.reset();
+
+      toast({
+        title: t(
+          "settings.team.members.inviteMember.notifications.success.title",
+        ),
+        description: t(
+          "settings.team.members.inviteMember.notifications.success.description",
+        ),
+        variant: "success",
+      });
+    } catch {
+      toast({
+        title: t(
+          "settings.team.members.inviteMember.notifications.error.title",
+        ),
+        description: t(
+          "settings.team.members.inviteMember.notifications.error.description",
+        ),
+        variant: "error",
+      });
+    }
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-row gap-2">
-            <div className="flex-1">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("settings.team.members.inviteMember.email")}
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="email" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+    <Card>
+      <CardHeader>
+        <CardTitle>{t("settings.team.members.inviteMember.title")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-row gap-2">
+              <div className="flex-1">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("settings.team.members.inviteMember.email")}
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="email" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div>
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("settings.team.members.inviteMember.role")}
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {roleOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
 
-            <div>
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("settings.team.members.inviteMember.role")}
-                    </FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {roleOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+            <div className="mt-6 flex justify-end border-t pt-3">
+              <Button type="submit" loading={form.formState.isSubmitting}>
+                {t("settings.team.members.inviteMember.submit")}
+              </Button>
             </div>
-          </div>
-
-          <Button className="w-full" type="submit">
-            {t("settings.team.members.inviteMember.submit")}
-          </Button>
-        </div>
-      </form>
-    </Form>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

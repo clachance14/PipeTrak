@@ -28,10 +28,7 @@ import {
 } from "@tanstack/react-table";
 
 import { UserAvatar } from "@shared/components";
-import { useSetAtom } from "jotai";
 import { useState } from "react";
-import { inviteTeamMemberDialogOpen } from "../state";
-import { InviteMemberDialog } from "./InviteMemberDialog";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 
 type TeamMembershipsOutput = ApiOutput["team"]["memberships"];
@@ -42,8 +39,6 @@ export function TeamMembersList({
   memberships: TeamMembershipsOutput;
 }) {
   const t = useTranslations();
-  const setInviteMemberDialogOpen = useSetAtom(inviteTeamMemberDialogOpen);
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -89,7 +84,7 @@ export function TeamMembersList({
               <DropdownMenuContent>
                 <DropdownMenuItem
                   disabled={row.original.isCreator}
-                  className="text-destructive"
+                  className="text-error"
                   onClick={() => alert("settings.team.members.remove user")}
                 >
                   <Icon.delete className="mr-2 h-4 w-4" />
@@ -119,48 +114,31 @@ export function TeamMembersList({
   });
 
   return (
-    <div className="bg-card text-card-foreground  overflow-hidden rounded-xl border p-6">
-      <div className="flex justify-end">
-        <Button size="sm" onClick={() => setInviteMemberDialogOpen(true)}>
-          <Icon.plus className="mr-2 h-4 w-4" />
-          {t("settings.team.members.invite")}
-        </Button>
-      </div>
-
-      <InviteMemberDialog />
-
-      <div className=" rounded-md border">
-        <Table>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
+    <div className=" rounded-md border">
+      <Table>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

@@ -10,8 +10,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@ui/components";
 import { useTranslations } from "next-intl";
@@ -47,17 +45,19 @@ export function TeamInvitationsList({
   const columns: ColumnDef<TeamInvitations[number]>[] = [
     {
       accessorKey: "email",
-      header: "",
       accessorFn: (row) => row.email,
       cell: ({ row }) => <div>{row.original.email}</div>,
     },
     {
       accessorKey: "actions",
-      header: "",
       cell: ({ row }) => {
         return (
           <div className="flex flex-row justify-end gap-2">
-            <TeamRoleSelect value={row.original.role} onSelect={() => {}} />
+            <TeamRoleSelect
+              value={row.original.role}
+              disabled
+              onSelect={() => {}}
+            />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -69,7 +69,7 @@ export function TeamInvitationsList({
                 <DropdownMenuItem
                   onClick={() => alert("settings.team.members.remove user")}
                 >
-                  <Icon.delete className="mr-2 h-4 w-4" />
+                  <Icon.undo className="mr-2 h-4 w-4" />
                   {t("settings.team.members.invitations.revoke")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -96,63 +96,31 @@ export function TeamInvitationsList({
   });
 
   return (
-    <div className="bg-card text-card-foreground  overflow-hidden rounded-xl border p-6">
-      <div className="flex w-full flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
-        <h2 className="mb-3 text-2xl font-semibold">
-          {t("settings.team.members.title")}
-        </h2>
-      </div>
-
-      <div className=" rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
+    <div className="rounded-md border">
+      <Table>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  {t("settings.team.members.invitations.empty")}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                {t("settings.team.members.invitations.empty")}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

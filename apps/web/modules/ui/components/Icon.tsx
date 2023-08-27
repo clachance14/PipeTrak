@@ -2,6 +2,7 @@ import {
   AlertCircle,
   AlertTriangle,
   Archive,
+  Bell,
   Book,
   Check,
   CheckCircle,
@@ -37,6 +38,7 @@ import {
   Sun,
   Trash,
   Twitter,
+  Undo,
   Upload,
   User,
   X,
@@ -88,6 +90,8 @@ export const Icon = {
   more: MoreVertical,
   delete: Trash,
   docs: Book,
+  undo: Undo,
+  notification: Bell,
 
   // social icons
   google: ({ ...props }: IconProps) => (

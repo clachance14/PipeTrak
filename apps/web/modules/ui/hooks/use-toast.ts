@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, useEffect, useState } from "react";
 import { ToastActionElement, ToastProps } from "../components/Toast";
 
 const TOAST_LIMIT = 1;
@@ -11,6 +11,7 @@ type ToasterToast = ToastProps & {
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: ToastActionElement;
+  icon?: JSXElementConstructor<{ className?: string }>;
 };
 
 const actionTypes = {

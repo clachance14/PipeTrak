@@ -1,5 +1,6 @@
 import { importLocale } from "@i18n";
 import { ClientProviders } from "@shared/components";
+import { Toaster } from "@ui/components";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -40,6 +41,7 @@ export default async function RootLayout({
       <body className={`${sansFont.variable} bg-background font-sans`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientProviders>{children}</ClientProviders>
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>

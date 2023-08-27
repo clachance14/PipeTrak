@@ -55,9 +55,10 @@ export const inviteMember = protectedProcedure
         },
       });
     } catch (e) {
+      console.error(e);
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: "Could not create membership.",
+        message: "Could not invite member.",
       });
     }
   });
