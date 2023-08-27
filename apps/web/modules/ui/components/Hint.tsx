@@ -1,9 +1,8 @@
+import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
 import { Icon } from "./Icon";
 
-export const hint = tv({
-  base: ["px-5", "py-4", "w-full", "rounded-xl"],
+export const hint = cva(["px-5", "py-4", "w-full", "rounded-xl"], {
   variants: {
     status: {
       success: ["bg-emerald-500/10", "border-emerald-500"],
@@ -17,8 +16,8 @@ export const hint = tv({
   },
 });
 
-export const hintIcon = tv({
-  base: [
+export const hintIcon = cva(
+  [
     "flex-shrink-0",
     "flex",
     "items-center",
@@ -26,6 +25,22 @@ export const hintIcon = tv({
     "text-3xl",
     "leading-tight",
   ],
+  {
+    variants: {
+      status: {
+        success: ["text-emerald-600 dark:text-emerald-300"],
+        info: ["text-primary-600 dark:text-primary-300"],
+        warning: ["text-amber-600 dark:text-amber-300"],
+        error: ["text-rose-600 dark:text-rose-300"],
+      },
+    },
+    defaultVariants: {
+      status: "info",
+    },
+  },
+);
+
+export const hintTitle = cva(["font-bold", "text-base"], {
   variants: {
     status: {
       success: ["text-emerald-600 dark:text-emerald-300"],
@@ -39,23 +54,7 @@ export const hintIcon = tv({
   },
 });
 
-export const hintTitle = tv({
-  base: ["font-bold", "text-base"],
-  variants: {
-    status: {
-      success: ["text-emerald-600 dark:text-emerald-300"],
-      info: ["text-primary-600 dark:text-primary-300"],
-      warning: ["text-amber-600 dark:text-amber-300"],
-      error: ["text-rose-600 dark:text-rose-300"],
-    },
-  },
-  defaultVariants: {
-    status: "info",
-  },
-});
-
-export const hintMessage = tv({
-  base: ["text-sm", "leading-tight"],
+export const hintMessage = cva(["text-sm", "leading-tight"], {
   variants: {
     status: {
       success: [
