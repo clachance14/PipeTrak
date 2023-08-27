@@ -23,7 +23,6 @@ import {
 import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -58,18 +57,6 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
       role: "MEMBER",
     },
   });
-
-  useEffect(() => {
-    toast({
-      title: t(
-        "settings.team.members.inviteMember.notifications.success.title",
-      ),
-      description: t(
-        "settings.team.members.inviteMember.notifications.success.description",
-      ),
-      variant: "success",
-    });
-  }, []);
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     try {
@@ -109,8 +96,8 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex flex-row gap-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="@container">
+            <div className="@md:flex-row flex flex-col gap-2">
               <div className="flex-1">
                 <FormField
                   control={form.control}
