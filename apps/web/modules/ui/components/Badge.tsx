@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
 
 export const badge = cva(
