@@ -10,7 +10,7 @@
           "title": "Link nicht gesendet"
         },
         "linkSent": {
-          "message": "Wir haben Ihnen einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
+          "message": "Wir haben dir einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
           "title": "Link gesendet"
         }
       },
@@ -29,15 +29,15 @@
           "title": "E-Mail nicht bestätigt"
         },
         "invalidCredentials": {
-          "message": "Es tut uns leid, aber die von Ihnen eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
+          "message": "Es tut uns leid, aber die von dir eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
           "title": "Ungültige Anmeldeinformationen"
         },
         "linkNotSent": {
-          "message": "Es tut uns leid, aber wir konnten Ihnen keinen magischen Link senden. \nBitte versuche es später noch einmal.",
+          "message": "Es tut uns leid, aber wir konnten dir keinen magischen Link senden. \nBitte versuche es später noch einmal.",
           "title": "Link nicht gesendet"
         },
         "linkSent": {
-          "message": "Wir haben Ihnen einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
+          "message": "Wir haben dir einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
           "title": "Link gesendet"
         }
       },
@@ -57,7 +57,7 @@
           "title": "Konto konnte nicht erstellt werden"
         },
         "verifyEmail": {
-          "message": "Wir haben Ihnen einen Link zur Bestätigung deiner E-Mail-Adresse gesendet. \nBitte überprüfe deinen Posteingang.",
+          "message": "Wir haben dir einen Link zur Bestätigung deiner E-Mail-Adresse gesendet. \nBitte überprüfe deinen Posteingang.",
           "title": "Bestätige deine E-Mail"
         }
       },
@@ -68,6 +68,10 @@
       "signIn": "Anmelden",
       "submit": "Benutzerkonto erstellen",
       "title": "Ein Konto erstellen"
+    },
+    "teamInvitation": {
+      "description": "Sie wurden eingeladen, einem Team beizutreten. \nWenn Sie sich anmelden oder registrieren, nehmen Sie automatisch die Einladung an und treten dem Team bei.",
+      "title": "Teameinladung annehmen"
     }
   },
   "blog": {

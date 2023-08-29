@@ -67,6 +67,10 @@
       "signIn": "Iniciar sesión",
       "submit": "Crear una cuenta",
       "title": "Crea una cuenta"
+    },
+    "teamInvitation": {
+      "description": "Te han invitado a unirte a un equipo. \nAl iniciar sesión o registrarte, aceptarás automáticamente la invitación y te unirás al equipo.",
+      "title": "Aceptar invitación del equipo"
     }
   },
   "blog": {
@@ -191,14 +195,31 @@
           "email": "Correo electrónico",
           "role": "Role",
           "submit": "Invitar",
-          "title": "Invitar nuevo miembro"
+          "title": "Invitar nuevo miembro",
+          "notifications": {
+            "error": {
+              "description": "No pudimos invitar al miembro. \nPor favor, inténtelo de nuevo más tarde.",
+              "title": "No se pudo invitar al miembro"
+            },
+            "success": {
+              "description": "El miembro ha sido invitado.",
+              "title": "Miembro invitado"
+            }
+          }
         },
         "removeMember": "Eliminar miembro",
         "roles": {
           "member": "Miembro",
           "owner": "Dueño"
         },
-        "title": "Miembros"
+        "title": "Miembros",
+        "activeMembers": "Miembros activos",
+        "invitations": {
+          "email": "Correo electrónico",
+          "empty": "Aún no has invitado a ningún miembro.",
+          "revoke": "Revocar invitación"
+        },
+        "pendingInvitations": "Invitaciones pendientes"
       },
       "subtitle": "Administre la configuración y los miembros de su equipo",
       "title": "Equipo"
