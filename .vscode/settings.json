@@ -21,5 +21,6 @@
     "packages/config/tsconfig"
   ],
   "i18n-ally.localesPaths": ["apps/web/locales"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["next-intl"]
 }
