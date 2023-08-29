@@ -88,13 +88,26 @@ export const signUp: AuthProviderClientModule["signUp"] = async (params) => {
     password,
     options: {
       data: {
-        name,
+        full_name: name,
       },
       emailRedirectTo: getCallbackUrl(redirectTo),
     },
   });
 
   if (error) throw new Error("Could not sign up");
+};
+
+export const verifyOTP: AuthProviderClientModule["verifyOTP"] = async (
+  params,
+) => {
+  const { email, type, otp } = params;
+  const { error } = await supabaseClient.auth.verifyOtp({
+    type,
+    email,
+    token: otp,
+  });
+
+  if (error) throw new Error("Could not verify OTP");
 };
 
 export const updateEmail: AuthProviderClientModule["updateEmail"] = async (

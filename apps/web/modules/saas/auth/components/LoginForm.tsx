@@ -13,7 +13,7 @@ import {
 } from "@ui/components";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,6 +30,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
   const t = useTranslations();
+  const router = useRouter();
   const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
@@ -78,12 +79,10 @@ export function LoginForm() {
     setServerError(null);
     try {
       if (signinMode === "password") {
-        if (!password) return;
-
         await login({
           method: "password",
           email,
-          password,
+          password: password!,
         });
       } else {
         await login({
@@ -91,6 +90,14 @@ export function LoginForm() {
           email,
           redirectTo,
         });
+
+        const redirectSearchParams = new URLSearchParams();
+        redirectSearchParams.set("type", "magiclink");
+        redirectSearchParams.set("redirectTo", redirectTo);
+        if (invitationCode)
+          redirectSearchParams.set("invitationCode", invitationCode);
+        if (email) redirectSearchParams.set("email", email);
+        router.replace(`/auth/verify-otp?${redirectSearchParams.toString()}`);
       }
     } catch (e) {
       setServerError({
@@ -127,79 +134,69 @@ export function LoginForm() {
 
       <hr className=" my-8" />
 
-      {isSubmitted && isSubmitSuccessful && signinMode !== "password" ? (
-        <Alert variant="success">
-          <Icon.mail className="h-4 w-4" />
-          <AlertTitle>{t("auth.login.hints.linkSent.title")}</AlertTitle>
-          <AlertDescription>
-            {t("auth.login.hints.linkSent.message")}
-          </AlertDescription>
-        </Alert>
-      ) : (
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <SigninModeSwitch
-            className="w-full"
-            activeMode={signinMode}
-            onChange={(value) => setSigninMode(value as typeof signinMode)}
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <SigninModeSwitch
+          className="w-full"
+          activeMode={signinMode}
+          onChange={(value) => setSigninMode(value as typeof signinMode)}
+        />
+        {isSubmitted && serverError && (
+          <Alert variant="error">
+            <Icon.warning className="h-4 w-4" />
+            <AlertTitle>{serverError.title}</AlertTitle>
+            <AlertDescription>{serverError.message}</AlertDescription>
+          </Alert>
+        )}
+        <div>
+          <label htmlFor="email" className="mb-1 block font-semibold">
+            {t("auth.login.email")}
+          </label>
+          <Input
+            type="email"
+            {...register("email", { required: true })}
+            required
+            autoComplete="email"
           />
-          {isSubmitted && serverError && (
-            <Alert variant="error">
-              <Icon.warning className="h-4 w-4" />
-              <AlertTitle>{serverError.title}</AlertTitle>
-              <AlertDescription>{serverError.message}</AlertDescription>
-            </Alert>
-          )}
+        </div>
+        {signinMode === "password" && (
           <div>
-            <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("auth.login.email")}
+            <label htmlFor="password" className="mb-1 block font-semibold">
+              {t("auth.login.password")}
             </label>
             <Input
-              type="email"
-              {...register("email", { required: true })}
+              type="password"
+              {...register("password", { required: true })}
               required
-              autoComplete="email"
+              autoComplete="current-password"
             />
-          </div>
-          {signinMode === "password" && (
-            <div>
-              <label htmlFor="password" className="mb-1 block font-semibold">
-                {t("auth.login.password")}
-              </label>
-              <Input
-                type="password"
-                {...register("password", { required: true })}
-                required
-                autoComplete="current-password"
-              />
-              <div className="mt-1 text-right text-sm">
-                <Link href="/auth/forgot-password">
-                  {t("auth.login.forgotPassword")}
-                </Link>
-              </div>
+            <div className="mt-1 text-right text-sm">
+              <Link href="/auth/forgot-password">
+                {t("auth.login.forgotPassword")}
+              </Link>
             </div>
-          )}
-          <Button className="w-full" type="submit" loading={isSubmitting}>
-            {signinMode === "password"
-              ? t("auth.login.submit")
-              : t("auth.login.sendMagicLink")}
-          </Button>
-
-          <div>
-            <span className="text-muted-foreground">
-              {t("auth.login.dontHaveAnAccount")}{" "}
-            </span>
-            <Link
-              href={`/auth/signup${
-                invitationCode
-                  ? `?invitationCode=${invitationCode}&email=${email}`
-                  : ""
-              }`}
-            >
-              {t("auth.login.createAnAccount")} &rarr;
-            </Link>
           </div>
-        </form>
-      )}
+        )}
+        <Button className="w-full" type="submit" loading={isSubmitting}>
+          {signinMode === "password"
+            ? t("auth.login.submit")
+            : t("auth.login.sendMagicLink")}
+        </Button>
+
+        <div>
+          <span className="text-muted-foreground">
+            {t("auth.login.dontHaveAnAccount")}{" "}
+          </span>
+          <Link
+            href={`/auth/signup${
+              invitationCode
+                ? `?invitationCode=${invitationCode}&email=${email}`
+                : ""
+            }`}
+          >
+            {t("auth.login.createAnAccount")} &rarr;
+          </Link>
+        </div>
+      </form>
     </div>
   );
 }

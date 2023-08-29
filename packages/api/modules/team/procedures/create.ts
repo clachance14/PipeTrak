@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { TeamModel, db } from "database";
 import slugify from "slugify";
 import { z } from "zod";
@@ -12,13 +13,21 @@ export const create = protectedProcedure
   )
   .output(TeamModel)
   .mutation(async ({ input: { name, slug }, ctx: { user } }) => {
+    const sanitizedSlug = slugify(slug || name, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
+
+    if (!sanitizedSlug)
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Invalid slug",
+      });
+
     const team = await db.team.create({
       data: {
         name,
-        slug: slugify(slug ?? name, {
-          lower: true,
-          remove: /[*+~.()'"!:@]/g,
-        }),
+        slug: sanitizedSlug,
       },
     });
 

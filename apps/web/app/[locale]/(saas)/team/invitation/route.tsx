@@ -22,7 +22,7 @@ export async function GET(request: Request) {
 
   if (!user)
     return redirect(
-      `/auth/signup?invitationCode=${invitation.id}&email=${invitation.email}`,
+      `/auth/login?invitationCode=${invitation.id}&email=${invitation.email}`,
     );
 
   const team = await apiCaller.team.acceptInvitation({

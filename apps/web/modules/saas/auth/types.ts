@@ -6,6 +6,8 @@ export type User = {
   email: string;
 };
 
+export type VerifyOTPType = "magiclink" | "signup";
+
 export type AuthProviderClientModule = {
   login: (
     params:
@@ -36,6 +38,11 @@ export type AuthProviderClientModule = {
   updateEmail: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
   updateName: (name: string) => Promise<void>;
+  verifyOTP: (params: {
+    otp: string;
+    type: VerifyOTPType;
+    email: string;
+  }) => Promise<void>;
   getUser: () => Promise<User | null>;
   registerAuthEventListener: (
     listener: (

@@ -18,6 +18,21 @@
       "submit": "Send link",
       "title": "Forgot your password?"
     },
+    "verifyOtp": {
+      "otp": "One time password",
+      "message": "You have mail! Please check your inbox for the one time password we sent you. You can also click the link in the email and this page will redirect you automatically.",
+      "submit": "Continue",
+      "title": "Verify your email",
+      "hints": {
+        "verificationFailed": {
+          "message": "We are sorry, the password you entered is invalid. Please try again.",
+          "title": "Invalid one time password"
+        }
+      },
+      "errors": {
+        "otpTooShort": "The one time password is too short."
+      }
+    },
     "login": {
       "createAnAccount": "Create an account",
       "dontHaveAnAccount": "Don't have an account yet?",

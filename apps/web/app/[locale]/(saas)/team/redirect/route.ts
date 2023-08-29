@@ -23,11 +23,10 @@ export async function GET(request: Request) {
 
       do {
         try {
+          const name = user.name || user.email.split("@")[0];
           team = await apiCaller.team.create({
-            name: `${user.name}'s Team`,
-            slug: `${user.name.replace(" ", "-").toLowerCase()}${
-              iteration ? `-${iteration}` : ""
-            }`,
+            name: name,
+            slug: `${name}${iteration ? ` ${iteration}` : ""}`,
           });
         } catch {}
       } while (!team);
