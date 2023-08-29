@@ -23,7 +23,7 @@ import { useLocale } from "next-intl";
 import { usePathname } from "next-intl/client";
 import Link from "next-intl/link";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const { locales, localeLabels } = appConfig.i18n;
@@ -31,6 +31,7 @@ const { locales, localeLabels } = appConfig.i18n;
 export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const currentLocale = useLocale();
   const [locale, setLocale] = useState<string>(currentLocale);
   const {
@@ -119,7 +120,9 @@ export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
                 value={locale}
                 onValueChange={(value) => {
                   setLocale(value);
-                  router.replace(`/${value}/${pathname}`);
+                  router.replace(
+                    `/${value}/${pathname}?${searchParams.toString()}`,
+                  );
                 }}
               >
                 {locales.map((locale) => {

@@ -11,7 +11,7 @@ import {
   Icon,
 } from "@ui/components";
 import { usePathname } from "next-intl/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const { localeLabels } = appConfig.i18n;
@@ -25,6 +25,7 @@ export function LocaleSwitch({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(currentLocale);
 
   return (
@@ -40,7 +41,7 @@ export function LocaleSwitch({
           value={value}
           onValueChange={(value) => {
             setValue(value);
-            router.replace(`/${value}/${pathname}`);
+            router.replace(`/${value}/${pathname}?${searchParams.toString()}`);
           }}
         >
           {locales.map((locale) => {
