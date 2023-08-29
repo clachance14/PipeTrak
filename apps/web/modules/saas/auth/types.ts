@@ -21,6 +21,7 @@ export type AuthProviderClientModule = {
         }
       | {
           method: "oauth";
+          redirectTo?: string;
           provider: string;
         },
   ) => Promise<void>;
@@ -28,6 +29,7 @@ export type AuthProviderClientModule = {
     email: string;
     password: string;
     name: string;
+    redirectTo?: string;
   }) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   signOut: () => Promise<void>;

@@ -25,6 +25,7 @@ import {
   Loader,
   LogOut,
   Mail,
+  MailCheck,
   Menu,
   Moon,
   MoreVertical,
@@ -92,6 +93,7 @@ export const Icon = {
   docs: Book,
   undo: Undo,
   notification: Bell,
+  invitation: MailCheck,
 
   // social icons
   google: ({ ...props }: IconProps) => (

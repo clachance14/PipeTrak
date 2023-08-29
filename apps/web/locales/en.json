@@ -68,6 +68,10 @@
       "signIn": "Sign in",
       "submit": "Create account",
       "title": "Create an account"
+    },
+    "teamInvitation": {
+      "title": "Accept team invitation",
+      "description": "You have been invited to join a team. By logging in or signing up you will automatically accept the invitation and join the team."
     }
   },
   "blog": {

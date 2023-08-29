@@ -34,22 +34,22 @@ export const login: AuthProviderClientModule["login"] = async (params) => {
 
     if (error) throw new Error("Could not log in");
   } else if (method === "email") {
-    const { email } = params;
+    const { email, redirectTo } = params;
 
     const { error } = await supabaseClient.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: getCallbackUrl(params.redirectTo),
+        emailRedirectTo: getCallbackUrl(redirectTo),
       },
     });
 
     if (error) throw new Error("Could not log in");
   } else if (method === "oauth") {
-    const { provider } = params;
+    const { provider, redirectTo } = params;
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider: provider as any,
       options: {
-        redirectTo: getCallbackUrl(),
+        redirectTo: getCallbackUrl(redirectTo),
       },
     });
 
@@ -81,7 +81,7 @@ export const forgotPassword: AuthProviderClientModule["forgotPassword"] =
   };
 
 export const signUp: AuthProviderClientModule["signUp"] = async (params) => {
-  const { email, password, name } = params;
+  const { email, password, name, redirectTo } = params;
 
   const { error } = await supabaseClient.auth.signUp({
     email,
@@ -90,6 +90,7 @@ export const signUp: AuthProviderClientModule["signUp"] = async (params) => {
       data: {
         name,
       },
+      emailRedirectTo: getCallbackUrl(redirectTo),
     },
   });
 

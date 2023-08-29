@@ -3,13 +3,22 @@
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login, signUp } from "@saas/auth";
-import { Button, Hint, Icon, Input } from "@ui/components";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Icon,
+  Input,
+} from "@ui/components";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SocialSigninButton } from "./SocialSigninButton";
+import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -25,6 +34,7 @@ export function SignupForm() {
     register,
     handleSubmit,
     formState: { isSubmitting, isSubmitted, isSubmitSuccessful, errors },
+    setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
@@ -33,6 +43,17 @@ export function SignupForm() {
     message: string;
   }>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+
+  const invitationCode = searchParams.get("invitationCode");
+  const redirectTo = invitationCode
+    ? `/team/invitation?code=${invitationCode}`
+    : searchParams.get("redirectTo") ?? "/team/redirect";
+  const email = searchParams.get("email");
+
+  useEffect(() => {
+    if (email) setValue("email", email);
+  }, [email]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({
     email,
@@ -45,6 +66,7 @@ export function SignupForm() {
         email,
         password,
         name,
+        redirectTo,
       });
     } catch (e) {
       setServerError({
@@ -57,10 +79,11 @@ export function SignupForm() {
   return (
     <div>
       <h1 className="text-3xl font-bold">{t("auth.signup.title")}</h1>
-
       <p className="text-muted-foreground mb-6 mt-2">
         {t("auth.signup.message")}
       </p>
+
+      {invitationCode && <TeamInvitationInfo className="mb-6" />}
 
       <div className="flex flex-col items-stretch gap-3">
         {appConfig.auth.oAuthProviders.map((providerId) => (
@@ -71,6 +94,7 @@ export function SignupForm() {
               login({
                 method: "oauth",
                 provider: providerId,
+                redirectTo,
               })
             }
           />
@@ -80,19 +104,24 @@ export function SignupForm() {
       <hr className=" my-8" />
 
       {isSubmitted && isSubmitSuccessful ? (
-        <Hint
-          status="success"
-          title={t("auth.signup.hints.verifyEmail.title")}
-          message={t("auth.signup.hints.verifyEmail.message")}
-          icon={Icon.mail}
-        />
+        <Alert variant="success">
+          <Icon.mail className="h-4 w-4" />
+          <AlertTitle>{t("auth.signup.hints.verifyEmail.title")}</AlertTitle>
+          <AlertDescription>
+            {t("auth.signup.hints.verifyEmail.message")}
+          </AlertDescription>
+        </Alert>
       ) : (
         <form
           className="flex flex-col items-stretch gap-6"
           onSubmit={handleSubmit(onSubmit)}
         >
           {isSubmitted && serverError && (
-            <Hint status="error" {...serverError} icon={Icon.error} />
+            <Alert variant="error">
+              <Icon.warning className="h-4 w-4" />
+              <AlertTitle>{serverError.title}</AlertTitle>
+              <AlertDescription>{serverError.message}</AlertDescription>
+            </Alert>
           )}
 
           <div>
@@ -159,7 +188,15 @@ export function SignupForm() {
             <span className="text-muted-foreground">
               {t("auth.signup.alreadyHaveAccount")}{" "}
             </span>
-            <Link href="/auth/login">{t("auth.signup.signIn")} &rarr;</Link>
+            <Link
+              href={`/auth/login${
+                invitationCode
+                  ? `?invitationCode=${invitationCode}&email=${email}`
+                  : ""
+              }`}
+            >
+              {t("auth.signup.signIn")} &rarr;
+            </Link>
           </div>
         </form>
       )}

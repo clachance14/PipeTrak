@@ -50,7 +50,7 @@ export const inviteMember = protectedProcedure
         templateId: "teamInvitation",
         to: email,
         context: {
-          url: `${getBaseUrl()}/auth/signup?invitationCode=${invitation.id}`,
+          url: `${getBaseUrl()}/team/invitation?code=${invitation.id}`,
           teamName: invitation.team.name,
         },
       });

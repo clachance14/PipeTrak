@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Hint, Icon, Input } from "@ui/components";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Icon,
+  Input,
+} from "@ui/components";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forgotPassword } from "@saas/auth";
@@ -54,12 +61,15 @@ export function ForgotPasswordForm() {
         </Link>
       </p>
       {isSubmitted && isSubmitSuccessful ? (
-        <Hint
-          status="success"
-          title={t("auth.forgotPassword.hints.linkSent.title")}
-          message={t("auth.forgotPassword.hints.linkSent.message")}
-          icon={Icon.mail}
-        />
+        <Alert variant="success">
+          <Icon.mail className="h-4 w-4" />
+          <AlertTitle>
+            {t("auth.forgotPassword.hints.linkSent.title")}
+          </AlertTitle>
+          <AlertDescription>
+            {t("auth.forgotPassword.hints.linkSent.message")}
+          </AlertDescription>
+        </Alert>
       ) : (
         <form
           className="flex flex-col items-stretch gap-6"
@@ -78,7 +88,11 @@ export function ForgotPasswordForm() {
           </div>
 
           {isSubmitted && serverError && (
-            <Hint status="error" {...serverError} icon={Icon.warning} />
+            <Alert variant="error">
+              <Icon.warning className="h-4 w-4" />
+              <AlertTitle>{serverError.title}</AlertTitle>
+              <AlertDescription>{serverError.message}</AlertDescription>
+            </Alert>
           )}
 
           <Button>

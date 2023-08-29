@@ -9,7 +9,6 @@ export const appConfig = {
     },
   },
   auth: {
-    redirectAfterLogin: "/dashboard",
     oAuthProviders: ["google", "github"],
   },
   marketing: {

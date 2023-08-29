@@ -3,7 +3,14 @@
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login, useUser } from "@saas/auth";
-import { Button, Hint, Icon, Input } from "@ui/components";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Icon,
+  Input,
+} from "@ui/components";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -12,6 +19,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import SigninModeSwitch from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
+import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -32,17 +40,23 @@ export function LoginForm() {
   }>(null);
   const searchParams = useSearchParams();
 
-  const redirectTo =
-    searchParams.get("redirectTo") ?? appConfig.auth.redirectAfterLogin;
-
-  const isPasswordSignin = signinMode === "password";
-
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting, isSubmitted, isSubmitSuccessful },
   } = useForm<FormValues>({ resolver: zodResolver(formSchema) });
+
+  const invitationCode = searchParams.get("invitationCode");
+  const redirectTo = invitationCode
+    ? `/team/invitation?code=${invitationCode}`
+    : searchParams.get("redirectTo") ?? "/team/redirect";
+  const email = searchParams.get("email");
+
+  useEffect(() => {
+    if (email) setValue("email", email);
+  }, [email]);
 
   useEffect(() => {
     reset();
@@ -54,7 +68,7 @@ export function LoginForm() {
     if (user && loaded) {
       if (typeof window !== undefined)
         window.location.href = new URL(
-          "/team-redirect",
+          redirectTo,
           window.location.origin,
         ).toString();
     }
@@ -63,7 +77,7 @@ export function LoginForm() {
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
     setServerError(null);
     try {
-      if (isPasswordSignin) {
+      if (signinMode === "password") {
         if (!password) return;
 
         await login({
@@ -93,6 +107,8 @@ export function LoginForm() {
         {t("auth.login.subtitle")}
       </p>
 
+      {invitationCode && <TeamInvitationInfo className="mb-6" />}
+
       <div className="flex flex-col items-stretch gap-3">
         {appConfig.auth.oAuthProviders.map((providerId) => (
           <SocialSigninButton
@@ -102,6 +118,7 @@ export function LoginForm() {
               login({
                 method: "oauth",
                 provider: providerId,
+                redirectTo,
               })
             }
           />
@@ -110,13 +127,14 @@ export function LoginForm() {
 
       <hr className=" my-8" />
 
-      {isSubmitted && isSubmitSuccessful && !isPasswordSignin ? (
-        <Hint
-          status="success"
-          title={t("auth.login.hints.linkSent.title")}
-          message={t("auth.login.hints.linkSent.message")}
-          icon={Icon.mail}
-        />
+      {isSubmitted && isSubmitSuccessful && signinMode !== "password" ? (
+        <Alert variant="success">
+          <Icon.mail className="h-4 w-4" />
+          <AlertTitle>{t("auth.login.hints.linkSent.title")}</AlertTitle>
+          <AlertDescription>
+            {t("auth.login.hints.linkSent.message")}
+          </AlertDescription>
+        </Alert>
       ) : (
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <SigninModeSwitch
@@ -125,7 +143,11 @@ export function LoginForm() {
             onChange={(value) => setSigninMode(value as typeof signinMode)}
           />
           {isSubmitted && serverError && (
-            <Hint status="error" {...serverError} icon={Icon.error} />
+            <Alert variant="error">
+              <Icon.warning className="h-4 w-4" />
+              <AlertTitle>{serverError.title}</AlertTitle>
+              <AlertDescription>{serverError.message}</AlertDescription>
+            </Alert>
           )}
           <div>
             <label htmlFor="email" className="mb-1 block font-semibold">
@@ -157,7 +179,7 @@ export function LoginForm() {
             </div>
           )}
           <Button className="w-full" type="submit" loading={isSubmitting}>
-            {isPasswordSignin
+            {signinMode === "password"
               ? t("auth.login.submit")
               : t("auth.login.sendMagicLink")}
           </Button>
@@ -166,7 +188,13 @@ export function LoginForm() {
             <span className="text-muted-foreground">
               {t("auth.login.dontHaveAnAccount")}{" "}
             </span>
-            <Link href="/auth/signup">
+            <Link
+              href={`/auth/signup${
+                invitationCode
+                  ? `?invitationCode=${invitationCode}&email=${email}`
+                  : ""
+              }`}
+            >
               {t("auth.login.createAnAccount")} &rarr;
             </Link>
           </div>

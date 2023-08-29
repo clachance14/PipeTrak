@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   if (req.nextUrl.pathname.startsWith("/auth") && session?.user)
-    return NextResponse.redirect(new URL("/team-redirect", req.nextUrl.origin));
+    return NextResponse.redirect(new URL("/team/redirect", req.nextUrl.origin));
 
   return intlMiddleware(req);
 }

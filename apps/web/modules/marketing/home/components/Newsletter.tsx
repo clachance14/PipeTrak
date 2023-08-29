@@ -2,7 +2,14 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiClient } from "@shared/lib";
-import { Button, Hint, Icon, Input } from "@ui/components";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Icon,
+  Input,
+} from "@ui/components";
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -43,12 +50,13 @@ export function Newsletter() {
 
         <div className="mx-auto max-w-lg">
           {isSubmitSuccessful ? (
-            <Hint
-              status="success"
-              title={t("newsletter.hints.success.title")}
-              message={t("newsletter.hints.success.message")}
-              icon={Icon.success}
-            />
+            <Alert variant="success">
+              <Icon.success className="h-4 w-4" />
+              <AlertTitle>{t("newsletter.hints.success.title")}</AlertTitle>
+              <AlertDescription>
+                {t("newsletter.hints.success.message")}
+              </AlertDescription>
+            </Alert>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex items-start">
