@@ -71,6 +71,21 @@
     "teamInvitation": {
       "description": "Te han invitado a unirte a un equipo. \nAl iniciar sesión o registrarte, aceptarás automáticamente la invitación y te unirás al equipo.",
       "title": "Aceptar invitación del equipo"
+    },
+    "verifyOtp": {
+      "errors": {
+        "otpTooShort": "La contraseña de un solo uso es demasiado corta."
+      },
+      "hints": {
+        "verificationFailed": {
+          "message": "Lo sentimos, la contraseña que ingresó no es válida. \nInténtalo de nuevo.",
+          "title": "Contraseña única no válida"
+        }
+      },
+      "message": "¡Tienes un correo! \nPor favor revise su bandeja de entrada para ver la contraseña única que le enviamos. \nTambién puede hacer clic en el enlace del correo electrónico y esta página lo redireccionará automáticamente.",
+      "otp": "Contraseña de un solo uso",
+      "submit": "Continuar",
+      "title": "Verifique su correo electrónico"
     }
   },
   "blog": {

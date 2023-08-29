@@ -72,6 +72,21 @@
     "teamInvitation": {
       "description": "Sie wurden eingeladen, einem Team beizutreten. \nWenn Sie sich anmelden oder registrieren, nehmen Sie automatisch die Einladung an und treten dem Team bei.",
       "title": "Teameinladung annehmen"
+    },
+    "verifyOtp": {
+      "errors": {
+        "otpTooShort": "Das Einmalpasswort ist zu kurz."
+      },
+      "hints": {
+        "verificationFailed": {
+          "message": "Es tut uns leid, das von Ihnen eingegebene Passwort ist ungültig. \nBitte versuche es erneut.",
+          "title": "Ungültiges Einmalpasswort"
+        }
+      },
+      "message": "Du hast Post! \nBitte überprüfen Sie Ihren Posteingang auf das Einmalpasswort, das wir Ihnen gesendet haben. \nSie können auch auf den Link in der E-Mail klicken und diese Seite wird Sie automatisch weiterleiten.",
+      "otp": "Einmaliges Passwort",
+      "submit": "Weitermachen",
+      "title": "Bestätigen Sie Ihre E-Mail"
     }
   },
   "blog": {
