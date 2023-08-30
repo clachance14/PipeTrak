@@ -1,70 +1,25 @@
-import { AbilityBuilder, PureAbility } from "@casl/ability";
-import { PrismaQuery, Subjects, createPrismaAbility } from "@casl/prisma";
-import { Team, TeamInvitation, TeamMembership, UserRole, db } from "database";
+import { TeamMembership } from "database";
+import { User } from "./types";
 
-type AppAbility = PureAbility<
-  [
-    string,
-    Subjects<{
-      Team: Team;
-      TeamInvitation: TeamInvitation;
-      TeamMembership: TeamMembership;
-    }>,
-  ],
-  PrismaQuery
->;
-
-export async function defineAbilitiesFor({
-  userId,
-  teamId,
+export function defineAbilitiesFor({
+  user,
+  teamMemberships,
 }: {
-  userId: string;
-  teamId?: string;
+  user: User | null;
+  teamMemberships: TeamMembership[] | null;
 }) {
-  const { can, cannot, build } = new AbilityBuilder<AppAbility>(
-    createPrismaAbility,
-  );
+  const isAdmin = user?.role === "ADMIN";
 
-  const user = await db.userProfile.findFirst({
-    where: {
-      userId,
-    },
-  });
+  const getTeamRole = (teamId: string) =>
+    teamMemberships?.find((m) => m.teamId === teamId)?.role ?? null;
 
-  const role: UserRole = user?.role ?? "USER";
+  const isTeamMember = (teamId: string) => !!getTeamRole(teamId);
 
-  /*
-    Team permissions
-  */
+  const isTeamOwner = (teamId: string) => getTeamRole(teamId) === "OWNER";
 
-  // everyone can create a new team
-  can("create", "Team");
-
-  if (!teamId) {
-    return build();
-  }
-
-  const teamMembership = await db.teamMembership.findFirst({
-    where: {
-      teamId,
-      userId,
-    },
-  });
-
-  if (!teamMembership) {
-    return build();
-  }
-
-  const { role: teamRole } = teamMembership;
-
-  can("read", "Team");
-  can("read", "TeamInvitation");
-  can("read", "TeamMembership");
-
-  if (teamRole === "OWNER") {
-    can("manage", "Team");
-    can("manage", "TeamInvitation");
-  }
-
-  return build();
+  return {
+    isAdmin,
+    isTeamMember,
+    isTeamOwner,
+  };
 }

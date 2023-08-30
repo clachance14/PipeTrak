@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { TeamInvitationModel, db } from "database";
 import { z } from "zod";
-import { defineAbilitiesFor } from "../../auth";
 import { protectedProcedure } from "../../trpc";
 
 export const invitations = protectedProcedure
@@ -11,13 +10,8 @@ export const invitations = protectedProcedure
     }),
   )
   .output(z.array(TeamInvitationModel))
-  .query(async ({ input: { teamId }, ctx: { user } }) => {
-    const abilities = await defineAbilitiesFor({
-      userId: user!.id,
-      teamId,
-    });
-
-    if (!abilities.can("read", "TeamInvitation")) {
+  .query(async ({ input: { teamId }, ctx: { abilities } }) => {
+    if (!abilities.isTeamMember(teamId)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to read the invitations for this team.",
@@ -26,7 +20,11 @@ export const invitations = protectedProcedure
 
     const invitations = await db.teamInvitation.findMany({
       where: {
-        teamId,
+        AND: [
+          {
+            teamId,
+          },
+        ],
       },
     });
 

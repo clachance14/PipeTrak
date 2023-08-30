@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { TeamModel, db } from "database";
 import { z } from "zod";
-import { defineAbilitiesFor } from "../../auth";
 import { protectedProcedure } from "../../trpc";
 
 export const bySlug = protectedProcedure
@@ -11,7 +10,7 @@ export const bySlug = protectedProcedure
     }),
   )
   .output(TeamModel)
-  .query(async ({ input: { slug }, ctx: { user } }) => {
+  .query(async ({ input: { slug }, ctx: { abilities } }) => {
     const team = await db.team.findFirst({
       where: {
         slug,
@@ -25,12 +24,7 @@ export const bySlug = protectedProcedure
       });
     }
 
-    const abilities = await defineAbilitiesFor({
-      userId: user!.id,
-      teamId: team!.id,
-    });
-
-    if (!abilities.can("read", "Team")) {
+    if (!abilities.isTeamMember(team.id)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to read this team.",

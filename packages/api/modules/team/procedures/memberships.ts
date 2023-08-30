@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { TeamMembershipModel, db } from "database";
 import { z } from "zod";
-import { defineAbilitiesFor, getUsersById, userSchema } from "../../auth";
+import { getUsersById, userSchema } from "../../auth";
 import { protectedProcedure } from "../../trpc";
 
 export const memberships = protectedProcedure
@@ -19,13 +19,8 @@ export const memberships = protectedProcedure
       ),
     ),
   )
-  .query(async ({ input: { teamId }, ctx: { user } }) => {
-    const abilities = await defineAbilitiesFor({
-      userId: user!.id,
-      teamId,
-    });
-
-    if (!abilities.can("read", "TeamMembership")) {
+  .query(async ({ input: { teamId }, ctx: { abilities } }) => {
+    if (!abilities.isTeamMember(teamId)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to read the memberships for this team.",

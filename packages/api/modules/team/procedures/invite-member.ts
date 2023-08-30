@@ -2,7 +2,6 @@ import { TRPCError } from "@trpc/server";
 import { db } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
-import { defineAbilitiesFor } from "../../auth";
 import { getBaseUrl } from "../../shared";
 import { protectedProcedure } from "../../trpc";
 
@@ -14,13 +13,8 @@ export const inviteMember = protectedProcedure
       role: z.enum(["MEMBER", "OWNER"]),
     }),
   )
-  .mutation(async ({ input: { teamId, email, role }, ctx: { user } }) => {
-    const abilities = await defineAbilitiesFor({
-      userId: user!.id,
-      teamId,
-    });
-
-    if (!abilities.can("create", "TeamInvitation")) {
+  .mutation(async ({ input: { teamId, email, role }, ctx: { abilities } }) => {
+    if (!abilities.isTeamOwner(teamId)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to add a member to this team.",

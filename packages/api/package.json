@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "@casl/ability": "^6.5.0",
-    "@casl/prisma": "^1.4.1",
     "@prisma/client": "^5.1.1",
     "@supabase/auth-helpers-nextjs": "0.7.2",
     "@supabase/gotrue-js": "2.34.0",
