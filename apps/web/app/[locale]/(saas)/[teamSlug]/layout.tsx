@@ -1,3 +1,4 @@
+import { UserContextProvider } from "@saas/auth/lib";
 import { NavBar } from "@saas/shared/components";
 import { createApiCaller } from "api";
 import { redirect } from "next/navigation";
@@ -8,18 +9,31 @@ export const revalidate = 0;
 
 export default async function Layout({
   children,
+  params: { teamSlug },
 }: PropsWithChildren<{ params: { teamSlug: string } }>) {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.user.me();
 
   if (!user) return redirect("/auth/login");
 
-  const teams = await apiCaller.user.teams({ userId: user.id });
+  const { teamMemberships } = user;
+
+  const currentTeamMembership = teamMemberships?.find(
+    (membership) => membership.team.slug === teamSlug,
+  );
 
   return (
-    <div className="bg-muted min-h-screen">
-      <NavBar user={user} teams={teams} />
-      <main className="bg-muted">{children}</main>
-    </div>
+    <UserContextProvider
+      initialUser={user}
+      teamRole={currentTeamMembership?.role}
+    >
+      <div className="bg-muted min-h-screen">
+        <NavBar
+          user={user}
+          teams={teamMemberships?.map((membership) => membership.team) ?? []}
+        />
+        <main className="bg-muted">{children}</main>
+      </div>
+    </UserContextProvider>
   );
 }

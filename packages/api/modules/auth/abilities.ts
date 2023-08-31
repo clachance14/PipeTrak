@@ -14,7 +14,6 @@ export function defineAbilitiesFor({
     teamMemberships?.find((m) => m.teamId === teamId)?.role ?? null;
 
   const isTeamMember = (teamId: string) => !!getTeamRole(teamId);
-
   const isTeamOwner = (teamId: string) => getTeamRole(teamId) === "OWNER";
 
   return {

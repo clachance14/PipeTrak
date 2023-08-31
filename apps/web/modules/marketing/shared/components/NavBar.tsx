@@ -1,7 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
-import { useUser } from "@saas/auth";
+import { useUser } from "@saas/auth/hooks";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import {
   Button,

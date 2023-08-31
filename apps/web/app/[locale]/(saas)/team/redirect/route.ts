@@ -1,4 +1,5 @@
-import { ApiOutput, createApiCaller } from "api";
+import { createApiCaller } from "api";
+import { Team } from "database";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -14,11 +15,13 @@ export async function GET(request: Request) {
 
     if (!user) throw new Error("Unauthorized");
 
-    const teams = await apiCaller.user.teams({ userId: user.id });
+    const teamMemberships = await apiCaller.user.teamMemberships({
+      userId: user.id,
+    });
 
     // if user has no teams, we create one for them
-    if (!teams || !teams.length) {
-      let team: ApiOutput["user"]["teams"][number] | undefined = undefined;
+    if (!teamMemberships || !teamMemberships.length) {
+      let team: Team | undefined = undefined;
       let iteration = 0;
 
       do {
@@ -40,17 +43,19 @@ export async function GET(request: Request) {
     const teamSlugCookie = cookies().get("team-slug")?.value;
 
     if (teamSlugCookie) {
-      const team = teams.find((team) => team.slug === teamSlugCookie);
+      const teamMembership = teamMemberships.find(
+        (membership) => membership.team.slug === teamSlugCookie,
+      );
 
-      if (team) {
+      if (teamMembership) {
         return NextResponse.redirect(
-          `${requestUrl.origin}/${team.slug}/dashboard`,
+          `${requestUrl.origin}/${teamMembership.team.slug}/dashboard`,
         );
       }
     }
 
     return NextResponse.redirect(
-      `${requestUrl.origin}/${teams[0].slug}/dashboard`,
+      `${requestUrl.origin}/${teamMemberships[0].team.slug}/dashboard`,
     );
   } catch (e) {
     console.error(e);

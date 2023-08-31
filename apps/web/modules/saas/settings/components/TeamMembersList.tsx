@@ -27,7 +27,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { useUser } from "@saas/auth/hooks";
 import { UserAvatar } from "@shared/components";
+import { apiClient } from "@shared/lib";
+import { useToast } from "@ui/hooks";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 
@@ -39,8 +43,31 @@ export function TeamMembersList({
   memberships: TeamMembershipsOutput;
 }) {
   const t = useTranslations();
+  const router = useRouter();
+  const { user, teamRole } = useUser();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const { toast } = useToast();
+
+  const removeMemberMutation = apiClient.team.removeMember.useMutation({
+    onSuccess: () => {
+      toast({
+        variant: "success",
+        description: t(
+          "settings.team.members.notifications.removeMember.success.description",
+        ),
+      });
+      router.refresh();
+    },
+    onError: () => {
+      toast({
+        variant: "error",
+        description: t(
+          "settings.team.members.notifications.removeMember.error.description",
+        ),
+      });
+    },
+  });
 
   const columns: ColumnDef<TeamMembershipsOutput[number]>[] = [
     {
@@ -72,7 +99,7 @@ export function TeamMembersList({
             <TeamRoleSelect
               value={row.original.role}
               onSelect={() => {}}
-              disabled={row.original.isCreator}
+              disabled={teamRole !== "OWNER" || row.original.isCreator}
             />
 
             <DropdownMenu>
@@ -85,10 +112,23 @@ export function TeamMembersList({
                 <DropdownMenuItem
                   disabled={row.original.isCreator}
                   className="text-error"
-                  onClick={() => alert("settings.team.members.remove user")}
+                  onClick={() =>
+                    removeMemberMutation.mutate({
+                      membershipId: row.original.id,
+                    })
+                  }
                 >
-                  <Icon.delete className="mr-2 h-4 w-4" />
-                  {t("settings.team.members.removeMember")}
+                  {row.original.user?.id === user?.id ? (
+                    <>
+                      <Icon.logout className="mr-2 h-4 w-4" />
+                      {t("settings.team.members.removeMember")}
+                    </>
+                  ) : (
+                    <>
+                      <Icon.delete className="mr-2 h-4 w-4" />
+                      {t("settings.team.members.removeMember")}
+                    </>
+                  )}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@saas/auth";
+import { useUser } from "@saas/auth/hooks";
 import { Logo } from "@shared/components";
 import { PropsWithChildren } from "react";
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUp } from "@saas/auth";
 import {
   Alert,
   AlertDescription,
@@ -16,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { signUp } from "../provider";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({

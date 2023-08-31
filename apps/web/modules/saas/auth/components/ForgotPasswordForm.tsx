@@ -92,7 +92,7 @@ export function ForgotPasswordForm() {
           </Alert>
         )}
 
-        <Button>
+        <Button loading={isSubmitting}>
           <Icon.submit className="h-4 w-4" /> {t("auth.forgotPassword.submit")}
         </Button>
       </form>

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUser } from "@saas/auth/hooks";
 import { apiClient } from "@shared/lib";
 import {
   Button,
@@ -37,6 +38,7 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
+  const { teamRole } = useUser();
   const inviteMemberMutation = apiClient.team.inviteMember.useMutation();
 
   const roleOptions = [
@@ -88,6 +90,8 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
       });
     }
   };
+
+  if (teamRole !== "OWNER") return null;
 
   return (
     <Card>

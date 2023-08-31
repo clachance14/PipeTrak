@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUser, verifyOTP } from "@saas/auth";
+import { verifyOTP } from "@saas/auth";
 import {
   Alert,
   AlertDescription,
@@ -20,6 +20,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { useUser } from "../hooks";
 import { VerifyOTPType } from "../types";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 

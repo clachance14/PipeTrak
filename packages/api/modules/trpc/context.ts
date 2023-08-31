@@ -23,6 +23,9 @@ export async function createContext() {
         where: {
           userId: user.id,
         },
+        include: {
+          team: true,
+        },
       })
     : null;
 

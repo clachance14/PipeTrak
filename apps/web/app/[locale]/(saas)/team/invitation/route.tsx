@@ -25,11 +25,16 @@ export async function GET(request: Request) {
       `/auth/login?invitationCode=${invitation.id}&email=${invitation.email}`,
     );
 
-  const team = await apiCaller.team.acceptInvitation({
-    id: code,
-  });
+  try {
+    const team = await apiCaller.team.acceptInvitation({
+      id: code,
+    });
 
-  if (!team) return redirect("/");
+    if (!team) return redirect("/");
 
-  return redirect(`/${team.slug}/dashboard`);
+    return redirect(`/${team.slug}/dashboard`);
+  } catch (e) {
+    console.error(e);
+    return redirect("/");
+  }
 }

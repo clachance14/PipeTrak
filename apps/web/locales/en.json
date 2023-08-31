@@ -241,7 +241,17 @@
           "member": "Member",
           "owner": "Owner"
         },
-        "title": "Members"
+        "title": "Members",
+        "notifications": {
+          "removeMember": {
+            "success": {
+              "description": "The member has been successfully removed from your team."
+            },
+            "error": {
+              "description": "Could not remove the member from your team. Please try again."
+            }
+          }
+        }
       },
       "subtitle": "Manage your team settings and members",
       "title": "Team"

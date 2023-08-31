@@ -1,2 +1,2 @@
 export * from "./me";
-export * from "./teams";
+export * from "./team-memberships";

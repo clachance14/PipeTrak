@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@saas/auth/hooks";
 import { ActionBlock } from "@saas/shared/components";
 import { apiClient } from "@shared/lib";
 import { Input } from "@ui/components";
@@ -18,6 +19,7 @@ export function ChangeTeamNameForm({
   const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
+  const { teamRole } = useUser();
   const [name, setName] = useState(initialValue);
 
   const updateTeamMutation = apiClient.team.update.useMutation({
@@ -44,6 +46,7 @@ export function ChangeTeamNameForm({
       <Input
         className="max-w-sm"
         value={name}
+        disabled={teamRole !== "OWNER"}
         onChange={(e) => setName(e.target.value)}
       />
     </ActionBlock>

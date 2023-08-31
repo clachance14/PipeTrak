@@ -2,7 +2,7 @@
 
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login, useUser } from "@saas/auth";
+import { useUser } from "@saas/auth/hooks";
 import {
   Alert,
   AlertDescription,
@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { login } from "../provider";
 import SigninModeSwitch from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";

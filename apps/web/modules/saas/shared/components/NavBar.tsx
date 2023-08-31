@@ -4,19 +4,19 @@ import { UserMenu } from "@marketing/shared/components";
 import { Logo } from "@shared/components";
 import { Icon } from "@ui/components";
 import { ApiOutput } from "api";
+import { Team } from "database";
 import { useTranslations } from "next-intl";
 import Link from "next-intl/link";
 import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";
 
-type Teams = ApiOutput["user"]["teams"];
 type User = ApiOutput["user"]["me"];
 
 export function NavBar({
   teams,
   user,
-}: PropsWithChildren<{ teams: Teams; user: User }>) {
+}: PropsWithChildren<{ teams: Team[]; user: User }>) {
   const t = useTranslations();
   const pathname = usePathname();
   const { teamSlug } = useParams();
