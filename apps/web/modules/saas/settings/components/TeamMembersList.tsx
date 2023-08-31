@@ -49,25 +49,7 @@ export function TeamMembersList({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { toast } = useToast();
 
-  const removeMemberMutation = apiClient.team.removeMember.useMutation({
-    onSuccess: () => {
-      toast({
-        variant: "success",
-        description: t(
-          "settings.team.members.notifications.removeMember.success.description",
-        ),
-      });
-      router.refresh();
-    },
-    onError: () => {
-      toast({
-        variant: "error",
-        description: t(
-          "settings.team.members.notifications.removeMember.error.description",
-        ),
-      });
-    },
-  });
+  const removeMemberMutation = apiClient.team.removeMember.useMutation();
 
   const columns: ColumnDef<TeamMembershipsOutput[number]>[] = [
     {
@@ -112,11 +94,41 @@ export function TeamMembersList({
                 <DropdownMenuItem
                   disabled={row.original.isCreator}
                   className="text-error"
-                  onClick={() =>
-                    removeMemberMutation.mutate({
-                      membershipId: row.original.id,
-                    })
-                  }
+                  onClick={() => {
+                    const loadingToast = toast({
+                      variant: "loading",
+                      description: t(
+                        "settings.team.members.notifications.removeMember.loading.description",
+                      ),
+                    });
+                    removeMemberMutation.mutate(
+                      {
+                        membershipId: row.original.id,
+                      },
+                      {
+                        onSettled: () => {
+                          loadingToast.dismiss();
+                        },
+                        onSuccess: () => {
+                          toast({
+                            variant: "success",
+                            description: t(
+                              "settings.team.members.notifications.removeMember.success.description",
+                            ),
+                          });
+                          router.refresh();
+                        },
+                        onError: () => {
+                          toast({
+                            variant: "error",
+                            description: t(
+                              "settings.team.members.notifications.removeMember.error.description",
+                            ),
+                          });
+                        },
+                      },
+                    );
+                  }}
                 >
                   {row.original.user?.id === user?.id ? (
                     <>

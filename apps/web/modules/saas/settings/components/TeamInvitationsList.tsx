@@ -90,9 +90,11 @@ export function TeamInvitationsList({
                           invitationId: row.original.id,
                         },
                         {
+                          onSettled: () => {
+                            loadingToast.dismiss();
+                          },
                           onSuccess: () => {
-                            loadingToast.update({
-                              id: loadingToast.id,
+                            toast({
                               variant: "success",
                               description: t(
                                 "settings.team.members.notifications.revokeInvitation.success.description",
@@ -101,8 +103,7 @@ export function TeamInvitationsList({
                             router.refresh();
                           },
                           onError: () => {
-                            loadingToast.update({
-                              id: loadingToast.id,
+                            toast({
                               variant: "error",
                               description: t(
                                 "settings.team.members.notifications.revokeInvitation.error.description",

@@ -1,4 +1,4 @@
-import { send } from "./provider";
+import { send } from "../provider";
 import { getTemplate, type mailTemplates } from "./templates";
 
 export async function sendEmail<

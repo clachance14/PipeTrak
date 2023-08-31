@@ -249,6 +249,9 @@
             },
             "error": {
               "description": "Could not remove the member from your team. Please try again."
+            },
+            "loading": {
+              "description": "Removing member from team..."
             }
           },
           "revokeInvitation": {

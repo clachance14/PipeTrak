@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import { config } from "../../config";
 import { SendEmailHandler } from "../../types";
+// @ts-ignore
 import { env } from "./env.mjs";
 
 const { from } = config;
