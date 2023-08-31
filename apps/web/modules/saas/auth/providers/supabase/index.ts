@@ -39,7 +39,7 @@ export const login: AuthProviderClientModule["login"] = async (params) => {
     const { error } = await supabaseClient.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: getCallbackUrl(redirectTo),
+        emailRedirectTo: getCallbackUrl("/auth/confirmation"),
       },
     });
 
@@ -74,7 +74,7 @@ export const getUser: AuthProviderClientModule["getUser"] = async () => {
 export const forgotPassword: AuthProviderClientModule["forgotPassword"] =
   async (email) => {
     const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-      redirectTo: `${location.origin}/settings/account`,
+      redirectTo: getCallbackUrl("/auth/confirmation"),
     });
 
     if (error) throw new Error("Could not send password reset email");
@@ -90,7 +90,7 @@ export const signUp: AuthProviderClientModule["signUp"] = async (params) => {
       data: {
         full_name: name,
       },
-      emailRedirectTo: getCallbackUrl(redirectTo),
+      emailRedirectTo: getCallbackUrl("/auth/confirmation"),
     },
   });
 

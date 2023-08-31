@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { forgotPassword } from "@saas/auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -25,6 +26,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function ForgotPasswordForm() {
   const t = useTranslations();
+  const router = useRouter();
   const [serverError, setServerError] = useState<null | {
     title: string;
     message: string;
@@ -41,6 +43,11 @@ export function ForgotPasswordForm() {
   const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
     try {
       await forgotPassword(email);
+
+      const redirectSearchParams = new URLSearchParams();
+      redirectSearchParams.set("type", "recovery");
+      if (email) redirectSearchParams.set("email", email);
+      router.replace(`/auth/verify-otp?${redirectSearchParams.toString()}`);
     } catch (e) {
       setServerError({
         title: t("auth.forgotPassword.hints.linkNotSent.title"),
@@ -60,47 +67,35 @@ export function ForgotPasswordForm() {
           {t("auth.forgotPassword.backToSignin")} &rarr;
         </Link>
       </p>
-      {isSubmitted && isSubmitSuccessful ? (
-        <Alert variant="success">
-          <Icon.mail className="h-4 w-4" />
-          <AlertTitle>
-            {t("auth.forgotPassword.hints.linkSent.title")}
-          </AlertTitle>
-          <AlertDescription>
-            {t("auth.forgotPassword.hints.linkSent.message")}
-          </AlertDescription>
-        </Alert>
-      ) : (
-        <form
-          className="flex flex-col items-stretch gap-6"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div>
-            <label htmlFor="email" className="mb-1 block font-semibold">
-              {t("auth.forgotPassword.email")}
-            </label>
-            <Input
-              type="email"
-              {...register("email", { required: true })}
-              required
-              autoComplete="email"
-            />
-          </div>
 
-          {isSubmitted && serverError && (
-            <Alert variant="error">
-              <Icon.warning className="h-4 w-4" />
-              <AlertTitle>{serverError.title}</AlertTitle>
-              <AlertDescription>{serverError.message}</AlertDescription>
-            </Alert>
-          )}
+      <form
+        className="flex flex-col items-stretch gap-6"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div>
+          <label htmlFor="email" className="mb-1 block font-semibold">
+            {t("auth.forgotPassword.email")}
+          </label>
+          <Input
+            type="email"
+            {...register("email", { required: true })}
+            required
+            autoComplete="email"
+          />
+        </div>
 
-          <Button>
-            <Icon.submit className="h-4 w-4" />{" "}
-            {t("auth.forgotPassword.submit")}
-          </Button>
-        </form>
-      )}
+        {isSubmitted && serverError && (
+          <Alert variant="error">
+            <Icon.warning className="h-4 w-4" />
+            <AlertTitle>{serverError.title}</AlertTitle>
+            <AlertDescription>{serverError.message}</AlertDescription>
+          </Alert>
+        )}
+
+        <Button>
+          <Icon.submit className="h-4 w-4" /> {t("auth.forgotPassword.submit")}
+        </Button>
+      </form>
     </>
   );
 }

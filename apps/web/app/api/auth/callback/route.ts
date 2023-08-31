@@ -14,10 +14,16 @@ export async function GET(request) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  if (redirectTo)
+  if (redirectTo) {
+    console.log(
+      "redirecting to",
+      redirectTo,
+      new URL(redirectTo, requestUrl.origin),
+    );
     return redirectTo.startsWith("http")
       ? NextResponse.redirect(redirectTo)
-      : NextResponse.redirect(`${requestUrl.origin}${redirectTo}`);
+      : NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
+  }
 
-  return NextResponse.redirect(`${requestUrl.origin}/team/redirect`);
+  return NextResponse.redirect(new URL("/team/redirect", requestUrl.origin));
 }

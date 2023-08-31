@@ -6,7 +6,7 @@ export type User = {
   email: string;
 };
 
-export type VerifyOTPType = "magiclink" | "signup";
+export type VerifyOTPType = "magiclink" | "signup" | "recovery";
 
 export type AuthProviderClientModule = {
   login: (

@@ -87,6 +87,11 @@
     "teamInvitation": {
       "title": "Accept team invitation",
       "description": "You have been invited to join a team. By logging in or signing up you will automatically accept the invitation and join the team."
+    },
+    "confirmation": {
+      "title": "You have been logged in!",
+      "message": "You can close this window and continue in the window you came from.",
+      "close": "Close this window"
     }
   },
   "blog": {
