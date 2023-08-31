@@ -250,6 +250,17 @@
             "error": {
               "description": "Could not remove the member from your team. Please try again."
             }
+          },
+          "revokeInvitation": {
+            "success": {
+              "description": "The invitation has been revoked."
+            },
+            "error": {
+              "description": "The invitation could not be revoked. Please try again later."
+            },
+            "loading": {
+              "description": "Revoking invitation..."
+            }
           }
         }
       },

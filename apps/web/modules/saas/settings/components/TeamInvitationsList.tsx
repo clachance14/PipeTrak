@@ -26,7 +26,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { useUser } from "@saas/auth/hooks";
+import { apiClient } from "@shared/lib";
+import { useToast } from "@ui/hooks";
 import { ApiOutput } from "api";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 
@@ -38,9 +42,15 @@ export function TeamInvitationsList({
   invitations: TeamInvitations;
 }) {
   const t = useTranslations();
+  const { toast } = useToast();
+  const router = useRouter();
+  const { teamRole } = useUser();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const revokeInvitationMutation =
+    apiClient.team.revokeInvitation.useMutation();
 
   const columns: ColumnDef<TeamInvitations[number]>[] = [
     {
@@ -59,21 +69,56 @@ export function TeamInvitationsList({
               onSelect={() => {}}
             />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost">
-                  <Icon.more />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => alert("settings.team.members.remove user")}
-                >
-                  <Icon.undo className="mr-2 h-4 w-4" />
-                  {t("settings.team.members.invitations.revoke")}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {teamRole === "OWNER" && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="icon" variant="ghost">
+                    <Icon.more />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      const loadingToast = toast({
+                        variant: "loading",
+                        description: t(
+                          "settings.team.members.notifications.revokeInvitation.loading.description",
+                        ),
+                      });
+                      revokeInvitationMutation.mutate(
+                        {
+                          invitationId: row.original.id,
+                        },
+                        {
+                          onSuccess: () => {
+                            loadingToast.update({
+                              id: loadingToast.id,
+                              variant: "success",
+                              description: t(
+                                "settings.team.members.notifications.revokeInvitation.success.description",
+                              ),
+                            });
+                            router.refresh();
+                          },
+                          onError: () => {
+                            loadingToast.update({
+                              id: loadingToast.id,
+                              variant: "error",
+                              description: t(
+                                "settings.team.members.notifications.revokeInvitation.error.description",
+                              ),
+                            });
+                          },
+                        },
+                      );
+                    }}
+                  >
+                    <Icon.undo className="mr-2 h-4 w-4" />
+                    {t("settings.team.members.invitations.revoke")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         );
       },

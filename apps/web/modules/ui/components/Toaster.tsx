@@ -18,6 +18,7 @@ const variantIcons: Record<
   JSXElementConstructor<{ className?: string }>
 > = {
   default: Icon.notification,
+  loading: Icon.spinner,
   success: Icon.check,
   error: Icon.error,
 };
@@ -36,7 +37,11 @@ export function Toaster() {
           <Toast key={id} {...props}>
             <div className="flex items-center gap-3">
               {ToastIcon !== undefined && (
-                <ToastIcon className="h-6 w-6 shrink-0 opacity-50" />
+                <ToastIcon
+                  className={`h-6 w-6 shrink-0 opacity-50 ${
+                    props.variant === "loading" ? "animate-spin" : ""
+                  }`}
+                />
               )}
               <div className="grid gap-1">
                 {title && <ToastTitle>{title}</ToastTitle>}
