@@ -13,8 +13,8 @@ import {
   DropdownMenuTrigger,
   Icon,
 } from "@ui/components";
-import { ApiOutput } from "api";
 import BoringAvatar from "boring-avatars";
+import { Team } from "database";
 import { useSetAtom } from "jotai";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
@@ -25,7 +25,7 @@ export function TeamSelect({
   teams,
   className,
 }: {
-  teams: ApiOutput["user"]["teams"];
+  teams: Team[];
   className?: string;
 }) {
   const t = useTranslations();
