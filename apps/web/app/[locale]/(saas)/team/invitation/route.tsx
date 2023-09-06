@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   if (!invitation) return redirect("/");
 
-  const user = await apiCaller.user.me();
+  const user = await apiCaller.auth.user();
 
   if (!user)
     return redirect(

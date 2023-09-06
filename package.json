@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "dotenv -c -- turbo build",
-    "dev": "dotenv -c -- turbo dev",
+    "dev": "dotenv -c -- turbo dev --concurrency 15",
     "lint": "turbo lint",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { apiClient } from "@shared/lib";
 import {
   Alert,
   AlertDescription,
@@ -15,7 +16,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { signUp } from "../provider";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
@@ -44,6 +44,8 @@ export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
 
+  const signupMutation = apiClient.auth.signup.useMutation();
+
   const invitationCode = searchParams.get("invitationCode");
   const redirectTo = invitationCode
     ? `/team/invitation?code=${invitationCode}`
@@ -61,21 +63,21 @@ export function SignupForm() {
   }) => {
     setServerError(null);
     try {
-      await signUp({
+      await signupMutation.mutateAsync({
         email,
         password,
         name,
-        redirectTo,
+        callbackUrl: new URL("/auth/verify", window.location.origin).toString(),
       });
 
       const redirectSearchParams = new URLSearchParams();
-      redirectSearchParams.set("type", "signup");
+      redirectSearchParams.set("type", "SIGNUP");
       redirectSearchParams.set("redirectTo", redirectTo);
       if (invitationCode)
         redirectSearchParams.set("invitationCode", invitationCode);
       if (email) redirectSearchParams.set("email", email);
 
-      router.replace(`/auth/verify-otp?${redirectSearchParams.toString()}`);
+      router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {
       setServerError({
         title: t("auth.signup.hints.signupFailed.title"),
@@ -110,7 +112,6 @@ export function SignupForm() {
             {t("auth.signup.name")} *
           </label>
           <Input
-            // status={errors.name ? "error" : "default"}
             type="text"
             {...register("name", { required: true })}
             required

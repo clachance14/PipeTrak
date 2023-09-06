@@ -4,7 +4,7 @@ import { CompleteTeam, RelatedTeamModel } from "./index"
 
 export const TeamInvitationModel = z.object({
   id: z.string(),
-  teamId: z.string(),
+  team_id: z.string(),
   email: z.string(),
   role: z.nativeEnum(TeamMemberRole),
   createdAt: z.date(),

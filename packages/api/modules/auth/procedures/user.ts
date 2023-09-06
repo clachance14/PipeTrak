@@ -1,11 +1,16 @@
-import { TeamMembershipModel, TeamModel, db } from "database";
+import { TeamMembershipModel, TeamModel, UserModel } from "database";
 import { z } from "zod";
-import { userSchema } from "../../auth";
 import { publicProcedure } from "../../trpc";
 
-export const me = publicProcedure
+export const user = publicProcedure
   .output(
-    userSchema
+    UserModel.pick({
+      id: true,
+      email: true,
+      role: true,
+      avatar_url: true,
+      name: true,
+    })
       .extend({
         teamMemberships: z
           .array(
@@ -18,23 +23,11 @@ export const me = publicProcedure
       .nullable(),
   )
   .query(async ({ ctx: { user, teamMemberships } }) => {
-    if (!user) {
-      return null;
-    }
-
-    const data = await db.userProfile.findFirst({
-      where: {
-        userId: user.id,
-      },
-    });
-
-    if (data) {
-      user.avatarUrl = data.avatarUrl ?? undefined;
-      user.role = data.role ?? "USER";
-    }
+    if (!user) return null;
 
     return {
       ...user,
+      id: user.userId,
       teamMemberships,
     };
   });

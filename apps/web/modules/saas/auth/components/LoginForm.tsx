@@ -2,7 +2,7 @@
 
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUser } from "@saas/auth/hooks";
+import { apiClient } from "@shared/lib";
 import {
   Alert,
   AlertDescription,
@@ -17,7 +17,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { login } from "../provider";
 import SigninModeSwitch from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
@@ -32,7 +31,6 @@ type FormValues = z.infer<typeof formSchema>;
 export function LoginForm() {
   const t = useTranslations();
   const router = useRouter();
-  const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
   );
@@ -42,12 +40,16 @@ export function LoginForm() {
   }>(null);
   const searchParams = useSearchParams();
 
+  const loginWithPasswordMutation =
+    apiClient.auth.loginWithPassword.useMutation();
+  const loginWithEmailMutation = apiClient.auth.loginWithEmail.useMutation();
+
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    formState: { isSubmitting, isSubmitted, isSubmitSuccessful },
+    formState: { isSubmitting, isSubmitted },
   } = useForm<FormValues>({ resolver: zodResolver(formSchema) });
 
   const invitationCode = searchParams.get("invitationCode");
@@ -65,40 +67,35 @@ export function LoginForm() {
     setServerError(null);
   }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // redirect when user has been loaded
-  useEffect(() => {
-    if (user && loaded) {
-      if (typeof window !== undefined)
-        window.location.href = new URL(
-          redirectTo,
-          window.location.origin,
-        ).toString();
-    }
-  }, [user, loaded]);
-
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
     setServerError(null);
     try {
       if (signinMode === "password") {
-        await login({
-          method: "password",
+        await loginWithPasswordMutation.mutateAsync({
           email,
           password: password!,
         });
-      } else {
-        await login({
-          method: "email",
-          email,
+
+        window.location.href = new URL(
           redirectTo,
+          window.location.origin,
+        ).toString();
+      } else {
+        await loginWithEmailMutation.mutateAsync({
+          email,
+          callbackUrl: new URL(
+            "/auth/verify",
+            window.location.origin,
+          ).toString(),
         });
 
         const redirectSearchParams = new URLSearchParams();
-        redirectSearchParams.set("type", "magiclink");
+        redirectSearchParams.set("type", "LOGIN");
         redirectSearchParams.set("redirectTo", redirectTo);
         if (invitationCode)
           redirectSearchParams.set("invitationCode", invitationCode);
-        if (email) redirectSearchParams.set("email", email);
-        router.replace(`/auth/verify-otp?${redirectSearchParams.toString()}`);
+        if (email) redirectSearchParams.set("identifier", email);
+        router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
       }
     } catch (e) {
       setServerError({
@@ -119,17 +116,7 @@ export function LoginForm() {
 
       <div className="flex flex-col items-stretch gap-3">
         {appConfig.auth.oAuthProviders.map((providerId) => (
-          <SocialSigninButton
-            key={providerId}
-            provider={providerId}
-            onClick={() =>
-              login({
-                method: "oauth",
-                provider: providerId,
-                redirectTo,
-              })
-            }
-          />
+          <SocialSigninButton key={providerId} provider={providerId} />
         ))}
       </div>
 

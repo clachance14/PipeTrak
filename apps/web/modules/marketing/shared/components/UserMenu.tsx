@@ -2,8 +2,9 @@
 
 import { appConfig } from "@config";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
-import { signOut } from "@saas/auth";
+import { useUser } from "@saas/auth/hooks";
 import { UserAvatar } from "@shared/components";
+import { apiClient } from "@shared/lib";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,21 +19,22 @@ import {
   DropdownMenuTrigger,
   Icon,
 } from "@ui/components";
-import { ApiOutput } from "api";
 import { useLocale } from "next-intl";
 import { usePathname } from "next-intl/client";
 import Link from "next-intl/link";
 import { useTheme } from "next-themes";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const { locales, localeLabels } = appConfig.i18n;
 
-export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
+export function UserMenu() {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
   const searchParams = useSearchParams();
   const currentLocale = useLocale();
+  const { user, logout } = useUser();
   const [locale, setLocale] = useState<string>(currentLocale);
   const {
     resolvedTheme,
@@ -40,6 +42,9 @@ export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
     theme: currentTheme,
   } = useTheme();
   const [theme, setTheme] = useState<string>(currentTheme ?? "system");
+  const logoutMutation = apiClient.auth.logout.useMutation();
+
+  const teamSlug = params.teamSlug as string;
 
   const colorModeOptions = [
     {
@@ -61,13 +66,13 @@ export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
 
   if (!user) return null;
 
-  const { name, email, avatarUrl } = user;
+  const { name, email, avatar_url } = user;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2">
-          <UserAvatar name={name} avatarUrl={avatarUrl} />
+          <UserAvatar name={name ?? ""} avatarUrl={avatar_url} />
         </button>
       </DropdownMenuTrigger>
 
@@ -142,7 +147,7 @@ export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="/">
+          <Link href={`/${teamSlug}/settings/account`}>
             <Icon.settings className="mr-2 h-4 w-4" /> Account settings
           </Link>
         </DropdownMenuItem>
@@ -155,8 +160,8 @@ export function UserMenu({ user }: { user: ApiOutput["user"]["me"] }) {
 
         <DropdownMenuItem
           onClick={async () => {
+            await logout();
             router.replace("/");
-            await signOut();
           }}
         >
           <Icon.logout className="mr-2 h-4 w-4" /> Logout

@@ -1,19 +1,18 @@
 import * as z from "zod"
 import { TeamMemberRole } from "@prisma/client"
-import { CompleteTeam, RelatedTeamModel } from "./index"
+import { CompleteTeam, RelatedTeamModel, CompleteUser, RelatedUserModel } from "./index"
 
 export const TeamMembershipModel = z.object({
   id: z.string(),
-  teamId: z.string(),
-  userId: z.string(),
+  team_id: z.string(),
+  user_id: z.string(),
   role: z.nativeEnum(TeamMemberRole),
-  isCreator: z.boolean(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  is_creator: z.boolean(),
 })
 
 export interface CompleteTeamMembership extends z.infer<typeof TeamMembershipModel> {
   team: CompleteTeam
+  user: CompleteUser
 }
 
 /**
@@ -23,4 +22,5 @@ export interface CompleteTeamMembership extends z.infer<typeof TeamMembershipMod
  */
 export const RelatedTeamMembershipModel: z.ZodSchema<CompleteTeamMembership> = z.lazy(() => TeamMembershipModel.extend({
   team: RelatedTeamModel,
+  user: RelatedUserModel,
 }))

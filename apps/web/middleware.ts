@@ -1,25 +1,10 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import createMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { appConfig } from "./config";
 
 const intlMiddleware = createMiddleware(appConfig.i18n);
 
 export default async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const pathname = req.nextUrl.pathname;
-  const supabase = createMiddlewareClient({ req, res });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (
-    pathname.startsWith("/auth") &&
-    !pathname.startsWith("/auth/confirmation") &&
-    session?.user
-  )
-    return NextResponse.redirect(new URL("/team/redirect", req.nextUrl.origin));
-
   return intlMiddleware(req);
 }
 

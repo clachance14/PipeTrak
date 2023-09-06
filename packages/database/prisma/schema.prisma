@@ -17,29 +17,75 @@ enum UserRole {
   ADMIN
 }
 
-model UserProfile {
-  userId    String   @id
-  avatarUrl String?
-  role      UserRole @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id                  String                  @id @unique
+  email               String                  @unique
+  email_verified      Boolean                 @default(false)
+  role                UserRole                @default(USER)
+  name                String?
+  avatar_url          String?
+  github_username     String?
+  sessions            UserSession[]
+  keys                UserKey[]
+  memberships         TeamMembership[]
+  verification_tokens UserVerificationToken[]
+  one_time_passwords  UserOneTimePassword[]
+}
+
+model UserSession {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model UserKey {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model UserVerificationToken {
+  id      String   @id @default(cuid())
+  user_id String
+  user    User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  token   String
+  expires DateTime
+
+  @@index([user_id])
+}
+
+enum UserOneTimePasswordType {
+  SIGNUP
+  LOGIN
+  PASSWORD_RESET
+}
+
+model UserOneTimePassword {
+  id         String                  @id @default(cuid())
+  user_id    String
+  user       User                    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  code       String
+  type       UserOneTimePasswordType
+  identifier String
+  expires    DateTime
+
+  @@index([user_id])
 }
 
 model Team {
-  id             String           @id @default(cuid())
-  name           String
-  slug           String           @unique
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  memberships    TeamMembership[]
-  Subscription   Subscription?
-  TeamInvitation TeamInvitation[]
-}
-
-enum TeamMembershipStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
+  id           String           @id @default(cuid())
+  name         String
+  slug         String           @unique
+  memberships  TeamMembership[]
+  subscription Subscription?
+  invitations  TeamInvitation[]
 }
 
 enum TeamMemberRole {
@@ -48,38 +94,37 @@ enum TeamMemberRole {
 }
 
 model TeamMembership {
-  id        String         @id @default(cuid())
-  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String
-  userId    String
-  role      TeamMemberRole @default(MEMBER)
-  isCreator Boolean        @default(false)
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id         String         @id @default(cuid())
+  team       Team           @relation(fields: [team_id], references: [id], onDelete: Cascade)
+  team_id    String
+  user       User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+  role       TeamMemberRole @default(MEMBER)
+  is_creator Boolean        @default(false)
 
-  @@unique([teamId, userId])
+  @@unique([team_id, user_id])
 }
 
 model TeamInvitation {
   id        String         @id @default(cuid())
-  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String
+  team      Team           @relation(fields: [team_id], references: [id], onDelete: Cascade)
+  team_id   String
   email     String
   role      TeamMemberRole @default(MEMBER)
   createdAt DateTime       @default(now())
   expiresAt DateTime       @updatedAt
 
-  @@unique([teamId, email])
+  @@unique([team_id, email])
 }
 
 model Subscription {
-  id              String    @id @default(cuid())
-  team            Team      @relation(fields: [teamId], references: [id])
-  teamId          String    @unique
-  customerId      String
-  subscriptionId  String
-  status          String
-  planId          String
-  variantId       String
-  nextPaymentDate DateTime?
+  id                String    @id @default(cuid())
+  team              Team      @relation(fields: [team_id], references: [id])
+  team_id           String    @unique
+  customer_id       String
+  subscription_id   String
+  status            String
+  plan_id           String
+  variant_id        String
+  next_payment_date DateTime?
 }

@@ -1,27 +1,23 @@
 import { inferAsyncReturnType } from "@trpc/server";
+import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { SessionUser, auth } from "auth";
 import { db } from "database";
-import { defineAbilitiesFor, getUser } from "../auth";
+import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
+import { defineAbilitiesFor } from "../auth";
 
-export async function createContext() {
-  const user = await getUser();
-
-  if (user) {
-    const userProfile = await db.userProfile.findFirst({
-      where: {
-        userId: user.id,
-      },
-    });
-
-    if (userProfile) {
-      user.avatarUrl = userProfile.avatarUrl ?? undefined;
-      user.role = userProfile.role ?? "USER";
-    }
-  }
+export async function createContext(params?: FetchCreateContextFnOptions) {
+  const authRequest = auth.handleRequest({
+    request: params ? (params.req as NextRequest) : null,
+    cookies,
+  });
+  const session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
+  const user: SessionUser | null = session?.user ?? null;
 
   const teamMemberships = user
     ? await db.teamMembership.findMany({
         where: {
-          userId: user.id,
+          user_id: user.id,
         },
         include: {
           team: true,
@@ -38,6 +34,8 @@ export async function createContext() {
     user,
     teamMemberships,
     abilities,
+    sessionId: session?.sessionId ?? null,
+    responseHeaders: params ? params.resHeaders : undefined,
   };
 }
 

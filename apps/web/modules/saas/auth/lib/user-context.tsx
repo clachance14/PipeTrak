@@ -1,20 +1,30 @@
 "use client";
 
-import { ApiOutput, User } from "api";
+import { apiClient } from "@shared/lib";
+import { ApiOutput } from "api";
 import { TeamMemberRole } from "database";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { getUser, registerAuthEventListener } from "../provider";
+
+type User = ApiOutput["auth"]["user"];
 
 type UserContext = {
-  user: null | User;
-  setUser: (user: null | User) => void;
+  user: User;
+  reloadUser: () => Promise<void>;
+  logout: () => Promise<void>;
   loaded: boolean;
   teamRole: TeamMemberRole | null;
 };
 
+const authBroadcastChannel = new BroadcastChannel("auth");
+type AuthEvent = {
+  type: "login" | "logout";
+  user: User | null;
+};
+
 export const userContext = createContext<UserContext>({
   user: null,
-  setUser: () => {},
+  reloadUser: () => Promise.resolve(),
+  logout: () => Promise.resolve(),
   loaded: false,
   teamRole: null,
 });
@@ -24,31 +34,63 @@ export function UserContextProvider({
   initialUser,
   teamRole,
 }: PropsWithChildren<{
-  initialUser: ApiOutput["user"]["me"];
+  initialUser: User;
   teamRole?: TeamMemberRole;
 }>) {
-  const [loaded, setLoaded] = useState(false);
-  const [user, setUser] = useState<null | User>(initialUser);
+  const [loaded, setLoaded] = useState(!!initialUser);
+  const [user, setUser] = useState<User>(initialUser);
+  const userQuery = apiClient.auth.user.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    enabled: !initialUser,
+  });
+  const logoutMutation = apiClient.auth.logout.useMutation();
+
+  const reloadUser = async () => {
+    await userQuery.refetch();
+  };
+
+  const logout = async () => {
+    await logoutMutation.mutateAsync();
+    userQuery.remove();
+    setUser(null);
+    authBroadcastChannel.postMessage({
+      type: "logout",
+      user: null,
+    } satisfies AuthEvent);
+  };
 
   useEffect(() => {
-    (async () => {
-      if (!user) setUser(await getUser());
+    if (userQuery.data) {
+      setUser(userQuery.data);
       setLoaded(true);
-    })();
+    }
+  }, [userQuery.data]);
 
-    const { unsubscribe } = registerAuthEventListener((_event, payload) => {
-      const user = payload?.user ?? null;
-      setUser(user);
-    });
+  // useEffect(() => {
+  //   const handleAuthEvent = async (event: MessageEvent<AuthEvent>) => {
+  //     if (JSON.stringify(event.data.user) !== JSON.stringify(user))
+  //       setUser(event.data.user);
+  //   };
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  //   authBroadcastChannel.addEventListener("message", handleAuthEvent);
+
+  //   return () =>
+  //     authBroadcastChannel.removeEventListener("message", handleAuthEvent);
+  // }, []);
+
+  // broadcast user when it changes
+  // useEffect(() => {
+  //   if (user)
+  //     authBroadcastChannel.postMessage({
+  //       type: "login",
+  //       user,
+  //     } satisfies AuthEvent);
+  // }, [user]);
 
   return (
     <userContext.Provider
-      value={{ user, setUser, loaded, teamRole: teamRole ?? null }}
+      value={{ user, reloadUser, logout, loaded, teamRole: teamRole ?? null }}
     >
       {children}
     </userContext.Provider>

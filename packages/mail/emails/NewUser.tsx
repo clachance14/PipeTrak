@@ -1,20 +1,40 @@
-import { Container, Heading, Section, Text } from "@react-email/components";
+import { Link, Text } from "@react-email/components";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
 
-export function NewUser({ url }: { url: string }): JSX.Element {
+export function NewUser({
+  url,
+  name,
+  otp,
+}: {
+  url: string;
+  name: string;
+  otp: string;
+}): JSX.Element {
   return (
     <Wrapper>
-      <Section className="bg-card p-8">
-        <Container>
-          <Heading as="h1">Welcome to supastarter!</Heading>
-          <Text>
-            Thank you for signing up to supastarter. Click the link below to
-            confirm your email and sign in:
-          </Text>
-          <PrimaryButton href={url}>Confirm email</PrimaryButton>
-        </Container>
-      </Section>
+      <Text>
+        Hey {name}, <br /> you requested a login email from supastarter.
+        <br />
+        <br /> You can either enter the one-time password below manually in the
+        application{" "}
+      </Text>
+
+      <Text>
+        One-time password:
+        <br />
+        <strong className="text-2xl font-bold">{otp}</strong>
+      </Text>
+
+      <Text>or use this link:</Text>
+
+      <PrimaryButton href={url}>Confirm email &rarr;</PrimaryButton>
+
+      <Text className="text-muted-foreground text-sm">
+        If you want to open the link in a different browser than your default
+        one, copy and paste this link:
+        <Link href={url}>{url}</Link>
+      </Text>
     </Wrapper>
   );
 }

@@ -5,7 +5,7 @@ export const UserAvatar = forwardRef<
   HTMLSpanElement,
   {
     name: string;
-    avatarUrl?: string;
+    avatarUrl?: string | null;
   }
 >(({ name, avatarUrl }, ref) => {
   const initials = useMemo(

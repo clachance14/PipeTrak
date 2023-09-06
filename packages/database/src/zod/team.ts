@@ -5,14 +5,12 @@ export const TeamModel = z.object({
   id: z.string(),
   name: z.string(),
   slug: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 })
 
 export interface CompleteTeam extends z.infer<typeof TeamModel> {
   memberships: CompleteTeamMembership[]
-  Subscription?: CompleteSubscription | null
-  TeamInvitation: CompleteTeamInvitation[]
+  subscription?: CompleteSubscription | null
+  invitations: CompleteTeamInvitation[]
 }
 
 /**
@@ -22,6 +20,6 @@ export interface CompleteTeam extends z.infer<typeof TeamModel> {
  */
 export const RelatedTeamModel: z.ZodSchema<CompleteTeam> = z.lazy(() => TeamModel.extend({
   memberships: RelatedTeamMembershipModel.array(),
-  Subscription: RelatedSubscriptionModel.nullish(),
-  TeamInvitation: RelatedTeamInvitationModel.array(),
+  subscription: RelatedSubscriptionModel.nullish(),
+  invitations: RelatedTeamInvitationModel.array(),
 }))

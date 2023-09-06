@@ -16,6 +16,8 @@ export const create = protectedProcedure
     const sanitizedSlug = slugify(slug || name, {
       lower: true,
       remove: /[*+~.()'"!:@]/g,
+      replacement: "-",
+      trim: true,
     });
 
     if (!sanitizedSlug)
@@ -28,16 +30,13 @@ export const create = protectedProcedure
       data: {
         name,
         slug: sanitizedSlug,
-      },
-    });
-
-    // automatically add the creating user to the team
-    await db.teamMembership.create({
-      data: {
-        teamId: team.id,
-        userId: user!.id,
-        role: "OWNER",
-        isCreator: true,
+        memberships: {
+          create: {
+            user_id: user!.userId,
+            role: "OWNER",
+            is_creator: true,
+          },
+        },
       },
     });
 

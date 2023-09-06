@@ -12,7 +12,7 @@ export default async function Layout({
   params: { teamSlug },
 }: PropsWithChildren<{ params: { teamSlug: string } }>) {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.me();
+  const user = await apiCaller.auth.user();
 
   if (!user) return redirect("/auth/login");
 

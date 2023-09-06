@@ -11,13 +11,12 @@ export async function GET(request: Request) {
   const apiCaller = await createApiCaller();
 
   try {
-    const user = await apiCaller.user.me();
+    const user = await apiCaller.auth.user();
 
-    if (!user) throw new Error("Unauthorized");
+    if (!user)
+      return NextResponse.redirect(new URL("/auth/login", requestUrl.origin));
 
-    const teamMemberships = await apiCaller.user.teamMemberships({
-      userId: user.id,
-    });
+    const { teamMemberships } = user;
 
     // if user has no teams, we create one for them
     if (!teamMemberships || !teamMemberships.length) {
@@ -25,17 +24,25 @@ export async function GET(request: Request) {
       let iteration = 0;
 
       do {
+        if (iteration === 10) return NextResponse.redirect(requestUrl.origin);
+
         try {
           const name = user.name || user.email.split("@")[0];
+          const slug = `${name}${iteration ? ` ${iteration + 1}` : ""}`;
+
           team = await apiCaller.team.create({
             name: name,
-            slug: `${name}${iteration ? ` ${iteration}` : ""}`,
+            slug,
           });
-        } catch {}
+        } catch (e) {
+          console.error(e);
+        }
+
+        iteration++;
       } while (!team);
 
       return NextResponse.redirect(
-        `${requestUrl.origin}/${team.slug}/dashboard`,
+        new URL(`/${team.slug}/dashboard`, requestUrl.origin),
       );
     }
 
@@ -49,13 +56,13 @@ export async function GET(request: Request) {
 
       if (teamMembership) {
         return NextResponse.redirect(
-          `${requestUrl.origin}/${teamMembership.team.slug}/dashboard`,
+          new URL(`/${teamMembership.team.slug}/dashboard`, requestUrl.origin),
         );
       }
     }
 
     return NextResponse.redirect(
-      `${requestUrl.origin}/${teamMemberships[0].team.slug}/dashboard`,
+      new URL(`/${teamMemberships[0].team.slug}/dashboard`, requestUrl.origin),
     );
   } catch (e) {
     console.error(e);

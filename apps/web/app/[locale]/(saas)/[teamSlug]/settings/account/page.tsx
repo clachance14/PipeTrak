@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { locale } }) {
 
 export default async function AccountSettingsPage() {
   const apiCaller = await createApiCaller();
-  const user = await apiCaller.user.me();
+  const user = await apiCaller.auth.user();
 
   if (!user) redirect("/auth/login");
 

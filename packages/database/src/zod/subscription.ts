@@ -3,13 +3,13 @@ import { CompleteTeam, RelatedTeamModel } from "./index"
 
 export const SubscriptionModel = z.object({
   id: z.string(),
-  teamId: z.string(),
-  customerId: z.string(),
-  subscriptionId: z.string(),
+  team_id: z.string(),
+  customer_id: z.string(),
+  subscription_id: z.string(),
   status: z.string(),
-  planId: z.string(),
-  variantId: z.string(),
-  nextPaymentDate: z.date().nullish(),
+  plan_id: z.string(),
+  variant_id: z.string(),
+  next_payment_date: z.date().nullish(),
 })
 
 export interface CompleteSubscription extends z.infer<typeof SubscriptionModel> {

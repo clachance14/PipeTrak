@@ -18,7 +18,8 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
+    "../../packages/auth/lucia.d.ts"
   ],
   "exclude": ["node_modules"]
 }

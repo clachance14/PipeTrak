@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { verifyOTP } from "@saas/auth";
+import { apiClient } from "@shared/lib";
 import {
   Alert,
   AlertDescription,
@@ -15,22 +15,22 @@ import {
   Icon,
   Input,
 } from "@ui/components";
+import { UserOneTimePasswordType } from "database";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "../hooks";
-import { VerifyOTPType } from "../types";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
-  otp: z.string().min(6).max(6),
+  code: z.string().min(6).max(6),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function VerifyOtpForm() {
+export function OtpForm() {
   const t = useTranslations();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -43,32 +43,38 @@ export function VerifyOtpForm() {
   const searchParams = useSearchParams();
 
   const invitationCode = searchParams.get("invitationCode");
-  const email = searchParams.get("email") || "";
-  const type: VerifyOTPType =
-    (searchParams.get("type") as VerifyOTPType) || "magiclink";
+  const identifier = searchParams.get("identifier") || "";
+  const type: UserOneTimePasswordType = searchParams.get(
+    "type",
+  ) as UserOneTimePasswordType;
   const redirectTo = invitationCode
     ? `/team/invitation?code=${invitationCode}`
     : searchParams.get("redirectTo") ?? "/team/redirect";
 
+  const verifyOtpMutation = apiClient.auth.verifyOtp.useMutation();
+
+  const handleRedirect = () => {
+    window.location.href = new URL(
+      redirectTo,
+      window.location.origin,
+    ).toString();
+  };
+
   // redirect when user has been loaded
   useEffect(() => {
-    if (user && loaded) {
-      if (typeof window !== undefined)
-        window.location.href = new URL(
-          redirectTo,
-          window.location.origin,
-        ).toString();
-    }
+    if (user && loaded) handleRedirect();
   }, [user, loaded]);
 
-  const onSubmit: SubmitHandler<FormValues> = async ({ otp }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({ code }) => {
     setServerError(null);
     try {
-      await verifyOTP({
-        otp,
+      await verifyOtpMutation.mutateAsync({
+        code,
         type,
-        email,
+        identifier,
       });
+
+      handleRedirect();
     } catch (e) {
       setServerError({
         title: t("auth.verifyOtp.hints.verificationFailed.title"),
@@ -101,7 +107,7 @@ export function VerifyOtpForm() {
 
           <FormField
             control={form.control}
-            name="otp"
+            name="code"
             render={({ field }) => (
               <FormControl>
                 <FormItem>

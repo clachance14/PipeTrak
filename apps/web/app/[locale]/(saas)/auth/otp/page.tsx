@@ -1,4 +1,4 @@
-import { VerifyOtpForm } from "@saas/auth/components";
+import { OtpForm } from "@saas/auth/components";
 import { getTranslator } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale, view } }) {
@@ -9,6 +9,6 @@ export async function generateMetadata({ params: { locale, view } }) {
   };
 }
 
-export default function VerifyOtpPage() {
-  return <VerifyOtpForm />;
+export default function OtpPage() {
+  return <OtpForm />;
 }

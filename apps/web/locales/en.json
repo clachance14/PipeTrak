@@ -92,6 +92,10 @@
       "title": "You have been logged in!",
       "message": "You can close this window and continue in the window you came from.",
       "close": "Close this window"
+    },
+    "invalidToken": {
+      "title": "Invalid token",
+      "message": "The link is either invalid or expired. Please try to log in again."
     }
   },
   "blog": {

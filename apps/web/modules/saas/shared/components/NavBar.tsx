@@ -11,7 +11,7 @@ import { useParams, usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";
 
-type User = ApiOutput["user"]["me"];
+type User = ApiOutput["auth"]["user"];
 
 export function NavBar({
   teams,
@@ -58,7 +58,7 @@ export function NavBar({
           </div>
 
           <div className="ml-auto mr-0 flex items-center justify-end gap-4">
-            {user && <UserMenu user={user} />}
+            <UserMenu />
           </div>
         </div>
 
