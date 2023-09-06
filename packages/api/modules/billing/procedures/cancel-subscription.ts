@@ -13,11 +13,11 @@ export const cancelSubscription = protectedProcedure
   .mutation(async ({ input: { subscriptionId }, ctx: { user } }) => {
     const subscription = await db.subscription.findFirst({
       where: {
-        subscriptionId,
+        subscription_id: subscriptionId,
       },
     });
 
-    if (!subscription || subscription.teamId !== user!.id) {
+    if (!subscription || subscription.team_id !== user!.id) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Subscription not found.",

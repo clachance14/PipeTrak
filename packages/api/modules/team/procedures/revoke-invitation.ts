@@ -16,7 +16,7 @@ export const revokeInvitation = protectedProcedure
       },
       select: {
         id: true,
-        teamId: true,
+        team_id: true,
       },
     });
 
@@ -26,7 +26,7 @@ export const revokeInvitation = protectedProcedure
         message: "Invitation not found.",
       });
 
-    if (!abilities.isTeamOwner(invitation.teamId))
+    if (!abilities.isTeamOwner(invitation.team_id))
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to add a member to this team.",

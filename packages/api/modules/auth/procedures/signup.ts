@@ -36,6 +36,7 @@ export const signup = publicProcedure
             email_verified: false,
             name,
             role: UserRole.USER,
+            avatar_url: null,
           },
         });
 

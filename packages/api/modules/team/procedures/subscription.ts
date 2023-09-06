@@ -12,7 +12,7 @@ export const subscription = protectedProcedure
   .query(async ({ ctx: { user } }) => {
     const subscription = await db.subscription.findFirst({
       where: {
-        teamId: user!.id,
+        team_id: user!.id,
       },
     });
 

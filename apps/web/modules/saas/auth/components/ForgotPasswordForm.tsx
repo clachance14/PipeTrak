@@ -10,7 +10,7 @@ import {
 } from "@ui/components";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { forgotPassword } from "@saas/auth";
+import { apiClient } from "@shared/lib";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,8 @@ export function ForgotPasswordForm() {
     message: string;
   }>(null);
 
+  const forgotPasswordMutation = apiClient.auth.forgotPassword.useMutation();
+
   const {
     register,
     handleSubmit,
@@ -42,12 +44,15 @@ export function ForgotPasswordForm() {
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
     try {
-      await forgotPassword(email);
+      await forgotPasswordMutation.mutateAsync({
+        email,
+        callbackUrl: new URL("/auth/verify", window.location.origin).toString(),
+      });
 
       const redirectSearchParams = new URLSearchParams();
-      redirectSearchParams.set("type", "recovery");
+      redirectSearchParams.set("type", "PASSWORD_RESET");
       if (email) redirectSearchParams.set("email", email);
-      router.replace(`/auth/verify-otp?${redirectSearchParams.toString()}`);
+      router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {
       setServerError({
         title: t("auth.forgotPassword.hints.linkNotSent.title"),

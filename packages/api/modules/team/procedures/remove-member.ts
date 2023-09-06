@@ -24,8 +24,8 @@ export const removeMember = protectedProcedure
 
     // user can only remove themselves from a team if they are not the owner
     if (
-      !abilities.isTeamOwner(membership.teamId) &&
-      membership.userId !== user?.id
+      !abilities.isTeamOwner(membership.team_id) &&
+      membership.user_id !== user?.id
     )
       throw new TRPCError({
         code: "UNAUTHORIZED",

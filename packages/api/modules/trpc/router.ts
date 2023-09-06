@@ -5,11 +5,9 @@ import * as billingProcedures from "../billing/procedures";
 import * as newsletterProcedures from "../newsletter/procedures";
 import * as teamProcedures from "../team/procedures";
 import { router } from "../trpc";
-import * as userProcedures from "../user/procedures";
 
 export const apiRouter = router({
   auth: router(authProcedures),
-  user: router(userProcedures),
   billing: router(billingProcedures),
   team: router(teamProcedures),
   newsletter: router(newsletterProcedures),

@@ -205,7 +205,8 @@
       "nameUpdated": "Your name has been updated.",
       "passwordUpdated": "Your password has been updated.",
       "teamNameNotUpdated": "We were unable to update your team name. Please try again later.",
-      "teamNameUpdated": "Your team name has been updated."
+      "teamNameUpdated": "Your team name has been updated.",
+      "nameUpdateFailed": "Could not update your name. Please try again later."
     },
     "save": "Save",
     "subtitle": "Manage your settings",

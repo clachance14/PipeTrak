@@ -1,8 +1,7 @@
 "use client";
 
-import { updatePassword } from "@saas/auth";
 import { ActionBlock } from "@saas/shared/components";
-import { useMutation } from "@tanstack/react-query";
+import { apiClient } from "@shared/lib";
 import { PasswordInput } from "@ui/components";
 import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
@@ -15,25 +14,19 @@ export function ChangePasswordForm() {
   const router = useRouter();
   const [password, setPassword] = useState("");
 
-  const changePasswordMutation = useMutation(
-    ["changePassword"],
-    async (password: string) => {
-      await updatePassword(password);
+  const changePasswordMutation = apiClient.auth.changePassword.useMutation({
+    onSuccess: () => {
+      toast({
+        title: t("settings.notifications.passwordUpdated"),
+      });
+      router.refresh();
     },
-    {
-      onSuccess: () => {
-        toast({
-          title: t("settings.notifications.passwordUpdated"),
-        });
-        router.refresh();
-      },
-    },
-  );
+  });
 
   return (
     <ActionBlock
       title={t("settings.account.changePassword.title")}
-      onSubmit={() => changePasswordMutation.mutate(password)}
+      onSubmit={() => changePasswordMutation.mutate({ password })}
       isSubmitting={changePasswordMutation.isLoading}
       isSubmitDisabled={!password || password.length < 8}
     >

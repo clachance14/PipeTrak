@@ -60,8 +60,8 @@ export function TeamMembersList({
         row.original.user ? (
           <div className="flex items-center gap-2">
             <UserAvatar
-              name={row.original.user.name}
-              avatarUrl={row.original.user?.avatarUrl}
+              name={row.original.user.name ?? row.original.user.email}
+              avatarUrl={row.original.user?.avatar_url}
             />
             <div>
               <strong className="block">{row.original.user.name}</strong>
@@ -81,7 +81,7 @@ export function TeamMembersList({
             <TeamRoleSelect
               value={row.original.role}
               onSelect={() => {}}
-              disabled={teamRole !== "OWNER" || row.original.isCreator}
+              disabled={teamRole !== "OWNER" || row.original.is_creator}
             />
 
             <DropdownMenu>
@@ -92,7 +92,7 @@ export function TeamMembersList({
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
-                  disabled={row.original.isCreator}
+                  disabled={row.original.is_creator}
                   className="text-error"
                   onClick={() => {
                     const loadingToast = toast({

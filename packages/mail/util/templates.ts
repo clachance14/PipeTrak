@@ -1,9 +1,10 @@
 import { renderAsync } from "@react-email/render";
+import EmailChange from "../emails/EmailChange";
 import { ForgotPassword } from "../emails/ForgotPassword";
 import { MagicLink } from "../emails/MagicLink";
 import { NewUser } from "../emails/NewUser";
 import { NewsletterSignup } from "../emails/NewsletterSignup";
-import TeamInvitation from "../emails/TeamInvitation";
+import { TeamInvitation } from "../emails/TeamInvitation";
 
 export const mailTemplates = {
   magicLink: MagicLink,
@@ -11,6 +12,7 @@ export const mailTemplates = {
   newUser: NewUser,
   newsletterSignup: NewsletterSignup,
   teamInvitation: TeamInvitation,
+  emailChange: EmailChange,
 };
 
 export async function getTemplate<

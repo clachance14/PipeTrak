@@ -18,7 +18,7 @@ export default async function AccountSettingsPage() {
 
   return (
     <div className="grid gap-6">
-      <ChangeNameForm initialValue={user.name} />
+      <ChangeNameForm initialValue={user.name ?? ""} />
       <ChangePasswordForm />
     </div>
   );

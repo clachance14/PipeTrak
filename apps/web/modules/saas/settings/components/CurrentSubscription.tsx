@@ -38,9 +38,11 @@ export function CurrentSubscription({
     userSubscription?.status &&
     !["expired", "cancelled"].includes(userSubscription.status);
 
-  const activePlanId = hasActiveSubscription ? userSubscription.planId : "free";
+  const activePlanId = hasActiveSubscription
+    ? userSubscription.plan_id
+    : "free";
   const activeVariantId = hasActiveSubscription
-    ? userSubscription.variantId
+    ? userSubscription.variant_id
     : "free";
 
   const subscriptionPlan = [freePlan, ...plans].find(
@@ -90,14 +92,14 @@ export function CurrentSubscription({
         )}
       </div>
 
-      {userSubscription?.nextPaymentDate && (
+      {userSubscription?.next_payment_date && (
         <p className="text-muted-foreground mt-1">
           {t.rich(
             !hasActiveSubscription
               ? "settings.billing.subscription.endsOn"
               : "settings.billing.subscription.nextPayment",
             {
-              nextPaymentDate: userSubscription.nextPaymentDate,
+              nextPaymentDate: userSubscription.next_payment_date,
               strong: (text) => <strong>{text}</strong>,
             },
           )}
@@ -110,7 +112,7 @@ export function CurrentSubscription({
             <div>
               <Button asChild variant="ghost" className="w-full md:w-auto">
                 <a
-                  href={`/billing/customer-portal?subscriptionId=${userSubscription.subscriptionId}`}
+                  href={`/billing/customer-portal?subscriptionId=${userSubscription.subscription_id}`}
                 >
                   <Icon.creditCard className="h-4 w-4" />
                   {t("settings.billing.subscription.updateBillingDetails")}
@@ -121,7 +123,7 @@ export function CurrentSubscription({
             <div className="flex flex-col gap-3 md:flex-row">
               {hasActiveSubscription && (
                 <CancelSubscriptionButton
-                  subscriptionId={userSubscription.subscriptionId}
+                  subscriptionId={userSubscription.subscription_id}
                   label={t("settings.billing.subscription.cancel")}
                 />
               )}

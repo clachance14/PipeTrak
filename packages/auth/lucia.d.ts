@@ -1,14 +1,14 @@
 /// <reference types="lucia" />
+
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 declare namespace Lucia {
   type UserRole = import("database").UserRole;
+  type User = import("database").User;
   type Auth = import("./lib/lucia").Auth;
-  type DatabaseUserAttributes = {
-    email: string;
-    email_verified: boolean;
-    name: string | null;
-    role: UserRole;
-    avatar_url?: string | null;
-    github_username?: string | null;
-  };
+  type DatabaseUserAttributes = PartialBy<
+    Omit<User, "id">,
+    "avatar_url" | "github_username"
+  >;
   type DatabaseSessionAttributes = {};
 }

@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
+    "NODE_ENV",
     "PORT",
     "VERCEL_URL",
     "LEMONSQUEEZY_SIGNING_SECRET",
@@ -10,8 +11,10 @@
     "MAIL_PORT",
     "MAIL_USER",
     "MAIL_PASS",
-    "NEXT_PUBLIC_SUPABASE_URL",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET"
   ],
   "pipeline": {
     "build": {

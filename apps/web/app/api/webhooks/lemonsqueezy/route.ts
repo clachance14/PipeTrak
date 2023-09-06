@@ -14,7 +14,7 @@ async function updateUserSubscription(
 
   const existingSubscription = await db.subscription.findFirst({
     where: {
-      teamId: subscription.teamId,
+      team_id: subscription.teamId,
     },
   });
 
@@ -70,13 +70,13 @@ export async function POST(req: Request) {
       case "subscription_expired":
       case "subscription_resumed":
         await updateUserSubscription({
-          teamId: customData?.team_id,
-          customerId: String(data.attributes.customer_id),
-          planId: String(data.attributes.product_id),
-          variantId: String(data.attributes.variant_id),
+          team_id: customData?.team_id,
+          customer_id: String(data.attributes.customer_id),
+          plan_id: String(data.attributes.product_id),
+          variant_id: String(data.attributes.variant_id),
           status: data.attributes.status,
-          subscriptionId: String(data.id),
-          nextPaymentDate: new Date(
+          subscription_id: String(data.id),
+          next_payment_date: new Date(
             data.attributes.trial_ends_at ?? data.attributes.renews_at,
           ),
         });
