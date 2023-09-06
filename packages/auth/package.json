@@ -2,12 +2,12 @@
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^3.0.0",
-    "@t3-oss/env-nextjs": "^0.6.0",
+    "@t3-oss/env-nextjs": "^0.6.1",
     "database": "workspace:*",
-    "lucia": "^2.4.1",
+    "lucia": "^2.4.2",
     "mail": "workspace:*",
-    "zod": "^3.21.4",
-    "utils": "workspace:*"
+    "utils": "workspace:*",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/react": "18.2.9",
