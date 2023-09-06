@@ -24,7 +24,7 @@ export function CreateTeamDialog() {
 
   const switchTeam = (slug: string) => {
     Cookies.set("createTeam.team-slug", slug, { path: "/", expires: 30 });
-    router.replace(pathname.replace(teamSlug, slug));
+    router.replace(pathname.replace(teamSlug as string, slug));
   };
 
   return (
