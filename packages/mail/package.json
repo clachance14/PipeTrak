@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "@types/mjml": "^4.7.1",
-    "@types/node": "20.2.5",
+    "@types/node": "20.5.9",
     "@types/nodemailer": "^6.4.9",
-    "@types/react": "18.2.9",
+    "@types/react": "18.2.21",
     "eslint-config-custom": "workspace:*",
     "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*"

@@ -10,7 +10,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/react": "18.2.9",
+    "@types/react": "18.2.21",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   },
