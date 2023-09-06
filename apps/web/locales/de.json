@@ -87,6 +87,15 @@
       "otp": "Einmaliges Passwort",
       "submit": "Weitermachen",
       "title": "Bestätigen Sie Ihre E-Mail"
+    },
+    "confirmation": {
+      "close": "Schließe dieses Fenster",
+      "message": "Sie können dieses Fenster schließen und in dem Fenster fortfahren, aus dem Sie gekommen sind.",
+      "title": "Sie wurden eingeloggt!"
+    },
+    "invalidToken": {
+      "message": "Der Link ist entweder ungültig oder abgelaufen. \nBitte versuchen Sie erneut, sich anzumelden.",
+      "title": "Ungültiges Token"
     }
   },
   "blog": {
@@ -196,7 +205,8 @@
       "nameUpdated": "Dein Name wurde geändert.",
       "passwordUpdated": "Dein Passwort wurde aktualisiert.",
       "teamNameNotUpdated": "Wir konnten deinen Teamnamen nicht aktualisieren. \nBitte versuche es später noch einmal.",
-      "teamNameUpdated": "Dein Teamname wurde aktualisiert."
+      "teamNameUpdated": "Dein Teamname wurde aktualisiert.",
+      "nameUpdateFailed": "Ihr Name konnte nicht aktualisiert werden. \nBitte versuchen Sie es später noch einmal."
     },
     "save": "Speichern",
     "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
@@ -236,7 +246,31 @@
           "empty": "Sie haben noch keine Mitglieder eingeladen.",
           "revoke": "Einladung widerrufen"
         },
-        "pendingInvitations": "Ausstehende Einladungen"
+        "pendingInvitations": "Ausstehende Einladungen",
+        "notifications": {
+          "removeMember": {
+            "error": {
+              "description": "Das Mitglied konnte nicht aus Ihrem Team entfernt werden. \nBitte versuche es erneut."
+            },
+            "loading": {
+              "description": "Mitglied wird aus dem Team entfernt..."
+            },
+            "success": {
+              "description": "Das Mitglied wurde erfolgreich aus Ihrem Team entfernt."
+            }
+          },
+          "revokeInvitation": {
+            "error": {
+              "description": "Die Einladung konnte nicht widerrufen werden. \nBitte versuchen Sie es später noch einmal."
+            },
+            "loading": {
+              "description": "Einladung wird zurückgezogen..."
+            },
+            "success": {
+              "description": "Die Einladung wurde widerrufen."
+            }
+          }
+        }
       },
       "subtitle": "Verwalte deine Teameinstellungen und Mitglieder",
       "title": "Team"

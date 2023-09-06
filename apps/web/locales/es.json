@@ -86,6 +86,15 @@
       "otp": "Contraseña de un solo uso",
       "submit": "Continuar",
       "title": "Verifique su correo electrónico"
+    },
+    "confirmation": {
+      "close": "Cierra esta ventana",
+      "message": "Puede cerrar esta ventana y continuar en la ventana de donde vino.",
+      "title": "¡Has iniciado sesión!"
+    },
+    "invalidToken": {
+      "message": "El enlace no es válido o ha caducado. \nIntente iniciar sesión nuevamente.",
+      "title": "Simbolo no valido"
     }
   },
   "blog": {
@@ -194,7 +203,8 @@
       "nameUpdated": "Su nombre ha sido actualizado.",
       "passwordUpdated": "Su contraseña ha sido actualizada.",
       "teamNameNotUpdated": "No pudimos actualizar el nombre de su equipo. \nPor favor, inténtelo de nuevo más tarde.",
-      "teamNameUpdated": "El nombre de tu equipo ha sido actualizado."
+      "teamNameUpdated": "El nombre de tu equipo ha sido actualizado.",
+      "nameUpdateFailed": "No se pudo actualizar su nombre. \nPor favor, inténtelo de nuevo más tarde."
     },
     "save": "Ahorrar",
     "subtitle": "Administra tu configuración",
@@ -234,7 +244,31 @@
           "empty": "Aún no has invitado a ningún miembro.",
           "revoke": "Revocar invitación"
         },
-        "pendingInvitations": "Invitaciones pendientes"
+        "pendingInvitations": "Invitaciones pendientes",
+        "notifications": {
+          "removeMember": {
+            "error": {
+              "description": "No se pudo eliminar al miembro de su equipo. \nInténtalo de nuevo."
+            },
+            "loading": {
+              "description": "Eliminando miembro del equipo..."
+            },
+            "success": {
+              "description": "El miembro ha sido eliminado exitosamente de su equipo."
+            }
+          },
+          "revokeInvitation": {
+            "error": {
+              "description": "La invitación no pudo ser revocada. \nPor favor, inténtelo de nuevo más tarde."
+            },
+            "loading": {
+              "description": "Revocando invitación..."
+            },
+            "success": {
+              "description": "La invitación ha sido revocada."
+            }
+          }
+        }
       },
       "subtitle": "Administre la configuración y los miembros de su equipo",
       "title": "Equipo"
