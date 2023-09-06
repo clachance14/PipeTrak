@@ -158,12 +158,7 @@ export function UserMenu() {
           </a>
         </DropdownMenuItem>
 
-        <DropdownMenuItem
-          onClick={async () => {
-            await logout();
-            router.replace("/");
-          }}
-        >
+        <DropdownMenuItem onClick={logout}>
           <Icon.logout className="mr-2 h-4 w-4" /> Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

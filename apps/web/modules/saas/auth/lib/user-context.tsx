@@ -3,6 +3,7 @@
 import { apiClient } from "@shared/lib";
 import { ApiOutput } from "api";
 import { TeamMemberRole } from "database";
+import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 type User = ApiOutput["auth"]["user"];
@@ -17,7 +18,7 @@ type UserContext = {
 
 const authBroadcastChannel = new BroadcastChannel("auth");
 type AuthEvent = {
-  type: "login" | "logout";
+  type: "loaded" | "logout";
   user: User | null;
 };
 
@@ -37,6 +38,7 @@ export function UserContextProvider({
   initialUser: User;
   teamRole?: TeamMemberRole;
 }>) {
+  const router = useRouter();
   const [loaded, setLoaded] = useState(!!initialUser);
   const [user, setUser] = useState<User>(initialUser);
   const userQuery = apiClient.auth.user.useQuery(undefined, {
@@ -58,35 +60,43 @@ export function UserContextProvider({
       type: "logout",
       user: null,
     } satisfies AuthEvent);
+    router.replace("/");
   };
 
   useEffect(() => {
-    if (userQuery.data) {
-      setUser(userQuery.data);
-      setLoaded(true);
-    }
+    if (userQuery.data) setUser(userQuery.data);
   }, [userQuery.data]);
 
-  // useEffect(() => {
-  //   const handleAuthEvent = async (event: MessageEvent<AuthEvent>) => {
-  //     if (JSON.stringify(event.data.user) !== JSON.stringify(user))
-  //       setUser(event.data.user);
-  //   };
+  useEffect(() => {
+    if (userQuery.isSuccess) setLoaded(true);
+  }, [userQuery.isSuccess]);
 
-  //   authBroadcastChannel.addEventListener("message", handleAuthEvent);
+  useEffect(() => {
+    if (user && loaded)
+      authBroadcastChannel.postMessage({
+        type: "loaded",
+        user: user,
+      });
+  }, [user, loaded]);
 
-  //   return () =>
-  //     authBroadcastChannel.removeEventListener("message", handleAuthEvent);
-  // }, []);
+  useEffect(() => {
+    const handleAuthEvent = async (event: MessageEvent<AuthEvent>) => {
+      if (JSON.stringify(event.data.user) !== JSON.stringify(user)) {
+        if (event.data.type === "logout") {
+          userQuery.remove();
+          setUser(null);
+          router.replace("/");
+        } else {
+          setUser(event.data.user);
+        }
+      }
+    };
 
-  // broadcast user when it changes
-  // useEffect(() => {
-  //   if (user)
-  //     authBroadcastChannel.postMessage({
-  //       type: "login",
-  //       user,
-  //     } satisfies AuthEvent);
-  // }, [user]);
+    authBroadcastChannel.addEventListener("message", handleAuthEvent);
+
+    return () =>
+      authBroadcastChannel.removeEventListener("message", handleAuthEvent);
+  }, [user]);
 
   return (
     <userContext.Provider

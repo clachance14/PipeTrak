@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { useUser } from "../hooks";
 import SigninModeSwitch from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
@@ -31,6 +32,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function LoginForm() {
   const t = useTranslations();
   const router = useRouter();
+  const { user, loaded } = useUser();
   const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
     "magic-link",
   );
@@ -67,6 +69,18 @@ export function LoginForm() {
     setServerError(null);
   }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleRedirect = () => {
+    window.location.href = new URL(
+      redirectTo,
+      window.location.origin,
+    ).toString();
+  };
+
+  // redirect when user has been loaded
+  useEffect(() => {
+    if (user && loaded) handleRedirect();
+  }, [user, loaded]);
+
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
     setServerError(null);
     try {
@@ -76,10 +90,7 @@ export function LoginForm() {
           password: password!,
         });
 
-        window.location.href = new URL(
-          redirectTo,
-          window.location.origin,
-        ).toString();
+        handleRedirect();
       } else {
         await loginWithEmailMutation.mutateAsync({
           email,
