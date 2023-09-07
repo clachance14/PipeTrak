@@ -275,6 +275,20 @@
       "subtitle": "Manage your team settings and members",
       "title": "Team"
     },
-    "title": "Settings"
+    "title": "Settings",
+    "sections": {
+      "team": "Team"
+    },
+    "menu": {
+      "team": {
+        "title": "Team",
+        "general": "General",
+        "members": "Members"
+      },
+      "account": {
+        "title": "Account",
+        "general": "General"
+      }
+    }
   }
 }
