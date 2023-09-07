@@ -22,7 +22,7 @@ export function UpgradePlan({
   return (
     <ActionBlock title={t("settings.billing.subscription.upgradePlan")}>
       <PricingTable
-        className="-mt-12"
+        className="md:-mt-12"
         plans={plans}
         activePlanId={activePlanId}
         onSelectPlan={async (planId, variantId) => {
