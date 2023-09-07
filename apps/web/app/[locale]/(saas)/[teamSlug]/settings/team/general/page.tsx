@@ -1,8 +1,4 @@
-import {
-  ChangeTeamNameForm,
-  InviteMemberForm,
-  TeamMembersBlock,
-} from "@saas/settings/components";
+import { ChangeTeamNameForm } from "@saas/settings/components";
 import { createApiCaller } from "api";
 import { getTranslator } from "next-intl/server";
 
@@ -23,19 +19,10 @@ export default async function TeamSettingsPage({
   const team = await apiCaller.team.bySlug({
     slug: teamSlug,
   });
-  const memberships = await apiCaller.team.memberships({
-    teamId: team.id,
-  });
-  const invitations = await apiCaller.team.invitations({
-    teamId: team.id,
-  });
-  const t = await getTranslator(locale);
 
   return (
     <div className="grid grid-cols-1 gap-6">
       <ChangeTeamNameForm initialValue={team.name} teamId={team.id} />
-      <InviteMemberForm teamId={team.id} />
-      <TeamMembersBlock memberships={memberships} invitations={invitations} />
     </div>
   );
 }

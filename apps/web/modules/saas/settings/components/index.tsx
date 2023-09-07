@@ -4,6 +4,7 @@ export * from "./ChangePassword";
 export * from "./ChangeTeamNameForm";
 export * from "./CurrentSubscription";
 export * from "./InviteMemberForm";
+export * from "./SettingsMenu";
 export * from "./TeamInvitationsList";
 export * from "./TeamMembersBlock";
 export * from "./TeamMembersList";

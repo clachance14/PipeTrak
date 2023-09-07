@@ -5,5 +5,5 @@ export default async function SettingsPage({
 }: {
   params: { teamSlug: string };
 }) {
-  redirect(`/${teamSlug}/settings/account`);
+  redirect(`/${teamSlug}/settings/team/general`);
 }

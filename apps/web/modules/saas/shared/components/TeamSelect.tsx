@@ -52,7 +52,7 @@ export function TeamSelect({
           <div className="flex items-center justify-start gap-2 text-sm">
             <span className="hidden lg:block">
               <BoringAvatar
-                size={16}
+                size={32}
                 name={activeTeam.name}
                 variant="marble"
                 colors={appConfig.teams.avatarColors}

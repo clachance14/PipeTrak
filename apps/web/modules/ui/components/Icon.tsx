@@ -42,6 +42,7 @@ import {
   Undo,
   Upload,
   User,
+  Users,
   X,
 } from "lucide-react";
 
@@ -94,6 +95,7 @@ export const Icon = {
   undo: Undo,
   notification: Bell,
   invitation: MailCheck,
+  team: Users,
 
   // social icons
   google: ({ ...props }: IconProps) => (

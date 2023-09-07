@@ -283,7 +283,8 @@
       "team": {
         "title": "Team",
         "general": "General",
-        "members": "Members"
+        "members": "Members",
+        "billing": "Billing"
       },
       "account": {
         "title": "Account",

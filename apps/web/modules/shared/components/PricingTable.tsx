@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Tabs, TabsList, TabsTrigger } from "@ui/components";
+import { cn } from "@ui/lib";
 import { ApiOutput } from "api";
 import { useState } from "react";
 
@@ -13,10 +14,12 @@ export function PricingTable({
   activePlanId,
   onSelectPlan,
   labels,
+  className,
 }: {
   plans: SubscriptionPlan[];
   activePlanId?: string;
   onSelectPlan: (planId: string, variantId: string) => void | Promise<void>;
+  className?: string;
   labels: {
     yearly: string;
     monthly: string;
@@ -35,8 +38,8 @@ export function PricingTable({
   };
 
   return (
-    <div className="@container">
-      <div className="flex justify-center">
+    <div className={cn(className, "@container")}>
+      <div className="flex justify-end">
         <Tabs
           value={interval}
           onValueChange={(value) => setInterval(value as typeof interval)}

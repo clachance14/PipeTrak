@@ -30,7 +30,7 @@ export default async function BillingSettingsPage({
       <CurrentSubscription
         plans={plans}
         userSubscription={userSubscription}
-        className="mb-8"
+        className="mb-4"
       />
       <UpgradePlan plans={plans} activePlanId={userSubscription?.plan_id} />
     </div>
