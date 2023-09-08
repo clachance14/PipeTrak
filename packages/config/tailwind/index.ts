@@ -1,4 +1,10 @@
-const colorVariable = require("@mertasan/tailwindcss-variables/colorVariable");
+import variablesPlugin from "@mertasan/tailwindcss-variables";
+import colorVariable from "@mertasan/tailwindcss-variables/colorVariable";
+import containerQueryPlugin from "@tailwindcss/container-queries";
+import formsPlugin from "@tailwindcss/forms";
+import typographyPlugin from "@tailwindcss/typography";
+import { Config } from "tailwindcss";
+import animatePlugin from "tailwindcss-animate";
 
 const lightVariables = {
   colors: {
@@ -52,8 +58,8 @@ const darkVariables = {
   },
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
+  content: [],
   darkMode: ["class"],
   theme: {
     container: {
@@ -83,12 +89,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -143,14 +149,16 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/forms")({
+    formsPlugin({
       strategy: "base",
     }),
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/container-queries"),
-    require("tailwindcss-animate"),
-    require("@mertasan/tailwindcss-variables")({
+    typographyPlugin,
+    animatePlugin,
+    containerQueryPlugin,
+    variablesPlugin({
       colorVariables: true,
     }),
   ],
 };
+
+export default config;
