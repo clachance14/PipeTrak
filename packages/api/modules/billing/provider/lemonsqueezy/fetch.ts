@@ -1,5 +1,4 @@
-// @ts-ignore
-import { env } from "./env.mjs";
+import { env } from "./env";
 
 export function createApiFetch(config: {
   baseUrl: string;

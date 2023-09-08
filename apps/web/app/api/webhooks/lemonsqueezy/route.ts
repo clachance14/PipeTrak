@@ -4,34 +4,27 @@ import { headers } from "next/headers";
 import { env } from "../../../../env.mjs";
 
 async function updateUserSubscription(
-  subscription: Omit<Subscription, "id"> & {
-    teamId?: string;
-  },
+  subscription: Subscription,
 ): Promise<void | Subscription> {
-  if (!subscription.teamId) {
-    throw new Error("Either customerId or userId must be provided");
-  }
+  if (!subscription.team_id) throw new Error("team_id must be provided");
 
   const existingSubscription = await db.subscription.findFirst({
     where: {
-      team_id: subscription.teamId,
+      team_id: subscription.team_id,
     },
   });
 
   try {
-    if (existingSubscription) {
+    if (existingSubscription)
       return await db.subscription.update({
         data: subscription,
         where: {
           id: existingSubscription.id,
         },
       });
-    }
 
     await db.subscription.create({
-      data: {
-        ...subscription,
-      },
+      data: subscription,
     });
   } catch (e) {
     console.error(e);
@@ -70,19 +63,17 @@ export async function POST(req: Request) {
       case "subscription_expired":
       case "subscription_resumed":
         await updateUserSubscription({
+          id: String(data.id),
           team_id: customData?.team_id,
           customer_id: String(data.attributes.customer_id),
           plan_id: String(data.attributes.product_id),
           variant_id: String(data.attributes.variant_id),
           status: data.attributes.status,
-          subscription_id: String(data.id),
           next_payment_date: new Date(
             data.attributes.trial_ends_at ?? data.attributes.renews_at,
           ),
         });
         break;
-      default:
-        throw new Error(`🤷‍♀️ Unhandled event: ${eventName}`);
     }
   } catch (error: unknown) {
     return new Response(
@@ -94,6 +85,6 @@ export async function POST(req: Request) {
   }
 
   return new Response(null, {
-    status: 200,
+    status: 204,
   });
 }

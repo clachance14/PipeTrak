@@ -11,9 +11,11 @@ type SubscriptionPlans = ApiOutput["billing"]["plans"];
 export function UpgradePlan({
   plans,
   activePlanId,
+  teamId,
 }: {
   plans: SubscriptionPlans;
   activePlanId?: string;
+  teamId: string;
 }) {
   const createCheckoutLinkMutation =
     apiClient.billing.createCheckoutLink.useMutation();
@@ -29,7 +31,10 @@ export function UpgradePlan({
           const checkoutLink = await createCheckoutLinkMutation.mutateAsync({
             planId,
             variantId,
+            teamId,
+            redirectUrl: window.location.href,
           });
+
           window.location.href = checkoutLink;
         }}
         labels={{

@@ -118,11 +118,10 @@ model TeamInvitation {
 }
 
 model Subscription {
-  id                String    @id @default(cuid())
+  id                String    @unique
   team              Team      @relation(fields: [team_id], references: [id])
   team_id           String    @unique
   customer_id       String
-  subscription_id   String
   status            String
   plan_id           String
   variant_id        String

@@ -5,11 +5,9 @@ export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
 export type CreateCheckoutLink = (params: {
   planId: string;
   variantId: string;
-  userData: {
-    email: string;
-    name: string;
-    id: string;
-  };
+  email?: string;
+  name?: string;
+  teamId: string;
   redirectUrl?: string;
 }) => Promise<string>;
 
@@ -17,9 +15,11 @@ export type CreateCustomerPortalLink = (params: {
   subscriptionId: string;
 }) => Promise<string>;
 
-export type CancelSubscription = (params: {
-  subscriptionId: string;
-}) => Promise<void>;
+export type CancelSubscription = (params: { id: string }) => Promise<void>;
+
+export type ResumeSubscription = (params: { id: string }) => Promise<{
+  status: string;
+}>;
 
 export const SubscriptionPlanModel = z.object({
   id: z.string(),

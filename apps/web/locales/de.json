@@ -196,9 +196,30 @@
         "upgradePlan": "Upgrade deinen Plan",
         "year": "Jahr",
         "yearly": "jöhrlich",
-        "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert."
+        "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert.",
+        "resume": "Abonnement fortsetzen"
       },
-      "title": "Zahlung"
+      "title": "Zahlung",
+      "cancelSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Das Abonnement konnte nicht gekündigt werden"
+          },
+          "success": {
+            "title": "Das Abonnement wurde gekündigt"
+          }
+        }
+      },
+      "resumeSubscription": {
+        "notifications": {
+          "error": {
+            "title": "Das Abonnement konnte nicht fortgesetzt werden"
+          },
+          "success": {
+            "title": "Das Abonnement wurde wieder aufgenommen"
+          }
+        }
+      }
     },
     "notifications": {
       "emailUpdated": "Deine E-Mail wurde geändert.",
@@ -275,6 +296,21 @@
       "subtitle": "Verwalte deine Teameinstellungen und Mitglieder",
       "title": "Team"
     },
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "menu": {
+      "account": {
+        "general": "Allgemein",
+        "title": "Konto"
+      },
+      "team": {
+        "billing": "Abrechnung",
+        "general": "Allgemein",
+        "members": "Mitglieder",
+        "title": "Team"
+      }
+    },
+    "sections": {
+      "team": "Team"
+    }
   }
 }

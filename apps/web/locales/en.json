@@ -196,9 +196,30 @@
         "upgradePlan": "Upgrade your plan",
         "year": "year",
         "yearly": "Yearly",
-        "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})"
+        "yourSubscription": "Your are subscribed to <strong>{plan}</strong> ({price}/{interval})",
+        "resume": "Resume subscription"
       },
-      "title": "Billing"
+      "title": "Billing",
+      "cancelSubscription": {
+        "notifications": {
+          "success": {
+            "title": "Subscription was canceled"
+          },
+          "error": {
+            "title": "Could not cancel subscription"
+          }
+        }
+      },
+      "resumeSubscription": {
+        "notifications": {
+          "success": {
+            "title": "Subscription was resumed"
+          },
+          "error": {
+            "title": "Could not resume subscription"
+          }
+        }
+      }
     },
     "notifications": {
       "emailUpdated": "Your email has been updated.",

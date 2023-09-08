@@ -3,12 +3,13 @@ import {
   CreateCheckoutLink,
   CreateCustomerPortalLink,
   GetAllPlans,
+  ResumeSubscription,
   SubscriptionPlan,
 } from "../../types";
-import { env } from "./env.mjs";
+import { env } from "./env";
 import { lemonsqueezyApi } from "./fetch";
 
-const getAllPlans: GetAllPlans = async function () {
+export const getAllPlans: GetAllPlans = async function () {
   const response = await lemonsqueezyApi("/products?include=variants,store");
 
   return response.data
@@ -45,9 +46,11 @@ const getAllPlans: GetAllPlans = async function () {
     .filter((product: any) => product.variants.length > 0);
 };
 
-const createCheckoutLink: CreateCheckoutLink = async function ({
+export const createCheckoutLink: CreateCheckoutLink = async function ({
   variantId,
-  userData,
+  email,
+  name,
+  teamId,
   redirectUrl,
 }) {
   const response = await lemonsqueezyApi("/checkouts", {
@@ -61,10 +64,10 @@ const createCheckoutLink: CreateCheckoutLink = async function ({
             redirect_url: redirectUrl,
           },
           checkout_data: {
-            email: userData.email,
-            name: userData.name,
+            email,
+            name,
             custom: {
-              user_id: userData.id,
+              team_id: teamId,
             },
           },
         },
@@ -89,7 +92,9 @@ const createCheckoutLink: CreateCheckoutLink = async function ({
   return response.data.attributes.url;
 };
 
-const createCustomerPortalLink: CreateCustomerPortalLink = async (params) => {
+export const createCustomerPortalLink: CreateCustomerPortalLink = async (
+  params,
+) => {
   const { subscriptionId } = params;
 
   const response = await lemonsqueezyApi(`/subscriptions/${subscriptionId}`);
@@ -97,17 +102,29 @@ const createCustomerPortalLink: CreateCustomerPortalLink = async (params) => {
   return response.data.attributes.urls.update_payment_method;
 };
 
-const cancelSubscription: CancelSubscription = async (params) => {
-  const { subscriptionId } = params;
+export const cancelSubscription: CancelSubscription = async (params) => {
+  const { id } = params;
 
-  await lemonsqueezyApi(`/subscriptions/${subscriptionId}`, {
+  await lemonsqueezyApi(`/subscriptions/${id}`, {
     method: "DELETE",
   });
 };
 
-export {
-  cancelSubscription,
-  createCheckoutLink,
-  createCustomerPortalLink,
-  getAllPlans,
+export const resumeSubscription: ResumeSubscription = async (params) => {
+  const { id } = params;
+
+  const response = await lemonsqueezyApi(`/subscriptions/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      data: {
+        type: "subscriptions",
+        id,
+        attributes: {
+          cancelled: false,
+        },
+      },
+    }),
+  });
+
+  return response.data.attributes;
 };

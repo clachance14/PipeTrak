@@ -17,11 +17,14 @@ export default async function BillingSettingsPage({
 }) {
   const apiCaller = await createApiCaller();
   const plans = await apiCaller.billing.plans();
-  const team = await apiCaller.team.bySlug({ slug: teamSlug });
+  const user = await apiCaller.auth.user();
+  const team = user?.teamMemberships?.find(
+    (membership) => membership.team.slug === teamSlug,
+  )?.team;
 
   if (!team) redirect("/auth/login");
 
-  const userSubscription = await apiCaller.team.subscription({
+  const teamSubscription = await apiCaller.team.subscription({
     teamId: team.id,
   });
 
@@ -29,10 +32,14 @@ export default async function BillingSettingsPage({
     <div>
       <CurrentSubscription
         plans={plans}
-        userSubscription={userSubscription}
+        activeSubscription={teamSubscription}
         className="mb-4"
       />
-      <UpgradePlan plans={plans} activePlanId={userSubscription?.plan_id} />
+      <UpgradePlan
+        plans={plans}
+        activePlanId={teamSubscription?.plan_id}
+        teamId={team.id}
+      />
     </div>
   );
 }

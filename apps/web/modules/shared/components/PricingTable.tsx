@@ -60,46 +60,52 @@ export function PricingTable({
 
           return (
             <div key={plan.id} className=" rounded-xl border p-6">
-              <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
-              {plan.description && (
-                <div
-                  className="prose text-muted-foreground mb-2"
-                  dangerouslySetInnerHTML={{ __html: plan.description }}
-                />
-              )}
+              <div className="flex h-full flex-col justify-between gap-4">
+                <div>
+                  <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
+                  {plan.description && (
+                    <div
+                      className="prose text-muted-foreground mb-2"
+                      dangerouslySetInnerHTML={{ __html: plan.description }}
+                    />
+                  )}
 
-              {!!plan.features?.length && (
-                <ul className="text-muted-foreground mb-4 grid list-disc gap-2 pl-4">
-                  {plan.features.map((feature, key) => (
-                    <li key={key}>{feature}</li>
-                  ))}
-                </ul>
-              )}
+                  {!!plan.features?.length && (
+                    <ul className="text-muted-foreground grid list-disc gap-2 pl-4">
+                      {plan.features.map((feature, key) => (
+                        <li key={key}>{feature}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
 
-              <strong className="text-primary text-4xl font-bold">
-                {Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: plan.currency,
-                }).format(variant.price / 100)}
-                <span className="text-sm"> / {labels[interval]}</span>
-              </strong>
+                <div>
+                  <strong className="text-primary text-4xl font-bold">
+                    {Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: plan.currency,
+                    }).format(variant.price / 100)}
+                    <span className="text-sm"> / {labels[interval]}</span>
+                  </strong>
 
-              <Button
-                disabled={isActivePlan(plan)}
-                loading={selectedPlan === plan.id}
-                className="mt-4 w-full"
-                onClick={async () => {
-                  setSelectedPlan(plan.id);
-                  await onSelectPlan(plan.id, String(variant.id));
-                  setSelectedPlan(null);
-                }}
-              >
-                {isActivePlan(plan)
-                  ? labels.currentPlan
-                  : activePlanId
-                  ? labels.switchToPlan
-                  : labels.subscribe}
-              </Button>
+                  <Button
+                    disabled={isActivePlan(plan)}
+                    loading={selectedPlan === plan.id}
+                    className="mt-4 w-full"
+                    onClick={async () => {
+                      setSelectedPlan(plan.id);
+                      await onSelectPlan(plan.id, String(variant.id));
+                      setSelectedPlan(null);
+                    }}
+                  >
+                    {isActivePlan(plan)
+                      ? labels.currentPlan
+                      : activePlanId
+                      ? labels.switchToPlan
+                      : labels.subscribe}
+                  </Button>
+                </div>
+              </div>
             </div>
           );
         })}

@@ -30,7 +30,7 @@ export function SettingsMenu({
             <h2 className="text-muted-foreground">{item.title}</h2>
           </div>
 
-          <ul className="mt-3 list-none">
+          <ul className="mt-1 list-none">
             {item.items.map((subitem, k) => (
               <li key={k}>
                 <Link

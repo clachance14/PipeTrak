@@ -2,9 +2,9 @@ import { TRPCError } from "@trpc/server";
 import { db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../trpc";
-import { cancelSubscription as cancelSubscriptionResolver } from "../provider";
+import { resumeSubscription as resumeSubscriptionResolver } from "../provider";
 
-export const cancelSubscription = protectedProcedure
+export const resumeSubscription = protectedProcedure
   .input(
     z.object({
       id: z.string(),
@@ -28,14 +28,14 @@ export const cancelSubscription = protectedProcedure
       });
 
     try {
-      await cancelSubscriptionResolver({ id });
+      const { status } = await resumeSubscriptionResolver({ id });
 
       await db.subscription.update({
         where: {
-          id: id,
+          id,
         },
         data: {
-          status: "cancelled",
+          status,
         },
       });
     } catch (e) {

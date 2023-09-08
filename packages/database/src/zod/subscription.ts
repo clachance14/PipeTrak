@@ -5,7 +5,6 @@ export const SubscriptionModel = z.object({
   id: z.string(),
   team_id: z.string(),
   customer_id: z.string(),
-  subscription_id: z.string(),
   status: z.string(),
   plan_id: z.string(),
   variant_id: z.string(),

@@ -194,9 +194,30 @@
         "upgradePlan": "Actualiza tu plan",
         "year": "año",
         "yearly": "Anual",
-        "yourSubscription": "Estás suscrito a <strong>{plan}</strong> ({price}/{interval})"
+        "yourSubscription": "Estás suscrito a <strong>{plan}</strong> ({price}/{interval})",
+        "resume": "Reanudar suscripción"
       },
-      "title": "Facturación"
+      "title": "Facturación",
+      "cancelSubscription": {
+        "notifications": {
+          "error": {
+            "title": "No se pudo cancelar la suscripción"
+          },
+          "success": {
+            "title": "La suscripción fue cancelada"
+          }
+        }
+      },
+      "resumeSubscription": {
+        "notifications": {
+          "error": {
+            "title": "No se pudo reanudar la suscripción"
+          },
+          "success": {
+            "title": "Se reanudó la suscripción."
+          }
+        }
+      }
     },
     "notifications": {
       "emailUpdated": "Su correo electrónico ha sido actualizado.",
@@ -273,6 +294,21 @@
       "subtitle": "Administre la configuración y los miembros de su equipo",
       "title": "Equipo"
     },
-    "title": "Ajustes"
+    "title": "Ajustes",
+    "menu": {
+      "account": {
+        "general": "General",
+        "title": "Cuenta"
+      },
+      "team": {
+        "billing": "Facturación",
+        "general": "General",
+        "members": "Miembros",
+        "title": "Equipo"
+      }
+    },
+    "sections": {
+      "team": "Equipo"
+    }
   }
 }
