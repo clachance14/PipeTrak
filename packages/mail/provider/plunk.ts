@@ -1,21 +1,15 @@
 import fetch from "node-fetch";
-import { config } from "../../config";
-import { SendEmailHandler } from "../../types";
-// @ts-ignore
-import { env } from "./env.mjs";
-
-const { from } = config;
+import { SendEmailHandler } from "../types";
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
   const response = await fetch("https://api.useplunk.com/v1/send", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${env.PLUNK_API_KEY}`,
+      Authorization: `Bearer ${process.env.PLUNK_API_KEY}`,
     },
     body: JSON.stringify({
       to,
-      // from,
       subject,
       body: html,
       text,

@@ -1,18 +1,16 @@
 import nodemailer from "nodemailer";
-import { config } from "../../config";
-import { SendEmailHandler } from "../../types";
-// @ts-ignore
-import { env } from "./env.mjs";
+import { config } from "../config";
+import { SendEmailHandler } from "../types";
 
 const { from } = config;
 
 export const send: SendEmailHandler = async ({ to, subject, text, html }) => {
   const transporter = nodemailer.createTransport({
-    host: env.MAIL_HOST,
-    port: env.MAIL_PORT,
+    host: process.env.MAIL_HOST as string,
+    port: parseInt(process.env.MAIL_PORT as string, 10),
     auth: {
-      user: env.MAIL_USER,
-      pass: env.MAIL_PASS,
+      user: process.env.MAIL_USER as string,
+      pass: process.env.MAIL_PASS as string,
     },
   });
 
