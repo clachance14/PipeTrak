@@ -1,5 +1,3 @@
-import { env } from "./env";
-
 export function createApiFetch(config: {
   baseUrl: string;
   fetchOptions?: RequestInit;
@@ -30,7 +28,7 @@ export const lemonsqueezyApi = (() => {
     baseUrl: "https://api.lemonsqueezy.com/v1",
     fetchOptions: {
       headers: new Headers({
-        Authorization: `Bearer ${env.LEMONSQUEEZY_API_KEY}`,
+        Authorization: `Bearer ${process.env.LEMONSQUEEZY_API_KEY}`,
         Accept: "application/vnd.api+json",
         "Content-Type": "application/vnd.api+json",
       }),

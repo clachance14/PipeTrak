@@ -4,7 +4,6 @@ import { db } from "database";
 import { User, lucia } from "lucia";
 import { nextjs } from "lucia/middleware";
 import { getBaseUrl } from "utils";
-import { env } from "../env";
 
 export const auth = lucia({
   adapter: prisma(db, {
@@ -29,14 +28,14 @@ export const auth = lucia({
 });
 
 export const githubAuth = github(auth, {
-  clientId: env.GITHUB_CLIENT_ID,
-  clientSecret: env.GITHUB_CLIENT_SECRET,
+  clientId: process.env.GITHUB_CLIENT_ID as string,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
 });
 
 export const googleAuth = google(auth, {
   redirectUri: new URL("/api/oauth/google/callback", getBaseUrl()).toString(),
-  clientId: env.GOOGLE_CLIENT_ID,
-  clientSecret: env.GOOGLE_CLIENT_SECRET,
+  clientId: process.env.GOOGLE_CLIENT_ID as string,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
   scope: ["email"],
 });
 

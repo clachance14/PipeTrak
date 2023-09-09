@@ -2,7 +2,6 @@
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^3.0.0",
-    "@t3-oss/env-nextjs": "^0.6.1",
     "database": "workspace:*",
     "lucia": "^2.4.2",
     "mail": "workspace:*",

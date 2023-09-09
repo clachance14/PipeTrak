@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@t3-oss/env-nextjs": "^0.6.1",
     "@trpc/server": "^10.38.1",
     "auth": "workspace:*",
     "database": "workspace:*",

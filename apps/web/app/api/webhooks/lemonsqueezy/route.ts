@@ -1,7 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { Subscription, db } from "database";
 import { headers } from "next/headers";
-import { env } from "../../../../env.mjs";
 
 async function updateUserSubscription(
   subscription: Subscription,
@@ -33,11 +32,12 @@ async function updateUserSubscription(
 }
 
 export async function POST(req: Request) {
-  const lemonsqueezySigningSecret = env.LEMONSQUEEZY_SIGNING_SECRET;
-
   try {
     const text = await req.text();
-    const hmac = createHmac("sha256", lemonsqueezySigningSecret);
+    const hmac = createHmac(
+      "sha256",
+      process.env.LEMONSQUEEZY_SIGNING_SECRET as string,
+    );
     const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
     const signature = Buffer.from(
       headers().get("x-signature") as string,

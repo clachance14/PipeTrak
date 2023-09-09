@@ -6,7 +6,6 @@ import {
   ResumeSubscription,
   SubscriptionPlan,
 } from "../../types";
-import { env } from "./env";
 import { lemonsqueezyApi } from "./fetch";
 
 export const getAllPlans: GetAllPlans = async function () {
@@ -75,7 +74,7 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
           store: {
             data: {
               type: "stores",
-              id: String(env.LEMONSQUEEZY_STORE_ID),
+              id: String(process.env.LEMONSQUEEZY_STORE_ID),
             },
           },
           variant: {
