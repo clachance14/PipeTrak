@@ -1,9 +1,11 @@
 "use client";
 
+import { useLocaleCurrency } from "@shared/hooks";
 import { Button, Tabs, TabsList, TabsTrigger } from "@ui/components";
 import { cn } from "@ui/lib";
 import { ApiOutput } from "api";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number] & {
   features?: Array<string>;
@@ -30,8 +32,41 @@ export function PricingTable({
     switchToPlan?: string;
   };
 }) {
+  const t = useTranslations();
+  const localeCurrency = useLocaleCurrency();
   const [interval, setInterval] = useState<"month" | "year">("month");
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  const sortedAndFilteredPlans = useMemo(() => {
+    return [...plans]
+      .map((plan) => {
+        const variants = plan.variants
+          .filter(
+            (v) =>
+              v.interval === interval &&
+              v.currency.toLowerCase() === localeCurrency.toLowerCase(),
+          )
+          .sort((a, b) => a.price - b.price);
+
+        return {
+          ...plan,
+          variants,
+        };
+      })
+      .filter((plan) => plan.variants.length > 0)
+      .sort((a, b) => {
+        const lowestPriceA = a.variants.reduce(
+          (lowest, variant) => Math.min(lowest, variant.price),
+          Infinity,
+        );
+        const lowestPriceB = b.variants.reduce(
+          (lowest, variant) => Math.min(lowest, variant.price),
+          Infinity,
+        );
+
+        return lowestPriceA - lowestPriceB;
+      });
+  }, [plans]);
 
   const isActivePlan = (plan: (typeof plans)[number]) => {
     return activePlanId === plan.id;
@@ -52,8 +87,8 @@ export function PricingTable({
         </Tabs>
       </div>
 
-      <div className="@md:grid-cols-2 grid gap-4">
-        {plans.map((plan) => {
+      <div className="@md:grid-cols-3 grid gap-4">
+        {sortedAndFilteredPlans.map((plan) => {
           const variant = plan.variants.find((v) => v.interval === interval);
 
           if (!variant) return null;
@@ -83,7 +118,7 @@ export function PricingTable({
                   <strong className="text-primary text-4xl font-bold">
                     {Intl.NumberFormat("en-US", {
                       style: "currency",
-                      currency: plan.currency,
+                      currency: variant.currency,
                     }).format(variant.price / 100)}
                     <span className="text-sm"> / {labels[interval]}</span>
                   </strong>

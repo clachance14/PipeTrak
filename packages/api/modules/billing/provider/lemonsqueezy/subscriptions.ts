@@ -6,10 +6,12 @@ import {
   ResumeSubscription,
   SubscriptionPlan,
 } from "../../types";
-import { lemonsqueezyApi } from "./fetch";
+import { callLemonsqueezyApi } from "./api";
 
 export const getAllPlans: GetAllPlans = async function () {
-  const response = await lemonsqueezyApi("/products?include=variants,store");
+  const response = await callLemonsqueezyApi(
+    "/products?include=variants,store",
+  );
 
   return response.data
     .map((product: any): SubscriptionPlan => {
@@ -24,7 +26,6 @@ export const getAllPlans: GetAllPlans = async function () {
         id: product.id,
         name: product.attributes.name,
         description: product.attributes.description,
-        currency,
         storeId: String(store.id),
         variants: response.included
           .filter(
@@ -38,7 +39,7 @@ export const getAllPlans: GetAllPlans = async function () {
             interval: variant.attributes.interval,
             interval_count: variant.attributes.interval_count,
             price: variant.attributes.price,
-            checkoutLink: product.attributes.buy_now_url,
+            currency,
           })),
       };
     })
@@ -52,7 +53,7 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
   teamId,
   redirectUrl,
 }) {
-  const response = await lemonsqueezyApi("/checkouts", {
+  const response = await callLemonsqueezyApi("/checkouts", {
     method: "POST",
     body: JSON.stringify({
       data: {
@@ -96,7 +97,9 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async (
 ) => {
   const { subscriptionId } = params;
 
-  const response = await lemonsqueezyApi(`/subscriptions/${subscriptionId}`);
+  const response = await callLemonsqueezyApi(
+    `/subscriptions/${subscriptionId}`,
+  );
 
   return response.data.attributes.urls.update_payment_method;
 };
@@ -104,7 +107,7 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async (
 export const cancelSubscription: CancelSubscription = async (params) => {
   const { id } = params;
 
-  await lemonsqueezyApi(`/subscriptions/${id}`, {
+  await callLemonsqueezyApi(`/subscriptions/${id}`, {
     method: "DELETE",
   });
 };
@@ -112,7 +115,7 @@ export const cancelSubscription: CancelSubscription = async (params) => {
 export const resumeSubscription: ResumeSubscription = async (params) => {
   const { id } = params;
 
-  const response = await lemonsqueezyApi(`/subscriptions/${id}`, {
+  const response = await callLemonsqueezyApi(`/subscriptions/${id}`, {
     method: "PATCH",
     body: JSON.stringify({
       data: {
@@ -125,5 +128,7 @@ export const resumeSubscription: ResumeSubscription = async (params) => {
     }),
   });
 
-  return response.data.attributes;
+  return {
+    status: response.data.attributes.status,
+  };
 };

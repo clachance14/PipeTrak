@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocaleCurrency } from "@shared/hooks";
 import {
   Badge,
   Card,
@@ -28,12 +29,14 @@ export function StatsTile({
   valueFormat,
 }: Props) {
   const format = useFormatter();
+  const localeCurrency = useLocaleCurrency();
+
   const formattedValue = useMemo(() => {
     // format currency
     if (valueFormat === "currency") {
       return format.number(value, {
         style: "currency",
-        currency: "USD",
+        currency: localeCurrency,
       });
     }
     // format percentage

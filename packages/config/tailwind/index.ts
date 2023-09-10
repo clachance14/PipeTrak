@@ -40,7 +40,7 @@ const darkVariables = {
     background: "#121924",
     foreground: "#f8fafc",
     primary: "#6e81ba",
-    "primary-foreground": "#1e3427",
+    "primary-foreground": "#ffffff",
     secondary: "#1e293b",
     "secondary-foreground": "#f8fafc",
     error: "#ef4444",

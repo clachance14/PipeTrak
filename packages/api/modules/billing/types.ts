@@ -13,6 +13,7 @@ export type CreateCheckoutLink = (params: {
 
 export type CreateCustomerPortalLink = (params: {
   subscriptionId: string;
+  redirectUrl?: string;
 }) => Promise<string>;
 
 export type CancelSubscription = (params: { id: string }) => Promise<void>;
@@ -21,29 +22,23 @@ export type ResumeSubscription = (params: { id: string }) => Promise<{
   status: string;
 }>;
 
+export const SubscriptionPlanVariantModel = z.object({
+  id: z.string(),
+  price: z.number(),
+  currency: z.string(),
+  interval: z.string(),
+  interval_count: z.number(),
+});
+
 export const SubscriptionPlanModel = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string().optional(),
-  currency: z.string(),
   storeId: z.string().optional(),
-  variants: z.array(
-    z.object({
-      id: z.string(),
-      price: z.number(),
-      interval: z.string(),
-      interval_count: z.number(),
-      checkout_link: z.string().optional(),
-    }),
-  ),
+  variants: z.array(SubscriptionPlanVariantModel),
 });
 
 export type SubscriptionPlan = z.infer<typeof SubscriptionPlanModel>;
-
-export interface SubscriptionPlanVariant {
-  id: string | number;
-  price: number;
-  interval: string;
-  interval_count: number;
-  checkoutLink?: string;
-}
+export type SubscriptionPlanVariant = z.infer<
+  typeof SubscriptionPlanVariantModel
+>;
