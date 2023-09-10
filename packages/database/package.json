@@ -8,7 +8,8 @@
     "eslint-config-custom": "workspace:*",
     "prisma": "^5.2.0",
     "tsconfig": "workspace:*",
-    "zod-prisma": "^0.5.4"
+    "zod-prisma": "^0.5.4",
+    "dotenv-cli": "^7.3.0"
   },
   "license": "MIT",
   "main": "./index.tsx",

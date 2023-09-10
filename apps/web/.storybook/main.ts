@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 import { dirname, join } from "path";
 
@@ -33,13 +34,14 @@ const config: StorybookConfig = {
     options: {},
   },
   docs: {
-    autodocs: "tag",
+    // autodocs: "tag",
   },
   env: (config) => ({
     ...config,
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env
-      .NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
   }),
+  webpackFinal: async (config) => {
+    config.resolve!.plugins = [new TsconfigPathsPlugin()];
+    return config;
+  },
 };
 export default config;

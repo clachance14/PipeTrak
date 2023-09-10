@@ -9,10 +9,7 @@ import {
 } from "@ui/components";
 
 const meta = {
-  title: "Base/Select",
-  parameters: {
-    layout: "centered",
-  },
+  title: "Select",
 } satisfies Meta;
 
 export default meta;

@@ -11,10 +11,7 @@ import {
 } from "@ui/components";
 
 const meta = {
-  title: "Base/Dropdown Menu",
-  parameters: {
-    layout: "centered",
-  },
+  title: "Dropdown Menu",
 } satisfies Meta;
 
 export default meta;

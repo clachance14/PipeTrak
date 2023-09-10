@@ -8,10 +8,7 @@ import {
 } from "@ui/components";
 
 const meta = {
-  title: "Base/Accordion",
-  parameters: {
-    layout: "centered",
-  },
+  title: "Accordion",
 } satisfies Meta;
 
 export default meta;
