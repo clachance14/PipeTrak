@@ -9,12 +9,14 @@ import {
 
 const meta = {
   title: "Accordion",
-} satisfies Meta;
+  component: Accordion,
+} satisfies Meta<typeof Accordion>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: { type: "single" },
   render: () => {
     return (
       <Accordion type="single" collapsible className="w-full">

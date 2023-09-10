@@ -10,7 +10,8 @@ import {
 
 const meta = {
   title: "Select",
-} satisfies Meta;
+  component: Select,
+} satisfies Meta<typeof Select>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
