@@ -359,6 +359,9 @@ importers:
       '@types/node':
         specifier: 20.5.9
         version: 20.5.9
+      dotenv-cli:
+        specifier: ^7.3.0
+        version: 7.3.0
       eslint-config-custom:
         specifier: workspace:*
         version: link:../config/eslint-config-custom
