@@ -42,7 +42,7 @@ export function CurrentSubscription({
     activeSubscription?.status &&
     !["expired", "cancelled"].includes(activeSubscription.status);
 
-  const hasCancelledSubscription = activeSubscription?.status === "cancelled";
+  const hasCancelledSubscription = activeSubscription?.status === "CANCELED";
 
   const activePlanId = hasActiveSubscription
     ? activeSubscription.plan_id

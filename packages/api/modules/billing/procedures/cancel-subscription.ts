@@ -35,7 +35,7 @@ export const cancelSubscription = protectedProcedure
           id: id,
         },
         data: {
-          status: "cancelled",
+          status: "CANCELED",
         },
       });
     } catch (e) {

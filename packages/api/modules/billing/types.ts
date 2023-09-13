@@ -1,3 +1,4 @@
+import { SubscriptionStatus } from "database";
 import { z } from "zod";
 
 export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
@@ -20,7 +21,7 @@ export type CreateCustomerPortalLink = (params: {
 export type CancelSubscription = (params: { id: string }) => Promise<void>;
 
 export type ResumeSubscription = (params: { id: string }) => Promise<{
-  status: string;
+  status: SubscriptionStatus;
 }>;
 
 export const SubscriptionPlanVariantModel = z.object({
