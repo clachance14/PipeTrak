@@ -42,11 +42,10 @@ export async function POST(req: Request) {
       paused: "PAUSED",
     };
 
-    const data = payload?.data.object;
-
     const apiCaller = await createAdminApiCaller();
 
-    if (!event || !data) throw new Error("Invalid event.");
+    const data = payload?.data.object;
+    if (!data) throw new Error("Invalid payload.");
 
     await apiCaller.billing.syncSubscription({
       id: String(data.id),
