@@ -1,16 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { Subscription, SubscriptionModel, db } from "database";
-import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 
 export const syncSubscription = publicProcedure
-  .input(
-    z.object({
-      event: z.enum(["created", "updated", "deleted"]),
-      subscription: SubscriptionModel,
-    }),
-  )
-  .mutation(async ({ input: { subscription }, ctx: { isAdmin } }) => {
+  .input(SubscriptionModel)
+  .mutation(async ({ input: subscription, ctx: { isAdmin } }) => {
     // this procedure can only be called by the admin caller from a webhook
     if (!isAdmin)
       throw new TRPCError({

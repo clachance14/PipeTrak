@@ -1,5 +1,6 @@
 import { createAdminApiCaller } from "api/modules/trpc";
 import { createHmac, timingSafeEqual } from "crypto";
+import { SubscriptionStatus } from "database";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
@@ -30,13 +31,17 @@ export async function POST(req: Request) {
 
     const payload = JSON.parse(text);
 
-    const eventMap = {
-      "customer.subscription.created": "created",
-      "customer.subscription.updated": "updated",
-      "customer.subscription.deleted": "deleted",
+    const statusMap: Record<string, SubscriptionStatus> = {
+      active: "ACTIVE",
+      past_due: "PAST_DUE",
+      unpaid: "UNPAID",
+      canceled: "CANCELED",
+      incomplete: "INCOMPLETE",
+      incomplete_expired: "EXPIRED",
+      trialing: "TRIALING",
+      paused: "PAUSED",
     };
 
-    const event = eventMap[payload?.type] ?? null;
     const data = payload?.data.object;
 
     const apiCaller = await createAdminApiCaller();
@@ -44,18 +49,13 @@ export async function POST(req: Request) {
     if (!event || !data) throw new Error("Invalid event.");
 
     await apiCaller.billing.syncSubscription({
-      event,
-      subscription: {
-        id: String(data.id),
-        team_id: data.metadata?.team_id,
-        customer_id: String(data.customer),
-        plan_id: String(data.plan.product),
-        variant_id: String(data.plan.id),
-        status: data.status,
-        next_payment_date: new Date(
-          data.trial_end ?? data.billing_cycle_anchor,
-        ),
-      },
+      id: String(data.id),
+      team_id: data.metadata?.team_id,
+      customer_id: String(data.customer),
+      plan_id: String(data.plan.product),
+      variant_id: String(data.plan.id),
+      status: statusMap[data.status],
+      next_payment_date: new Date(data.trial_end ?? data.billing_cycle_anchor),
     });
   } catch (error: unknown) {
     return new Response(

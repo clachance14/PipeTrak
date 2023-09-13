@@ -1,5 +1,6 @@
+import { createAdminApiCaller } from "api/modules/trpc";
 import { createHmac, timingSafeEqual } from "crypto";
-import { Subscription, db } from "database";
+import { Subscription, SubscriptionStatus, db } from "database";
 import { headers } from "next/headers";
 
 async function updateUserSubscription(
@@ -56,19 +57,31 @@ export async function POST(req: Request) {
       data,
     } = payload;
 
+    const statusMap: Record<string, SubscriptionStatus> = {
+      active: "ACTIVE",
+      past_due: "PAST_DUE",
+      unpaid: "UNPAID",
+      cancelled: "CANCELED",
+      expired: "EXPIRED",
+      on_trial: "TRIALING",
+      paused: "PAUSED",
+    };
+
+    const apiCaller = await createAdminApiCaller();
+
     switch (eventName) {
       case "subscription_created":
       case "subscription_updated":
       case "subscription_cancelled":
       case "subscription_expired":
       case "subscription_resumed":
-        await updateUserSubscription({
+        await apiCaller.billing.syncSubscription({
           id: String(data.id),
           team_id: customData?.team_id,
           customer_id: String(data.attributes.customer_id),
           plan_id: String(data.attributes.product_id),
           variant_id: String(data.attributes.variant_id),
-          status: data.attributes.status,
+          status: statusMap[data.attributes.status],
           next_payment_date: new Date(
             data.attributes.trial_ends_at ?? data.attributes.renews_at,
           ),
