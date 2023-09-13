@@ -54,7 +54,9 @@ export async function POST(req: Request) {
       plan_id: String(data.plan.product),
       variant_id: String(data.plan.id),
       status: statusMap[data.status],
-      next_payment_date: new Date(data.trial_end ?? data.current_period_end),
+      next_payment_date: new Date(
+        (data.trial_end ?? data.current_period_end ?? 0) * 1000,
+      ),
     });
   } catch (error: unknown) {
     return new Response(
