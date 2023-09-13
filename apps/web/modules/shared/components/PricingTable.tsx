@@ -115,12 +115,15 @@ export function PricingTable({
                 </div>
 
                 <div>
-                  <strong className="text-primary text-4xl font-bold">
+                  <strong className="text-primary text-2xl font-bold">
                     {Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: variant.currency,
                     }).format(variant.price / 100)}
-                    <span className="text-sm"> / {labels[interval]}</span>
+                    <span className="text-sm opacity-70">
+                      {" "}
+                      / {labels[interval]}
+                    </span>
                   </strong>
 
                   <Button
