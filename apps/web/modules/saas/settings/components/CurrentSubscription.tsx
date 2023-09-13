@@ -2,22 +2,22 @@
 
 import { ActionBlock } from "@saas/shared/components";
 import { useLocaleCurrency } from "@shared/hooks";
-import { Badge } from "@ui/components";
 import { ApiOutput } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";
 import { CustomerPortalButton } from "./CustomerPortalButton";
 import { ResumeSubscriptionButton } from "./ResumeSubscriptionButton";
+import { SubscriptionStatusBadge } from "./SubscriptionStatusBadge";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
 
-export function CurrentSubscription({
+export function SubscriptionOverview({
   plans,
-  activeSubscription,
+  currentSubscription,
   className,
 }: {
   plans: SubscriptionPlan[];
-  activeSubscription?: ApiOutput["team"]["subscription"];
+  currentSubscription?: ApiOutput["team"]["subscription"];
   className?: string;
 }) {
   const format = useFormatter();
@@ -38,17 +38,11 @@ export function CurrentSubscription({
     ],
   };
 
-  const hasActiveSubscription =
-    activeSubscription?.status &&
-    !["expired", "cancelled"].includes(activeSubscription.status);
-
-  const hasCancelledSubscription = activeSubscription?.status === "CANCELED";
-
-  const activePlanId = hasActiveSubscription
-    ? activeSubscription.plan_id
+  const activePlanId = currentSubscription
+    ? currentSubscription.plan_id
     : "free";
-  const activeVariantId = hasActiveSubscription
-    ? activeSubscription.variant_id
+  const activeVariantId = currentSubscription
+    ? currentSubscription.variant_id
     : "free";
 
   const subscriptionPlan = [freePlan, ...plans].find(
@@ -70,7 +64,7 @@ export function CurrentSubscription({
       <div className="flex items-center gap-2">
         <h4 className="text-primary text-lg font-bold">
           <span>{subscriptionPlan.name} </span>
-          <small>
+          <small className="font-normal">
             (
             {format.number(subscriptionVariant.price / 100, {
               style: "currency",
@@ -83,56 +77,48 @@ export function CurrentSubscription({
             )
           </small>
         </h4>
-        {activeSubscription?.status && (
-          <Badge
-            status={
-              ["on_trial", "active"].includes(activeSubscription.status)
-                ? "success"
-                : "error"
-            }
-          >
-            {t(
-              `settings.billing.subscription.status.${activeSubscription.status}` as any,
-            )}
-          </Badge>
+        {currentSubscription?.status && (
+          <SubscriptionStatusBadge status={currentSubscription.status} />
         )}
       </div>
 
-      {activeSubscription?.next_payment_date && (
+      {currentSubscription?.next_payment_date && (
         <p className="text-muted-foreground mt-1">
           {t.rich(
-            !hasActiveSubscription
+            currentSubscription.status === "CANCELED" ||
+              currentSubscription.status === "PAUSED"
               ? "settings.billing.subscription.endsOn"
               : "settings.billing.subscription.nextPayment",
             {
-              nextPaymentDate: activeSubscription.next_payment_date,
+              nextPaymentDate: currentSubscription.next_payment_date,
               strong: (text) => <strong>{text}</strong>,
             },
           )}
         </p>
       )}
 
-      {(activeSubscription ||
-        hasActiveSubscription ||
-        hasCancelledSubscription) && (
+      {currentSubscription && (
         <div className="-mx-6 -mb-6 mt-6 flex justify-end border-t px-6 py-3">
           <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
             <div>
-              {activeSubscription && (
-                <CustomerPortalButton subscriptionId={activeSubscription.id} />
+              {currentSubscription && (
+                <CustomerPortalButton subscriptionId={currentSubscription.id} />
               )}
             </div>
 
             <div className="flex flex-col gap-3 md:flex-row">
-              {hasActiveSubscription && (
+              {(currentSubscription.status === "ACTIVE" ||
+                currentSubscription.status === "TRIALING") && (
                 <CancelSubscriptionButton
-                  id={activeSubscription.id}
+                  id={currentSubscription.id}
                   label={t("settings.billing.subscription.cancel")}
                 />
               )}
-              {hasCancelledSubscription && (
+
+              {(currentSubscription.status === "PAUSED" ||
+                currentSubscription.status === "CANCELED") && (
                 <ResumeSubscriptionButton
-                  id={activeSubscription.id}
+                  id={currentSubscription.id}
                   label={t("settings.billing.subscription.resume")}
                 />
               )}

@@ -183,10 +183,13 @@
         "resumeSubscription": "Reanuda tu suscripción",
         "status": {
           "active": "Activo",
-          "cancelled": "Cancelado",
           "expired": "Venció",
-          "on_trial": "Ensayo",
-          "paused": "en pausa"
+          "paused": "en pausa",
+          "canceled": "Cancelado",
+          "incomplete": "Incompleto",
+          "past_due": "Vencido",
+          "trialing": "Ensayo",
+          "unpaid": "No pagado"
         },
         "subscribe": "Suscribir",
         "switchToPlan": "Cambiar a este plan",

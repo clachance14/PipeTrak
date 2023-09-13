@@ -185,10 +185,13 @@
         "resumeSubscription": "Resume your subscription",
         "status": {
           "active": "Active",
-          "cancelled": "Cancelled",
+          "canceled": "Canceled",
           "expired": "Expired",
-          "on_trial": "Trialing",
-          "paused": "Paused"
+          "trialing": "Trialing",
+          "paused": "Paused",
+          "incomplete": "Incomplete",
+          "unpaid": "Unpaid",
+          "past_due": "Past due"
         },
         "subscribe": "Subscribe",
         "switchToPlan": "Switch to this plan",

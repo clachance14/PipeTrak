@@ -185,10 +185,13 @@
         "resumeSubscription": "Abonnement fortsetzen",
         "status": {
           "active": "Aktiv",
-          "cancelled": "Gekündigt",
+          "canceled": "Gekündigt",
           "expired": "Ausgelaufen",
-          "on_trial": "In der Testphase",
-          "paused": "Pausiert"
+          "paused": "Pausiert",
+          "incomplete": "Unvollständig",
+          "past_due": "Überfällig",
+          "trialing": "Versuch",
+          "unpaid": "Unbezahlt"
         },
         "subscribe": "Abonnieren",
         "switchToPlan": "Zu diesem Plan wechseln",

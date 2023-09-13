@@ -1,4 +1,4 @@
-import { CurrentSubscription, UpgradePlan } from "@saas/settings/components";
+import { SubscriptionOverview, UpgradePlan } from "@saas/settings/components";
 import { createApiCaller } from "api";
 import { getTranslator, redirect } from "next-intl/server";
 
@@ -30,9 +30,9 @@ export default async function BillingSettingsPage({
 
   return (
     <div>
-      <CurrentSubscription
+      <SubscriptionOverview
         plans={plans}
-        activeSubscription={teamSubscription}
+        currentSubscription={teamSubscription}
         className="mb-4"
       />
       <UpgradePlan

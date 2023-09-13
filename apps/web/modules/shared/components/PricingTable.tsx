@@ -120,7 +120,7 @@ export function PricingTable({
                       style: "currency",
                       currency: variant.currency,
                     }).format(variant.price / 100)}
-                    <span className="text-sm opacity-70">
+                    <span className="text-sm font-normal opacity-70">
                       {" "}
                       / {labels[interval]}
                     </span>
