@@ -217,6 +217,14 @@
             "title": "Se reanudó la suscripción."
           }
         }
+      },
+      "createCustomerPortal": {
+        "label": "Administrar detalles de facturación",
+        "notifications": {
+          "error": {
+            "title": "No se pudo crear una sesión del portal del cliente. \nInténtalo de nuevo."
+          }
+        }
       }
     },
     "notifications": {

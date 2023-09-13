@@ -219,6 +219,14 @@
             "title": "Das Abonnement wurde wieder aufgenommen"
           }
         }
+      },
+      "createCustomerPortal": {
+        "label": "Rechnungsdetails verwalten",
+        "notifications": {
+          "error": {
+            "title": "Es konnte keine Kundenportalsitzung erstellt werden. \nBitte versuche es erneut."
+          }
+        }
       }
     },
     "notifications": {

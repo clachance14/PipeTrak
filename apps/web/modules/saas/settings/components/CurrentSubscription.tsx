@@ -2,10 +2,11 @@
 
 import { ActionBlock } from "@saas/shared/components";
 import { useLocaleCurrency } from "@shared/hooks";
-import { Badge, Button, Icon } from "@ui/components";
+import { Badge } from "@ui/components";
 import { ApiOutput } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";
+import { CustomerPortalButton } from "./CustomerPortalButton";
 import { ResumeSubscriptionButton } from "./ResumeSubscriptionButton";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
@@ -118,14 +119,7 @@ export function CurrentSubscription({
           <div className="flex w-full flex-col justify-between gap-3 md:flex-row">
             <div>
               {activeSubscription && (
-                <Button asChild variant="ghost" className="w-full md:w-auto">
-                  <a
-                    href={`/billing/customer-portal?subscriptionId=${activeSubscription?.id}`}
-                  >
-                    <Icon.creditCard className="mr-2 h-4 w-4" />
-                    {t("settings.billing.subscription.updateBillingDetails")}
-                  </a>
-                </Button>
+                <CustomerPortalButton subscriptionId={activeSubscription.id} />
               )}
             </div>
 

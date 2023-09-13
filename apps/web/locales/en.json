@@ -219,6 +219,14 @@
             "title": "Could not resume subscription"
           }
         }
+      },
+      "createCustomerPortal": {
+        "label": "Manage billing details",
+        "notifications": {
+          "error": {
+            "title": "Could not create a customer portal session. Please try again."
+          }
+        }
       }
     },
     "notifications": {

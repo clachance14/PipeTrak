@@ -6,9 +6,11 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { defineAbilitiesFor } from "../auth";
 
-export async function createContext(params?: FetchCreateContextFnOptions) {
+export async function createContext(
+  params?: FetchCreateContextFnOptions | { isAdmin?: boolean },
+) {
   const authRequest = auth.handleRequest({
-    request: params ? (params.req as NextRequest) : null,
+    request: params && "req" in params ? (params.req as NextRequest) : null,
     cookies,
   });
   const session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
@@ -35,7 +37,9 @@ export async function createContext(params?: FetchCreateContextFnOptions) {
     teamMemberships,
     abilities,
     sessionId: session?.sessionId ?? null,
-    responseHeaders: params ? params.resHeaders : undefined,
+    responseHeaders:
+      params && "resHeaders" in params ? params.resHeaders : undefined,
+    isAdmin: params && "isAdmin" in params ? params.isAdmin : false,
   };
 }
 

@@ -63,7 +63,7 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
   body.append("success_url", redirectUrl ?? "");
   body.append("line_items[0][quantity]", "1");
   body.append("line_items[0][price]", variantId);
-  body.append("metadata[team_id]", teamId);
+  body.append("subscription_data[metadata][team_id]", teamId);
 
   const response = await callStripeApi("/checkout/sessions", {
     method: "POST",
@@ -75,16 +75,9 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
 
 export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
   subscriptionId,
+  customerId,
   redirectUrl,
 }) => {
-  const subscriptionData = await callStripeApi(
-    `/subscriptions/${subscriptionId}`,
-  );
-
-  const customerId = subscriptionData.customer;
-
-  if (!customerId) return null;
-
   const body = new URLSearchParams();
   body.append("customer", customerId);
   body.append("return_url", redirectUrl ?? "");

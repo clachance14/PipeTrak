@@ -117,12 +117,23 @@ model TeamInvitation {
   @@unique([team_id, email])
 }
 
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAUSED
+  CANCELED
+  PAST_DUE
+  UNPAID
+  INCOMPLETE
+  EXPIRED
+}
+
 model Subscription {
-  id                String    @unique
-  team              Team      @relation(fields: [team_id], references: [id])
-  team_id           String    @unique
+  id                String             @unique
+  team              Team               @relation(fields: [team_id], references: [id])
+  team_id           String             @unique
   customer_id       String
-  status            String
+  status            SubscriptionStatus
   plan_id           String
   variant_id        String
   next_payment_date DateTime?
