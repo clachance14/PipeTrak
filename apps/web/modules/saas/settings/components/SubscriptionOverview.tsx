@@ -6,7 +6,6 @@ import { ApiOutput } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";
 import { CustomerPortalButton } from "./CustomerPortalButton";
-import { ResumeSubscriptionButton } from "./ResumeSubscriptionButton";
 import { SubscriptionStatusBadge } from "./SubscriptionStatusBadge";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
@@ -109,19 +108,23 @@ export function SubscriptionOverview({
             <div className="flex flex-col gap-3 md:flex-row">
               {(currentSubscription.status === "ACTIVE" ||
                 currentSubscription.status === "TRIALING") && (
-                <CancelSubscriptionButton
-                  id={currentSubscription.id}
-                  label={t("settings.billing.subscription.cancel")}
-                />
+                <>
+                  {/* Pause/resume subscription is currently in development */}
+                  {/* <PauseSubscriptionButton id={currentSubscription.id} /> */}
+                  <CancelSubscriptionButton
+                    id={currentSubscription.id}
+                    label={t("settings.billing.subscription.cancel")}
+                  />
+                </>
               )}
 
-              {(currentSubscription.status === "PAUSED" ||
-                currentSubscription.status === "CANCELED") && (
+              {/* Pause/resume subscription is currently in development */}
+              {/* {currentSubscription.status === "PAUSED" && (
                 <ResumeSubscriptionButton
                   id={currentSubscription.id}
                   label={t("settings.billing.subscription.resume")}
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>

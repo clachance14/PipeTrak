@@ -1,6 +1,5 @@
 import { appConfig } from "@config";
 import { SettingsMenu } from "@saas/settings/components";
-import { PageHeader } from "@saas/shared/components";
 import { UserAvatar } from "@shared/components";
 import { createApiCaller } from "api";
 import BoringAvatar from "boring-avatars";
@@ -60,13 +59,8 @@ export default async function SettingsLayout({
   ];
 
   return (
-    <div className="container max-w-5xl py-8">
-      <PageHeader
-        title={t("settings.title")}
-        subtitle={t("settings.subtitle")}
-      />
-
-      <div className="align-start mt-8 flex flex-col gap-8 md:flex-row">
+    <div className="container max-w-6xl py-8">
+      <div className="align-start flex flex-col gap-8 md:flex-row">
         <div className="w-full md:max-w-[200px]">
           <SettingsMenu menuItems={menuItems} />
         </div>

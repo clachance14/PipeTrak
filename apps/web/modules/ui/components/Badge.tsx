@@ -2,7 +2,16 @@ import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
 
 export const badge = cva(
-  ["inline-block", "rounded-full", "px-3", "py-1", "text-sm", "leading-tight"],
+  [
+    "inline-block",
+    "rounded-full",
+    "px-3",
+    "py-1",
+    "text-xs",
+    "uppercase",
+    "font-semibold",
+    "leading-tight",
+  ],
   {
     variants: {
       status: {

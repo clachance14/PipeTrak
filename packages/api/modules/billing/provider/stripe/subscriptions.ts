@@ -3,6 +3,7 @@ import {
   CreateCheckoutLink,
   CreateCustomerPortalLink,
   GetAllPlans,
+  PauseSubscription,
   ResumeSubscription,
   SubscriptionPlan,
 } from "../../types";
@@ -90,6 +91,25 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
   return response.url;
 };
 
+export const pauseSubscription: PauseSubscription = async (params) => {
+  const { id } = params;
+
+  const body = new URLSearchParams();
+  body.append("pause_collection[behavior]", "void");
+
+  console.log(
+    "pausing subscription",
+    id,
+    `/subscriptions/${id}`,
+    body.toString(),
+  );
+
+  await callStripeApi(`/subscriptions/${id}`, {
+    method: "POST",
+    body,
+  });
+};
+
 export const cancelSubscription: CancelSubscription = async (params) => {
   const { id } = params;
 
@@ -98,11 +118,9 @@ export const cancelSubscription: CancelSubscription = async (params) => {
   });
 };
 
-export const resumeSubscription: ResumeSubscription = async (params) => {
-  const { id } = params;
-
+export const resumeSubscription: ResumeSubscription = async ({ id }) => {
   const body = new URLSearchParams();
-  body.append("billing_cycle_anchor", "now");
+  body.append("billing_cycle_anchor", "unchanged");
 
   const response = await callStripeApi(`/subscriptions/${id}/resume`, {
     method: "POST",

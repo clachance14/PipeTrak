@@ -228,6 +228,17 @@
             "title": "No se pudo crear una sesión del portal del cliente. \nInténtalo de nuevo."
           }
         }
+      },
+      "pauseSubscription": {
+        "label": "Pausar suscripción",
+        "notifications": {
+          "error": {
+            "title": "No se pudo pausar la suscripción. \nInténtalo de nuevo."
+          },
+          "success": {
+            "title": "La suscripción fue pausada."
+          }
+        }
       }
     },
     "notifications": {

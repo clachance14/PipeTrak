@@ -18,6 +18,8 @@ export type CreateCustomerPortalLink = (params: {
   redirectUrl?: string;
 }) => Promise<string>;
 
+export type PauseSubscription = (params: { id: string }) => Promise<void>;
+
 export type CancelSubscription = (params: { id: string }) => Promise<void>;
 
 export type ResumeSubscription = (params: { id: string }) => Promise<{

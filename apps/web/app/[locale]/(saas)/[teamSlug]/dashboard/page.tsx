@@ -10,7 +10,7 @@ export default async function Dashboard({ params: { locale } }) {
   const t = await getTranslator(locale);
 
   return (
-    <div className="container max-w-5xl py-8">
+    <div className="container max-w-6xl py-8">
       <PageHeader
         title={t("dashboard.welcome", { name: user?.name })}
         subtitle={t("dashboard.subtitle")}

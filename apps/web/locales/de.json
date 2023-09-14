@@ -171,7 +171,7 @@
     },
     "billing": {
       "subscription": {
-        "cancel": "Abonnement kündigen",
+        "cancel": "Kündigen",
         "currentPlan": "Dein aktueller Plan",
         "currentSubscription": "Dein aktuelles Abonnement",
         "endsOn": "Dein Abonnement endet am <strong>{nextPaymentDate, date, medium}</strong>",
@@ -228,6 +228,17 @@
         "notifications": {
           "error": {
             "title": "Es konnte keine Kundenportalsitzung erstellt werden. \nBitte versuche es erneut."
+          }
+        }
+      },
+      "pauseSubscription": {
+        "label": "Pausieren",
+        "notifications": {
+          "error": {
+            "title": "Das Abonnement konnte nicht pausiert werden. \nBitte versuche es erneut."
+          },
+          "success": {
+            "title": "Das Abonnement wurde pausiert."
           }
         }
       }

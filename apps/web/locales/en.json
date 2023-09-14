@@ -230,6 +230,17 @@
             "title": "Could not create a customer portal session. Please try again."
           }
         }
+      },
+      "pauseSubscription": {
+        "notifications": {
+          "success": {
+            "title": "The subscription was paused."
+          },
+          "error": {
+            "title": "Could not pause the subscription. Please try again."
+          }
+        },
+        "label": "Pause subscription"
       }
     },
     "notifications": {

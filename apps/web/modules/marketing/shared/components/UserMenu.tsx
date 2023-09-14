@@ -4,7 +4,6 @@ import { appConfig } from "@config";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks";
 import { UserAvatar } from "@shared/components";
-import { apiClient } from "@shared/lib";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,13 +35,8 @@ export function UserMenu() {
   const currentLocale = useLocale();
   const { user, logout } = useUser();
   const [locale, setLocale] = useState<string>(currentLocale);
-  const {
-    resolvedTheme,
-    setTheme: setCurrentTheme,
-    theme: currentTheme,
-  } = useTheme();
+  const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
   const [theme, setTheme] = useState<string>(currentTheme ?? "system");
-  const logoutMutation = apiClient.auth.logout.useMutation();
 
   const teamSlug = params.teamSlug as string;
 
@@ -147,7 +141,7 @@ export function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={`/${teamSlug}/settings/account`}>
+          <Link href={`/${teamSlug}/settings/account/general`}>
             <Icon.settings className="mr-2 h-4 w-4" /> Account settings
           </Link>
         </DropdownMenuItem>

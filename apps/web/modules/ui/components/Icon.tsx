@@ -31,6 +31,7 @@ import {
   MoreVertical,
   MousePointer,
   Paperclip,
+  Pause,
   Phone,
   Plus,
   Send,
@@ -96,6 +97,7 @@ export const Icon = {
   notification: Bell,
   invitation: MailCheck,
   team: Users,
+  pause: Pause,
 
   // social icons
   google: ({ ...props }: IconProps) => (
