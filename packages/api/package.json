@@ -4,7 +4,7 @@
     "auth": "workspace:*",
     "database": "workspace:*",
     "mail": "workspace:*",
-    "next": "13.4.19",
+    "next": "13.5.1",
     "slugify": "^1.6.6",
     "superjson": "^1.13.1",
     "utils": "workspace:*",
