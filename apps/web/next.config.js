@@ -10,16 +10,6 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
   },
-  experimental: {
-    serverActions: true,
-    outputFileTracingExcludes: {
-      "*": [
-        "node_modules/@swc/core-linux-x64-gnu",
-        "node_modules/@swc/core-linux-x64-musl",
-        "node_modules/@esbuild/linux-x64",
-      ],
-    },
-  },
 };
 
 module.exports = withNextIntl(withContentlayer(nextConfig));
