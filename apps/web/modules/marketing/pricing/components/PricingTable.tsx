@@ -3,6 +3,7 @@
 import { PricingTable as PricingTablePrimitive } from "@shared/components";
 import { ApiOutput } from "api";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export function PricingTable({
   plans,
@@ -10,11 +11,17 @@ export function PricingTable({
   plans: ApiOutput["billing"]["plans"];
 }) {
   const t = useTranslations();
+  const router = useRouter();
+
   return (
     <PricingTablePrimitive
       plans={plans}
       onSelectPlan={() => {
-        window.location.href = `/settings/billing`;
+        router.push(
+          `/team/redirect?redirectTo=${encodeURIComponent(
+            "/settings/team/billing",
+          )}`,
+        );
       }}
       labels={{
         year: t("pricing.year"),

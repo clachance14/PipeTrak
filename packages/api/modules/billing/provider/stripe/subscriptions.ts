@@ -97,13 +97,6 @@ export const pauseSubscription: PauseSubscription = async (params) => {
   const body = new URLSearchParams();
   body.append("pause_collection[behavior]", "void");
 
-  console.log(
-    "pausing subscription",
-    id,
-    `/subscriptions/${id}`,
-    body.toString(),
-  );
-
   await callStripeApi(`/subscriptions/${id}`, {
     method: "POST",
     body,

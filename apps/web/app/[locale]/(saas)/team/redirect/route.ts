@@ -2,6 +2,7 @@ import { createApiCaller } from "api";
 import { Team } from "database";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { join } from "path";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -10,11 +11,28 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const apiCaller = await createApiCaller();
 
+  const redirectTo = requestUrl.searchParams.get("redirectTo");
+
+  const getRedirectUrl = ({
+    teamSlug,
+    path,
+  }: {
+    teamSlug?: string;
+    path: string;
+  }) => {
+    let redirectPath = redirectTo ?? path;
+    if (teamSlug) redirectPath = join(teamSlug, redirectPath);
+    return new URL(redirectPath, requestUrl.origin).toString();
+  };
+
   try {
     const user = await apiCaller.auth.user();
 
-    if (!user)
-      return NextResponse.redirect(new URL("/auth/login", requestUrl.origin));
+    if (!user) {
+      const redirectUrl = new URL("/auth/login", requestUrl.origin);
+      if (redirectTo) redirectUrl.searchParams.set("redirectTo", redirectTo);
+      return NextResponse.redirect(redirectUrl);
+    }
 
     const { teamMemberships } = user;
 
@@ -42,7 +60,10 @@ export async function GET(request: Request) {
       } while (!team);
 
       return NextResponse.redirect(
-        new URL(`/${team.slug}/dashboard`, requestUrl.origin),
+        getRedirectUrl({
+          teamSlug: team.slug,
+          path: "/dashboard",
+        }),
       );
     }
 
@@ -56,13 +77,19 @@ export async function GET(request: Request) {
 
       if (teamMembership) {
         return NextResponse.redirect(
-          new URL(`/${teamMembership.team.slug}/dashboard`, requestUrl.origin),
+          getRedirectUrl({
+            teamSlug: teamMembership.team.slug,
+            path: "/dashboard",
+          }),
         );
       }
     }
 
     return NextResponse.redirect(
-      new URL(`/${teamMemberships[0].team.slug}/dashboard`, requestUrl.origin),
+      getRedirectUrl({
+        teamSlug: teamMemberships[0].team.slug,
+        path: "/dashboard",
+      }),
     );
   } catch (e) {
     console.error(e);
