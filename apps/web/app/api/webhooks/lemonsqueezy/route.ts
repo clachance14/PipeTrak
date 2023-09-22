@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     const text = await req.text();
     const hmac = createHmac(
       "sha256",
-      process.env.LEMONSQUEEZY_SIGNING_SECRET as string,
+      process.env.LEMONSQUEEZY_WEBHOOK_SECRET as string,
     );
     const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
     const signature = Buffer.from(
