@@ -129,7 +129,7 @@ enum SubscriptionStatus {
 }
 
 model Subscription {
-  id                String             @unique
+  id                String             @id
   team              Team               @relation(fields: [team_id], references: [id])
   team_id           String             @unique
   customer_id       String
