@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^3.0.1",
-    "@lucia-auth/oauth": "^3.0.0",
+    "@lucia-auth/oauth": "^3.3.0",
     "database": "workspace:*",
-    "lucia": "^2.4.2",
+    "lucia": "^2.7.0",
     "mail": "workspace:*",
     "utils": "workspace:*",
     "zod": "^3.22.2"
