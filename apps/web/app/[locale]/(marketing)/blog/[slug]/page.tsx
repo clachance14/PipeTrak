@@ -3,6 +3,7 @@ import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getBaseUrl } from "utils";
 
 interface Params {
   slug: string;
@@ -19,6 +20,14 @@ export async function generateMetadata({
 
   return {
     title: post?.title,
+    description: post?.excerpt,
+    openGraph: {
+      title: post?.title,
+      description: post?.excerpt,
+      images: post?.image
+        ? [new URL(post?.image ?? "", getBaseUrl()).toString()]
+        : [],
+    },
   };
 }
 
