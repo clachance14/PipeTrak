@@ -121,7 +121,8 @@
   "dashboard": {
     "menu": {
       "dashboard": "Panel",
-      "settings": "Ajustes"
+      "settings": "Ajustes",
+      "aiDemo": "Demostración de IA"
     },
     "sidebar": {
       "createTeam": "Crear un nuevo equipo"
