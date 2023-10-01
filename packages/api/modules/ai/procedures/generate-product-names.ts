@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { protectedProcedure } from "../../trpc";
 
-export const generateProductNames = publicProcedure
+export const generateProductNames = protectedProcedure
   .input(
     z.object({
       topic: z.string(),
