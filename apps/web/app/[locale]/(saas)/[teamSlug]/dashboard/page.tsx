@@ -39,7 +39,7 @@ export default async function Dashboard({ params: { locale } }) {
 
       <Card className="mt-8">
         <div className="text-muted-foreground flex h-64 items-center justify-center p-8">
-          Here you can add your own content.
+          Place your content here...
         </div>
       </Card>
     </div>

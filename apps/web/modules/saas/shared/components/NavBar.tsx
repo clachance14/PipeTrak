@@ -28,6 +28,11 @@ export function NavBar({
       icon: Icon.grid,
     },
     {
+      label: t("dashboard.menu.aiDemo"),
+      href: `/${teamSlug}/ai-demo`,
+      icon: Icon.magic,
+    },
+    {
       label: t("dashboard.menu.settings"),
       href: `/${teamSlug}/settings`,
       icon: Icon.settings,

@@ -44,6 +44,7 @@ import {
   Upload,
   User,
   Users,
+  Wand2,
   X,
 } from "lucide-react";
 
@@ -98,6 +99,7 @@ export const Icon = {
   invitation: MailCheck,
   team: Users,
   pause: Pause,
+  magic: Wand2,
 
   // social icons
   google: ({ ...props }: IconProps) => (
