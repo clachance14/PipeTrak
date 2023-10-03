@@ -30,6 +30,19 @@ export async function POST(req: Request) {
       });
 
     const payload = JSON.parse(text);
+    const type = payload?.type as string;
+
+    if (
+      ![
+        "customer.subscription.created",
+        "customer.subscription.updated",
+        "customer.subscription.deleted",
+      ].includes(type)
+    ) {
+      return new Response("Invalid event type.", {
+        status: 400,
+      });
+    }
 
     const statusMap: Record<string, SubscriptionStatus> = {
       active: "ACTIVE",
