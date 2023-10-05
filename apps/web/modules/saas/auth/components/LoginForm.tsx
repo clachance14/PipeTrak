@@ -104,7 +104,8 @@ export function LoginForm() {
 
         const redirectSearchParams = new URLSearchParams();
         redirectSearchParams.set("type", "LOGIN");
-        redirectSearchParams.set("redirectTo", redirectTo);
+        if (!redirectTo.startsWith("/team/redirect"))
+          redirectSearchParams.set("redirectTo", redirectTo);
         if (invitationCode)
           redirectSearchParams.set("invitationCode", invitationCode);
         if (email) redirectSearchParams.set("identifier", email);
