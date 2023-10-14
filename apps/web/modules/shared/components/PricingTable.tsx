@@ -66,7 +66,7 @@ export function PricingTable({
 
         return lowestPriceA - lowestPriceB;
       });
-  }, [plans]);
+  }, [plans, interval]);
 
   const isActivePlan = (plan: (typeof plans)[number]) => {
     return activePlanId === plan.id;
