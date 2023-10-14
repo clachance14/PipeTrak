@@ -11,10 +11,12 @@ import {
 } from "@ui/components";
 import { useTheme } from "next-themes";
 import { useState } from "react";
+import { useIsClient } from "usehooks-ts";
 
 export function ColorModeToggle() {
   const { resolvedTheme, setTheme, theme } = useTheme();
   const [value, setValue] = useState<string>(theme ?? "system");
+  const isClient = useIsClient();
 
   const colorModeOptions = [
     {
@@ -33,6 +35,10 @@ export function ColorModeToggle() {
       icon: Icon.darkMode,
     },
   ];
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <DropdownMenu>
