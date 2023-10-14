@@ -8,7 +8,7 @@ export function PostContent({ mdx }: { mdx: MDX }) {
   const MDXContent = useMDXComponent(mdx.code);
 
   return (
-    <div className="prose mx-auto mt-6 max-w-2xl">
+    <div className="prose dark:prose-invert mx-auto mt-6 max-w-2xl">
       <MDXContent components={mdxComponents} />
     </div>
   );
