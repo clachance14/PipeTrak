@@ -23,6 +23,9 @@ export default function BlogListPage() {
       <div className="grid gap-4 md:grid-cols-2">
         {allPosts
           .filter((post) => post.published)
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          )
           .map((post) => (
             <PostListItem post={post} key={post._id} />
           ))}
