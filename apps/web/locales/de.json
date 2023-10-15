@@ -6,7 +6,7 @@
       "email": "E-Mail",
       "hints": {
         "linkNotSent": {
-          "message": "Es tut uns leid, aber wir konnten deinen keinen Link zum Zurücksetzen des Passworts nicht senden. \nBitte versuche es später noch einmal.",
+          "message": "Es tut uns leid, aber wir konnten keinen Link zum Zurücksetzen des Passworts senden. \nBitte versuche es später noch einmal.",
           "title": "Link nicht gesendet"
         },
         "linkSent": {
@@ -25,7 +25,7 @@
       "forgotPassword": "Passwort vergessen?",
       "hints": {
         "emailNotVerified": {
-          "message": "Bitte überprüfe deine E-Mail-Adresse, bevor du dich anmelden. Überprüfe deinen Posteingang auf die Bestätigungsmail.",
+          "message": "Bitte überprüfe deine E-Mail-Adresse, bevor du dich anmeldest. Überprüfe deinen Posteingang auf die Bestätigungsmail.",
           "title": "E-Mail nicht bestätigt"
         },
         "invalidCredentials": {
@@ -61,7 +61,7 @@
           "title": "Bestätige deine E-Mail"
         }
       },
-      "message": "Wir freuen uns, dass du dich uns anschließen möchten. \nBitte fülle das untenstehende Formular aus, um dein Konto zu erstellen.",
+      "message": "Wir freuen uns, dass du dich uns anschließen möchtest. \nBitte fülle das untenstehende Formular aus, um dein Konto zu erstellen.",
       "name": "Name",
       "password": "Passwort",
       "passwordHint": "Bitte gib mindestens 8 Zeichen ein.",
@@ -79,7 +79,7 @@
       },
       "hints": {
         "verificationFailed": {
-          "message": "Es tut uns leid, das von Ihnen eingegebene Passwort ist ungültig. \nBitte versuche es erneut.",
+          "message": "Es tut uns leid, das von Ihnen eingegebene Passwort ist ungültig. \nBitte versuchen Sie es erneut.",
           "title": "Ungültiges Einmalpasswort"
         }
       },
@@ -136,7 +136,7 @@
     "email": "Email",
     "hints": {
       "success": {
-        "message": "Danke, dass du unseren Newsletter abonniert haben. \nWir werden dich auf dem Laufenden halten.",
+        "message": "Danke, dass du unseren Newsletter abonniert hast. \nWir werden dich auf dem Laufenden halten.",
         "title": "Gezeichnet"
       }
     },
@@ -199,7 +199,7 @@
         "updateBillingDetails": "Zahlungsdetails aktualisieren",
         "upgradePlan": "Upgrade deinen Plan",
         "year": "Jahr",
-        "yearly": "jöhrlich",
+        "yearly": "jährlich",
         "yourSubscription": "Du hast den Plan <strong>{plan}</strong> ({price}/{interval}) abonniert.",
         "resume": "Abonnement fortsetzen"
       },
@@ -294,7 +294,7 @@
         "notifications": {
           "removeMember": {
             "error": {
-              "description": "Das Mitglied konnte nicht aus Ihrem Team entfernt werden. \nBitte versuche es erneut."
+              "description": "Das Mitglied konnte nicht aus Ihrem Team entfernt werden. \nBitte versuchen Sie es erneut."
             },
             "loading": {
               "description": "Mitglied wird aus dem Team entfernt..."
