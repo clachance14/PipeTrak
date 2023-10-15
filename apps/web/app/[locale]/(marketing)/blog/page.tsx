@@ -21,9 +21,11 @@ export default function BlogListPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {allPosts.map((post) => (
-          <PostListItem post={post} key={post._id} />
-        ))}
+        {allPosts
+          .filter((post) => post.published)
+          .map((post) => (
+            <PostListItem post={post} key={post._id} />
+          ))}
       </div>
     </div>
   );
