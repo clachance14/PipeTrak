@@ -78,7 +78,7 @@ export function NavBar() {
                 </Button>
               </SheetTrigger>
               <SheetContent className="w-[250px]" side="right">
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-start justify-center">
                   {menuItems.map((menuItem) => (
                     <Link
                       key={menuItem.href}
