@@ -6,7 +6,7 @@ import typographyPlugin from "@tailwindcss/typography";
 import { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 
-const lightVariables = {
+export const lightVariables = {
   colors: {
     border: "#e2e8f0",
     input: "#e2e8f0",
@@ -32,7 +32,7 @@ const lightVariables = {
   },
 };
 
-const darkVariables = {
+export const darkVariables = {
   colors: {
     border: "#2f3e57",
     input: "#1e293b",
