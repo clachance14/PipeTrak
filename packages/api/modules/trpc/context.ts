@@ -1,6 +1,6 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { SessionUser, auth } from "auth";
+import { Session, SessionUser, auth } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
@@ -13,7 +13,14 @@ export async function createContext(
     request: params && "req" in params ? (params.req as NextRequest) : null,
     cookies,
   });
-  const session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
+  let session: Session | null = null;
+
+  try {
+    session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
+  } catch (e) {
+    console.error(e);
+  }
+
   const user: SessionUser | null = session?.user ?? null;
 
   const teamMemberships = user
