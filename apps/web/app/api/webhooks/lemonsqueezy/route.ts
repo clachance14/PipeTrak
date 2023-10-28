@@ -1,36 +1,7 @@
 import { createAdminApiCaller } from "api/modules/trpc";
 import { createHmac, timingSafeEqual } from "crypto";
-import { Subscription, SubscriptionStatus, db } from "database";
+import { SubscriptionStatus } from "database";
 import { headers } from "next/headers";
-
-async function updateUserSubscription(
-  subscription: Subscription,
-): Promise<void | Subscription> {
-  if (!subscription.team_id) throw new Error("team_id must be provided");
-
-  const existingSubscription = await db.subscription.findFirst({
-    where: {
-      team_id: subscription.team_id,
-    },
-  });
-
-  try {
-    if (existingSubscription)
-      return await db.subscription.update({
-        data: subscription,
-        where: {
-          id: existingSubscription.id,
-        },
-      });
-
-    await db.subscription.create({
-      data: subscription,
-    });
-  } catch (e) {
-    console.error(e);
-    throw new Error("Could not upsert subscription");
-  }
-}
 
 export async function POST(req: Request) {
   try {
