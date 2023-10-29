@@ -23,7 +23,7 @@ export function CreateTeamDialog() {
   const { teamSlug } = params;
 
   const switchTeam = (slug: string) => {
-    Cookies.set("createTeam.team-slug", slug, { path: "/", expires: 30 });
+    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
     router.replace(pathname.replace(teamSlug as string, slug));
   };
 

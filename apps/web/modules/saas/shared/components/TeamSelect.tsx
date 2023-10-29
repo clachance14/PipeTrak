@@ -39,7 +39,7 @@ export function TeamSelect({
   const switchTeam = (slug: string) => {
     if (!activeTeam) return;
 
-    Cookies.set("dashboard.team-slug", slug, { path: "/", expires: 30 });
+    Cookies.set("team-slug", slug, { path: "/", expires: 30 });
     router.replace(pathname.replace(activeTeam.slug, slug));
   };
 
