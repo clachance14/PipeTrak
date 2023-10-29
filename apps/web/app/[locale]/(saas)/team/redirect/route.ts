@@ -1,3 +1,4 @@
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
 import { createApiCaller } from "api";
 import { Team } from "database";
 import { cookies } from "next/headers";
@@ -68,7 +69,7 @@ export async function GET(request: Request) {
     }
 
     // check cookie for latest team
-    const teamSlugCookie = cookies().get("team-slug")?.value;
+    const teamSlugCookie = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value;
 
     if (teamSlugCookie) {
       const teamMembership = teamMemberships.find(
