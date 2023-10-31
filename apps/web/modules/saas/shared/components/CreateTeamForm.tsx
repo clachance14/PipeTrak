@@ -16,14 +16,10 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function CreateTeamForm({
-  isInitialTeam,
   onSuccess,
   defaultName,
-  defaultSlug,
 }: {
-  isInitialTeam: boolean;
   onSuccess: (team: ApiOutput["team"]["create"]) => void;
-  defaultSlug?: string;
   defaultName?: string;
 }) {
   const t = useTranslations();
@@ -46,7 +42,6 @@ export function CreateTeamForm({
     try {
       const newTeam = await createTeamMutation.mutateAsync({
         name: data.name,
-        slug: (data.name === defaultName && defaultSlug) || undefined,
       });
 
       // redirect to team settings page

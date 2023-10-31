@@ -35,7 +35,6 @@ export function CreateTeamDialog() {
         </DialogHeader>
 
         <CreateTeamForm
-          isInitialTeam={false}
           onSuccess={async (team) => {
             switchTeam(team.slug);
             setOpen(false);
