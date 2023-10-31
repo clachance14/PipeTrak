@@ -1,6 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
+import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
   DropdownMenu,
@@ -16,10 +17,8 @@ import {
 import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";
-import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { TEAM_SLUG_COOKIE_NAME } from "../types";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export function TeamSelect({
@@ -40,8 +39,8 @@ export function TeamSelect({
   const switchTeam = (slug: string) => {
     if (!activeTeam) return;
 
-    Cookies.set(TEAM_SLUG_COOKIE_NAME, slug, { path: "/", expires: 30 });
-    router.replace(pathname.replace(activeTeam.slug, slug));
+    updateTeamSlugCookie(slug);
+    router.replace(pathname.replace(teamSlug as string, slug));
   };
 
   if (!activeTeam) return null;

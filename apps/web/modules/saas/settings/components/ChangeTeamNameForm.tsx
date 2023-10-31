@@ -1,12 +1,13 @@
 "use client";
 
 import { useUser } from "@saas/auth/hooks";
+import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
 import { ActionBlock } from "@saas/shared/components";
 import { apiClient } from "@shared/lib";
 import { Input } from "@ui/components";
 import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangeTeamNameForm({
@@ -21,6 +22,8 @@ export function ChangeTeamNameForm({
   const router = useRouter();
   const { teamRole } = useUser();
   const [name, setName] = useState(initialValue);
+  const pathname = usePathname();
+  const { teamSlug } = useParams();
 
   const updateTeamMutation = apiClient.team.update.useMutation({
     onSuccess: ({ slug }) => {
@@ -28,7 +31,9 @@ export function ChangeTeamNameForm({
         variant: "success",
         title: t("settings.notifications.teamNameUpdated"),
       });
-      router.replace(`/${slug}/settings/team`);
+
+      updateTeamSlugCookie(slug);
+      router.replace(pathname.replace(teamSlug as string, slug));
     },
     onError: () => {
       toast({

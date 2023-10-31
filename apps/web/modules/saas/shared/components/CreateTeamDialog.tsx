@@ -1,5 +1,6 @@
 "use client";
 
+import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
   Dialog,
@@ -8,10 +9,8 @@ import {
   DialogTitle,
 } from "@ui/components";
 import { useAtom } from "jotai";
-import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { TEAM_SLUG_COOKIE_NAME } from "../types";
 import { CreateTeamForm } from "./CreateTeamForm";
 
 export function CreateTeamDialog() {
@@ -24,7 +23,7 @@ export function CreateTeamDialog() {
   const { teamSlug } = params;
 
   const switchTeam = (slug: string) => {
-    Cookies.set(TEAM_SLUG_COOKIE_NAME, slug, { path: "/", expires: 30 });
+    updateTeamSlugCookie(slug);
     router.replace(pathname.replace(teamSlug as string, slug));
   };
 
