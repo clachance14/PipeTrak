@@ -52,6 +52,10 @@ export function ForgotPasswordForm() {
       const redirectSearchParams = new URLSearchParams();
       redirectSearchParams.set("type", "PASSWORD_RESET");
       if (email) redirectSearchParams.set("identifier", email);
+      redirectSearchParams.set(
+        "redirectTo",
+        "/[teamSlug]/settings/account/general",
+      );
       router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {
       setServerError({

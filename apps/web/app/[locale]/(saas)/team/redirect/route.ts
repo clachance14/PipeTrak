@@ -3,7 +3,6 @@ import { createApiCaller } from "api";
 import { Team } from "database";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { join } from "path";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -22,7 +21,9 @@ export async function GET(request: Request) {
     path: string;
   }) => {
     let redirectPath = redirectTo ?? path;
-    if (teamSlug) redirectPath = join(teamSlug, redirectPath);
+    if (teamSlug && redirectPath.includes("[teamSlug]"))
+      redirectPath = redirectPath.replace("[teamSlug]", teamSlug);
+
     return new URL(redirectPath, requestUrl.origin).toString();
   };
 
@@ -63,7 +64,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(
         getRedirectUrl({
           teamSlug: team.slug,
-          path: "/dashboard",
+          path: "/[teamSlug]/dashboard",
         }),
       );
     }
@@ -80,7 +81,7 @@ export async function GET(request: Request) {
         return NextResponse.redirect(
           getRedirectUrl({
             teamSlug: teamMembership.team.slug,
-            path: "/dashboard",
+            path: "/[teamSlug]/dashboard",
           }),
         );
       }
@@ -89,7 +90,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(
       getRedirectUrl({
         teamSlug: teamMemberships[0].team.slug,
-        path: "/dashboard",
+        path: "/[teamSlug]/dashboard",
       }),
     );
   } catch (e) {

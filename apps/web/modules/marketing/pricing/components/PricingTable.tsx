@@ -19,7 +19,7 @@ export function PricingTable({
       onSelectPlan={() => {
         router.push(
           `/team/redirect?redirectTo=${encodeURIComponent(
-            "/settings/team/billing",
+            "/[teamSlug]/settings/team/billing",
           )}`,
         );
       }}
