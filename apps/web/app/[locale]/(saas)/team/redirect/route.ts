@@ -41,25 +41,16 @@ export async function GET(request: Request) {
     // if user has no teams, we create one for them
     if (!teamMemberships || !teamMemberships.length) {
       let team: Team | undefined = undefined;
-      let iteration = 0;
 
-      do {
-        if (iteration === 10) return NextResponse.redirect(requestUrl.origin);
-
-        try {
-          const name = user.name || user.email.split("@")[0];
-          const slug = `${name}${iteration ? ` ${iteration + 1}` : ""}`;
-
-          team = await apiCaller.team.create({
-            name: name,
-            slug,
-          });
-        } catch (e) {
-          console.error(e);
-        }
-
-        iteration++;
-      } while (!team);
+      try {
+        const name = user.name || user.email.split("@")[0];
+        team = await apiCaller.team.create({
+          name,
+        });
+      } catch (e) {
+        console.error(e);
+        return NextResponse.redirect("/");
+      }
 
       return NextResponse.redirect(
         getRedirectUrl({

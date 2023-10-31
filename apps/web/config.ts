@@ -31,6 +31,6 @@ export const appConfig = {
     ],
   },
   teams: {
-    avatarColors: ["#425693", "#9170b4", "#7e91c9", "#6e90ba"],
+    avatarColors: ["#0072f5", "#9dbee5", "#8e7db7", "#6dc4ae"],
   },
 };
