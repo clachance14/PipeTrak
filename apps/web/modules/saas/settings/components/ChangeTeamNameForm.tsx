@@ -25,12 +25,14 @@ export function ChangeTeamNameForm({
   const updateTeamMutation = apiClient.team.update.useMutation({
     onSuccess: ({ slug }) => {
       toast({
+        variant: "success",
         title: t("settings.notifications.teamNameUpdated"),
       });
       router.replace(`/${slug}/settings/team`);
     },
     onError: () => {
       toast({
+        variant: "error",
         title: t("settings.notifications.teamNameNotUpdated"),
       });
     },

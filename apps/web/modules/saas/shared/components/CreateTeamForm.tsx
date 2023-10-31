@@ -51,6 +51,7 @@ export function CreateTeamForm({
 
       // redirect to team settings page
       toast({
+        variant: "success",
         title: t("createTeam.notifications.success"),
       });
 
