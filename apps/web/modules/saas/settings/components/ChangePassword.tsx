@@ -17,9 +17,16 @@ export function ChangePasswordForm() {
   const changePasswordMutation = apiClient.auth.changePassword.useMutation({
     onSuccess: () => {
       toast({
+        variant: "success",
         title: t("settings.notifications.passwordUpdated"),
       });
       router.refresh();
+    },
+    onError: (error) => {
+      toast({
+        variant: "error",
+        title: t("settings.notifications.passwordNotUpdated"),
+      });
     },
   });
 
