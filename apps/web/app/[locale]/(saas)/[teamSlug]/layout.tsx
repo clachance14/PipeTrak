@@ -22,6 +22,8 @@ export default async function Layout({
     (membership) => membership.team.slug === teamSlug,
   );
 
+  if (!currentTeamMembership) return redirect("/");
+
   return (
     <UserContextProvider
       initialUser={user}
