@@ -51,7 +51,7 @@ export function ForgotPasswordForm() {
 
       const redirectSearchParams = new URLSearchParams();
       redirectSearchParams.set("type", "PASSWORD_RESET");
-      if (email) redirectSearchParams.set("email", email);
+      if (email) redirectSearchParams.set("identifier", email);
       router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {
       setServerError({
@@ -98,7 +98,8 @@ export function ForgotPasswordForm() {
         )}
 
         <Button loading={isSubmitting}>
-          <Icon.submit className="h-4 w-4" /> {t("auth.forgotPassword.submit")}
+          <Icon.submit className="mr-2 h-4 w-4" />{" "}
+          {t("auth.forgotPassword.submit")}
         </Button>
       </form>
     </>
