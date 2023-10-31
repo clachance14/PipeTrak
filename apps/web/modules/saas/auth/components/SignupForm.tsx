@@ -78,7 +78,7 @@ export function SignupForm() {
         redirectSearchParams.set("redirectTo", redirectTo);
       if (invitationCode)
         redirectSearchParams.set("invitationCode", invitationCode);
-      if (email) redirectSearchParams.set("email", email);
+      if (email) redirectSearchParams.set("identifier", email);
 
       router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {
