@@ -20,7 +20,12 @@ export const verifyToken = publicProcedure
         attributes: {},
       });
 
-      // auth.handleRequest(req);
+      if (!session.user.email_verified) {
+        await auth.updateUserAttributes(session.user.id, {
+          email_verified: true,
+        });
+      }
+
       const sessionCookie = auth.createSessionCookie(session);
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
