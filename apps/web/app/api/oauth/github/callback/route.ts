@@ -27,19 +27,46 @@ export const GET = async (request: NextRequest) => {
     });
 
   try {
-    const { getExistingUser, githubUser, createUser, createKey } =
+    const { getExistingUser, githubUser, createUser, createKey, githubTokens } =
       await githubAuth.validateCallback(code);
+
+    const getUserPrimaryEmail = async () => {
+      if (githubUser.email) return githubUser.email;
+
+      type EmailsResData =
+        | {
+            email: string | null | undefined;
+            primary: boolean | undefined;
+            verified: boolean | undefined;
+            visibility: string | null;
+          }[]
+        | null
+        | undefined;
+
+      const emailsRes = await fetch("https://api.github.com/user/emails", {
+        headers: {
+          Authorization: `token ${githubTokens.accessToken}`,
+        },
+      });
+      const emailsResData = (await emailsRes.json()) as EmailsResData;
+
+      const primaryEmail = emailsResData?.find((email) => email.primary)?.email;
+      return primaryEmail ?? null;
+    };
 
     const getUser = async () => {
       const existingUser = await getExistingUser();
 
       if (existingUser) return existingUser;
 
+      // get all emails from user, due to issue with github not returning primary email when it's private
+      const githubUserEmail = await getUserPrimaryEmail();
+
       // check if user exists with same email
-      if (githubUser.email) {
+      if (githubUserEmail) {
         const existingDatabaseUserWithEmail = await db.user.findFirst({
           where: {
-            email: githubUser.email,
+            email: githubUserEmail,
           },
         });
 
@@ -56,11 +83,11 @@ export const GET = async (request: NextRequest) => {
 
       const user = await createUser({
         attributes: {
-          email: githubUser.email!,
+          email: githubUserEmail!,
           name: githubUser.name ?? githubUser.login,
           github_username: githubUser.login,
           avatar_url: githubUser.avatar_url,
-          email_verified: githubUser.email !== null,
+          email_verified: githubUserEmail !== null,
           role: "USER",
         },
       });
