@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
 
-  if (!code) return redirect("/");
+  if (!code) throw new Error("No invitation code query param provided");
 
   const apiCaller = await createApiCaller();
 
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     id: code,
   });
 
-  if (!invitation) return redirect("/");
+  if (!invitation) throw new Error("Invitation not found");
 
   const user = await apiCaller.auth.user();
 
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
       id: code,
     });
 
-    if (!team) return redirect("/");
+    if (!team) throw new Error("Team not found");
 
     return redirect(`/${team.slug}/dashboard`);
   } catch (e) {
