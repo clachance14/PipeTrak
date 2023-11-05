@@ -21,6 +21,7 @@
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
     "database": "workspace:*",
+    "geist": "^1.0.0",
     "jotai": "^2.4.3",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.274.0",

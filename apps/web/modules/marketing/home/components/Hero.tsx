@@ -5,7 +5,7 @@ export function Hero() {
     <nav className=" border-b py-24">
       <div className="container text-center">
         <h1 className="mx-auto max-w-3xl text-5xl font-bold lg:text-7xl">
-          Your revolutionary Next.js SaaS
+          Your revolutionary <span className="text-primary">Next.js</span> SaaS
         </h1>
 
         <p className="mt-5 text-lg opacity-75">

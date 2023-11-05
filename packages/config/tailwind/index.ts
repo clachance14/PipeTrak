@@ -84,8 +84,7 @@ const config: Config = {
         sm: "calc(0.75rem - 4px)",
       },
       fontFamily: {
-        // --font-sans is defined as a variable by next/font
-        sans: ["var(--font-sans)", "sans-serif"],
+        sans: ["var(--font-geist-sans)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
