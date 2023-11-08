@@ -33,7 +33,7 @@ export function ChangeTeamNameForm({
       });
 
       updateTeamSlugCookie(slug);
-      router.replace(pathname.replace(teamSlug as string, slug));
+      location.href = location.href.replace(teamSlug as string, slug);
     },
     onError: () => {
       toast({
