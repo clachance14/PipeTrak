@@ -7,7 +7,7 @@ import { apiClient } from "@shared/lib";
 import { Input } from "@ui/components";
 import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export function ChangeTeamNameForm({
@@ -19,10 +19,8 @@ export function ChangeTeamNameForm({
 }) {
   const t = useTranslations();
   const { toast } = useToast();
-  const router = useRouter();
   const { teamRole } = useUser();
   const [name, setName] = useState(initialValue);
-  const pathname = usePathname();
   const { teamSlug } = useParams();
 
   const updateTeamMutation = apiClient.team.update.useMutation({
