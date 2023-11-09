@@ -12,12 +12,20 @@ import {
 } from "@ui/components";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next-intl/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Banner } from "./Banner";
 
 export function NavBar() {
   const t = useTranslations();
   const { user, loaded: userLoaded } = useUser();
   const locale = useLocale();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const menuItems: {
     label: string;
@@ -71,7 +79,10 @@ export function NavBar() {
               currentLocale={locale}
             />
 
-            <Sheet>
+            <Sheet
+              open={mobileMenuOpen}
+              onOpenChange={(open) => setMobileMenuOpen(open)}
+            >
               <SheetTrigger asChild>
                 <Button className="md:hidden" size="icon" variant="outline">
                   <Icon.menu />
