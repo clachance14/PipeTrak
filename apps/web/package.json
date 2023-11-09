@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.2",
+    "cypress": "^13.5.0",
     "database": "workspace:*",
     "geist": "^1.0.0",
     "jotai": "^2.4.3",
@@ -62,6 +63,7 @@
     "eslint-plugin-storybook": "^0.6.15",
     "postcss": "8.4.31",
     "storybook": "^7.5.3",
+    "start-server-and-test": "^2.0.2",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.3.3",
     "tailwindcss-themer": "^3.1.1",
@@ -74,9 +76,11 @@
   "scripts": {
     "build": "next build",
     "build-storybook": "storybook build",
-    "dev": "next dev --port 3000",
+    "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
+    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+    "e2e:headlesss": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "storybook": "dotenv -c -e ../../.env -- storybook dev -p 6006"
   },
   "version": "0.1.0"
