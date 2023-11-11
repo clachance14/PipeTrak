@@ -21,7 +21,7 @@
     "login": {
       "createAnAccount": "Ein Konto erstellen",
       "dontHaveAnAccount": "Du hast noch kein Konto?",
-      "email": "Email",
+      "email": "E-Mail",
       "forgotPassword": "Passwort vergessen?",
       "hints": {
         "emailNotVerified": {
@@ -70,7 +70,7 @@
       "title": "Ein Konto erstellen"
     },
     "teamInvitation": {
-      "description": "Sie wurden eingeladen, einem Team beizutreten. \nWenn Sie sich anmelden oder registrieren, nehmen Sie automatisch die Einladung an und treten dem Team bei.",
+      "description": "Du wurdest eingeladen, einem Team beizutreten. \nWenn du dich anmeldest oder registrierst, nimmst du automatisch die Einladung an und trittst dem Team bei.",
       "title": "Teameinladung annehmen"
     },
     "verifyOtp": {
@@ -79,35 +79,36 @@
       },
       "hints": {
         "verificationFailed": {
-          "message": "Es tut uns leid, das von Ihnen eingegebene Passwort ist ungültig. \nBitte versuchen Sie es erneut.",
+          "message": "Es tut uns leid, das von dir eingegebene Passwort ist ungültig. \nBitte versuche es erneut.",
           "title": "Ungültiges Einmalpasswort"
         }
       },
-      "message": "Du hast Post! \nBitte überprüfen Sie Ihren Posteingang auf das Einmalpasswort, das wir Ihnen gesendet haben. \nSie können auch auf den Link in der E-Mail klicken und diese Seite wird Sie automatisch weiterleiten.",
+      "message": "Du hast Post! \nBitte überprüfe deinen Posteingang auf das Einmalpasswort, das wir dir gesendet haben. \nDu kannst auch auf den Link in der E-Mail klicken und du wirst automatisch weitergeleitet.",
       "otp": "Einmaliges Passwort",
       "submit": "Weitermachen",
-      "title": "Bestätigen Sie Ihre E-Mail"
+      "title": "Bestätige deine E-Mail"
     },
     "confirmation": {
-      "close": "Schließe dieses Fenster",
-      "message": "Sie können dieses Fenster schließen und in dem Fenster fortfahren, aus dem Sie gekommen sind.",
-      "title": "Sie wurden eingeloggt!"
+      "close": "Schließe diesen Tab",
+      "message": "Du kannst diesen Tab jetzt schließen und in dem ursprünglichen Tab fortfahren.",
+      "title": "Du wurdest eingeloggt!"
     },
     "invalidToken": {
-      "message": "Der Link ist entweder ungültig oder abgelaufen. \nBitte versuchen Sie erneut, sich anzumelden.",
-      "title": "Ungültiges Token"
+      "message": "Der Link ist entweder ungültig oder abgelaufen. \nBitte versuche es erneut, dich anzumelden.",
+      "title": "Ungültiger Token"
     }
   },
   "blog": {
     "description": "In diesem Blog schreibe ich über alles mögliche.",
-    "title": "Mein toller Blog"
+    "title": "Mein toller Blog",
+    "backLabel": "Zurück zum Blog"
   },
   "common": {
     "locales": {},
     "menu": {
       "blog": "Blog",
       "dashboard": "Dashboard",
-      "login": "Anmeldung",
+      "login": "Anmelden",
       "pricing": "Preise"
     }
   },
@@ -129,7 +130,7 @@
     "sidebar": {
       "createTeam": "Erstelle ein neues Team"
     },
-    "subtitle": "Sehen Sie sich die neuesten Statistiken Ihres großartigen Unternehmens an.",
+    "subtitle": "Sieh dir die neuesten Statistiken deines großartigen Unternehmens an.",
     "welcome": "Willkommen {name}!"
   },
   "newsletter": {
@@ -138,6 +139,11 @@
       "success": {
         "message": "Danke, dass du unseren Newsletter abonniert hast. \nWir werden dich auf dem Laufenden halten.",
         "title": "Erfolgreich angemeldet!"
+      },
+      "error": {
+        "title": "Fehler",
+        "input": "Bitte gib eine gültige E-Mail-Adresse ein.",
+        "submission": "Es tut uns leid, aber wir konnten dich nicht für unseren Newsletter anmelden. \nBitte versuche es später noch einmal."
       }
     },
     "submit": "Abonnieren",
@@ -191,7 +197,7 @@
           "paused": "Pausiert",
           "incomplete": "Unvollständig",
           "past_due": "Überfällig",
-          "trialing": "Versuch",
+          "trialing": "Testversion",
           "unpaid": "Unbezahlt"
         },
         "subscribe": "Abonnieren",
@@ -251,7 +257,7 @@
       "passwordNotUpdated": "Wir konnten dein Passwort nicht aktualisieren. \nBitte versuche es erneut.",
       "teamNameNotUpdated": "Wir konnten deinen Teamnamen nicht aktualisieren. \nBitte versuche es später noch einmal.",
       "teamNameUpdated": "Dein Teamname wurde aktualisiert.",
-      "nameUpdateFailed": "Ihr Name konnte nicht aktualisiert werden. \nBitte versuchen Sie es später noch einmal."
+      "nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal."
     },
     "save": "Speichern",
     "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
@@ -288,25 +294,25 @@
         "activeMembers": "Aktive Mitglieder",
         "invitations": {
           "email": "Email",
-          "empty": "Sie haben noch keine Mitglieder eingeladen.",
+          "empty": "Du hast noch keine Mitglieder eingeladen.",
           "revoke": "Einladung widerrufen"
         },
         "pendingInvitations": "Ausstehende Einladungen",
         "notifications": {
           "removeMember": {
             "error": {
-              "description": "Das Mitglied konnte nicht aus Ihrem Team entfernt werden. \nBitte versuchen Sie es erneut."
+              "description": "Das Mitglied konnte nicht aus deinem Team entfernt werden. \nBitte versuche es erneut."
             },
             "loading": {
               "description": "Mitglied wird aus dem Team entfernt..."
             },
             "success": {
-              "description": "Das Mitglied wurde erfolgreich aus Ihrem Team entfernt."
+              "description": "Das Mitglied wurde erfolgreich aus deinem Team entfernt."
             }
           },
           "revokeInvitation": {
             "error": {
-              "description": "Die Einladung konnte nicht widerrufen werden. \nBitte versuchen Sie es später noch einmal."
+              "description": "Die Einladung konnte nicht widerrufen werden. \nBitte versuche es später noch einmal."
             },
             "loading": {
               "description": "Einladung wird zurückgezogen..."
