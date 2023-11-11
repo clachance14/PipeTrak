@@ -20,6 +20,7 @@ export function ChangePasswordForm() {
         variant: "success",
         title: t("settings.notifications.passwordUpdated"),
       });
+      setPassword("");
       router.refresh();
     },
     onError: (error) => {
