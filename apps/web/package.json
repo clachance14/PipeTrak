@@ -79,7 +79,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+    "e2e": "dotenv -c -e ../../.env -- start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
     "storybook": "dotenv -c -e ../../.env -- storybook dev -p 6006"
   },
   "version": "0.1.0"
