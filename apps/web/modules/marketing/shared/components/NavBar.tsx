@@ -45,6 +45,7 @@ export function NavBar() {
   return (
     <nav
       className={`bg-background/80 fixed left-0 top-0 z-20 w-full backdrop-blur-lg`}
+      data-test="navigation"
     >
       <Banner />
 
