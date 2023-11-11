@@ -37,4 +37,24 @@ describe("homepage", () => {
       banner.should("not.exist");
     });
   });
+
+  describe("dark mode", () => {
+    it("should have a color mode toggle", () => {
+      cy.get('[data-test="color-mode-toggle"]').should("exist");
+    });
+
+    it("should toggle to light mode if selected", () => {
+      cy.get('[data-test="color-mode-toggle"]').click();
+      cy.get('[data-test="color-mode-toggle-item-light"]').click();
+
+      cy.get("html").should("have.class", "light");
+    });
+
+    it("should toggle to dark mode if selected", () => {
+      cy.get('[data-test="color-mode-toggle"]').click();
+      cy.get('[data-test="color-mode-toggle-item-dark"]').click();
+
+      cy.get("html").should("have.class", "dark");
+    });
+  });
 });

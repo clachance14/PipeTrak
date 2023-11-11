@@ -43,7 +43,7 @@ export function ColorModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" data-test="color-mode-toggle">
           {resolvedTheme === "light" ? (
             <Icon.lightMode className="h-4 w-4" />
           ) : (
@@ -61,7 +61,11 @@ export function ColorModeToggle() {
           }}
         >
           {colorModeOptions.map((option) => (
-            <DropdownMenuRadioItem key={option.value} value={option.value}>
+            <DropdownMenuRadioItem
+              key={option.value}
+              value={option.value}
+              data-test={`color-mode-toggle-item-${option.value}`}
+            >
               <option.icon className="mr-2 h-4 w-4 opacity-50" /> {option.label}
             </DropdownMenuRadioItem>
           ))}
