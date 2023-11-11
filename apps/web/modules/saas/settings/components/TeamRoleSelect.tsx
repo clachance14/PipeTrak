@@ -31,7 +31,7 @@ export function TeamRoleSelect({
   ];
 
   return (
-    <Select value={value} disabled={disabled}>
+    <Select value={value} onValueChange={onSelect} disabled={disabled}>
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>

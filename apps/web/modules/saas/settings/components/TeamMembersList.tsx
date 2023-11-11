@@ -50,6 +50,8 @@ export function TeamMembersList({
   const { toast } = useToast();
 
   const removeMemberMutation = apiClient.team.removeMember.useMutation();
+  const updateMembershipMutation =
+    apiClient.team.updateMembership.useMutation();
 
   const columns: ColumnDef<TeamMembershipsOutput[number]>[] = [
     {
@@ -80,7 +82,42 @@ export function TeamMembersList({
           <div className="flex flex-row justify-end gap-2">
             <TeamRoleSelect
               value={row.original.role}
-              onSelect={() => {}}
+              onSelect={async (value) => {
+                const loadingToast = toast({
+                  variant: "loading",
+                  description: t(
+                    "settings.team.members.notifications.updateMembership.loading.description",
+                  ),
+                });
+                updateMembershipMutation.mutate(
+                  {
+                    id: row.original.id,
+                    role: value,
+                  },
+                  {
+                    onSettled: () => {
+                      loadingToast.dismiss();
+                    },
+                    onSuccess: () => {
+                      toast({
+                        variant: "success",
+                        description: t(
+                          "settings.team.members.notifications.updateMembership.success.description",
+                        ),
+                      });
+                      router.refresh();
+                    },
+                    onError: () => {
+                      toast({
+                        variant: "error",
+                        description: t(
+                          "settings.team.members.notifications.updateMembership.error.description",
+                        ),
+                      });
+                    },
+                  },
+                );
+              }}
               disabled={teamRole !== "OWNER" || row.original.is_creator}
             />
 

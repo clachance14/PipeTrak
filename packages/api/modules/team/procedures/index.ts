@@ -9,3 +9,4 @@ export * from "./remove-member";
 export * from "./revoke-invitation";
 export * from "./subscription";
 export * from "./update";
+export * from "./update-membership";
