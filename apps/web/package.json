@@ -60,7 +60,7 @@
     "dotenv-cli": "^7.3.0",
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-storybook": "^0.6.15",
-    "postcss": "8.4.29",
+    "postcss": "8.4.31",
     "storybook": "^7.5.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.3.3",
