@@ -2,12 +2,12 @@ import { StatsTile } from "@saas/dashboard/components";
 import { PageHeader } from "@saas/shared/components";
 import { Card } from "@ui/components";
 import { createApiCaller } from "api";
-import { getTranslator } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
-export default async function Dashboard({ params: { locale } }) {
+export default async function Dashboard() {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
-  const t = await getTranslator(locale);
+  const t = await getTranslations();
 
   return (
     <div className="container max-w-6xl py-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
+import { Link, usePathname } from "@i18n";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks";
 import { UserAvatar } from "@shared/components";
@@ -19,8 +20,6 @@ import {
   Icon,
 } from "@ui/components";
 import { useLocale } from "next-intl";
-import { usePathname } from "next-intl/client";
-import Link from "next-intl/link";
 import { useTheme } from "next-themes";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

@@ -4,10 +4,10 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@config": ["./config"],
-      "@i18n": ["./i18n"],
       "@marketing/*": ["./modules/marketing/*"],
       "@saas/*": ["./modules/saas/*"],
       "@ui/*": ["./modules/ui/*"],
+      "@i18n": ["./modules/i18n"],
       "@shared/*": ["./modules/shared/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }

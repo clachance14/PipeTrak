@@ -1,9 +1,10 @@
 import { ChangeNameForm, ChangePasswordForm } from "@saas/settings/components";
 import { createApiCaller } from "api";
-import { getTranslator, redirect } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({ params: { locale } }) {
-  const t = await getTranslator(locale);
+export async function generateMetadata() {
+  const t = await getTranslations();
 
   return {
     title: t("settings.account.title"),

@@ -1,6 +1,6 @@
 "use client";
 
-import { appConfig } from "@config";
+import { Link } from "@i18n";
 import { useUser } from "@saas/auth/hooks";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import {
@@ -11,7 +11,6 @@ import {
   SheetTrigger,
 } from "@ui/components";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next-intl/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Banner } from "./Banner";
@@ -74,10 +73,7 @@ export function NavBar() {
 
           <div className="flex flex-1 items-center justify-end gap-3">
             <ColorModeToggle />
-            <LocaleSwitch
-              locales={appConfig.i18n.locales}
-              currentLocale={locale}
-            />
+            <LocaleSwitch />
 
             <Sheet
               open={mobileMenuOpen}

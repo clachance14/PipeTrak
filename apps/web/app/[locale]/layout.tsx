@@ -1,10 +1,10 @@
-import { importLocale } from "@i18n";
 import { ClientProviders } from "@shared/components";
 import { Toaster } from "@ui/components";
 import { GeistSans } from "geist/font";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { importLocale } from "../../i18n";
 import "../../styles/globals.css";
 
 export const metadata: Metadata = {

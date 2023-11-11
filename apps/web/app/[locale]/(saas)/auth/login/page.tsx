@@ -1,8 +1,8 @@
 import { LoginForm } from "@saas/auth/components";
-import { getTranslator } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata({ params: { locale, view } }) {
-  const t = await getTranslator(locale);
+export async function generateMetadata() {
+  const t = await getTranslations();
 
   return {
     title: t("auth.login.title"),

@@ -1,6 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
+import { usePathname } from "@i18n";
 import {
   Button,
   DropdownMenu,
@@ -10,22 +11,17 @@ import {
   DropdownMenuTrigger,
   Icon,
 } from "@ui/components";
-import { usePathname } from "next-intl/client";
+import { useLocale } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const { localeLabels } = appConfig.i18n;
+const { localeLabels, locales } = appConfig.i18n;
 
-export function LocaleSwitch({
-  locales,
-  currentLocale,
-}: {
-  locales: string[];
-  currentLocale: string;
-}) {
+export function LocaleSwitch() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const currentLocale = useLocale();
   const [value, setValue] = useState<string>(currentLocale);
 
   return (

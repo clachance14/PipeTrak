@@ -1,9 +1,8 @@
-import { appConfig } from "@config";
+import { Link } from "@i18n";
 import { UserContextProvider } from "@saas/auth/lib";
 import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
 import { Card } from "@ui/components";
 import { useLocale } from "next-intl";
-import Link from "next-intl/link";
 import { PropsWithChildren } from "react";
 
 export default function AuthLayout({ children }: PropsWithChildren<{}>) {
@@ -20,10 +19,7 @@ export default function AuthLayout({ children }: PropsWithChildren<{}>) {
               </Link>
 
               <div className="flex items-center justify-end gap-2">
-                <LocaleSwitch
-                  locales={appConfig.i18n.locales}
-                  currentLocale={locale}
-                />
+                <LocaleSwitch />
                 <ColorModeToggle />
               </div>
             </div>

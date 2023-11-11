@@ -3,14 +3,14 @@ import { SettingsMenu } from "@saas/settings/components";
 import { UserAvatar } from "@shared/components";
 import { createApiCaller } from "api";
 import BoringAvatar from "boring-avatars";
-import { getTranslator } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { PropsWithChildren } from "react";
 
 export default async function SettingsLayout({
   children,
-  params: { teamSlug, locale },
-}: PropsWithChildren<{ params: { teamSlug: string; locale: string } }>) {
-  const t = await getTranslator(locale);
+  params: { teamSlug },
+}: PropsWithChildren<{ params: { teamSlug: string } }>) {
+  const t = await getTranslations();
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
 

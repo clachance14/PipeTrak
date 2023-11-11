@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -114,8 +118,8 @@ importers:
         specifier: ^0.3.2
         version: 0.3.4(contentlayer@0.3.4)(esbuild@0.19.5)(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
       next-intl:
-        specifier: 3.0.0-beta.5
-        version: 3.0.0-beta.5(next@14.0.0)(react@18.2.0)
+        specifier: 3.0.0-rc.10
+        version: 3.0.0-rc.10(next@14.0.0)(react@18.2.0)
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.0.0)(react-dom@18.2.0)(react@18.2.0)
@@ -331,7 +335,7 @@ importers:
     devDependencies:
       '@mertasan/tailwindcss-variables':
         specifier: ^2.7.0
-        version: 2.7.0(autoprefixer@10.4.15)(postcss@8.4.31)
+        version: 2.7.0(autoprefixer@10.4.16)(postcss@8.4.31)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.3.3)
@@ -2992,14 +2996,14 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@mertasan/tailwindcss-variables@2.7.0(autoprefixer@10.4.15)(postcss@8.4.31):
+  /@mertasan/tailwindcss-variables@2.7.0(autoprefixer@10.4.16)(postcss@8.4.31):
     resolution: {integrity: sha512-rKPhxi/0r6XWP0+OjPmsfrloX/TtQmvONj2Pr3Nl8BNBznQVP3M9sphguDBUDC0AiKYx2xgup3XzAhlIDLPLIA==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.0.9
     dependencies:
-      autoprefixer: 10.4.15(postcss@8.4.31)
+      autoprefixer: 10.4.16(postcss@8.4.31)
       lodash: 4.17.21
       postcss: 8.4.31
     dev: true
@@ -7058,6 +7062,22 @@ packages:
 
   /autoprefixer@10.4.15(postcss@8.4.31):
     resolution: {integrity: sha512-KCuPB8ZCIqFdA4HwKXsvz7j6gvSDNhDP7WnUjBleRkKjPdvCmHFuQ77ocavI8FT6NdvlBnE2UFr2H4Mycn8Vew==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      browserslist: 4.22.1
+      caniuse-lite: 1.0.30001561
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.0.0
+      postcss: 8.4.31
+      postcss-value-parser: 4.2.0
+    dev: true
+
+  /autoprefixer@10.4.16(postcss@8.4.31):
+    resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -11771,19 +11791,17 @@ packages:
       - supports-color
     dev: false
 
-  /next-intl@3.0.0-beta.5(next@14.0.0)(react@18.2.0):
-    resolution: {integrity: sha512-OmTBneu7xUT0hjfRGw+9uYykLb8ODAktR2j2hz5FXdYj3mqbGNgRMaNbiP5c5Ri8zjPLZS1gy7HSAkMQernqVg==}
-    engines: {node: '>=10'}
+  /next-intl@3.0.0-rc.10(next@14.0.0)(react@18.2.0):
+    resolution: {integrity: sha512-8Q/CIcjRP3U/L2Xe4YDY1enEKSV8fXjc0sjddblgS6XE3sJa+/aZfRm0FT7lVLnVXI4qgCVm4Pjvyh1GEstpaQ==}
     peerDependencies:
-      next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+      next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@formatjs/intl-localematcher': 0.2.32
       negotiator: 0.6.3
       next: 14.0.0(@babel/core@7.23.3)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      server-only: 0.0.1
-      use-intl: 2.22.1(react@18.2.0)
+      use-intl: 3.0.0-rc.6(react@18.2.0)
     dev: false
 
   /next-themes@0.2.1(next@14.0.0)(react-dom@18.2.0)(react@18.2.0):
@@ -13639,10 +13657,6 @@ packages:
       - supports-color
     dev: true
 
-  /server-only@0.0.1:
-    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
-    dev: false
-
   /set-function-length@1.1.1:
     resolution: {integrity: sha512-VoaqjbBJKiWtg4yRcKBQ7g7wnGnLV3M8oLvVWwOk2PdYY6PEFegR1vezXR0tw6fZGF9csVakIRjrJiy2veSBFQ==}
     engines: {node: '>= 0.4'}
@@ -14805,9 +14819,8 @@ packages:
       react: 18.2.0
       tslib: 2.6.2
 
-  /use-intl@2.22.1(react@18.2.0):
-    resolution: {integrity: sha512-vTMJZrqVjErn421Ry4mxS2GuVUTWkY5zyIwu+3XvrAXH3PsPDAfWBMvVhip3kx914/IRs/4QnZ2ZaOehiZSXng==}
-    engines: {node: '>=10'}
+  /use-intl@3.0.0-rc.6(react@18.2.0):
+    resolution: {integrity: sha512-vkPHZFFTrt/GnLPVn0HdCUeU+BgtitkuONa9e+XC3IeItd6RxJ28RMbAK43QI726N/CrAjds/fGjI8BF21u6Hw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -15283,7 +15296,3 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

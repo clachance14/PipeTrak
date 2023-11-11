@@ -1,9 +1,10 @@
 import { SubscriptionOverview, UpgradePlan } from "@saas/settings/components";
 import { createApiCaller } from "api";
-import { getTranslator, redirect } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params: { locale } }) {
-  const t = await getTranslator(locale);
+  const t = await getTranslations();
 
   return {
     title: t("settings.billing.title"),

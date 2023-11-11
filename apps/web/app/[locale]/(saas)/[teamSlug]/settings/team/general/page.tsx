@@ -1,9 +1,9 @@
 import { ChangeTeamNameForm } from "@saas/settings/components";
 import { createApiCaller } from "api";
-import { getTranslator } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata({ params: { locale } }) {
-  const t = await getTranslator(locale);
+export async function generateMetadata() {
+  const t = await getTranslations();
 
   return {
     title: t("settings.team.title"),

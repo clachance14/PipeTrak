@@ -1,8 +1,7 @@
 "use client";
 
+import { Link, usePathname } from "@i18n";
 import { cn } from "@ui/lib";
-import { usePathname } from "next-intl/client";
-import Link from "next-intl/link";
 import React from "react";
 
 export function SettingsMenu({
