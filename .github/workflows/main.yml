@@ -16,10 +16,6 @@ jobs:
         with:
           runTests: false
       - run: pnpm build
-        env:
-          NEXT_PUBLIC_SITE_URL: ${{secrets.NEXT_PUBLIC_SITE_URL}}
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
-          STRIPE_SECRET: ${{secrets.STRIPE_SECRET}}
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
@@ -27,3 +23,7 @@ jobs:
           working-directory: apps/web
           start: pnpm start
           wait-on: "http://localhost:3000"
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{secrets.NEXT_PUBLIC_SITE_URL}}
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          STRIPE_SECRET: ${{secrets.STRIPE_SECRET}}
