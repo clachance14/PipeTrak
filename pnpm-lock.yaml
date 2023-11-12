@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -200,8 +196,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/auth
       autoprefixer:
-        specifier: 10.4.15
-        version: 10.4.15(postcss@8.4.31)
+        specifier: 10.4.16
+        version: 10.4.16(postcss@8.4.31)
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
@@ -341,7 +337,7 @@ importers:
     devDependencies:
       '@mertasan/tailwindcss-variables':
         specifier: ^2.7.0
-        version: 2.7.0(autoprefixer@10.4.15)(postcss@8.4.31)
+        version: 2.7.0(autoprefixer@10.4.16)(postcss@8.4.31)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.3.3)
@@ -3044,14 +3040,14 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@mertasan/tailwindcss-variables@2.7.0(autoprefixer@10.4.15)(postcss@8.4.31):
+  /@mertasan/tailwindcss-variables@2.7.0(autoprefixer@10.4.16)(postcss@8.4.31):
     resolution: {integrity: sha512-rKPhxi/0r6XWP0+OjPmsfrloX/TtQmvONj2Pr3Nl8BNBznQVP3M9sphguDBUDC0AiKYx2xgup3XzAhlIDLPLIA==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.0.9
     dependencies:
-      autoprefixer: 10.4.15(postcss@8.4.31)
+      autoprefixer: 10.4.16(postcss@8.4.31)
       lodash: 4.17.21
       postcss: 8.4.31
     dev: true
@@ -7173,8 +7169,8 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: false
 
-  /autoprefixer@10.4.15(postcss@8.4.31):
-    resolution: {integrity: sha512-KCuPB8ZCIqFdA4HwKXsvz7j6gvSDNhDP7WnUjBleRkKjPdvCmHFuQ77ocavI8FT6NdvlBnE2UFr2H4Mycn8Vew==}
+  /autoprefixer@10.4.16(postcss@8.4.31):
+    resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -15970,3 +15966,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
