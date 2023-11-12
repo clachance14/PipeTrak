@@ -79,6 +79,7 @@ export function PricingTable({
           value={interval}
           onValueChange={(value) => setInterval(value as typeof interval)}
           className="mb-4"
+          data-test="price-table-interval-tabs"
         >
           <TabsList>
             <TabsTrigger value="month">{labels.monthly}</TabsTrigger>
@@ -94,7 +95,11 @@ export function PricingTable({
           if (!variant) return null;
 
           return (
-            <div key={plan.id} className=" rounded-xl border p-6">
+            <div
+              key={plan.id}
+              className="rounded-xl border p-6"
+              data-test="price-table-plan"
+            >
               <div className="flex h-full flex-col justify-between gap-4">
                 <div>
                   <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
@@ -115,7 +120,10 @@ export function PricingTable({
                 </div>
 
                 <div>
-                  <strong className="text-primary text-2xl font-bold">
+                  <strong
+                    className="text-primary text-2xl font-bold"
+                    data-test="price-table-plan-price"
+                  >
                     {Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: variant.currency,

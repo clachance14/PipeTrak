@@ -24,7 +24,10 @@ export function Banner() {
   }
 
   return (
-    <div className="bg-primary/10 text-foreground relative inset-0 bottom-auto px-8 py-3 text-center text-sm data-[state='open']:block data-[state='closed']:hidden">
+    <div
+      className="bg-primary/10 text-foreground relative inset-0 bottom-auto px-8 py-3 text-center text-sm data-[state='open']:block data-[state='closed']:hidden"
+      data-test="banner"
+    >
       <div>
         <strong>New:</strong> In this banner you can show your awesome new
         feature
