@@ -54,7 +54,7 @@
     "@types/cookie": "^0.5.2",
     "@types/js-cookie": "^3.0.4",
     "@types/node": "20.9.0",
-    "@types/react": "18.2.33",
+    "@types/react": "18.2.37",
     "@types/react-dom": "18.2.14",
     "auth": "workspace:*",
     "autoprefixer": "10.4.16",
