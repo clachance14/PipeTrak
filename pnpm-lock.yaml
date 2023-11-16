@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -282,8 +278,8 @@ importers:
         specifier: workspace:*
         version: link:../config/eslint-config-custom
       prisma:
-        specifier: ^5.5.2
-        version: 5.5.2
+        specifier: ^5.6.0
+        version: 5.6.0
       tsconfig:
         specifier: workspace:*
         version: link:../config/tsconfig
@@ -370,7 +366,7 @@ importers:
     dependencies:
       '@prisma/client':
         specifier: ^5.6.0
-        version: 5.6.0(prisma@5.5.2)
+        version: 5.6.0(prisma@5.6.0)
       zod:
         specifier: ^3.22.2
         version: 3.22.4
@@ -385,14 +381,14 @@ importers:
         specifier: workspace:*
         version: link:../config/eslint-config-custom
       prisma:
-        specifier: ^5.5.2
-        version: 5.5.2
+        specifier: ^5.6.0
+        version: 5.6.0
       tsconfig:
         specifier: workspace:*
         version: link:../config/tsconfig
       zod-prisma:
         specifier: ^0.5.4
-        version: 0.5.4(prisma@5.5.2)(zod@3.22.4)
+        version: 0.5.4(prisma@5.6.0)(zod@3.22.4)
 
   packages/mail:
     dependencies:
@@ -2966,7 +2962,7 @@ packages:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: ^2.0.0
     dependencies:
-      '@prisma/client': 5.6.0(prisma@5.5.2)
+      '@prisma/client': 5.6.0(prisma@5.6.0)
       lucia: 2.7.4
     dev: false
 
@@ -3507,7 +3503,7 @@ packages:
       webpack: 5.89.0(@swc/core@1.3.96)(esbuild@0.19.5)
     dev: true
 
-  /@prisma/client@5.6.0(prisma@5.5.2):
+  /@prisma/client@5.6.0(prisma@5.6.0):
     resolution: {integrity: sha512-mUDefQFa1wWqk4+JhKPYq8BdVoFk9NFMBXUI8jAkBfQTtgx8WPx02U2HB/XbAz3GSUJpeJOKJQtNvaAIDs6sug==}
     engines: {node: '>=16.13'}
     requiresBuild: true
@@ -3518,7 +3514,7 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee
-      prisma: 5.5.2
+      prisma: 5.6.0
     dev: false
 
   /@prisma/debug@3.8.1:
@@ -3533,8 +3529,8 @@ packages:
     resolution: {integrity: sha512-UoFgbV1awGL/3wXuUK3GDaX2SolqczeeJ5b4FVec9tzeGbSWJboPSbT0psSrmgYAKiKnkOPFSLlH6+b+IyOwAw==}
     dev: false
 
-  /@prisma/engines@5.5.2:
-    resolution: {integrity: sha512-Be5hoNF8k+lkB3uEMiCHbhbfF6aj1GnrTBnn5iYFT7GEr3TsOEp1soviEcBR0tYCgHbxjcIxJMhdbvxALJhAqg==}
+  /@prisma/engines@5.6.0:
+    resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
     requiresBuild: true
 
   /@prisma/generator-helper@3.8.1:
@@ -13220,13 +13216,13 @@ packages:
       js-beautify: 1.14.11
     dev: false
 
-  /prisma@5.5.2:
-    resolution: {integrity: sha512-WQtG6fevOL053yoPl6dbHV+IWgKo25IRN4/pwAGqcWmg7CrtoCzvbDbN9fXUc7QS2KK0LimHIqLsaCOX/vHl8w==}
+  /prisma@5.6.0:
+    resolution: {integrity: sha512-EEaccku4ZGshdr2cthYHhf7iyvCcXqwJDvnoQRAJg5ge2Tzpv0e2BaMCp+CbbDUwoVTzwgOap9Zp+d4jFa2O9A==}
     engines: {node: '>=16.13'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 5.5.2
+      '@prisma/engines': 5.6.0
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -15930,7 +15926,7 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod-prisma@0.5.4(prisma@5.5.2)(zod@3.22.4):
+  /zod-prisma@0.5.4(prisma@5.6.0)(zod@3.22.4):
     resolution: {integrity: sha512-5Ca4Qd1a1jy1T/NqCEpbr0c+EsbjJfJ/7euEHob3zDvtUK2rTuD1Rc/vfzH8q8PtaR2TZbysD88NHmrLwpv3Xg==}
     engines: {node: '>=14'}
     hasBin: true
@@ -15944,7 +15940,7 @@ packages:
     dependencies:
       '@prisma/generator-helper': 3.8.1
       parenthesis: 3.1.8
-      prisma: 5.5.2
+      prisma: 5.6.0
       ts-morph: 13.0.3
       zod: 3.22.4
     dev: true
@@ -15955,3 +15951,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
