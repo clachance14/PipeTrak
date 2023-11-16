@@ -253,8 +253,8 @@ importers:
         specifier: 14.0.2
         version: 14.0.2(@babel/core@7.23.3)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       openai:
-        specifier: ^4.14.2
-        version: 4.17.4(encoding@0.1.13)
+        specifier: ^4.19.0
+        version: 4.19.0(encoding@0.1.13)
       slugify:
         specifier: ^1.6.6
         version: 1.6.6
@@ -12642,8 +12642,8 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openai@4.17.4(encoding@0.1.13):
-    resolution: {integrity: sha512-ThRFkl6snLbcAKS58St7N3CaKuI5WdYUvIjPvf4s+8SdymgNtOfzmZcZXVcCefx04oKFnvZJvIcTh3eAFUUhAQ==}
+  /openai@4.19.0(encoding@0.1.13):
+    resolution: {integrity: sha512-cJbl0noZyAaXVKBTMMq6X5BAvP1pm2rWYDBnZes99NL+Zh5/4NmlAwyuhTZEru5SqGGZIoiYKeMPXy4bm9DI0w==}
     hasBin: true
     dependencies:
       '@types/node': 18.18.9
