@@ -45,7 +45,7 @@ export default async function BlogPostPage({
   const { title, date, authorName, authorImage, tags, image, url, body } = post;
 
   return (
-    <div className="container max-w-6xl pb-32">
+    <div className="container max-w-6xl pb-24">
       <div className="mx-auto max-w-2xl">
         <div className="mb-12">
           <Link href="/blog">&larr; Back to blog</Link>
@@ -95,7 +95,7 @@ export default async function BlogPostPage({
       </div>
 
       {image && (
-        <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-xl">
+        <div className="mt-6 aspect-[16/9] overflow-hidden rounded-xl">
           <Image
             src={image}
             alt={title}
@@ -103,7 +103,6 @@ export default async function BlogPostPage({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover object-center"
           />
-          <Link href={url} className="absolute inset-0" />
         </div>
       )}
 
