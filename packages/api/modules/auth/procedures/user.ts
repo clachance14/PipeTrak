@@ -3,6 +3,7 @@ import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 
 export const user = publicProcedure
+  .input(z.void())
   .output(
     UserModel.pick({
       id: true,
