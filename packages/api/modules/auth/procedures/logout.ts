@@ -1,9 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { auth } from "auth";
+import { z } from "zod";
 import { protectedProcedure } from "../../trpc";
 
-export const logout = protectedProcedure.mutation(
-  async ({ ctx: { sessionId, responseHeaders } }) => {
+export const logout = protectedProcedure
+  .input(z.void())
+  .mutation(async ({ ctx: { sessionId, responseHeaders } }) => {
     try {
       if (!sessionId) return;
       await auth.invalidateSession(sessionId);
@@ -16,5 +18,4 @@ export const logout = protectedProcedure.mutation(
         message: "An unknown error occurred.",
       });
     }
-  },
-);
+  });
