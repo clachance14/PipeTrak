@@ -95,7 +95,7 @@ export default async function BlogPostPage({
       </div>
 
       {image && (
-        <div className="mt-6 aspect-[16/9] overflow-hidden rounded-xl">
+        <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-xl">
           <Image
             src={image}
             alt={title}
