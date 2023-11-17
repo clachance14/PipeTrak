@@ -1,8 +1,9 @@
 import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
 import { createApiCaller } from "api";
 import { Team } from "database";
+import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -13,7 +14,7 @@ export async function GET(request: Request) {
 
   const redirectTo = requestUrl.searchParams.get("redirectTo") || null;
 
-  const getRedirectUrl = ({
+  const getRedirectPath = ({
     teamSlug,
     path,
   }: {
@@ -24,16 +25,16 @@ export async function GET(request: Request) {
     if (teamSlug && redirectPath.includes("[teamSlug]"))
       redirectPath = redirectPath.replace("[teamSlug]", teamSlug);
 
-    return new URL(redirectPath, requestUrl.origin).toString();
+    return redirectPath;
   };
 
   try {
     const user = await apiCaller.auth.user();
 
     if (!user) {
-      const redirectUrl = new URL("/auth/login", requestUrl.origin);
-      if (redirectTo) redirectUrl.searchParams.set("redirectTo", redirectTo);
-      return NextResponse.redirect(redirectUrl);
+      let redirectPath = "/auth/login";
+      if (redirectTo) redirectPath += `?redirectTo=${redirectTo}`;
+      redirect(redirectPath);
     }
 
     const { teamMemberships } = user;
@@ -49,11 +50,11 @@ export async function GET(request: Request) {
         });
       } catch (e) {
         console.error(e);
-        return NextResponse.redirect("/");
+        redirect("/");
       }
 
-      return NextResponse.redirect(
-        getRedirectUrl({
+      redirect(
+        getRedirectPath({
           teamSlug: team.slug,
           path: "/[teamSlug]/dashboard",
         }),
@@ -69,8 +70,8 @@ export async function GET(request: Request) {
       );
 
       if (teamMembership) {
-        return NextResponse.redirect(
-          getRedirectUrl({
+        redirect(
+          getRedirectPath({
             teamSlug: teamMembership.team.slug,
             path: "/[teamSlug]/dashboard",
           }),
@@ -78,14 +79,17 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.redirect(
-      getRedirectUrl({
+    redirect(
+      getRedirectPath({
         teamSlug: teamMemberships[0].team.slug,
         path: "/[teamSlug]/dashboard",
       }),
     );
   } catch (e) {
     console.error(e);
-    return NextResponse.redirect(requestUrl.origin);
+
+    if (isRedirectError(e)) throw e;
+
+    redirect("/");
   }
 }
