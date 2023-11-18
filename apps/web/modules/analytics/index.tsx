@@ -1,1 +1,1 @@
-export * from "./provider/pirsch";
+export * from "./provider/plausible";
