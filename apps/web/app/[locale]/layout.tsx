@@ -1,6 +1,6 @@
 import { ClientProviders } from "@shared/components";
 import { Toaster } from "@ui/components";
-import { GeistSans } from "geist/font";
+import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
