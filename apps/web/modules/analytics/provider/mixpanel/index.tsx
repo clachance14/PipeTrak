@@ -7,7 +7,11 @@ const mixpanelToken = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN as string;
 
 export function AnalyticsScript() {
   useEffect(() => {
-    mixpanel.init(mixpanelToken);
+    mixpanel.init(mixpanelToken, {
+      debug: true,
+      track_pageview: true,
+      persistence: "localStorage",
+    });
   }, []);
 
   return null;
