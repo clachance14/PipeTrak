@@ -1,3 +1,4 @@
+import { AnalyticsScript } from "@analytics";
 import { ClientProviders } from "@shared/components";
 import { Toaster } from "@ui/components";
 import { GeistSans } from "geist/font/sans";
@@ -39,6 +40,7 @@ export default async function RootLayout({
           <ClientProviders>{children}</ClientProviders>
           <Toaster />
         </NextIntlClientProvider>
+        <AnalyticsScript />
       </body>
     </html>
   );
