@@ -241,8 +241,8 @@ importers:
   packages/api:
     dependencies:
       '@trpc/server':
-        specifier: ^10.38.5
-        version: 10.43.3
+        specifier: ^10.43.4
+        version: 10.43.4
       auth:
         specifier: workspace:*
         version: link:../auth
@@ -6179,11 +6179,6 @@ packages:
       '@trpc/server': 10.43.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@trpc/server@10.43.3:
-    resolution: {integrity: sha512-U7HsNtgjupNvPzH6ho4rPlIXZ2t5PctOH6pmFX4jv4YJi98RjGuOhHUNhiiVb8KUw6Kuh5EHTAv7cUV+igbMuQ==}
-    engines: {node: '>=18.0.0'}
     dev: false
 
   /@trpc/server@10.43.4:
