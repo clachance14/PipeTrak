@@ -10,7 +10,7 @@ export function AnalyticsScript() {
 }
 
 export function useAnalytics() {
-  const trackEvent = (event: string, data: Record<string, any>) => {
+  const trackEvent = (event: string, data?: Record<string, any>) => {
     track(event, data);
   };
 

@@ -27,14 +27,12 @@ export function AnalyticsScript() {
 }
 
 export function useAnalytics() {
-  const trackEvent = (event: string, data: Record<string, any>) => {
-    if (typeof window === "undefined" || !(window as any).pirsch) {
+  const trackEvent = (event: string, data?: Record<string, any>) => {
+    if (typeof window === "undefined" || !(window as any).gta) {
       return;
     }
 
-    (window as any).pirsch(event, {
-      meta: data,
-    });
+    (window as any).gta("event", event, data);
   };
 
   return {
