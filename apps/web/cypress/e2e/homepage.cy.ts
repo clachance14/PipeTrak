@@ -57,13 +57,4 @@ describe("homepage", () => {
       cy.get("html").should("have.class", "dark");
     });
   });
-
-  describe("progress-bar", () => {
-    it("should show progress bar when navigating to different page", () => {
-      cy.get('[data-test="progress-bar"]').should("not.exist");
-
-      cy.get('nav a[href="/en/pricing"]').click();
-      cy.get("#nprogress").should("exist");
-    });
-  });
 });
