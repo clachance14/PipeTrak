@@ -1,1 +1,1 @@
-export * from "./provider/plausible";
+export * from "./provider/mixpanel";

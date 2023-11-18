@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-const pirschCode = process.env.NEXT_PUBLIC_PIRSCH_CODE;
+const pirschCode = process.env.NEXT_PUBLIC_PIRSCH_CODE as string;
 
 export function AnalyticsScript() {
   return (
