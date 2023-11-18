@@ -1,1 +1,1 @@
-export * from "./provider/mixpanel";
+export * from "./provider/custom";
