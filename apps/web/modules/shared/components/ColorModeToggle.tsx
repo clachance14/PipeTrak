@@ -1,5 +1,6 @@
 "use client";
 
+import { useAnalytics } from "@analytics";
 import {
   Button,
   DropdownMenu,
@@ -17,6 +18,7 @@ export function ColorModeToggle() {
   const { resolvedTheme, setTheme, theme } = useTheme();
   const [value, setValue] = useState<string>(theme ?? "system");
   const isClient = useIsClient();
+  const { trackEvent } = useAnalytics();
 
   const colorModeOptions = [
     {
@@ -58,6 +60,7 @@ export function ColorModeToggle() {
           onValueChange={(value) => {
             setTheme(value);
             setValue(value);
+            trackEvent("Color mode change", { value });
           }}
         >
           {colorModeOptions.map((option) => (
