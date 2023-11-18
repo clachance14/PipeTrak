@@ -1,5 +1,6 @@
 "use client";
 
+// @ts-ignore
 import mixpanel from "mixpanel-browser";
 import { useEffect } from "react";
 
