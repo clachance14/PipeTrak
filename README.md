@@ -5,18 +5,9 @@
 
 supastarter is the ultimate starter kit for production-ready, scalable SaaS applications. 
 
-The goal of it is to provide a scalable and production-ready template that can be fully customized to your needs, while still being easy to use and maintain. It also is structured in a modular way, so we can implemented multiple providers for different features (like payments, auth, analytics, etc.) and you can choose features and providers you want to use.
+## Helpful links
 
-## Principles
+- [📘 Documentation](https://docs.supastarter.dev)
+- [🚀 Demo](https://demo.supastarter.dev)
+- [💬 Discord](https://discord.gg/RUSASaAj4V)
 
-- Focus on DX
-- Fully typed
-- Modular & Extensible
-- Fully customizable
-- Production-ready
-- Scalable
-- Serverless
-
-## Documentation
-
-You can find the extensive documentation [here](https://docs.supastarter.dev).
