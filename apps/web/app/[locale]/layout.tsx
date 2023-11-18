@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import NextTopLoader from "nextjs-toploader";
 import { importLocale } from "../../i18n";
 import "../../styles/globals.css";
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${GeistSans.variable} bg-background font-sans`}>
+        <NextTopLoader color={"var(--colors-primary)"} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientProviders>{children}</ClientProviders>
           <Toaster />
