@@ -68,7 +68,6 @@
     "storybook": "^7.5.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.3.5",
-    "tailwindcss-themer": "^3.1.1",
     "tsconfig": "workspace:*",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "5.2.2"
