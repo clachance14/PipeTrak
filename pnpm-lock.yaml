@@ -256,8 +256,8 @@ importers:
         specifier: 14.0.3
         version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       openai:
-        specifier: ^4.19.0
-        version: 4.19.0(encoding@0.1.13)
+        specifier: ^4.19.1
+        version: 4.19.1(encoding@0.1.13)
       slugify:
         specifier: ^1.6.6
         version: 1.6.6
@@ -12797,8 +12797,8 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openai@4.19.0(encoding@0.1.13):
-    resolution: {integrity: sha512-cJbl0noZyAaXVKBTMMq6X5BAvP1pm2rWYDBnZes99NL+Zh5/4NmlAwyuhTZEru5SqGGZIoiYKeMPXy4bm9DI0w==}
+  /openai@4.19.1(encoding@0.1.13):
+    resolution: {integrity: sha512-9TddzuZBn2xxhghGGTHLZ4EeNBGTLs3xVzh266NiSJvtUsCsZQ5yVV6H5NhnhyAkKK8uUiZOUUlUAk3HdV+4xg==}
     hasBin: true
     dependencies:
       '@types/node': 18.18.9
