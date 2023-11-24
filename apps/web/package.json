@@ -13,7 +13,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-table": "^8.10.3",
-    "@trpc/client": "^10.44.0",
+    "@trpc/client": "^10.44.1",
     "@trpc/react-query": "^10.44.1",
     "api": "workspace:*",
     "boring-avatars": "^1.10.1",
@@ -69,8 +69,7 @@
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.3.5",
     "tsconfig": "workspace:*",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "typescript": "5.3.2"
+    "tsconfig-paths-webpack-plugin": "^4.1.0"
   },
   "name": "web",
   "private": true,
