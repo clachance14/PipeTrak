@@ -23,7 +23,7 @@
     "cypress": "^13.6.0",
     "database": "workspace:*",
     "geist": "^1.0.0",
-    "jotai": "^2.4.3",
+    "jotai": "^2.6.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.292.0",
     "mail": "workspace:*",
