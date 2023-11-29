@@ -76,6 +76,7 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
           store: {
             data: {
               type: "stores",
+              // eslint-disable-next-line turbo/no-undeclared-env-vars
               id: String(process.env.LEMONSQUEEZY_STORE_ID),
             },
           },
