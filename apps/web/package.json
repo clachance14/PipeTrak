@@ -65,7 +65,7 @@
     "eslint-plugin-storybook": "^0.6.15",
     "postcss": "8.4.31",
     "start-server-and-test": "^2.0.3",
-    "storybook": "^7.6.0",
+    "storybook": "^7.6.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.3.5",
     "tsconfig": "workspace:*",
