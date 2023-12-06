@@ -393,8 +393,8 @@ importers:
         specifier: ^0.0.11
         version: 0.0.11(@types/react@18.2.39)(react@18.2.0)
       '@react-email/render':
-        specifier: ^0.0.9
-        version: 0.0.9
+        specifier: ^0.0.10
+        version: 0.0.10
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -4964,6 +4964,16 @@ packages:
       react: 18.2.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@react-email/render@0.0.10:
+    resolution: {integrity: sha512-FdLhg/E5PH5qZU/jf9NbvRi5v5134kbX7o8zIhOJIk/TALxB18ggprnH5tQX96dGQFqlLob8OLReaRwrpEF7YA==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      html-to-text: 9.0.5
+      pretty: 2.0.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@react-email/render@0.0.6:
