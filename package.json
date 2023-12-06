@@ -10,7 +10,6 @@
     "db:generate": "turbo db:generate",
     "db:studio": "pnpm --filter database run db:studio",
     "mail:preview": "pnpm --filter mail run preview",
-    "storybook": "pnpm --filter web storybook",
     "e2e": "pnpm --filter web e2e"
   },
   "dependencies": {
