@@ -98,7 +98,7 @@ export function NavBar() {
                   ))}
 
                   <Link
-                    href={hasUser ? `/team/redirect` : "/auth/login"}
+                    href={hasUser ? `/app` : "/auth/login"}
                     className="block px-3 py-2 text-lg"
                     prefetch={!hasUser}
                   >
@@ -111,10 +111,7 @@ export function NavBar() {
             </Sheet>
 
             <Button className="hidden md:block" asChild variant="ghost">
-              <Link
-                href={hasUser ? `/team/redirect` : "/auth/login"}
-                prefetch={!hasUser}
-              >
+              <Link href={hasUser ? `/app` : "/auth/login"} prefetch={!hasUser}>
                 {hasUser ? t("common.menu.dashboard") : t("common.menu.login")}
               </Link>
             </Button>

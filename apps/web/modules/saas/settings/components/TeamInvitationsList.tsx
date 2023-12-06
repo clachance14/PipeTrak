@@ -44,7 +44,7 @@ export function TeamInvitationsList({
   const t = useTranslations();
   const { toast } = useToast();
   const router = useRouter();
-  const { teamRole } = useUser();
+  const { teamMembership } = useUser();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -69,7 +69,7 @@ export function TeamInvitationsList({
               onSelect={() => {}}
             />
 
-            {teamRole === "OWNER" && (
+            {teamMembership?.role === "OWNER" && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button size="icon" variant="ghost">

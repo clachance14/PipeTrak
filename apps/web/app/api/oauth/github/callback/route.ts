@@ -104,7 +104,7 @@ export const GET = async (request: NextRequest) => {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/team/redirect",
+        Location: "/app",
       },
     });
   } catch (e) {

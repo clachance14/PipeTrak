@@ -38,7 +38,7 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
-  const { teamRole } = useUser();
+  const { teamMembership } = useUser();
   const inviteMemberMutation = apiClient.team.inviteMember.useMutation();
 
   const roleOptions = [
@@ -91,7 +91,7 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
     }
   };
 
-  if (teamRole !== "OWNER") return null;
+  if (teamMembership?.role !== "OWNER") return null;
 
   return (
     <Card>

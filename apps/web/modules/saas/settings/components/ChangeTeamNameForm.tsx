@@ -7,7 +7,7 @@ import { apiClient } from "@shared/lib";
 import { Input } from "@ui/components";
 import { useToast } from "@ui/hooks";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangeTeamNameForm({
@@ -18,10 +18,10 @@ export function ChangeTeamNameForm({
   teamId: string;
 }) {
   const t = useTranslations();
+  const router = useRouter();
   const { toast } = useToast();
-  const { teamRole } = useUser();
+  const { teamMembership } = useUser();
   const [name, setName] = useState(initialValue);
-  const { teamSlug } = useParams();
 
   const updateTeamMutation = apiClient.team.update.useMutation({
     onSuccess: ({ slug }) => {
@@ -31,7 +31,7 @@ export function ChangeTeamNameForm({
       });
 
       updateTeamSlugCookie(slug);
-      location.href = location.href.replace(teamSlug as string, slug);
+      router.refresh();
     },
     onError: () => {
       toast({
@@ -51,7 +51,7 @@ export function ChangeTeamNameForm({
       <Input
         className="max-w-sm"
         value={name}
-        disabled={teamRole !== "OWNER"}
+        disabled={teamMembership?.role !== "OWNER"}
         onChange={(e) => setName(e.target.value)}
       />
     </ActionBlock>

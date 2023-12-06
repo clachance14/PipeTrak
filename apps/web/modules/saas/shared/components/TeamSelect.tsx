@@ -1,6 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
+import { useUser } from "@saas/auth/hooks";
 import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
@@ -18,7 +19,7 @@ import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export function TeamSelect({
@@ -30,17 +31,15 @@ export function TeamSelect({
 }) {
   const t = useTranslations();
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
-  const params = useParams();
   const router = useRouter();
-  const pathname = usePathname();
-  const { teamSlug } = params;
-  const activeTeam = teams.find((team) => team.slug === teamSlug);
+  const { teamMembership } = useUser();
+  const activeTeam = teams.find((team) => team.id === teamMembership?.team_id);
 
   const switchTeam = (slug: string) => {
     if (!activeTeam) return;
 
     updateTeamSlugCookie(slug);
-    router.replace(pathname.replace(teamSlug as string, slug));
+    location.reload();
   };
 
   if (!activeTeam) return null;

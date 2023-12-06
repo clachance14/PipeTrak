@@ -1,6 +1,8 @@
 import { ChangeTeamNameForm } from "@saas/settings/components";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
 
 export async function generateMetadata() {
   const t = await getTranslations();
@@ -10,12 +12,9 @@ export async function generateMetadata() {
   };
 }
 
-export default async function TeamSettingsPage({
-  params: { teamSlug, locale },
-}: {
-  params: { teamSlug: string; locale: string };
-}) {
+export default async function TeamSettingsPage() {
   const apiCaller = await createApiCaller();
+  const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value as string;
   const team = await apiCaller.team.bySlug({
     slug: teamSlug,
   });
