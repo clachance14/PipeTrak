@@ -1,6 +1,8 @@
 import { SubscriptionOverview, UpgradePlan } from "@saas/settings/components";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params: { locale } }) {
@@ -11,14 +13,12 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function BillingSettingsPage({
-  params: { teamSlug },
-}: {
-  params: { teamSlug: string };
-}) {
+export default async function BillingSettingsPage() {
   const apiCaller = await createApiCaller();
   const plans = await apiCaller.billing.plans();
   const user = await apiCaller.auth.user();
+  const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value as string;
+
   const team = user?.teamMemberships?.find(
     (membership) => membership.team.slug === teamSlug,
   )?.team;

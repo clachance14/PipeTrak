@@ -17,11 +17,7 @@ export function PricingTable({
     <PricingTablePrimitive
       plans={plans}
       onSelectPlan={() => {
-        router.push(
-          `/team/redirect?redirectTo=${encodeURIComponent(
-            "/[teamSlug]/settings/team/billing",
-          )}`,
-        );
+        router.push("/app/settings/team/billing");
       }}
       labels={{
         year: t("pricing.year"),

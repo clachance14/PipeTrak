@@ -7,7 +7,7 @@ import { Icon } from "@ui/components";
 import { ApiOutput } from "api";
 import { Team } from "database";
 import { useTranslations } from "next-intl";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";
 
@@ -19,22 +19,21 @@ export function NavBar({
 }: PropsWithChildren<{ teams: Team[]; user: User }>) {
   const t = useTranslations();
   const pathname = usePathname();
-  const { teamSlug } = useParams();
 
   const menuItems = [
     {
       label: t("dashboard.menu.dashboard"),
-      href: `/${teamSlug}/dashboard`,
+      href: `/app/dashboard`,
       icon: Icon.grid,
     },
     {
       label: t("dashboard.menu.aiDemo"),
-      href: `/${teamSlug}/ai-demo`,
+      href: `/app/ai-demo`,
       icon: Icon.magic,
     },
     {
       label: t("dashboard.menu.settings"),
-      href: `/${teamSlug}/settings`,
+      href: `/app/settings`,
       icon: Icon.settings,
     },
   ];

@@ -10,7 +10,7 @@ import {
 } from "@ui/components";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CreateTeamForm } from "./CreateTeamForm";
 
 export function CreateTeamDialog() {
@@ -18,13 +18,10 @@ export function CreateTeamDialog() {
   const [open, setOpen] = useAtom(createTeamDialogOpen);
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
-
-  const { teamSlug } = params;
 
   const switchTeam = (slug: string) => {
     updateTeamSlugCookie(slug);
-    router.replace(pathname.replace(teamSlug as string, slug));
+    router.refresh();
   };
 
   return (

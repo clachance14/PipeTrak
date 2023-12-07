@@ -10,7 +10,17 @@ export const create = protectedProcedure
       name: z.string(),
     }),
   )
-  .output(TeamModel)
+  .output(
+    TeamModel.extend({
+      memberships: z.array(
+        z.object({
+          id: z.string(),
+          role: z.nativeEnum(TeamMemberRole),
+          is_creator: z.boolean(),
+        }),
+      ),
+    }),
+  )
   .mutation(async ({ input: { name }, ctx: { user } }) => {
     let slug = slugifyTeamName(name);
 
@@ -52,6 +62,18 @@ export const create = protectedProcedure
           create: {
             user_id: user!.userId,
             role: TeamMemberRole.OWNER,
+            is_creator: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        memberships: {
+          select: {
+            id: true,
+            role: true,
             is_creator: true,
           },
         },

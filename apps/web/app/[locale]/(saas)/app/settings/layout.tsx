@@ -1,22 +1,28 @@
 import { appConfig } from "@config";
 import { SettingsMenu } from "@saas/settings/components";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
 import { UserAvatar } from "@shared/components";
 import { createApiCaller } from "api";
 import BoringAvatar from "boring-avatars";
 import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-export default async function SettingsLayout({
-  children,
-  params: { teamSlug },
-}: PropsWithChildren<{ params: { teamSlug: string } }>) {
+export default async function SettingsLayout({ children }: PropsWithChildren) {
   const t = await getTranslations();
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
+  const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value;
 
-  const activeTeam = user?.teamMemberships?.find(
-    (membership) => membership.team.slug === teamSlug,
-  )?.team;
+  if (!user) return redirect("/auth/login");
+
+  const { teamMemberships } = user;
+
+  const activeTeam = (
+    teamMemberships!.find((membership) => membership.team.slug === teamSlug) ??
+    teamMemberships![0]
+  ).team;
 
   if (!activeTeam) return null;
 
@@ -34,15 +40,15 @@ export default async function SettingsLayout({
       items: [
         {
           title: t("settings.menu.team.general"),
-          href: `/${teamSlug}/settings/team/general`,
+          href: `/app/settings/team/general`,
         },
         {
           title: t("settings.menu.team.members"),
-          href: `/${teamSlug}/settings/team/members`,
+          href: `/app/settings/team/members`,
         },
         {
           title: t("settings.menu.team.billing"),
-          href: `/${teamSlug}/settings/team/billing`,
+          href: `/app/settings/team/billing`,
         },
       ],
     },
@@ -52,7 +58,7 @@ export default async function SettingsLayout({
       items: [
         {
           title: t("settings.menu.account.general"),
-          href: `/${teamSlug}/settings/account/general`,
+          href: `/app/settings/account/general`,
         },
       ],
     },

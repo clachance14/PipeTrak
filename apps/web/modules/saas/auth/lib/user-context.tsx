@@ -2,18 +2,20 @@
 
 import { apiClient } from "@shared/lib";
 import { ApiOutput } from "api";
-import { TeamMemberRole } from "database";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 type User = ApiOutput["auth"]["user"];
+type TeamMembership = NonNullable<
+  NonNullable<ApiOutput["auth"]["user"]>["teamMemberships"]
+>[number];
 
 type UserContext = {
   user: User;
   reloadUser: () => Promise<void>;
   logout: () => Promise<void>;
   loaded: boolean;
-  teamRole: TeamMemberRole | null;
+  teamMembership: TeamMembership | null;
 };
 
 const authBroadcastChannel = new BroadcastChannel("auth");
@@ -27,16 +29,16 @@ export const userContext = createContext<UserContext>({
   reloadUser: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   loaded: false,
-  teamRole: null,
+  teamMembership: null,
 });
 
 export function UserContextProvider({
   children,
   initialUser,
-  teamRole,
+  teamMembership,
 }: PropsWithChildren<{
   initialUser: User;
-  teamRole?: TeamMemberRole;
+  teamMembership?: TeamMembership;
 }>) {
   const router = useRouter();
   const [loaded, setLoaded] = useState(!!initialUser);
@@ -100,7 +102,13 @@ export function UserContextProvider({
 
   return (
     <userContext.Provider
-      value={{ user, reloadUser, logout, loaded, teamRole: teamRole ?? null }}
+      value={{
+        user,
+        reloadUser,
+        logout,
+        loaded,
+        teamMembership: teamMembership ?? null,
+      }}
     >
       {children}
     </userContext.Provider>

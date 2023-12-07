@@ -21,7 +21,7 @@ import {
 } from "@ui/components";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const { locales, localeLabels } = appConfig.i18n;
@@ -29,15 +29,12 @@ const { locales, localeLabels } = appConfig.i18n;
 export function UserMenu() {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
   const searchParams = useSearchParams();
   const currentLocale = useLocale();
   const { user, logout } = useUser();
   const [locale, setLocale] = useState<string>(currentLocale);
   const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
   const [theme, setTheme] = useState<string>(currentTheme ?? "system");
-
-  const teamSlug = params.teamSlug as string;
 
   const colorModeOptions = [
     {
@@ -140,7 +137,7 @@ export function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={`/${teamSlug}/settings/account/general`}>
+          <Link href={`/app/settings/account/general`}>
             <Icon.settings className="mr-2 h-4 w-4" /> Account settings
           </Link>
         </DropdownMenuItem>

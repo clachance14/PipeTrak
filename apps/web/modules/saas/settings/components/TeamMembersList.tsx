@@ -44,7 +44,7 @@ export function TeamMembersList({
 }) {
   const t = useTranslations();
   const router = useRouter();
-  const { user, teamRole } = useUser();
+  const { user, teamMembership } = useUser();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { toast } = useToast();
@@ -118,7 +118,9 @@ export function TeamMembersList({
                   },
                 );
               }}
-              disabled={teamRole !== "OWNER" || row.original.is_creator}
+              disabled={
+                teamMembership?.role !== "OWNER" || row.original.is_creator
+              }
             />
 
             <DropdownMenu>
