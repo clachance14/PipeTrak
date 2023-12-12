@@ -20,7 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.2",
-    "cypress": "^13.6.0",
+    "cypress": "^13.6.1",
     "database": "workspace:*",
     "geist": "^1.2.0",
     "jotai": "^2.6.0",
