@@ -17,9 +17,11 @@ export const UserAvatar = forwardRef<
     [name],
   );
 
+  const avatarSrc = useMemo(() => avatarUrl ?? undefined, [avatarUrl]);
+
   return (
     <Avatar ref={ref}>
-      <AvatarImage src={avatarUrl ?? undefined} />
+      <AvatarImage src={avatarSrc} />
       <AvatarFallback className="bg-primary/10 text-primary">
         {initials}
       </AvatarFallback>
