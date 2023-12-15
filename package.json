@@ -13,7 +13,7 @@
     "e2e": "pnpm --filter web e2e"
   },
   "dependencies": {
-    "eslint": "^8.54.0",
+    "eslint": "^8.55.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.1.1",
     "turbo": "^1.11.2",
