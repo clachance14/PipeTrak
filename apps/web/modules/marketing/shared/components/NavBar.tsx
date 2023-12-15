@@ -13,6 +13,7 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useIsClient } from "usehooks-ts";
 import { Banner } from "./Banner";
 
 export function NavBar() {
@@ -21,6 +22,7 @@ export function NavBar() {
   const locale = useLocale();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isClient = useIsClient();
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -39,8 +41,6 @@ export function NavBar() {
       href: "/blog",
     },
   ];
-
-  const hasUser = userLoaded && user;
 
   return (
     <nav
@@ -98,23 +98,40 @@ export function NavBar() {
                   ))}
 
                   <Link
-                    href={hasUser ? `/app` : "/auth/login"}
+                    key={user ? "dashboard" : "login"}
+                    href={user ? `/app` : "/auth/login"}
                     className="block px-3 py-2 text-lg"
-                    prefetch={!hasUser}
+                    prefetch={!user}
                   >
-                    {hasUser
-                      ? t("common.menu.dashboard")
-                      : t("common.menu.login")}
+                    {user ? t("common.menu.dashboard") : t("common.menu.login")}
                   </Link>
                 </div>
               </SheetContent>
             </Sheet>
 
-            <Button className="hidden md:block" asChild variant="ghost">
-              <Link href={hasUser ? `/app` : "/auth/login"} prefetch={!hasUser}>
-                {hasUser ? t("common.menu.dashboard") : t("common.menu.login")}
-              </Link>
-            </Button>
+            {isClient && userLoaded && (
+              <>
+                {user ? (
+                  <Button
+                    key="dashboard"
+                    className="hidden md:block"
+                    asChild
+                    variant="ghost"
+                  >
+                    <Link href="/app">{t("common.menu.dashboard")}</Link>
+                  </Button>
+                ) : (
+                  <Button
+                    key="login"
+                    className="hidden md:block"
+                    asChild
+                    variant="ghost"
+                  >
+                    <Link href="/auth/login">{t("common.menu.login")}</Link>
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
