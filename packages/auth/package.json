@@ -3,7 +3,7 @@
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^3.3.0",
     "database": "workspace:*",
-    "lucia": "^2.7.0",
+    "lucia": "^2.7.5",
     "mail": "workspace:*",
     "utils": "workspace:*",
     "zod": "^3.22.2"
