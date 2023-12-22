@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -256,16 +252,16 @@ importers:
     dependencies:
       '@lucia-auth/adapter-prisma':
         specifier: ^3.0.1
-        version: 3.0.2(@prisma/client@5.7.0)(lucia@2.7.5)
+        version: 3.0.2(@prisma/client@5.7.0)(lucia@2.7.6)
       '@lucia-auth/oauth':
         specifier: ^3.3.0
-        version: 3.5.0(lucia@2.7.5)
+        version: 3.5.0(lucia@2.7.6)
       database:
         specifier: workspace:*
         version: link:../database
       lucia:
-        specifier: ^2.7.5
-        version: 2.7.5
+        specifier: ^2.7.6
+        version: 2.7.6
       mail:
         specifier: workspace:*
         version: link:../mail
@@ -384,7 +380,7 @@ importers:
     devDependencies:
       '@tailwindcss/line-clamp':
         specifier: ^0.4.4
-        version: 0.4.4(tailwindcss@3.3.6)
+        version: 0.4.4(tailwindcss@3.4.0)
       '@types/mjml':
         specifier: ^4.7.2
         version: 4.7.4
@@ -1539,22 +1535,22 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@lucia-auth/adapter-prisma@3.0.2(@prisma/client@5.7.0)(lucia@2.7.5):
+  /@lucia-auth/adapter-prisma@3.0.2(@prisma/client@5.7.0)(lucia@2.7.6):
     resolution: {integrity: sha512-EyJWZene1/zasPwPctv8wwNErZt5mwwm5JATbhg+kXr3R8pbC7lJfVzDTAeeFClVH5k/FywRcsBl3JkPaNIcow==}
     peerDependencies:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: ^2.0.0
     dependencies:
       '@prisma/client': 5.7.0(prisma@5.7.0)
-      lucia: 2.7.5
+      lucia: 2.7.6
     dev: false
 
-  /@lucia-auth/oauth@3.5.0(lucia@2.7.5):
+  /@lucia-auth/oauth@3.5.0(lucia@2.7.6):
     resolution: {integrity: sha512-JSwAMVwlDJtbvfcJV1nbkv41OD830pgICrx8zFT71SYd5I1MnEQ+GqMTXBGRyxzc5XlLatT8ZS1Jt0k81487xg==}
     peerDependencies:
       lucia: ^2.0.0
     dependencies:
-      lucia: 2.7.5
+      lucia: 2.7.6
     dev: false
 
   /@manypkg/find-root@2.2.1:
@@ -3257,12 +3253,12 @@ packages:
       tailwindcss: 3.4.0
     dev: true
 
-  /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.3.6):
+  /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.0):
     resolution: {integrity: sha512-5U6SY5z8N42VtrCrKlsTAA35gy2VSyYtHWCsg1H87NU1SXnEfekTVlrga9fzUDrrHcGi2Lb5KenUWb4lRQT5/g==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.3.6
+      tailwindcss: 3.4.0
     dev: true
 
   /@tailwindcss/typography@0.5.10(tailwindcss@3.4.0):
@@ -6662,8 +6658,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucia@2.7.5:
-    resolution: {integrity: sha512-2e/Oezb+b2qjQLyP28CraBlad2s9GAp22bfPLn05IsXi99FEX/oTo2TGMM4Gn9nJT7ow15kEFkwL3lBUpknopA==}
+  /lucia@2.7.6:
+    resolution: {integrity: sha512-xyRkNtevf0DUM4nGC6F2nCFFNphZ1qqBrfWwAgPa9zkpQsVJ/hN32I8zAY+pm+ZKWPPS/C/Sqqmo2LreSCzg7w==}
     dev: false
 
   /lucide-react@0.298.0(react@18.2.0):
@@ -8860,37 +8856,6 @@ packages:
     dependencies:
       tailwindcss: 3.4.0
 
-  /tailwindcss@3.3.6:
-    resolution: {integrity: sha512-AKjF7qbbLvLaPieoKeTjG1+FyNZT6KaJMJPFeQyLfIp7l82ggH1fbHJSsYIvnbTFQOlkh+gBYpyby5GT1LIdLw==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.5.3
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.0
-      lilconfig: 2.1.0
-      micromatch: 4.0.5
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.0
-      postcss: 8.4.32
-      postcss-import: 15.1.0(postcss@8.4.32)
-      postcss-js: 4.0.1(postcss@8.4.32)
-      postcss-load-config: 4.0.2(postcss@8.4.32)
-      postcss-nested: 6.0.1(postcss@8.4.32)
-      postcss-selector-parser: 6.0.13
-      resolve: 1.22.8
-      sucrase: 3.34.0
-    transitivePeerDependencies:
-      - ts-node
-    dev: true
-
   /tailwindcss@3.4.0:
     resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
     engines: {node: '>=14.0.0'}
@@ -9649,3 +9614,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
