@@ -19,10 +19,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 
   const { teamMemberships } = user;
 
-  const activeTeam = (
+  const { team: activeTeam } =
     teamMemberships!.find((membership) => membership.team.slug === teamSlug) ??
-    teamMemberships![0]
-  ).team;
+    teamMemberships![0];
 
   if (!activeTeam) return null;
 

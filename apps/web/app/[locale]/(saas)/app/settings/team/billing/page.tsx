@@ -19,11 +19,13 @@ export default async function BillingSettingsPage() {
   const user = await apiCaller.auth.user();
   const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value as string;
 
-  const team = user?.teamMemberships?.find(
-    (membership) => membership.team.slug === teamSlug,
-  )?.team;
+  if (!user) redirect("/auth/login");
 
-  if (!team) redirect("/auth/login");
+  const { teamMemberships } = user;
+
+  const { team } =
+    teamMemberships!.find((membership) => membership.team.slug === teamSlug) ??
+    teamMemberships![0];
 
   const teamSubscription = await apiCaller.team.subscription({
     teamId: team.id,
