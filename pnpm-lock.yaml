@@ -252,16 +252,16 @@ importers:
     dependencies:
       '@lucia-auth/adapter-prisma':
         specifier: ^3.0.1
-        version: 3.0.2(@prisma/client@5.7.0)(lucia@2.7.5)
+        version: 3.0.2(@prisma/client@5.7.0)(lucia@2.7.6)
       '@lucia-auth/oauth':
         specifier: ^3.3.0
-        version: 3.5.0(lucia@2.7.5)
+        version: 3.5.0(lucia@2.7.6)
       database:
         specifier: workspace:*
         version: link:../database
       lucia:
-        specifier: ^2.7.5
-        version: 2.7.5
+        specifier: ^2.7.6
+        version: 2.7.6
       mail:
         specifier: workspace:*
         version: link:../mail
@@ -1528,22 +1528,22 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@lucia-auth/adapter-prisma@3.0.2(@prisma/client@5.7.0)(lucia@2.7.5):
+  /@lucia-auth/adapter-prisma@3.0.2(@prisma/client@5.7.0)(lucia@2.7.6):
     resolution: {integrity: sha512-EyJWZene1/zasPwPctv8wwNErZt5mwwm5JATbhg+kXr3R8pbC7lJfVzDTAeeFClVH5k/FywRcsBl3JkPaNIcow==}
     peerDependencies:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: ^2.0.0
     dependencies:
       '@prisma/client': 5.7.0(prisma@5.7.0)
-      lucia: 2.7.5
+      lucia: 2.7.6
     dev: false
 
-  /@lucia-auth/oauth@3.5.0(lucia@2.7.5):
+  /@lucia-auth/oauth@3.5.0(lucia@2.7.6):
     resolution: {integrity: sha512-JSwAMVwlDJtbvfcJV1nbkv41OD830pgICrx8zFT71SYd5I1MnEQ+GqMTXBGRyxzc5XlLatT8ZS1Jt0k81487xg==}
     peerDependencies:
       lucia: ^2.0.0
     dependencies:
-      lucia: 2.7.5
+      lucia: 2.7.6
     dev: false
 
   /@manypkg/find-root@2.2.1:
@@ -6651,8 +6651,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucia@2.7.5:
-    resolution: {integrity: sha512-2e/Oezb+b2qjQLyP28CraBlad2s9GAp22bfPLn05IsXi99FEX/oTo2TGMM4Gn9nJT7ow15kEFkwL3lBUpknopA==}
+  /lucia@2.7.6:
+    resolution: {integrity: sha512-xyRkNtevf0DUM4nGC6F2nCFFNphZ1qqBrfWwAgPa9zkpQsVJ/hN32I8zAY+pm+ZKWPPS/C/Sqqmo2LreSCzg7w==}
     dev: false
 
   /lucide-react@0.302.0(react@18.2.0):
