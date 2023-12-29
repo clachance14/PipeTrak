@@ -3,7 +3,7 @@ import { generateOneTimePassword, generateVerificationToken } from "auth";
 import { db } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const forgotPassword = publicProcedure
   .input(

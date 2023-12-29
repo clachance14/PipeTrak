@@ -1,11 +1,10 @@
 import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
 import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";
 import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
 export async function generateMetadata() {
   const t = await getTranslations();
 

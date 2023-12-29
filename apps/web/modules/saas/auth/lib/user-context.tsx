@@ -1,7 +1,7 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
-import { ApiOutput } from "api";
+import { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 

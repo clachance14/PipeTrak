@@ -3,7 +3,7 @@
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { PricingTable } from "@shared/components/PricingTable";
 import { apiClient } from "@shared/lib/api-client";
-import { ApiOutput } from "api";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 
 type SubscriptionPlans = ApiOutput["billing"]["plans"];

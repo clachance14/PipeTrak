@@ -4,7 +4,7 @@ import { Session, SessionUser, auth } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { defineAbilitiesFor } from "../auth";
+import { defineAbilitiesFor } from "../modules/auth/abilities";
 
 export async function createContext(
   params?: FetchCreateContextFnOptions | { isAdmin?: boolean },

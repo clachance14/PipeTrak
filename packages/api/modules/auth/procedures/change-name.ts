@@ -1,6 +1,6 @@
 import { auth } from "auth";
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 
 export const changeName = protectedProcedure
   .input(

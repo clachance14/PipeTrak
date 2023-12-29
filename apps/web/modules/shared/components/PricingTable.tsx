@@ -4,7 +4,7 @@ import { useLocaleCurrency } from "@shared/hooks/locale-currency";
 import { Button } from "@ui/components/Button";
 import { Tabs, TabsList, TabsTrigger } from "@ui/components/Tabs";
 import { cn } from "@ui/lib/utils";
-import { ApiOutput } from "api";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 

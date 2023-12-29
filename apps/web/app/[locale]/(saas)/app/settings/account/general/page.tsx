@@ -1,9 +1,8 @@
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-
 export async function generateMetadata() {
   const t = await getTranslations();
 

@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 import { createCheckoutLink as createCheckoutLinkResolver } from "../provider";
 
 export const createCheckoutLink = protectedProcedure

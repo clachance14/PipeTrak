@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiOutput } from "api";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 
 import {

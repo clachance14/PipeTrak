@@ -2,13 +2,12 @@ import { appConfig } from "@config";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import BoringAvatar from "boring-avatars";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
-
 export default async function SettingsLayout({ children }: PropsWithChildren) {
   const t = await getTranslations();
   const apiCaller = await createApiCaller();

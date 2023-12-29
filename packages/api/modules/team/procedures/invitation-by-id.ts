@@ -1,6 +1,6 @@
 import { TeamInvitationModel, db } from "database";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const invitationById = publicProcedure
   .input(

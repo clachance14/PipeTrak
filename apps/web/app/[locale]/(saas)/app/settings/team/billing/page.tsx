@@ -1,11 +1,10 @@
 import { SubscriptionOverview } from "@saas/settings/components/SubscriptionOverview";
 import { UpgradePlan } from "@saas/settings/components/UpgradePlan";
 import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslations();
 

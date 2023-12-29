@@ -3,7 +3,7 @@ import { db } from "database";
 import { sendEmail } from "mail";
 import { getBaseUrl } from "utils";
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 
 export const inviteMember = protectedProcedure
   .input(

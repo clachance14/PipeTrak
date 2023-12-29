@@ -1,11 +1,10 @@
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { NavBar } from "@saas/shared/components/NavBar";
 import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 

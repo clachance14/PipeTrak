@@ -1,5 +1,5 @@
 import { PricingTable } from "@marketing/pricing/components/PricingTable";
-import { createApiCaller } from "api";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 
 export default async function PricingPage() {

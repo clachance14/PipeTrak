@@ -26,7 +26,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/Button";
 import { Icon } from "@ui/components/Icon";
 import { useToast } from "@ui/hooks/use-toast";
-import { ApiOutput } from "api";
+import { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
