@@ -1,10 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { apiClient } from "@shared/lib";
-import { Button, Input } from "@ui/components";
-import { useToast } from "@ui/hooks";
-import { ApiOutput } from "api";
+import { apiClient } from "@shared/lib/api-client";
+import { Button } from "@ui/components/Button";
+import { Input } from "@ui/components/Input";
+import { useToast } from "@ui/hooks/use-toast";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

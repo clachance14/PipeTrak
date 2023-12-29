@@ -1,7 +1,7 @@
 "use client";
 
 import { appConfig } from "@config";
-import { useUser } from "@saas/auth/hooks";
+import { useUser } from "@saas/auth/hooks/use-user";
 import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
@@ -13,8 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Icon,
-} from "@ui/components";
+} from "@ui/components/DropdownMenu";
+import { Icon } from "@ui/components/Icon";
 import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";

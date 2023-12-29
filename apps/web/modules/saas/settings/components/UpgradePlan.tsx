@@ -1,9 +1,9 @@
 "use client";
 
-import { ActionBlock } from "@saas/shared/components";
-import { PricingTable } from "@shared/components";
-import { apiClient } from "@shared/lib";
-import { ApiOutput } from "api";
+import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { PricingTable } from "@shared/components/PricingTable";
+import { apiClient } from "@shared/lib/api-client";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 
 type SubscriptionPlans = ApiOutput["billing"]["plans"];

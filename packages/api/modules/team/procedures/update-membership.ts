@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { TeamMembershipModel, db } from "database";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 
 export const updateMembership = protectedProcedure
   .input(

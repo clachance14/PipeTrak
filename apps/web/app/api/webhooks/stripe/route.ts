@@ -1,4 +1,4 @@
-import { createAdminApiCaller } from "api/modules/trpc";
+import { createAdminApiCaller } from "api/trpc/caller";
 import { createHmac, timingSafeEqual } from "crypto";
 import { SubscriptionStatus } from "database";
 import { headers } from "next/headers";

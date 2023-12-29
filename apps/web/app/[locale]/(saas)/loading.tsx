@@ -1,4 +1,4 @@
-import { Logo } from "@shared/components";
+import { Logo } from "@shared/components/Logo";
 
 export default function Loading() {
   return (

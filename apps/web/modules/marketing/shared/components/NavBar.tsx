@@ -1,15 +1,13 @@
 "use client";
 
 import { Link } from "@i18n";
-import { useUser } from "@saas/auth/hooks";
-import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
-import {
-  Button,
-  Icon,
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@ui/components";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { ColorModeToggle } from "@shared/components/ColorModeToggle";
+import { LocaleSwitch } from "@shared/components/LocaleSwitch";
+import { Logo } from "@shared/components/Logo";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
+import { Sheet, SheetContent, SheetTrigger } from "@ui/components/Sheet";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

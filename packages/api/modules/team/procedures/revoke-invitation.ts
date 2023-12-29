@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { db } from "database";
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 
 export const revokeInvitation = protectedProcedure
   .input(

@@ -1,6 +1,6 @@
 import { TeamMembershipModel, TeamModel, UserModel } from "database";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const user = publicProcedure
   .input(z.void())

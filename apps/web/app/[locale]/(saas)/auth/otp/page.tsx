@@ -1,4 +1,4 @@
-import { OtpForm } from "@saas/auth/components";
+import { OtpForm } from "@saas/auth/components/OtpForm";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {

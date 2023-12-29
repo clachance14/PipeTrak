@@ -1,10 +1,10 @@
 "use client";
 
 import { Link } from "@i18n";
-import { UserMenu } from "@marketing/shared/components";
-import { Logo } from "@shared/components";
-import { Icon } from "@ui/components";
-import { ApiOutput } from "api";
+import { UserMenu } from "@marketing/shared/components/UserMenu";
+import { Logo } from "@shared/components/Logo";
+import { Icon } from "@ui/components/Icon";
+import { ApiOutput } from "api/trpc/router";
 import { Team } from "database";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";

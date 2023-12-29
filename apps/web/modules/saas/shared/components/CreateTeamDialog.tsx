@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@ui/components";
+} from "@ui/components/Dialog";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";

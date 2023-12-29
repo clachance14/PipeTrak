@@ -1,9 +1,8 @@
-import { StatsTile } from "@saas/dashboard/components";
-import { PageHeader } from "@saas/shared/components";
-import { Card } from "@ui/components";
-import { createApiCaller } from "api";
+import { StatsTile } from "@saas/dashboard/components/StatsTile";
+import { PageHeader } from "@saas/shared/components/PageHeader";
+import { Card } from "@ui/components/Card";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
-
 export default async function Dashboard() {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();

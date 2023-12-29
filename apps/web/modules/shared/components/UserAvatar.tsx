@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@ui/components";
+import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/Avatar";
 import { forwardRef, useMemo } from "react";
 
 export const UserAvatar = forwardRef<

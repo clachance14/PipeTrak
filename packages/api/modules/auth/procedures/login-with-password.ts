@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { LuciaError, auth } from "auth";
 import { UserModel } from "database";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const loginWithPassword = publicProcedure
   .input(

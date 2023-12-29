@@ -1,15 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { apiClient } from "@shared/lib";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Button,
-  Icon,
-  Input,
-} from "@ui/components";
+import { apiClient } from "@shared/lib/api-client";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/Alert";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
+import { Input } from "@ui/components/Input";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";

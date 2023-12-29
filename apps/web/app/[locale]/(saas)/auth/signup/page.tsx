@@ -1,4 +1,4 @@
-import { SignupForm } from "@saas/auth/components";
+import { SignupForm } from "@saas/auth/components/SignupForm";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {

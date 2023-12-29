@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { protectedProcedure } from "../../../trpc/base";
 
 export const generateProductNames = protectedProcedure
   .input(

@@ -1,9 +1,10 @@
 "use client";
 
-import { useLocaleCurrency } from "@shared/hooks";
-import { Button, Tabs, TabsList, TabsTrigger } from "@ui/components";
-import { cn } from "@ui/lib";
-import { ApiOutput } from "api";
+import { useLocaleCurrency } from "@shared/hooks/locale-currency";
+import { Button } from "@ui/components/Button";
+import { Tabs, TabsList, TabsTrigger } from "@ui/components/Tabs";
+import { cn } from "@ui/lib/utils";
+import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
@@ -147,8 +148,8 @@ export function PricingTable({
                     {isActivePlan(plan)
                       ? labels.currentPlan
                       : activePlanId
-                      ? labels.switchToPlan
-                      : labels.subscribe}
+                        ? labels.switchToPlan
+                        : labels.subscribe}
                   </Button>
                 </div>
               </div>

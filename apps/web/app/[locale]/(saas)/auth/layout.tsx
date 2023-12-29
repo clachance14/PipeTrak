@@ -1,7 +1,9 @@
 import { Link } from "@i18n";
-import { UserContextProvider } from "@saas/auth/lib";
-import { ColorModeToggle, LocaleSwitch, Logo } from "@shared/components";
-import { Card } from "@ui/components";
+import { UserContextProvider } from "@saas/auth/lib/user-context";
+import { ColorModeToggle } from "@shared/components/ColorModeToggle";
+import { LocaleSwitch } from "@shared/components/LocaleSwitch";
+import { Logo } from "@shared/components/Logo";
+import { Card } from "@ui/components/Card";
 import { useLocale } from "next-intl";
 import { PropsWithChildren } from "react";
 

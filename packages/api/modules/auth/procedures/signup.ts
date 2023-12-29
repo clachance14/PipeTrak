@@ -3,7 +3,7 @@ import { auth, generateOneTimePassword, generateVerificationToken } from "auth";
 import { UserRole } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const signup = publicProcedure
   .input(

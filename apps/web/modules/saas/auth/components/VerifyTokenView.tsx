@@ -1,11 +1,12 @@
 "use client";
 
-import { apiClient } from "@shared/lib";
-import { Button, Icon } from "@ui/components";
+import { apiClient } from "@shared/lib/api-client";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useUser } from "../hooks";
+import { useUser } from "../hooks/use-user";
 
 export function VerifyTokenView() {
   const t = useTranslations();

@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { auth, validateVerificationToken } from "auth";
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const verifyToken = publicProcedure
   .input(

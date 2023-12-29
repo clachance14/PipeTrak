@@ -1,4 +1,4 @@
-import { Logo } from "@shared/components";
+import { Logo } from "@shared/components/Logo";
 import Link from "next/link";
 
 export function Footer() {

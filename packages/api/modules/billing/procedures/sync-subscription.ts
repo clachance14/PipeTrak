@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { Subscription, SubscriptionModel, db } from "database";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../../trpc/base";
 
 export const syncSubscription = publicProcedure
   .input(SubscriptionModel)

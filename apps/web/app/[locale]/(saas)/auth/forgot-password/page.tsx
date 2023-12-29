@@ -1,4 +1,4 @@
-import { ForgotPasswordForm } from "@saas/auth/components";
+import { ForgotPasswordForm } from "@saas/auth/components/ForgotPasswordForm";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {

@@ -2,15 +2,15 @@
 
 import { appConfig } from "@config";
 import { usePathname } from "@i18n";
+import { Button } from "@ui/components/Button";
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-  Icon,
-} from "@ui/components";
+} from "@ui/components/DropdownMenu";
+import { Icon } from "@ui/components/Icon";
 import { useLocale } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

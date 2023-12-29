@@ -1,17 +1,12 @@
 "use client";
 
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Icon,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@ui/components";
+} from "@ui/components/DropdownMenu";
+import { Table, TableBody, TableCell, TableRow } from "@ui/components/Table";
 import { useTranslations } from "next-intl";
 
 import {
@@ -26,10 +21,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useUser } from "@saas/auth/hooks";
-import { apiClient } from "@shared/lib";
-import { useToast } from "@ui/hooks";
-import { ApiOutput } from "api";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { apiClient } from "@shared/lib/api-client";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
+import { useToast } from "@ui/hooks/use-toast";
+import { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
