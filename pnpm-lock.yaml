@@ -105,8 +105,8 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       lucide-react:
-        specifier: ^0.298.0
-        version: 0.298.0(react@18.2.0)
+        specifier: ^0.302.0
+        version: 0.302.0(react@18.2.0)
       mail:
         specifier: workspace:*
         version: link:../../packages/mail
@@ -6662,8 +6662,8 @@ packages:
     resolution: {integrity: sha512-2e/Oezb+b2qjQLyP28CraBlad2s9GAp22bfPLn05IsXi99FEX/oTo2TGMM4Gn9nJT7ow15kEFkwL3lBUpknopA==}
     dev: false
 
-  /lucide-react@0.298.0(react@18.2.0):
-    resolution: {integrity: sha512-tWoxZ663Zf/n8VxXTHnTJsU/w1ysWT1LORnIL1pzqElFdSqBhWbZeJ3sLdCZ5FpzpbkpkYEtluhuTyG2BTDYNQ==}
+  /lucide-react@0.302.0(react@18.2.0):
+    resolution: {integrity: sha512-JZX+1fjpqxvQmEgItvPOAwRlqf0Eg9dSZMxljA2/V2M6dluOhQCPBhewIlSJWgkNu0M36kViOgmTAMnDaAMOFw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
