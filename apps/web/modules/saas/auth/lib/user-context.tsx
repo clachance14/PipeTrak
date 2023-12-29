@@ -1,6 +1,6 @@
 "use client";
 
-import { apiClient } from "@shared/lib";
+import { apiClient } from "@shared/lib/api-client";
 import { ApiOutput } from "api";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";

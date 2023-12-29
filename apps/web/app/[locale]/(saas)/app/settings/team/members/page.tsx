@@ -1,5 +1,6 @@
-import { InviteMemberForm, TeamMembersBlock } from "@saas/settings/components";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
+import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
+import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@ui/components";
+import { Tabs, TabsList, TabsTrigger } from "@ui/components/Tabs";
 
 export default function SigninModeSwitch({
   activeMode,

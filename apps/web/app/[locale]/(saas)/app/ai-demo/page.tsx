@@ -1,5 +1,5 @@
-import { ProductNameGenerator } from "@saas/dashboard/components";
-import { PageHeader } from "@saas/shared/components";
+import { ProductNameGenerator } from "@saas/dashboard/components/ProductNameGenerator";
+import { PageHeader } from "@saas/shared/components/PageHeader";
 
 export default function AiDemoPage() {
   return (

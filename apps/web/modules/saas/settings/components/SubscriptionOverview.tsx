@@ -1,7 +1,7 @@
 "use client";
 
-import { ActionBlock } from "@saas/shared/components";
-import { useLocaleCurrency } from "@shared/hooks";
+import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { useLocaleCurrency } from "@shared/hooks/locale-currency";
 import { ApiOutput } from "api";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";

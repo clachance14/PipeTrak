@@ -1,27 +1,26 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUser } from "@saas/auth/hooks";
-import { apiClient } from "@shared/lib";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { apiClient } from "@shared/lib/api-client";
+import { Button } from "@ui/components/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/Card";
 import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  Input,
+} from "@ui/components/Form";
+import { Input } from "@ui/components/Input";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@ui/components";
-import { useToast } from "@ui/hooks";
+} from "@ui/components/Select";
+import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";

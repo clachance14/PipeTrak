@@ -1,6 +1,6 @@
 import { AnalyticsScript } from "@analytics";
-import { ClientProviders } from "@shared/components";
-import { Toaster } from "@ui/components";
+import { ClientProviders } from "@shared/components/ClientProviders";
+import { Toaster } from "@ui/components/Toaster";
 import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";

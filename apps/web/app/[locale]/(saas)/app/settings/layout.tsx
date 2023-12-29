@@ -1,7 +1,7 @@
 import { appConfig } from "@config";
-import { SettingsMenu } from "@saas/settings/components";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
-import { UserAvatar } from "@shared/components";
+import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
+import { UserAvatar } from "@shared/components/UserAvatar";
 import { createApiCaller } from "api";
 import BoringAvatar from "boring-avatars";
 import { getTranslations } from "next-intl/server";

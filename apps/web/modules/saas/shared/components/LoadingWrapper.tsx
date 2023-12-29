@@ -1,7 +1,7 @@
 "use client";
 
-import { useUser } from "@saas/auth/hooks";
-import { Logo } from "@shared/components";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { Logo } from "@shared/components/Logo";
 import { PropsWithChildren } from "react";
 
 export function LoadingWrapper({ children }: PropsWithChildren) {

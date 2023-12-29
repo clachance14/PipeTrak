@@ -1,6 +1,6 @@
-import { StatsTile } from "@saas/dashboard/components";
-import { PageHeader } from "@saas/shared/components";
-import { Card } from "@ui/components";
+import { StatsTile } from "@saas/dashboard/components/StatsTile";
+import { PageHeader } from "@saas/shared/components/PageHeader";
+import { Card } from "@ui/components/Card";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
 

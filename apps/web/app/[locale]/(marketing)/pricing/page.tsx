@@ -1,4 +1,4 @@
-import { PricingTable } from "@marketing/pricing/components";
+import { PricingTable } from "@marketing/pricing/components/PricingTable";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
 

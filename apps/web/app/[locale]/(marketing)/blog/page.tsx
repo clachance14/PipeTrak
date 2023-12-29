@@ -1,4 +1,4 @@
-import { PostListItem } from "@marketing/blog/components";
+import { PostListItem } from "@marketing/blog/components/PostListItem";
 import { allPosts } from "contentlayer/generated";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";

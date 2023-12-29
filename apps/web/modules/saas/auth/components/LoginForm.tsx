@@ -2,22 +2,18 @@
 
 import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { apiClient } from "@shared/lib";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Button,
-  Icon,
-  Input,
-} from "@ui/components";
+import { apiClient } from "@shared/lib/api-client";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/Alert";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
+import { Input } from "@ui/components/Input";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { useUser } from "../hooks";
+import { useUser } from "../hooks/use-user";
 import SigninModeSwitch from "./SigninModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";

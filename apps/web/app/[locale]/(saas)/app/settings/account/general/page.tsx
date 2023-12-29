@@ -1,4 +1,5 @@
-import { ChangeNameForm, ChangePasswordForm } from "@saas/settings/components";
+import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
+import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";

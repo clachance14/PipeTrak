@@ -3,8 +3,8 @@
 import { appConfig } from "@config";
 import { Link, usePathname } from "@i18n";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
-import { useUser } from "@saas/auth/hooks";
-import { UserAvatar } from "@shared/components";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { UserAvatar } from "@shared/components/UserAvatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +17,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-  Icon,
-} from "@ui/components";
+} from "@ui/components/DropdownMenu";
+import { Icon } from "@ui/components/Icon";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter, useSearchParams } from "next/navigation";

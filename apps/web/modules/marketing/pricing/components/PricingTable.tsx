@@ -1,6 +1,6 @@
 "use client";
 
-import { PricingTable as PricingTablePrimitive } from "@shared/components";
+import { PricingTable as PricingTablePrimitive } from "@shared/components/PricingTable";
 import { ApiOutput } from "api";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

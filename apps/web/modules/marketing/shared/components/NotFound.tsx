@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Icon } from "@ui/components";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
 import Link from "next/link";
 
 export function NotFound() {

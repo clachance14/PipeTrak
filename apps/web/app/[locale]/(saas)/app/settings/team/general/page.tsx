@@ -1,5 +1,5 @@
-import { ChangeTeamNameForm } from "@saas/settings/components";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
+import { ChangeTeamNameForm } from "@saas/settings/components/ChangeTeamNameForm";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";

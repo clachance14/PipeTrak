@@ -1,10 +1,10 @@
 "use client";
 
-import { useUser } from "@saas/auth/hooks";
-import { ActionBlock } from "@saas/shared/components";
-import { apiClient } from "@shared/lib";
-import { Input } from "@ui/components";
-import { useToast } from "@ui/hooks";
+import { useUser } from "@saas/auth/hooks/use-user";
+import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { apiClient } from "@shared/lib/api-client";
+import { Input } from "@ui/components/Input";
+import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

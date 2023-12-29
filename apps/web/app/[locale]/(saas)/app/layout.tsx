@@ -1,6 +1,6 @@
-import { UserContextProvider } from "@saas/auth/lib";
-import { NavBar } from "@saas/shared/components";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/types";
+import { UserContextProvider } from "@saas/auth/lib/user-context";
+import { NavBar } from "@saas/shared/components/NavBar";
+import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

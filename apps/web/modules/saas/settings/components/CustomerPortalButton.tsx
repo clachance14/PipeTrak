@@ -1,8 +1,9 @@
 "use client";
 
-import { apiClient } from "@shared/lib";
-import { Button, Icon } from "@ui/components";
-import { useToast } from "@ui/hooks";
+import { apiClient } from "@shared/lib/api-client";
+import { Button } from "@ui/components/Button";
+import { Icon } from "@ui/components/Icon";
+import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 
 export function CustomerPortalButton({

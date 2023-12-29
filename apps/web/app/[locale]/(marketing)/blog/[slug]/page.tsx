@@ -1,4 +1,4 @@
-import { PostContent } from "@marketing/blog/components";
+import { PostContent } from "@marketing/blog/components/PostContent";
 import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
