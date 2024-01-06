@@ -3,7 +3,7 @@
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { apiClient } from "@shared/lib/api-client";
-import { Input } from "@ui/components/Input";
+import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

@@ -13,8 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@ui/components/DropdownMenu";
-import { Icon } from "@ui/components/Icon";
+} from "@ui/components/dropdown-menu";
+import { Icon } from "@ui/components/icon";
 import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";

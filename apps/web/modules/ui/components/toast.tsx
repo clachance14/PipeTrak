@@ -1,10 +1,10 @@
 "use client";
 
 import * as ToastPrimitives from "@radix-ui/react-toast";
-import { cn } from "@ui/lib/utils";
+import { cn } from "@ui/lib";
 import { VariantProps, cva } from "class-variance-authority";
 import * as React from "react";
-import { Icon } from "./Icon";
+import { Icon } from "./icon";
 
 const ToastProvider = ({ children }) => {
   return <ToastPrimitives.Provider>{children}</ToastPrimitives.Provider>;
@@ -32,7 +32,7 @@ const toastVariants = cva(
       variant: {
         default: "border bg-background",
         loading: "border bg-background",
-        error: "border-error bg-error text-error-foreground",
+        error: "border-destructive bg-destructive text-destructive-foreground",
         success: "border-success bg-success text-success-foreground",
       },
     },
@@ -64,7 +64,7 @@ const ToastAction = React.forwardRef<
   <ToastPrimitives.Action
     ref={ref}
     className={cn(
-      "hover:bg-secondary focus:ring-ring group-[.error]:border-muted/40 group-[.error]:hover:border-error/30 group-[.error]:hover:bg-error group-[.error]:hover:text-error-foreground group-[.error]:focus:ring-error inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:pointer-events-none disabled:opacity-50",
+      "hover:bg-secondary focus:ring-ring group-[.error]:border-muted/40 group-[.error]:hover:border-destructive/30 group-[.error]:hover:bg-destructive group-[.error]:hover:text-destructive-foreground group-[.error]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:pointer-events-none disabled:opacity-50",
       className,
     )}
     {...props}

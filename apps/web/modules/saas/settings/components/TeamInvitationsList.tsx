@@ -5,26 +5,26 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@ui/components/DropdownMenu";
-import { Table, TableBody, TableCell, TableRow } from "@ui/components/Table";
+} from "@ui/components/dropdown-menu";
+import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useTranslations } from "next-intl";
 
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
 import { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";

@@ -1,4 +1,4 @@
-import { cn } from "@ui/lib/utils";
+import { cn } from "@ui/lib";
 import React from "react";
 
 export interface InputProps

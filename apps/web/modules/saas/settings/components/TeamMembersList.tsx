@@ -18,15 +18,15 @@ import {
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { apiClient } from "@shared/lib/api-client";
-import { Button } from "@ui/components/Button";
+import { Button } from "@ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@ui/components/DropdownMenu";
-import { Icon } from "@ui/components/Icon";
-import { Table, TableBody, TableCell, TableRow } from "@ui/components/Table";
+} from "@ui/components/dropdown-menu";
+import { Icon } from "@ui/components/icon";
+import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useToast } from "@ui/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -129,7 +129,7 @@ export function TeamMembersList({
               <DropdownMenuContent>
                 <DropdownMenuItem
                   disabled={row.original.is_creator}
-                  className="text-error"
+                  className="text-destructive"
                   onClick={() => {
                     const loadingToast = toast({
                       variant: "loading",

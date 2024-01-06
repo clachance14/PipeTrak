@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, BadgeProps } from "@ui/components/Badge";
+import { Badge, BadgeProps } from "@ui/components/badge";
 import { ApiOutput } from "api/trpc/router";
 import { SubscriptionStatus } from "database";
 import { useTranslations } from "next-intl";

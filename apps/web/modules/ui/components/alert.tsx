@@ -1,4 +1,4 @@
-import { cn } from "@ui/lib/utils";
+import { cn } from "@ui/lib";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
@@ -10,7 +10,8 @@ const alertVariants = cva(
         default: "bg-background text-foreground",
         primary:
           "border-primary/20 bg-primary/10 text-primary [&>svg]:text-primary",
-        error: "border-error/20 bg-error/10 text-error [&>svg]:text-error",
+        error:
+          "border-destructive/20 bg-destructive/10 text-destructive [&>svg]:text-destructive",
         success:
           "border-success/20 bg-success/10 text-success [&>svg]:text-success",
       },

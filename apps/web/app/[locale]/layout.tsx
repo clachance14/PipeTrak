@@ -1,6 +1,7 @@
 import { AnalyticsScript } from "@analytics";
 import { ClientProviders } from "@shared/components/ClientProviders";
-import { Toaster } from "@ui/components/Toaster";
+import { Toaster } from "@ui/components/toaster";
+import { cn } from "@ui/lib";
 import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
@@ -34,7 +35,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${GeistSans.variable} bg-background font-sans`}>
+      <body
+        className={cn(
+          "bg-background text-foreground min-h-screen font-sans antialiased",
+          GeistSans.variable,
+        )}
+      >
         <NextTopLoader color={"var(--colors-primary)"} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientProviders>{children}</ClientProviders>

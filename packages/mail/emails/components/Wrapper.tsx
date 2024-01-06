@@ -39,9 +39,9 @@ export default function Wrapper({ children }: PropsWithChildren) {
                   DEFAULT: lightVariables.colors.secondary,
                   foreground: lightVariables.colors["secondary-foreground"],
                 },
-                error: {
-                  DEFAULT: lightVariables.colors.error,
-                  foreground: lightVariables.colors["error-foreground"],
+                destructive: {
+                  DEFAULT: lightVariables.colors.destructive,
+                  foreground: lightVariables.colors["destructive-foreground"],
                 },
                 success: {
                   DEFAULT: lightVariables.colors.success,

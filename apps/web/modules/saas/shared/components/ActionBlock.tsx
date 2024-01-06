@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@ui/components/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/Card";
+import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 

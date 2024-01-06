@@ -1,9 +1,9 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
-import { Input } from "@ui/components/Input";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
+import { Input } from "@ui/components/input";
 import { useState } from "react";
 
 export function ProductNameGenerator() {

@@ -2,17 +2,17 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/Alert";
-import { Button } from "@ui/components/Button";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Button } from "@ui/components/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@ui/components/Form";
-import { Icon } from "@ui/components/Icon";
-import { Input } from "@ui/components/Input";
+} from "@ui/components/form";
+import { Icon } from "@ui/components/icon";
+import { Input } from "@ui/components/input";
 import { UserOneTimePasswordType } from "database";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";

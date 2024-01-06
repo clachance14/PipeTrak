@@ -3,7 +3,7 @@
 import { Link } from "@i18n";
 import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
-import { Icon } from "@ui/components/Icon";
+import { Icon } from "@ui/components/icon";
 import { ApiOutput } from "api/trpc/router";
 import { Team } from "database";
 import { useTranslations } from "next-intl";

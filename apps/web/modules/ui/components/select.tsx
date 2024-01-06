@@ -4,8 +4,8 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as React from "react";
 
-import { cn } from "@ui/lib/utils";
-import { Icon } from "./Icon";
+import { cn } from "@ui/lib";
+import { Icon } from "./icon";
 
 const Select = SelectPrimitive.Root;
 

@@ -12,8 +12,8 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import { cn } from "@ui/lib/utils";
-import { Label } from "./Label";
+import { cn } from "@ui/lib";
+import { Label } from "./label";
 
 const Form = FormProvider;
 
@@ -95,7 +95,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-error", className)}
+      className={cn(error && "text-destructive", className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -158,7 +158,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-error text-sm font-medium", className)}
+      className={cn("text-destructive text-sm font-medium", className)}
       {...props}
     >
       {body}

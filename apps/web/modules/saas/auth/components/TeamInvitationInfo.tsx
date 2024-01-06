@@ -1,5 +1,5 @@
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/Alert";
-import { Icon } from "@ui/components/Icon";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Icon } from "@ui/components/icon";
 import { useTranslations } from "next-intl";
 
 export function TeamInvitationInfo({ className }: { className?: string }) {

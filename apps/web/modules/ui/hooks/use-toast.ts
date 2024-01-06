@@ -1,7 +1,7 @@
 "use client";
 
 import { JSXElementConstructor, useEffect, useState } from "react";
-import { ToastActionElement, ToastProps } from "../components/Toast";
+import { ToastActionElement, ToastProps } from "../components/toast";
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;

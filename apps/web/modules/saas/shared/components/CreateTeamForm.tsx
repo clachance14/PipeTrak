@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiClient } from "@shared/lib/api-client";
-import { Button } from "@ui/components/Button";
-import { Input } from "@ui/components/Input";
+import { Button } from "@ui/components/button";
+import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";

@@ -1,7 +1,7 @@
 "use client";
 
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/Tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

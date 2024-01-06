@@ -22,6 +22,7 @@
     "contentlayer": "^0.3.2",
     "cypress": "^13.6.2",
     "database": "workspace:*",
+    "date-fns": "^3.0.6",
     "geist": "^1.2.0",
     "jotai": "^2.6.1",
     "js-cookie": "^3.0.5",
@@ -33,6 +34,7 @@
     "next-themes": "^0.2.1",
     "nextjs-toploader": "^1.6.4",
     "react": "18.2.0",
+    "react-day-picker": "^8.10.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.49.2",
     "sharp": "^0.33.1",
@@ -64,9 +66,10 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "e2e": "dotenv -c -e ../../.env -- start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
     "lint": "next lint",
-    "start": "next start",
-    "e2e": "dotenv -c -e ../../.env -- start-server-and-test dev http://localhost:3000 \"cypress open --e2e\""
+    "shadcn-ui": "pnpm dlx shadcn-ui@latest",
+    "start": "next start"
   },
   "version": "0.1.0"
 }

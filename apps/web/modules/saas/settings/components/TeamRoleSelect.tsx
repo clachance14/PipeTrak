@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@ui/components/Select";
+} from "@ui/components/select";
 import { TeamMemberRole } from "database";
 import { useTranslations } from "next-intl";
 

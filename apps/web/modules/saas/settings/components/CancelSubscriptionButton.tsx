@@ -1,8 +1,8 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

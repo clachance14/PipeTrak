@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 

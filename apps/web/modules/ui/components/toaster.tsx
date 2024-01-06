@@ -2,7 +2,7 @@
 
 import { JSXElementConstructor } from "react";
 import { useToast } from "../hooks/use-toast";
-import { Icon } from "./Icon";
+import { Icon } from "./icon";
 import {
   Toast,
   ToastClose,
@@ -11,7 +11,7 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "./Toast";
+} from "./toast";
 
 const variantIcons: Record<
   NonNullable<ToastProps["variant"]>,

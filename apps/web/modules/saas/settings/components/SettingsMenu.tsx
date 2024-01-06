@@ -1,7 +1,7 @@
 "use client";
 
 import { Link, usePathname } from "@i18n";
-import { cn } from "@ui/lib/utils";
+import { cn } from "@ui/lib";
 import React from "react";
 
 export function SettingsMenu({

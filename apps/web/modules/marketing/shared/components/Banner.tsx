@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
 import { useEffect, useState } from "react";
 
 const BANNER_HIDDEN_STORAGE_KEY = "banner-hidden";

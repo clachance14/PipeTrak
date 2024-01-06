@@ -2,10 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/Alert";
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
-import { Input } from "@ui/components/Input";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
+import { Input } from "@ui/components/input";
 
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";

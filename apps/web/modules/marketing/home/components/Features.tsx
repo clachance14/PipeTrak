@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import { Button } from "@ui/components/Button";
-import { Icon } from "@ui/components/Icon";
+import { Button } from "@ui/components/button";
+import { Icon } from "@ui/components/icon";
 import heroDarkImage from "/public/images/hero-dark.svg";
 import heroImage from "/public/images/hero.svg";
 

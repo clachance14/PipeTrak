@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Icon } from "./Icon";
-import { Input } from "./Input";
+import { Icon } from "./icon";
+import { Input } from "./input";
 
 export function PasswordInput({
   value,
