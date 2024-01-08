@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -264,8 +260,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.2(@prisma/client@5.7.1)(lucia@2.7.6)
       '@lucia-auth/oauth':
-        specifier: ^3.3.0
-        version: 3.5.0(lucia@2.7.6)
+        specifier: ^3.5.1
+        version: 3.5.1(lucia@2.7.6)
       database:
         specifier: workspace:*
         version: link:../database
@@ -1548,8 +1544,8 @@ packages:
       lucia: 2.7.6
     dev: false
 
-  /@lucia-auth/oauth@3.5.0(lucia@2.7.6):
-    resolution: {integrity: sha512-JSwAMVwlDJtbvfcJV1nbkv41OD830pgICrx8zFT71SYd5I1MnEQ+GqMTXBGRyxzc5XlLatT8ZS1Jt0k81487xg==}
+  /@lucia-auth/oauth@3.5.1(lucia@2.7.6):
+    resolution: {integrity: sha512-GEohSpTt7M8LQgmA+wFuoq/Pb8afos4kZlFXTmmn8n+hUnV/40dEP0C4X735PbMo+QW9JIFkOggTfHDhB60XhA==}
     peerDependencies:
       lucia: ^2.0.0
     dependencies:
@@ -9626,3 +9622,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
