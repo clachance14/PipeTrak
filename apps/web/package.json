@@ -22,7 +22,7 @@
     "contentlayer": "^0.3.2",
     "cypress": "^13.6.2",
     "database": "workspace:*",
-    "date-fns": "^3.0.6",
+    "date-fns": "^3.2.0",
     "geist": "^1.2.0",
     "jotai": "^2.6.1",
     "js-cookie": "^3.0.5",
