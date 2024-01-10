@@ -4,7 +4,7 @@ on: push
 
 jobs:
   e2e:
-    name: 'E2E tests'
+    name: E2E tests
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -29,10 +29,10 @@ jobs:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           STRIPE_SECRET_KEY: ${{secrets.STRIPE_SECRET_KEY}}
   dependabot:
-    name: 'Dependabot'
+    name: Dependabot
     needs: [e2e]
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && github.event_name == 'pull_request'}}
     steps:
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --merge "$PR_URL"
