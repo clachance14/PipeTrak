@@ -28,7 +28,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{secrets.NEXT_PUBLIC_SITE_URL}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           STRIPE_SECRET_KEY: ${{secrets.STRIPE_SECRET_KEY}}
-  auto-merge:
+  dependabot:
     name: 'Dependabot'
     needs: [e2e]
     runs-on: ubuntu-latest
