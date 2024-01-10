@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamInvitationModel, db } from "database";
+import { TeamInvitationSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -9,7 +9,7 @@ export const invitations = protectedProcedure
       teamId: z.string(),
     }),
   )
-  .output(z.array(TeamInvitationModel))
+  .output(z.array(TeamInvitationSchema))
   .query(async ({ input: { teamId }, ctx: { abilities } }) => {
     if (!abilities.isTeamMember(teamId)) {
       throw new TRPCError({

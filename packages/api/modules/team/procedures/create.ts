@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamMemberRole, TeamModel, db } from "database";
+import { TeamMemberRoleSchema, TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 import { slugifyTeamName } from "../lib/team-slug";
@@ -11,11 +11,11 @@ export const create = protectedProcedure
     }),
   )
   .output(
-    TeamModel.extend({
+    TeamSchema.extend({
       memberships: z.array(
         z.object({
           id: z.string(),
-          role: z.nativeEnum(TeamMemberRole),
+          role: TeamMemberRoleSchema,
           is_creator: z.boolean(),
         }),
       ),
@@ -61,7 +61,7 @@ export const create = protectedProcedure
         memberships: {
           create: {
             user_id: user!.userId,
-            role: TeamMemberRole.OWNER,
+            role: TeamMemberRoleSchema.Values.OWNER,
             is_creator: true,
           },
         },

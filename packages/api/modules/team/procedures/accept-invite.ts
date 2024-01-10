@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamModel, db } from "database";
+import { TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -9,7 +9,7 @@ export const acceptInvitation = protectedProcedure
       id: z.string(),
     }),
   )
-  .output(TeamModel.pick({ slug: true }))
+  .output(TeamSchema.pick({ slug: true }))
   .mutation(async ({ input: { id }, ctx: { user } }) => {
     const invitation = await db.teamInvitation.findFirst({
       where: {

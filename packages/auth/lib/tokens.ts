@@ -1,4 +1,4 @@
-import { db, UserOneTimePasswordType } from "database";
+import { db, UserOneTimePasswordTypeType } from "database";
 import { generateRandomString, isWithinExpiration } from "lucia/utils";
 
 export const generateVerificationToken = async ({
@@ -67,7 +67,7 @@ export const generateOneTimePassword = async ({
   expireDuration = 1000 * 60 * 60 * 2,
 }: {
   userId: string;
-  type: UserOneTimePasswordType;
+  type: UserOneTimePasswordTypeType;
   identifier: string;
   expireDuration?: number;
 }) => {
@@ -105,7 +105,7 @@ export const validateOneTimePassword = async ({
   identifier,
 }: {
   code: string;
-  type: UserOneTimePasswordType;
+  type: UserOneTimePasswordTypeType;
   identifier?: string;
 }) => {
   const storedOtp = await db.userOneTimePassword.findFirst({

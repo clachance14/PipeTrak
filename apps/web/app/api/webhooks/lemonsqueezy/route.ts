@@ -1,6 +1,6 @@
 import { createAdminApiCaller } from "api/trpc/caller";
 import { createHmac, timingSafeEqual } from "crypto";
-import { SubscriptionStatus } from "database";
+import { SubscriptionStatusType } from "database";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       data,
     } = payload;
 
-    const statusMap: Record<string, SubscriptionStatus> = {
+    const statusMap: Record<string, SubscriptionStatusType> = {
       active: "ACTIVE",
       past_due: "PAST_DUE",
       unpaid: "UNPAID",

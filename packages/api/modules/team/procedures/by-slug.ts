@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamModel, db } from "database";
+import { TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -9,7 +9,7 @@ export const bySlug = protectedProcedure
       slug: z.string(),
     }),
   )
-  .output(TeamModel)
+  .output(TeamSchema)
   .query(async ({ input: { slug }, ctx: { abilities } }) => {
     const team = await db.team.findFirst({
       where: {

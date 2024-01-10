@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { TeamMembershipModel, db } from "database";
+import { TeamMembershipSchema, db } from "database";
 import { protectedProcedure } from "../../../trpc/base";
 
 export const updateMembership = protectedProcedure
   .input(
-    TeamMembershipModel.pick({
+    TeamMembershipSchema.pick({
       id: true,
       role: true,
     }),

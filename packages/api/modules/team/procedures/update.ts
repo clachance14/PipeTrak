@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamModel, db } from "database";
+import { TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 import { slugifyTeamName } from "../lib/team-slug";
@@ -11,7 +11,7 @@ export const update = protectedProcedure
       name: z.string(),
     }),
   )
-  .output(TeamModel)
+  .output(TeamSchema)
   .mutation(async ({ input: { id, name }, ctx: { abilities } }) => {
     if (!abilities.isTeamOwner(id)) {
       throw new TRPCError({

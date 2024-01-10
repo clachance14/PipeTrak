@@ -1,13 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { auth, validateOneTimePassword } from "auth";
-import { UserOneTimePasswordType } from "database";
+import { UserOneTimePasswordTypeSchema } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
 export const verifyOtp = publicProcedure
   .input(
     z.object({
-      type: z.nativeEnum(UserOneTimePasswordType),
+      type: UserOneTimePasswordTypeSchema,
       identifier: z.string(),
       code: z.string(),
     }),

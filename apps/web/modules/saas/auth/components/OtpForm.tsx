@@ -13,7 +13,7 @@ import {
 } from "@ui/components/form";
 import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
-import { UserOneTimePasswordType } from "database";
+import { UserOneTimePasswordTypeType } from "database";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -42,9 +42,9 @@ export function OtpForm() {
 
   const invitationCode = searchParams.get("invitationCode");
   const identifier = searchParams.get("identifier") || "";
-  const type: UserOneTimePasswordType = searchParams.get(
+  const type: UserOneTimePasswordTypeType = searchParams.get(
     "type",
-  ) as UserOneTimePasswordType;
+  ) as UserOneTimePasswordTypeType;
   const redirectTo = invitationCode
     ? `/team/invitation?code=${invitationCode}`
     : searchParams.get("redirectTo") ?? "/app";

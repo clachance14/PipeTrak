@@ -2,7 +2,7 @@
 
 import { Badge, BadgeProps } from "@ui/components/badge";
 import { ApiOutput } from "api/trpc/router";
-import { SubscriptionStatus } from "database";
+import { SubscriptionStatusType } from "database";
 import { useTranslations } from "next-intl";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
@@ -11,12 +11,12 @@ export function SubscriptionStatusBadge({
   status,
   className,
 }: {
-  status: SubscriptionStatus;
+  status: SubscriptionStatusType;
   className?: string;
 }) {
   const t = useTranslations();
 
-  const badgeLabels: Record<SubscriptionStatus, string> = {
+  const badgeLabels: Record<SubscriptionStatusType, string> = {
     ACTIVE: t("settings.billing.subscription.status.active"),
     CANCELED: t("settings.billing.subscription.status.canceled"),
     EXPIRED: t("settings.billing.subscription.status.expired"),
@@ -27,7 +27,7 @@ export function SubscriptionStatusBadge({
     UNPAID: t("settings.billing.subscription.status.unpaid"),
   };
 
-  const badgeColors: Record<SubscriptionStatus, BadgeProps["status"]> = {
+  const badgeColors: Record<SubscriptionStatusType, BadgeProps["status"]> = {
     ACTIVE: "success",
     CANCELED: "error",
     EXPIRED: "error",

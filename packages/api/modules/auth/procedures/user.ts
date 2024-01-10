@@ -1,11 +1,11 @@
-import { TeamMembershipModel, TeamModel, UserModel } from "database";
+import { TeamMembershipSchema, TeamSchema, UserSchema } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
 export const user = publicProcedure
   .input(z.void())
   .output(
-    UserModel.pick({
+    UserSchema.pick({
       id: true,
       email: true,
       role: true,
@@ -15,8 +15,8 @@ export const user = publicProcedure
       .extend({
         teamMemberships: z
           .array(
-            TeamMembershipModel.extend({
-              team: TeamModel,
+            TeamMembershipSchema.extend({
+              team: TeamSchema,
             }),
           )
           .nullable(),
@@ -29,6 +29,7 @@ export const user = publicProcedure
     return {
       ...user,
       id: user.userId,
+      avatar_url: user.avatar_url ?? null,
       teamMemberships,
     };
   });

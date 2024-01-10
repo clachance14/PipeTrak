@@ -1,4 +1,4 @@
-import { SubscriptionModel, db } from "database";
+import { SubscriptionSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -8,7 +8,7 @@ export const subscription = protectedProcedure
       teamId: z.string(),
     }),
   )
-  .output(SubscriptionModel.nullable())
+  .output(SubscriptionSchema.nullable())
   .query(async ({ input: { teamId }, ctx: { abilities } }) => {
     if (!abilities.isTeamMember(teamId)) throw new Error("Unauthorized");
 

@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
-import { Subscription, SubscriptionModel, db } from "database";
+import { Subscription, SubscriptionSchema, db } from "database";
 import { publicProcedure } from "../../../trpc/base";
 
 export const syncSubscription = publicProcedure
-  .input(SubscriptionModel)
+  .input(SubscriptionSchema)
   .mutation(async ({ input: subscription, ctx: { isAdmin } }) => {
     // this procedure can only be called by the admin caller from a webhook
     if (!isAdmin)

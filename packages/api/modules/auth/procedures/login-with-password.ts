@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { LuciaError, auth } from "auth";
-import { UserModel } from "database";
+import { UserSchema } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -19,11 +19,13 @@ export const loginWithPassword = publicProcedure
   .output(
     z.object({
       sessionId: z.string(),
-      user: UserModel.pick({
+      user: UserSchema.pick({
         id: true,
         email: true,
         name: true,
         role: true,
+        avatar_url: true,
+      }).partial({
         avatar_url: true,
       }),
     }),

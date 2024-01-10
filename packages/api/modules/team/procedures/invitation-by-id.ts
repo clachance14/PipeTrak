@@ -1,4 +1,4 @@
-import { TeamInvitationModel, db } from "database";
+import { TeamInvitationSchema, db } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -9,7 +9,7 @@ export const invitationById = publicProcedure
     }),
   )
   .output(
-    TeamInvitationModel.extend({
+    TeamInvitationSchema.extend({
       team: z
         .object({
           name: z.string(),

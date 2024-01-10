@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { TeamMembershipModel, UserModel, db } from "database";
+import { TeamMembershipSchema, UserSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -11,9 +11,9 @@ export const memberships = protectedProcedure
   )
   .output(
     z.array(
-      TeamMembershipModel.merge(
+      TeamMembershipSchema.merge(
         z.object({
-          user: UserModel.optional(),
+          user: UserSchema.optional(),
         }),
       ),
     ),

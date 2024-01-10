@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/components/select";
-import { TeamMemberRole } from "database";
+import { TeamMemberRoleType } from "database";
 import { useTranslations } from "next-intl";
 
 export function TeamRoleSelect({
@@ -13,8 +13,8 @@ export function TeamRoleSelect({
   onSelect,
   disabled,
 }: {
-  value: TeamMemberRole;
-  onSelect: (value: TeamMemberRole) => void;
+  value: TeamMemberRoleType;
+  onSelect: (value: TeamMemberRoleType) => void;
   disabled?: boolean;
 }) {
   const t = useTranslations();

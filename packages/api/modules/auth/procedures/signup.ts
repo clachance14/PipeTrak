@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { auth, generateOneTimePassword, generateVerificationToken } from "auth";
-import { UserRole } from "database";
+import { UserRoleSchema } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -35,7 +35,7 @@ export const signup = publicProcedure
             email: email,
             email_verified: false,
             name,
-            role: UserRole.USER,
+            role: UserRoleSchema.Values.USER,
             avatar_url: null,
           },
         });
