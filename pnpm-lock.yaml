@@ -223,8 +223,8 @@ importers:
         specifier: 14.0.3
         version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       openai:
-        specifier: ^4.24.1
-        version: 4.24.1(encoding@0.1.13)
+        specifier: ^4.24.2
+        version: 4.24.2(encoding@0.1.13)
       slugify:
         specifier: ^1.6.6
         version: 1.6.6
@@ -7538,8 +7538,8 @@ packages:
     engines: {node: '>= 14.17.0'}
     dev: false
 
-  /openai@4.24.1(encoding@0.1.13):
-    resolution: {integrity: sha512-ezm/O3eiZMnyBqirUnWm9N6INJU1WhNtz+nK/Zj/2oyKvRz9pgpViDxa5wYOtyGYXPn1sIKBV0I/S4BDhtydqw==}
+  /openai@4.24.2(encoding@0.1.13):
+    resolution: {integrity: sha512-Np5zFPAYsBRmsfgPS8cMM25r1wVO5NCTdmeoYDNEUhJn/rw6jNXU0CFSFwhbWsjIkYhdv31pPIzQ0xChHCvltQ==}
     hasBin: true
     dependencies:
       '@types/node': 18.18.13
