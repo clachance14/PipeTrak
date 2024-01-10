@@ -3,7 +3,8 @@ name: e2e
 on: push
 
 jobs:
-  cypress-run:
+  e2e:
+    name: 'E2E tests'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -27,3 +28,14 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{secrets.NEXT_PUBLIC_SITE_URL}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           STRIPE_SECRET_KEY: ${{secrets.STRIPE_SECRET_KEY}}
+  auto-merge:
+    name: 'Dependabot'
+    needs: [e2e]
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
