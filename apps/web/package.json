@@ -26,7 +26,7 @@
     "geist": "^1.2.1",
     "jotai": "^2.6.2",
     "js-cookie": "^3.0.5",
-    "lucide-react": "^0.309.0",
+    "lucide-react": "^0.311.0",
     "mail": "workspace:*",
     "next": "14.0.2",
     "next-contentlayer": "^0.3.2",
