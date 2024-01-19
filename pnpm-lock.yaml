@@ -260,8 +260,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.2(@prisma/client@5.8.1)(lucia@2.7.6)
       '@lucia-auth/oauth':
-        specifier: ^3.5.1
-        version: 3.5.1(lucia@2.7.6)
+        specifier: ^3.5.2
+        version: 3.5.2(lucia@2.7.6)
       database:
         specifier: workspace:*
         version: link:../database
@@ -1544,8 +1544,8 @@ packages:
       lucia: 2.7.6
     dev: false
 
-  /@lucia-auth/oauth@3.5.1(lucia@2.7.6):
-    resolution: {integrity: sha512-GEohSpTt7M8LQgmA+wFuoq/Pb8afos4kZlFXTmmn8n+hUnV/40dEP0C4X735PbMo+QW9JIFkOggTfHDhB60XhA==}
+  /@lucia-auth/oauth@3.5.2(lucia@2.7.6):
+    resolution: {integrity: sha512-GAYKHs2d6VMx64f0gWk5ljdeEKLa4EsoFOWSZHVHVtsFHOLuaFtJBT2ybLGIUb6oyJbQ/fibjRwYoNXxI54iHQ==}
     peerDependencies:
       lucia: ^2.0.0
     dependencies:
