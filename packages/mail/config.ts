@@ -1,3 +1,3 @@
 export const config = {
-  from: "kontakt@sedecon.tech",
+  from: "<your-from-email-here>",
 };
