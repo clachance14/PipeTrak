@@ -16,7 +16,7 @@ export const create = protectedProcedure
         z.object({
           id: z.string(),
           role: TeamMemberRoleSchema,
-          is_creator: z.boolean(),
+          isCreator: z.boolean(),
         }),
       ),
     }),
@@ -60,9 +60,9 @@ export const create = protectedProcedure
         slug,
         memberships: {
           create: {
-            user_id: user!.userId,
+            userId: user!.id,
             role: TeamMemberRoleSchema.Values.OWNER,
-            is_creator: true,
+            isCreator: true,
           },
         },
       },
@@ -74,7 +74,7 @@ export const create = protectedProcedure
           select: {
             id: true,
             role: true,
-            is_creator: true,
+            isCreator: true,
           },
         },
       },

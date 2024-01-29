@@ -9,7 +9,7 @@ export const user = publicProcedure
       id: true,
       email: true,
       role: true,
-      avatar_url: true,
+      avatarUrl: true,
       name: true,
     })
       .extend({
@@ -28,8 +28,7 @@ export const user = publicProcedure
 
     return {
       ...user,
-      id: user.userId,
-      avatar_url: user.avatar_url ?? null,
+      avatarUrl: user.avatarUrl ?? null,
       teamMemberships,
     };
   });

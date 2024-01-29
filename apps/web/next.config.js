@@ -6,7 +6,7 @@ const withContentlayer = createContentlayerPlugin({});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["api"],
+  transpilePackages: ["api", "auth"],
   images: {
     domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
   },
@@ -23,6 +23,10 @@ const nextConfig = {
         permanent: true,
       },
     ];
+  },
+  webpack: (config) => {
+    config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
+    return config;
   },
 };
 

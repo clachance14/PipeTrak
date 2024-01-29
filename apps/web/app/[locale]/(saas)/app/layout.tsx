@@ -28,8 +28,8 @@ export default async function Layout({ children }: PropsWithChildren) {
 
       teamMemberships.push({
         ...team.memberships.at(0)!,
-        user_id: user.id,
-        team_id: team.id,
+        userId: user.id,
+        teamId: team.id,
         team,
       });
     } catch (e) {

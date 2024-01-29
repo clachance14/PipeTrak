@@ -48,12 +48,12 @@ export async function POST(req: Request) {
       case "subscription_resumed":
         await apiCaller.billing.syncSubscription({
           id: String(data.id),
-          team_id: customData?.team_id,
-          customer_id: String(data.attributes.customer_id),
-          plan_id: String(data.attributes.product_id),
-          variant_id: String(data.attributes.variant_id),
+          teamId: customData?.team_id,
+          customerId: String(data.attributes.customer_id),
+          planId: String(data.attributes.product_id),
+          variantId: String(data.attributes.variant_id),
           status: statusMap[data.attributes.status],
-          next_payment_date: new Date(
+          nextPaymentDate: new Date(
             data.attributes.trial_ends_at ?? data.attributes.renews_at,
           ),
         });

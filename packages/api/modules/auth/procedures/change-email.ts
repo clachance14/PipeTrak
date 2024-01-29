@@ -1,4 +1,5 @@
-import { auth, generateVerificationToken } from "auth";
+import { generateVerificationToken, lucia } from "auth";
+import { db } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
@@ -20,19 +21,22 @@ export const changeEmail = protectedProcedure
       ctx: { user, responseHeaders },
       input: { email, callbackUrl },
     }) => {
-      if (!user) return;
-
-      const updatedUser = await auth.updateUserAttributes(user.id, {
-        email,
-        email_verified: false,
+      const updatedUser = await db.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          email,
+          emailVerified: false,
+        },
       });
 
-      await auth.invalidateAllUserSessions(user.id);
-      const sessionCookie = auth.createSessionCookie(null);
+      await lucia.invalidateUserSessions(user.id);
+      const sessionCookie = lucia.createBlankSessionCookie();
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
       const token = await generateVerificationToken({
-        userId: user.userId,
+        userId: user.id,
       });
 
       const url = new URL(callbackUrl);
