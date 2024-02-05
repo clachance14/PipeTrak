@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { auth, validateOneTimePassword } from "auth";
-import { UserOneTimePasswordTypeSchema } from "database";
+import { lucia, validateOneTimePassword } from "auth";
+import { UserOneTimePasswordTypeSchema, db } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -21,19 +21,28 @@ export const verifyOtp = publicProcedure
           code,
         });
 
-        const session = await auth.createSession({
-          userId: userId,
-          attributes: {},
+        const user = await db.user.findFirst({
+          where: {
+            id: userId,
+          },
         });
 
-        if (!session.user.email_verified) {
-          await auth.updateUserAttributes(session.user.id, {
-            email_verified: true,
+        if (!user)
+          throw new TRPCError({
+            code: "NOT_FOUND",
           });
-        }
 
-        // auth.handleRequest(req);
-        const sessionCookie = auth.createSessionCookie(session);
+        if (!user.emailVerified)
+          await db.user.update({
+            where: { id: user.id },
+            data: {
+              emailVerified: true,
+            },
+          });
+
+        const session = await lucia.createSession(userId, {});
+
+        const sessionCookie = lucia.createSessionCookie(session.id);
         responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
         return session;

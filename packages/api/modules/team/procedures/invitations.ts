@@ -20,7 +20,7 @@ export const invitations = protectedProcedure
 
     const invitations = await db.teamInvitation.findMany({
       where: {
-        team_id: teamId,
+        teamId,
       },
     });
 

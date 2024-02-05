@@ -56,13 +56,13 @@ export function UserMenu() {
 
   if (!user) return null;
 
-  const { name, email, avatar_url } = user;
+  const { name, email, avatarUrl } = user;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2">
-          <UserAvatar name={name ?? ""} avatarUrl={avatar_url} />
+          <UserAvatar name={name ?? ""} avatarUrl={avatarUrl} />
         </button>
       </DropdownMenuTrigger>
 

@@ -40,7 +40,7 @@ export default async function BillingSettingsPage() {
       />
       <UpgradePlan
         plans={plans}
-        activePlanId={teamSubscription?.plan_id}
+        activePlanId={teamSubscription?.planId}
         teamId={team.id}
       />
     </div>

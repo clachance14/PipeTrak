@@ -24,7 +24,7 @@ export const updateMembership = protectedProcedure
         });
 
       // user can only remove themselves from a team if they are not the owner
-      if (!isAdmin && !abilities.isTeamOwner(membership.team_id))
+      if (!isAdmin && !abilities.isTeamOwner(membership.teamId))
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "No permission to remove a member from this team.",
