@@ -41,7 +41,7 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "usehooks-ts": "^2.10.0",
+    "usehooks-ts": "^2.12.1",
     "utils": "workspace:*",
     "zod": "^3.22.2"
   },
