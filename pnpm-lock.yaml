@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -262,7 +258,7 @@ importers:
     dependencies:
       '@lucia-auth/adapter-prisma':
         specifier: ^4.0.0
-        version: 4.0.0(@prisma/client@5.8.1)(lucia@3.0.1)
+        version: 4.0.0(@prisma/client@5.9.1)(lucia@3.0.1)
       arctic:
         specifier: ^1.1.0
         version: 1.1.0
@@ -345,8 +341,8 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: ^5.8.1
-        version: 5.8.1(prisma@5.8.1)
+        specifier: ^5.9.1
+        version: 5.9.1(prisma@5.8.1)
       zod:
         specifier: ^3.22.2
         version: 3.22.4
@@ -1386,13 +1382,13 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@lucia-auth/adapter-prisma@4.0.0(@prisma/client@5.8.1)(lucia@3.0.1):
+  /@lucia-auth/adapter-prisma@4.0.0(@prisma/client@5.9.1)(lucia@3.0.1):
     resolution: {integrity: sha512-TJg4/U1K1slS4A/OzDYCgmHTrIArntIynue14zGIEaMDu+OD+tGyq9WwQWqOabpx2Gm9xtDsoK+tTokAY3Up7A==}
     peerDependencies:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: 3.x
     dependencies:
-      '@prisma/client': 5.8.1(prisma@5.8.1)
+      '@prisma/client': 5.9.1(prisma@5.8.1)
       lucia: 3.0.1
     dev: false
 
@@ -2464,8 +2460,8 @@ packages:
     dev: false
     optional: true
 
-  /@prisma/client@5.8.1(prisma@5.8.1):
-    resolution: {integrity: sha512-xQtMPfbIwLlbm0VVIVQY2yqQVOxPwRQhvIp7Z3m2900g1bu/zRHKhYZJQWELqmjl6d8YwBy0K2NvMqh47v1ubw==}
+  /@prisma/client@5.9.1(prisma@5.8.1):
+    resolution: {integrity: sha512-caSOnG4kxcSkhqC/2ShV7rEoWwd3XrftokxJqOCMVvia4NYV/TPtJlS9C2os3Igxw/Qyxumj9GBQzcStzECvtQ==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -6461,6 +6457,7 @@ packages:
 
   /fs-monkey@1.0.5:
     resolution: {integrity: sha512-8uMbBjrhzW76TYgEV27Y5E//W2f/lTFmx78P2w19FZSxarhI/798APGQyuGCwmkNxgwGRhrLfvWyLBvNtuOmew==}
+    requiresBuild: true
     dev: false
 
   /fs.realpath@1.0.0:
@@ -10833,3 +10830,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
