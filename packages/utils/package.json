@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@types/node": "^20.11.8",
+    "@types/node": "^20.11.16",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   },
