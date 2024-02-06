@@ -19,6 +19,7 @@ import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export function TeamSelect({
@@ -30,8 +31,9 @@ export function TeamSelect({
 }) {
   const t = useTranslations();
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
+  const router = useRouter();
   const { teamMembership } = useUser();
-  const activeTeam = teams.find((team) => team.id === teamMembership?.teamId);
+  const activeTeam = teams.find((team) => team.id === teamMembership?.team_id);
 
   const switchTeam = (slug: string) => {
     if (!activeTeam) return;

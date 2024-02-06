@@ -1,11 +1,15 @@
 "use client";
 
 import { Badge, BadgeProps } from "@ui/components/badge";
+import { ApiOutput } from "api/trpc/router";
 import { SubscriptionStatusType } from "database";
 import { useTranslations } from "next-intl";
 
+type SubscriptionPlan = ApiOutput["billing"]["plans"][number];
+
 export function SubscriptionStatusBadge({
   status,
+  className,
 }: {
   status: SubscriptionStatusType;
   className?: string;

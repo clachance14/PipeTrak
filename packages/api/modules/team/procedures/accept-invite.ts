@@ -32,8 +32,8 @@ export const acceptInvitation = protectedProcedure
     // create membership for user
     const { team } = await db.teamMembership.create({
       data: {
-        teamId: invitation.teamId,
-        userId: user!.id,
+        team_id: invitation.team_id,
+        user_id: user!.id,
         role: invitation.role,
       },
       include: {

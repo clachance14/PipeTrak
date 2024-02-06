@@ -1,11 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import {
-  generateOneTimePassword,
-  generateVerificationToken,
-  lucia,
-} from "auth";
-import { hashPassword } from "auth/lib/password";
-import { UserRoleSchema, db } from "database";
+import { auth, generateOneTimePassword, generateVerificationToken } from "auth";
+import { UserRoleSchema } from "database";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -30,26 +25,35 @@ export const signup = publicProcedure
       ctx: { responseHeaders },
     }) => {
       try {
-        const hashedPassword = await hashPassword(password);
-        const user = await db.user.create({
-          data: {
-            email,
+        const user = await auth.createUser({
+          key: {
+            providerId: "email",
+            providerUserId: email,
+            password,
+          },
+          attributes: {
+            email: email,
+            email_verified: false,
             name,
             role: UserRoleSchema.Values.USER,
-            hashedPassword,
+            avatar_url: null,
           },
         });
 
-        const session = await lucia.createSession(user.id, {});
+        const session = await auth.createSession({
+          userId: user.userId,
+          attributes: {},
+        });
 
-        const sessionCookie = lucia.createSessionCookie(session.id);
+        // auth.handleRequest(req);
+        const sessionCookie = auth.createSessionCookie(session);
         responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
         const token = await generateVerificationToken({
-          userId: user.id,
+          userId: user.userId,
         });
         const otp = await generateOneTimePassword({
-          userId: user.id,
+          userId: user.userId,
           type: "SIGNUP",
           identifier: email,
         });

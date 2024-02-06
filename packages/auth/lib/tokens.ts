@@ -1,6 +1,5 @@
 import { db, UserOneTimePasswordTypeType } from "database";
-import { isWithinExpirationDate } from "oslo";
-import { alphabet, generateRandomString } from "oslo/crypto";
+import { generateRandomString, isWithinExpiration } from "lucia/utils";
 
 export const generateVerificationToken = async ({
   userId,
@@ -11,26 +10,24 @@ export const generateVerificationToken = async ({
 }) => {
   const storedUserTokens = await db.userVerificationToken.findMany({
     where: {
-      userId: userId,
+      user_id: userId,
     },
   });
 
   if (storedUserTokens.length > 0) {
     const reusableStoredToken = storedUserTokens.find((token) => {
-      return isWithinExpirationDate(
-        new Date(Number(token.expires) - expireDuration / 2),
-      );
+      return isWithinExpiration(Number(token.expires) - expireDuration / 2);
     });
     if (reusableStoredToken) return reusableStoredToken.token;
   }
 
-  const token = generateRandomString(63, alphabet("0-9", "A-Z"));
+  const token = generateRandomString(63);
 
   await db.userVerificationToken.create({
     data: {
       token,
       expires: new Date(new Date().getTime() + expireDuration),
-      userId,
+      user_id: userId,
     },
   });
 
@@ -56,10 +53,11 @@ export const validateVerificationToken = async ({
     },
   });
 
-  if (!isWithinExpirationDate(storedToken.expires))
-    throw new Error("Expired token");
+  const expires = storedToken.expires.getTime();
 
-  return storedToken.userId;
+  if (!isWithinExpiration(expires)) throw new Error("Expired token");
+
+  return storedToken.user_id;
 };
 
 export const generateOneTimePassword = async ({
@@ -75,20 +73,18 @@ export const generateOneTimePassword = async ({
 }) => {
   const storedUserTokens = await db.userOneTimePassword.findMany({
     where: {
-      userId,
+      user_id: userId,
     },
   });
 
   if (storedUserTokens.length > 0) {
     const reusableStoredToken = storedUserTokens.find((token) => {
-      return isWithinExpirationDate(
-        new Date(Number(token.expires) - expireDuration / 2),
-      );
+      return isWithinExpiration(Number(token.expires) - expireDuration / 2);
     });
     if (reusableStoredToken) return reusableStoredToken.code;
   }
 
-  const otp = generateRandomString(6, alphabet("0-9"));
+  const otp = generateRandomString(6, "0123456789");
 
   await db.userOneTimePassword.create({
     data: {
@@ -96,7 +92,7 @@ export const generateOneTimePassword = async ({
       type,
       identifier,
       expires: new Date(new Date().getTime() + expireDuration),
-      userId,
+      user_id: userId,
     },
   });
 
@@ -128,8 +124,9 @@ export const validateOneTimePassword = async ({
     },
   });
 
-  if (!isWithinExpirationDate(storedOtp.expires))
-    throw new Error("Expired token");
+  const expires = storedOtp.expires.getTime();
 
-  return storedOtp.userId;
+  if (!isWithinExpiration(expires)) throw new Error("Expired token");
+
+  return storedOtp.user_id;
 };

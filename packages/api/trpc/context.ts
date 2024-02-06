@@ -1,28 +1,32 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { SessionUser, lucia } from "auth";
+import { Session, SessionUser, auth } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 import { defineAbilitiesFor } from "../modules/auth/abilities";
 
 export async function createContext(
   params?: FetchCreateContextFnOptions | { isAdmin?: boolean },
 ) {
-  let user: SessionUser | null = null;
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+  const authRequest = auth.handleRequest({
+    request: params && "req" in params ? (params.req as NextRequest) : null,
+    cookies,
+  });
+  let session: Session | null = null;
 
-  if (sessionId) {
-    const validatedSession = await lucia.validateSession(sessionId);
-
-    if (validatedSession.user) {
-      user = validatedSession.user;
-    }
+  try {
+    session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
+  } catch (e) {
+    console.error(e);
   }
+
+  const user: SessionUser | null = session?.user ?? null;
 
   const teamMemberships = user
     ? await db.teamMembership.findMany({
         where: {
-          userId: user.id,
+          user_id: user.id,
         },
         include: {
           team: true,
@@ -39,7 +43,7 @@ export async function createContext(
     user,
     teamMemberships,
     abilities,
-    sessionId,
+    sessionId: session?.sessionId ?? null,
     responseHeaders:
       params && "resHeaders" in params ? params.resHeaders : undefined,
     isAdmin: params && "isAdmin" in params ? params.isAdmin : false,

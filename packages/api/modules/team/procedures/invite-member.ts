@@ -24,7 +24,7 @@ export const inviteMember = protectedProcedure
     try {
       const invitation = await db.teamInvitation.create({
         data: {
-          teamId,
+          team_id: teamId,
           email,
           role,
           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days

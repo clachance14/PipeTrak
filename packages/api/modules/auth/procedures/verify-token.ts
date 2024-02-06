@@ -1,6 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { lucia, validateVerificationToken } from "auth";
-import { db } from "database";
+import { auth, validateVerificationToken } from "auth";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -16,28 +15,18 @@ export const verifyToken = publicProcedure
         token,
       });
 
-      const user = await db.user.findFirst({
-        where: {
-          id: userId,
-        },
+      const session = await auth.createSession({
+        userId: userId,
+        attributes: {},
       });
 
-      if (!user)
-        throw new TRPCError({
-          code: "NOT_FOUND",
+      if (!session.user.email_verified) {
+        await auth.updateUserAttributes(session.user.id, {
+          email_verified: true,
         });
+      }
 
-      if (!user.emailVerified)
-        await db.user.update({
-          where: { id: user.id },
-          data: {
-            emailVerified: true,
-          },
-        });
-
-      const session = await lucia.createSession(userId, {});
-
-      const sessionCookie = lucia.createSessionCookie(session.id);
+      const sessionCookie = auth.createSessionCookie(session);
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
       return session;

@@ -52,7 +52,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
     },
     {
       title: t("settings.menu.account.title"),
-      avatar: <UserAvatar name={user.name ?? ""} avatarUrl={user.avatarUrl} />,
+      avatar: <UserAvatar name={user.name ?? ""} avatarUrl={user.avatar_url} />,
       items: [
         {
           title: t("settings.menu.account.general"),

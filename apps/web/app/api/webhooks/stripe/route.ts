@@ -62,12 +62,12 @@ export async function POST(req: Request) {
 
     await apiCaller.billing.syncSubscription({
       id: String(data.id),
-      teamId: data.metadata?.team_id,
-      customerId: String(data.customer),
-      planId: String(data.plan.product),
-      variantId: String(data.plan.id),
+      team_id: data.metadata?.team_id,
+      customer_id: String(data.customer),
+      plan_id: String(data.plan.product),
+      variant_id: String(data.plan.id),
       status: statusMap[data.status],
-      nextPaymentDate: new Date(
+      next_payment_date: new Date(
         (data.trial_end ?? data.current_period_end ?? 0) * 1000,
       ),
     });

@@ -38,10 +38,10 @@ export function SubscriptionOverview({
   };
 
   const activePlanId = currentSubscription
-    ? currentSubscription.planId
+    ? currentSubscription.plan_id
     : "free";
   const activeVariantId = currentSubscription
-    ? currentSubscription.variantId
+    ? currentSubscription.variant_id
     : "free";
 
   const subscriptionPlan = [freePlan, ...plans].find(
@@ -81,7 +81,7 @@ export function SubscriptionOverview({
         )}
       </div>
 
-      {currentSubscription?.nextPaymentDate && (
+      {currentSubscription?.next_payment_date && (
         <p className="text-muted-foreground mt-1">
           {t.rich(
             currentSubscription.status === "CANCELED" ||
@@ -89,7 +89,7 @@ export function SubscriptionOverview({
               ? "settings.billing.subscription.endsOn"
               : "settings.billing.subscription.nextPayment",
             {
-              nextPaymentDate: currentSubscription.nextPaymentDate,
+              nextPaymentDate: currentSubscription.next_payment_date,
               strong: (text) => <strong>{text}</strong>,
             },
           )}

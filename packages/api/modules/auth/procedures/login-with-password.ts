@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { lucia } from "auth";
-import { verifyPassword } from "auth/lib/password";
-import { UserSchema, db } from "database";
+import { LuciaError, auth } from "auth";
+import { UserSchema } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -25,43 +24,41 @@ export const loginWithPassword = publicProcedure
         email: true,
         name: true,
         role: true,
-        avatarUrl: true,
+        avatar_url: true,
       }).partial({
-        avatarUrl: true,
+        avatar_url: true,
       }),
     }),
   )
   .mutation(
     async ({ input: { email, password }, ctx: { responseHeaders } }) => {
-      const user = await db.user.findFirst({
-        where: {
-          email,
-        },
-      });
-
-      if (!user || !user.hashedPassword)
-        throw new TRPCError({
-          code: "NOT_FOUND",
+      try {
+        const key = await auth.useKey("email", email, password);
+        const session = await auth.createSession({
+          userId: key.userId,
+          attributes: {},
         });
 
-      const isValidPassword = await verifyPassword(
-        user.hashedPassword,
-        password,
-      );
+        // auth.handleRequest(req);
+        const sessionCookie = auth.createSessionCookie(session);
+        responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
-      if (!isValidPassword)
+        return session;
+      } catch (e) {
+        if (
+          e instanceof LuciaError &&
+          (e.message === "AUTH_INVALID_KEY_ID" ||
+            e.message === "AUTH_INVALID_PASSWORD")
+        )
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Incorrect email or password.",
+          });
+
         throw new TRPCError({
-          code: "NOT_FOUND",
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unknown error occurred.",
         });
-
-      const session = await lucia.createSession(user.id, {});
-
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
-
-      return {
-        sessionId: session.id,
-        user,
-      };
+      }
     },
   );

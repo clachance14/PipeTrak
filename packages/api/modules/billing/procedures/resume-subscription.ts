@@ -22,7 +22,7 @@ export const resumeSubscription = protectedProcedure
         code: "NOT_FOUND",
       });
 
-    if (!abilities.isTeamOwner(subscription.teamId))
+    if (!abilities.isTeamOwner(subscription.team_id))
       throw new TRPCError({
         code: "FORBIDDEN",
       });
