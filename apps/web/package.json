@@ -55,7 +55,7 @@
     "autoprefixer": "10.4.17",
     "dotenv-cli": "^7.3.0",
     "eslint-config-custom": "workspace:*",
-    "postcss": "8.4.34",
+    "postcss": "8.4.35",
     "start-server-and-test": "^2.0.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.4.1",
