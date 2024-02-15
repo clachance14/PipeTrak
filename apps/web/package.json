@@ -48,7 +48,7 @@
   "devDependencies": {
     "@types/cookie": "^0.6.0",
     "@types/js-cookie": "^3.0.4",
-    "@types/node": "20.11.17",
+    "@types/node": "20.11.18",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",
     "auth": "workspace:*",
