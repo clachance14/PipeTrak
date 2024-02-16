@@ -17,7 +17,7 @@ export const forgotPassword = publicProcedure
       callbackUrl: z.string(),
     }),
   )
-  .mutation(async ({ ctx: { user }, input: { email, callbackUrl } }) => {
+  .mutation(async ({ input: { email, callbackUrl } }) => {
     try {
       const user = await db.user.findFirst({
         where: {
