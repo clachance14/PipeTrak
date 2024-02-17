@@ -107,6 +107,10 @@
       "dashboard": "Panel",
       "login": "Acceso",
       "pricing": "Precios"
+    },
+    "confirmation": {
+      "cancel": "Cancelar",
+      "confirm": "Confirmar"
     }
   },
   "createTeam": {
@@ -166,7 +170,13 @@
         "note": "Por favor ingrese al menos 8 caracteres.",
         "title": "Tu contraseña"
       },
-      "title": "Cuenta"
+      "title": "Cuenta",
+      "deleteAccount": {
+        "confirmation": "¿Estás seguro de que quieres eliminar tu cuenta?",
+        "description": "Elimina permanentemente tu cuenta. \nUna vez que eliminas tu cuenta, no hay vuelta atrás. \nPor favor esté seguro.",
+        "submit": "Borrar cuenta",
+        "title": "Borrar cuenta"
+      }
     },
     "billing": {
       "subscription": {
@@ -249,7 +259,11 @@
       "passwordNotUpdated": "No pudimos actualizar su contraseña. \nInténtalo de nuevo.",
       "teamNameNotUpdated": "No pudimos actualizar el nombre de su equipo. \nPor favor, inténtelo de nuevo más tarde.",
       "teamNameUpdated": "El nombre de tu equipo ha sido actualizado.",
-      "nameUpdateFailed": "No se pudo actualizar su nombre. \nPor favor, inténtelo de nuevo más tarde."
+      "nameUpdateFailed": "No se pudo actualizar su nombre. \nPor favor, inténtelo de nuevo más tarde.",
+      "accountDeleted": "Tu cuenta ha sido eliminada.",
+      "accountNotDeleted": "No pudimos eliminar su cuenta. \nPor favor, inténtelo de nuevo más tarde.",
+      "teamDeleted": "Tu equipo ha sido eliminado.",
+      "teamNotDeleted": "No pudimos eliminar tu equipo. \nPor favor, inténtelo de nuevo más tarde."
     },
     "save": "Ahorrar",
     "subtitle": "Administra tu configuración",
@@ -327,7 +341,13 @@
         }
       },
       "subtitle": "Administre la configuración y los miembros de su equipo",
-      "title": "Equipo"
+      "title": "Equipo",
+      "deleteTeam": {
+        "confirmation": "¿Estás seguro de que quieres eliminar tu equipo?",
+        "description": "Elimina permanentemente tu equipo. \nUna vez que eliminas tu equipo, no hay vuelta atrás. \nPor favor esté seguro.",
+        "submit": "Eliminar equipo",
+        "title": "Eliminar equipo"
+      }
     },
     "title": "Ajustes",
     "menu": {

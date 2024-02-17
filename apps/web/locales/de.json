@@ -100,8 +100,7 @@
   },
   "blog": {
     "description": "In diesem Blog schreibe ich über alles mögliche.",
-    "title": "Mein toller Blog",
-    "backLabel": "Zurück zum Blog"
+    "title": "Mein toller Blog"
   },
   "common": {
     "locales": {},
@@ -110,6 +109,10 @@
       "dashboard": "Dashboard",
       "login": "Anmelden",
       "pricing": "Preise"
+    },
+    "confirmation": {
+      "cancel": "Abbrechen",
+      "confirm": "Bestätigen"
     }
   },
   "createTeam": {
@@ -139,11 +142,6 @@
       "success": {
         "message": "Danke, dass du unseren Newsletter abonniert hast. \nWir werden dich auf dem Laufenden halten.",
         "title": "Erfolgreich angemeldet!"
-      },
-      "error": {
-        "title": "Fehler",
-        "input": "Bitte gib eine gültige E-Mail-Adresse ein.",
-        "submission": "Es tut uns leid, aber wir konnten dich nicht für unseren Newsletter anmelden. \nBitte versuche es später noch einmal."
       }
     },
     "submit": "Abonnieren",
@@ -174,7 +172,13 @@
         "note": "Bitte gib mindestens 8 Zeichen ein.",
         "title": "Dein Passwort"
       },
-      "title": "Account"
+      "title": "Account",
+      "deleteAccount": {
+        "confirmation": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten?",
+        "description": "Lösche dein Konto dauerhaft. \nSobald Du dein Konto gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
+        "submit": "Konto löschen",
+        "title": "Konto löschen"
+      }
     },
     "billing": {
       "subscription": {
@@ -257,7 +261,11 @@
       "passwordNotUpdated": "Wir konnten dein Passwort nicht aktualisieren. \nBitte versuche es erneut.",
       "teamNameNotUpdated": "Wir konnten deinen Teamnamen nicht aktualisieren. \nBitte versuche es später noch einmal.",
       "teamNameUpdated": "Dein Teamname wurde aktualisiert.",
-      "nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal."
+      "nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal.",
+      "accountDeleted": "Dein Account wurde gelöscht.",
+      "accountNotDeleted": "Wir konnten Dein Konto nicht löschen. \nBitte versuche es später noch einmal.",
+      "teamDeleted": "Dein Team wurde gelöscht.",
+      "teamNotDeleted": "Wir konnten das Team nicht löschen. \nBitte versuche es später noch einmal."
     },
     "save": "Speichern",
     "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
@@ -335,7 +343,13 @@
         }
       },
       "subtitle": "Verwalte deine Teameinstellungen und Mitglieder",
-      "title": "Team"
+      "title": "Team",
+      "deleteTeam": {
+        "confirmation": "Bist du sicher, dass du dein Team löschen möchten?",
+        "description": "Lösche dein Team dauerhaft. \nSobald du dein Team gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
+        "submit": "Team löschen",
+        "title": "Team löschen"
+      }
     },
     "title": "Einstellungen",
     "menu": {
