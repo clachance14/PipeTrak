@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
-import { importLocale } from "../../i18n";
+import { getMessagesForLocale } from "../../i18n";
 import "../../styles/globals.css";
 
 export const metadata: Metadata = {
@@ -27,11 +27,9 @@ export default async function RootLayout({
 }) {
   const locale = useLocale();
 
-  // Show a 404 error if the user requests an unknown locale
-  if (params.locale !== locale) {
-    notFound();
-  }
-  const messages = await importLocale(locale);
+  if (params.locale !== locale) notFound();
+
+  const messages = await getMessagesForLocale(locale);
 
   return (
     <html lang={locale}>
