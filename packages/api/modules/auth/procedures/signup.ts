@@ -1,9 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import {
-  generateOneTimePassword,
-  generateVerificationToken,
-  lucia,
-} from "auth";
+import { generateOneTimePassword, generateVerificationToken } from "auth";
 import { hashPassword } from "auth/lib/password";
 import { UserRoleSchema, db } from "database";
 import { sendEmail } from "mail";
@@ -39,11 +35,6 @@ export const signup = publicProcedure
             hashedPassword,
           },
         });
-
-        const session = await lucia.createSession(user.id, {});
-
-        const sessionCookie = lucia.createSessionCookie(session.id);
-        responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
         const token = await generateVerificationToken({
           userId: user.id,
