@@ -1,6 +1,6 @@
 "use client";
 
-import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
+import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
   Dialog,
@@ -10,17 +10,16 @@ import {
 } from "@ui/components/dialog";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { CreateTeamForm } from "./CreateTeamForm";
 
 export function CreateTeamDialog() {
   const t = useTranslations();
   const [open, setOpen] = useAtom(createTeamDialogOpen);
   const router = useRouter();
-  const pathname = usePathname();
 
-  const switchTeam = (slug: string) => {
-    updateTeamSlugCookie(slug);
+  const switchTeam = (teamId: string) => {
+    updateCurrentTeamIdCookie(teamId);
     router.refresh();
   };
 
@@ -33,7 +32,7 @@ export function CreateTeamDialog() {
 
         <CreateTeamForm
           onSuccess={async (team) => {
-            switchTeam(team.slug);
+            switchTeam(team.id);
             setOpen(false);
           }}
         />

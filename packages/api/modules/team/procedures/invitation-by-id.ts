@@ -13,7 +13,6 @@ export const invitationById = publicProcedure
       team: z
         .object({
           name: z.string(),
-          slug: z.string(),
         })
         .nullish(),
     }).nullable(),
@@ -27,7 +26,6 @@ export const invitationById = publicProcedure
         team: {
           select: {
             name: true,
-            slug: true,
           },
         },
       },

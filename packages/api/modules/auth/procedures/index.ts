@@ -1,6 +1,7 @@
 export * from "./change-email";
 export * from "./change-name";
 export * from "./change-password";
+export * from "./delete-account";
 export * from "./forgot-password";
 export * from "./login-with-email";
 export * from "./login-with-password";

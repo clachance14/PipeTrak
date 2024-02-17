@@ -109,6 +109,10 @@
       "dashboard": "Dashboard",
       "login": "Login",
       "pricing": "Pricing"
+    },
+    "confirmation": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
     }
   },
   "createTeam": {
@@ -167,6 +171,12 @@
         "description": "To change your password, enter the new one below and click save.",
         "note": "Please enter at least 8 characters.",
         "title": "Your password"
+      },
+      "deleteAccount": {
+        "description": "Permanently delete your account. Once you delete your account, there is no going back. Please be certain.",
+        "title": "Delete account",
+        "confirmation": "Are you sure you want to delete your account?",
+        "submit": "Delete account"
       },
       "title": "Account"
     },
@@ -251,7 +261,11 @@
       "passwordNotUpdated": "We were unable to update your password. Please try again.",
       "teamNameNotUpdated": "We were unable to update your team name. Please try again later.",
       "teamNameUpdated": "Your team name has been updated.",
-      "nameUpdateFailed": "Could not update your name. Please try again later."
+      "nameUpdateFailed": "Could not update your name. Please try again later.",
+      "accountDeleted": "Your account has been deleted.",
+      "accountNotDeleted": "We were unable to delete your account. Please try again later.",
+      "teamDeleted": "Your team has been deleted.",
+      "teamNotDeleted": "We were unable to delete your team. Please try again later."
     },
     "save": "Save",
     "subtitle": "Manage your settings",
@@ -260,6 +274,12 @@
         "description": "Enter a new name and click save to update it.",
         "teamUrl": "Your team url will be <strong>{url}</strong>.",
         "title": "Team name"
+      },
+      "deleteTeam": {
+        "description": "Permanently delete your team. Once you delete your team, there is no going back. Please be certain.",
+        "title": "Delete team",
+        "confirmation": "Are you sure you want to delete your team?",
+        "submit": "Delete team"
       },
       "members": {
         "invite": "Invite a new member",

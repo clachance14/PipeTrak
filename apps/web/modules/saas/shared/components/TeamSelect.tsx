@@ -2,7 +2,7 @@
 
 import { appConfig } from "@config";
 import { useUser } from "@saas/auth/hooks/use-user";
-import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
+import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
   DropdownMenu,
@@ -19,7 +19,6 @@ import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
 export function TeamSelect({
@@ -31,14 +30,13 @@ export function TeamSelect({
 }) {
   const t = useTranslations();
   const setCreateTeamDialogOpen = useSetAtom(createTeamDialogOpen);
-  const router = useRouter();
   const { teamMembership } = useUser();
-  const activeTeam = teams.find((team) => team.id === teamMembership?.team_id);
+  const activeTeam = teams.find((team) => team.id === teamMembership?.teamId);
 
-  const switchTeam = (slug: string) => {
+  const switchTeam = (teamId: string) => {
     if (!activeTeam) return;
 
-    updateTeamSlugCookie(slug);
+    updateCurrentTeamIdCookie(teamId);
     location.reload();
   };
 
@@ -63,13 +61,13 @@ export function TeamSelect({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
           <DropdownMenuRadioGroup
-            value={activeTeam.slug}
+            value={activeTeam.id}
             onValueChange={switchTeam}
           >
             {teams.map((team) => (
               <DropdownMenuRadioItem
                 key={team.id}
-                value={team.slug}
+                value={team.id}
                 className="flex items-center justify-center gap-2"
               >
                 <div className="flex flex-1 items-center justify-start gap-2">

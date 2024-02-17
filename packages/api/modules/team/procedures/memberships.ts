@@ -28,13 +28,12 @@ export const memberships = protectedProcedure
 
     const memberships = await db.teamMembership.findMany({
       where: {
-        team_id: teamId,
+        teamId,
       },
     });
 
     const userIds =
-      memberships.map((m) => m.user_id).filter((id): id is string => !!id) ??
-      [];
+      memberships.map((m) => m.userId).filter((id): id is string => !!id) ?? [];
 
     const users = await db.user.findMany({
       where: {
@@ -47,7 +46,7 @@ export const memberships = protectedProcedure
     return (
       memberships.map((m) => ({
         ...m,
-        user: users.find((u) => u.id === m.user_id),
+        user: users.find((u) => u.id === m.userId),
       })) ?? []
     );
   });

@@ -60,7 +60,7 @@ export function TeamMembersList({
           <div className="flex items-center gap-2">
             <UserAvatar
               name={row.original.user.name ?? row.original.user.email}
-              avatarUrl={row.original.user?.avatar_url}
+              avatarUrl={row.original.user?.avatarUrl}
             />
             <div>
               <strong className="block">{row.original.user.name}</strong>
@@ -116,7 +116,7 @@ export function TeamMembersList({
                 );
               }}
               disabled={
-                teamMembership?.role !== "OWNER" || row.original.is_creator
+                teamMembership?.role !== "OWNER" || row.original.isCreator
               }
             />
 
@@ -128,7 +128,7 @@ export function TeamMembersList({
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
-                  disabled={row.original.is_creator}
+                  disabled={row.original.isCreator}
                   className="text-destructive"
                   onClick={() => {
                     const loadingToast = toast({

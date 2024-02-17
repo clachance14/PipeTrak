@@ -2,19 +2,23 @@
 
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { cn } from "@ui/lib";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 
 export function ActionBlock({
   children,
   title,
+  danger,
   onSubmit,
   isSubmitting,
   isSubmitDisabled,
   className,
+  submitLabel,
 }: PropsWithChildren<{
   onSubmit?: () => void;
   title: string;
+  danger?: boolean;
   isSubmitting?: boolean;
   isSubmitDisabled?: boolean;
   submitLabel?: string;
@@ -23,7 +27,9 @@ export function ActionBlock({
   const t = useTranslations();
 
   return (
-    <Card className={className}>
+    <Card
+      className={cn(className, danger ? "border-destructive/50 border" : "")}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -31,7 +37,9 @@ export function ActionBlock({
         }}
       >
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className={danger ? "text-destructive" : ""}>
+            {title}
+          </CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -43,8 +51,9 @@ export function ActionBlock({
                 type="submit"
                 disabled={isSubmitDisabled}
                 loading={isSubmitting}
+                variant={danger ? "error" : "default"}
               >
-                {t("settings.save")}
+                {submitLabel || t("settings.save")}
               </Button>
             </div>
           )}

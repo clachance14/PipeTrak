@@ -1,14 +1,29 @@
 import { TRPCError } from "@trpc/server";
 import { lucia } from "auth";
+import { db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
-export const logout = protectedProcedure
+export const deleteAccount = protectedProcedure
   .input(z.void())
-  .mutation(async ({ ctx: { sessionId, responseHeaders } }) => {
+  .mutation(async ({ ctx: { responseHeaders, user } }) => {
     try {
-      if (!sessionId) return;
-      await lucia.invalidateSession(sessionId);
+      await db.user.delete({
+        where: {
+          id: user.id,
+        },
+      });
+
+      await db.team.deleteMany({
+        where: {
+          memberships: {
+            every: {
+              userId: user.id,
+            },
+          },
+        },
+      });
+
       const sessionCookie = lucia.createBlankSessionCookie();
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
     } catch (e) {

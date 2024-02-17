@@ -1,5 +1,6 @@
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
+import { DeleteAccountForm } from "@saas/settings/components/DeleteAccountForm";
 import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -21,6 +22,7 @@ export default async function AccountSettingsPage() {
     <div className="grid gap-6">
       <ChangeNameForm initialValue={user.name ?? ""} />
       <ChangePasswordForm />
+      <DeleteAccountForm />
     </div>
   );
 }

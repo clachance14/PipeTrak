@@ -11,7 +11,7 @@ export function defineAbilitiesFor({
   const isAdmin = user?.role === UserRoleSchema.Values.ADMIN;
 
   const getTeamRole = (teamId: string) =>
-    teamMemberships?.find((m) => m.team_id === teamId)?.role ?? null;
+    teamMemberships?.find((m) => m.teamId === teamId)?.role ?? null;
 
   const isTeamOwner = (teamId: string) =>
     isAdmin || getTeamRole(teamId) === TeamMemberRoleSchema.Values.OWNER;
