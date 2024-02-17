@@ -14,6 +14,16 @@ export const deleteAccount = protectedProcedure
         },
       });
 
+      await db.team.deleteMany({
+        where: {
+          memberships: {
+            every: {
+              userId: user.id,
+            },
+          },
+        },
+      });
+
       const sessionCookie = lucia.createBlankSessionCookie();
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
     } catch (e) {

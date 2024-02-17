@@ -263,7 +263,9 @@
       "teamNameUpdated": "Your team name has been updated.",
       "nameUpdateFailed": "Could not update your name. Please try again later.",
       "accountDeleted": "Your account has been deleted.",
-      "accountNotDeleted": "We were unable to delete your account. Please try again later."
+      "accountNotDeleted": "We were unable to delete your account. Please try again later.",
+      "teamDeleted": "Your team has been deleted.",
+      "teamNotDeleted": "We were unable to delete your team. Please try again later."
     },
     "save": "Save",
     "subtitle": "Manage your settings",
@@ -272,6 +274,12 @@
         "description": "Enter a new name and click save to update it.",
         "teamUrl": "Your team url will be <strong>{url}</strong>.",
         "title": "Team name"
+      },
+      "deleteTeam": {
+        "description": "Permanently delete your team. Once you delete your team, there is no going back. Please be certain.",
+        "title": "Delete team",
+        "confirmation": "Are you sure you want to delete your team?",
+        "submit": "Delete team"
       },
       "members": {
         "invite": "Invite a new member",

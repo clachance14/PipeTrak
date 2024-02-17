@@ -1,4 +1,5 @@
 import { ChangeTeamNameForm } from "@saas/settings/components/ChangeTeamNameForm";
+import { DeleteTeamForm } from "@saas/settings/components/DeleteTeamForm";
 import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
@@ -30,6 +31,7 @@ export default async function TeamSettingsPage() {
   return (
     <div className="grid grid-cols-1 gap-6">
       <ChangeTeamNameForm initialValue={team.name} teamId={team.id} />
+      <DeleteTeamForm teamId={team.id} />
     </div>
   );
 }

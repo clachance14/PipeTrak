@@ -71,7 +71,7 @@ export async function githubCallbackRouteHandler(req: Request) {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: "/app",
         },
       });
     }
@@ -102,7 +102,7 @@ export async function githubCallbackRouteHandler(req: Request) {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/app",
       },
     });
   } catch (e) {

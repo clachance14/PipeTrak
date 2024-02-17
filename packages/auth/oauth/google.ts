@@ -100,7 +100,7 @@ export async function googleCallbackRouteHandler(req: Request) {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/",
+          Location: "/app",
         },
       });
     }
@@ -131,7 +131,7 @@ export async function googleCallbackRouteHandler(req: Request) {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/app",
       },
     });
   } catch (e) {
