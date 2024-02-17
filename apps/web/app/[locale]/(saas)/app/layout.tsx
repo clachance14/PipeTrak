@@ -1,6 +1,6 @@
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { NavBar } from "@saas/shared/components/NavBar";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
+import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -10,7 +10,7 @@ export const revalidate = 0;
 
 export default async function Layout({ children }: PropsWithChildren) {
   const apiCaller = await createApiCaller();
-  const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value;
+  const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value;
 
   const user = await apiCaller.auth.user();
 
@@ -39,8 +39,9 @@ export default async function Layout({ children }: PropsWithChildren) {
   }
 
   const currentTeamMembership =
-    teamMemberships.find((membership) => membership.team.slug === teamSlug) ??
-    teamMemberships[0];
+    teamMemberships.find(
+      (membership) => membership.team.id === currentTeamId,
+    ) ?? teamMemberships[0];
 
   if (!currentTeamMembership) return redirect("/");
 

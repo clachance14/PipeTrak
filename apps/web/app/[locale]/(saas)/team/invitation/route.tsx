@@ -32,5 +32,5 @@ export async function GET(request: Request) {
 
   if (!team) redirect("/");
 
-  return redirect(`/${team.slug}/dashboard`);
+  return redirect(`/app/dashboard`);
 }

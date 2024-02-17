@@ -22,7 +22,7 @@ export const UserVerificationTokenScalarFieldEnumSchema = z.enum(['id','userId',
 
 export const UserOneTimePasswordScalarFieldEnumSchema = z.enum(['id','userId','code','type','identifier','expires']);
 
-export const TeamScalarFieldEnumSchema = z.enum(['id','name','slug']);
+export const TeamScalarFieldEnumSchema = z.enum(['id','name']);
 
 export const TeamMembershipScalarFieldEnumSchema = z.enum(['id','teamId','userId','role','isCreator']);
 
@@ -131,7 +131,6 @@ export type UserOneTimePassword = z.infer<typeof UserOneTimePasswordSchema>
 export const TeamSchema = z.object({
   id: z.string().cuid(),
   name: z.string(),
-  slug: z.string(),
 })
 
 export type Team = z.infer<typeof TeamSchema>

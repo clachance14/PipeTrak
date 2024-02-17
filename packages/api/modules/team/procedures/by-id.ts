@@ -3,17 +3,17 @@ import { TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
-export const bySlug = protectedProcedure
+export const byId = protectedProcedure
   .input(
     z.object({
-      slug: z.string(),
+      id: z.string(),
     }),
   )
   .output(TeamSchema)
-  .query(async ({ input: { slug }, ctx: { abilities } }) => {
+  .query(async ({ input: { id }, ctx: { abilities } }) => {
     const team = await db.team.findFirst({
       where: {
-        slug,
+        id,
       },
     });
 

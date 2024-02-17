@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@saas/auth/hooks/use-user";
-import { updateTeamSlugCookie } from "@saas/auth/lib/team-slug";
+import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { apiClient } from "@shared/lib/api-client";
 import { Input } from "@ui/components/input";
@@ -24,13 +24,13 @@ export function ChangeTeamNameForm({
   const [name, setName] = useState(initialValue);
 
   const updateTeamMutation = apiClient.team.update.useMutation({
-    onSuccess: ({ slug }) => {
+    onSuccess: ({ id }) => {
       toast({
         variant: "success",
         title: t("settings.notifications.teamNameUpdated"),
       });
 
-      updateTeamSlugCookie(slug);
+      updateCurrentTeamIdCookie(id);
       router.refresh();
     },
     onError: () => {

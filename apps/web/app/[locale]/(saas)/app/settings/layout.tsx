@@ -1,6 +1,6 @@
 import { appConfig } from "@config";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
-import { TEAM_SLUG_COOKIE_NAME } from "@saas/shared/constants";
+import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { createApiCaller } from "api/trpc/caller";
 import BoringAvatar from "boring-avatars";
@@ -12,15 +12,16 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
   const t = await getTranslations();
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
-  const teamSlug = cookies().get(TEAM_SLUG_COOKIE_NAME)?.value;
+  const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value;
 
   if (!user) return redirect("/auth/login");
 
   const { teamMemberships } = user;
 
   const { team: activeTeam } =
-    teamMemberships!.find((membership) => membership.team.slug === teamSlug) ??
-    teamMemberships![0];
+    teamMemberships!.find(
+      (membership) => membership.team.id === currentTeamId,
+    ) ?? teamMemberships![0];
 
   if (!activeTeam) return null;
 

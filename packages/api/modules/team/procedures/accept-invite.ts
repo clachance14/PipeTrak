@@ -9,7 +9,7 @@ export const acceptInvitation = protectedProcedure
       id: z.string(),
     }),
   )
-  .output(TeamSchema.pick({ slug: true }))
+  .output(TeamSchema.pick({ name: true }))
   .mutation(async ({ input: { id }, ctx: { user } }) => {
     const invitation = await db.teamInvitation.findFirst({
       where: {
@@ -39,7 +39,7 @@ export const acceptInvitation = protectedProcedure
       include: {
         team: {
           select: {
-            slug: true,
+            name: true,
           },
         },
       },
