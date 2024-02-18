@@ -8,6 +8,8 @@ export const githubAuth = new GitHub(
   process.env.GITHUB_CLIENT_SECRET as string,
 );
 
+const GITHUB_PROIVDER_ID = "github";
+
 interface GitHubUser {
   id: number;
   email: string;
@@ -53,15 +55,48 @@ export async function githubCallbackRouteHandler(req: Request) {
       },
     });
     const githubUser: GitHubUser = await githubUserResponse.json();
-    const existingUser = await db.userOauthAccount.findFirst({
+    const existingUser = await db.user.findFirst({
       where: {
-        providerId: "github",
-        providerUserId: String(githubUser.id),
+        OR: [
+          {
+            oauthAccounts: {
+              some: {
+                providerId: GITHUB_PROIVDER_ID,
+                providerUserId: String(githubUser.id),
+              },
+            },
+          },
+          {
+            email: githubUser.email,
+          },
+        ],
+      },
+      select: {
+        id: true,
+        oauthAccounts: {
+          select: {
+            providerId: true,
+          },
+        },
       },
     });
 
     if (existingUser) {
-      const session = await lucia.createSession(existingUser.userId, {});
+      if (
+        !existingUser.oauthAccounts.some(
+          (account) => account.providerId === GITHUB_PROIVDER_ID,
+        )
+      ) {
+        await db.userOauthAccount.create({
+          data: {
+            providerId: GITHUB_PROIVDER_ID,
+            providerUserId: String(githubUser.id),
+            userId: existingUser.id,
+          },
+        });
+      }
+
+      const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       cookies().set(
         sessionCookie.name,

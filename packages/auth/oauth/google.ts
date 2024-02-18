@@ -15,8 +15,10 @@ export const googleAuth = new Google(
   new URL("/api/oauth/google/callback", getBaseUrl()).toString(),
 );
 
+const GOOGLE_PROIVDER_ID = "google";
+
 interface GoogleUser {
-  id: number;
+  sub: string;
   email: string;
   email_verified?: boolean;
   picture?: string;
@@ -82,15 +84,49 @@ export async function googleCallbackRouteHandler(req: Request) {
       },
     );
     const googleUser: GoogleUser = await googleUserResponse.json();
-    const existingUser = await db.userOauthAccount.findFirst({
+
+    const existingUser = await db.user.findFirst({
       where: {
-        providerId: "google",
-        providerUserId: String(googleUser.id),
+        OR: [
+          {
+            oauthAccounts: {
+              some: {
+                providerId: GOOGLE_PROIVDER_ID,
+                providerUserId: googleUser.sub,
+              },
+            },
+          },
+          {
+            email: googleUser.email,
+          },
+        ],
+      },
+      select: {
+        id: true,
+        oauthAccounts: {
+          select: {
+            providerId: true,
+          },
+        },
       },
     });
 
     if (existingUser) {
-      const session = await lucia.createSession(existingUser.userId, {});
+      if (
+        !existingUser.oauthAccounts.some(
+          (account) => account.providerId === GOOGLE_PROIVDER_ID,
+        )
+      ) {
+        await db.userOauthAccount.create({
+          data: {
+            providerId: GOOGLE_PROIVDER_ID,
+            providerUserId: googleUser.sub,
+            userId: existingUser.id,
+          },
+        });
+      }
+
+      const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       cookies().set(
         sessionCookie.name,
@@ -108,7 +144,7 @@ export async function googleCallbackRouteHandler(req: Request) {
     const newUser = await db.user.create({
       data: {
         email: googleUser.email,
-        emailVerified: !!googleUser,
+        emailVerified: true,
         name: googleUser.name,
         avatarUrl: googleUser.picture,
       },
@@ -116,8 +152,8 @@ export async function googleCallbackRouteHandler(req: Request) {
 
     await db.userOauthAccount.create({
       data: {
-        providerId: "google",
-        providerUserId: String(googleUser.id),
+        providerId: GOOGLE_PROIVDER_ID,
+        providerUserId: googleUser.sub,
         userId: newUser.id,
       },
     });
