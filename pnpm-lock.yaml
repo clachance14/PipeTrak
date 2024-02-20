@@ -284,8 +284,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       oslo:
-        specifier: ^1.0.4
-        version: 1.0.4
+        specifier: ^1.1.2
+        version: 1.1.2
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -4724,7 +4724,7 @@ packages:
       dotenv: 16.3.1
       front-matter: 4.0.2
       nanoid: 4.0.2
-      oslo: 1.0.4
+      oslo: 1.1.2
     dev: false
 
   /autoprefixer@10.4.14(postcss@8.4.32):
@@ -8583,8 +8583,8 @@ packages:
       '@node-rs/bcrypt': 1.9.2
     dev: false
 
-  /oslo@1.0.4:
-    resolution: {integrity: sha512-f8gRy1Kb3+uY0HjBRyz0XcC7PU/EGU0wmXgiwWxvKhvHjlO01i15mDfQV3ncyKRWmcqLBRhnyRnhcFIs+3E9SA==}
+  /oslo@1.1.2:
+    resolution: {integrity: sha512-l5tmumAHJy6wTfcxjwbPtcEn23lxnsBqbW1PqM11lqnQ79Q8Gzc7b3+OjRpLTbiqkfvhT4/BZ2Ooe8/QCJxyEg==}
     dependencies:
       '@node-rs/argon2': 1.7.0
       '@node-rs/bcrypt': 1.9.0
