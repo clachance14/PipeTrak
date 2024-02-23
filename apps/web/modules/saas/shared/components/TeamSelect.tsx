@@ -1,9 +1,9 @@
 "use client";
 
-import { appConfig } from "@config";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
+import { TeamAvatar } from "@shared/components/TeamAvatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Icon } from "@ui/components/icon";
-import BoringAvatar from "boring-avatars";
 import { Team } from "database";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
@@ -48,11 +47,9 @@ export function TeamSelect({
         <DropdownMenuTrigger className="focus-visible:ring-ring focus-visible:border-primary -ml-2 flex w-full items-center justify-between rounded-md px-2 py-2 text-left outline-none focus-visible:ring-1">
           <div className="flex items-center justify-start gap-2 text-sm">
             <span className="hidden lg:block">
-              <BoringAvatar
-                size={32}
+              <TeamAvatar
                 name={activeTeam.name}
-                variant="marble"
-                colors={appConfig.teams.avatarColors}
+                avatarUrl={activeTeam.avatarUrl}
               />
             </span>
             <span className="block flex-1 truncate">{activeTeam.name}</span>
@@ -71,11 +68,10 @@ export function TeamSelect({
                 className="flex items-center justify-center gap-2"
               >
                 <div className="flex flex-1 items-center justify-start gap-2">
-                  <BoringAvatar
-                    size={16}
-                    name={team.name}
-                    variant="marble"
-                    colors={appConfig.teams.avatarColors}
+                  <TeamAvatar
+                    className="size-6"
+                    name={activeTeam.name}
+                    avatarUrl={activeTeam.avatarUrl}
                   />
                   {team.name}
                 </div>

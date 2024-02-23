@@ -178,7 +178,11 @@
         "confirmation": "Are you sure you want to delete your account?",
         "submit": "Delete account"
       },
-      "title": "Account"
+      "title": "Account",
+      "avatar": {
+        "title": "Your avatar",
+        "description": "To change your avatar click the picture on the right side of this block and select a file from your computer to upload."
+      }
     },
     "billing": {
       "subscription": {
@@ -265,7 +269,9 @@
       "accountDeleted": "Your account has been deleted.",
       "accountNotDeleted": "We were unable to delete your account. Please try again later.",
       "teamDeleted": "Your team has been deleted.",
-      "teamNotDeleted": "We were unable to delete your team. Please try again later."
+      "teamNotDeleted": "We were unable to delete your team. Please try again later.",
+      "avatarUpdated": "Your avatar has been updated.",
+      "avatarNotUpdated": "We were unable to update your avatar. Please try again."
     },
     "save": "Save",
     "subtitle": "Manage your settings",

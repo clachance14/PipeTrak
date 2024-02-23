@@ -3,6 +3,7 @@ import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { SessionUser, lucia } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
+import { getSignedUrl } from "storage";
 import { defineAbilitiesFor } from "../modules/auth/abilities";
 
 export async function createContext(
@@ -20,14 +21,29 @@ export async function createContext(
   }
 
   const teamMemberships = user
-    ? await db.teamMembership.findMany({
-        where: {
-          userId: user.id,
-        },
-        include: {
-          team: true,
-        },
-      })
+    ? await Promise.all(
+        (
+          await db.teamMembership.findMany({
+            where: {
+              userId: user.id,
+            },
+            include: {
+              team: true,
+            },
+          })
+        ).map(async (membership) => ({
+          ...membership,
+          team: {
+            ...membership.team,
+            avatarUrl: membership.team.avatarUrl
+              ? await getSignedUrl(membership.team.avatarUrl, {
+                  bucket: "avatars",
+                  expiresIn: 360,
+                })
+              : null,
+          },
+        })),
+      )
     : null;
 
   const abilities = defineAbilitiesFor({

@@ -1,7 +1,9 @@
+import { appConfig } from "@config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
+import BoringAvatar from "boring-avatars";
 import { forwardRef, useMemo } from "react";
 
-export const UserAvatar = forwardRef<
+export const TeamAvatar = forwardRef<
   HTMLSpanElement,
   {
     name: string;
@@ -9,22 +11,18 @@ export const UserAvatar = forwardRef<
     className?: string;
   }
 >(({ name, avatarUrl, className }, ref) => {
-  const initials = useMemo(
-    () =>
-      name
-        .split(" ")
-        .map((n) => n[0])
-        .join(""),
-    [name],
-  );
-
   const avatarSrc = useMemo(() => avatarUrl ?? undefined, [avatarUrl]);
 
   return (
     <Avatar ref={ref} className={className}>
       <AvatarImage src={avatarSrc} />
-      <AvatarFallback className="bg-primary/10 text-primary">
-        {initials}
+      <AvatarFallback>
+        <BoringAvatar
+          size={96}
+          name={name}
+          variant="marble"
+          colors={appConfig.teams.avatarColors}
+        />
       </AvatarFallback>
     </Avatar>
   );

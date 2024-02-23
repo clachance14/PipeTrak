@@ -1,9 +1,8 @@
-import { appConfig } from "@config";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
+import { TeamAvatar } from "@shared/components/TeamAvatar";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { createApiCaller } from "api/trpc/caller";
-import BoringAvatar from "boring-avatars";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -29,12 +28,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
     {
       title: t("settings.menu.team.title"),
       avatar: (
-        <BoringAvatar
-          size={32}
-          name={activeTeam.name}
-          variant="marble"
-          colors={appConfig.teams.avatarColors}
-        />
+        <TeamAvatar name={activeTeam.name} avatarUrl={activeTeam.avatarUrl} />
       ),
       items: [
         {

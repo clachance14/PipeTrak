@@ -7,4 +7,5 @@ packages:
   - packages/config/eslint-config-custom
   - packages/config/tsconfig
   - packages/config/tailwind
+  - packages/storage
   - packages/utils

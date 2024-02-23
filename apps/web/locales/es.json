@@ -176,6 +176,10 @@
         "description": "Elimina permanentemente tu cuenta. \nUna vez que eliminas tu cuenta, no hay vuelta atrás. \nPor favor esté seguro.",
         "submit": "Borrar cuenta",
         "title": "Borrar cuenta"
+      },
+      "avatar": {
+        "description": "Para cambiar su avatar, haga clic en la imagen en el lado derecho de este bloque y seleccione un archivo de su computadora para cargarlo.",
+        "title": "Tu avatar"
       }
     },
     "billing": {
@@ -263,7 +267,9 @@
       "accountDeleted": "Tu cuenta ha sido eliminada.",
       "accountNotDeleted": "No pudimos eliminar su cuenta. \nPor favor, inténtelo de nuevo más tarde.",
       "teamDeleted": "Tu equipo ha sido eliminado.",
-      "teamNotDeleted": "No pudimos eliminar tu equipo. \nPor favor, inténtelo de nuevo más tarde."
+      "teamNotDeleted": "No pudimos eliminar tu equipo. \nPor favor, inténtelo de nuevo más tarde.",
+      "avatarNotUpdated": "No pudimos actualizar tu avatar. \nInténtalo de nuevo.",
+      "avatarUpdated": "Tu avatar ha sido actualizado."
     },
     "save": "Ahorrar",
     "subtitle": "Administra tu configuración",
