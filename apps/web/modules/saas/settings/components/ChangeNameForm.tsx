@@ -16,7 +16,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
   const { toast } = useToast();
   const t = useTranslations();
 
-  const changeNameMutation = apiClient.auth.changeName.useMutation({
+  const updateUserMutation = apiClient.auth.update.useMutation({
     onSuccess: async () => {
       toast({
         variant: "success",
@@ -36,8 +36,8 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
   return (
     <ActionBlock
       title={t("settings.account.changeName.title")}
-      onSubmit={() => changeNameMutation.mutate({ name })}
-      isSubmitting={changeNameMutation.isLoading}
+      onSubmit={() => updateUserMutation.mutate({ name })}
+      isSubmitting={updateUserMutation.isLoading}
       isSubmitDisabled={!name || name.length < 3 || name === initialValue}
     >
       <Input

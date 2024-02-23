@@ -178,6 +178,10 @@
         "description": "Lösche dein Konto dauerhaft. \nSobald Du dein Konto gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
         "submit": "Konto löschen",
         "title": "Konto löschen"
+      },
+      "avatar": {
+        "description": "Um deinen Avatar zu ändern, klicke auf das Bild auf der rechten Seite dieses Blocks und wähle eine Datei von deinem Computer zum Hochladen aus.",
+        "title": "Dein Avatar"
       }
     },
     "billing": {
@@ -265,7 +269,9 @@
       "accountDeleted": "Dein Account wurde gelöscht.",
       "accountNotDeleted": "Wir konnten Dein Konto nicht löschen. \nBitte versuche es später noch einmal.",
       "teamDeleted": "Dein Team wurde gelöscht.",
-      "teamNotDeleted": "Wir konnten das Team nicht löschen. \nBitte versuche es später noch einmal."
+      "teamNotDeleted": "Wir konnten das Team nicht löschen. \nBitte versuche es später noch einmal.",
+      "avatarNotUpdated": "Wir konnten deinen Avatar nicht aktualisieren. \nBitte versuche es erneut.",
+      "avatarUpdated": "Dein Avatar wurde aktualisiert."
     },
     "save": "Speichern",
     "subtitle": "Verwalte deinen Account und deine Anwendungseinstellungen.",
