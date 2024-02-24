@@ -189,6 +189,7 @@ export function TeamMembersList({
   const table = useReactTable({
     data: memberships,
     columns,
+    manualPagination: true,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

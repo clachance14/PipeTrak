@@ -32,6 +32,11 @@ export const lucia = new Lucia(adapter, {
       avatarUrl: data.avatarUrl,
     };
   },
+  getSessionAttributes: (databaseSession) => {
+    return {
+      impersonatorSessionId: databaseSession.impersonatorSessionId,
+    };
+  },
 });
 
 export type SessionUser = User;

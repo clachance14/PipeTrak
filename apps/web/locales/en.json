@@ -1,4 +1,22 @@
 {
+  "admin": {
+    "menu": {
+      "general": "General",
+      "users": "Users"
+    },
+    "users": {
+      "search": "Search for name or email...",
+      "loading": "Loading users...",
+      "title": "Manage users",
+      "adminRole": "Admin",
+      "impersonate": "Impersonate",
+      "delete": "Delete",
+      "emailVerified": {
+        "verified": "Email verified",
+        "waiting": "Email waiting for verification"
+      }
+    }
+  },
   "auth": {
     "continueWithProvider": "Continue with {provider}",
     "forgotPassword": {
@@ -128,7 +146,8 @@
     "menu": {
       "dashboard": "Dashboard",
       "settings": "Settings",
-      "aiDemo": "AI Demo"
+      "aiDemo": "AI Demo",
+      "admin": "Admin"
     },
     "sidebar": {
       "createTeam": "Create a new team"

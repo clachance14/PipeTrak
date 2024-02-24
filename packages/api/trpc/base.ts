@@ -12,6 +12,7 @@ const isAuthenticated = t.middleware(({ ctx, next }) => {
     ctx: {
       ...ctx,
       user: ctx.user,
+      sessionId: ctx.sessionId!,
     },
   });
 });

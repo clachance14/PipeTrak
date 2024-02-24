@@ -7,9 +7,11 @@ import {
   Check,
   CheckCircle,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   ChevronUp,
   ChevronsUpDown,
+  Clock,
   Cloud,
   Cookie,
   CreditCard,
@@ -36,6 +38,7 @@ import {
   Plus,
   Send,
   Settings,
+  SquareUserRound,
   Star,
   Sun,
   Trash,
@@ -43,7 +46,9 @@ import {
   Undo,
   Upload,
   User,
+  UserCog,
   Users,
+  Users2,
   Wand2,
   X,
 } from "lucide-react";
@@ -75,6 +80,7 @@ export const Icon = {
   chevronDown: ChevronDown,
   chevronUp: ChevronUp,
   chevronRight: ChevronRight,
+  chevronLeft: ChevronLeft,
   logout: LogOut,
   cookies: Cookie,
   menu: Menu,
@@ -100,6 +106,10 @@ export const Icon = {
   team: Users,
   pause: Pause,
   magic: Wand2,
+  admin: UserCog,
+  clock: Clock,
+  impersonate: SquareUserRound,
+  users: Users2,
 
   // social icons
   google: ({ ...props }: IconProps) => (
