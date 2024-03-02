@@ -17,7 +17,7 @@ export function ForgotPassword({
         Hey {name}, <br /> you requested a password reset.
         <br />
         <br /> You can either enter the one-time password below manually in the
-        application{" "}
+        application
       </Text>
 
       <Text>

@@ -10,10 +10,10 @@ export const lightVariables = {
   colors: {
     border: "#e2e8f0",
     input: "#e2e8f0",
-    ring: "#0072f5",
+    ring: "#7976d2",
     background: "#ffffff",
-    foreground: "#020817",
-    primary: "#0072f5",
+    foreground: "#333",
+    primary: "#7976d2",
     "primary-foreground": "#ffffff",
     secondary: "#f1f5f9",
     "secondary-foreground": "#0f172a",
@@ -36,10 +36,10 @@ export const darkVariables = {
   colors: {
     border: "#2f3e57",
     input: "#1e293b",
-    ring: "#0072f5",
-    background: "#121924",
+    ring: "#7976d2",
+    background: "#333",
     foreground: "#f8fafc",
-    primary: "#0072f5",
+    primary: "#7976d2",
     "primary-foreground": "#ffffff",
     secondary: "#1e293b",
     "secondary-foreground": "#f8fafc",
@@ -58,7 +58,7 @@ export const darkVariables = {
   },
 };
 
-const config: Config = {
+export default {
   content: [],
   darkMode: ["class"],
   theme: {
@@ -84,7 +84,7 @@ const config: Config = {
         sm: "calc(0.75rem - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "sans-serif"],
+        sans: ["var(--font-sans)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
@@ -158,6 +158,4 @@ const config: Config = {
       colorVariables: true,
     }),
   ],
-};
-
-export default config;
+} satisfies Config;

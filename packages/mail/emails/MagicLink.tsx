@@ -17,7 +17,7 @@ export function MagicLink({
         Hey {name}, <br /> you requested a login email from supastarter.
         <br />
         <br /> You can either enter the one-time password below manually in the
-        application{" "}
+        application
       </Text>
 
       <Text>

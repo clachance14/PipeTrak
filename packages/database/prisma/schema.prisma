@@ -27,6 +27,7 @@ model User {
   role               UserRole                @default(USER)
   name               String?
   avatarUrl          String?
+  createdAt          DateTime                @default(now())
   hashedPassword     String?
   oauthAccounts      UserOauthAccount[]
   sessions           UserSession[]
@@ -36,21 +37,23 @@ model User {
 }
 
 model UserSession {
-  id        String   @id
-  userId    String
-  expiresAt DateTime
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  id             String   @id
+  userId         String
+  expiresAt      DateTime
+  impersonatorId String?
+  user           User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model UserOauthAccount {
+  id             String @id @default(cuid())
   providerId     String
   providerUserId String
   userId         String
   user           User   @relation(references: [id], fields: [userId], onDelete: Cascade)
 
-  @@id([providerId, providerUserId])
+  @@unique([providerId, providerUserId])
 }
 
 model UserVerificationToken {

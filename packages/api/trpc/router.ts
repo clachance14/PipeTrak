@@ -1,5 +1,6 @@
 import type {} from "@prisma/client";
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import * as adminProcedures from "../modules/admin/procedures";
 import * as aiProcedures from "../modules/ai/procedures";
 import * as authProcedures from "../modules/auth/procedures";
 import * as billingProcedures from "../modules/billing/procedures";
@@ -15,6 +16,7 @@ export const apiRouter = router({
   newsletter: router(newsletterProcedures),
   ai: router(aiProcedures),
   uploads: router(uploadsProcedures),
+  admin: router(adminProcedures),
 });
 
 export type ApiRouter = typeof apiRouter;

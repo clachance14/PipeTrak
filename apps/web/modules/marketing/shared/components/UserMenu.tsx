@@ -5,6 +5,7 @@ import { Link, usePathname } from "@i18n";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import { apiClient } from "@shared/lib/api-client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Icon } from "@ui/components/icon";
-import { useLocale } from "next-intl";
+import { useToast } from "@ui/hooks/use-toast";
+import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -31,10 +33,14 @@ export function UserMenu() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentLocale = useLocale();
+  const t = useTranslations();
   const { user, logout } = useUser();
+  const { toast } = useToast();
   const [locale, setLocale] = useState<string>(currentLocale);
   const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
   const [theme, setTheme] = useState<string>(currentTheme ?? "system");
+
+  const unimpersonateMutation = apiClient.admin.unimpersonate.useMutation();
 
   const colorModeOptions = [
     {
@@ -77,7 +83,8 @@ export function UserMenu() {
         {/* Color mode selection */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icon.lightMode className="mr-2 h-4 w-4" /> Color mode
+            <Icon.lightMode className="mr-2 h-4 w-4" />
+            {t("dashboard.userMenu.colorMode")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -93,7 +100,7 @@ export function UserMenu() {
                     key={option.value}
                     value={option.value}
                   >
-                    <option.icon className="mr-2 h-4 w-4 opacity-50" />{" "}
+                    <option.icon className="mr-2 h-4 w-4 opacity-50" />
                     {option.label}
                   </DropdownMenuRadioItem>
                 ))}
@@ -107,7 +114,8 @@ export function UserMenu() {
         {/* Language selection */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icon.language className="mr-2 h-4 w-4" /> Language
+            <Icon.language className="mr-2 h-4 w-4" />
+            {t("dashboard.userMenu.language")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -138,18 +146,38 @@ export function UserMenu() {
 
         <DropdownMenuItem asChild>
           <Link href={`/app/settings/account/general`}>
-            <Icon.settings className="mr-2 h-4 w-4" /> Account settings
+            <Icon.settings className="mr-2 h-4 w-4" />
+            {t("dashboard.userMenu.accountSettings")}
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
           <a href="#" target="_blank" rel="noopener noreferrer">
-            <Icon.docs className="mr-2 h-4 w-4" /> Documentation
+            <Icon.docs className="mr-2 h-4 w-4" />
+            {t("dashboard.userMenu.documentation")}
           </a>
         </DropdownMenuItem>
 
+        {user.impersonatedBy && (
+          <DropdownMenuItem
+            onClick={async () => {
+              const { dismiss } = toast({
+                variant: "loading",
+                title: t("admin.users.impersonation.unimpersonating"),
+              });
+              await unimpersonateMutation.mutateAsync();
+              dismiss();
+              window.location.reload();
+            }}
+          >
+            <Icon.unimpersonate className="mr-2 h-4 w-4" />
+            {t("dashboard.userMenu.unimpersonate")}
+          </DropdownMenuItem>
+        )}
+
         <DropdownMenuItem onClick={logout}>
-          <Icon.logout className="mr-2 h-4 w-4" /> Logout
+          <Icon.logout className="mr-2 h-4 w-4" />
+          {t("dashboard.userMenu.logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

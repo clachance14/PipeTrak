@@ -12,11 +12,11 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','hashedPassword']);
+export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword']);
 
-export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt']);
+export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
 
-export const UserOauthAccountScalarFieldEnumSchema = z.enum(['providerId','providerUserId','userId']);
+export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
 
 export const UserVerificationTokenScalarFieldEnumSchema = z.enum(['id','userId','token','expires']);
 
@@ -67,6 +67,7 @@ export const UserSchema = z.object({
   emailVerified: z.boolean(),
   name: z.string().nullable(),
   avatarUrl: z.string().nullable(),
+  createdAt: z.coerce.date(),
   hashedPassword: z.string().nullable(),
 })
 
@@ -80,6 +81,7 @@ export const UserSessionSchema = z.object({
   id: z.string(),
   userId: z.string(),
   expiresAt: z.coerce.date(),
+  impersonatorId: z.string().nullable(),
 })
 
 export type UserSession = z.infer<typeof UserSessionSchema>
@@ -89,6 +91,7 @@ export type UserSession = z.infer<typeof UserSessionSchema>
 /////////////////////////////////////////
 
 export const UserOauthAccountSchema = z.object({
+  id: z.string().cuid(),
   providerId: z.string(),
   providerUserId: z.string(),
   userId: z.string(),

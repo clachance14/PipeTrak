@@ -1,4 +1,31 @@
 {
+  "admin": {
+    "menu": {
+      "general": "General",
+      "users": "Users"
+    },
+    "users": {
+      "search": "Search for name or email...",
+      "loading": "Loading users...",
+      "title": "Manage users",
+      "adminRole": "Admin",
+      "impersonate": "Impersonate",
+      "delete": "Delete",
+      "emailVerified": {
+        "verified": "Email verified",
+        "waiting": "Email waiting for verification"
+      },
+      "impersonation": {
+        "impersonating": "Impersonating as {name}...",
+        "unimpersonating": "Unimpersonating..."
+      },
+      "deleteUser": {
+        "deleting": "Deleting user...",
+        "deleted": "User has been deleted successfully!",
+        "notDeleted": "User could not be deleted. Please try again."
+      }
+    }
+  },
   "auth": {
     "continueWithProvider": "Continue with {provider}",
     "forgotPassword": {
@@ -128,7 +155,16 @@
     "menu": {
       "dashboard": "Dashboard",
       "settings": "Settings",
-      "aiDemo": "AI Demo"
+      "aiDemo": "AI Demo",
+      "admin": "Admin"
+    },
+    "userMenu": {
+      "logout": "Logout",
+      "accountSettings": "Account settings",
+      "unimpersonate": "Unimpersonate",
+      "documentation": "Documentation",
+      "language": "Language",
+      "colorMode": "Color mode"
     },
     "sidebar": {
       "createTeam": "Create a new team"

@@ -5,7 +5,7 @@ import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { Icon } from "@ui/components/icon";
 import { ApiOutput } from "api/trpc/router";
-import { Team } from "database";
+import { Team, UserRoleSchema } from "database";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren, useCallback } from "react";
@@ -19,6 +19,7 @@ export function NavBar({
 }: PropsWithChildren<{ teams: Team[]; user: User }>) {
   const t = useTranslations();
   const pathname = usePathname();
+  const isAdmin = user?.role === UserRoleSchema.Values.ADMIN;
 
   const menuItems = [
     {
@@ -36,6 +37,15 @@ export function NavBar({
       href: `/app/settings`,
       icon: Icon.settings,
     },
+    ...(isAdmin
+      ? [
+          {
+            label: t("dashboard.menu.admin"),
+            href: `/app/admin`,
+            icon: Icon.admin,
+          },
+        ]
+      : []),
   ];
 
   const isActiveMenuItem = useCallback(

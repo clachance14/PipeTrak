@@ -22,6 +22,11 @@ const nextConfig = {
         destination: "/app/settings/account/general",
         permanent: true,
       },
+      {
+        source: "/app/admin",
+        destination: "/app/admin/users",
+        permanent: true,
+      },
     ];
   },
   webpack: (config) => {
