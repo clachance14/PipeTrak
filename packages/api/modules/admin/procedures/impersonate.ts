@@ -12,15 +12,7 @@ export const impersonate = protectedProcedure
   )
   .output(z.void())
   .mutation(
-    async ({
-      input: { userId },
-      ctx: { sessionId, isAdmin, abilities, responseHeaders },
-    }) => {
-      if (!isAdmin && !abilities.isAdmin)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-        });
-
+    async ({ input: { userId }, ctx: { user, session, responseHeaders } }) => {
       // check if user with id exists
       const userExists = await db.user.findUnique({
         where: {
@@ -31,12 +23,13 @@ export const impersonate = protectedProcedure
       if (!userExists) throw new TRPCError({ code: "NOT_FOUND" });
 
       try {
-        const session = await lucia.createSession(userId, {
-          impersonatorSessionId: sessionId,
+        const newSession = await lucia.createSession(userId, {
+          impersonatorId: user.id,
         });
 
-        // auth.handleRequest(req);
-        const sessionCookie = lucia.createSessionCookie(session.id);
+        await lucia.invalidateSession(session.id);
+
+        const sessionCookie = lucia.createSessionCookie(newSession.id);
         responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
       } catch (e) {
         console.error(e);

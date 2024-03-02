@@ -1,9 +1,8 @@
-import { TRPCError } from "@trpc/server";
 import { TeamMembershipSchema, TeamSchema, UserSchema, db } from "database";
 import { z } from "zod";
-import { protectedProcedure } from "../../../trpc/base";
+import { adminProcedure } from "../../../trpc/base";
 
-export const users = protectedProcedure
+export const users = adminProcedure
   .input(
     z.object({
       limit: z.number().optional().default(25),
@@ -34,61 +33,51 @@ export const users = protectedProcedure
       total: z.number(),
     }),
   )
-  .query(
-    async ({
-      input: { limit, offset, searchTerm },
-      ctx: { isAdmin, abilities },
-    }) => {
-      if (!isAdmin && !abilities.isAdmin)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-        });
+  .query(async ({ input: { limit, offset, searchTerm } }) => {
+    const sanitizedSearchTerm = (searchTerm ?? "").trim().toLowerCase();
 
-      const sanitizedSearchTerm = (searchTerm ?? "").trim().toLowerCase();
-
-      const where = sanitizedSearchTerm
-        ? {
-            OR: [
-              {
-                name: {
-                  contains: sanitizedSearchTerm,
-                },
+    const where = sanitizedSearchTerm
+      ? {
+          OR: [
+            {
+              name: {
+                contains: sanitizedSearchTerm,
               },
-              {
-                email: {
-                  contains: sanitizedSearchTerm,
-                },
-              },
-            ],
-          }
-        : {};
-
-      const users = await db.user.findMany({
-        where,
-        select: {
-          avatarUrl: true,
-          email: true,
-          emailVerified: true,
-          role: true,
-          id: true,
-          name: true,
-          memberships: {
-            include: {
-              team: true,
             },
+            {
+              email: {
+                contains: sanitizedSearchTerm,
+              },
+            },
+          ],
+        }
+      : {};
+
+    const users = await db.user.findMany({
+      where,
+      select: {
+        avatarUrl: true,
+        email: true,
+        emailVerified: true,
+        role: true,
+        id: true,
+        name: true,
+        memberships: {
+          include: {
+            team: true,
           },
         },
-        take: limit,
-        skip: offset,
-      });
+      },
+      take: limit,
+      skip: offset,
+    });
 
-      const total = await db.user.count({
-        where,
-      });
+    const total = await db.user.count({
+      where,
+    });
 
-      return {
-        users,
-        total,
-      };
-    },
-  );
+    return {
+      users,
+      total,
+    };
+  });

@@ -47,6 +47,7 @@ import {
   Upload,
   User,
   UserCog,
+  UserRoundX,
   Users,
   Users2,
   Wand2,
@@ -109,6 +110,7 @@ export const Icon = {
   admin: UserCog,
   clock: Clock,
   impersonate: SquareUserRound,
+  unimpersonate: UserRoundX,
   users: Users2,
 
   // social icons

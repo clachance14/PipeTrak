@@ -19,7 +19,6 @@ export const loginWithPassword = publicProcedure
   )
   .output(
     z.object({
-      sessionId: z.string(),
       user: UserSchema.pick({
         id: true,
         email: true,
@@ -60,7 +59,6 @@ export const loginWithPassword = publicProcedure
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
 
       return {
-        sessionId: session.id,
         user,
       };
     },

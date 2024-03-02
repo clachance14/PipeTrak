@@ -1,6 +1,6 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { SessionUser, lucia } from "auth";
+import { lucia } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
 import { getSignedUrl } from "storage";
@@ -9,16 +9,10 @@ import { defineAbilitiesFor } from "../modules/auth/abilities";
 export async function createContext(
   params?: FetchCreateContextFnOptions | { isAdmin?: boolean },
 ) {
-  let user: SessionUser | null = null;
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-
-  if (sessionId) {
-    const validatedSession = await lucia.validateSession(sessionId);
-
-    if (validatedSession.user) {
-      user = validatedSession.user;
-    }
-  }
+  const { user, session } = sessionId
+    ? await lucia.validateSession(sessionId)
+    : { user: null, session: null };
 
   const teamMemberships = user
     ? await Promise.all(
@@ -55,7 +49,7 @@ export async function createContext(
     user,
     teamMemberships,
     abilities,
-    sessionId,
+    session,
     responseHeaders:
       params && "resHeaders" in params ? params.resHeaders : undefined,
     isAdmin: params && "isAdmin" in params ? params.isAdmin : false,

@@ -34,7 +34,7 @@ export const lucia = new Lucia(adapter, {
   },
   getSessionAttributes: (databaseSession) => {
     return {
-      impersonatorSessionId: databaseSession.impersonatorSessionId,
+      impersonatorId: databaseSession.impersonatorId,
     };
   },
 });

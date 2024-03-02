@@ -2,13 +2,14 @@ import { AnalyticsScript } from "@analytics";
 import { ClientProviders } from "@shared/components/ClientProviders";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
-import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { getMessagesForLocale } from "../../i18n";
-import "../../styles/globals.css";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -17,6 +18,11 @@ export const metadata: Metadata = {
     template: "%s | supastarter.nextjs - Application",
   },
 };
+
+const sansFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export default async function RootLayout({
   children,
@@ -36,7 +42,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          GeistSans.variable,
+          sansFont.variable,
         )}
       >
         <NextTopLoader color={"var(--colors-primary)"} />

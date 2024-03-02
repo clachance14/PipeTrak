@@ -24,6 +24,7 @@ import {
 import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
+import { useToast } from "@ui/hooks/use-toast";
 import { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
@@ -32,6 +33,7 @@ import { EmailVerified } from "./EmailVerified";
 
 export function UserList() {
   const t = useTranslations();
+  const { toast } = useToast();
   const impersonateMutation = apiClient.admin.impersonate.useMutation();
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,12 +41,13 @@ export function UserList() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
+  const deleteUserMutation = apiClient.admin.deleteUser.useMutation();
 
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
-  const { data, isLoading } = apiClient.admin.users.useQuery(
+  const { data, isLoading, refetch } = apiClient.admin.users.useQuery(
     {
       limit: itemsPerPage,
       offset: (currentPage - 1) * itemsPerPage,
@@ -56,6 +59,49 @@ export function UserList() {
       keepPreviousData: true,
     },
   );
+
+  const impersonateUser = async (
+    userId: string,
+    { name }: { name: string },
+  ) => {
+    const { dismiss } = toast({
+      variant: "loading",
+      title: t("admin.users.impersonation.impersonating", {
+        name,
+      }),
+    });
+    await impersonateMutation.mutateAsync({
+      userId,
+    });
+    await refetch();
+    dismiss();
+    window.location.href = new URL("/app", window.location.origin).toString();
+  };
+
+  const deleteUser = async (id: string) => {
+    const deleteUserToast = toast({
+      variant: "loading",
+      title: t("admin.users.deleteUser.deleting"),
+    });
+    try {
+      await deleteUserMutation.mutateAsync({
+        id: id,
+      });
+      deleteUserToast.update({
+        id: deleteUserToast.id,
+        variant: "success",
+        title: t("admin.users.deleteUser.deleted"),
+        duration: 5000,
+      });
+    } catch {
+      deleteUserToast.update({
+        id: deleteUserToast.id,
+        variant: "error",
+        title: t("admin.users.deleteUser.notDeleted"),
+        duration: 5000,
+      });
+    }
+  };
 
   const columns: ColumnDef<ApiOutput["admin"]["users"]["users"][number]>[] =
     useMemo(
@@ -107,20 +153,18 @@ export function UserList() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem
-                      onClick={async () => {
-                        await impersonateMutation.mutateAsync({
-                          userId: row.original.id,
-                        });
-                        window.location.href = new URL(
-                          "/app",
-                          window.location.origin,
-                        ).toString();
-                      }}
+                      onClick={() =>
+                        impersonateUser(row.original.id, {
+                          name: row.original.name ?? "",
+                        })
+                      }
                     >
                       <Icon.impersonate className="mr-2 h-4 w-4" />
                       {t("admin.users.impersonate")}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {}}>
+                    <DropdownMenuItem
+                      onClick={() => deleteUser(row.original.id)}
+                    >
                       <span className="text-destructive hover:text-destructive flex items-center">
                         <Icon.delete className="mr-2 h-4 w-4" />
                         {t("admin.users.delete")}
