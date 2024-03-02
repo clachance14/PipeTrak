@@ -37,7 +37,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
     <ActionBlock
       title={t("settings.account.changeName.title")}
       onSubmit={() => updateUserMutation.mutate({ name })}
-      isSubmitting={updateUserMutation.isLoading}
+      isSubmitting={updateUserMutation.isPending}
       isSubmitDisabled={!name || name.length < 3 || name === initialValue}
     >
       <Input

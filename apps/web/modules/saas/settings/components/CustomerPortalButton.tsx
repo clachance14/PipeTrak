@@ -40,7 +40,7 @@ export function CustomerPortalButton({
     <Button
       variant="default"
       onClick={() => createCustomerPortal()}
-      loading={createCustomerPortalMutation.isLoading}
+      loading={createCustomerPortalMutation.isPending}
     >
       <Icon.creditCard className="mr-2 h-4 w-4" />
       {t("settings.billing.createCustomerPortal.label")}

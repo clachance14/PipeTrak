@@ -3,6 +3,7 @@
 import { Pagination } from "@saas/shared/components/Pagination";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { apiClient } from "@shared/lib/api-client";
+import { keepPreviousData } from "@tanstack/react-query";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -56,7 +57,7 @@ export function UserList() {
     {
       retry: false,
       refetchOnWindowFocus: false,
-      keepPreviousData: true,
+      placeholderData: keepPreviousData,
     },
   );
 

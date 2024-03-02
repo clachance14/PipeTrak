@@ -48,7 +48,7 @@ export function ResumeSubscriptionButton({
     <Button
       variant="outline"
       onClick={() => resumeSubscription()}
-      loading={resumeSubscriptionMutation.isLoading}
+      loading={resumeSubscriptionMutation.isPending}
     >
       <Icon.undo className="mr-2 h-4 w-4" />
       {label}

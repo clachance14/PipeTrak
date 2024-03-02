@@ -69,7 +69,7 @@ export function DeleteTeamForm({ teamId }: { teamId: string }) {
             </AlertDialogCancel>
             <Button
               variant="error"
-              loading={deleteTeamMutation.isLoading}
+              loading={deleteTeamMutation.isPending}
               onClick={async () => {
                 await deleteTeamMutation.mutateAsync({
                   id: teamId,

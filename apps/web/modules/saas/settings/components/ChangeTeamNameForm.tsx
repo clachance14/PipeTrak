@@ -45,7 +45,7 @@ export function ChangeTeamNameForm({
     <ActionBlock
       title={t("settings.team.changeName.title")}
       onSubmit={() => updateTeamMutation.mutate({ name, id: teamId })}
-      isSubmitting={updateTeamMutation.isLoading}
+      isSubmitting={updateTeamMutation.isPending}
       isSubmitDisabled={!name || name === initialValue}
     >
       <Input

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@trpc/server": "^10.45.1",
+    "@trpc/server": "11.0.0-next-beta.303",
     "auth": "workspace:*",
     "database": "workspace:*",
     "mail": "workspace:*",

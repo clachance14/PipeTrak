@@ -48,7 +48,7 @@ export function CancelSubscriptionButton({
     <Button
       variant="outline"
       onClick={() => cancelSubscription()}
-      loading={cancelSubscriptionMutation.isLoading}
+      loading={cancelSubscriptionMutation.isPending}
     >
       <Icon.close className="mr-2 h-4 w-4" />
       {label}

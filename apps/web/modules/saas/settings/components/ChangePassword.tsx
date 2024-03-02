@@ -35,7 +35,7 @@ export function ChangePasswordForm() {
     <ActionBlock
       title={t("settings.account.changePassword.title")}
       onSubmit={() => changePasswordMutation.mutate({ password })}
-      isSubmitting={changePasswordMutation.isLoading}
+      isSubmitting={changePasswordMutation.isPending}
       isSubmitDisabled={!password || password.length < 8}
     >
       <PasswordInput

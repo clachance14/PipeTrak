@@ -42,7 +42,7 @@ export function PauseSubscriptionButton({ id }: { id: string }) {
     <Button
       variant="outline"
       onClick={() => pauseSubscription()}
-      loading={pauseSubscriptionMutation.isLoading}
+      loading={pauseSubscriptionMutation.isPending}
     >
       <Icon.pause className="mr-2 h-4 w-4" />
       {t("settings.billing.pauseSubscription.label")}

@@ -69,7 +69,7 @@ export function DeleteAccountForm() {
             </AlertDialogCancel>
             <Button
               variant="error"
-              loading={deleteAccountMutation.isLoading}
+              loading={deleteAccountMutation.isPending}
               onClick={async () => {
                 await deleteAccountMutation.mutateAsync();
                 setShowConfirmation(false);

@@ -1,6 +1,8 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
+import { useQueryClient } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
@@ -43,6 +45,7 @@ export function UserContextProvider({
   const router = useRouter();
   const [loaded, setLoaded] = useState(!!initialUser);
   const [user, setUser] = useState<User>(initialUser);
+  const queryClient = useQueryClient();
   const userQuery = apiClient.auth.user.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -56,7 +59,7 @@ export function UserContextProvider({
 
   const logout = async () => {
     await logoutMutation.mutateAsync();
-    userQuery.remove();
+    queryClient.removeQueries({ queryKey: getQueryKey(apiClient.auth) });
     setUser(null);
     authBroadcastChannel.postMessage({
       type: "logout",
@@ -85,7 +88,7 @@ export function UserContextProvider({
     const handleAuthEvent = async (event: MessageEvent<AuthEvent>) => {
       if (JSON.stringify(event.data.user) !== JSON.stringify(user)) {
         if (event.data.type === "logout") {
-          userQuery.remove();
+          queryClient.removeQueries({ queryKey: getQueryKey(apiClient.auth) });
           setUser(null);
           router.replace("/");
         } else {
