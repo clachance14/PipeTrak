@@ -6,32 +6,41 @@ import {
 import { getSignedUrl as getS3SignedUrl } from "@aws-sdk/s3-request-presigner";
 import { GetSignedUploadUrlHandler, GetSignedUrlHander } from "../../types";
 
-const s3Endpoint = process.env.S3_ENDPOINT as string;
-if (!s3Endpoint) console.warn("Missing env variable S3_ENDPOINT");
+let s3Client: S3Client | null = null;
 
-const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID as string;
-if (!s3AccessKeyId) console.warn("Missing env variable S3_ACCESS_KEY_ID");
+const getS3Client = () => {
+  if (s3Client) return s3Client;
 
-const s3SecretAccessKey = process.env.S3_SECRET_ACCESS_KEY as string;
-if (!s3SecretAccessKey)
-  console.warn("Missing env variable S3_SECRET_ACCESS_KEY");
+  const s3Endpoint = process.env.S3_ENDPOINT as string;
+  if (!s3Endpoint) throw new Error("Missing env variable S3_ENDPOINT");
 
-const S3 = new S3Client({
-  region: "auto",
-  endpoint: s3Endpoint,
-  credentials: {
-    accessKeyId: s3AccessKeyId,
-    secretAccessKey: s3SecretAccessKey,
-  },
-});
+  const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID as string;
+  if (!s3AccessKeyId) throw new Error("Missing env variable S3_ACCESS_KEY_ID");
+
+  const s3SecretAccessKey = process.env.S3_SECRET_ACCESS_KEY as string;
+  if (!s3SecretAccessKey)
+    throw new Error("Missing env variable S3_SECRET_ACCESS_KEY");
+
+  s3Client = new S3Client({
+    region: "auto",
+    endpoint: s3Endpoint,
+    credentials: {
+      accessKeyId: s3AccessKeyId,
+      secretAccessKey: s3SecretAccessKey,
+    },
+  });
+
+  return s3Client;
+};
 
 export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
   path,
   { bucket },
 ) => {
+  const s3Client = getS3Client();
   try {
     return await getS3SignedUrl(
-      S3,
+      s3Client,
       new PutObjectCommand({ Bucket: bucket, Key: path }),
       {
         expiresIn: 60,
@@ -47,9 +56,10 @@ export const getSignedUrl: GetSignedUrlHander = async (
   path,
   { bucket, expiresIn },
 ) => {
+  const s3Client = getS3Client();
   try {
     return getS3SignedUrl(
-      S3,
+      s3Client,
       new GetObjectCommand({ Bucket: bucket, Key: path }),
       { expiresIn },
     );
