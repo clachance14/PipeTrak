@@ -18,11 +18,17 @@ interface GitHubUser {
   avatar_url: string;
 }
 
+type GithubUserEmails = Array<{
+  email: string;
+  primary?: boolean;
+  verified?: boolean;
+}>;
+
 export async function githubRouteHandler() {
   const state = generateState();
 
   const url = await githubAuth.createAuthorizationURL(state, {
-    scopes: ["email"],
+    scopes: ["user:email"],
   });
 
   cookies().set("github_oauth_state", state, {
@@ -54,7 +60,17 @@ export async function githubCallbackRouteHandler(req: Request) {
         Authorization: `Bearer ${tokens.accessToken}`,
       },
     });
+    const emailsResponse = await fetch("https://api.github.com/user/emails", {
+      headers: {
+        Authorization: `Bearer ${tokens.accessToken}`,
+      },
+    });
     const githubUser: GitHubUser = await githubUserResponse.json();
+
+    const emails: GithubUserEmails = await emailsResponse.json();
+    githubUser.email =
+      githubUser.email ?? emails.find((email) => email.primary)?.email;
+
     const existingUser = await db.user.findFirst({
       where: {
         OR: [
