@@ -2,13 +2,13 @@ import { Button } from "@ui/components/button";
 
 export function Hero() {
   return (
-    <nav className=" border-b py-24">
+    <nav className="to-primary/10 border-b bg-gradient-to-b from-transparent pb-20 pt-8">
       <div className="container text-center">
         <h1 className="mx-auto max-w-3xl text-5xl font-bold lg:text-7xl">
           Your revolutionary <span className="text-primary">Next.js</span> SaaS
         </h1>
 
-        <p className="mt-5 text-lg opacity-75">
+        <p className="mt-4 text-lg opacity-75">
           This is a demo application built with supastarter. <br />
           It will save you a lot of time and effort building your next SaaS.
         </p>
@@ -20,12 +20,12 @@ export function Hero() {
           </Button>
         </div>
 
-        <div className="mt-32 px-8 text-center">
-          <h5 className="text-muted-foreground/50 text-xs font-semibold uppercase tracking-wider">
+        <div className="mt-16 px-8 text-center">
+          <h5 className="text-foreground/50 text-xs font-semibold uppercase tracking-wider">
             Built & shipped with these awesome tools
           </h5>
 
-          <div className="text-muted-foreground/50 mt-4 flex flex-col-reverse items-center justify-center gap-4 md:flex-row md:gap-8">
+          <div className="text-foreground/50 mt-4 flex flex-col-reverse items-center justify-center gap-4 md:flex-row md:gap-8">
             {/* Vercel logo */}
             <div className="aspect-[284/64] h-6 w-auto">
               <svg

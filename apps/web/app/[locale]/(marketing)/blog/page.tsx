@@ -1,5 +1,5 @@
 import { PostListItem } from "@marketing/blog/components/PostListItem";
-import { allPosts } from "contentlayer/generated";
+import { allPosts } from "content-collections";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
@@ -26,8 +26,8 @@ export default function BlogListPage() {
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
-          .map((post) => (
-            <PostListItem post={post} key={post._id} />
+          .map((post, i) => (
+            <PostListItem post={post} key={i} />
           ))}
       </div>
     </div>

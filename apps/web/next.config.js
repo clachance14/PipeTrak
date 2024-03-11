@@ -1,14 +1,24 @@
-const { createContentlayerPlugin } = require("next-contentlayer");
+const { withContentCollections } = require("@content-collections/next");
 const nextIntlPlugin = require("next-intl/plugin");
 
 const withNextIntl = nextIntlPlugin("./i18n.ts");
-const withContentlayer = createContentlayerPlugin({});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["api", "auth"],
   images: {
-    domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
+    remotePatterns: [
+      {
+        // google profile images
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        // github profile images
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
   async redirects() {
     return [
@@ -35,4 +45,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(withContentlayer(nextConfig));
+module.exports = withNextIntl(withContentCollections(nextConfig));

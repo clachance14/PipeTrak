@@ -27,13 +27,13 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <a href="#" className="block">
+          <Link href="/legal/privacy-policy" className="block">
             Privacy policy
-          </a>
+          </Link>
 
-          <a href="#" className="block">
-            Terms of service
-          </a>
+          <Link href="/legal/terms" className="block">
+            Terms and conditions
+          </Link>
 
           <a href="#" className="block">
             Contact

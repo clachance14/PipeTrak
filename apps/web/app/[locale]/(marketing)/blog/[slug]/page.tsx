@@ -1,5 +1,5 @@
 import { PostContent } from "@marketing/blog/components/PostContent";
-import { allPosts } from "contentlayer/generated";
+import { allPosts } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -7,8 +7,6 @@ import { getBaseUrl } from "utils";
 
 interface Params {
   slug: string;
-  locale: string;
-  lang: string;
 }
 
 export async function generateMetadata({
@@ -42,7 +40,7 @@ export default async function BlogPostPage({
     redirect("/blog");
   }
 
-  const { title, date, authorName, authorImage, tags, image, url, body } = post;
+  const { title, date, authorName, authorImage, tags, image, body } = post;
 
   return (
     <div className="container max-w-6xl pb-24">
@@ -106,7 +104,7 @@ export default async function BlogPostPage({
         </div>
       )}
 
-      <PostContent mdx={body} />
+      <PostContent content={body} />
     </div>
   );
 }
