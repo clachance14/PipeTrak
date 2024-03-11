@@ -67,7 +67,10 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2">
+        <button
+          className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2"
+          aria-label="User menu"
+        >
           <UserAvatar name={name ?? ""} avatarUrl={avatarUrl} />
         </button>
       </DropdownMenuTrigger>

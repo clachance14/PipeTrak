@@ -37,6 +37,7 @@ export function Banner() {
         variant="link"
         onClick={hideBanner}
         className="absolute right-1 top-1"
+        aria-label="Hide banner"
       >
         <Icon.close />
       </Button>

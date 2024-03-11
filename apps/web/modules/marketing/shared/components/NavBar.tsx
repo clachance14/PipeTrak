@@ -100,7 +100,12 @@ export function NavBar() {
               onOpenChange={(open) => setMobileMenuOpen(open)}
             >
               <SheetTrigger asChild>
-                <Button className="md:hidden" size="icon" variant="outline">
+                <Button
+                  className="md:hidden"
+                  size="icon"
+                  variant="outline"
+                  aria-label="Menu"
+                >
                   <Icon.menu />
                 </Button>
               </SheetTrigger>
