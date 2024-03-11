@@ -27,7 +27,7 @@ export default function BlogListPage() {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
           .map((post, i) => (
-            <PostListItem post={post} key={i} />
+            <PostListItem post={post} key={post.slug} />
           ))}
       </div>
     </div>
