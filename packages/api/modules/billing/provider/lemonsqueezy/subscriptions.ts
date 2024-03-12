@@ -39,7 +39,8 @@ export const getAllPlans: GetAllPlans = async function () {
             id: variant.id,
             interval: variant.attributes.interval,
             interval_count: variant.attributes.interval_count,
-            price: variant.attributes.price,
+            // we have to do some parsing here because the API (sometimes) returns the price as a string
+            price: parseFloat(String(variant.attributes.price)),
             currency,
           })),
       };
