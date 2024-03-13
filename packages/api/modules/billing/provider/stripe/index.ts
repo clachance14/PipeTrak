@@ -17,13 +17,13 @@ export function getStripeClient() {
     return stripeClient;
   }
 
-  const stripeApiKey = process.env.STRIPE_API_KEY!;
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY!;
 
-  if (!stripeApiKey) {
-    throw new Error("Missing env variable STRIPE_API_KEY");
+  if (!stripeSecretKey) {
+    throw new Error("Missing env variable STRIPE_SECRET_KEY");
   }
 
-  stripeClient = new Stripe(stripeApiKey);
+  stripeClient = new Stripe(stripeSecretKey);
 
   return stripeClient;
 }
