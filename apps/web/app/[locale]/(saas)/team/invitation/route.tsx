@@ -7,7 +7,9 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
 
-  if (!code) redirect("/");
+  if (!code) {
+    redirect("/");
+  }
 
   const apiCaller = await createApiCaller();
 
@@ -15,22 +17,27 @@ export async function GET(request: Request) {
     id: code,
   });
 
-  if (!invitation) redirect("/");
+  if (!invitation) {
+    redirect("/");
+  }
 
   const user = await apiCaller.auth.user();
 
-  if (!user)
+  if (!user) {
     return redirect(
       `/auth/login?invitationCode=${invitation.id}&email=${encodeURIComponent(
         invitation.email,
       )}`,
     );
+  }
 
   const team = await apiCaller.team.acceptInvitation({
     id: code,
   });
 
-  if (!team) redirect("/");
+  if (!team) {
+    redirect("/");
+  }
 
   return redirect(`/app/dashboard`);
 }

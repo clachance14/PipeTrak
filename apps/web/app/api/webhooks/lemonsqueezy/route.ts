@@ -16,10 +16,11 @@ export async function POST(req: Request) {
       "utf8",
     );
 
-    if (!timingSafeEqual(digest, signature))
+    if (!timingSafeEqual(digest, signature)) {
       return new Response("Invalid signature.", {
         status: 400,
       });
+    }
 
     const payload = JSON.parse(text);
 

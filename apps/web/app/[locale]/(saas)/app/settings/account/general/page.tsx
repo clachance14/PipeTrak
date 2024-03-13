@@ -17,7 +17,9 @@ export default async function AccountSettingsPage() {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
 
-  if (!user) redirect("/auth/login");
+  if (!user) {
+    redirect("/auth/login");
+  }
 
   return (
     <div className="grid gap-6">

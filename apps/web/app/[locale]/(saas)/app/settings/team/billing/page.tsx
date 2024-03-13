@@ -21,7 +21,9 @@ export default async function BillingSettingsPage() {
   const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)
     ?.value as string;
 
-  if (!user) redirect("/auth/login");
+  if (!user) {
+    redirect("/auth/login");
+  }
 
   const { teamMemberships } = user;
 

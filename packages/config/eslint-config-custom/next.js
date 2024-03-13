@@ -33,4 +33,9 @@ module.exports = {
     "node_modules/",
   ],
   overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
+  rules: {
+    "object-shorthand": "error",
+    curly: ["error", "all"],
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+  },
 };

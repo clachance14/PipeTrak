@@ -14,7 +14,9 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   const user = await apiCaller.auth.user();
 
-  if (!user) return redirect("/auth/login");
+  if (!user) {
+    return redirect("/auth/login");
+  }
 
   const teamMemberships = user.teamMemberships ?? [];
 
@@ -43,7 +45,9 @@ export default async function Layout({ children }: PropsWithChildren) {
       (membership) => membership.team.id === currentTeamId,
     ) ?? teamMemberships[0];
 
-  if (!currentTeamMembership) return redirect("/");
+  if (!currentTeamMembership) {
+    return redirect("/");
+  }
 
   return (
     <UserContextProvider

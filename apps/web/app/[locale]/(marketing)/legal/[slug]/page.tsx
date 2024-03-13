@@ -2,9 +2,9 @@ import { PostContent } from "@marketing/blog/components/PostContent";
 import { allLegalPages } from "content-collections";
 import { redirect } from "next/navigation";
 
-interface Params {
+type Params = {
   slug: string;
-}
+};
 
 export async function generateMetadata({
   params: { slug },
@@ -28,7 +28,9 @@ export default async function BlogPostPage({
 }) {
   const page = allLegalPages.find((page) => page.slug === slug);
 
-  if (!page) redirect("/");
+  if (!page) {
+    redirect("/");
+  }
 
   const { title, body } = page;
 

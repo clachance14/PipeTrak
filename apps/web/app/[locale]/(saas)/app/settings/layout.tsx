@@ -13,7 +13,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
   const user = await apiCaller.auth.user();
   const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value;
 
-  if (!user) return redirect("/auth/login");
+  if (!user) {
+    return redirect("/auth/login");
+  }
 
   const { teamMemberships } = user;
 
@@ -22,7 +24,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
       (membership) => membership.team.id === currentTeamId,
     ) ?? teamMemberships![0];
 
-  if (!activeTeam) return null;
+  if (!activeTeam) {
+    return null;
+  }
 
   const menuItems = [
     {

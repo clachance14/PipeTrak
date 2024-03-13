@@ -24,10 +24,11 @@ export async function POST(req: Request) {
     );
     const signature = Buffer.from(signatureKey, "utf8");
 
-    if (!timingSafeEqual(digest, signature))
+    if (!timingSafeEqual(digest, signature)) {
       return new Response("Invalid signature.", {
         status: 400,
       });
+    }
 
     const payload = JSON.parse(text);
     const type = payload?.type as string;
@@ -58,7 +59,9 @@ export async function POST(req: Request) {
     const apiCaller = await createAdminApiCaller();
 
     const data = payload?.data.object;
-    if (!data) throw new Error("Invalid payload.");
+    if (!data) {
+      throw new Error("Invalid payload.");
+    }
 
     await apiCaller.billing.syncSubscription({
       id: String(data.id),
