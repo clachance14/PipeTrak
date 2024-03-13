@@ -1,10 +1,11 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { PrismaClient } from "database";
-import { Lucia, User } from "lucia";
-import { DatabaseSessionAttributes, DatabaseUserAttributes } from "../types";
+import type { User } from "lucia";
+import { Lucia } from "lucia";
+import type { DatabaseSessionAttributes, DatabaseUserAttributes } from "../types";
 
 declare module "lucia" {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+   
   interface Register {
     Lucia: typeof lucia;
     DatabaseSessionAttributes: DatabaseSessionAttributes;

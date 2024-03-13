@@ -4,7 +4,10 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl as getS3SignedUrl } from "@aws-sdk/s3-request-presigner";
-import { GetSignedUploadUrlHandler, GetSignedUrlHander } from "../../types";
+import type {
+  GetSignedUploadUrlHandler,
+  GetSignedUrlHander,
+} from "../../types";
 
 let s3Client: S3Client | null = null;
 
@@ -13,17 +16,17 @@ const getS3Client = () => {
     return s3Client;
   }
 
-  const s3Endpoint = process.env.S3_ENDPOINT as string;
+  const s3Endpoint = process.env.S3_ENDPOINT!;
   if (!s3Endpoint) {
     throw new Error("Missing env variable S3_ENDPOINT");
   }
 
-  const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID as string;
+  const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID!;
   if (!s3AccessKeyId) {
     throw new Error("Missing env variable S3_ACCESS_KEY_ID");
   }
 
-  const s3SecretAccessKey = process.env.S3_SECRET_ACCESS_KEY as string;
+  const s3SecretAccessKey = process.env.S3_SECRET_ACCESS_KEY!;
   if (!s3SecretAccessKey) {
     throw new Error("Missing env variable S3_SECRET_ACCESS_KEY");
   }

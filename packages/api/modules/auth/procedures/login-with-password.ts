@@ -38,7 +38,7 @@ export const loginWithPassword = publicProcedure
         },
       });
 
-      if (!user || !user.hashedPassword) {
+      if (!user?.hashedPassword) {
         throw new TRPCError({
           code: "NOT_FOUND",
         });

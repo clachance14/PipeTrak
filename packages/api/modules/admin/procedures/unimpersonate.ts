@@ -16,7 +16,7 @@ export const unimpersonate = protectedProcedure
         },
       });
 
-      if (!currentSession || !currentSession.impersonatorId) {
+      if (!currentSession?.impersonatorId) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 

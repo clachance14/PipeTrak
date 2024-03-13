@@ -3,7 +3,7 @@ import { createApiCaller } from "api/trpc/caller";
 import { UserRoleSchema } from "database";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
   const t = await getTranslations();

@@ -10,20 +10,20 @@ import { getBaseUrl } from "utils";
 import { lucia } from "../lib/lucia";
 
 export const googleAuth = new Google(
-  process.env.GOOGLE_CLIENT_ID as string,
-  process.env.GOOGLE_CLIENT_SECRET as string,
+  process.env.GOOGLE_CLIENT_ID!,
+  process.env.GOOGLE_CLIENT_SECRET!,
   new URL("/api/oauth/google/callback", getBaseUrl()).toString(),
 );
 
 const GOOGLE_PROIVDER_ID = "google";
 
-type GoogleUser = {
+interface GoogleUser {
   sub: string;
   email: string;
   email_verified?: boolean;
   picture?: string;
   name: string;
-};
+}
 
 export async function googleRouteHandler() {
   const state = generateState();
@@ -84,7 +84,7 @@ export async function googleCallbackRouteHandler(req: Request) {
         },
       },
     );
-    const googleUser: GoogleUser = await googleUserResponse.json();
+    const googleUser = (await googleUserResponse.json()) as GoogleUser;
 
     const existingUser = await db.user.findFirst({
       where: {

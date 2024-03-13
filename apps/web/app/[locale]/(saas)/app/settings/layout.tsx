@@ -6,7 +6,7 @@ import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 export default async function SettingsLayout({ children }: PropsWithChildren) {
   const t = await getTranslations();
   const apiCaller = await createApiCaller();

@@ -1,4 +1,5 @@
-import { db, UserOneTimePasswordTypeType } from "database";
+import type { UserOneTimePasswordTypeType } from "database";
+import { db } from "database";
 import { isWithinExpirationDate } from "oslo";
 import { alphabet, generateRandomString } from "oslo/crypto";
 

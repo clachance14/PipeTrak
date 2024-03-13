@@ -1,16 +1,13 @@
 import { createAdminApiCaller } from "api/trpc/caller";
 import { createHmac, timingSafeEqual } from "crypto";
-import { SubscriptionStatusType } from "database";
+import type { SubscriptionStatusType } from "database";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
   try {
     const text = await req.text();
-    const hmac = createHmac(
-      "sha256",
-      process.env.STRIPE_WEBHOOK_SECRET as string,
-    );
-    const signatureHeader = headers().get("stripe-signature") as string;
+    const hmac = createHmac("sha256", process.env.STRIPE_WEBHOOK_SECRET!);
+    const signatureHeader = headers().get("stripe-signature")!;
     const signatureParts = signatureHeader
       .split(",")
       .map((part) => part.split("="));
@@ -30,10 +27,30 @@ export async function POST(req: Request) {
       });
     }
 
-    const payload = JSON.parse(text);
-    const type = payload?.type as string;
+    const payload = JSON.parse(text) as {
+      type: string;
+      data: {
+        object: {
+          id: string;
+          metadata?: {
+            team_id: string;
+          };
+          customer: string;
+          plan: {
+            product: string;
+            id: string;
+          };
+          status: string;
+          trial_end?: number;
+          current_period_end?: number;
+        };
+      };
+    } | null;
+
+    const type = payload?.type ?? null;
 
     if (
+      !type ||
       ![
         "customer.subscription.created",
         "customer.subscription.updated",
@@ -59,7 +76,8 @@ export async function POST(req: Request) {
     const apiCaller = await createAdminApiCaller();
 
     const data = payload?.data.object;
-    if (!data) {
+
+    if (!data?.metadata?.team_id) {
       throw new Error("Invalid payload.");
     }
 

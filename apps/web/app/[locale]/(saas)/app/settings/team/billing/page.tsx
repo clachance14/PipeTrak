@@ -18,8 +18,8 @@ export default async function BillingSettingsPage() {
   const apiCaller = await createApiCaller();
   const plans = await apiCaller.billing.plans();
   const user = await apiCaller.auth.user();
-  const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)
-    ?.value as string;
+  const currentTeamId =
+    cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
 
   if (!user) {
     redirect("/auth/login");

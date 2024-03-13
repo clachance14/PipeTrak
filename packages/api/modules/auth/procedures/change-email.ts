@@ -42,7 +42,7 @@ export const changeEmail = protectedProcedure
       const url = new URL(callbackUrl);
       url.searchParams.set("token", token);
 
-      sendEmail({
+      await sendEmail({
         to: email,
         templateId: "emailChange",
         context: {

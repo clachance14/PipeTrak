@@ -1,5 +1,5 @@
-import { inferAsyncReturnType } from "@trpc/server";
-import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import type { inferAsyncReturnType } from "@trpc/server";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { lucia } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";

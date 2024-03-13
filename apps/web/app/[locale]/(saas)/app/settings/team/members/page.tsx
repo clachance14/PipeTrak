@@ -16,8 +16,8 @@ export async function generateMetadata() {
 export default async function TeamSettingsPage() {
   const apiCaller = await createApiCaller();
   const user = await apiCaller.auth.user();
-  const currentTeamId = cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)
-    ?.value as string;
+  const currentTeamId =
+    cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
 
   if (!user) {
     redirect("/auth/login");

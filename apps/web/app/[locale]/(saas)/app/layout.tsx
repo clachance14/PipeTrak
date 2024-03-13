@@ -4,7 +4,7 @@ import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -23,7 +23,7 @@ export default async function Layout({ children }: PropsWithChildren) {
   // if user has no team memberships, we create a team for them
   if (!teamMemberships.length) {
     try {
-      const name = user.name || user.email.split("@")[0];
+      const name = user.name ?? user.email.split("@")[0];
       const team = await apiCaller.team.create({
         name,
       });

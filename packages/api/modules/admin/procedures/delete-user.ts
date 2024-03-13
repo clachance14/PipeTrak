@@ -13,7 +13,7 @@ export const deleteUser = adminProcedure
     try {
       await db.user.delete({
         where: {
-          id,
+          id: id,
         },
       });
 

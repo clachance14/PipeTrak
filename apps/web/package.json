@@ -83,5 +83,13 @@
     "shadcn-ui": "pnpm dlx shadcn-ui@latest",
     "start": "next start"
   },
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "eslint-config-custom/base",
+      "eslint-config-custom/nextjs",
+      "eslint-config-custom/react"
+    ]
+  }
 }

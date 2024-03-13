@@ -1,5 +1,6 @@
-import { SessionUser } from "auth";
-import { TeamMemberRoleSchema, TeamMembership, UserRoleSchema } from "database";
+import type { SessionUser } from "auth";
+import type { TeamMembership} from "database";
+import { TeamMemberRoleSchema, UserRoleSchema } from "database";
 
 export function defineAbilitiesFor({
   user,

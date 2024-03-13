@@ -21,5 +21,11 @@
     "db:studio": "dotenv -c -e ../../.env -- prisma studio"
   },
   "types": "./**/.tsx",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "eslint-config-custom/base"
+    ]
+  }
 }

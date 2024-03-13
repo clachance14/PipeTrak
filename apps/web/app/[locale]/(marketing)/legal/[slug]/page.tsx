@@ -2,9 +2,9 @@ import { PostContent } from "@marketing/blog/components/PostContent";
 import { allLegalPages } from "content-collections";
 import { redirect } from "next/navigation";
 
-type Params = {
+interface Params {
   slug: string;
-};
+}
 
 export async function generateMetadata({
   params: { slug },

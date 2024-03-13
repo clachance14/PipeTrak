@@ -26,5 +26,12 @@
     "export": "email export"
   },
   "types": "./index.ts",
-  "version": "0.1.0"
+  "version": "0.0.0",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "eslint-config-custom/base",
+      "eslint-config-custom/react"
+    ]
+  }
 }

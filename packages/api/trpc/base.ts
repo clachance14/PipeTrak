@@ -1,7 +1,7 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import { UserRoleSchema } from "database";
 import superjson from "superjson";
-import { Context } from "./context";
+import type { Context } from "./context";
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,

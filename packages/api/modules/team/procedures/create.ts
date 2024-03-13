@@ -25,7 +25,7 @@ export const create = protectedProcedure
         name,
         memberships: {
           create: {
-            userId: user!.id,
+            userId: user.id,
             role: TeamMemberRoleSchema.Values.OWNER,
             isCreator: true,
           },

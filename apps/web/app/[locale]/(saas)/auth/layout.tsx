@@ -4,7 +4,7 @@ import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { Card } from "@ui/components/card";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (

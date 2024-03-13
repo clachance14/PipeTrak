@@ -11,8 +11,8 @@ export const generateProductNames = protectedProcedure
   .output(z.array(z.string()))
   .query(async ({ input: { topic } }) => {
     const openai = new OpenAI({
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
-      apiKey: process.env.OPENAI_API_KEY as string,
+       
+      apiKey: process.env.OPENAI_API_KEY!,
     });
 
     const response = await openai.chat.completions.create({

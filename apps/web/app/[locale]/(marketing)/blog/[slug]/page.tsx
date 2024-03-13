@@ -5,9 +5,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getBaseUrl } from "utils";
 
-type Params = {
+interface Params {
   slug: string;
-};
+}
 
 export async function generateMetadata({
   params: { slug },

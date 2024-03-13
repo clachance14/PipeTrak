@@ -4,25 +4,25 @@ import { cookies } from "next/headers";
 import { lucia } from "../lib/lucia";
 
 export const githubAuth = new GitHub(
-  process.env.GITHUB_CLIENT_ID as string,
-  process.env.GITHUB_CLIENT_SECRET as string,
+  process.env.GITHUB_CLIENT_ID!,
+  process.env.GITHUB_CLIENT_SECRET!,
 );
 
 const GITHUB_PROIVDER_ID = "github";
 
-type GitHubUser = {
+interface GitHubUser {
   id: number;
   email: string;
   name: string;
   login: string;
   avatar_url: string;
-};
+}
 
-type GithubUserEmails = Array<{
+type GithubUserEmails = {
   email: string;
   primary?: boolean;
   verified?: boolean;
-}>;
+}[];
 
 export async function githubRouteHandler() {
   const state = generateState();
@@ -66,9 +66,10 @@ export async function githubCallbackRouteHandler(req: Request) {
         Authorization: `Bearer ${tokens.accessToken}`,
       },
     });
-    const githubUser: GitHubUser = await githubUserResponse.json();
 
-    const emails: GithubUserEmails = await emailsResponse.json();
+    const githubUser = (await githubUserResponse.json()) as GitHubUser;
+    const emails = (await emailsResponse.json()) as GithubUserEmails;
+
     githubUser.email =
       githubUser.email ?? emails.find((email) => email.primary)?.email;
 

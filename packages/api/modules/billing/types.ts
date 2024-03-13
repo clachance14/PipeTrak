@@ -1,4 +1,4 @@
-import { SubscriptionStatusType } from "database";
+import type { SubscriptionStatusType } from "database";
 import { z } from "zod";
 
 export type GetAllPlans = () => Promise<SubscriptionPlan[]>;
@@ -10,13 +10,13 @@ export type CreateCheckoutLink = (params: {
   name?: string;
   teamId: string;
   redirectUrl?: string;
-}) => Promise<string>;
+}) => Promise<string | null>;
 
 export type CreateCustomerPortalLink = (params: {
   subscriptionId: string;
   customerId: string;
   redirectUrl?: string;
-}) => Promise<string>;
+}) => Promise<string | null>;
 
 export type PauseSubscription = (params: { id: string }) => Promise<void>;
 
