@@ -11,7 +11,7 @@ export const generateVerificationToken = async ({
 }) => {
   const storedUserTokens = await db.userVerificationToken.findMany({
     where: {
-      userId: userId,
+      userId,
     },
   });
 
@@ -21,7 +21,9 @@ export const generateVerificationToken = async ({
         new Date(Number(token.expires) - expireDuration / 2),
       );
     });
-    if (reusableStoredToken) return reusableStoredToken.token;
+    if (reusableStoredToken) {
+      return reusableStoredToken.token;
+    }
   }
 
   const token = generateRandomString(63, alphabet("0-9", "A-Z"));
@@ -48,7 +50,9 @@ export const validateVerificationToken = async ({
     },
   });
 
-  if (!storedToken) throw new Error("Invalid token");
+  if (!storedToken) {
+    throw new Error("Invalid token");
+  }
 
   await db.userVerificationToken.delete({
     where: {
@@ -56,8 +60,9 @@ export const validateVerificationToken = async ({
     },
   });
 
-  if (!isWithinExpirationDate(storedToken.expires))
+  if (!isWithinExpirationDate(storedToken.expires)) {
     throw new Error("Expired token");
+  }
 
   return storedToken.userId;
 };
@@ -85,7 +90,9 @@ export const generateOneTimePassword = async ({
         new Date(Number(token.expires) - expireDuration / 2),
       );
     });
-    if (reusableStoredToken) return reusableStoredToken.code;
+    if (reusableStoredToken) {
+      return reusableStoredToken.code;
+    }
   }
 
   const otp = generateRandomString(6, alphabet("0-9"));
@@ -120,7 +127,9 @@ export const validateOneTimePassword = async ({
     },
   });
 
-  if (!storedOtp) throw new Error("Invalid token");
+  if (!storedOtp) {
+    throw new Error("Invalid token");
+  }
 
   await db.userOneTimePassword.delete({
     where: {
@@ -128,8 +137,9 @@ export const validateOneTimePassword = async ({
     },
   });
 
-  if (!isWithinExpirationDate(storedOtp.expires))
+  if (!isWithinExpirationDate(storedOtp.expires)) {
     throw new Error("Expired token");
+  }
 
   return storedOtp.userId;
 };

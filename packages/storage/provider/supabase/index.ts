@@ -3,16 +3,20 @@ import { GetSignedUploadUrlHandler, GetSignedUrlHander } from "../../types";
 
 let supabaseClient: ReturnType<typeof createClient> | null = null;
 const getSupabaseAdminClient = () => {
-  if (supabaseClient) return supabaseClient;
+  if (supabaseClient) {
+    return supabaseClient;
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-  if (!supabaseUrl)
+  if (!supabaseUrl) {
     throw new Error("Missing env variable NEXT_PUBLIC_SUPABASE_URL");
+  }
 
   const supabaseServiceRoleKey = process.env
     .SUPABASE_SERVICE_ROLE_KEY as string;
-  if (!supabaseServiceRoleKey)
+  if (!supabaseServiceRoleKey) {
     throw new Error("Missing env variable SUPABASE_SERVICE_ROLE_KEY");
+  }
 
   supabaseClient = createClient(supabaseUrl, supabaseServiceRoleKey);
 

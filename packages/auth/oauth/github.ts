@@ -48,10 +48,11 @@ export async function githubCallbackRouteHandler(req: Request) {
   const state = url.searchParams.get("state");
   const storedState = cookies().get("github_oauth_state")?.value ?? null;
 
-  if (!code || !state || !storedState || state !== storedState)
+  if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
     });
+  }
 
   try {
     const tokens = await githubAuth.validateAuthorizationCode(code);
@@ -158,10 +159,11 @@ export async function githubCallbackRouteHandler(req: Request) {
     });
   } catch (e) {
     console.error(e);
-    if (e instanceof OAuth2RequestError)
+    if (e instanceof OAuth2RequestError) {
       return new Response(null, {
         status: 400,
       });
+    }
 
     return new Response(null, {
       status: 500,

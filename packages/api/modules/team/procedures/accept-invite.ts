@@ -17,17 +17,19 @@ export const acceptInvitation = protectedProcedure
       },
     });
 
-    if (!invitation)
+    if (!invitation) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Invitation not found.",
       });
+    }
 
-    if (invitation.expiresAt < new Date())
+    if (invitation.expiresAt < new Date()) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Invitation expired.",
       });
+    }
 
     // create membership for user
     const { team } = await db.teamMembership.create({

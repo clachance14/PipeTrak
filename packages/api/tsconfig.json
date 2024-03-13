@@ -1,5 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["**/*.ts", "../auth/lucia.d.ts"],
+  "include": ["**/*.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }

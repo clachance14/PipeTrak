@@ -14,11 +14,11 @@
   "devDependencies": {
     "@types/react": "18.2.61",
     "encoding": "^0.1.13",
+    "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
     "prisma": "^5.10.2",
     "tsconfig": "workspace:*"
   },
-  "license": "MIT",
   "main": "./index.tsx",
   "name": "api",
   "scripts": {

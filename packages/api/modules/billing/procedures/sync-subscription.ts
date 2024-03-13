@@ -6,10 +6,11 @@ export const syncSubscription = publicProcedure
   .input(SubscriptionSchema)
   .mutation(async ({ input: subscription, ctx: { isAdmin } }) => {
     // this procedure can only be called by the admin caller from a webhook
-    if (!isAdmin)
+    if (!isAdmin) {
       throw new TRPCError({
         code: "FORBIDDEN",
       });
+    }
 
     let existingSubscription: Subscription | null = null;
 
@@ -22,17 +23,18 @@ export const syncSubscription = publicProcedure
     }
 
     try {
-      if (!existingSubscription)
+      if (!existingSubscription) {
         await db.subscription.create({
           data: subscription,
         });
-      else
+      } else {
         await db.subscription.update({
           where: {
             teamId: existingSubscription.teamId,
           },
           data: subscription,
         });
+      }
     } catch (e) {
       console.error(e);
       throw new TRPCError({

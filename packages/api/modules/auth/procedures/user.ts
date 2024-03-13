@@ -29,16 +29,19 @@ export const user = publicProcedure
       .nullable(),
   )
   .query(async ({ ctx: { user, session, teamMemberships } }) => {
-    if (!user) return null;
+    if (!user) {
+      return null;
+    }
 
     // if avatar url is only the path (e.g. /avatars/1234.png)
     // we need to create a signed url for accessing the storage
     let avatarUrl = user.avatarUrl ?? null;
-    if (avatarUrl && !avatarUrl.startsWith("http"))
+    if (avatarUrl && !avatarUrl.startsWith("http")) {
       avatarUrl = await getSignedUrl(avatarUrl, {
         bucket: "avatars",
         expiresIn: 360,
       });
+    }
 
     const impersonatedBy = session?.impersonatorId
       ? await db.user.findUnique({

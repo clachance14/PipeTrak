@@ -12,16 +12,17 @@
     "mail:preview": "pnpm --filter mail run preview",
     "e2e": "pnpm --filter web e2e"
   },
-  "dependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-custom": "workspace:*",
-    "prettier": "^3.2.5",
-    "turbo": "^1.12.4",
-    "typescript": "5.3.3"
+  "engines": {
+    "node": ">=20"
   },
   "packageManager": "pnpm@8.3.0",
   "devDependencies": {
     "dotenv-cli": "^7.3.0",
-    "prettier-plugin-tailwindcss": "^0.5.11"
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tsconfig": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "prettier": "^3.2.5",
+    "turbo": "^1.12.4",
+    "typescript": "5.3.3"
   }
 }

@@ -20,7 +20,9 @@ export const impersonate = adminProcedure
         },
       });
 
-      if (!userExists) throw new TRPCError({ code: "NOT_FOUND" });
+      if (!userExists) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
 
       try {
         const newSession = await lucia.createSession(userId, {

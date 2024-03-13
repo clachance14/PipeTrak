@@ -6,10 +6,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   },
-  "license": "MIT",
   "main": "./index.ts",
   "name": "storage",
   "scripts": {

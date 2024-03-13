@@ -8,7 +8,9 @@ const t = initTRPC.context<Context>().create({
 });
 
 const isAuthenticatedMiddleware = t.middleware(({ ctx, next }) => {
-  if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!ctx.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
   return next({
     ctx: {
       ...ctx,
@@ -19,9 +21,12 @@ const isAuthenticatedMiddleware = t.middleware(({ ctx, next }) => {
 });
 
 const isAdminMiddleware = t.middleware(({ ctx, next }) => {
-  if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
-  if (ctx.user.role !== UserRoleSchema.Values.ADMIN)
+  if (!ctx.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  if (ctx.user.role !== UserRoleSchema.Values.ADMIN) {
     throw new TRPCError({ code: "FORBIDDEN" });
+  }
 
   return next({
     ctx: {

@@ -27,18 +27,20 @@ export const verifyOtp = publicProcedure
           },
         });
 
-        if (!user)
+        if (!user) {
           throw new TRPCError({
             code: "NOT_FOUND",
           });
+        }
 
-        if (!user.emailVerified)
+        if (!user.emailVerified) {
           await db.user.update({
             where: { id: user.id },
             data: {
               emailVerified: true,
             },
           });
+        }
 
         const session = await lucia.createSession(userId, {});
 

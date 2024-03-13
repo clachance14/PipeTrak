@@ -20,17 +20,19 @@ export const revokeInvitation = protectedProcedure
       },
     });
 
-    if (!invitation)
+    if (!invitation) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Invitation not found.",
       });
+    }
 
-    if (!abilities.isTeamOwner(invitation.teamId))
+    if (!abilities.isTeamOwner(invitation.teamId)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to add a member to this team.",
       });
+    }
 
     try {
       await db.teamInvitation.delete({

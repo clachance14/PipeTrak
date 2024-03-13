@@ -17,15 +17,17 @@ export const resumeSubscription = protectedProcedure
       },
     });
 
-    if (!subscription)
+    if (!subscription) {
       throw new TRPCError({
         code: "NOT_FOUND",
       });
+    }
 
-    if (!abilities.isTeamOwner(subscription.teamId))
+    if (!abilities.isTeamOwner(subscription.teamId)) {
       throw new TRPCError({
         code: "FORBIDDEN",
       });
+    }
 
     try {
       const { status } = await resumeSubscriptionResolver({ id });

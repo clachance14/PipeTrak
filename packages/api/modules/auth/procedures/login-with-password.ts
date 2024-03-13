@@ -38,26 +38,29 @@ export const loginWithPassword = publicProcedure
         },
       });
 
-      if (!user || !user.hashedPassword)
+      if (!user || !user.hashedPassword) {
         throw new TRPCError({
           code: "NOT_FOUND",
         });
+      }
 
-      if (!user.emailVerified)
+      if (!user.emailVerified) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Email not verified",
         });
+      }
 
       const isValidPassword = await verifyPassword(
         user.hashedPassword,
         password,
       );
 
-      if (!isValidPassword)
+      if (!isValidPassword) {
         throw new TRPCError({
           code: "NOT_FOUND",
         });
+      }
 
       const session = await lucia.createSession(user.id, {});
 

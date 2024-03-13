@@ -17,22 +17,24 @@ export const pauseSubscription = protectedProcedure
       },
     });
 
-    if (!subscription)
+    if (!subscription) {
       throw new TRPCError({
         code: "NOT_FOUND",
       });
+    }
 
-    if (!abilities.isTeamOwner(subscription.teamId))
+    if (!abilities.isTeamOwner(subscription.teamId)) {
       throw new TRPCError({
         code: "FORBIDDEN",
       });
+    }
 
     try {
       await pauseSubscriptionResolver({ id });
 
       await db.subscription.update({
         where: {
-          id: id,
+          id,
         },
         data: {
           status: "PAUSED",

@@ -26,7 +26,7 @@ export default function BlogListPage() {
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
-          .map((post, i) => (
+          .map((post) => (
             <PostListItem post={post} key={post.slug} />
           ))}
       </div>

@@ -4,12 +4,9 @@ import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { Card } from "@ui/components/card";
-import { useLocale } from "next-intl";
 import { PropsWithChildren } from "react";
 
-export default function AuthLayout({ children }: PropsWithChildren<{}>) {
-  const locale = useLocale();
-
+export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <UserContextProvider initialUser={null}>
       <div className="bg-muted text-foreground flex min-h-screen place-items-center">

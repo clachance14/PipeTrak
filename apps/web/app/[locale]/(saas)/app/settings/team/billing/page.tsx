@@ -5,7 +5,8 @@ import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-export async function generateMetadata({ params: { locale } }) {
+
+export async function generateMetadata() {
   const t = await getTranslations();
 
   return {

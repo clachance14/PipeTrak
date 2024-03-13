@@ -65,10 +65,11 @@ export async function googleCallbackRouteHandler(req: Request) {
     !storedState ||
     !storedCodeVerifier ||
     state !== storedState
-  )
+  ) {
     return new Response(null, {
       status: 400,
     });
+  }
 
   try {
     const tokens = await googleAuth.validateAuthorizationCode(
@@ -172,10 +173,11 @@ export async function googleCallbackRouteHandler(req: Request) {
     });
   } catch (e) {
     console.error(e);
-    if (e instanceof OAuth2RequestError)
+    if (e instanceof OAuth2RequestError) {
       return new Response(null, {
         status: 400,
       });
+    }
 
     return new Response(null, {
       status: 500,

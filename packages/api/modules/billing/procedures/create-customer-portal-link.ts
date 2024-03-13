@@ -20,15 +20,17 @@ export const createCustomerPortalLink = protectedProcedure
         },
       });
 
-      if (!subscription)
+      if (!subscription) {
         throw new TRPCError({
           code: "BAD_REQUEST",
         });
+      }
 
-      if (!abilities.isTeamOwner(subscription.teamId))
+      if (!abilities.isTeamOwner(subscription.teamId)) {
         throw new TRPCError({
           code: "FORBIDDEN",
         });
+      }
 
       try {
         const customerPortalLink = await createCustomerPortalLinkResolver({

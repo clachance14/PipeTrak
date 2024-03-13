@@ -16,21 +16,23 @@ export const removeMember = protectedProcedure
       },
     });
 
-    if (!membership)
+    if (!membership) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Membership not found.",
       });
+    }
 
     // user can only remove themselves from a team if they are not the owner
     if (
       !abilities.isTeamOwner(membership.teamId) &&
       membership.userId !== user.id
-    )
+    ) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "No permission to remove a member from this team.",
       });
+    }
 
     try {
       await db.teamMembership.delete({

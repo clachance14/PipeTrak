@@ -14,38 +14,45 @@ export const getAllPlans: GetAllPlans = async function () {
     "/products?include=variants,store",
   );
 
-  return response.data
-    .map((product: any): SubscriptionPlan => {
-      const store = response.included.find(
-        (item: any) =>
-          item.type === "stores" &&
-          Number(product.attributes.store_id) === Number(item.id),
-      );
-      const currency = store.attributes.currency ?? "USD";
+  return (
+    response.data
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((product: any): SubscriptionPlan => {
+        const store = response.included.find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (item: any) =>
+            item.type === "stores" &&
+            Number(product.attributes.store_id) === Number(item.id),
+        );
+        const currency = store.attributes.currency ?? "USD";
 
-      return {
-        id: product.id,
-        name: product.attributes.name,
-        description: product.attributes.description,
-        storeId: String(store.id),
-        variants: response.included
-          .filter(
-            (item: any) =>
-              item.type === "variants" &&
-              item.attributes.is_subscription &&
-              Number(item.attributes.product_id) === Number(product.id),
-          )
-          .map((variant: any) => ({
-            id: variant.id,
-            interval: variant.attributes.interval,
-            interval_count: variant.attributes.interval_count,
-            // we have to do some parsing here because the API (sometimes) returns the price as a string
-            price: parseFloat(String(variant.attributes.price)),
-            currency,
-          })),
-      };
-    })
-    .filter((product: any) => product.variants.length > 0);
+        return {
+          id: product.id,
+          name: product.attributes.name,
+          description: product.attributes.description,
+          storeId: String(store.id),
+          variants: response.included
+            .filter(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (item: any) =>
+                item.type === "variants" &&
+                item.attributes.is_subscription &&
+                Number(item.attributes.product_id) === Number(product.id),
+            )
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((variant: any) => ({
+              id: variant.id,
+              interval: variant.attributes.interval,
+              interval_count: variant.attributes.interval_count,
+              // we have to do some parsing here because the API (sometimes) returns the price as a string
+              price: parseFloat(String(variant.attributes.price)),
+              currency,
+            })),
+        };
+      })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .filter((product: any) => product.variants.length > 0)
+  );
 };
 
 export const createCheckoutLink: CreateCheckoutLink = async function ({

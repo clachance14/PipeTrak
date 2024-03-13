@@ -3,11 +3,10 @@
 
 # supastarter – next.js
 
-supastarter is the ultimate starter kit for production-ready, scalable SaaS applications. 
+supastarter is the ultimate starter kit for production-ready, scalable SaaS applications.
 
 ## Helpful links
 
 - [📘 Documentation](https://docs.supastarter.dev)
 - [🚀 Demo](https://demo.supastarter.dev)
 - [💬 Discord](https://discord.gg/RUSASaAj4V)
-

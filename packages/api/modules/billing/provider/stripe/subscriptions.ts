@@ -16,6 +16,7 @@ export const getAllPlans: GetAllPlans = async function () {
 
   const plans: SubscriptionPlan[] = [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response.data.forEach((price: any) => {
     const product = price.product;
 
@@ -50,13 +51,12 @@ export const getAllPlans: GetAllPlans = async function () {
     });
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return plans.filter((product: any) => product.variants.length > 0);
 };
 
 export const createCheckoutLink: CreateCheckoutLink = async function ({
   variantId,
-  email,
-  name,
   teamId,
   redirectUrl,
 }) {
@@ -77,7 +77,6 @@ export const createCheckoutLink: CreateCheckoutLink = async function ({
 };
 
 export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
-  subscriptionId,
   customerId,
   redirectUrl,
 }) => {

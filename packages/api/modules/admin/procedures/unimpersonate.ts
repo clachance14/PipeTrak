@@ -16,8 +16,9 @@ export const unimpersonate = protectedProcedure
         },
       });
 
-      if (!currentSession || !currentSession.impersonatorId)
+      if (!currentSession || !currentSession.impersonatorId) {
         throw new TRPCError({ code: "NOT_FOUND" });
+      }
 
       await lucia.invalidateSession(session.id);
 
