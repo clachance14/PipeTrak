@@ -10,13 +10,13 @@ export const githubAuth = new GitHub(
 
 const GITHUB_PROIVDER_ID = "github";
 
-interface GitHubUser {
+type GitHubUser = {
   id: number;
   email: string;
   name: string;
   login: string;
   avatar_url: string;
-}
+};
 
 type GithubUserEmails = Array<{
   email: string;

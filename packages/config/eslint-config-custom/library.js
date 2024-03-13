@@ -39,5 +39,6 @@ module.exports = {
   rules: {
     "object-shorthand": "error",
     curly: ["error", "all"],
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
   },
 };

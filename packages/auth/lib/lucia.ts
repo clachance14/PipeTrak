@@ -4,6 +4,7 @@ import { Lucia, User } from "lucia";
 import { DatabaseSessionAttributes, DatabaseUserAttributes } from "../types";
 
 declare module "lucia" {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Register {
     Lucia: typeof lucia;
     DatabaseSessionAttributes: DatabaseSessionAttributes;
