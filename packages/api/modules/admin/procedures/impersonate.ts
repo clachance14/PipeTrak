@@ -2,9 +2,9 @@ import { TRPCError } from "@trpc/server";
 import { lucia } from "auth";
 import { db } from "database";
 import { z } from "zod";
-import { protectedProcedure } from "../../../trpc/base";
+import { adminProcedure } from "../../../trpc/base";
 
-export const impersonate = protectedProcedure
+export const impersonate = adminProcedure
   .input(
     z.object({
       userId: z.string(),

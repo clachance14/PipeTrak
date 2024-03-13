@@ -9,11 +9,11 @@ export const deleteUser = adminProcedure
       id: z.string(),
     }),
   )
-  .mutation(async ({ input: { id }, ctx: { responseHeaders, user } }) => {
+  .mutation(async ({ input: { id } }) => {
     try {
       await db.user.delete({
         where: {
-          id: user.id,
+          id,
         },
       });
 
@@ -21,7 +21,7 @@ export const deleteUser = adminProcedure
         where: {
           memberships: {
             every: {
-              userId: user.id,
+              userId: id,
             },
           },
         },
