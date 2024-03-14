@@ -5,7 +5,7 @@ updates:
     open-pull-requests-limit: 20
     schedule:
       interval: "daily"
-      ignore:
-        - dependency-name: "@trpc/server"
-        - dependency-name: "@trpc/client"
-        - dependency-name: "@trpc/react-query"
+    ignore:
+      - dependency-name: "@trpc/server"
+      - dependency-name: "@trpc/client"
+      - dependency-name: "@trpc/react-query"
