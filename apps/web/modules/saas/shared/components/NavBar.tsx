@@ -4,11 +4,13 @@ import { Link } from "@i18n";
 import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { Icon } from "@ui/components/icon";
-import { ApiOutput } from "api/trpc/router";
-import { Team, UserRoleSchema } from "database";
+import type { ApiOutput } from "api/trpc/router";
+import type { Team } from "database";
+import { UserRoleSchema } from "database";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { PropsWithChildren, useCallback } from "react";
+import type { PropsWithChildren } from "react";
+import { useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";
 
 type User = ApiOutput["auth"]["user"];

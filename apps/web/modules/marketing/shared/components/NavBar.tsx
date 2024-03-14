@@ -8,7 +8,7 @@ import { Logo } from "@shared/components/Logo";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounceCallback, useIsClient } from "usehooks-ts";
@@ -17,7 +17,6 @@ import { Banner } from "./Banner";
 export function NavBar() {
   const t = useTranslations();
   const { user, loaded: userLoaded } = useUser();
-  const locale = useLocale();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isClient = useIsClient();
@@ -61,14 +60,14 @@ export function NavBar() {
 
   return (
     <nav
-      className={`bg-background/80 fixed left-0 top-0 z-20 w-full backdrop-blur-lg ${isTop ? "shadow-none" : "shadow-sm"} transition-all duration-200`}
+      className={`bg-background/80 fixed left-0 top-0 z-20 w-full backdrop-blur-lg ${isTop ? "shadow-none" : "shadow-sm"} transition-[box-shadow] duration-200`}
       data-test="navigation"
     >
       <Banner />
 
       <div className="container">
         <div
-          className={`flex items-center justify-stretch gap-6 ${isTop ? "py-8" : "py-4"} transition-all duration-200`}
+          className={`flex items-center justify-stretch gap-6 ${isTop ? "py-8" : "py-4"} transition-[padding] duration-200`}
         >
           <div className="flex flex-1 justify-start">
             <Link

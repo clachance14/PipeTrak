@@ -1,5 +1,4 @@
 import { AnalyticsScript } from "@analytics";
-import { ClientProviders } from "@shared/components/ClientProviders";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import type { Metadata } from "next";
@@ -9,6 +8,8 @@ import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { getMessagesForLocale } from "../../i18n";
 
+import { ApiClientProvider } from "@shared/components/ApiClientProvider";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,7 +50,9 @@ export default async function RootLayout({
       >
         <NextTopLoader color={"var(--colors-primary)"} />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ClientProviders>{children}</ClientProviders>
+          <ThemeProvider attribute="class">
+            <ApiClientProvider>{children}</ApiClientProvider>
+          </ThemeProvider>
           <Toaster />
         </NextIntlClientProvider>
         <AnalyticsScript />
