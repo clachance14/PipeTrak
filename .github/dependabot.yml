@@ -2,9 +2,9 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    open-pull-requests-limit: 20
     schedule:
       interval: "daily"
-      open-pull-requests-limit: 20
       ignore:
         - dependency-name: "@trpc/server"
         - dependency-name: "@trpc/client"
