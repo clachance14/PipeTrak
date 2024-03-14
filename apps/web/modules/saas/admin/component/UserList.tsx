@@ -4,10 +4,12 @@ import { Pagination } from "@saas/shared/components/Pagination";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { apiClient } from "@shared/lib/api-client";
 import { keepPreviousData } from "@tanstack/react-query";
-import {
+import type {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -26,22 +28,21 @@ import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useToast } from "@ui/hooks/use-toast";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
-import { useDebounce } from "usehooks-ts";
+import { useDebounceValue } from "usehooks-ts";
 import { EmailVerified } from "./EmailVerified";
 
 export function UserList() {
   const t = useTranslations();
   const { toast } = useToast();
   const impersonateMutation = apiClient.admin.impersonate.useMutation();
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useDebounceValue("", 200);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const debouncedSearchTerm = useDebounce(searchTerm, 200);
   const deleteUserMutation = apiClient.admin.deleteUser.useMutation();
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export function UserList() {
     {
       limit: itemsPerPage,
       offset: (currentPage - 1) * itemsPerPage,
-      searchTerm: debouncedSearchTerm,
+      searchTerm,
     },
     {
       retry: false,
