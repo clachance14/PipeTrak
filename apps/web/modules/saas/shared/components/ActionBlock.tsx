@@ -4,7 +4,7 @@ import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { cn } from "@ui/lib";
 import { useTranslations } from "next-intl";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export function ActionBlock({
   children,
@@ -53,7 +53,7 @@ export function ActionBlock({
                 loading={isSubmitting}
                 variant={danger ? "error" : "default"}
               >
-                {submitLabel || t("settings.save")}
+                {submitLabel ?? t("settings.save")}
               </Button>
             </div>
           )}
