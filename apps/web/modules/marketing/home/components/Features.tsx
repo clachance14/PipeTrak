@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
+import heroDarkImage from "../../../../public/images/hero-dark.svg";
+import heroImage from "../../../../public/images/hero.svg";
 
 export function Features() {
   return (
@@ -22,12 +24,14 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12">
               <Image
-                src="/hero.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroImage}
                 className="block dark:hidden"
                 alt="Feature 1"
               />
               <Image
-                src="hero-dark.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroDarkImage}
                 className="hidden dark:block"
                 alt="Feature 1"
               />
@@ -62,14 +66,16 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12 lg:order-2">
               <Image
-                src="/hero.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroImage}
                 className="block dark:hidden"
-                alt="Feature 1"
+                alt="Feature 2"
               />
               <Image
-                src="hero-dark.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroDarkImage}
                 className="hidden dark:block"
-                alt="Feature 1"
+                alt="Feature 2"
               />
             </div>
 
@@ -102,14 +108,16 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12 ">
               <Image
-                src="/hero.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroImage}
                 className="block dark:hidden"
-                alt="Feature 1"
+                alt="Feature 3"
               />
               <Image
-                src="hero-dark.svg"
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                src={heroDarkImage}
                 className="hidden dark:block"
-                alt="Feature 1"
+                alt="Feature 3"
               />
             </div>
 
