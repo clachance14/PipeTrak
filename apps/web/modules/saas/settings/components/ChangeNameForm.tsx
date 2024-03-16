@@ -25,7 +25,7 @@ export function ChangeNameForm({ initialValue }: { initialValue: string }) {
       await reloadUser();
       router.refresh();
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         variant: "error",
         title: t("settings.notifications.nameUpdateFailed"),

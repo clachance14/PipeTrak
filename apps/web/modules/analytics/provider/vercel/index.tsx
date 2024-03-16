@@ -1,8 +1,8 @@
 "use client";
 
-// @ts-ignore
+// @ts-expect-error package is not installed per default
 import { Analytics } from "@vercel/analytics/react";
-// @ts-ignore
+// @ts-expect-error package is not installed per default
 import { track } from "@vercel/analytics";
 
 export function AnalyticsScript() {
@@ -10,7 +10,8 @@ export function AnalyticsScript() {
 }
 
 export function useAnalytics() {
-  const trackEvent = (event: string, data?: Record<string, any>) => {
+  const trackEvent = (event: string, data?: Record<string, unknown>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     track(event, data);
   };
 

@@ -13,11 +13,12 @@ import {
 } from "@ui/components/form";
 import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
-import { UserOneTimePasswordTypeType } from "database";
+import type { UserOneTimePasswordTypeType } from "database";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "../hooks/use-user";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
@@ -41,7 +42,7 @@ export function OtpForm() {
   const searchParams = useSearchParams();
 
   const invitationCode = searchParams.get("invitationCode");
-  const identifier = searchParams.get("identifier") || "";
+  const identifier = searchParams.get("identifier") ?? "";
   const type: UserOneTimePasswordTypeType = searchParams.get(
     "type",
   ) as UserOneTimePasswordTypeType;
@@ -60,7 +61,10 @@ export function OtpForm() {
 
   // redirect when user has been loaded
   useEffect(() => {
-    if (user && loaded) handleRedirect();
+    if (user && loaded) {
+      handleRedirect();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loaded]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({ code }) => {

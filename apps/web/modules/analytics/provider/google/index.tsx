@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string;
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID!;
 
 export function AnalyticsScript() {
   return (
@@ -10,16 +10,20 @@ export function AnalyticsScript() {
       async
       src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
       onLoad={() => {
-        if (typeof window === "undefined") return;
+        if (typeof window === "undefined") {
+          return;
+        }
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
         (window as any).dataLayer = (window as any).dataLayer || [];
 
         function gtag() {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, prefer-rest-params, @typescript-eslint/no-explicit-any
           (window as any).dataLayer.push(arguments);
         }
-        // @ts-ignore
+        // @ts-expect-error gtag is only improted in the browser
         gtag("js", new Date());
-        // @ts-ignore
+        // @ts-expect-error gtag is only improted in the browser
         gtag("config", googleAnalyticsId);
       }}
     />
@@ -27,11 +31,13 @@ export function AnalyticsScript() {
 }
 
 export function useAnalytics() {
-  const trackEvent = (event: string, data?: Record<string, any>) => {
+  const trackEvent = (event: string, data?: Record<string, unknown>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     if (typeof window === "undefined" || !(window as any).gta) {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     (window as any).gta("event", event, data);
   };
 

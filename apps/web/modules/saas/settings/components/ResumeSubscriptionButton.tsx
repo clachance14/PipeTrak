@@ -41,7 +41,9 @@ export function ResumeSubscriptionButton({
   const resumeSubscription = async () => {
     try {
       await resumeSubscriptionMutation.mutateAsync({ id });
-    } catch {}
+    } catch {
+      // TODO: add error notification
+    }
   };
 
   return (

@@ -1,12 +1,14 @@
 "use client";
 
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 
-import {
+import type {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,

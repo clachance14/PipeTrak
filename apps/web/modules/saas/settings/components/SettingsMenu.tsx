@@ -7,14 +7,14 @@ import React from "react";
 export function SettingsMenu({
   menuItems,
 }: {
-  menuItems: Array<{
+  menuItems: {
     title: string;
     avatar: React.ReactNode;
-    items: Array<{
+    items: {
       title: string;
       href: string;
-    }>;
-  }>;
+    }[];
+  }[];
 }) {
   const pathname = usePathname();
 

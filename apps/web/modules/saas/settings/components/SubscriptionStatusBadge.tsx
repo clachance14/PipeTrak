@@ -1,7 +1,8 @@
 "use client";
 
-import { Badge, BadgeProps } from "@ui/components/badge";
-import { SubscriptionStatusType } from "database";
+import type { BadgeProps } from "@ui/components/badge";
+import { Badge } from "@ui/components/badge";
+import type { SubscriptionStatusType } from "database";
 import { useTranslations } from "next-intl";
 
 export function SubscriptionStatusBadge({

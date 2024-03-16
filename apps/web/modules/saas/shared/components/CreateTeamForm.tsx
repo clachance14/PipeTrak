@@ -5,7 +5,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

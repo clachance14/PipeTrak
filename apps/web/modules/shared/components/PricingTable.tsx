@@ -4,12 +4,11 @@ import { useLocaleCurrency } from "@shared/hooks/locale-currency";
 import { Button } from "@ui/components/button";
 import { Tabs, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { cn } from "@ui/lib";
-import { ApiOutput } from "api/trpc/router";
-import { useTranslations } from "next-intl";
+import type { ApiOutput } from "api/trpc/router";
 import { useMemo, useState } from "react";
 
 type SubscriptionPlan = ApiOutput["billing"]["plans"][number] & {
-  features?: Array<string>;
+  features?: string[];
 };
 
 export function PricingTable({
@@ -33,7 +32,6 @@ export function PricingTable({
     switchToPlan?: string;
   };
 }) {
-  const t = useTranslations();
   const localeCurrency = useLocaleCurrency();
   const [interval, setInterval] = useState<"month" | "year">("month");
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -67,6 +65,7 @@ export function PricingTable({
 
         return lowestPriceA - lowestPriceB;
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans, interval]);
 
   const isActivePlan = (plan: (typeof plans)[number]) => {
@@ -93,7 +92,9 @@ export function PricingTable({
         {sortedAndFilteredPlans.map((plan) => {
           const variant = plan.variants.find((v) => v.interval === interval);
 
-          if (!variant) return null;
+          if (!variant) {
+            return null;
+          }
 
           return (
             <div

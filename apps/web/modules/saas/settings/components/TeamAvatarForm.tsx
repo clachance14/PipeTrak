@@ -25,7 +25,7 @@ export function TeamAvatarForm() {
   const updateTeamMutation = apiClient.team.update.useMutation();
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: async (acceptedFiles) => {
+    onDrop: (acceptedFiles) => {
       setImage(acceptedFiles[0]);
       setCropDialogOpen(true);
     },
@@ -36,12 +36,16 @@ export function TeamAvatarForm() {
     multiple: false,
   });
 
-  if (!teamMembership?.team) return null;
+  if (!teamMembership?.team) {
+    return null;
+  }
 
   const { team } = teamMembership;
 
   const onCrop = async (croppedImageData: Blob | null) => {
-    if (!croppedImageData) return;
+    if (!croppedImageData) {
+      return;
+    }
 
     setUploading(true);
     try {
@@ -59,7 +63,9 @@ export function TeamAvatarForm() {
         },
       });
 
-      if (!response.ok) throw new Error("Failed to upload image");
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
 
       await updateTeamMutation.mutateAsync({
         id: team.id,

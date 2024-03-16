@@ -23,7 +23,8 @@ import {
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -90,7 +91,9 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
     }
   };
 
-  if (teamMembership?.role !== "OWNER") return null;
+  if (teamMembership?.role !== "OWNER") {
+    return null;
+  }
 
   return (
     <Card>

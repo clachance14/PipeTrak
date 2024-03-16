@@ -15,7 +15,7 @@ export function VerifyTokenView() {
   const searchParams = useSearchParams();
   const { reloadUser } = useUser();
 
-  const token = searchParams.get("token") || "";
+  const token = searchParams.get("token") ?? "";
 
   const verifyTokenMutation = apiClient.auth.verifyToken.useMutation();
 
@@ -25,24 +25,26 @@ export function VerifyTokenView() {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         await verifyTokenMutation.mutateAsync({ token });
         setTokenVerified(true);
         await reloadUser();
-      } catch (e) {
       } finally {
         setLoading(false);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
         <Icon.spinner className="h-8 w-8 animate-spin" />
       </div>
     );
+  }
 
   // TODO: Add texts for invalid token
 

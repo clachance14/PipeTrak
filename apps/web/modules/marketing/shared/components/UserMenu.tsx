@@ -60,7 +60,9 @@ export function UserMenu() {
     },
   ];
 
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
   const { name, email, avatarUrl } = user;
 
@@ -155,7 +157,11 @@ export function UserMenu() {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://docs.supastarter.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Icon.docs className="mr-2 h-4 w-4" />
             {t("dashboard.userMenu.documentation")}
           </a>

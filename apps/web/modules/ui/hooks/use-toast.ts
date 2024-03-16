@@ -1,7 +1,8 @@
 "use client";
 
-import { JSXElementConstructor, useEffect, useState } from "react";
-import { ToastActionElement, ToastProps } from "../components/toast";
+import type { JSXElementConstructor } from "react";
+import { useEffect, useState } from "react";
+import type { ToastActionElement, ToastProps } from "../components/toast";
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
@@ -123,7 +124,7 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
-const listeners: Array<(state: State) => void> = [];
+const listeners: ((state: State) => void)[] = [];
 
 let memoryState: State = { toasts: [] };
 
@@ -153,7 +154,9 @@ function toast({ ...props }: Toast) {
       id,
       open: true,
       onOpenChange: (open) => {
-        if (!open) dismiss();
+        if (!open) {
+          dismiss();
+        }
       },
     },
   });

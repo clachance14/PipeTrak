@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/components/select";
-import { TeamMemberRoleType } from "database";
+import type { TeamMemberRoleType } from "database";
 import { useTranslations } from "next-intl";
 
 export function TeamRoleSelect({

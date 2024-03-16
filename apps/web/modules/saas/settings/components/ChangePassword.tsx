@@ -23,7 +23,7 @@ export function ChangePasswordForm() {
       setPassword("");
       router.refresh();
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         variant: "error",
         title: t("settings.notifications.passwordNotUpdated"),

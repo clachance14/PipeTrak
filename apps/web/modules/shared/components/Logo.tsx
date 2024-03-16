@@ -1,5 +1,4 @@
 export function Logo({
-  className,
   withLabel = true,
 }: {
   className?: string;

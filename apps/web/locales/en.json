@@ -55,6 +55,10 @@
       "title": "Invalid token"
     },
     "login": {
+      "modes": {
+        "magicLink": "Magic link",
+        "password": "Password"
+      },
       "createAnAccount": "Create an account",
       "dontHaveAnAccount": "Don't have an account yet?",
       "email": "Email",

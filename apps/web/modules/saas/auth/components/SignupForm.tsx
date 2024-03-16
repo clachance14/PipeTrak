@@ -10,7 +10,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
@@ -28,7 +29,7 @@ export function SignupForm() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, isSubmitted, isSubmitSuccessful, errors },
+    formState: { isSubmitting, isSubmitted },
     setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -49,7 +50,10 @@ export function SignupForm() {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (email) setValue("email", email);
+    if (email) {
+      setValue("email", email);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({
@@ -69,9 +73,12 @@ export function SignupForm() {
       const redirectSearchParams = new URLSearchParams();
       redirectSearchParams.set("type", "SIGNUP");
       redirectSearchParams.set("redirectTo", redirectTo);
-      if (invitationCode)
+      if (invitationCode) {
         redirectSearchParams.set("invitationCode", invitationCode);
-      if (email) redirectSearchParams.set("identifier", email);
+      }
+      if (email) {
+        redirectSearchParams.set("identifier", email);
+      }
 
       router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {

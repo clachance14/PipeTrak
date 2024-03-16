@@ -9,10 +9,14 @@ export function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    if (!Boolean(Cookies.get("consent"))) setShowBanner(true);
+    if (!Cookies.get("consent")) {
+      setShowBanner(true);
+    }
   }, []);
 
-  if (!showBanner) return null;
+  if (!showBanner) {
+    return null;
+  }
 
   const handleAllow = () => {
     Cookies.set("consent", "true", { expires: 30 });

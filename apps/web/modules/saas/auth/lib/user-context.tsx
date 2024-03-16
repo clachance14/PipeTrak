@@ -3,28 +3,29 @@
 import { apiClient } from "@shared/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
+import type { PropsWithChildren } from "react";
+import { createContext, useEffect, useState } from "react";
 
 type User = ApiOutput["auth"]["user"];
 type TeamMembership = NonNullable<
   NonNullable<ApiOutput["auth"]["user"]>["teamMemberships"]
 >[number];
 
-type UserContext = {
+interface UserContext {
   user: User;
   reloadUser: () => Promise<void>;
   logout: () => Promise<void>;
   loaded: boolean;
   teamMembership: TeamMembership | null;
-};
+}
 
 const authBroadcastChannel = new BroadcastChannel("auth");
-type AuthEvent = {
+interface AuthEvent {
   type: "loaded" | "logout";
   user: User | null;
-};
+}
 
 export const userContext = createContext<UserContext>({
   user: null,
@@ -69,23 +70,28 @@ export function UserContextProvider({
   };
 
   useEffect(() => {
-    if (userQuery.data) setUser(userQuery.data);
+    if (userQuery.data) {
+      setUser(userQuery.data);
+    }
   }, [userQuery.data]);
 
   useEffect(() => {
-    if (userQuery.isSuccess) setLoaded(true);
+    if (userQuery.isSuccess) {
+      setLoaded(true);
+    }
   }, [userQuery.isSuccess]);
 
   useEffect(() => {
-    if (user && loaded)
+    if (user && loaded) {
       authBroadcastChannel.postMessage({
         type: "loaded",
         user: user,
       });
+    }
   }, [user, loaded]);
 
   useEffect(() => {
-    const handleAuthEvent = async (event: MessageEvent<AuthEvent>) => {
+    const handleAuthEvent = (event: MessageEvent<AuthEvent>) => {
       if (JSON.stringify(event.data.user) !== JSON.stringify(user)) {
         if (event.data.type === "logout") {
           queryClient.removeQueries({ queryKey: getQueryKey(apiClient.auth) });
@@ -101,6 +107,7 @@ export function UserContextProvider({
 
     return () =>
       authBroadcastChannel.removeEventListener("message", handleAuthEvent);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

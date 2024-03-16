@@ -27,3 +27,5 @@ export const TeamAvatar = forwardRef<
     </Avatar>
   );
 });
+
+TeamAvatar.displayName = "TeamAvatar";

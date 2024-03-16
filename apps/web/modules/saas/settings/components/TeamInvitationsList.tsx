@@ -9,15 +9,17 @@ import {
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useTranslations } from "next-intl";
 
-import {
+import type {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -26,7 +28,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
@@ -63,7 +65,9 @@ export function TeamInvitationsList({
             <TeamRoleSelect
               value={row.original.role}
               disabled
-              onSelect={() => {}}
+              onSelect={() => {
+                return;
+              }}
             />
 
             {teamMembership?.role === "OWNER" && (

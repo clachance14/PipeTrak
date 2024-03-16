@@ -2,10 +2,12 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { PrismaClient } from "database";
 import type { User } from "lucia";
 import { Lucia } from "lucia";
-import type { DatabaseSessionAttributes, DatabaseUserAttributes } from "../types";
+import type {
+  DatabaseSessionAttributes,
+  DatabaseUserAttributes,
+} from "../types";
 
 declare module "lucia" {
-   
   interface Register {
     Lucia: typeof lucia;
     DatabaseSessionAttributes: DatabaseSessionAttributes;

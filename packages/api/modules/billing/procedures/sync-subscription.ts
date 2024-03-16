@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import type { Subscription} from "database";
+import type { Subscription } from "database";
 import { SubscriptionSchema, db } from "database";
 import { publicProcedure } from "../../../trpc/base";
 

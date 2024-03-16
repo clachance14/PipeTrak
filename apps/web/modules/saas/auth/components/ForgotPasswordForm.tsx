@@ -11,7 +11,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -47,7 +48,9 @@ export function ForgotPasswordForm() {
 
       const redirectSearchParams = new URLSearchParams();
       redirectSearchParams.set("type", "PASSWORD_RESET");
-      if (email) redirectSearchParams.set("identifier", email);
+      if (email) {
+        redirectSearchParams.set("identifier", email);
+      }
       redirectSearchParams.set("redirectTo", "/app/settings/account/general");
       router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
     } catch (e) {

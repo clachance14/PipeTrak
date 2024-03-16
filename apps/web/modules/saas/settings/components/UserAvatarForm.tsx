@@ -25,7 +25,7 @@ export function UserAvatarForm() {
   const updateUserMutation = apiClient.auth.update.useMutation();
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: async (acceptedFiles) => {
+    onDrop: (acceptedFiles) => {
       setImage(acceptedFiles[0]);
       setCropDialogOpen(true);
     },
@@ -36,10 +36,14 @@ export function UserAvatarForm() {
     multiple: false,
   });
 
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
   const onCrop = async (croppedImageData: Blob | null) => {
-    if (!croppedImageData) return;
+    if (!croppedImageData) {
+      return;
+    }
 
     setUploading(true);
     try {
@@ -57,7 +61,9 @@ export function UserAvatarForm() {
         },
       });
 
-      if (!response.ok) throw new Error("Failed to upload image");
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
 
       await updateUserMutation.mutateAsync({
         avatarUrl: path,

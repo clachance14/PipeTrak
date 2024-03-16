@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Icon } from "@ui/components/icon";
-import { Team } from "database";
+import type { Team } from "database";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { CreateTeamDialog } from "./CreateTeamDialog";
@@ -33,13 +33,17 @@ export function TeamSelect({
   const activeTeam = teams.find((team) => team.id === teamMembership?.teamId);
 
   const switchTeam = (teamId: string) => {
-    if (!activeTeam) return;
+    if (!activeTeam) {
+      return;
+    }
 
     updateCurrentTeamIdCookie(teamId);
     location.reload();
   };
 
-  if (!activeTeam) return null;
+  if (!activeTeam) {
+    return null;
+  }
 
   return (
     <div className={className}>

@@ -11,7 +11,6 @@ export const generateProductNames = protectedProcedure
   .output(z.array(z.string()))
   .query(async ({ input: { topic } }) => {
     const openai = new OpenAI({
-       
       apiKey: process.env.OPENAI_API_KEY!,
     });
 

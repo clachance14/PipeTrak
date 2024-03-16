@@ -17,11 +17,11 @@ export function Footer() {
             Blog
           </Link>
 
-          <a href="#" className="block">
+          <a href="#features" className="block">
             Features
           </a>
 
-          <a href="#" className="block">
+          <a href="/pricing" className="block">
             Pricing
           </a>
         </div>
@@ -34,10 +34,6 @@ export function Footer() {
           <Link href="/legal/terms" className="block">
             Terms and conditions
           </Link>
-
-          <a href="#" className="block">
-            Contact
-          </a>
         </div>
       </div>
     </footer>

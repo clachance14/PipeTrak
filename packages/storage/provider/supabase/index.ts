@@ -1,5 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
-import type { GetSignedUploadUrlHandler, GetSignedUrlHander } from "../../types";
+import type {
+  GetSignedUploadUrlHandler,
+  GetSignedUrlHander,
+} from "../../types";
 
 let supabaseClient: ReturnType<typeof createClient> | null = null;
 const getSupabaseAdminClient = () => {
@@ -12,8 +15,7 @@ const getSupabaseAdminClient = () => {
     throw new Error("Missing env variable NEXT_PUBLIC_SUPABASE_URL");
   }
 
-  const supabaseServiceRoleKey = process.env
-    .SUPABASE_SERVICE_ROLE_KEY!;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
   if (!supabaseServiceRoleKey) {
     throw new Error("Missing env variable SUPABASE_SERVICE_ROLE_KEY");
   }

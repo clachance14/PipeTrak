@@ -8,7 +8,8 @@ import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 
 import { useTranslations } from "next-intl";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -23,7 +24,7 @@ export function Newsletter() {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitSuccessful },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
@@ -31,7 +32,9 @@ export function Newsletter() {
   const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
     try {
       await newsletterSignupMutation.mutateAsync({ email });
-    } catch {}
+    } catch {
+      // TODO: handle error
+    }
   };
 
   return (

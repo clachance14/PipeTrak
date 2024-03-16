@@ -1,7 +1,7 @@
 "use client";
 
 import { PricingTable as PricingTablePrimitive } from "@shared/components/PricingTable";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 

@@ -43,6 +43,9 @@ const nextConfig = {
     config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
     return config;
   },
+  eslint: {
+    dirs: ["app", "cypress", "modules"],
+  },
 };
 
 module.exports = withNextIntl(withContentCollections(nextConfig));

@@ -35,7 +35,9 @@ export function PauseSubscriptionButton({ id }: { id: string }) {
   const pauseSubscription = async () => {
     try {
       await pauseSubscriptionMutation.mutateAsync({ id });
-    } catch {}
+    } catch {
+      // TODO: add error notification
+    }
   };
 
   return (

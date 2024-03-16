@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@ui/components/tabs";
+import { useTranslations } from "next-intl";
 
 export default function SigninModeSwitch({
   activeMode,
@@ -11,25 +12,15 @@ export default function SigninModeSwitch({
   onChange: (mode: string) => void;
   className?: string;
 }) {
-  const modes = [
-    {
-      value: "magic-link",
-      label: "Magic Link",
-    },
-    {
-      value: "password",
-      label: "Password",
-    },
-  ];
-
+  const t = useTranslations();
   return (
     <Tabs value={activeMode} onValueChange={onChange} className={className}>
       <TabsList className="w-full">
         <TabsTrigger value="magic-link" className="flex-1">
-          Magic Link
+          {t("auth.login.modes.magicLink")}
         </TabsTrigger>
         <TabsTrigger value="password" className="flex-1">
-          Password
+          {t("auth.login.modes.password")}
         </TabsTrigger>
       </TabsList>
     </Tabs>

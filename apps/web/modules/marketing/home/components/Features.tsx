@@ -2,8 +2,6 @@ import Image from "next/image";
 
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
-import heroDarkImage from "/public/images/hero-dark.svg";
-import heroImage from "/public/images/hero.svg";
 
 export function Features() {
   return (
@@ -24,12 +22,12 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12">
               <Image
-                src={heroImage}
+                src="/hero.svg"
                 className="block dark:hidden"
                 alt="Feature 1"
               />
               <Image
-                src={heroDarkImage}
+                src="hero-dark.svg"
                 className="hidden dark:block"
                 alt="Feature 1"
               />
@@ -64,14 +62,14 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12 lg:order-2">
               <Image
-                src={heroImage}
+                src="/hero.svg"
                 className="block dark:hidden"
-                alt="Feature 2"
+                alt="Feature 1"
               />
               <Image
-                src={heroDarkImage}
+                src="hero-dark.svg"
                 className="hidden dark:block"
-                alt="Feature 2"
+                alt="Feature 1"
               />
             </div>
 
@@ -104,14 +102,14 @@ export function Features() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div className="bg-primary/10 rounded-2xl p-12 ">
               <Image
-                src={heroImage}
+                src="/hero.svg"
                 className="block dark:hidden"
-                alt="Feature 3"
+                alt="Feature 1"
               />
               <Image
-                src={heroDarkImage}
+                src="hero-dark.svg"
                 className="hidden dark:block"
-                alt="Feature 3"
+                alt="Feature 1"
               />
             </div>
 

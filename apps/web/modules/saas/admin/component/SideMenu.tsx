@@ -7,11 +7,11 @@ import { cn } from "@ui/lib";
 export function SideMenu({
   menuItems,
 }: {
-  menuItems: Array<{
+  menuItems: {
     title: string;
     href: string;
     icon: keyof typeof Icon;
-  }>;
+  }[];
 }) {
   const pathname = usePathname();
 

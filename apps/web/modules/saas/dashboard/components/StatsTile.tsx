@@ -19,7 +19,6 @@ export function StatsTile({
   title,
   value,
   context,
-  icon,
   trend,
   valueFormat,
 }: Props) {
@@ -44,6 +43,7 @@ export function StatsTile({
     else {
       return format.number(value);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, valueFormat, format]);
 
   const formattedTrend = useMemo(() => {

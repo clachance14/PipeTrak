@@ -23,11 +23,17 @@ export function ProductNameGenerator() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          refetch();
+          await refetch();
         }}
       >
-        <label className="mb-2 block font-bold">Topic</label>
-        <Input value={topic} onChange={(e) => setTopic(e.target.value)} />
+        <label htmlFor="topic" className="mb-2 block font-bold">
+          Topic
+        </label>
+        <Input
+          id="topic"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+        />
         <Button className="mt-4 w-full" loading={isFetching}>
           <Icon.magic className="mr-2 h-4 w-4" />
           Generate product names

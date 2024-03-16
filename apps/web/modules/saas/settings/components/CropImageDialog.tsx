@@ -9,7 +9,8 @@ import {
 } from "@ui/components/dialog";
 import "cropperjs/dist/cropper.css";
 import { useMemo, useRef } from "react";
-import Cropper, { ReactCropperElement } from "react-cropper";
+import type { ReactCropperElement } from "react-cropper";
+import Cropper from "react-cropper";
 
 export function CropImageDialog({
   image,

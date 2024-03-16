@@ -2,7 +2,7 @@
 
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useLocaleCurrency } from "@shared/hooks/locale-currency";
-import { ApiOutput } from "api/trpc/router";
+import type { ApiOutput } from "api/trpc/router";
 import { useFormatter, useTranslations } from "next-intl";
 import { CancelSubscriptionButton } from "./CancelSubscriptionButton";
 import { CustomerPortalButton } from "./CustomerPortalButton";
@@ -71,7 +71,7 @@ export function SubscriptionOverview({
             })}
             /
             {t(
-              `settings.billing.subscription.${subscriptionVariant.interval}` as any,
+              `settings.billing.subscription.${subscriptionVariant.interval}` as never,
             )}
             )
           </small>

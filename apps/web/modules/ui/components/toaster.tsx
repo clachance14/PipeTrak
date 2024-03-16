@@ -1,13 +1,13 @@
 "use client";
 
-import { JSXElementConstructor } from "react";
+import type { JSXElementConstructor } from "react";
 import { useToast } from "../hooks/use-toast";
 import { Icon } from "./icon";
+import type { ToastProps } from "./toast";
 import {
   Toast,
   ToastClose,
   ToastDescription,
-  ToastProps,
   ToastProvider,
   ToastTitle,
   ToastViewport,

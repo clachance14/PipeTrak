@@ -33,7 +33,9 @@ export function CustomerPortalButton({
       });
 
       window.location.href = url;
-    } catch {}
+    } catch {
+      // TODO: add error notification
+    }
   };
 
   return (

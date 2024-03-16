@@ -11,7 +11,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "../hooks/use-user";
 import SigninModeSwitch from "./SigninModeSwitch";
@@ -57,7 +58,10 @@ export function LoginForm() {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (email) setValue("email", email);
+    if (email) {
+      setValue("email", email);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email]);
 
   useEffect(() => {
@@ -74,7 +78,10 @@ export function LoginForm() {
 
   // redirect when user has been loaded
   useEffect(() => {
-    if (user && loaded) handleRedirect();
+    if (user && loaded) {
+      handleRedirect();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loaded]);
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
@@ -99,9 +106,12 @@ export function LoginForm() {
         const redirectSearchParams = new URLSearchParams();
         redirectSearchParams.set("type", "LOGIN");
         redirectSearchParams.set("redirectTo", redirectTo);
-        if (invitationCode)
+        if (invitationCode) {
           redirectSearchParams.set("invitationCode", invitationCode);
-        if (email) redirectSearchParams.set("identifier", email);
+        }
+        if (email) {
+          redirectSearchParams.set("identifier", email);
+        }
         router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
       }
     } catch (e) {

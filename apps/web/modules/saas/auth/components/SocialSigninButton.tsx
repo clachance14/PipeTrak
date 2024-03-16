@@ -3,7 +3,8 @@
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { useTranslations } from "next-intl";
-import React, { JSXElementConstructor } from "react";
+import type { JSXElementConstructor } from "react";
+import React from "react";
 
 const providers: Record<
   string,

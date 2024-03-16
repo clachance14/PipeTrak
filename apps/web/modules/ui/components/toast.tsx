@@ -2,7 +2,8 @@
 
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cn } from "@ui/lib";
-import { VariantProps, cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import * as React from "react";
 import { Icon } from "./icon";
 

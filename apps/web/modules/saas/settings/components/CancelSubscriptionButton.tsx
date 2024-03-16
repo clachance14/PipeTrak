@@ -41,7 +41,9 @@ export function CancelSubscriptionButton({
   const cancelSubscription = async () => {
     try {
       await cancelSubscriptionMutation.mutateAsync({ id });
-    } catch {}
+    } catch {
+      // TODO: add error notification
+    }
   };
 
   return (

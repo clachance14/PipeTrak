@@ -9,10 +9,11 @@ type MdxModule = Awaited<ReturnType<typeof run>>;
 
 export function MdxContent({ code }: { code: string }) {
   const [mdxModule, setMdxModule] = useState<MdxModule>();
-  const Content = mdxModule && mdxModule.default;
+  const Content = mdxModule?.default;
 
   useEffect(
     function () {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async function () {
         setMdxModule(
           await run(code, { ...runtime, baseUrl: import.meta.url, Fragment }),

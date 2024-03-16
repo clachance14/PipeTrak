@@ -1,6 +1,6 @@
 "use client";
 
-import { type Post } from "content-collections";
+import type { Post } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
 

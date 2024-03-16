@@ -5,8 +5,8 @@ export function useLocaleCurrency() {
   const locale = useLocale();
   const localeCurrency =
     Object.entries(appConfig.i18n.localeCurrencies).find(
-      ([key, value]) => key === locale,
-    )?.[1] || "USD";
+      ([key]) => key === locale,
+    )?.[1] ?? "USD";
 
   return localeCurrency;
 }

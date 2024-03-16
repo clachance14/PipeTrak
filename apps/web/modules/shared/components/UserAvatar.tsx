@@ -29,3 +29,5 @@ export const UserAvatar = forwardRef<
     </Avatar>
   );
 });
+
+UserAvatar.displayName = "UserAvatar";
