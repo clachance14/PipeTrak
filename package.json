@@ -23,6 +23,6 @@
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "^1.12.4",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }
