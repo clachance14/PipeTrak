@@ -98,7 +98,7 @@ export async function googleCallbackRouteHandler(req: Request) {
             },
           },
           {
-            email: googleUser.email,
+            email: googleUser.email.toLowerCase(),
           },
         ],
       },
@@ -144,7 +144,7 @@ export async function googleCallbackRouteHandler(req: Request) {
 
     const newUser = await db.user.create({
       data: {
-        email: googleUser.email,
+        email: googleUser.email.toLowerCase(),
         emailVerified: true,
         name: googleUser.name,
         avatarUrl: googleUser.picture,

@@ -70,8 +70,9 @@ export async function githubCallbackRouteHandler(req: Request) {
     const githubUser = (await githubUserResponse.json()) as GitHubUser;
     const emails = (await emailsResponse.json()) as GithubUserEmails;
 
-    githubUser.email =
-      githubUser.email ?? emails.find((email) => email.primary)?.email;
+    githubUser.email = (
+      githubUser.email ?? emails.find((email) => email.primary)?.email
+    ).toLowerCase();
 
     const existingUser = await db.user.findFirst({
       where: {
@@ -131,7 +132,7 @@ export async function githubCallbackRouteHandler(req: Request) {
 
     const newUser = await db.user.create({
       data: {
-        email: githubUser.email,
+        email: githubUser.email.toLowerCase(),
         name: githubUser.name ?? githubUser.login,
         avatarUrl: githubUser.avatar_url,
         emailVerified: true,
