@@ -1,5 +1,5 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { compile } from "@mdx-js/mdx";
+import { compileMDX } from "@content-collections/mdx";
 
 const posts = defineCollection({
   name: "posts",
@@ -16,17 +16,12 @@ const posts = defineCollection({
     tags: z.array(z.string()),
     published: z.boolean(),
   }),
-  transform: async ({ content, _meta, ...data }) => {
-    const body = String(
-      await compile(content, {
-        outputFormat: "function-body",
-      }),
-    );
-
-    const slug = _meta.path;
+  transform: async (document, context) => {
+    const body = await compileMDX(context, document);
+    const slug = document._meta.path;
 
     return {
-      ...data,
+      ...document,
       body,
       slug,
     };
@@ -40,17 +35,13 @@ const legalPages = defineCollection({
   schema: (z) => ({
     title: z.string(),
   }),
-  transform: async ({ content, _meta, ...data }) => {
-    const body = String(
-      await compile(content, {
-        outputFormat: "function-body",
-      }),
-    );
+  transform: async (document, context) => {
+    const body = await compileMDX(context, document);
 
-    const slug = _meta.path;
+    const slug = document._meta.path;
 
     return {
-      ...data,
+      ...document,
       body,
       slug,
     };
