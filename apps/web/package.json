@@ -68,7 +68,7 @@
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
-    "postcss": "8.4.37",
+    "postcss": "8.4.38",
     "start-server-and-test": "^2.0.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.4.1",
