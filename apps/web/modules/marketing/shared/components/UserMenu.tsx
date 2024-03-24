@@ -67,7 +67,7 @@ export function UserMenu() {
   const { name, email, avatarUrl } = user;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
           className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2"
