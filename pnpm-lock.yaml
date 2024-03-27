@@ -84,11 +84,11 @@ importers:
         specifier: ^8.14.0
         version: 8.14.0(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
-        specifier: 11.0.0-next.320
-        version: 11.0.0-next.320(@trpc/server@11.0.0-next.320)
+        specifier: 11.0.0-next.326
+        version: 11.0.0-next.326
       '@trpc/react-query':
         specifier: 11.0.0-next.320
-        version: 11.0.0-next.320(@tanstack/react-query@5.28.4)(@trpc/client@11.0.0-next.320)(@trpc/server@11.0.0-next.320)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next.320(@tanstack/react-query@5.28.4)(@trpc/client@11.0.0-next.326)(react-dom@18.2.0)(react@18.2.0)
       api:
         specifier: workspace:*
         version: link:../../packages/api
@@ -5432,15 +5432,13 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /@trpc/client@11.0.0-next.320(@trpc/server@11.0.0-next.320):
-    resolution: {integrity: sha512-6VuHBXOLpVYflC75ktgMDexq6RkCNkHmPUWxdpi85O+zEk3miCJMYdlFNRO40d78HC0pTmoyuiQzyAX8J4+m3w==}
+  /@trpc/client@11.0.0-next.326:
+    resolution: {integrity: sha512-+Qv+UQZ6vOTW3IWfreC68S0GXkgVadgdt5zqYfYTBWJo4igtLLdf2C6LUlCVRjklEhx92yqT3cHBUrve7/ILPA==}
     peerDependencies:
-      '@trpc/server': 11.0.0-next.320+f3a237ccb
-    dependencies:
-      '@trpc/server': 11.0.0-next.320
+      '@trpc/server': 11.0.0-next.326+1bd1056c4
     dev: false
 
-  /@trpc/react-query@11.0.0-next.320(@tanstack/react-query@5.28.4)(@trpc/client@11.0.0-next.320)(@trpc/server@11.0.0-next.320)(react-dom@18.2.0)(react@18.2.0):
+  /@trpc/react-query@11.0.0-next.320(@tanstack/react-query@5.28.4)(@trpc/client@11.0.0-next.326)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-r7yECFJm7U+2Wcm/KgzNUEB0BSajJnjEcZZctXlbvvVUTVrYMyEjCh5cjJDoZfRuvrwLmJbhFSg+ytzXXJkTLw==}
     peerDependencies:
       '@tanstack/react-query': ^5.25.0
@@ -5450,8 +5448,7 @@ packages:
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.28.4(react@18.2.0)
-      '@trpc/client': 11.0.0-next.320(@trpc/server@11.0.0-next.320)
-      '@trpc/server': 11.0.0-next.320
+      '@trpc/client': 11.0.0-next.326
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
