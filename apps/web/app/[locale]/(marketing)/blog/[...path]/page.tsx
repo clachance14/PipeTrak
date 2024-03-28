@@ -1,4 +1,5 @@
 import { PostContent } from "@marketing/blog/components/PostContent";
+import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allPosts } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,15 +7,19 @@ import { redirect } from "next/navigation";
 import { getBaseUrl } from "utils";
 
 interface Params {
-  slug: string;
+  path: string;
+  locale: string;
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params: { path, locale },
 }: {
   params: Params;
 }) {
-  const post = allPosts.find((post) => post.slug === slug);
+  const activePath = getActivePathFromUrlParam(path);
+  const post = allPosts.find(
+    (post) => post.path === activePath && locale === post.locale,
+  );
 
   return {
     title: post?.title,
@@ -30,11 +35,14 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({
-  params: { slug },
+  params: { path, locale },
 }: {
   params: Params;
 }) {
-  const post = allPosts.find((post) => post.slug === slug);
+  const activePath = getActivePathFromUrlParam(path);
+  const post = allPosts.find(
+    (post) => post.path === activePath && locale === post.locale,
+  );
 
   if (!post) {
     redirect("/blog");

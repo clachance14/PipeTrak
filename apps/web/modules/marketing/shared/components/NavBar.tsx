@@ -56,6 +56,10 @@ export function NavBar() {
       label: t("common.menu.blog"),
       href: "/blog",
     },
+    {
+      label: t("common.menu.docs"),
+      href: "/docs",
+    },
   ];
 
   return (

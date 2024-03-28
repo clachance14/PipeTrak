@@ -1,32 +1,47 @@
 import { PostContent } from "@marketing/blog/components/PostContent";
+import {
+  getActivePathFromUrlParam,
+  getLocalizedDocumentWithFallback,
+} from "@shared/lib/content";
 import { allLegalPages } from "content-collections";
 import { redirect } from "next/navigation";
 
 interface Params {
-  slug: string;
+  path: string;
+  locale: string;
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params: { path, locale },
 }: {
   params: Params;
 }) {
-  const post = allLegalPages.find((post) => post.slug === slug);
+  const activePath = getActivePathFromUrlParam(path);
+  const page = getLocalizedDocumentWithFallback(
+    allLegalPages,
+    activePath,
+    locale,
+  );
 
   return {
-    title: post?.title,
+    title: page?.title,
     openGraph: {
-      title: post?.title,
+      title: page?.title,
     },
   };
 }
 
 export default async function BlogPostPage({
-  params: { slug },
+  params: { path, locale },
 }: {
   params: Params;
 }) {
-  const page = allLegalPages.find((page) => page.slug === slug);
+  const activePath = getActivePathFromUrlParam(path);
+  const page = getLocalizedDocumentWithFallback(
+    allLegalPages,
+    activePath,
+    locale,
+  );
 
   if (!page) {
     redirect("/");

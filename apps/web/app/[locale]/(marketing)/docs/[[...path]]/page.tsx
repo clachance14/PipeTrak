@@ -1,0 +1,49 @@
+import { MDXContent } from "@content-collections/mdx/react";
+import { mdxComponents } from "@marketing/blog/utils/mdx-components";
+import { TableOfContents } from "@marketing/shared/components/TableOfContents";
+import { getActivePathFromUrlParam } from "@shared/lib/content";
+import { allDocumentationPages } from "content-collections";
+import { useLocale } from "next-intl";
+import { redirect } from "next/navigation";
+
+interface Params {
+  path: string | string[];
+}
+
+export default async function DocsPage({
+  params: { path },
+}: {
+  params: Params;
+}) {
+  const activePath = getActivePathFromUrlParam(path);
+  const locale = useLocale();
+
+  const page = allDocumentationPages
+    .filter((page) => page.path === activePath)
+    .sort((page) => (page.locale === locale ? -1 : 1))[0];
+
+  if (!page) {
+    redirect("/");
+  }
+
+  const { title, subtitle, body, toc } = page;
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold">{title}</h1>
+
+        {subtitle && (
+          <h2 className="text-foreground/60 mt-3 text-2xl">{subtitle}</h2>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-6 md:flex-row-reverse">
+        {toc.length > 0 && <TableOfContents items={toc} />}
+        <div className="flex-1">
+          <MDXContent code={body} components={mdxComponents} />
+        </div>
+      </div>
+    </div>
+  );
+}
