@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^4.0.0",
-    "arctic": "^1.2.1",
+    "arctic": "^1.4.0",
     "database": "workspace:*",
     "lucia": "^3.0.1",
     "mail": "workspace:*",
