@@ -1,6 +1,6 @@
 import { PostListItem } from "@marketing/blog/components/PostListItem";
 import { allPosts } from "content-collections";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -11,6 +11,7 @@ export async function generateMetadata() {
 }
 
 export default function BlogListPage() {
+  const locale = useLocale();
   const t = useTranslations();
 
   return (
@@ -22,12 +23,12 @@ export default function BlogListPage() {
 
       <div className="grid gap-4 md:grid-cols-2">
         {allPosts
-          .filter((post) => post.published)
+          .filter((post) => post.published && locale === post.locale)
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
           .map((post) => (
-            <PostListItem post={post} key={post.slug} />
+            <PostListItem post={post} key={post.path} />
           ))}
       </div>
     </div>

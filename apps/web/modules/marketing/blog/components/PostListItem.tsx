@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function PostListItem({ post }: { post: Post }) {
-  const { title, excerpt, authorName, image, date, slug, authorImage, tags } =
+  const { title, excerpt, authorName, image, date, path, authorImage, tags } =
     post;
 
   return (
@@ -19,7 +19,7 @@ export function PostListItem({ post }: { post: Post }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover object-center"
           />
-          <Link href={`/blog/${slug}`} className="absolute inset-0" />
+          <Link href={`/blog/${path}`} className="absolute inset-0" />
         </div>
       )}
 
@@ -36,7 +36,7 @@ export function PostListItem({ post }: { post: Post }) {
         </div>
       )}
 
-      <Link href={`/blog/${slug}`} className="text-xl font-semibold">
+      <Link href={`/blog/${path}`} className="text-xl font-semibold">
         {title}
       </Link>
       {excerpt && <p className="opacity-50">{excerpt}</p>}

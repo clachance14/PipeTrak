@@ -1,6 +1,7 @@
 import { MDXContent } from "@content-collections/mdx/react";
 import { mdxComponents } from "@marketing/blog/utils/mdx-components";
 import { TableOfContents } from "@marketing/shared/components/TableOfContents";
+import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allDocumentationPages } from "content-collections";
 import { useLocale } from "next-intl";
 import { redirect } from "next/navigation";
@@ -14,7 +15,7 @@ export default async function DocsPage({
 }: {
   params: Params;
 }) {
-  const activePath = Array.isArray(path) ? path.join("/") : path || "";
+  const activePath = getActivePathFromUrlParam(path);
   const locale = useLocale();
 
   const page = allDocumentationPages

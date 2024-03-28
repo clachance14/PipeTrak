@@ -46,12 +46,10 @@ const posts = defineCollection({
   }),
   transform: async (document, context) => {
     const body = await compileMDX(context, document);
-    const slug = document._meta.path;
 
     return {
       ...document,
       body,
-      slug,
       locale: getLocaleFromFilePath(document._meta.filePath),
       path: sanitizePath(document._meta.path),
     };
@@ -68,12 +66,9 @@ const legalPages = defineCollection({
   transform: async (document, context) => {
     const body = await compileMDX(context, document);
 
-    const slug = document._meta.path;
-
     return {
       ...document,
       body,
-      slug,
       locale: getLocaleFromFilePath(document._meta.filePath),
       path: sanitizePath(document._meta.path),
     };

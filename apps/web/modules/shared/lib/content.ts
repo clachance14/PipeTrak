@@ -122,3 +122,16 @@ export async function getContentStructure({
 
   return contentStructure;
 }
+
+export function getActivePathFromUrlParam(path: string | string[]) {
+  return Array.isArray(path) ? path.join("/") : path || "";
+}
+
+export function getLocalizedDocumentWithFallback<
+  T extends { path: string; locale: string },
+>(documents: T[], path: string, locale: string) {
+  return documents
+    .filter((post) => post.path === path)
+    .filter((page) => page.path === path)
+    .sort((page) => (page.locale === locale ? -1 : 1))[0];
+}
