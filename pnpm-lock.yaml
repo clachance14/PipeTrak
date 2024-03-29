@@ -190,8 +190,8 @@ importers:
         specifier: ^0.3.1
         version: 0.3.1
       '@content-collections/mdx':
-        specifier: ^0.1.1
-        version: 0.1.1(@content-collections/core@0.3.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^0.1.2
+        version: 0.1.2(@content-collections/core@0.3.1)(react-dom@18.2.0)(react@18.2.0)
       '@content-collections/next':
         specifier: ^0.1.3
         version: 0.1.3(@content-collections/core@0.3.1)(next@14.1.4)
@@ -1216,8 +1216,8 @@ packages:
       '@content-collections/core': 0.3.1
     dev: true
 
-  /@content-collections/mdx@0.1.1(@content-collections/core@0.3.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-WTnsqNxXC/Dt1bWf4Z3EFhVl7ca4TnUt/ZySo29ygNDipSJXVlwW1byAnaKYF/GA6WFGzubpD31Al68IWNqi1w==}
+  /@content-collections/mdx@0.1.2(@content-collections/core@0.3.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-fYo/GfunbTBdOxlUlAUXpnmKiWjoqCptNOCnpKZZagS3lcr3hy/nSkSF4pWa7KiU4qoAWoJ3MQcqReB0KdtMwQ==}
     peerDependencies:
       '@content-collections/core': 0.x
       react: ^18.0.0
