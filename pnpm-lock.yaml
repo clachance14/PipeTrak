@@ -320,8 +320,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.1(@prisma/client@5.11.0)(lucia@3.1.1)
       arctic:
-        specifier: ^1.4.0
-        version: 1.4.0
+        specifier: ^1.5.0
+        version: 1.5.0
       database:
         specifier: workspace:*
         version: link:../database
@@ -6093,8 +6093,8 @@ packages:
     resolution: {integrity: sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==}
     dev: false
 
-  /arctic@1.4.0:
-    resolution: {integrity: sha512-1EvpysJTT9ZjnwlBgJIg9M+HOcvOk/R66F5t98k2bprky6HE5VtToaU22qC5G76dy7V/h1h62tHGl29u/FAA1w==}
+  /arctic@1.5.0:
+    resolution: {integrity: sha512-ZBC3a7yFncIkeoavrOFi+Jq+Qc4ENsl1JViCMjFe2VEv30XEEHyUsWOO8MHmPFsCyRXbboWSHf+OGpc3WyR67A==}
     dependencies:
       oslo: 1.2.0
     dev: false
