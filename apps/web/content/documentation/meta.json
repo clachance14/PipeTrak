@@ -1,4 +1,6 @@
 {
-  "getting-started": "Getting Started",
-  "installation": "Installation"
+  "items": {
+    "getting-started": "Getting Started",
+    "installation": "Installation"
+  }
 }

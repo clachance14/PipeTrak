@@ -1,17 +1,9 @@
 import { appConfig } from "@config";
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
+import rehypeShiki from "@shikijs/rehype";
 import markdownToc from "markdown-toc";
 import { z } from "zod";
-
-const metaSchema = z.record(
-  z.union([
-    z.string(),
-    z.object({
-      title: z.string(),
-    }),
-  ]),
-);
 
 function sanitizePath(path: string) {
   return path
@@ -35,7 +27,7 @@ const posts = defineCollection({
   include: "**/*.{mdx,md}",
   schema: (z) => ({
     title: z.string(),
-    date: z.string().transform((val) => new Date(val)),
+    date: z.string(),
     image: z.string().optional(),
     authorName: z.string(),
     authorImage: z.string().optional(),
@@ -45,7 +37,17 @@ const posts = defineCollection({
     published: z.boolean(),
   }),
   transform: async (document, context) => {
-    const body = await compileMDX(context, document);
+    const body = await compileMDX(context, document, {
+      rehypePlugins: [
+        [
+          rehypeShiki,
+          {
+            theme: "nord",
+            langs: ["python"],
+          },
+        ],
+      ],
+    });
 
     return {
       ...document,
@@ -84,7 +86,17 @@ const documentationPages = defineCollection({
     subtitle: z.string().optional(),
   }),
   transform: async (document, context) => {
-    const body = await compileMDX(context, document);
+    const body = await compileMDX(context, document, {
+      rehypePlugins: [
+        [
+          rehypeShiki,
+          {
+            theme: "nord",
+            langs: ["python"],
+          },
+        ],
+      ],
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const toc = markdownToc(document.content).json as {
@@ -107,20 +119,20 @@ const documentationMeta = defineCollection({
   name: "documentationMeta",
   directory: "content/documentation",
   include: "**/*.json",
-  schema: () => ({}),
+  parser: "json",
+  schema: () => ({
+    items: z.record(
+      z.union([
+        z.string(),
+        z.object({
+          title: z.string(),
+        }),
+      ]),
+    ),
+  }),
   transform: async (document) => {
-    const parsedContent = JSON.parse(document.content) as object;
-
-    const schemaValidation = metaSchema.safeParse(parsedContent);
-
-    if (!schemaValidation.success) {
-      throw new Error(
-        `Invalid schema for file ${document._meta.filePath}: ${schemaValidation.error.toString()}`,
-      );
-    }
-
     return {
-      data: parsedContent as z.infer<typeof metaSchema>,
+      data: document.items,
       path: document._meta.path.split("/").slice(0, -1).join("/"),
       locale: getLocaleFromFilePath(document._meta.filePath),
     };

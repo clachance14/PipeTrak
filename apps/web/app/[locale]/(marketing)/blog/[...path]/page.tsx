@@ -112,7 +112,9 @@ export default async function BlogPostPage({
         </div>
       )}
 
-      <PostContent content={body} />
+      <div className="pb-8">
+        <PostContent content={body} />
+      </div>
     </div>
   );
 }

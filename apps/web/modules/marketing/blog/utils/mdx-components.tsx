@@ -83,10 +83,11 @@ const CustomH6 = ({ children, ...rest }: PropsWithChildren) => (
 );
 
 const CustomParagraph = ({ children, ...rest }: PropsWithChildren) => (
-  <p className="mb-4" {...rest}>
+  <p className="mb-4 leading-relaxed" {...rest}>
     {children}
   </p>
 );
+
 
 export const mdxComponents = {
   a: CustomLink,

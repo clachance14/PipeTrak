@@ -18,3 +18,7 @@
     scrollbar-width: none;
   }
 }
+
+pre.shiki {
+  @apply rounded-lg p-4;
+}

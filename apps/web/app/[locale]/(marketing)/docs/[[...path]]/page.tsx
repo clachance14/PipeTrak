@@ -38,9 +38,9 @@ export default async function DocsPage({
         )}
       </div>
 
-      <div className="flex flex-col gap-6 md:flex-row-reverse">
+      <div className="flex flex-col gap-6 lg:flex-row-reverse">
         {toc.length > 0 && <TableOfContents items={toc} />}
-        <div className="flex-1">
+        <div className="flex-1 pb-8">
           <MDXContent code={body} components={mdxComponents} />
         </div>
       </div>
