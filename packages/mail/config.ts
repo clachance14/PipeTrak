@@ -1,3 +1,3 @@
 export const config = {
-  from: "<your-from-email-here>",
+  from: "contact@supastarter.dev",
 };
