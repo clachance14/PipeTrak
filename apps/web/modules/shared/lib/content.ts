@@ -5,9 +5,9 @@ export type ContentStructureItem = {
   path: string;
   children: ContentStructureItem[];
   isPage: boolean;
-}
+};
 
-export async function getContentStructure({
+export function getContentStructure({
   documents,
   meta,
   locale,

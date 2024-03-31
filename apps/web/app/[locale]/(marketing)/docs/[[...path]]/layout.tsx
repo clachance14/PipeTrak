@@ -15,7 +15,7 @@ export default async function DocsLayout({
 
   const activePath = Array.isArray(path) ? path.join("/") : path || "";
 
-  const contentStructure = await getContentStructure({
+  const contentStructure = getContentStructure({
     documents: allDocumentationPages,
     meta: allDocumentationMetas,
     locale,
