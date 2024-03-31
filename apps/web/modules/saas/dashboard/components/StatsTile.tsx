@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { useFormatter } from "next-intl";
 import { useMemo } from "react";
 
-interface Props {
+type Props = {
   title: string;
   value: number;
   valueFormat: "currency" | "number" | "percentage";

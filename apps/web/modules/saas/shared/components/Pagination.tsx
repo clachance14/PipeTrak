@@ -1,7 +1,7 @@
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 
-export interface PaginatioProps {
+export type PaginatioProps = {
   className?: string;
   totalItems: number;
   itemsPerPage: number;

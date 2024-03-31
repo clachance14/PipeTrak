@@ -6,7 +6,7 @@ import { allDocumentationPages } from "content-collections";
 import { useLocale } from "next-intl";
 import { redirect } from "next/navigation";
 
-interface Params {
+type Params = {
   path: string | string[];
 }
 

@@ -13,7 +13,7 @@ type TeamMembership = NonNullable<
   NonNullable<ApiOutput["auth"]["user"]>["teamMemberships"]
 >[number];
 
-interface UserContext {
+type UserContext = {
   user: User;
   reloadUser: () => Promise<void>;
   logout: () => Promise<void>;
@@ -22,7 +22,7 @@ interface UserContext {
 }
 
 const authBroadcastChannel = new BroadcastChannel("auth");
-interface AuthEvent {
+type AuthEvent = {
   type: "loaded" | "logout";
   user: User | null;
 }

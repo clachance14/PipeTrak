@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getBaseUrl } from "utils";
 
-interface Params {
+type Params = {
   path: string;
   locale: string;
 }

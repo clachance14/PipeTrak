@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-export interface ContentStructureItem {
+export type ContentStructureItem = {
   label: string;
   path: string;
   children: ContentStructureItem[];

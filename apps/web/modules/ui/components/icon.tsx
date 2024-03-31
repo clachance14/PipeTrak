@@ -54,7 +54,7 @@ import {
   X,
 } from "lucide-react";
 
-interface IconProps {
+type IconProps = {
   className?: string;
 }
 

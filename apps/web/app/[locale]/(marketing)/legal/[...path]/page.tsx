@@ -6,7 +6,7 @@ import {
 import { allLegalPages } from "content-collections";
 import { redirect } from "next/navigation";
 
-interface Params {
+type Params = {
   path: string;
   locale: string;
 }

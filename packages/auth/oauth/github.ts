@@ -16,7 +16,7 @@ type GitHubUser = {
   name: string;
   login: string;
   avatar_url: string;
-}
+};
 
 type GithubUserEmails = {
   email: string;
@@ -71,7 +71,9 @@ export async function githubCallbackRouteHandler(req: Request) {
     const emails = (await emailsResponse.json()) as GithubUserEmails;
 
     githubUser.email = (
-      githubUser.email ?? emails.find((email) => email.primary)?.email
+      githubUser.email ??
+      emails.find((email) => email.primary)?.email ??
+      ""
     ).toLowerCase();
 
     const existingUser = await db.user.findFirst({
