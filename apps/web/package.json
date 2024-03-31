@@ -72,6 +72,7 @@
     "eslint-config-custom": "workspace:*",
     "markdown-toc": "^1.2.0",
     "postcss": "8.4.38",
+    "rehype-img-size": "^1.0.1",
     "start-server-and-test": "^2.0.3",
     "tailwind-config": "workspace:*",
     "tailwindcss": "3.4.3",

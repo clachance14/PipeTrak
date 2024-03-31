@@ -1,8 +1,10 @@
 import { appConfig } from "@config";
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
+import { slugifyHeadline } from "@shared/lib/content";
 import rehypeShiki from "@shikijs/rehype";
 import markdownToc from "markdown-toc";
+import rehypeImgSize from "rehype-img-size";
 import { z } from "zod";
 
 function sanitizePath(path: string) {
@@ -95,15 +97,17 @@ const documentationPages = defineCollection({
             langs: ["python"],
           },
         ],
+        [rehypeImgSize, { dir: "public" }],
       ],
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    const toc = markdownToc(document.content).json as {
-      content: string;
-      slug: string;
-      lvl: number;
-    }[];
+    const toc =
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      markdownToc(document.content, { slugify: slugifyHeadline }).json as {
+        content: string;
+        slug: string;
+        lvl: number;
+      }[];
 
     return {
       ...document,

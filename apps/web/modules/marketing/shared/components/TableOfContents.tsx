@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 export function TableOfContents({
   items,
 }: {
@@ -12,8 +14,15 @@ export function TableOfContents({
       const elementPositionY =
         element.getBoundingClientRect().top + window.scrollY - scrollOffset;
       window.scrollTo({ top: elementPositionY, behavior: "smooth" });
+      history.pushState({}, "", `#${id}`);
     }
   };
+
+  useEffect(() => {
+    if (location.hash) {
+      scrollToSection(location.hash.substring(1));
+    }
+  }, []);
 
   return (
     <div className="w-full max-w-64 self-start rounded-lg border p-4">

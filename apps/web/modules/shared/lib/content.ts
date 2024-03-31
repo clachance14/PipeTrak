@@ -1,3 +1,5 @@
+import slugify from "slugify";
+
 export interface ContentStructureItem {
   label: string;
   path: string;
@@ -133,4 +135,14 @@ export function getLocalizedDocumentWithFallback<
   return documents
     .filter((doc) => doc.path === path)
     .sort((doc) => (doc.locale === locale ? -1 : 1))[0];
+}
+
+export function slugifyHeadline(headline: string) {
+  return slugify(headline, {
+    lower: true,
+    replacement: "-",
+    trim: true,
+    strict: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
 }
