@@ -17,7 +17,7 @@ export const googleAuth = new Google(
 
 const GOOGLE_PROIVDER_ID = "google";
 
-interface GoogleUser {
+type GoogleUser = {
   sub: string;
   email: string;
   email_verified?: boolean;

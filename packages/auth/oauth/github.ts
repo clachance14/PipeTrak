@@ -10,7 +10,7 @@ export const githubAuth = new GitHub(
 
 const GITHUB_PROIVDER_ID = "github";
 
-interface GitHubUser {
+type GitHubUser = {
   id: number;
   email: string;
   name: string;
