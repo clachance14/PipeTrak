@@ -1,8 +1,8 @@
 "use client";
 
+import { Link } from "@i18n";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
-import Link from "next/link";
 
 export function NotFound() {
   return (

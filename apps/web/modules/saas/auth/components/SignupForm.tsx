@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";

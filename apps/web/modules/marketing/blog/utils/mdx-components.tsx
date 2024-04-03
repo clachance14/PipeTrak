@@ -1,6 +1,6 @@
+import { Link } from "@i18n";
 import { slugifyHeadline } from "@shared/lib/content";
 import Image from "next/image";
-import Link from "next/link";
 import type { PropsWithChildren } from "react";
 
 const CustomImage = (props: { alt?: string; src: string }) => (

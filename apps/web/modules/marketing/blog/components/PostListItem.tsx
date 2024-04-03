@@ -1,8 +1,8 @@
 "use client";
 
+import { Link } from "@i18n";
 import type { Post } from "content-collections";
 import Image from "next/image";
-import Link from "next/link";
 
 export function PostListItem({ post }: { post: Post }) {
   const { title, excerpt, authorName, image, date, path, authorImage, tags } =

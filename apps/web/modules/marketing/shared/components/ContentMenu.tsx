@@ -1,5 +1,5 @@
+import { Link } from "@i18n";
 import type { ContentStructureItem } from "@shared/lib/content";
-import Link from "next/link";
 
 function ContentMenuItem({
   label,

@@ -1,15 +1,15 @@
+import { Link } from "@i18n";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allPosts } from "content-collections";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getBaseUrl } from "utils";
 
 type Params = {
   path: string;
   locale: string;
-}
+};
 
 export async function generateMetadata({
   params: { path, locale },
