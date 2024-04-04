@@ -202,8 +202,8 @@ importers:
         specifier: ^14.1.4
         version: 14.1.4
       '@shikijs/rehype':
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.4
+        version: 1.2.4
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
@@ -4723,25 +4723,25 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@shikijs/core@1.2.1:
-    resolution: {integrity: sha512-KaIS0H4EQ3KI2d++TjYqRNgwp8E3M/68e9veR4QtInzA7kKFgcjeiJqb80fuXW+blDy5fmd11PN9g9soz/3ANQ==}
+  /@shikijs/core@1.2.4:
+    resolution: {integrity: sha512-ClaUWpt8oTzjcF0MM1P81AeWyzc1sNSJlAjMG80CbwqbFqXSNz+NpQVUC0icobt3sZn43Sn27M4pHD/Jmp3zHw==}
     dev: true
 
-  /@shikijs/rehype@1.2.1:
-    resolution: {integrity: sha512-9ncncKvutFfZBB2qlciMRjcqNmeO2fNHseZDFNWNGfSf5qEi5TDZLW5PDsAV7Z61xcc1puZ51LigVucknvF5Fw==}
+  /@shikijs/rehype@1.2.4:
+    resolution: {integrity: sha512-g7kopA0+CcZbnudUSHGKUjOguHtX/KN2ArTs+61cz+QY9EIN7fbOstuA6Gcj8a9WWSDxJPlqjr3S6jzq+qFrdg==}
     dependencies:
-      '@shikijs/transformers': 1.2.1
+      '@shikijs/transformers': 1.2.4
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.2.1
+      shiki: 1.2.4
       unified: 11.0.4
       unist-util-visit: 5.0.0
     dev: true
 
-  /@shikijs/transformers@1.2.1:
-    resolution: {integrity: sha512-H7cVtrdv6BW2kx83t2IQgP5ri1IA50mE3QnzgJ0AvOKCGtCEieXu0JIP3245cgjNLrL+LBwb8DtTXdky1iQL9Q==}
+  /@shikijs/transformers@1.2.4:
+    resolution: {integrity: sha512-ysGkpsHxRxLmz8nGKeFdV+gKj1NXt+88sM/34kfKVWTWIXg5gsFOJxJBbG7k+fUR5JlD6sNh65W9qPXrbVE1wQ==}
     dependencies:
-      shiki: 1.2.1
+      shiki: 1.2.4
     dev: true
 
   /@sideway/address@4.1.5:
@@ -10934,10 +10934,10 @@ packages:
       rechoir: 0.6.2
     dev: false
 
-  /shiki@1.2.1:
-    resolution: {integrity: sha512-u+XW6o0vCkUNlneZb914dLO+AayEIwK5tI62WeS//R5HIXBFiYaj/Hc5xcq27Yh83Grr4JbNtUBV8W6zyK4hWg==}
+  /shiki@1.2.4:
+    resolution: {integrity: sha512-Q9n9jKiOjJCRPztA9POn3/uZXNySHDNKAsPNpmtHDcFyi6ZQhx5vQKZW3Nhrwn8TWW3RudSRk66zqY603EZDeg==}
     dependencies:
-      '@shikijs/core': 1.2.1
+      '@shikijs/core': 1.2.4
     dev: true
 
   /side-channel@1.0.6:
