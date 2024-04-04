@@ -187,14 +187,14 @@ importers:
         version: 3.22.4
     devDependencies:
       '@content-collections/core':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@content-collections/mdx':
         specifier: ^0.1.3
-        version: 0.1.3(@content-collections/core@0.4.0)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.1.3(@content-collections/core@0.4.1)(react-dom@18.2.0)(react@18.2.0)
       '@content-collections/next':
         specifier: ^0.1.3
-        version: 0.1.3(@content-collections/core@0.4.0)(next@14.1.4)
+        version: 0.1.3(@content-collections/core@0.4.1)(next@14.1.4)
       '@mdx-js/mdx':
         specifier: ^3.0.1
         version: 3.0.1
@@ -1202,8 +1202,8 @@ packages:
     dev: false
     optional: true
 
-  /@content-collections/core@0.4.0:
-    resolution: {integrity: sha512-/J9KzAQ1oWPpZURr2ZgJbrM2cZzJcfCG4Etuw0rnzfuJABPUzT8XJV2BnqUn5o7ut2DtV3aNtygMNERxuf+x0g==}
+  /@content-collections/core@0.4.1:
+    resolution: {integrity: sha512-6UJ65DNMaMuU0yp6TpHmCP4oFPwfmqzlD48bYiB5sNbKvkLbw5kg22BY/VOosRcry+zxlYZ+WpEd45YVEP6cFQ==}
     dependencies:
       '@parcel/watcher': 2.4.1
       camelcase: 8.0.0
@@ -1216,22 +1216,22 @@ packages:
       zod: 3.22.4
     dev: true
 
-  /@content-collections/integrations@0.1.1(@content-collections/core@0.4.0):
+  /@content-collections/integrations@0.1.1(@content-collections/core@0.4.1):
     resolution: {integrity: sha512-doJ/PZ79+bhmj2dne6qvAkH4XYMm3NjjP54jq6oDE7Gk6pGUrHW5+wXkc6WHYg/8i1iJZAl0iNShaJn4r23g2g==}
     peerDependencies:
       '@content-collections/core': 0.x
     dependencies:
-      '@content-collections/core': 0.4.0
+      '@content-collections/core': 0.4.1
     dev: true
 
-  /@content-collections/mdx@0.1.3(@content-collections/core@0.4.0)(react-dom@18.2.0)(react@18.2.0):
+  /@content-collections/mdx@0.1.3(@content-collections/core@0.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-YnZVCppJsA3FgPMtctyL3RqcrLFbGWoi3D8xfDSdx9Yuu9HdIQjgAhrLo+XNQLngTeHaRUBNJfwhYEfAxV84PA==}
     peerDependencies:
       '@content-collections/core': 0.x
       react: ^18.0.0
       react-dom: ^18.2.0
     dependencies:
-      '@content-collections/core': 0.4.0
+      '@content-collections/core': 0.4.1
       esbuild: 0.19.12
       mdx-bundler: 10.0.1(esbuild@0.19.12)
       react: 18.2.0
@@ -1241,14 +1241,14 @@ packages:
       - supports-color
     dev: true
 
-  /@content-collections/next@0.1.3(@content-collections/core@0.4.0)(next@14.1.4):
+  /@content-collections/next@0.1.3(@content-collections/core@0.4.1)(next@14.1.4):
     resolution: {integrity: sha512-yOfd2mP1mI3fzJ0oK/oBEv7w14PxqE7pXZZ6q+WFIE8RyCazcXEKfOFlsBtZmg6N0CXY05zC9Zi6TdLJNllITQ==}
     peerDependencies:
       '@content-collections/core': 0.x
       next: ^12 || ^13 || ^14
     dependencies:
-      '@content-collections/core': 0.4.0
-      '@content-collections/integrations': 0.1.1(@content-collections/core@0.4.0)
+      '@content-collections/core': 0.4.1
+      '@content-collections/integrations': 0.1.1(@content-collections/core@0.4.1)
       next: 14.1.4(react-dom@18.2.0)(react@18.2.0)
     dev: true
 
