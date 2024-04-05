@@ -321,7 +321,7 @@ importers:
     dependencies:
       '@lucia-auth/adapter-prisma':
         specifier: ^4.0.0
-        version: 4.0.1(@prisma/client@5.12.0)(lucia@3.1.1)
+        version: 4.0.1(@prisma/client@5.12.1)(lucia@3.1.1)
       arctic:
         specifier: ^1.5.0
         version: 1.5.0
@@ -366,8 +366,8 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: ^5.10.2
-        version: 5.11.0(prisma@5.12.1)
+        specifier: ^5.12.1
+        version: 5.12.1(prisma@5.12.1)
       zod:
         specifier: ^3.22.2
         version: 3.22.4
@@ -2148,13 +2148,13 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /@lucia-auth/adapter-prisma@4.0.1(@prisma/client@5.12.0)(lucia@3.1.1):
+  /@lucia-auth/adapter-prisma@4.0.1(@prisma/client@5.12.1)(lucia@3.1.1):
     resolution: {integrity: sha512-3SztRhj1RAHbbhI/0aB7YC5zl6Z6aktPhkWpn2CHhiB03B9x/+A+M6pqJuAt1usU8PzkjVilgRPhrPymMar66A==}
     peerDependencies:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: 3.x
     dependencies:
-      '@prisma/client': 5.12.0
+      '@prisma/client': 5.12.1(prisma@5.12.1)
       lucia: 3.1.1
     dev: false
 
@@ -3436,8 +3436,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@prisma/client@5.11.0(prisma@5.12.1):
-    resolution: {integrity: sha512-SWshvS5FDXvgJKM/a0y9nDC1rqd7KG0Q6ZVzd+U7ZXK5soe73DJxJJgbNBt2GNXOa+ysWB4suTpdK5zfFPhwiw==}
+  /@prisma/client@5.12.1(prisma@5.12.1):
+    resolution: {integrity: sha512-6/JnizEdlSBxDIdiLbrBdMW5NqDxOmhXAJaNXiPpgzAPr/nLZResT6MMpbOHLo5yAbQ1Vv5UU8PTPRzb0WIxdA==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -3447,17 +3447,6 @@ packages:
         optional: true
     dependencies:
       prisma: 5.12.1
-    dev: false
-
-  /@prisma/client@5.12.0:
-    resolution: {integrity: sha512-bk/+KPpRm0+IzqFCtAxrj+/TNiHzulspnO+OkysaYY/atc/eX0Gx8V3tTLxbHKVX0LKD4Hi8KKCcSbU1U72n7Q==}
-    engines: {node: '>=16.13'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
     dev: false
 
   /@prisma/debug@5.11.0:
