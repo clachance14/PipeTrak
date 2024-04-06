@@ -55,10 +55,6 @@
       "title": "Invalid token"
     },
     "login": {
-      "modes": {
-        "magicLink": "Magic link",
-        "password": "Password"
-      },
       "createAnAccount": "Create an account",
       "dontHaveAnAccount": "Don't have an account yet?",
       "email": "Email",
@@ -80,6 +76,10 @@
           "message": "We have sent you a link to continue. Please check your inbox.",
           "title": "Link sent"
         }
+      },
+      "modes": {
+        "magicLink": "Magic link",
+        "password": "Password"
       },
       "password": "Password",
       "sendMagicLink": "Send magic link",
@@ -142,9 +142,12 @@
     "menu": {
       "blog": "Blog",
       "dashboard": "Dashboard",
+      "docs": "Docs",
       "login": "Login",
-      "pricing": "Pricing",
-      "docs": "Docs"
+      "pricing": "Pricing"
+    },
+    "tableOfContents": {
+      "title": "On this page"
     }
   },
   "createTeam": {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 export function TableOfContents({
@@ -7,6 +8,7 @@ export function TableOfContents({
 }: {
   items: { slug: string; content: string; lvl: number }[];
 }) {
+  const t = useTranslations();
   const scrollToSection = (id: string) => {
     const scrollOffset = 80;
     const element = document.getElementById(id);
@@ -26,7 +28,9 @@ export function TableOfContents({
 
   return (
     <div className="w-full max-w-64 self-start rounded-lg border p-4">
-      <h3 className="mb-2 text-base font-semibold">Table of contents</h3>
+      <h3 className="mb-2 text-base font-semibold">
+        {t("common.tableOfContents.title")}
+      </h3>
       <nav className="list-none space-y-2">
         {items.map((item) => (
           <a
