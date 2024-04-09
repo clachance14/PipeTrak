@@ -1,7 +1,7 @@
 import { TeamMembershipSchema, TeamSchema, UserSchema, db } from "database";
-import { getSignedUrl } from "storage";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
+import { getUserAvatarUrl } from "../lib/avatar-url";
 
 export const user = publicProcedure
   .input(z.void())
@@ -12,6 +12,7 @@ export const user = publicProcedure
       role: true,
       avatarUrl: true,
       name: true,
+      onboardingComplete: true,
     })
       .extend({
         teamMemberships: z
@@ -33,16 +34,6 @@ export const user = publicProcedure
       return null;
     }
 
-    // if avatar url is only the path (e.g. /avatars/1234.png)
-    // we need to create a signed url for accessing the storage
-    let avatarUrl = user.avatarUrl ?? null;
-    if (avatarUrl && !avatarUrl.startsWith("http")) {
-      avatarUrl = await getSignedUrl(avatarUrl, {
-        bucket: "avatars",
-        expiresIn: 360,
-      });
-    }
-
     const impersonatedBy = session?.impersonatorId
       ? await db.user.findUnique({
           where: {
@@ -57,7 +48,7 @@ export const user = publicProcedure
 
     return {
       ...user,
-      avatarUrl,
+      avatarUrl: await getUserAvatarUrl(user.avatarUrl),
       teamMemberships,
       impersonatedBy,
     };

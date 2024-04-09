@@ -1,4 +1,5 @@
 import { UserContextProvider } from "@saas/auth/lib/user-context";
+import { Footer } from "@saas/shared/components/Footer";
 import { NavBar } from "@saas/shared/components/NavBar";
 import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api/trpc/caller";
@@ -16,6 +17,10 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   if (!user) {
     return redirect("/auth/login");
+  }
+
+  if (!user.onboardingComplete) {
+    return redirect("/onboarding");
   }
 
   const teamMemberships = user.teamMemberships ?? [];
@@ -60,6 +65,7 @@ export default async function Layout({ children }: PropsWithChildren) {
           teams={teamMemberships?.map((membership) => membership.team) ?? []}
         />
         <main className="bg-muted">{children}</main>
+        <Footer />
       </div>
     </UserContextProvider>
   );

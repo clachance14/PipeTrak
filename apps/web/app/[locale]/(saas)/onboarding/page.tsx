@@ -1,14 +1,36 @@
 import { Link } from "@i18n";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
+import { OnboardingForm } from "@saas/onboarding/components/OnboardingForm";
 import { Footer } from "@saas/shared/components/Footer";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
-import type { PropsWithChildren } from "react";
+import { createApiCaller } from "api/trpc/caller";
+import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
-export default function AuthLayout({ children }: PropsWithChildren) {
+export async function generateMetadata() {
+  const t = await getTranslations();
+
+  return {
+    title: t("auth.onboarding.title"),
+  };
+}
+
+export default async function OnboardingPage() {
+  const apiCaller = await createApiCaller();
+  const user = await apiCaller.auth.user();
+
+  if (!user) {
+    return redirect("/auth/login");
+  }
+
+  if (user.onboardingComplete) {
+    return redirect("/app");
+  }
+
   return (
-    <UserContextProvider initialUser={null}>
+    <UserContextProvider initialUser={user}>
       <div className="bg-card flex min-h-screen w-full p-8">
         <div className="flex w-full flex-col items-center justify-between">
           <div className="container">
@@ -24,7 +46,9 @@ export default function AuthLayout({ children }: PropsWithChildren) {
             </div>
           </div>
 
-          <div className="w-full max-w-md">{children}</div>
+          <div className="container w-full max-w-md">
+            <OnboardingForm />
+          </div>
 
           <Footer />
         </div>
