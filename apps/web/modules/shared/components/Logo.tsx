@@ -1,11 +1,19 @@
+import { cn } from "@ui/lib";
+
 export function Logo({
   withLabel = true,
+  className,
 }: {
   className?: string;
   withLabel?: boolean;
 }) {
   return (
-    <span className="text-primary flex items-center font-semibold leading-none">
+    <span
+      className={cn(
+        "text-primary flex items-center font-semibold leading-none",
+        className,
+      )}
+    >
       <svg className="h-10 w-10" viewBox="0 0 734 635">
         <path
           opacity="0.2"

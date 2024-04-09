@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="bg-muted text-muted-foreground py-12">
       <div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div>
-          <Logo />
+          <Logo className="opacity-70 grayscale" />
           <p className="mt-3 text-sm opacity-70">
             © {new Date().getFullYear()} supastarter. All rights reserved.
           </p>

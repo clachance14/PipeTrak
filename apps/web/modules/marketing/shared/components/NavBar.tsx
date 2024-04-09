@@ -7,6 +7,7 @@ import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { Button } from "@ui/components/button";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
+import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -57,10 +58,23 @@ export function NavBar() {
       href: "/blog",
     },
     {
+      label: t("common.menu.faq"),
+      href: "/faq",
+    },
+    {
+      label: t("common.menu.changelog"),
+      href: "/changelog",
+    },
+    {
       label: t("common.menu.docs"),
       href: "/docs",
     },
   ];
+
+  const isMenuItemActive = (href: string) => {
+    console.log(pathname, href);
+    return pathname === href;
+  };
 
   return (
     <nav
@@ -87,7 +101,10 @@ export function NavBar() {
               <Link
                 key={menuItem.href}
                 href={menuItem.href}
-                className="block px-3 py-2 text-lg"
+                className={cn(
+                  "block px-3 py-2 text-lg",
+                  isMenuItemActive(menuItem.href) ? "font-bold" : "",
+                )}
               >
                 {menuItem.label}
               </Link>
@@ -118,7 +135,10 @@ export function NavBar() {
                     <Link
                       key={menuItem.href}
                       href={menuItem.href}
-                      className="block px-3 py-2 text-lg"
+                      className={cn(
+                        "block px-3 py-2 text-lg",
+                        isMenuItemActive(menuItem.href) ? "font-bold" : "",
+                      )}
                     >
                       {menuItem.label}
                     </Link>

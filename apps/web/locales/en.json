@@ -154,6 +154,10 @@
     "description": "Read the latest news from our company",
     "title": "My awesome blog"
   },
+  "changelog": {
+    "description": "Stay up to date with the latest changes in our product.",
+    "title": "Changelog"
+  },
   "common": {
     "confirmation": {
       "cancel": "Cancel",
@@ -165,7 +169,9 @@
       "dashboard": "Dashboard",
       "docs": "Docs",
       "login": "Login",
-      "pricing": "Pricing"
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "changelog": "Changelog"
     },
     "tableOfContents": {
       "title": "On this page"
@@ -200,6 +206,10 @@
       "unimpersonate": "Unimpersonate"
     },
     "welcome": "Welcome {name}!"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "description": "Do you have any questions? We have got you covered."
   },
   "newsletter": {
     "email": "Email",
