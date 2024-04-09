@@ -11,7 +11,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/node": "^20.12.4",
+    "@types/node": "^20.12.6",
     "@types/react": "18.2.74",
     "eslint": "^9.0.0",
     "eslint-config-custom": "workspace:*",
