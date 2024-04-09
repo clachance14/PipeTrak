@@ -6,6 +6,7 @@ import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -27,22 +28,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   // if user has no team memberships, we create a team for them
   if (!teamMemberships.length) {
-    try {
-      const name = user.name ?? user.email.split("@")[0];
-      const team = await apiCaller.team.create({
-        name,
-      });
-
-      teamMemberships.push({
-        ...team.memberships.at(0)!,
-        userId: user.id,
-        teamId: team.id,
-        team,
-      });
-    } catch (e) {
-      console.error(e);
-      redirect("/");
-    }
+    return redirect("/onboarding");
   }
 
   const currentTeamMembership =

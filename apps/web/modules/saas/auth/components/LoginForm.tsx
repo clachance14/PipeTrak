@@ -77,10 +77,7 @@ export function LoginForm() {
   }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleRedirect = () => {
-    window.location.href = new URL(
-      redirectTo,
-      window.location.origin,
-    ).toString();
+    router.replace(redirectTo);
   };
 
   // redirect when user has been loaded

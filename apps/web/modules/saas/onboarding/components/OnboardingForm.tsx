@@ -2,6 +2,7 @@
 
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
+import { clearCache } from "@shared/lib/cache";
 import { Progress } from "@ui/components/progress";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -33,6 +34,7 @@ export function OnboardingForm() {
       onboardingComplete: true,
     });
 
+    await clearCache();
     router.replace("/app/dashboard");
   };
 

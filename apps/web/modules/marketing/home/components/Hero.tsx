@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "lucide-react";
 
 export function Hero() {
   return (
-    <nav className="to-primary/10 border-b bg-gradient-to-b from-transparent pb-20 pt-8">
+    <nav className="to-primary/5 border-b bg-gradient-to-b from-transparent pb-20 pt-8">
       <div className="container text-center">
         <h1 className="mx-auto max-w-3xl text-5xl font-bold lg:text-7xl">
           Your revolutionary <span className="text-primary">Next.js</span> SaaS

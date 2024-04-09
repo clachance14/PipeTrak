@@ -15,7 +15,7 @@ import { Input } from "@ui/components/input";
 import type { UserOneTimePasswordTypeType } from "database";
 import { AlertTriangleIcon, ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function OtpForm() {
+  const router = useRouter();
   const t = useTranslations();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -53,10 +54,7 @@ export function OtpForm() {
   const verifyOtpMutation = apiClient.auth.verifyOtp.useMutation();
 
   const handleRedirect = () => {
-    window.location.href = new URL(
-      redirectTo,
-      window.location.origin,
-    ).toString();
+    router.replace(redirectTo);
   };
 
   // redirect when user has been loaded

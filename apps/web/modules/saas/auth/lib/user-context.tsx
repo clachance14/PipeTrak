@@ -1,6 +1,7 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
+import { clearCache } from "@shared/lib/cache";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import type { ApiOutput } from "api/trpc/router";
@@ -64,13 +65,14 @@ export function UserContextProvider({
 
   const logout = async () => {
     await logoutMutation.mutateAsync();
+    await clearCache();
+    router.replace("/");
     queryClient.removeQueries({ queryKey: getQueryKey(apiClient.auth) });
     setUser(null);
     authBroadcastChannel.postMessage({
       type: "logout",
       user: null,
     } satisfies AuthEvent);
-    router.replace("/");
   };
 
   useEffect(() => {
