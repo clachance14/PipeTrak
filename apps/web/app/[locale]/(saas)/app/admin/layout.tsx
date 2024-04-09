@@ -1,6 +1,7 @@
 import { SideMenu } from "@saas/admin/component/SideMenu";
 import { createApiCaller } from "api/trpc/caller";
 import { UserRoleSchema } from "database";
+import { UsersIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -23,7 +24,7 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
               {
                 title: t("admin.menu.users"),
                 href: `users`,
-                icon: "users",
+                icon: UsersIcon,
               },
             ]}
           />

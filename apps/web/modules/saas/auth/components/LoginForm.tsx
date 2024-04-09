@@ -6,8 +6,21 @@ import { Link } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@ui/components/form";
 import { Input } from "@ui/components/input";
+import {
+  AlertTriangleIcon,
+  ArrowRightIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -37,19 +50,14 @@ export function LoginForm() {
     title: string;
     message: string;
   }>(null);
+  const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
 
   const loginWithPasswordMutation =
     apiClient.auth.loginWithPassword.useMutation();
   const loginWithEmailMutation = apiClient.auth.loginWithEmail.useMutation();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { isSubmitting, isSubmitted },
-  } = useForm<FormValues>({ resolver: zodResolver(formSchema) });
+  const form = useForm<FormValues>({ resolver: zodResolver(formSchema) });
 
   const invitationCode = searchParams.get("invitationCode");
   const redirectTo = invitationCode
@@ -59,13 +67,12 @@ export function LoginForm() {
 
   useEffect(() => {
     if (email) {
-      setValue("email", email);
+      form.setValue("email", email);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email]);
+  }, [email]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    reset();
+    form.reset();
     setServerError(null);
   }, [signinMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -124,7 +131,9 @@ export function LoginForm() {
 
   return (
     <div>
-      <h1 className="text-3xl font-extrabold">{t("auth.login.title")}</h1>
+      <h1 className="text-3xl font-extrabold md:text-4xl">
+        {t("auth.login.title")}
+      </h1>
       <p className="text-muted-foreground mb-6 mt-4">
         {t("auth.login.subtitle")}
       </p>
@@ -139,69 +148,99 @@ export function LoginForm() {
 
       <hr className=" my-8" />
 
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <SigninModeSwitch
-          className="w-full"
-          activeMode={signinMode}
-          onChange={(value) => setSigninMode(value as typeof signinMode)}
-        />
-        {isSubmitted && serverError && (
-          <Alert variant="error">
-            <Icon.warning className="h-4 w-4" />
-            <AlertTitle>{serverError.title}</AlertTitle>
-            <AlertDescription>{serverError.message}</AlertDescription>
-          </Alert>
-        )}
-        <div>
-          <label htmlFor="email" className="mb-1 block font-semibold">
-            {t("auth.login.email")}
-          </label>
-          <Input
-            type="email"
-            {...register("email", { required: true })}
-            required
-            autoComplete="email"
+      <Form {...form}>
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <SigninModeSwitch
+            className="w-full"
+            activeMode={signinMode}
+            onChange={(value) => setSigninMode(value as typeof signinMode)}
           />
-        </div>
-        {signinMode === "password" && (
-          <div>
-            <label htmlFor="password" className="mb-1 block font-semibold">
-              {t("auth.login.password")}
-            </label>
-            <Input
-              type="password"
-              {...register("password", { required: true })}
-              required
-              autoComplete="current-password"
-            />
-            <div className="mt-1 text-right text-sm">
-              <Link href="/auth/forgot-password">
-                {t("auth.login.forgotPassword")}
-              </Link>
-            </div>
-          </div>
-        )}
-        <Button className="w-full" type="submit" loading={isSubmitting}>
-          {signinMode === "password"
-            ? t("auth.login.submit")
-            : t("auth.login.sendMagicLink")}
-        </Button>
+          {form.formState.isSubmitted && serverError && (
+            <Alert variant="error">
+              <AlertTriangleIcon className="size-4" />
+              <AlertTitle>{serverError.title}</AlertTitle>
+              <AlertDescription>{serverError.message}</AlertDescription>
+            </Alert>
+          )}
 
-        <div>
-          <span className="text-muted-foreground">
-            {t("auth.login.dontHaveAnAccount")}{" "}
-          </span>
-          <Link
-            href={`/auth/signup${
-              invitationCode
-                ? `?invitationCode=${invitationCode}&email=${email}`
-                : ""
-            }`}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("auth.signup.email")}</FormLabel>
+                <FormControl>
+                  <Input {...field} autoComplete="email" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          {signinMode === "password" && (
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("auth.signup.password")}</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        className="pr-10"
+                        {...field}
+                        autoComplete="current-password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="size-4" />
+                        ) : (
+                          <EyeIcon className="size-4" />
+                        )}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormDescription className="text-right">
+                    <Link href="/auth/forgot-password">
+                      {t("auth.login.forgotPassword")}
+                    </Link>
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+          )}
+
+          <Button
+            className="w-full"
+            type="submit"
+            loading={form.formState.isSubmitting}
           >
-            {t("auth.login.createAnAccount")} &rarr;
-          </Link>
-        </div>
-      </form>
+            {signinMode === "password"
+              ? t("auth.login.submit")
+              : t("auth.login.sendMagicLink")}
+          </Button>
+
+          <div>
+            <span className="text-muted-foreground">
+              {t("auth.login.dontHaveAnAccount")}{" "}
+            </span>
+            <Link
+              href={`/auth/signup${
+                invitationCode
+                  ? `?invitationCode=${invitationCode}&email=${email}`
+                  : ""
+              }`}
+            >
+              {t("auth.login.createAnAccount")}
+              <ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+            </Link>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }

@@ -1,7 +1,15 @@
 import Image from "next/image";
 
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
+import {
+  ArrowRightIcon,
+  CloudIcon,
+  MousePointerIcon,
+  PaperclipIcon,
+  PhoneIcon,
+  StarIcon,
+  UploadIcon,
+} from "lucide-react";
 import heroDarkImage from "../../../../public/images/hero-dark.svg";
 import heroImage from "../../../../public/images/hero.svg";
 
@@ -44,17 +52,18 @@ export function Features() {
                 why. This is basically just a dummy text.
               </p>
               <Button variant="link" size="sm" className="mt-4 px-0">
-                Learn more &rarr;
+                Learn more
+                <ArrowRightIcon className="ml-2 size-4" />
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.star className="text-primary h-6 w-6 text-3xl" />
+                  <StarIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.pointer className="text-primary h-6 w-6 text-3xl" />
+                  <MousePointerIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -86,17 +95,18 @@ export function Features() {
                 why. This is basically just a dummy text.
               </p>
               <Button variant="link" size="sm" className="mt-4 px-0">
-                Learn more &rarr;
+                Learn more
+                <ArrowRightIcon className="ml-2 size-4" />
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.upload className="text-primary h-6 w-6 text-3xl" />
+                  <UploadIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.cloud className="text-primary h-6 w-6 text-3xl" />
+                  <CloudIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -128,17 +138,18 @@ export function Features() {
                 why. This is basically just a dummy text.
               </p>
               <Button variant="link" size="sm" className="mt-4 px-0">
-                Learn more &rarr;
+                Learn more
+                <ArrowRightIcon className="ml-2 size-4" />
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.phone className="text-primary h-6 w-6 text-3xl" />
+                  <PhoneIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
                 <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <Icon.paperclip className="text-primary h-6 w-6 text-3xl" />
+                  <PaperclipIcon className="text-primary h-6 w-6 text-3xl" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>

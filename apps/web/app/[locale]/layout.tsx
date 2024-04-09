@@ -3,7 +3,7 @@ import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { getMessagesForLocale } from "../../i18n";
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sansFont = Plus_Jakarta_Sans({
+const sansFont = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });

@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@ui/lib";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { Icon } from "./icon";
+import { LoaderIcon } from "lucide-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -38,7 +38,8 @@ const buttonVariants = cva(
 export type ButtonProps = {
   asChild?: boolean;
   loading?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>
+} & React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -62,7 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled ?? loading}
         {...props}
       >
-        {loading ? <Icon.spinner className="h-4 w-4 animate-spin" /> : children}
+        {loading ? <LoaderIcon className="size-4 animate-spin" /> : children}
       </Comp>
     );
   },

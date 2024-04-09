@@ -5,8 +5,8 @@ import { Link } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
+import { AlertTriangleIcon, ArrowRightIcon, SendIcon } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -63,18 +63,19 @@ export function ForgotPasswordForm() {
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold">
+      <h1 className="text-3xl font-extrabold md:text-4xl">
         {t("auth.forgotPassword.title")}
       </h1>
       <p className="text-muted-foreground mb-6 mt-4">
         {t("auth.forgotPassword.message")}{" "}
         <Link href="/auth/login">
-          {t("auth.forgotPassword.backToSignin")} &rarr;
+          {t("auth.forgotPassword.backToSignin")}
+          <ArrowRightIcon className="ml-1 inline size-4 align-middle" />
         </Link>
       </p>
 
       <form
-        className="flex flex-col items-stretch gap-6"
+        className="flex flex-col items-stretch gap-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
@@ -91,15 +92,14 @@ export function ForgotPasswordForm() {
 
         {isSubmitted && serverError && (
           <Alert variant="error">
-            <Icon.warning className="h-4 w-4" />
+            <AlertTriangleIcon className="size-4" />
             <AlertTitle>{serverError.title}</AlertTitle>
             <AlertDescription>{serverError.message}</AlertDescription>
           </Alert>
         )}
 
         <Button loading={isSubmitting}>
-          <Icon.submit className="mr-2 h-4 w-4" />{" "}
-          {t("auth.forgotPassword.submit")}
+          <SendIcon className="mr-2 size-4" /> {t("auth.forgotPassword.submit")}
         </Button>
       </form>
     </>

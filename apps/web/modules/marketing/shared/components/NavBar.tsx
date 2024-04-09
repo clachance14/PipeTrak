@@ -6,8 +6,8 @@ import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
+import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -109,7 +109,7 @@ export function NavBar() {
                   variant="outline"
                   aria-label="Menu"
                 >
-                  <Icon.menu />
+                  <MenuIcon className="size-4" />
                 </Button>
               </SheetTrigger>
               <SheetContent className="w-[250px]" side="right">

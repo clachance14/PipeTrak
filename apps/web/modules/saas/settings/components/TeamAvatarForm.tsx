@@ -4,8 +4,8 @@ import { useUser } from "@saas/auth/hooks/use-user";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { TeamAvatar } from "@shared/components/TeamAvatar";
 import { apiClient } from "@shared/lib/api-client";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
+import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -105,7 +105,7 @@ export function TeamAvatarForm() {
 
           {uploading && (
             <div className="bg-card/90 absolute inset-0 z-20 flex items-center justify-center">
-              <Icon.spinner className="text-primary h-6 w-6 animate-spin" />
+              <LoaderIcon className="text-primary h-6 w-6 animate-spin" />
             </div>
           )}
         </div>

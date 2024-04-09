@@ -2,8 +2,8 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
+import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -52,7 +52,7 @@ export function CancelSubscriptionButton({
       onClick={() => cancelSubscription()}
       loading={cancelSubscriptionMutation.isPending}
     >
-      <Icon.close className="mr-2 h-4 w-4" />
+      <XIcon className="mr-2 size-4" />
       {label}
     </Button>
   );

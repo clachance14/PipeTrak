@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
+import { XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const BANNER_HIDDEN_STORAGE_KEY = "banner-hidden";
@@ -39,7 +39,7 @@ export function Banner() {
         className="absolute right-1 top-1"
         aria-label="Hide banner"
       >
-        <Icon.close />
+        <XIcon className="size-4" />
       </Button>
     </div>
   );

@@ -1,4 +1,5 @@
 import { Button } from "@ui/components/button";
+import { ArrowRightIcon } from "lucide-react";
 
 export function Hero() {
   return (
@@ -14,7 +15,10 @@ export function Hero() {
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">
-          <Button size="lg">Get started &rarr;</Button>
+          <Button size="lg">
+            Get started
+            <ArrowRightIcon className="ml-2 size-4" />
+          </Button>
           <Button variant="outline" size="lg">
             Documentation
           </Button>

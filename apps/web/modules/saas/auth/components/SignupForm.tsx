@@ -5,8 +5,21 @@ import { Link } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@ui/components/form";
 import { Input } from "@ui/components/input";
+import {
+  AlertTriangleIcon,
+  ArrowRightIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,7 +31,6 @@ import { TeamInvitationInfo } from "./TeamInvitationInfo";
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  name: z.string().min(2),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -26,12 +38,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function SignupForm() {
   const t = useTranslations();
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, isSubmitted },
-    setValue,
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
   const [serverError, setServerError] = useState<null | {
@@ -51,22 +58,17 @@ export function SignupForm() {
 
   useEffect(() => {
     if (email) {
-      setValue("email", email);
+      form.setValue("email", email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email]);
 
-  const onSubmit: SubmitHandler<FormValues> = async ({
-    email,
-    password,
-    name,
-  }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
     setServerError(null);
     try {
       await signupMutation.mutateAsync({
         email,
         password,
-        name,
         callbackUrl: new URL("/auth/verify", window.location.origin).toString(),
       });
 
@@ -91,97 +93,97 @@ export function SignupForm() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{t("auth.signup.title")}</h1>
+      <h1 className="text-3xl font-bold md:text-4xl">
+        {t("auth.signup.title")}
+      </h1>
       <p className="text-muted-foreground mb-6 mt-2">
         {t("auth.signup.message")}
       </p>
 
       {invitationCode && <TeamInvitationInfo className="mb-6" />}
 
-      <form
-        className="flex flex-col items-stretch gap-6"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        {isSubmitted && serverError && (
-          <Alert variant="error">
-            <Icon.warning className="h-4 w-4" />
-            <AlertTitle>{serverError.title}</AlertTitle>
-            <AlertDescription>{serverError.message}</AlertDescription>
-          </Alert>
-        )}
+      <Form {...form}>
+        <form
+          className="flex flex-col items-stretch gap-8"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          {form.formState.isSubmitted && serverError && (
+            <Alert variant="error">
+              <AlertTriangleIcon className="size-4" />
+              <AlertTitle>{serverError.title}</AlertTitle>
+              <AlertDescription>{serverError.message}</AlertDescription>
+            </Alert>
+          )}
 
-        <div>
-          <label htmlFor="name" className="mb-1 block font-semibold">
-            {t("auth.signup.name")} *
-          </label>
-          <Input
-            type="text"
-            {...register("name", { required: true })}
-            required
-            autoComplete="name"
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("auth.signup.email")}</FormLabel>
+                <FormControl>
+                  <Input {...field} autoComplete="email" />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label htmlFor="email" className="mb-1 block font-semibold">
-            {t("auth.signup.email")} *
-          </label>
-          <Input
-            // status={errors.email ? "error" : "default"}
-            type="email"
-            {...register("email", { required: true })}
-            required
-            autoComplete="email"
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("auth.signup.password")}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      className="pr-10"
+                      {...field}
+                      required
+                      autoComplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+                    >
+                      {showPassword ? (
+                        <EyeOffIcon className="size-4" />
+                      ) : (
+                        <EyeIcon className="size-4" />
+                      )}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormDescription>
+                  {t("auth.signup.passwordHint")}
+                </FormDescription>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label htmlFor="password" className="mb-1 block font-semibold">
-            {t("auth.signup.password")} *
-          </label>
-          <div className="relative">
-            <Input
-              type={showPassword ? "text" : "password"}
-              className="pr-10"
-              // status={errors.password ? "error" : "default"}
-              {...register("password", { required: true, minLength: 8 })}
-              required
-              autoComplete="new-password"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+          <Button loading={form.formState.isSubmitting}>
+            {t("auth.signup.submit")}
+          </Button>
+
+          <div>
+            <span className="text-muted-foreground">
+              {t("auth.signup.alreadyHaveAccount")}{" "}
+            </span>
+            <Link
+              href={`/auth/login${
+                invitationCode
+                  ? `?invitationCode=${invitationCode}&email=${email}`
+                  : ""
+              }`}
             >
-              {showPassword ? (
-                <Icon.hide className="h-4 w-4" />
-              ) : (
-                <Icon.show className="h-4 w-4" />
-              )}
-            </button>
+              {t("auth.signup.signIn")}
+              <ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+            </Link>
           </div>
-          <small className="italic opacity-50">
-            {t("auth.signup.passwordHint")}
-          </small>
-        </div>
-
-        <Button loading={isSubmitting}>{t("auth.signup.submit")} &rarr;</Button>
-
-        <div>
-          <span className="text-muted-foreground">
-            {t("auth.signup.alreadyHaveAccount")}{" "}
-          </span>
-          <Link
-            href={`/auth/login${
-              invitationCode
-                ? `?invitationCode=${invitationCode}&email=${email}`
-                : ""
-            }`}
-          >
-            {t("auth.signup.signIn")} &rarr;
-          </Link>
-        </div>
-      </form>
+        </form>
+      </Form>
     </div>
   );
 }

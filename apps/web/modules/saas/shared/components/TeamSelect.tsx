@@ -14,9 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { Icon } from "@ui/components/icon";
 import type { Team } from "database";
 import { useSetAtom } from "jotai";
+import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CreateTeamDialog } from "./CreateTeamDialog";
 
@@ -57,7 +57,7 @@ export function TeamSelect({
               />
             </span>
             <span className="block flex-1 truncate">{activeTeam.name}</span>
-            <Icon.select className="block h-4 w-4 opacity-50" />
+            <ChevronsUpDownIcon className="block size-4 opacity-50" />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
@@ -87,7 +87,7 @@ export function TeamSelect({
 
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setCreateTeamDialogOpen(true)}>
-              <Icon.plus className="mr-2 h-4 w-4" />
+              <PlusIcon className="mr-2 size-4" />
               {t("dashboard.sidebar.createTeam")}
             </DropdownMenuItem>
           </DropdownMenuGroup>
