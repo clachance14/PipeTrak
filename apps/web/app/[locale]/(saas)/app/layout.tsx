@@ -1,10 +1,12 @@
 import { UserContextProvider } from "@saas/auth/lib/user-context";
+import { Footer } from "@saas/shared/components/Footer";
 import { NavBar } from "@saas/shared/components/NavBar";
 import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
 import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -18,26 +20,15 @@ export default async function Layout({ children }: PropsWithChildren) {
     return redirect("/auth/login");
   }
 
+  if (!user.onboardingComplete) {
+    return redirect("/onboarding");
+  }
+
   const teamMemberships = user.teamMemberships ?? [];
 
   // if user has no team memberships, we create a team for them
   if (!teamMemberships.length) {
-    try {
-      const name = user.name ?? user.email.split("@")[0];
-      const team = await apiCaller.team.create({
-        name,
-      });
-
-      teamMemberships.push({
-        ...team.memberships.at(0)!,
-        userId: user.id,
-        teamId: team.id,
-        team,
-      });
-    } catch (e) {
-      console.error(e);
-      redirect("/");
-    }
+    return redirect("/onboarding");
   }
 
   const currentTeamMembership =
@@ -60,6 +51,7 @@ export default async function Layout({ children }: PropsWithChildren) {
           teams={teamMemberships?.map((membership) => membership.team) ?? []}
         />
         <main className="bg-muted">{children}</main>
+        <Footer />
       </div>
     </UserContextProvider>
   );

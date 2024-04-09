@@ -27,9 +27,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { Icon } from "@ui/components/icon";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useToast } from "@ui/hooks/use-toast";
+import { LogOutIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
@@ -125,7 +125,7 @@ export function TeamMembersList({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="icon" variant="ghost">
-                  <Icon.more />
+                  <MoreVerticalIcon className="size-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -170,12 +170,12 @@ export function TeamMembersList({
                 >
                   {row.original.user?.id === user?.id ? (
                     <>
-                      <Icon.logout className="mr-2 h-4 w-4" />
+                      <LogOutIcon className="mr-2 size-4" />
                       {t("settings.team.members.removeMember")}
                     </>
                   ) : (
                     <>
-                      <Icon.delete className="mr-2 h-4 w-4" />
+                      <TrashIcon className="mr-2 size-4" />
                       {t("settings.team.members.removeMember")}
                     </>
                   )}

@@ -2,7 +2,7 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
+import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ export function VerifyTokenView() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <Icon.spinner className="h-8 w-8 animate-spin" />
+        <LoaderIcon className="h-8 w-8 animate-spin" />
       </div>
     );
   }
@@ -50,7 +50,7 @@ export function VerifyTokenView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">
+      <h1 className="text-3xl font-bold md:text-4xl">
         {tokenVerified
           ? t("auth.confirmation.title")
           : t("auth.invalidToken.title")}

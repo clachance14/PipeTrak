@@ -1,7 +1,7 @@
 "use client";
 
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import React from "react";
-import { Icon } from "./icon";
 import { Input } from "./input";
 
 export function PasswordInput({
@@ -29,9 +29,9 @@ export function PasswordInput({
         className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
       >
         {showPassword ? (
-          <Icon.hide className="h-4 w-4" />
+          <EyeOffIcon className="size-4" />
         ) : (
-          <Icon.show className="h-4 w-4" />
+          <EyeIcon className="size-4" />
         )}
       </button>
     </div>

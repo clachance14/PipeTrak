@@ -19,8 +19,17 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
+import {
+  BookIcon,
+  HardDriveIcon,
+  LanguagesIcon,
+  LogOutIcon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+  UserRoundXIcon,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -46,17 +55,17 @@ export function UserMenu() {
     {
       value: "system",
       label: "System",
-      icon: Icon.system,
+      icon: HardDriveIcon,
     },
     {
       value: "light",
       label: "Light",
-      icon: Icon.lightMode,
+      icon: SunIcon,
     },
     {
       value: "dark",
       label: "Dark",
-      icon: Icon.darkMode,
+      icon: MoonIcon,
     },
   ];
 
@@ -88,7 +97,7 @@ export function UserMenu() {
         {/* Color mode selection */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icon.lightMode className="mr-2 h-4 w-4" />
+            <SunIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.colorMode")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
@@ -105,7 +114,7 @@ export function UserMenu() {
                     key={option.value}
                     value={option.value}
                   >
-                    <option.icon className="mr-2 h-4 w-4 opacity-50" />
+                    <option.icon className="mr-2 size-4 opacity-50" />
                     {option.label}
                   </DropdownMenuRadioItem>
                 ))}
@@ -119,7 +128,7 @@ export function UserMenu() {
         {/* Language selection */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icon.language className="mr-2 h-4 w-4" />
+            <LanguagesIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.language")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
@@ -151,7 +160,7 @@ export function UserMenu() {
 
         <DropdownMenuItem asChild>
           <Link href={`/app/settings/account/general`}>
-            <Icon.settings className="mr-2 h-4 w-4" />
+            <SettingsIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.accountSettings")}
           </Link>
         </DropdownMenuItem>
@@ -162,7 +171,7 @@ export function UserMenu() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Icon.docs className="mr-2 h-4 w-4" />
+            <BookIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.documentation")}
           </a>
         </DropdownMenuItem>
@@ -179,13 +188,13 @@ export function UserMenu() {
               window.location.reload();
             }}
           >
-            <Icon.unimpersonate className="mr-2 h-4 w-4" />
+            <UserRoundXIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.unimpersonate")}
           </DropdownMenuItem>
         )}
 
         <DropdownMenuItem onClick={logout}>
-          <Icon.logout className="mr-2 h-4 w-4" />
+          <LogOutIcon className="mr-2 size-4" />
           {t("dashboard.userMenu.logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>

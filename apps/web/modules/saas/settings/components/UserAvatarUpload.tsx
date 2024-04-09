@@ -1,28 +1,29 @@
 "use client";
 
 import { useUser } from "@saas/auth/hooks/use-user";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
-import { TeamAvatar } from "@shared/components/TeamAvatar";
+import { UserAvatar } from "@shared/components/UserAvatar";
 import { apiClient } from "@shared/lib/api-client";
-import { useToast } from "@ui/hooks/use-toast";
 import { LoaderIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuid } from "uuid";
 import { CropImageDialog } from "./CropImageDialog";
 
-export function TeamAvatarForm() {
-  const { toast } = useToast();
-  const t = useTranslations();
+export function UserAvatarUpload({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError: () => void;
+}) {
+  const { user, updateUser } = useUser();
   const [uploading, setUploading] = useState(false);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const { teamMembership, reloadUser } = useUser();
 
   const getSignedUploadUrlMutation =
     apiClient.uploads.signedUploadUrl.useMutation();
-  const updateTeamMutation = apiClient.team.update.useMutation();
+  const updateUserMutation = apiClient.auth.update.useMutation();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -36,11 +37,9 @@ export function TeamAvatarForm() {
     multiple: false,
   });
 
-  if (!teamMembership?.team) {
+  if (!user) {
     return null;
   }
-
-  const { team } = teamMembership;
 
   const onCrop = async (croppedImageData: Blob | null) => {
     if (!croppedImageData) {
@@ -49,7 +48,7 @@ export function TeamAvatarForm() {
 
     setUploading(true);
     try {
-      const path = `/${team.id}-${uuid()}.png`;
+      const path = `/${user.id}-${uuid()}.png`;
       const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
         path,
         bucket: "avatars",
@@ -67,48 +66,37 @@ export function TeamAvatarForm() {
         throw new Error("Failed to upload image");
       }
 
-      await updateTeamMutation.mutateAsync({
-        id: team.id,
+      const updatedUser = await updateUserMutation.mutateAsync({
         avatarUrl: path,
       });
 
-      toast({
-        variant: "success",
-        title: t("settings.notifications.avatarUpdated"),
+      updateUser({
+        avatarUrl: updatedUser.avatarUrl,
       });
 
-      await reloadUser();
+      onSuccess();
     } catch (e) {
-      toast({
-        variant: "error",
-        title: t("settings.notifications.avatarNotUpdated"),
-      });
+      onError();
     } finally {
       setUploading(false);
     }
   };
 
   return (
-    <ActionBlock title={t("settings.account.avatar.title")}>
-      <div className="flex items-center gap-4">
-        <div>
-          <p>{t("settings.account.avatar.description")}</p>
-        </div>
+    <>
+      <div className="relative rounded-full" {...getRootProps()}>
+        <input {...getInputProps()} />
+        <UserAvatar
+          className="size-24 cursor-pointer text-xl"
+          avatarUrl={user.avatarUrl}
+          name={user.name ?? ""}
+        />
 
-        <div className="relative rounded-full" {...getRootProps()}>
-          <input {...getInputProps()} />
-          <TeamAvatar
-            className="size-24 cursor-pointer text-xl"
-            avatarUrl={team.avatarUrl}
-            name={team.name ?? ""}
-          />
-
-          {uploading && (
-            <div className="bg-card/90 absolute inset-0 z-20 flex items-center justify-center">
-              <LoaderIcon className="text-primary h-6 w-6 animate-spin" />
-            </div>
-          )}
-        </div>
+        {uploading && (
+          <div className="bg-card/90 absolute inset-0 z-20 flex items-center justify-center">
+            <LoaderIcon className="text-primary size-6 animate-spin" />
+          </div>
+        )}
       </div>
 
       <CropImageDialog
@@ -117,6 +105,6 @@ export function TeamAvatarForm() {
         onOpenChange={setCropDialogOpen}
         onCrop={onCrop}
       />
-    </ActionBlock>
+    </>
   );
 }

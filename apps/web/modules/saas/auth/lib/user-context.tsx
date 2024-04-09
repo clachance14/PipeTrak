@@ -1,6 +1,7 @@
 "use client";
 
 import { apiClient } from "@shared/lib/api-client";
+import { clearCache } from "@shared/lib/cache";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import type { ApiOutput } from "api/trpc/router";
@@ -16,20 +17,24 @@ type TeamMembership = NonNullable<
 type UserContext = {
   user: User;
   reloadUser: () => Promise<void>;
+  updateUser: (info: Partial<User>) => void;
   logout: () => Promise<void>;
   loaded: boolean;
   teamMembership: TeamMembership | null;
-}
+};
 
 const authBroadcastChannel = new BroadcastChannel("auth");
 type AuthEvent = {
   type: "loaded" | "logout";
   user: User | null;
-}
+};
 
 export const userContext = createContext<UserContext>({
   user: null,
   reloadUser: () => Promise.resolve(),
+  updateUser: () => {
+    return;
+  },
   logout: () => Promise.resolve(),
   loaded: false,
   teamMembership: null,
@@ -60,13 +65,14 @@ export function UserContextProvider({
 
   const logout = async () => {
     await logoutMutation.mutateAsync();
+    await clearCache();
+    router.replace("/");
     queryClient.removeQueries({ queryKey: getQueryKey(apiClient.auth) });
     setUser(null);
     authBroadcastChannel.postMessage({
       type: "logout",
       user: null,
     } satisfies AuthEvent);
-    router.replace("/");
   };
 
   useEffect(() => {
@@ -110,6 +116,15 @@ export function UserContextProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  const updateUser = (info: Partial<User>) => {
+    if (user) {
+      setUser({
+        ...user,
+        ...info,
+      });
+    }
+  };
+
   return (
     <userContext.Provider
       value={{
@@ -117,6 +132,7 @@ export function UserContextProvider({
         reloadUser,
         logout,
         loaded,
+        updateUser,
         teamMembership: teamMembership ?? null,
       }}
     >

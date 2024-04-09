@@ -24,11 +24,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useToast } from "@ui/hooks/use-toast";
 import type { ApiOutput } from "api/trpc/router";
+import {
+  LoaderIcon,
+  MoreVerticalIcon,
+  SquareUserRoundIcon,
+  TrashIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
@@ -150,7 +155,7 @@ export function UserList() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button size="icon" variant="ghost">
-                      <Icon.more className="h-4 w-4" />
+                      <MoreVerticalIcon className="size-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
@@ -161,14 +166,14 @@ export function UserList() {
                         })
                       }
                     >
-                      <Icon.impersonate className="mr-2 h-4 w-4" />
+                      <SquareUserRoundIcon className="mr-2 size-4" />
                       {t("admin.users.impersonate")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => deleteUser(row.original.id)}
                     >
                       <span className="text-destructive hover:text-destructive flex items-center">
-                        <Icon.delete className="mr-2 h-4 w-4" />
+                        <TrashIcon className="mr-2 size-4" />
                         {t("admin.users.delete")}
                       </span>
                     </DropdownMenuItem>
@@ -243,7 +248,7 @@ export function UserList() {
                 >
                   {isLoading ? (
                     <div className="flex h-full items-center justify-center">
-                      <Icon.spinner className="text-primary mr-2 h-4 w-4 animate-spin" />
+                      <LoaderIcon className="text-primary mr-2 size-4 animate-spin" />
                       {t("admin.users.loading")}
                     </div>
                   ) : (

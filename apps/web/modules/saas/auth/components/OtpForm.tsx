@@ -11,11 +11,11 @@ import {
   FormItem,
   FormLabel,
 } from "@ui/components/form";
-import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
 import type { UserOneTimePasswordTypeType } from "database";
+import { AlertTriangleIcon, ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function OtpForm() {
+  const router = useRouter();
   const t = useTranslations();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -53,10 +54,7 @@ export function OtpForm() {
   const verifyOtpMutation = apiClient.auth.verifyOtp.useMutation();
 
   const handleRedirect = () => {
-    window.location.href = new URL(
-      redirectTo,
-      window.location.origin,
-    ).toString();
+    router.replace(redirectTo);
   };
 
   // redirect when user has been loaded
@@ -87,7 +85,9 @@ export function OtpForm() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{t("auth.verifyOtp.title")}</h1>
+      <h1 className="text-3xl font-bold md:text-4xl">
+        {t("auth.verifyOtp.title")}
+      </h1>
       <p className="text-muted-foreground mb-6 mt-2">
         {t("auth.verifyOtp.message")}
       </p>
@@ -96,12 +96,12 @@ export function OtpForm() {
 
       <Form {...form}>
         <form
-          className="flex flex-col items-stretch gap-6"
+          className="flex flex-col items-stretch gap-8"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {form.formState.isSubmitted && serverError && (
             <Alert variant="error">
-              <Icon.warning className="h-4 w-4" />
+              <AlertTriangleIcon className="size-4" />
               <AlertTitle>{serverError.title}</AlertTitle>
               <AlertDescription>{serverError.message}</AlertDescription>
             </Alert>
@@ -123,7 +123,8 @@ export function OtpForm() {
           />
 
           <Button loading={form.formState.isSubmitting}>
-            {t("auth.verifyOtp.submit")} &rarr;
+            {t("auth.verifyOtp.submit")}
+            <ArrowRightIcon className="ml-1 inline size-4 align-middle" />
           </Button>
         </form>
       </Form>

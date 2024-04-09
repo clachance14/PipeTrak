@@ -2,8 +2,8 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
+import { PauseIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -46,7 +46,7 @@ export function PauseSubscriptionButton({ id }: { id: string }) {
       onClick={() => pauseSubscription()}
       loading={pauseSubscriptionMutation.isPending}
     >
-      <Icon.pause className="mr-2 h-4 w-4" />
+      <PauseIcon className="mr-2 size-4" />
       {t("settings.billing.pauseSubscription.label")}
     </Button>
   );

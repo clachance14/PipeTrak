@@ -2,8 +2,8 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
+import { Wand2Icon } from "lucide-react";
 import { useState } from "react";
 
 export function ProductNameGenerator() {
@@ -35,7 +35,7 @@ export function ProductNameGenerator() {
           onChange={(e) => setTopic(e.target.value)}
         />
         <Button className="mt-4 w-full" loading={isFetching}>
-          <Icon.magic className="mr-2 h-4 w-4" />
+          <Wand2Icon className="mr-2 size-4" />
           Generate product names
         </Button>
       </form>

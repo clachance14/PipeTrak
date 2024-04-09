@@ -10,7 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { Icon } from "@ui/components/icon";
+import { LanguagesIcon } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export function LocaleSwitch() {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" aria-label="Language">
-          <Icon.language className="h-4 w-4" />
+          <LanguagesIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
 

@@ -2,8 +2,8 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
+import { CreditCardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function CustomerPortalButton({
@@ -44,7 +44,7 @@ export function CustomerPortalButton({
       onClick={() => createCustomerPortal()}
       loading={createCustomerPortalMutation.isPending}
     >
-      <Icon.creditCard className="mr-2 h-4 w-4" />
+      <CreditCardIcon className="mr-2 size-4" />
       {t("settings.billing.createCustomerPortal.label")}
     </Button>
   );

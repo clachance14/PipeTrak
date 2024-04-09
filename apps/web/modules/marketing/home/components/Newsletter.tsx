@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { Input } from "@ui/components/input";
+import { CheckCircleIcon, KeyIcon } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 import type { SubmitHandler } from "react-hook-form";
@@ -41,7 +41,7 @@ export function Newsletter() {
     <section className=" border-t py-24">
       <div className="container">
         <div className="mb-12 text-center">
-          <Icon.key className="text-primary mx-auto mb-3 h-12 w-12" />
+          <KeyIcon className="text-primary mx-auto mb-3 h-12 w-12" />
           <h1 className="text-3xl font-bold lg:text-4xl">
             {t("newsletter.title")}
           </h1>
@@ -51,7 +51,7 @@ export function Newsletter() {
         <div className="mx-auto max-w-lg">
           {isSubmitSuccessful ? (
             <Alert variant="success">
-              <Icon.success className="h-4 w-4" />
+              <CheckCircleIcon className="size-4" />
               <AlertTitle>{t("newsletter.hints.success.title")}</AlertTitle>
               <AlertDescription>
                 {t("newsletter.hints.success.message")}

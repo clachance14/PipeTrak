@@ -126,6 +126,27 @@
       "otp": "Contraseña de un solo uso",
       "submit": "Continuar",
       "title": "Verifique su correo electrónico"
+    },
+    "onboarding": {
+      "account": {
+        "avatar": "Avatar",
+        "avatarDescription": "Haz clic en el círculo o suelta una imagen para cargar tu avatar.",
+        "name": "Nombre",
+        "title": "Completa tu cuenta"
+      },
+      "back": "Atrás",
+      "complete": "Completo",
+      "continue": "Continuar",
+      "message": "Sólo unos pocos pasos rápidos para comenzar.",
+      "notifications": {
+        "accountSetupFailed": "Lo sentimos, pero no pudimos configurar su cuenta. \nPor favor, inténtelo de nuevo más tarde."
+      },
+      "step": "Paso {paso} / {total}",
+      "team": {
+        "name": "Nombre del equipo",
+        "title": "crear un equipo"
+      },
+      "title": "Configurar tu cuenta"
     }
   },
   "blog": {

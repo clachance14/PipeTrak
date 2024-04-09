@@ -26,9 +26,9 @@ import {
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
-import { Icon } from "@ui/components/icon";
 import { useToast } from "@ui/hooks/use-toast";
 import type { ApiOutput } from "api/trpc/router";
+import { MoreVerticalIcon, UndoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
@@ -74,7 +74,7 @@ export function TeamInvitationsList({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button size="icon" variant="ghost">
-                    <Icon.more className="h-4 w-4" />
+                    <MoreVerticalIcon className="size-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -115,7 +115,7 @@ export function TeamInvitationsList({
                       );
                     }}
                   >
-                    <Icon.undo className="mr-2 h-4 w-4" />
+                    <UndoIcon className="mr-2 size-4" />
                     {t("settings.team.members.invitations.revoke")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>

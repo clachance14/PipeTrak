@@ -3,10 +3,16 @@
 import { Link } from "@i18n";
 import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
-import { Icon } from "@ui/components/icon";
 import type { ApiOutput } from "api/trpc/router";
 import type { Team } from "database";
 import { UserRoleSchema } from "database";
+import {
+  ChevronRightIcon,
+  GridIcon,
+  SettingsIcon,
+  UserCogIcon,
+  Wand2Icon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -27,24 +33,24 @@ export function NavBar({
     {
       label: t("dashboard.menu.dashboard"),
       href: `/app/dashboard`,
-      icon: Icon.grid,
+      icon: GridIcon,
     },
     {
       label: t("dashboard.menu.aiDemo"),
       href: `/app/ai-demo`,
-      icon: Icon.magic,
+      icon: Wand2Icon,
     },
     {
       label: t("dashboard.menu.settings"),
       href: `/app/settings`,
-      icon: Icon.settings,
+      icon: SettingsIcon,
     },
     ...(isAdmin
       ? [
           {
             label: t("dashboard.menu.admin"),
             href: `/app/admin`,
-            icon: Icon.admin,
+            icon: UserCogIcon,
           },
         ]
       : []),
@@ -67,7 +73,7 @@ export function NavBar({
             </Link>
 
             <span className="hidden opacity-30 lg:block">
-              <Icon.chevronRight className="h-4 w-4" />
+              <ChevronRightIcon className="size-4" />
             </span>
 
             <TeamSelect teams={teams} />
@@ -90,7 +96,7 @@ export function NavBar({
                 }`}
               >
                 <menuItem.icon
-                  className={`h-4 w-4 shrink-0 ${
+                  className={`size-4 shrink-0 ${
                     isActiveMenuItem(menuItem.href) ? "text-primary" : ""
                   }`}
                 />
