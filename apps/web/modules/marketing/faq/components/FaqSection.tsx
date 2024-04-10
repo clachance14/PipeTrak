@@ -26,7 +26,7 @@ export function FaqSection({
             value={`faq-item-${i}`}
             className="rounded-lg border px-6 py-4"
           >
-            <AccordionTrigger className="[data-state=open]:text-primary py-2 text-lg">
+            <AccordionTrigger className="py-2 text-lg">
               {item.question}
             </AccordionTrigger>
             <AccordionContent className="">{item.answer}</AccordionContent>
