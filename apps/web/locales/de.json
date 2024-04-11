@@ -127,27 +127,6 @@
       "otp": "Einmaliges Passwort",
       "submit": "Weitermachen",
       "title": "Bestätige deine E-Mail"
-    },
-    "onboarding": {
-      "account": {
-        "avatar": "Avatar",
-        "avatarDescription": "Klicke auf den Kreis oder ziehe ein Bild hinein, um deinen Avatar hochzuladen.",
-        "name": "Name",
-        "title": "Vervollständigen Sie Ihr Konto"
-      },
-      "back": "Zurück",
-      "complete": "Abschließen",
-      "continue": "Weiter",
-      "message": "Nur ein paar schnelle Schritte, um Ihnen den Einstieg zu erleichtern.",
-      "notifications": {
-        "accountSetupFailed": "Es tut uns leid, aber wir konnten dein Konto nicht einrichten. \nBitte versuchen Sie es später noch einmal."
-      },
-      "step": "Schritt {step} / {total}",
-      "team": {
-        "name": "Teamname",
-        "title": "Erstelle ein Team"
-      },
-      "title": "Richten dein Konto ein"
     }
   },
   "blog": {
@@ -212,6 +191,27 @@
     "submit": "Abonnieren",
     "subtitle": "Gehöre zu den Ersten, die Zugriff auf supastarter.nextjs erhalten.",
     "title": "Erhalte frühen Zugang"
+  },
+  "onboarding": {
+    "account": {
+      "avatar": "Avatar",
+      "avatarDescription": "Klicke auf den Kreis oder ziehe ein Bild hinein, um deinen Avatar hochzuladen.",
+      "name": "Name",
+      "title": "Vervollständigen Sie Ihr Konto"
+    },
+    "back": "Zurück",
+    "complete": "Abschließen",
+    "continue": "Weiter",
+    "message": "Nur ein paar schnelle Schritte, um Ihnen den Einstieg zu erleichtern.",
+    "notifications": {
+      "accountSetupFailed": "Es tut uns leid, aber wir konnten dein Konto nicht einrichten. \nBitte versuchen Sie es später noch einmal."
+    },
+    "step": "Schritt {step} / {total}",
+    "team": {
+      "name": "Teamname",
+      "title": "Erstelle ein Team"
+    },
+    "title": "Richte dein Konto ein"
   },
   "pricing": {
     "description": "Wähle das passende Paket für dich aus.",

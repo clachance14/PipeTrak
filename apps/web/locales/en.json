@@ -87,27 +87,6 @@
       "subtitle": "Please enter your credentials to sign in.",
       "title": "Welcome back"
     },
-    "onboarding": {
-      "continue": "Continue",
-      "complete": "Complete",
-      "title": "Set up your account",
-      "message": "Just a few quick steps to get you started.",
-      "step": "Step {step} / {total}",
-      "back": "Back",
-      "account": {
-        "name": "Name",
-        "title": "Complete your account",
-        "avatar": "Avatar",
-        "avatarDescription": "Click the circle or drop an image to it to upload your avatar."
-      },
-      "team": {
-        "title": "Create a team",
-        "name": "Team name"
-      },
-      "notifications": {
-        "accountSetupFailed": "We are sorry, but we were unable to set up your account. Please try again later."
-      }
-    },
     "setup": {},
     "signup": {
       "alreadyHaveAccount": "Already have an account?",
@@ -222,6 +201,27 @@
     "submit": "Subscribe",
     "subtitle": "Be among the first to get access to supastarter.nextjs.",
     "title": "Get early access"
+  },
+  "onboarding": {
+    "continue": "Continue",
+    "complete": "Complete",
+    "title": "Set up your account",
+    "message": "Just a few quick steps to get you started.",
+    "step": "Step {step} / {total}",
+    "back": "Back",
+    "account": {
+      "name": "Name",
+      "title": "Complete your account",
+      "avatar": "Avatar",
+      "avatarDescription": "Click the circle or drop an image to it to upload your avatar."
+    },
+    "team": {
+      "title": "Create a team",
+      "name": "Team name"
+    },
+    "notifications": {
+      "accountSetupFailed": "We are sorry, but we were unable to set up your account. Please try again later."
+    }
   },
   "pricing": {
     "description": "Choose the plan that works best for you.",

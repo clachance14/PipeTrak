@@ -53,16 +53,14 @@ export function OnboardingStep2({
     } catch (e) {
       form.setError("root", {
         type: "server",
-        message: t("auth.onboarding.notifications.accountSetupFailed"),
+        message: t("onboarding.notifications.accountSetupFailed"),
       });
     }
   };
 
   return (
     <div>
-      <h3 className="mb-4 text-xl font-bold">
-        {t("auth.onboarding.team.title")}
-      </h3>
+      <h3 className="mb-4 text-xl font-bold">{t("onboarding.team.title")}</h3>
 
       <Form {...form}>
         <form
@@ -74,7 +72,7 @@ export function OnboardingStep2({
             name="teamName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("auth.onboarding.team.name")}</FormLabel>
+                <FormLabel>{t("onboarding.team.name")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -90,7 +88,7 @@ export function OnboardingStep2({
               onClick={onBack}
             >
               <ArrowLeftIcon className="mr-2 size-4" />
-              {t("auth.onboarding.back")}
+              {t("onboarding.back")}
             </Button>
             <Button
               className="flex-1"
@@ -98,7 +96,7 @@ export function OnboardingStep2({
               loading={form.formState.isSubmitting}
             >
               <CheckIcon className="mr-2 size-4" />
-              {t("auth.onboarding.complete")}
+              {t("onboarding.complete")}
             </Button>
           </div>
         </form>

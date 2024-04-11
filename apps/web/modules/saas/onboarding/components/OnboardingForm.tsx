@@ -41,16 +41,16 @@ export function OnboardingForm() {
   return (
     <div>
       <h1 className="text-3xl font-bold md:text-4xl">
-        {t("auth.onboarding.title")}
+        {t("onboarding.title")}
       </h1>
       <p className="text-muted-foreground mb-6 mt-2">
-        {t("auth.onboarding.message")}
+        {t("onboarding.message")}
       </p>
 
       <div className="mb-6 flex items-center gap-3">
         <Progress value={(onboardingStep / totalSteps) * 100} className="h-2" />
         <span className="text-muted-foreground shrink-0 text-xs">
-          {t("auth.onboarding.step", {
+          {t("onboarding.step", {
             step: onboardingStep,
             total: totalSteps,
           })}

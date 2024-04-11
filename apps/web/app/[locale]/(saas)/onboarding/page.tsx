@@ -13,7 +13,7 @@ export async function generateMetadata() {
   const t = await getTranslations();
 
   return {
-    title: t("auth.onboarding.title"),
+    title: t("onboarding.title"),
   };
 }
 
