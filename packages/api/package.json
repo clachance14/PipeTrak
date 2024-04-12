@@ -5,7 +5,7 @@
     "auth": "workspace:*",
     "database": "workspace:*",
     "mail": "workspace:*",
-    "next": "14.1.4",
+    "next": "14.2.0",
     "openai": "^4.33.0",
     "storage": "workspace:*",
     "stripe": "^14.24.0",
