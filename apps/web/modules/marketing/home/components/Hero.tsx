@@ -29,7 +29,7 @@ export function Hero() {
             Built & shipped with these awesome tools
           </h5>
 
-          <div className="text-foreground/50 mt-4 flex flex-col-reverse items-center justify-center gap-4 md:flex-row md:gap-8">
+          <div className="text-primary/50 mt-4 flex flex-col-reverse items-center justify-center gap-4 md:flex-row md:gap-8">
             {/* Vercel logo */}
             <div className="aspect-[284/64] h-6 w-auto">
               <svg

@@ -115,7 +115,7 @@ export function OtpForm() {
                 <FormItem>
                   <FormLabel>{t("auth.verifyOtp.otp")}</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} autoComplete="one-time-code" />
                   </FormControl>
                 </FormItem>
               </FormControl>
