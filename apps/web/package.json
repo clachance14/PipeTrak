@@ -24,7 +24,7 @@
     "boring-avatars": "^1.10.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "cypress": "^13.7.2",
+    "cypress": "^13.7.3",
     "database": "workspace:*",
     "date-fns": "^3.6.0",
     "deepmerge": "^4.3.1",
