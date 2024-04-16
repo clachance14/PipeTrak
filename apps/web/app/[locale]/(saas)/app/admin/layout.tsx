@@ -24,7 +24,7 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
               {
                 title: t("admin.menu.users"),
                 href: `users`,
-                icon: UsersIcon,
+                icon: <UsersIcon className="size-4" />,
               },
             ]}
           />

@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@i18n";
 import { cn } from "@ui/lib";
-import type { JSXElementConstructor } from "react";
+import { ReactNode } from "react";
 
 export function SideMenu({
   menuItems,
@@ -10,7 +10,7 @@ export function SideMenu({
   menuItems: {
     title: string;
     href: string;
-    icon: JSXElementConstructor<{ className?: string }>;
+    icon: ReactNode;
   }[];
 }) {
   const pathname = usePathname();
@@ -30,7 +30,7 @@ export function SideMenu({
                   isActiveMenuItem(item.href) ? "font-bold" : "",
                 )}
               >
-                <item.icon className="size-4 opacity-75" />
+                {item.icon}
                 {item.title}
               </Link>
             </li>
