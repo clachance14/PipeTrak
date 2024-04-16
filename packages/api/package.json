@@ -6,7 +6,7 @@
     "database": "workspace:*",
     "mail": "workspace:*",
     "next": "14.2.0",
-    "openai": "^4.33.0",
+    "openai": "^4.33.1",
     "storage": "workspace:*",
     "stripe": "^15.1.0",
     "superjson": "^2.2.1",
