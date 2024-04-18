@@ -1,3 +1,4 @@
+import { Link } from "@i18n";
 import { Button } from "@ui/components/button";
 import { ArrowRightIcon } from "lucide-react";
 
@@ -15,12 +16,14 @@ export function Hero() {
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">
-          <Button size="lg">
-            Get started
-            <ArrowRightIcon className="ml-2 size-4" />
+          <Button size="lg" asChild>
+            <Link href="/auth/login">
+              Get started
+              <ArrowRightIcon className="ml-2 size-4" />
+            </Link>
           </Button>
-          <Button variant="outline" size="lg">
-            Documentation
+          <Button variant="outline" size="lg" asChild>
+            <Link href="/docs">Documentation</Link>
           </Button>
         </div>
 
