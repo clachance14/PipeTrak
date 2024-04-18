@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <UserContextProvider initialUser={null}>
       <div className="bg-card flex min-h-screen w-full p-8">
-        <div className="flex w-full flex-col items-center justify-between">
+        <div className="flex w-full flex-col items-center justify-between gap-8">
           <div className="container">
             <div className="flex items-center justify-between">
               <Link href="/" className="block">

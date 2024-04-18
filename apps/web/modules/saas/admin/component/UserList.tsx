@@ -31,6 +31,7 @@ import type { ApiOutput } from "api/trpc/router";
 import {
   LoaderIcon,
   MoreVerticalIcon,
+  Repeat1Icon,
   SquareUserRoundIcon,
   TrashIcon,
 } from "lucide-react";
@@ -45,20 +46,29 @@ export function UserList() {
   const impersonateMutation = apiClient.admin.impersonate.useMutation();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useDebounceValue("", 200);
+  const [searchTerm, setSearchTerm] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const deleteUserMutation = apiClient.admin.deleteUser.useMutation();
+  const resendVerificationMailMutation =
+    apiClient.admin.resendVerificationMail.useMutation();
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebounceValue(
+    searchTerm,
+    500,
+    {
+      leading: false,
+    },
+  );
 
   useEffect(() => {
-    setCurrentPage(1);
+    setDebouncedSearchTerm(searchTerm);
   }, [searchTerm]);
 
   const { data, isLoading, refetch } = apiClient.admin.users.useQuery(
     {
       limit: itemsPerPage,
       offset: (currentPage - 1) * itemsPerPage,
-      searchTerm,
+      searchTerm: debouncedSearchTerm,
     },
     {
       retry: false,
@@ -66,6 +76,10 @@ export function UserList() {
       placeholderData: keepPreviousData,
     },
   );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
 
   const impersonateUser = async (
     userId: string,
@@ -110,6 +124,31 @@ export function UserList() {
     }
   };
 
+  const resendVerificationMail = async (userId: string) => {
+    const resendVerificationMailToast = toast({
+      variant: "loading",
+      title: t("admin.users.resendVerificationMail.submitting"),
+    });
+    try {
+      await resendVerificationMailMutation.mutateAsync({
+        userId,
+      });
+      resendVerificationMailToast.update({
+        id: resendVerificationMailToast.id,
+        variant: "success",
+        title: t("admin.users.resendVerificationMail.success"),
+        duration: 5000,
+      });
+    } catch {
+      resendVerificationMailToast.update({
+        id: resendVerificationMailToast.id,
+        variant: "error",
+        title: t("admin.users.resendVerificationMail.error"),
+        duration: 5000,
+      });
+    }
+  };
+
   const columns: ColumnDef<ApiOutput["admin"]["users"]["users"][number]>[] =
     useMemo(
       () => [
@@ -117,34 +156,35 @@ export function UserList() {
           accessorKey: "user",
           header: "",
           accessorFn: (row) => row.name,
-          cell: ({ row }) =>
-            row.original.name ? (
-              <div className="flex items-center gap-2">
-                <UserAvatar
-                  name={row.original.name ?? row.original.email}
-                  avatarUrl={row.original.avatarUrl}
-                />
-                <div className="leading-tight">
-                  <strong className="block">{row.original.name}</strong>
-                  <small className="text-muted-foreground">
-                    {row.original.email}{" "}
-                    <EmailVerified
-                      verified={row.original.emailVerified}
-                      className="inline-block align-text-top"
-                    />
-                    {row.original.role === "ADMIN" ? " – Admin" : ""} – Teams:{" "}
-                    {row.original.memberships?.map((mebership, i) => {
-                      return (
-                        <span key={i}>
-                          {i > 0 && <span>, </span>}
-                          {mebership.team.name}
-                        </span>
-                      );
-                    })}
-                  </small>
-                </div>
+          cell: ({ row }) => (
+            <div className="flex items-center gap-2">
+              <UserAvatar
+                name={row.original.name ?? row.original.email}
+                avatarUrl={row.original.avatarUrl}
+              />
+              <div className="leading-tight">
+                <strong className="block">
+                  {row.original.name ?? row.original.email}
+                </strong>
+                <small className="text-muted-foreground">
+                  {!!row.original.name && row.original.email}{" "}
+                  <EmailVerified
+                    verified={row.original.emailVerified}
+                    className="inline-block align-text-top"
+                  />
+                  {row.original.role === "ADMIN" ? " – Admin" : ""} – Teams:{" "}
+                  {row.original.memberships?.map((mebership, i) => {
+                    return (
+                      <span key={i}>
+                        {i > 0 && <span>, </span>}
+                        {mebership.team.name}
+                      </span>
+                    );
+                  })}
+                </small>
               </div>
-            ) : null,
+            </div>
+          ),
         },
         {
           accessorKey: "actions",
@@ -169,6 +209,16 @@ export function UserList() {
                       <SquareUserRoundIcon className="mr-2 size-4" />
                       {t("admin.users.impersonate")}
                     </DropdownMenuItem>
+
+                    {!row.original.emailVerified && (
+                      <DropdownMenuItem
+                        onClick={() => resendVerificationMail(row.original.id)}
+                      >
+                        <Repeat1Icon className="mr-2 size-4" />
+                        {t("admin.users.resendVerificationMail.title")}
+                      </DropdownMenuItem>
+                    )}
+
                     <DropdownMenuItem
                       onClick={() => deleteUser(row.original.id)}
                     >
