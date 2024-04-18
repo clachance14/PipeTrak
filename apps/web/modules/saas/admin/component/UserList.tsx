@@ -79,7 +79,7 @@ export function UserList() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [data]);
+  }, [debouncedSearchTerm]);
 
   const impersonateUser = async (
     userId: string,
