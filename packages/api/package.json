@@ -11,7 +11,7 @@
     "stripe": "^15.1.0",
     "superjson": "^2.2.1",
     "utils": "workspace:*",
-    "zod": "^3.22.2"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@types/react": "18.2.79",
