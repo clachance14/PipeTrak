@@ -87,11 +87,11 @@ importers:
         specifier: ^8.16.0
         version: 8.16.0(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
-        specifier: 11.0.0-rc.340
-        version: 11.0.0-rc.340(@trpc/server@11.0.0-rc.340)
+        specifier: 11.0.0-rc.342
+        version: 11.0.0-rc.342(@trpc/server@11.0.0-rc.342)
       '@trpc/react-query':
-        specifier: 11.0.0-rc.340
-        version: 11.0.0-rc.340(@tanstack/react-query@5.29.2)(@trpc/client@11.0.0-rc.340)(@trpc/server@11.0.0-rc.340)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 11.0.0-rc.342
+        version: 11.0.0-rc.342(@tanstack/react-query@5.29.2)(@trpc/client@11.0.0-rc.342)(@trpc/server@11.0.0-rc.342)(react-dom@18.2.0)(react@18.2.0)
       api:
         specifier: workspace:*
         version: link:../../packages/api
@@ -268,8 +268,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
       '@trpc/server':
-        specifier: 11.0.0-rc.340
-        version: 11.0.0-rc.340
+        specifier: 11.0.0-rc.342
+        version: 11.0.0-rc.342
       auth:
         specifier: workspace:*
         version: link:../auth
@@ -2223,7 +2223,7 @@ packages:
     dependencies:
       '@emnapi/core': 1.1.1
       '@emnapi/runtime': 1.1.1
-      '@tybys/wasm-util': 0.8.1
+      '@tybys/wasm-util': 0.8.2
     dev: false
     optional: true
 
@@ -2670,7 +2670,7 @@ packages:
     dependencies:
       '@emnapi/core': 0.45.0
       '@emnapi/runtime': 0.45.0
-      '@tybys/wasm-util': 0.8.1
+      '@tybys/wasm-util': 0.8.2
       memfs-browser: 3.5.10302
     dev: false
     optional: true
@@ -3124,7 +3124,7 @@ packages:
     dependencies:
       '@emnapi/core': 0.45.0
       '@emnapi/runtime': 0.45.0
-      '@tybys/wasm-util': 0.8.1
+      '@tybys/wasm-util': 0.8.2
       memfs-browser: 3.5.10302
     dev: false
     optional: true
@@ -5471,36 +5471,36 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /@trpc/client@11.0.0-rc.340(@trpc/server@11.0.0-rc.340):
-    resolution: {integrity: sha512-q2ecZW58LM9pKpzRt+um9Jh33Nmjt7qDZu3xsjMFD61QLE6M/Tply7lC02iqZzrXzTGxR0w2+dLdkkrSlITOKQ==}
+  /@trpc/client@11.0.0-rc.342(@trpc/server@11.0.0-rc.342):
+    resolution: {integrity: sha512-uDqeoG3y0Ef/Qtp7l8nNIG05WnLlerSEIJSUXG2vd4CWHjPra2Po17rcCjl4Rr5Jz+w6eJMn1OvWTk7FBIWR0w==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.340+d1652d1bc
+      '@trpc/server': 11.0.0-rc.342+96bcf23a7
     dependencies:
-      '@trpc/server': 11.0.0-rc.340
+      '@trpc/server': 11.0.0-rc.342
     dev: false
 
-  /@trpc/react-query@11.0.0-rc.340(@tanstack/react-query@5.29.2)(@trpc/client@11.0.0-rc.340)(@trpc/server@11.0.0-rc.340)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-3c+KWh3+KN+T0gBKSnxzGfrHlX1NRK5u+v4BqFWLTBg0ADi2eVOgSpTaToF/WEea616kacmPh5ptJeK8SmyBKQ==}
+  /@trpc/react-query@11.0.0-rc.342(@tanstack/react-query@5.29.2)(@trpc/client@11.0.0-rc.342)(@trpc/server@11.0.0-rc.342)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-zE8F4uNrRVpbz1JRNVpCad89TOq+06HkF4BRo0lqc183fugZ8WAgd7+2lELFJagLH2YvL5N6A2HXomTE0mrbNA==}
     peerDependencies:
       '@tanstack/react-query': ^5.25.0
-      '@trpc/client': 11.0.0-rc.340+d1652d1bc
-      '@trpc/server': 11.0.0-rc.340+d1652d1bc
+      '@trpc/client': 11.0.0-rc.342+96bcf23a7
+      '@trpc/server': 11.0.0-rc.342+96bcf23a7
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.29.2(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.340(@trpc/server@11.0.0-rc.340)
-      '@trpc/server': 11.0.0-rc.340
+      '@trpc/client': 11.0.0-rc.342(@trpc/server@11.0.0-rc.342)
+      '@trpc/server': 11.0.0-rc.342
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@11.0.0-rc.340:
-    resolution: {integrity: sha512-fKzFeAzFbsezC8Jx6gIy4AjlzNvQy4aFc2LT0qIq7hNWYCkuv3gQ7ROgcIF4dUI0rfPC3Gt/y8PQjE+GayAhvA==}
+  /@trpc/server@11.0.0-rc.342:
+    resolution: {integrity: sha512-q/h8uWQFols0XAyStHN/1rm9gvK5Zeh221rdqQdzYZUTHtjHgseKa90/AGPntVVeaZVm54nXktIMsQA2S7tXCQ==}
     dev: false
 
-  /@tybys/wasm-util@0.8.1:
-    resolution: {integrity: sha512-GSsTwyBl4pIzsxAY5wroZdyQKyhXk0d8PCRZtrSZ2WEB1cBdrp2EgGBwHOGCZtIIPun/DL3+AykCv+J6fyRH4Q==}
+  /@tybys/wasm-util@0.8.2:
+    resolution: {integrity: sha512-kzI0zdUtC/ymNQCVQiqHCKobSSyppUHet+pHaiOdKUV48B/uKCEDznwf4N9tOoDKdh7Uuhm8V60xPU8VYbBbrQ==}
     requiresBuild: true
     dependencies:
       tslib: 2.6.2
