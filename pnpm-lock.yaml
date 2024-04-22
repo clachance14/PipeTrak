@@ -186,8 +186,8 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
       zod:
-        specifier: ^3.22.2
-        version: 3.22.4
+        specifier: ^3.22.5
+        version: 3.22.5
     devDependencies:
       '@content-collections/core':
         specifier: ^0.4.1
@@ -298,8 +298,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       zod:
-        specifier: ^3.22.2
-        version: 3.22.4
+        specifier: ^3.22.5
+        version: 3.22.5
     devDependencies:
       '@types/react':
         specifier: 18.2.79
@@ -347,8 +347,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       zod:
-        specifier: ^3.22.2
-        version: 3.22.4
+        specifier: ^3.22.5
+        version: 3.22.5
     devDependencies:
       '@types/node':
         specifier: ^20.12.7
@@ -372,8 +372,8 @@ importers:
         specifier: ^5.12.1
         version: 5.12.1(prisma@5.12.1)
       zod:
-        specifier: ^3.22.2
-        version: 3.22.4
+        specifier: ^3.22.5
+        version: 3.22.5
     devDependencies:
       '@types/node':
         specifier: 20.12.7
@@ -1216,7 +1216,7 @@ packages:
       micromatch: 4.0.5
       pluralize: 8.0.0
       yaml: 2.4.1
-      zod: 3.22.4
+      zod: 3.22.5
     dev: true
 
   /@content-collections/integrations@0.1.1(@content-collections/core@0.4.1):
@@ -12137,11 +12137,11 @@ packages:
       '@prisma/generator-helper': 5.11.0
       code-block-writer: 12.0.0
       lodash: 4.17.21
-      zod: 3.22.4
+      zod: 3.22.5
     dev: true
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.22.5:
+    resolution: {integrity: sha512-HqnGsCdVZ2xc0qWPLdO25WnseXThh0kEYKIdV5F/hTHO75hNZFp8thxSeHhiPrHZKrFTo1SOgkAj9po5bexZlw==}
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
