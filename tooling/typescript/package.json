@@ -4,5 +4,8 @@
   "private": true,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "eslint": "8.56.0"
   }
 }
