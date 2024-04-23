@@ -23,7 +23,7 @@
     "api": "workspace:*",
     "boring-avatars": "^1.10.2",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "cypress": "^13.8.0",
     "database": "workspace:*",
     "date-fns": "^3.6.0",
