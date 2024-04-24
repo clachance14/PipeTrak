@@ -88,7 +88,7 @@ export function OtpForm() {
       <h1 className="text-3xl font-bold md:text-4xl">
         {t("auth.verifyOtp.title")}
       </h1>
-      <p className="text-muted-foreground mb-6 mt-2">
+      <p className="mb-6 mt-2 text-muted-foreground">
         {t("auth.verifyOtp.message")}
       </p>
 

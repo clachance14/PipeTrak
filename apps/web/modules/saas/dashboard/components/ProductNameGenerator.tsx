@@ -43,7 +43,7 @@ export function ProductNameGenerator() {
       {data && (
         <div className="mt-8 grid grid-cols-1 gap-2">
           {data?.map((name, i) => (
-            <div className="bg-muted rounded-md border p-4" key={i}>
+            <div className="rounded-md border bg-muted p-4" key={i}>
               {name}
             </div>
           ))}

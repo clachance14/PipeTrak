@@ -64,7 +64,7 @@ export function NavBar({
   );
 
   return (
-    <nav className="bg-muted w-full border-b">
+    <nav className="w-full border-b bg-muted">
       <div className="container max-w-6xl py-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">

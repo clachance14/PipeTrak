@@ -88,7 +88,7 @@ export function PricingTable({
         </Tabs>
       </div>
 
-      <div className="@md:grid-cols-3 grid gap-4">
+      <div className="grid gap-4 @md:grid-cols-3">
         {sortedAndFilteredPlans.map((plan) => {
           const variant = plan.variants.find((v) => v.interval === interval);
 
@@ -107,13 +107,13 @@ export function PricingTable({
                   <h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
                   {plan.description && (
                     <div
-                      className="prose text-muted-foreground mb-2"
+                      className="prose mb-2 text-muted-foreground"
                       dangerouslySetInnerHTML={{ __html: plan.description }}
                     />
                   )}
 
                   {!!plan.features?.length && (
-                    <ul className="text-muted-foreground grid list-disc gap-2 pl-4">
+                    <ul className="grid list-disc gap-2 pl-4 text-muted-foreground">
                       {plan.features.map((feature, key) => (
                         <li key={key}>{feature}</li>
                       ))}
@@ -123,7 +123,7 @@ export function PricingTable({
 
                 <div>
                   <strong
-                    className="text-primary text-2xl font-bold"
+                    className="text-2xl font-bold text-primary"
                     data-test="price-table-plan-price"
                   >
                     {Intl.NumberFormat("en-US", {

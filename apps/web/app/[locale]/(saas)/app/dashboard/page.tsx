@@ -37,7 +37,7 @@ export default async function Dashboard() {
       </div>
 
       <Card className="mt-8">
-        <div className="text-muted-foreground flex h-64 items-center justify-center p-8">
+        <div className="flex h-64 items-center justify-center p-8 text-muted-foreground">
           Place your content here...
         </div>
       </Card>

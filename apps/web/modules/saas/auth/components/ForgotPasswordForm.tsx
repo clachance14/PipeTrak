@@ -66,7 +66,7 @@ export function ForgotPasswordForm() {
       <h1 className="text-3xl font-extrabold md:text-4xl">
         {t("auth.forgotPassword.title")}
       </h1>
-      <p className="text-muted-foreground mb-6 mt-4">
+      <p className="mb-6 mt-4 text-muted-foreground">
         {t("auth.forgotPassword.message")}{" "}
         <Link href="/auth/login">
           {t("auth.forgotPassword.backToSignin")}

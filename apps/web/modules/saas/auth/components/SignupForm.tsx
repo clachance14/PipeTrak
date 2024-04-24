@@ -96,7 +96,7 @@ export function SignupForm() {
       <h1 className="text-3xl font-bold md:text-4xl">
         {t("auth.signup.title")}
       </h1>
-      <p className="text-muted-foreground mb-6 mt-2">
+      <p className="mb-6 mt-2 text-muted-foreground">
         {t("auth.signup.message")}
       </p>
 
@@ -146,7 +146,7 @@ export function SignupForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+                      className="absolute inset-y-0 right-0 flex items-center pr-4 text-xl text-primary"
                     >
                       {showPassword ? (
                         <EyeOffIcon className="size-4" />

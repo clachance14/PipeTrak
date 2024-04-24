@@ -31,7 +31,7 @@ export default async function OnboardingPage() {
 
   return (
     <UserContextProvider initialUser={user}>
-      <div className="bg-card flex min-h-screen w-full p-8">
+      <div className="flex min-h-screen w-full bg-card p-8">
         <div className="flex w-full flex-col items-center justify-between">
           <div className="container">
             <div className="flex items-center justify-between">

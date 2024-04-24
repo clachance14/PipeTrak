@@ -43,13 +43,13 @@ export function OnboardingForm() {
       <h1 className="text-3xl font-bold md:text-4xl">
         {t("onboarding.title")}
       </h1>
-      <p className="text-muted-foreground mb-6 mt-2">
+      <p className="mb-6 mt-2 text-muted-foreground">
         {t("onboarding.message")}
       </p>
 
       <div className="mb-6 flex items-center gap-3">
         <Progress value={(onboardingStep / totalSteps) * 100} className="h-2" />
-        <span className="text-muted-foreground shrink-0 text-xs">
+        <span className="shrink-0 text-xs text-muted-foreground">
           {t("onboarding.step", {
             step: onboardingStep,
             total: totalSteps,

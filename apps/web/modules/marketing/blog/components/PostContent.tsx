@@ -5,7 +5,7 @@ import { mdxComponents } from "../utils/mdx-components";
 
 export function PostContent({ content }: { content: string }) {
   return (
-    <div className="prose dark:prose-invert mx-auto mt-6 max-w-2xl">
+    <div className="prose mx-auto mt-6 max-w-2xl dark:prose-invert">
       <MDXContent code={content} components={mdxComponents} />
     </div>
   );

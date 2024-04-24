@@ -2,7 +2,7 @@ import { Link } from "@i18n";
 
 export function Footer() {
   return (
-    <footer className="text-muted-foreground container py-4 text-center text-sm">
+    <footer className="container py-4 text-center text-sm text-muted-foreground">
       <span>
         © {new Date().getFullYear()} supastarter. All rights reserved.
       </span>

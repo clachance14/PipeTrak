@@ -8,7 +8,7 @@ export default function AiDemoPage() {
         title="AI Demo"
         subtitle="This demo shows an example integration of the OpenAI API"
       />
-      <div className="bg-card text-foreground mx-auto max-w-3xl rounded-lg border p-8">
+      <div className="mx-auto max-w-3xl rounded-lg border bg-card p-8 text-foreground">
         <div>
           <p className="mb-4">
             Enter a topic and we will generate some funny product names for you:

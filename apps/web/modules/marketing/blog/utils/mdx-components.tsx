@@ -88,7 +88,7 @@ const CustomH6 = ({ children, ...rest }: PropsWithChildren) => (
 );
 
 const CustomParagraph = ({ children, ...rest }: PropsWithChildren) => (
-  <p className="text-foreground/60 mb-6 leading-relaxed" {...rest}>
+  <p className="mb-6 leading-relaxed text-foreground/60" {...rest}>
     {children}
   </p>
 );

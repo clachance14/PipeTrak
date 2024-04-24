@@ -63,7 +63,7 @@ export default async function BlogPostPage({
           {authorName && (
             <div className="flex items-center">
               {authorImage && (
-                <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
+                <div className="relative mr-2 size-8 overflow-hidden rounded-full">
                   <Image
                     src={authorImage}
                     alt={authorName}
@@ -90,7 +90,7 @@ export default async function BlogPostPage({
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-primary text-xs font-semibold uppercase tracking-wider"
+                  className="text-xs font-semibold uppercase tracking-wider text-primary"
                 >
                   #{tag}
                 </span>

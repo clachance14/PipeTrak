@@ -29,9 +29,9 @@ export function ConsentBanner() {
   };
 
   return (
-    <div className="bottom fixed bottom-4 right-4 max-w-md">
-      <div className="bg-card text-card-foreground flex gap-4 rounded-xl border p-6 shadow-xl">
-        <CookieIcon className="text-primary block size-4 flex-shrink-0 text-5xl" />
+    <div className="fixed bottom-4 right-4 max-w-md">
+      <div className="flex gap-4 rounded-xl border bg-card p-6 text-card-foreground shadow-xl">
+        <CookieIcon className="block size-4 shrink-0 text-5xl text-primary" />
         <div>
           <p className="text-sm leading-normal">
             We use tracking cookies to understand how you use the product and

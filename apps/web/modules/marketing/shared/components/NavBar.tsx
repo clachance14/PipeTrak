@@ -78,7 +78,7 @@ export function NavBar() {
 
   return (
     <nav
-      className={`bg-background/80 fixed left-0 top-0 z-20 w-full backdrop-blur-lg ${isTop ? "shadow-none" : "shadow-sm"} transition-[box-shadow] duration-200`}
+      className={`fixed left-0 top-0 z-20 w-full bg-background/80 backdrop-blur-lg ${isTop ? "shadow-none" : "shadow-sm"} transition-shadow duration-200`}
       data-test="navigation"
     >
       <Banner />

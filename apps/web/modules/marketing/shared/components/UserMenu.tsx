@@ -79,7 +79,7 @@ export function UserMenu() {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
-          className="focus-visible:ring-primary rounded-full outline-none focus-visible:ring-2"
+          className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary"
           aria-label="User menu"
         >
           <UserAvatar name={name ?? ""} avatarUrl={avatarUrl} />

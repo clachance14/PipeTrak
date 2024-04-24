@@ -41,7 +41,7 @@ export function VerifyTokenView() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <LoaderIcon className="h-8 w-8 animate-spin" />
+        <LoaderIcon className="size-8 animate-spin" />
       </div>
     );
   }
@@ -55,7 +55,7 @@ export function VerifyTokenView() {
           ? t("auth.confirmation.title")
           : t("auth.invalidToken.title")}
       </h1>
-      <p className="text-muted-foreground mb-4 mt-2">
+      <p className="mb-4 mt-2 text-muted-foreground">
         {tokenVerified
           ? t("auth.confirmation.message")
           : t("auth.invalidToken.message")}

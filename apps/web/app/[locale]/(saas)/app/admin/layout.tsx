@@ -17,7 +17,7 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
 
   return (
     <div className="container max-w-6xl py-8">
-      <div className="align-start flex flex-col gap-8 md:flex-row">
+      <div className="flex flex-col items-start gap-8 md:flex-row">
         <div className="w-full md:max-w-[200px]">
           <SideMenu
             menuItems={[

@@ -104,8 +104,8 @@ export function TeamAvatarForm() {
           />
 
           {uploading && (
-            <div className="bg-card/90 absolute inset-0 z-20 flex items-center justify-center">
-              <LoaderIcon className="text-primary h-6 w-6 animate-spin" />
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
+              <LoaderIcon className="size-6 animate-spin text-primary" />
             </div>
           )}
         </div>

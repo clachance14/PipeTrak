@@ -36,6 +36,7 @@ export function TableOfContents({
           <a
             key={item.slug}
             href={`#${item.slug}`}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
             className={`block text-sm ${`ml-${Math.max(0, item.lvl - 2) * 2}`}`}
             onClick={(e) => {
               e.preventDefault();

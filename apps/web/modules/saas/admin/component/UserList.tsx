@@ -222,7 +222,7 @@ export function UserList() {
                     <DropdownMenuItem
                       onClick={() => deleteUser(row.original.id)}
                     >
-                      <span className="text-destructive hover:text-destructive flex items-center">
+                      <span className="flex items-center text-destructive hover:text-destructive">
                         <TrashIcon className="mr-2 size-4" />
                         {t("admin.users.delete")}
                       </span>
@@ -257,7 +257,7 @@ export function UserList() {
   });
 
   return (
-    <div className="bg-card rounded-lg p-6 shadow-sm ">
+    <div className="rounded-lg bg-card p-6 shadow-sm ">
       <h2 className="mb-4 text-2xl font-semibold">{t("admin.users.title")}</h2>
       <Input
         type="search"
@@ -298,7 +298,7 @@ export function UserList() {
                 >
                   {isLoading ? (
                     <div className="flex h-full items-center justify-center">
-                      <LoaderIcon className="text-primary mr-2 size-4 animate-spin" />
+                      <LoaderIcon className="mr-2 size-4 animate-spin text-primary" />
                       {t("admin.users.loading")}
                     </div>
                   ) : (

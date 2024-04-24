@@ -45,7 +45,7 @@ export default async function Layout({ children }: PropsWithChildren) {
       initialUser={user}
       teamMembership={currentTeamMembership}
     >
-      <div className="bg-muted min-h-screen">
+      <div className="min-h-screen bg-muted">
         <NavBar
           user={user}
           teams={teamMemberships?.map((membership) => membership.team) ?? []}

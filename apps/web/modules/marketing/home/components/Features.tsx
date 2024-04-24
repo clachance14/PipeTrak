@@ -15,7 +15,7 @@ import heroImage from "../../../../public/images/hero.svg";
 
 export function Features() {
   return (
-    <section className="bg-card text-card-foreground py-24">
+    <section className="bg-card py-24 text-card-foreground">
       <div className="container">
         {/* Section header */}
         <div className="text-center">
@@ -30,7 +30,7 @@ export function Features() {
         <div className="mt-20 grid grid-cols-1 gap-16">
           {/* Feature 1 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary/10 rounded-2xl p-12">
+            <div className="rounded-2xl bg-primary/10 p-12">
               <Image
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 src={heroImage}
@@ -57,13 +57,13 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <StarIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <StarIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <MousePointerIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <MousePointerIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -73,7 +73,7 @@ export function Features() {
 
           {/* Feature 2 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary/10 rounded-2xl p-12 lg:order-2">
+            <div className="rounded-2xl bg-primary/10 p-12 lg:order-2">
               <Image
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 src={heroImage}
@@ -100,13 +100,13 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <UploadIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <UploadIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <CloudIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <CloudIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
@@ -116,7 +116,7 @@ export function Features() {
 
           {/* Feature 3 */}
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="bg-primary/10 rounded-2xl p-12 ">
+            <div className="rounded-2xl bg-primary/10 p-12 ">
               <Image
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 src={heroImage}
@@ -143,13 +143,13 @@ export function Features() {
               </Button>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <PhoneIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <PhoneIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 1</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>
-                <div className="bg-card text-card-foreground  rounded-xl border p-4">
-                  <PaperclipIcon className="text-primary h-6 w-6 text-3xl" />
+                <div className="rounded-xl border  bg-card p-4 text-card-foreground">
+                  <PaperclipIcon className="size-6 text-3xl text-primary" />
                   <strong className="mt-2 block">Benefit 2</strong>
                   <p className="opacity-70">This is a brilliant benefit.</p>
                 </div>

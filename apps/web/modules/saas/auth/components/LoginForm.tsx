@@ -131,7 +131,7 @@ export function LoginForm() {
       <h1 className="text-3xl font-extrabold md:text-4xl">
         {t("auth.login.title")}
       </h1>
-      <p className="text-muted-foreground mb-6 mt-4">
+      <p className="mb-6 mt-4 text-muted-foreground">
         {t("auth.login.subtitle")}
       </p>
 
@@ -191,7 +191,7 @@ export function LoginForm() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 text-xl"
+                        className="absolute inset-y-0 right-0 flex items-center pr-4 text-xl text-primary"
                       >
                         {showPassword ? (
                           <EyeOffIcon className="size-4" />

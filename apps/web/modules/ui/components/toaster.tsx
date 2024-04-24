@@ -38,7 +38,7 @@ export function Toaster() {
             <div className="flex items-center gap-3">
               {ToastIcon !== undefined && (
                 <ToastIcon
-                  className={`h-6 w-6 shrink-0 opacity-50 ${
+                  className={`size-6 shrink-0 opacity-50 ${
                     props.variant === "loading" ? "animate-spin" : ""
                   }`}
                 />

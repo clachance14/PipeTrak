@@ -61,7 +61,7 @@ export function SubscriptionOverview({
       className={className}
     >
       <div className="flex items-center gap-2">
-        <h4 className="text-primary text-lg font-bold">
+        <h4 className="text-lg font-bold text-primary">
           <span>{subscriptionPlan.name} </span>
           <small className="font-normal">
             (
@@ -82,7 +82,7 @@ export function SubscriptionOverview({
       </div>
 
       {currentSubscription?.nextPaymentDate && (
-        <p className="text-muted-foreground mt-1">
+        <p className="mt-1 text-muted-foreground">
           {t.rich(
             currentSubscription.status === "CANCELED" ||
               currentSubscription.status === "PAUSED"
