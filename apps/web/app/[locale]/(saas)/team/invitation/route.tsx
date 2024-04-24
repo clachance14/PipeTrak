@@ -39,5 +39,5 @@ export async function GET(request: Request) {
     redirect("/");
   }
 
-  return redirect(`/app/dashboard`);
+  return redirect("/app/dashboard");
 }

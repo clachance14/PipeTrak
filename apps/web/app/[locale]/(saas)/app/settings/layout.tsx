@@ -37,15 +37,15 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
       items: [
         {
           title: t("settings.menu.team.general"),
-          href: `/app/settings/team/general`,
+          href: "/app/settings/team/general",
         },
         {
           title: t("settings.menu.team.members"),
-          href: `/app/settings/team/members`,
+          href: "/app/settings/team/members",
         },
         {
           title: t("settings.menu.team.billing"),
-          href: `/app/settings/team/billing`,
+          href: "/app/settings/team/billing",
         },
       ],
     },
@@ -55,7 +55,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
       items: [
         {
           title: t("settings.menu.account.general"),
-          href: `/app/settings/account/general`,
+          href: "/app/settings/account/general",
         },
       ],
     },

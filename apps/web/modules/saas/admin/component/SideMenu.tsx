@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@i18n";
 import { cn } from "@ui/lib";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export function SideMenu({
   menuItems,

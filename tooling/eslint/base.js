@@ -30,6 +30,7 @@ const config = {
     ],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
     curly: ["error", "all"],
+    quotes: ["error", "double", { avoidEscape: true }],
   },
   ignorePatterns: [
     "**/*.config.js",

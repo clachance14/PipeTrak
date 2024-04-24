@@ -48,7 +48,7 @@ export default async function RootLayout({
           sansFont.variable,
         )}
       >
-        <NextTopLoader color={"var(--colors-primary)"} />
+        <NextTopLoader color="var(--colors-primary)" />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class">
             <ApiClientProvider>{children}</ApiClientProvider>

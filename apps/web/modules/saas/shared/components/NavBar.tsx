@@ -32,24 +32,24 @@ export function NavBar({
   const menuItems = [
     {
       label: t("dashboard.menu.dashboard"),
-      href: `/app/dashboard`,
+      href: "/app/dashboard",
       icon: GridIcon,
     },
     {
       label: t("dashboard.menu.aiDemo"),
-      href: `/app/ai-demo`,
+      href: "/app/ai-demo",
       icon: Wand2Icon,
     },
     {
       label: t("dashboard.menu.settings"),
-      href: `/app/settings`,
+      href: "/app/settings",
       icon: SettingsIcon,
     },
     ...(isAdmin
       ? [
           {
             label: t("dashboard.menu.admin"),
-            href: `/app/admin`,
+            href: "/app/admin",
             icon: UserCogIcon,
           },
         ]

@@ -159,7 +159,7 @@ export function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={`/app/settings/account/general`}>
+          <Link href="/app/settings/account/general">
             <SettingsIcon className="mr-2 size-4" />
             {t("dashboard.userMenu.accountSettings")}
           </Link>

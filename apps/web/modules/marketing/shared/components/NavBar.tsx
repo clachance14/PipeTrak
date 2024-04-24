@@ -51,7 +51,7 @@ export function NavBar() {
   }[] = [
     {
       label: t("common.menu.pricing"),
-      href: `/pricing`,
+      href: "/pricing",
     },
     {
       label: t("common.menu.blog"),
@@ -146,7 +146,7 @@ export function NavBar() {
 
                   <Link
                     key={user ? "dashboard" : "login"}
-                    href={user ? `/app` : "/auth/login"}
+                    href={user ? "/app" : "/auth/login"}
                     className="block px-3 py-2 text-lg"
                     prefetch={!user}
                   >
