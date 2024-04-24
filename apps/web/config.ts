@@ -15,9 +15,6 @@ export const appConfig = {
       es: "USD",
     },
   },
-  auth: {
-    oAuthProviders: ["google", "github"],
-  },
   marketing: {
     menu: [
       {

@@ -1,6 +1,5 @@
 "use client";
 
-import { appConfig } from "@config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
@@ -29,7 +28,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUser } from "../hooks/use-user";
 import SigninModeSwitch from "./SigninModeSwitch";
-import { SocialSigninButton } from "./SocialSigninButton";
+import { SocialSigninButton, oAuthProviders } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
@@ -138,7 +137,7 @@ export function LoginForm() {
       {invitationCode && <TeamInvitationInfo className="mb-6" />}
 
       <div className="flex flex-col items-stretch gap-3">
-        {appConfig.auth.oAuthProviders.map((providerId) => (
+        {Object.keys(oAuthProviders).map((providerId) => (
           <SocialSigninButton key={providerId} provider={providerId} />
         ))}
       </div>

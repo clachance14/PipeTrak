@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@ui/components/button";
-import { TwitterIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { JSXElementConstructor } from "react";
 import React from "react";
@@ -10,7 +9,7 @@ type IconProps = {
   className?: string;
 };
 
-const providers: Record<
+export const oAuthProviders: Record<
   string,
   {
     name: string;
@@ -39,21 +38,17 @@ const providers: Record<
       </svg>
     ),
   },
-  twitter: {
-    name: "Twitter",
-    icon: TwitterIcon,
-  },
 };
 
 export function SocialSigninButton({
   provider,
   className,
 }: {
-  provider: keyof typeof providers;
+  provider: keyof typeof oAuthProviders;
   className?: string;
 }) {
   const t = useTranslations();
-  const providerData = providers[provider];
+  const providerData = oAuthProviders[provider];
 
   return (
     <Button asChild variant="outline" type="button" className={className}>
