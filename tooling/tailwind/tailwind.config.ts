@@ -3,7 +3,7 @@ import colorVariable from "@mertasan/tailwindcss-variables/colorVariable";
 import containerQueryPlugin from "@tailwindcss/container-queries";
 import formsPlugin from "@tailwindcss/forms";
 import typographyPlugin from "@tailwindcss/typography";
-import { Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 
 export const lightVariables = {
@@ -79,8 +79,8 @@ export default {
         "2xl": "0 16px 64px 0 rgb(0, 0, 0, 0.15), 0 0 1px rgba(0,0,0,0.1)",
       },
       borderRadius: {
-        lg: `0.75rem`,
-        md: `calc(0.75rem - 2px)`,
+        lg: "0.75rem",
+        md: "calc(0.75rem - 2px)",
         sm: "calc(0.75rem - 4px)",
       },
       fontFamily: {
