@@ -52,7 +52,8 @@ export function createOauthCallbackHandler(
     const url = new URL(req.url);
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
-    const storedState = cookies().get("google_oauth_state")?.value ?? null;
+    const storedState =
+      cookies().get(`${providerId}_oauth_state`)?.value ?? null;
     const storedCodeVerifier = cookies().get("code_verifier")?.value ?? null;
 
     if (!code || !state || !storedState || state !== storedState) {
