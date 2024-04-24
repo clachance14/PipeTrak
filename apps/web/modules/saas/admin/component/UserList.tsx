@@ -62,7 +62,7 @@ export function UserList() {
 
   useEffect(() => {
     setDebouncedSearchTerm(searchTerm);
-  }, [searchTerm]);
+  }, [searchTerm]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { data, isLoading, refetch } = apiClient.admin.users.useQuery(
     {
