@@ -1,6 +1,5 @@
-import fetch from "node-fetch";
 import { config } from "../config";
-import { SendEmailHandler } from "../types";
+import type { SendEmailHandler } from "../types";
 
 const { from } = config;
 
@@ -9,7 +8,7 @@ export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Postmark-Server-Token": process.env.POSTMARK_SERVER_TOKEN as string,
+      "X-Postmark-Server-Token": process.env.POSTMARK_SERVER_TOKEN!,
     },
     body: JSON.stringify({
       From: from,

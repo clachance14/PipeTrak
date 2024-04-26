@@ -2,7 +2,6 @@
   "dependencies": {
     "@react-email/components": "^0.0.16",
     "@react-email/render": "^0.0.12",
-    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -19,19 +18,19 @@
     "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*"
   },
-  "main": "./index.ts",
-  "name": "mail",
-  "scripts": {
-    "preview": "email dev --port 3005",
-    "export": "email export"
-  },
-  "types": "./index.ts",
-  "version": "0.0.0",
   "eslintConfig": {
-    "root": true,
     "extends": [
       "eslint-config-custom/base",
       "eslint-config-custom/react"
-    ]
-  }
+    ],
+    "root": true
+  },
+  "main": "./index.ts",
+  "name": "mail",
+  "scripts": {
+    "export": "email export",
+    "preview": "email dev --port 3005"
+  },
+  "types": "./index.ts",
+  "version": "0.0.0"
 }
