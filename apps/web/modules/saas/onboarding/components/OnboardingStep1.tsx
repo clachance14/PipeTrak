@@ -87,10 +87,10 @@ export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
             <FormControl>
               <UserAvatarUpload
                 onSuccess={() => {
-                  console.log("success");
+                  return;
                 }}
                 onError={() => {
-                  console.log("error");
+                  return;
                 }}
               />
             </FormControl>

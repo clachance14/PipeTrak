@@ -71,10 +71,7 @@ export function NavBar() {
     },
   ];
 
-  const isMenuItemActive = (href: string) => {
-    console.log(pathname, href);
-    return pathname === href;
-  };
+  const isMenuItemActive = (href: string) => pathname.startsWith(href);
 
   return (
     <nav
