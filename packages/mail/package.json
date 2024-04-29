@@ -3,7 +3,7 @@
     "@react-email/components": "^0.0.16",
     "@react-email/render": "^0.0.12",
     "nodemailer": "^6.9.13",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-dom": "18.2.0",
     "react-email": "^2.1.1"
   },
@@ -12,7 +12,7 @@
     "@types/mjml": "^4.7.2",
     "@types/node": "20.12.7",
     "@types/nodemailer": "^6.4.11",
-    "@types/react": "18.2.79",
+    "@types/react": "18.3.0",
     "eslint": "^8.56.0",
     "eslint-config-custom": "workspace:*",
     "tailwind-config": "workspace:*",
