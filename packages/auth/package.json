@@ -3,7 +3,7 @@
     "@lucia-auth/adapter-prisma": "^4.0.0",
     "arctic": "^1.8.0",
     "database": "workspace:*",
-    "lucia": "^3.0.1",
+    "lucia": "^3.2.0",
     "mail": "workspace:*",
     "next": "14.2.3",
     "oslo": "^1.2.0",
