@@ -138,8 +138,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0)(react@18.3.1)
       nextjs-toploader:
-        specifier: ^1.6.11
-        version: 1.6.11(next@14.2.3)(react-dom@18.2.0)(react@18.3.1)
+        specifier: ^1.6.12
+        version: 1.6.12(next@14.2.3)(react-dom@18.2.0)(react@18.3.1)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -5650,10 +5650,6 @@ packages:
       '@types/node': 20.12.7
     dev: true
 
-  /@types/nprogress@0.2.3:
-    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
-    dev: false
-
   /@types/phoenix@1.6.4:
     resolution: {integrity: sha512-B34A7uot1Cv0XtaHRYDATltAdKx0BvVKNgYNqE4WjtPUa4VQJM7kxeXcVKaH+KS+kCmZ+6w+QaUdcljiheiBJA==}
     dev: false
@@ -9763,14 +9759,13 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
-  /nextjs-toploader@1.6.11(next@14.2.3)(react-dom@18.2.0)(react@18.3.1):
-    resolution: {integrity: sha512-2mt+YDj3I7s8JGv136TRdJo9amd2BBeb2u1U4tyvZpR08eqeBgqp3xsw2Yu1AUT7C3NZQhbQN11EXwnlqsPEIA==}
+  /nextjs-toploader@1.6.12(next@14.2.3)(react-dom@18.2.0)(react@18.3.1):
+    resolution: {integrity: sha512-nbun5lvVjlKnxLQlahzZ55nELVEduqoEXT03KCHnsEYJnFpI/3BaIzpMyq/v8C7UGU2NfxQmjq6ldZ310rsDqA==}
     peerDependencies:
       next: '>= 6.0.0'
       react: '>= 16.0.0'
       react-dom: '>= 16.0.0'
     dependencies:
-      '@types/nprogress': 0.2.3
       next: 14.2.3(react-dom@18.2.0)(react@18.3.1)
       nprogress: 0.2.0
       prop-types: 15.8.1
