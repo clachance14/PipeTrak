@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { SocialSigninButton, oAuthProviders } from "./SocialSigninButton";
 import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
@@ -101,6 +102,14 @@ export function SignupForm() {
       </p>
 
       {invitationCode && <TeamInvitationInfo className="mb-6" />}
+
+      <div className="flex flex-col items-stretch gap-3">
+        {Object.keys(oAuthProviders).map((providerId) => (
+          <SocialSigninButton key={providerId} provider={providerId} />
+        ))}
+      </div>
+
+      <hr className=" my-8" />
 
       <Form {...form}>
         <form

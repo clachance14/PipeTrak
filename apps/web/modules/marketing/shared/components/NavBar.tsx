@@ -12,15 +12,14 @@ import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDebounceCallback, useIsClient } from "usehooks-ts";
+import { useDebounceCallback } from "usehooks-ts";
 import { Banner } from "./Banner";
 
 export function NavBar() {
   const t = useTranslations();
-  const { user, loaded: userLoaded } = useUser();
+  const { user } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isClient = useIsClient();
   const [isTop, setIsTop] = useState(true);
 
   const debouncedScrollHandler = useDebounceCallback(
@@ -153,28 +152,24 @@ export function NavBar() {
               </SheetContent>
             </Sheet>
 
-            {isClient && userLoaded && (
-              <>
-                {user ? (
-                  <Button
-                    key="dashboard"
-                    className="hidden md:block"
-                    asChild
-                    variant="ghost"
-                  >
-                    <Link href="/app">{t("common.menu.dashboard")}</Link>
-                  </Button>
-                ) : (
-                  <Button
-                    key="login"
-                    className="hidden md:block"
-                    asChild
-                    variant="ghost"
-                  >
-                    <Link href="/auth/login">{t("common.menu.login")}</Link>
-                  </Button>
-                )}
-              </>
+            {user ? (
+              <Button
+                key="dashboard"
+                className="hidden md:block"
+                asChild
+                variant="ghost"
+              >
+                <Link href="/app">{t("common.menu.dashboard")}</Link>
+              </Button>
+            ) : (
+              <Button
+                key="login"
+                className="hidden md:block"
+                asChild
+                variant="ghost"
+              >
+                <Link href="/auth/login">{t("common.menu.login")}</Link>
+              </Button>
             )}
           </div>
         </div>
