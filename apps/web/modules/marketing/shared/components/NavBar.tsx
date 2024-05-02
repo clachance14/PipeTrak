@@ -98,7 +98,7 @@ export function NavBar() {
                 key={menuItem.href}
                 href={menuItem.href}
                 className={cn(
-                  "block px-3 py-2 text-lg",
+                  "block px-3 py-2 text-base text-foreground/80",
                   isMenuItemActive(menuItem.href) ? "font-bold" : "",
                 )}
               >
