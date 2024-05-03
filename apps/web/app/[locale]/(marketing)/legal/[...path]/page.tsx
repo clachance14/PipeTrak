@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 type Params = {
   path: string;
   locale: string;
-}
+};
 
 export async function generateMetadata({
   params: { path, locale },
