@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 import { createCheckoutLink as createCheckoutLinkResolver } from "../provider";
@@ -36,7 +37,7 @@ export const createCheckoutLink = protectedProcedure
 
         return checkoutLink;
       } catch (e) {
-        console.error(e);
+        logger.error(e);
 
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { lucia } from "auth";
 import { db } from "database";
+import { logger } from "logs";
 import { z } from "zod";
 import { adminProcedure } from "../../../trpc/base";
 
@@ -34,7 +35,7 @@ export const impersonate = adminProcedure
         const sessionCookie = lucia.createSessionCookie(newSession.id);
         responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
       } catch (e) {
-        console.error(e);
+        logger.error(e);
 
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

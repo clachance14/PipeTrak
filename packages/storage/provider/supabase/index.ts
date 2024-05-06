@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { logger } from "logs";
 import type {
   GetSignedUploadUrlHandler,
   GetSignedUrlHander,
@@ -35,7 +36,7 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
     .createSignedUploadUrl(path);
 
   if (error) {
-    console.error(error);
+    logger.error(error);
     throw new Error("Could not get signed url");
   }
 
@@ -52,7 +53,7 @@ export const getSignedUrl: GetSignedUrlHander = async (
     .createSignedUrl(path, expiresIn ?? 60);
 
   if (error) {
-    console.error(error);
+    logger.error(error);
     throw new Error("Could not get signed url");
   }
 

@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { TeamMembershipSchema, db } from "database";
+import { logger } from "logs";
 import { protectedProcedure } from "../../../trpc/base";
 
 export const updateMembership = protectedProcedure
@@ -41,7 +42,8 @@ export const updateMembership = protectedProcedure
         },
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Could not update member.",
