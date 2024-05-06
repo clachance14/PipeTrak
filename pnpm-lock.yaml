@@ -4421,7 +4421,7 @@ packages:
       html-to-text: 9.0.5
       js-beautify: 1.15.1
       react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@react-email/row@0.0.7(react@18.3.1):
