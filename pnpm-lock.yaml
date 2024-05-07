@@ -412,8 +412,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       react-email:
-        specifier: ^2.1.1
-        version: 2.1.1(eslint@8.56.0)
+        specifier: ^2.1.2
+        version: 2.1.2(eslint@8.56.0)
     devDependencies:
       '@tailwindcss/line-clamp':
         specifier: ^0.4.4
@@ -10278,8 +10278,8 @@ packages:
       react: 18.3.1
     dev: false
 
-  /react-email@2.1.1(eslint@8.56.0):
-    resolution: {integrity: sha512-09oMVl/jN0/Re0bT0sEqYjyyFSCN/Tg0YmzjC9wfYpnMx02Apk40XXitySDfUBMR9EgTdr6T4lYknACqiLK3mg==}
+  /react-email@2.1.2(eslint@8.56.0):
+    resolution: {integrity: sha512-HBHhpzEE5es9YUoo7VSj6qy1omjwndxf3/Sb44UJm/uJ2AjmqALo2yryux0CjW9QAVfitc9rxHkLvIb9H87QQw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
@@ -10290,8 +10290,8 @@ packages:
       '@radix-ui/react-slot': 1.0.2(@types/react@18.3.0)(react@18.3.1)
       '@radix-ui/react-toggle-group': 1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.3.1)(react@18.3.1)
       '@radix-ui/react-tooltip': 1.0.6(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.3.1)(react@18.3.1)
-      '@react-email/components': 0.0.16(@types/react@18.3.0)(react@18.3.1)
-      '@react-email/render': 0.0.12
+      '@react-email/components': 0.0.17(@types/react@18.3.0)(react@18.3.1)
+      '@react-email/render': 0.0.13
       '@swc/core': 1.3.101
       '@types/react': 18.3.0
       '@types/react-dom': 18.3.0
