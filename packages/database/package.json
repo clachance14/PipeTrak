@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^5.12.1",
+    "@prisma/client": "^5.13.0",
     "zod": "^3.23.6"
   },
   "devDependencies": {

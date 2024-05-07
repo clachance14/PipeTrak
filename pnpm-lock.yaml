@@ -366,8 +366,8 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: ^5.12.1
-        version: 5.12.1(prisma@5.13.0)
+        specifier: ^5.13.0
+        version: 5.13.0(prisma@5.13.0)
       zod:
         specifier: ^3.23.6
         version: 3.23.6
@@ -2156,7 +2156,7 @@ packages:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: 3.x
     dependencies:
-      '@prisma/client': 5.13.0
+      '@prisma/client': 5.13.0(prisma@5.13.0)
       lucia: 3.2.0
     dev: false
 
@@ -3144,8 +3144,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@prisma/client@5.12.1(prisma@5.13.0):
-    resolution: {integrity: sha512-6/JnizEdlSBxDIdiLbrBdMW5NqDxOmhXAJaNXiPpgzAPr/nLZResT6MMpbOHLo5yAbQ1Vv5UU8PTPRzb0WIxdA==}
+  /@prisma/client@5.13.0(prisma@5.13.0):
+    resolution: {integrity: sha512-uYdfpPncbZ/syJyiYBwGZS8Gt1PTNoErNYMuqHDa2r30rNSFtgTA/LXsSk55R7pdRTMi5pHkeP9B14K6nHmwkg==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -3155,17 +3155,6 @@ packages:
         optional: true
     dependencies:
       prisma: 5.13.0
-    dev: false
-
-  /@prisma/client@5.13.0:
-    resolution: {integrity: sha512-uYdfpPncbZ/syJyiYBwGZS8Gt1PTNoErNYMuqHDa2r30rNSFtgTA/LXsSk55R7pdRTMi5pHkeP9B14K6nHmwkg==}
-    engines: {node: '>=16.13'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
     dev: false
 
   /@prisma/debug@5.11.0:
