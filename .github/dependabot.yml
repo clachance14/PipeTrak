@@ -6,6 +6,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      trpc:
-        patterns:
-          - "@trpc/*"
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
