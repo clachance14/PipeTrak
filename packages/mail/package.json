@@ -13,7 +13,7 @@
     "@types/node": "20.12.7",
     "@types/nodemailer": "^6.4.15",
     "@types/react": "18.3.0",
-    "eslint": "^8.56.0",
+    "eslint": "^9.2.0",
     "eslint-config-custom": "workspace:*",
     "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*"
