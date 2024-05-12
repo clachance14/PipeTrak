@@ -10,9 +10,9 @@
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/mjml": "^4.7.2",
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.11",
     "@types/nodemailer": "^6.4.15",
-    "@types/react": "18.3.0",
+    "@types/react": "18.3.2",
     "eslint": "^9.2.0",
     "eslint-config-custom": "workspace:*",
     "tailwind-config": "workspace:*",
