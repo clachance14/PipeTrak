@@ -5,7 +5,7 @@
   },
   "devDependencies": {
     "@types/node": "20.12.7",
-    "dotenv-cli": "^7.3.0",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.56.0",
     "eslint-config-custom": "workspace:*",
     "prisma": "^5.13.0",
