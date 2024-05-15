@@ -10,7 +10,7 @@
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/mjml": "^4.7.2",
-    "@types/node": "20.12.11",
+    "@types/node": "20.12.12",
     "@types/nodemailer": "^6.4.15",
     "@types/react": "18.3.2",
     "eslint": "^9.2.0",

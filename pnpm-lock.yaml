@@ -202,8 +202,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3
       '@shikijs/rehype':
-        specifier: ^1.5.1
-        version: 1.5.1
+        specifier: ^1.5.2
+        version: 1.5.2
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
@@ -211,8 +211,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.6
       '@types/node':
-        specifier: 20.12.11
-        version: 20.12.11
+        specifier: 20.12.12
+        version: 20.12.12
       '@types/react':
         specifier: 18.3.2
         version: 18.3.2
@@ -311,8 +311,8 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/eslint
       prisma:
-        specifier: ^5.13.0
-        version: 5.13.0
+        specifier: ^5.14.0
+        version: 5.14.0
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -321,7 +321,7 @@ importers:
     dependencies:
       '@lucia-auth/adapter-prisma':
         specifier: ^4.0.0
-        version: 4.0.1(@prisma/client@5.14.0(prisma@5.13.0))(lucia@3.2.0)
+        version: 4.0.1(@prisma/client@5.14.0(prisma@5.14.0))(lucia@3.2.0)
       arctic:
         specifier: ^1.8.1
         version: 1.8.1
@@ -348,8 +348,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@types/node':
-        specifier: ^20.12.11
-        version: 20.12.11
+        specifier: ^20.12.12
+        version: 20.12.12
       '@types/react':
         specifier: 18.3.2
         version: 18.3.2
@@ -367,14 +367,14 @@ importers:
     dependencies:
       '@prisma/client':
         specifier: ^5.14.0
-        version: 5.14.0(prisma@5.13.0)
+        version: 5.14.0(prisma@5.14.0)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
       '@types/node':
-        specifier: 20.12.11
-        version: 20.12.11
+        specifier: 20.12.12
+        version: 20.12.12
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
@@ -385,8 +385,8 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/eslint
       prisma:
-        specifier: ^5.13.0
-        version: 5.13.0
+        specifier: ^5.14.0
+        version: 5.14.0
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -422,8 +422,8 @@ importers:
         specifier: ^4.7.2
         version: 4.7.4
       '@types/node':
-        specifier: 20.12.11
-        version: 20.12.11
+        specifier: 20.12.12
+        version: 20.12.12
       '@types/nodemailer':
         specifier: ^6.4.15
         version: 6.4.15
@@ -456,8 +456,8 @@ importers:
         version: 2.43.1
     devDependencies:
       '@types/node':
-        specifier: ^20.12.11
-        version: 20.12.11
+        specifier: ^20.12.12
+        version: 20.12.12
       eslint:
         specifier: ^9.2.0
         version: 9.2.0
@@ -471,8 +471,8 @@ importers:
   packages/utils:
     devDependencies:
       '@types/node':
-        specifier: ^20.12.11
-        version: 20.12.11
+        specifier: ^20.12.12
+        version: 20.12.12
       eslint:
         specifier: ^9.2.0
         version: 9.2.0
@@ -2049,23 +2049,23 @@ packages:
   '@prisma/debug@5.11.0':
     resolution: {integrity: sha512-N6yYr3AbQqaiUg+OgjkdPp3KPW1vMTAgtKX6+BiB/qB2i1TjLYCrweKcUjzOoRM5BriA4idrkTej9A9QqTfl3A==}
 
-  '@prisma/debug@5.13.0':
-    resolution: {integrity: sha512-699iqlEvzyCj9ETrXhs8o8wQc/eVW+FigSsHpiskSFydhjVuwTJEfj/nIYqTaWFYuxiWQRfm3r01meuW97SZaQ==}
+  '@prisma/debug@5.14.0':
+    resolution: {integrity: sha512-iq56qBZuFfX3fCxoxT8gBX33lQzomBU0qIUaEj1RebsKVz1ob/BVH1XSBwwwvRVtZEV1b7Fxx2eVu34Ge/mg3w==}
 
-  '@prisma/engines-version@5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b':
-    resolution: {integrity: sha512-AyUuhahTINGn8auyqYdmxsN+qn0mw3eg+uhkp8zwknXYIqoT3bChG4RqNY/nfDkPvzWAPBa9mrDyBeOnWSgO6A==}
+  '@prisma/engines-version@5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48':
+    resolution: {integrity: sha512-ip6pNkRo1UxWv+6toxNcYvItNYaqQjXdFNGJ+Nuk2eYtRoEdoF13wxo7/jsClJFFenMPVNVqXQDV0oveXnR1cA==}
 
-  '@prisma/engines@5.13.0':
-    resolution: {integrity: sha512-hIFLm4H1boj6CBZx55P4xKby9jgDTeDG0Jj3iXtwaaHmlD5JmiDkZhh8+DYWkTGchu+rRF36AVROLnk0oaqhHw==}
+  '@prisma/engines@5.14.0':
+    resolution: {integrity: sha512-lgxkKZ6IEygVcw6IZZUlPIfLQ9hjSYAtHjZ5r64sCLDgVzsPFCi2XBBJgzPMkOQ5RHzUD4E/dVdpn9+ez8tk1A==}
 
-  '@prisma/fetch-engine@5.13.0':
-    resolution: {integrity: sha512-Yh4W+t6YKyqgcSEB3odBXt7QyVSm0OQlBSldQF2SNXtmOgMX8D7PF/fvH6E6qBCpjB/yeJLy/FfwfFijoHI6sA==}
+  '@prisma/fetch-engine@5.14.0':
+    resolution: {integrity: sha512-VrheA9y9DMURK5vu8OJoOgQpxOhas3qF0IBHJ8G/0X44k82kc8E0w98HCn2nhnbOOMwbWsJWXfLC2/F8n5u0gQ==}
 
   '@prisma/generator-helper@5.11.0':
     resolution: {integrity: sha512-oK25sTb2q2TPN7OipiU5xkCpDPNvdWvmFgU9UmmPr8uEt2CdwDjxiWonULgwd6YfqnCOLNpLq0wBIONjelaVMg==}
 
-  '@prisma/get-platform@5.13.0':
-    resolution: {integrity: sha512-B/WrQwYTzwr7qCLifQzYOmQhZcFmIFhR81xC45gweInSUn2hTEbfKUPd2keAog+y5WI5xLAFNJ3wkXplvSVkSw==}
+  '@prisma/get-platform@5.14.0':
+    resolution: {integrity: sha512-/yAyBvcEjRv41ynZrhdrPtHgk47xLRRq/o5eWGcUpBJ1YrUZTYB8EoPiopnP7iQrMATK8stXQdPOoVlrzuTQZw==}
 
   '@radix-ui/colors@1.0.1':
     resolution: {integrity: sha512-xySw8f0ZVsAEP+e7iLl3EvcBXX7gsIlC1Zso/sPBW9gIWerBTgz6axrjU+MZ39wD+WFi5h5zdWpsg3+hwt2Qsg==}
@@ -2716,14 +2716,14 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@shikijs/core@1.5.1':
-    resolution: {integrity: sha512-xjV63pRUBvxA1LsxOUhRKLPh0uUjwBLzAKLdEuYSLIylo71sYuwDcttqNP01Ib1TZlLfO840CXHPlgUUsYFjzg==}
+  '@shikijs/core@1.5.2':
+    resolution: {integrity: sha512-wSAOgaz48GmhILFElMCeQypSZmj6Ru6DttOOtl3KNkdJ17ApQuGNCfzpk4cClasVrnIu45++2DBwG4LNMQAfaA==}
 
-  '@shikijs/rehype@1.5.1':
-    resolution: {integrity: sha512-UzmDzid4Zv4ZeY+GvJlKabBVdTt40aCCoOyeq/JwLJ0YmiZhm5vOicpzdbmMcUClgpCtBjJRLaOg8mkhd7YX/w==}
+  '@shikijs/rehype@1.5.2':
+    resolution: {integrity: sha512-MlpLBEyLcV399AgV5ai7wD0F7E/5qTlfF3487bx5MkGZb+DMAvpF279OI0UYKXVrqKrTS1zJfZXyIJlFQ3JeTA==}
 
-  '@shikijs/transformers@1.5.1':
-    resolution: {integrity: sha512-vir+y0elkjh2CepLVbqeGX+ftuc6WpfWNCMV/EBIallSLzhBfDO9r/TORDVOzegbTg9JMEmtOFv6PT9cSZTcyA==}
+  '@shikijs/transformers@1.5.2':
+    resolution: {integrity: sha512-/Sh64rKOFGMQLCvtHeL1Y7EExdq8LLxcdVkvoGx2aMHsYMOn8DckYl2gYKMHRBu/YUt1C38/Amd1Jdh48tWHgw==}
 
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
@@ -3145,8 +3145,8 @@ packages:
   '@types/node@18.19.23':
     resolution: {integrity: sha512-wtE3d0OUfNKtZYAqZb8HAWGxxXsImJcPUAgZNw+dWFxO6s5tIwIjyKnY76tsTatsNCLJPkVYwUpq15D38ng9Aw==}
 
-  '@types/node@20.12.11':
-    resolution: {integrity: sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==}
+  '@types/node@20.12.12':
+    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
 
   '@types/nodemailer@6.4.15':
     resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
@@ -5558,8 +5558,8 @@ packages:
     peerDependencies:
       react: '>=16.0.0'
 
-  prisma@5.13.0:
-    resolution: {integrity: sha512-kGtcJaElNRAdAGsCNykFSZ7dBKpL14Cbs+VaQ8cECxQlRPDjBlMHNFYeYt0SKovAVy2Y65JXQwB3A5+zIQwnTg==}
+  prisma@5.14.0:
+    resolution: {integrity: sha512-gCNZco7y5XtjrnQYeDJTiVZmT/ncqCr5RY1/Cf8X2wgLRmyh9ayPAGBNziI4qEE4S6SxCH5omQLVo9lmURaJ/Q==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -5867,8 +5867,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  shiki@1.5.1:
-    resolution: {integrity: sha512-vx4Ds3M3B9ZEmLeSXqBAB85osBWV8ErZfP69kuFQZozPgHc33m7spLTCUkcjwEjFm3gk3F9IdXMv8kX+v9xDHA==}
+  shiki@1.5.2:
+    resolution: {integrity: sha512-fpPbuSaatinmdGijE7VYUD3hxLozR3ZZ+iAx8Iy2X6REmJGyF5hQl94SgmiUNTospq346nXUVZx0035dyGvIVw==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -7540,9 +7540,9 @@ snapshots:
 
   '@lemonsqueezy/lemonsqueezy.js@2.2.0': {}
 
-  '@lucia-auth/adapter-prisma@4.0.1(@prisma/client@5.14.0(prisma@5.13.0))(lucia@3.2.0)':
+  '@lucia-auth/adapter-prisma@4.0.1(@prisma/client@5.14.0(prisma@5.14.0))(lucia@3.2.0)':
     dependencies:
-      '@prisma/client': 5.14.0(prisma@5.13.0)
+      '@prisma/client': 5.14.0(prisma@5.14.0)
       lucia: 3.2.0
 
   '@mdx-js/esbuild@3.0.1(esbuild@0.19.12)':
@@ -7981,36 +7981,36 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@prisma/client@5.14.0(prisma@5.13.0)':
+  '@prisma/client@5.14.0(prisma@5.14.0)':
     optionalDependencies:
-      prisma: 5.13.0
+      prisma: 5.14.0
 
   '@prisma/debug@5.11.0': {}
 
-  '@prisma/debug@5.13.0': {}
+  '@prisma/debug@5.14.0': {}
 
-  '@prisma/engines-version@5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b': {}
+  '@prisma/engines-version@5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48': {}
 
-  '@prisma/engines@5.13.0':
+  '@prisma/engines@5.14.0':
     dependencies:
-      '@prisma/debug': 5.13.0
-      '@prisma/engines-version': 5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
-      '@prisma/fetch-engine': 5.13.0
-      '@prisma/get-platform': 5.13.0
+      '@prisma/debug': 5.14.0
+      '@prisma/engines-version': 5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
+      '@prisma/fetch-engine': 5.14.0
+      '@prisma/get-platform': 5.14.0
 
-  '@prisma/fetch-engine@5.13.0':
+  '@prisma/fetch-engine@5.14.0':
     dependencies:
-      '@prisma/debug': 5.13.0
-      '@prisma/engines-version': 5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
-      '@prisma/get-platform': 5.13.0
+      '@prisma/debug': 5.14.0
+      '@prisma/engines-version': 5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
+      '@prisma/get-platform': 5.14.0
 
   '@prisma/generator-helper@5.11.0':
     dependencies:
       '@prisma/debug': 5.11.0
 
-  '@prisma/get-platform@5.13.0':
+  '@prisma/get-platform@5.14.0':
     dependencies:
-      '@prisma/debug': 5.13.0
+      '@prisma/debug': 5.14.0
 
   '@radix-ui/colors@1.0.1': {}
 
@@ -8728,20 +8728,20 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shikijs/core@1.5.1': {}
+  '@shikijs/core@1.5.2': {}
 
-  '@shikijs/rehype@1.5.1':
+  '@shikijs/rehype@1.5.2':
     dependencies:
-      '@shikijs/transformers': 1.5.1
+      '@shikijs/transformers': 1.5.2
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.5.1
+      shiki: 1.5.2
       unified: 11.0.4
       unist-util-visit: 5.0.0
 
-  '@shikijs/transformers@1.5.1':
+  '@shikijs/transformers@1.5.2':
     dependencies:
-      shiki: 1.5.1
+      shiki: 1.5.2
 
   '@sideway/address@4.1.5':
     dependencies:
@@ -9218,7 +9218,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
 
   '@types/debug@4.1.12':
     dependencies:
@@ -9272,20 +9272,20 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
       form-data: 4.0.0
 
   '@types/node@18.19.23':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.12.11':
+  '@types/node@20.12.12':
     dependencies:
       undici-types: 5.26.5
 
   '@types/nodemailer@6.4.15':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
 
   '@types/phoenix@1.6.4': {}
 
@@ -9316,7 +9316,7 @@ snapshots:
 
   '@types/webpack@5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
       tapable: 2.2.1
       webpack: 5.90.3(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
@@ -9327,11 +9327,11 @@ snapshots:
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
     optional: true
 
   '@typescript-eslint/eslint-plugin@7.9.0(@typescript-eslint/parser@7.9.0(eslint@9.2.0)(typescript@5.4.5))(eslint@9.2.0)(typescript@5.4.5)':
@@ -10188,7 +10188,7 @@ snapshots:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.17
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -11274,7 +11274,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -12243,9 +12243,9 @@ snapshots:
       clsx: 1.2.1
       react: 18.3.1
 
-  prisma@5.13.0:
+  prisma@5.14.0:
     dependencies:
-      '@prisma/engines': 5.13.0
+      '@prisma/engines': 5.14.0
 
   prismjs@1.29.0: {}
 
@@ -12672,9 +12672,9 @@ snapshots:
       interpret: 1.4.0
       rechoir: 0.6.2
 
-  shiki@1.5.1:
+  shiki@1.5.2:
     dependencies:
-      '@shikijs/core': 1.5.1
+      '@shikijs/core': 1.5.2
 
   side-channel@1.0.6:
     dependencies:
@@ -12884,7 +12884,7 @@ snapshots:
 
   stripe@15.6.0:
     dependencies:
-      '@types/node': 20.12.11
+      '@types/node': 20.12.12
       qs: 6.12.0
 
   strnum@1.0.5: {}
