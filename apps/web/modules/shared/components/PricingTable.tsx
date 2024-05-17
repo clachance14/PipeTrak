@@ -74,7 +74,7 @@ export function PricingTable({
 
   return (
     <div className={cn(className, "@container")}>
-      <div className="flex justify-end">
+      <div className="flex justify-center">
         <Tabs
           value={interval}
           onValueChange={(value) => setInterval(value as typeof interval)}
@@ -99,7 +99,7 @@ export function PricingTable({
           return (
             <div
               key={plan.id}
-              className="rounded-xl border p-6"
+              className="rounded-xl bg-card/50 p-6 shadow"
               data-test="price-table-plan"
             >
               <div className="flex h-full flex-col justify-between gap-4">
@@ -123,7 +123,7 @@ export function PricingTable({
 
                 <div>
                   <strong
-                    className="text-2xl font-bold text-primary"
+                    className="text-2xl font-bold text-highlight"
                     data-test="price-table-plan-price"
                   >
                     {Intl.NumberFormat("en-US", {
@@ -139,7 +139,7 @@ export function PricingTable({
                   <Button
                     disabled={isActivePlan(plan)}
                     loading={selectedPlan === plan.id}
-                    className="mt-4 w-full"
+                    className="mt-6 w-full"
                     onClick={async () => {
                       setSelectedPlan(plan.id);
                       await onSelectPlan(plan.id, String(variant.id));

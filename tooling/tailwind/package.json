@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "eslint": "9.2.0"
+    "color2k": "^2.0.3"
   },
   "devDependencies": {
     "@mertasan/tailwindcss-variables": "^2.7.0",
@@ -8,6 +8,7 @@
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.13",
     "@types/mertasan__tailwindcss-variables": "^2.6.1",
+    "eslint": "8.57.0",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7"
   },

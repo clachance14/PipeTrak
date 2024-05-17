@@ -7,7 +7,7 @@ export default function MarketingLayout({ children }: PropsWithChildren) {
   return (
     <UserContextProvider initialUser={null}>
       <NavBar />
-      <main className="min-h-screen pt-40">{children}</main>
+      <main>{children}</main>
       <Footer />
     </UserContextProvider>
   );

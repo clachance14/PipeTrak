@@ -13,7 +13,6 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
-import { Banner } from "./Banner";
 
 export function NavBar() {
   const t = useTranslations();
@@ -57,10 +56,6 @@ export function NavBar() {
       href: "/blog",
     },
     {
-      label: t("common.menu.faq"),
-      href: "/faq",
-    },
-    {
       label: t("common.menu.changelog"),
       href: "/changelog",
     },
@@ -74,11 +69,9 @@ export function NavBar() {
 
   return (
     <nav
-      className={`fixed left-0 top-0 z-20 w-full bg-background/80 backdrop-blur-lg ${isTop ? "shadow-none" : "shadow-sm"} transition-shadow duration-200`}
+      className={`fixed left-0 top-0 z-50 w-full ${isTop ? "shadow-none" : "bg-card/80 shadow-sm backdrop-blur-lg"} transition-shadow duration-200`}
       data-test="navigation"
     >
-      <Banner />
-
       <div className="container">
         <div
           className={`flex items-center justify-stretch gap-6 ${isTop ? "py-8" : "py-4"} transition-[padding] duration-200`}
@@ -98,8 +91,10 @@ export function NavBar() {
                 key={menuItem.href}
                 href={menuItem.href}
                 className={cn(
-                  "block px-3 py-2 text-base text-foreground/80",
-                  isMenuItemActive(menuItem.href) ? "font-bold" : "",
+                  "block px-3 py-2 text-sm font-medium text-foreground/80",
+                  isMenuItemActive(menuItem.href)
+                    ? "font-bold text-foreground"
+                    : "",
                 )}
               >
                 {menuItem.label}
@@ -132,8 +127,10 @@ export function NavBar() {
                       key={menuItem.href}
                       href={menuItem.href}
                       className={cn(
-                        "block px-3 py-2 text-lg",
-                        isMenuItemActive(menuItem.href) ? "font-bold" : "",
+                        "block px-3 py-2 text-base font-medium text-foreground/80",
+                        isMenuItemActive(menuItem.href)
+                          ? "font-bold text-foreground"
+                          : "",
                       )}
                     >
                       {menuItem.label}
@@ -143,7 +140,7 @@ export function NavBar() {
                   <Link
                     key={user ? "dashboard" : "login"}
                     href={user ? "/app" : "/auth/login"}
-                    className="block px-3 py-2 text-lg"
+                    className="block px-3 py-2 text-base"
                     prefetch={!user}
                   >
                     {user ? t("common.menu.dashboard") : t("common.menu.login")}
@@ -155,18 +152,18 @@ export function NavBar() {
             {user ? (
               <Button
                 key="dashboard"
-                className="hidden md:block"
+                className="hidden md:flex"
                 asChild
-                variant="ghost"
+                variant="secondary"
               >
                 <Link href="/app">{t("common.menu.dashboard")}</Link>
               </Button>
             ) : (
               <Button
                 key="login"
-                className="hidden md:block"
+                className="hidden md:flex"
                 asChild
-                variant="ghost"
+                variant="secondary"
               >
                 <Link href="/auth/login">{t("common.menu.login")}</Link>
               </Button>

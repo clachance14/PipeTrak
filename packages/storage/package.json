@@ -6,9 +6,15 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
-    "eslint": "^9.2.0",
+    "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-custom/base"
+    ],
+    "root": true
   },
   "main": "./index.ts",
   "name": "storage",
@@ -16,11 +22,5 @@
     "lint": "eslint \"**/*.ts*\""
   },
   "types": "./**/.ts",
-  "version": "0.0.0",
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "eslint-config-custom/base"
-    ]
-  }
+  "version": "0.0.0"
 }

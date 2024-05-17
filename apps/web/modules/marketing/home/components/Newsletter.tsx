@@ -38,7 +38,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className=" border-t py-24">
+    <section className="py-24">
       <div className="container">
         <div className="mb-12 text-center">
           <KeyIcon className="mx-auto mb-3 size-12 text-primary" />
