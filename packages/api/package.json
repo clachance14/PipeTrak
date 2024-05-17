@@ -1,14 +1,14 @@
 {
   "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "^2.2.0",
-    "@trpc/server": "11.0.0-rc.370",
+    "@lemonsqueezy/lemonsqueezy.js": "^3.0.0",
+    "@trpc/server": "11.0.0-rc.373",
     "auth": "workspace:*",
     "database": "workspace:*",
     "mail": "workspace:*",
     "next": "14.2.3",
     "openai": "^4.47.1",
     "storage": "workspace:*",
-    "stripe": "^15.6.0",
+    "stripe": "^15.7.0",
     "superjson": "^2.2.1",
     "utils": "workspace:*",
     "zod": "^3.23.8"
