@@ -15,7 +15,7 @@ export default async function Dashboard() {
         subtitle={t("dashboard.subtitle")}
       />
 
-      <div className="mt-8 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
         <StatsTile
           title="New clients"
           value={344}

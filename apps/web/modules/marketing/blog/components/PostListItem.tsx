@@ -9,9 +9,9 @@ export function PostListItem({ post }: { post: Post }) {
     post;
 
   return (
-    <div className=" rounded-2xl border p-6 ">
+    <div className="rounded-2xl border bg-card/50 p-6">
       {image && (
-        <div className="relative -m-4 mb-4 aspect-[16/9] overflow-hidden rounded-xl ">
+        <div className="relative -mx-4 -mt-4 mb-4 aspect-[16/9] overflow-hidden rounded-xl">
           <Image
             src={image}
             alt={title}

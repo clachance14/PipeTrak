@@ -15,13 +15,13 @@ export default function BlogListPage() {
   const t = useTranslations();
 
   return (
-    <div className="container max-w-6xl pb-24">
+    <div className="container max-w-6xl pb-16 pt-32">
       <div className="mb-12 pt-8 text-center">
         <h1 className="mb-2 text-5xl font-bold">{t("blog.title")}</h1>
         <p className="text-lg opacity-50">{t("blog.description")}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2">
         {allPosts
           .filter((post) => post.published && locale === post.locale)
           .sort(

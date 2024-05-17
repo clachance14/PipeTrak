@@ -64,15 +64,15 @@ export function NavBar({
   );
 
   return (
-    <nav className="w-full border-b bg-muted">
+    <nav className="w-full border-b">
       <div className="container max-w-6xl py-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link href="/" className="block">
-              <Logo withLabel={false} />
+              <Logo />
             </Link>
 
-            <span className="hidden opacity-30 lg:block">
+            <span className="hidden opacity-30 md:block">
               <ChevronRightIcon className="size-4" />
             </span>
 
@@ -84,12 +84,12 @@ export function NavBar({
           </div>
         </div>
 
-        <ul className="no-scrollbar -mx-8 -mb-4 mt-6 flex list-none items-center justify-start gap-6 overflow-x-auto px-8 text-sm lg:text-base">
+        <ul className="no-scrollbar -mx-8 -mb-4 mt-6 flex list-none items-center justify-start gap-6 overflow-x-auto px-8 text-sm">
           {menuItems.map((menuItem) => (
             <li key={menuItem.href}>
               <Link
                 href={menuItem.href}
-                className={`flex items-center gap-2 border-b-2 px-1 pb-3 ${
+                className={`flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-3 ${
                   isActiveMenuItem(menuItem.href)
                     ? "border-primary font-bold"
                     : "border-transparent"

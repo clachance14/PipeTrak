@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 type Params = {
   path: string | string[];
-}
+};
 
 export default async function DocsPage({
   params: { path },

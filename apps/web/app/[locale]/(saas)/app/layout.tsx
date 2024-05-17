@@ -45,14 +45,12 @@ export default async function Layout({ children }: PropsWithChildren) {
       initialUser={user}
       teamMembership={currentTeamMembership}
     >
-      <div className="min-h-screen bg-muted">
-        <NavBar
-          user={user}
-          teams={teamMemberships?.map((membership) => membership.team) ?? []}
-        />
-        <main className="bg-muted">{children}</main>
-        <Footer />
-      </div>
+      <NavBar
+        user={user}
+        teams={teamMemberships?.map((membership) => membership.team) ?? []}
+      />
+      <main className="min-h-[calc(100vh-12rem)]">{children}</main>
+      <Footer />
     </UserContextProvider>
   );
 }

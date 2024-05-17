@@ -103,7 +103,7 @@ export function SignupForm() {
 
       {invitationCode && <TeamInvitationInfo className="mb-6" />}
 
-      <div className="flex flex-col items-stretch gap-3">
+      <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
         {Object.keys(oAuthProviders).map((providerId) => (
           <SocialSigninButton key={providerId} provider={providerId} />
         ))}
