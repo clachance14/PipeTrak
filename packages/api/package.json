@@ -18,7 +18,7 @@
     "encoding": "^0.1.13",
     "eslint": "^9.2.0",
     "eslint-config-custom": "workspace:*",
-    "prisma": "^5.13.0",
+    "prisma": "^5.14.0",
     "tsconfig": "workspace:*"
   },
   "main": "./index.tsx",
