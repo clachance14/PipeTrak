@@ -2,7 +2,8 @@ import { AnalyticsScript } from "@analytics";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import type { Metadata } from "next";
-import { NextIntlClientProvider, useLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
 import { Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
@@ -34,7 +35,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const locale = useLocale();
+  const locale = await getLocale();
 
   if (params.locale !== locale) {
     notFound();
