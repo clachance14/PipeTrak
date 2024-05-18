@@ -2,6 +2,7 @@ import { appConfig } from "@config";
 import deepmerge from "deepmerge";
 import type { AbstractIntlMessages } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export const importLocale = async (
   locale: string,
@@ -25,6 +26,17 @@ export const getMessagesForLocale = async (
   return deepmerge(defaultLocaleMessages, localeMessages);
 };
 
-export default getRequestConfig(async ({ locale }) => ({
-  messages: await getMessagesForLocale(locale),
-}));
+export default getRequestConfig(async ({ locale }) => {
+  // Validate that the incoming `locale` parameter is valid
+  if (
+    !appConfig.i18n.locales.includes(
+      locale as (typeof appConfig.i18n.locales)[number],
+    )
+  ) {
+    notFound();
+  }
+
+  return {
+    messages: await getMessagesForLocale(locale),
+  };
+});

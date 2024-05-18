@@ -3,11 +3,9 @@ import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import { Poppins } from "next/font/google";
-import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
-import { getMessagesForLocale } from "../../i18n";
 
 import { ApiClientProvider } from "@shared/components/ApiClientProvider";
 import { GradientBackgroundWrapper } from "@shared/components/GradientBackgroundWrapper";
@@ -30,18 +28,11 @@ const sansFont = Poppins({
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
   const locale = await getLocale();
-
-  if (params.locale !== locale) {
-    notFound();
-  }
-
-  const messages = await getMessagesForLocale(locale);
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>
