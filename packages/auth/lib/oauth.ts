@@ -1,5 +1,6 @@
 import { OAuth2RequestError } from "arctic";
 import { db } from "database";
+import { logger } from "logs";
 import { cookies } from "next/headers";
 import { lucia } from "./lucia";
 
@@ -154,7 +155,8 @@ export function createOauthCallbackHandler(
         },
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       if (e instanceof OAuth2RequestError) {
         return new Response(null, {
           status: 400,

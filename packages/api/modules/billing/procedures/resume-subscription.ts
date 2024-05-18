@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { db } from "database";
+import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 import { resumeSubscription as resumeSubscriptionResolver } from "../provider";
@@ -41,7 +42,8 @@ export const resumeSubscription = protectedProcedure
         },
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
       });

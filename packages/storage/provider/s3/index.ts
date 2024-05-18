@@ -4,6 +4,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl as getS3SignedUrl } from "@aws-sdk/s3-request-presigner";
+import { logger } from "logs";
 import type {
   GetSignedUploadUrlHandler,
   GetSignedUrlHander,
@@ -57,7 +58,8 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
       },
     );
   } catch (e) {
-    console.error(e);
+    logger.error(e);
+
     throw new Error("Could not get signed upload url");
   }
 };
@@ -74,7 +76,7 @@ export const getSignedUrl: GetSignedUrlHander = async (
       { expiresIn },
     );
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     throw new Error("Could not get signed url");
   }
 };

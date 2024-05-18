@@ -1,5 +1,7 @@
+import { logger } from "logs";
 import { send } from "../provider";
-import { getTemplate, type mailTemplates } from "./templates";
+import type { mailTemplates } from "./templates";
+import { getTemplate } from "./templates";
 
 export async function sendEmail<
   TemplateId extends keyof typeof mailTemplates,
@@ -26,7 +28,8 @@ export async function sendEmail<
     });
     return true;
   } catch (e) {
-    console.error(e);
+    logger.error(e);
+
     return false;
   }
 }

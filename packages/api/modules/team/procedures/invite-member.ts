@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { db } from "database";
+import { logger } from "logs";
 import { sendEmail } from "mail";
 import { getBaseUrl } from "utils";
 import { z } from "zod";
@@ -49,7 +50,8 @@ export const inviteMember = protectedProcedure
         },
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Could not invite member.",

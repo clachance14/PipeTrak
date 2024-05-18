@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { lucia, validateOneTimePassword } from "auth";
 import { UserOneTimePasswordTypeSchema, db } from "database";
+import { logger } from "logs";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -49,7 +50,7 @@ export const verifyOtp = publicProcedure
 
         return session;
       } catch (e) {
-        console.error(e);
+        logger.error(e);
 
         throw new TRPCError({
           code: "BAD_REQUEST",

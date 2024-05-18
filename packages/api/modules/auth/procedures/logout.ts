@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { lucia } from "auth";
+import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
 
@@ -11,7 +12,8 @@ export const logout = protectedProcedure
       const sessionCookie = lucia.createBlankSessionCookie();
       responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "An unknown error occurred.",

@@ -31,6 +31,7 @@
     "geist": "^1.3.0",
     "jotai": "^2.8.0",
     "js-cookie": "^3.0.5",
+    "logs": "workspace:*",
     "lucide-react": "^0.378.0",
     "mail": "workspace:*",
     "next": "14.2.3",
@@ -79,6 +80,14 @@
     "tailwindcss": "3.4.3",
     "tsconfig": "workspace:*"
   },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-custom/base",
+      "eslint-config-custom/nextjs",
+      "eslint-config-custom/react"
+    ],
+    "root": true
+  },
   "name": "web",
   "private": true,
   "scripts": {
@@ -89,13 +98,5 @@
     "shadcn-ui": "pnpm dlx shadcn-ui@latest",
     "start": "next start"
   },
-  "version": "0.1.0",
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "eslint-config-custom/base",
-      "eslint-config-custom/nextjs",
-      "eslint-config-custom/react"
-    ]
-  }
+  "version": "0.1.0"
 }

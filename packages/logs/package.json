@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint": "^8.56.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-custom/base"
+    ],
+    "root": true
+  },
+  "main": "./index.tsx",
+  "name": "logs",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "types": "./**/.tsx",
+  "version": "0.0.0",
+  "dependencies": {
+    "winston": "^3.13.0"
+  }
+}

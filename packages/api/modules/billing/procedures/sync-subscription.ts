@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import type { Subscription } from "database";
 import { SubscriptionSchema, db } from "database";
+import { logger } from "logs";
 import { publicProcedure } from "../../../trpc/base";
 
 export const syncSubscription = publicProcedure
@@ -37,7 +38,8 @@ export const syncSubscription = publicProcedure
         });
       }
     } catch (e) {
-      console.error(e);
+      logger.error(e);
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
       });
