@@ -1,7 +1,6 @@
 import { PostListItem } from "@marketing/blog/components/PostListItem";
 import { allPosts } from "content-collections";
-import { useLocale, useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 
 export async function generateMetadata() {
   const t = await getTranslations();
@@ -10,9 +9,9 @@ export async function generateMetadata() {
   };
 }
 
-export default function BlogListPage() {
-  const locale = useLocale();
-  const t = useTranslations();
+export default async function BlogListPage() {
+  const locale = await getLocale();
+  const t = await getTranslations();
 
   return (
     <div className="container max-w-6xl pb-16 pt-32">
