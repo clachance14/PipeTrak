@@ -4,14 +4,14 @@ import {
   allDocumentationMetas,
   allDocumentationPages,
 } from "content-collections";
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 
 export default async function DocsLayout({
   children,
   params: { path },
 }: PropsWithChildren<{ params: { path: string | string[] } }>) {
-  const locale = useLocale();
+  const locale = await getLocale();
 
   const activePath = Array.isArray(path) ? path.join("/") : path || "";
 
