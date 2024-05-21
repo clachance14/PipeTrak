@@ -51,7 +51,7 @@ export default async function BlogPostPage({
   const { title, date, authorName, authorImage, tags, image, body } = post;
 
   return (
-    <div className="container max-w-6xl pb-24">
+    <div className="container max-w-6xl pt-32 pb-24">
       <div className="mx-auto max-w-2xl">
         <div className="mb-12">
           <Link href="/blog">&larr; Back to blog</Link>
