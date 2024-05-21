@@ -3,7 +3,7 @@ import { mdxComponents } from "@marketing/blog/utils/mdx-components";
 import { TableOfContents } from "@marketing/shared/components/TableOfContents";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allDocumentationPages } from "content-collections";
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 type Params = {
@@ -16,7 +16,7 @@ export default async function DocsPage({
   params: Params;
 }) {
   const activePath = getActivePathFromUrlParam(path);
-  const locale = useLocale();
+  const locale = await getLocale();
 
   const page = allDocumentationPages
     .filter((page) => page.path === activePath)
