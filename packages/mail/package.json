@@ -13,7 +13,7 @@
     "@types/mjml": "^4.7.2",
     "@types/node": "20.12.12",
     "@types/nodemailer": "^6.4.15",
-    "@types/react": "18.3.2",
+    "@types/react": "18.3.3",
     "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
     "tailwind-config": "workspace:*",
