@@ -34,6 +34,7 @@ export const getAllPlans: GetAllPlans = async function () {
   const response = await stripeClient.prices.list({
     active: true,
     expand: ["data.product"],
+    type: "recurring",
   });
 
   const plans: SubscriptionPlan[] = [];
