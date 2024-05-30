@@ -4,7 +4,7 @@ const customFormat = format.combine(
   format.colorize({
     all: true,
   }),
-  format.printf(({ message, level, ...rest }) => {
+  format.printf(({ message, ...rest }) => {
     return `${message} ${JSON.stringify(rest)}`.trim();
   }),
 );
