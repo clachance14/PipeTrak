@@ -7,7 +7,7 @@ import { cva } from "class-variance-authority";
 import { XIcon } from "lucide-react";
 import * as React from "react";
 
-const ToastProvider = ({ children }) => {
+const ToastProvider = ({ children }: React.PropsWithChildren) => {
   return <ToastPrimitives.Provider>{children}</ToastPrimitives.Provider>;
 };
 

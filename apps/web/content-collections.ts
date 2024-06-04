@@ -3,6 +3,7 @@ import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
 import { slugifyHeadline } from "@shared/lib/content";
 import rehypeShiki from "@shikijs/rehype";
+// @ts-expect-error the markdown-toc package does not have types
 import markdownToc from "markdown-toc";
 import rehypeImgSize from "rehype-img-size";
 import { z } from "zod";
