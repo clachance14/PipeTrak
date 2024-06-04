@@ -20,7 +20,7 @@
     "dotenv-cli": "^7.4.2",
     "tsconfig": "workspace:*",
     "eslint-config-custom": "workspace:*",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.0",
     "turbo": "^1.13.3",
     "typescript": "5.4.5"
   }
