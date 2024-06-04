@@ -202,8 +202,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3
       '@shikijs/rehype':
-        specifier: ^1.6.1
-        version: 1.6.1
+        specifier: ^1.6.2
+        version: 1.6.2
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
@@ -2784,14 +2784,14 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@shikijs/core@1.6.1':
-    resolution: {integrity: sha512-CqYyepN4SnBopaoXYwng4NO8riB5ask/LTCkhOFq+GNGtr2X+aKeD767eYdqYukeixEUvv4bXdyTYVaogj7KBw==}
+  '@shikijs/core@1.6.2':
+    resolution: {integrity: sha512-guW5JeDzZ7uwOjTfCOFZ2VtVXk5tmkMzBYbKGfXsmAH1qYOej49L5jQDcGmwd6/OgvpmWhzO2GNJkQIFnbwLPQ==}
 
-  '@shikijs/rehype@1.6.1':
-    resolution: {integrity: sha512-qBmZ93ASVX0tfuHvXB9EzgsAEcPmpk1R3I600JgaIBTljF+GsNxhJ+QL7dIVP8QvH6YslQ4jMx/2YC9DSDuCaw==}
+  '@shikijs/rehype@1.6.2':
+    resolution: {integrity: sha512-zXRiQn1lS4kRG5lb0fZeUOAuLvmpZp5Lv5Tqed38XTkRZeGHNRI75djkrsnWMEY6FRbsNGNP4Y+jPx9Qp8/Jkg==}
 
-  '@shikijs/transformers@1.6.1':
-    resolution: {integrity: sha512-m/h2Dh99XWvTzHL8MUQmEnrB+/gxDljIfgDNR00Zg941KENqORx8Hi9sKpGYjCgXoEJKASZlEMQdPnkHj9/8aQ==}
+  '@shikijs/transformers@1.6.2':
+    resolution: {integrity: sha512-ndqTWyHnxmsLkowhKWTam26opw8hg5a34y6FAUG/Xf6E49n3MM//nenKxXiWpPYkNPl1KZnYXB1k+Ia46wjOZg==}
 
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
@@ -6133,8 +6133,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  shiki@1.6.1:
-    resolution: {integrity: sha512-1Pu/A1rtsG6HZvQm4W0NExQ45e02og+rPog7PDaFDiMumZgOYnZIu4JtGQeAIfMwdbKSjJQoCUr79vDLKUUxWA==}
+  shiki@1.6.2:
+    resolution: {integrity: sha512-X3hSm5GzzBd/BmPmGfkueOUADLyBoZo1ojYQXhd+NU2VJn458yt4duaS0rVzC+WtqftSV7mTVvDw+OB9AHi3Eg==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -9115,20 +9115,20 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shikijs/core@1.6.1': {}
+  '@shikijs/core@1.6.2': {}
 
-  '@shikijs/rehype@1.6.1':
+  '@shikijs/rehype@1.6.2':
     dependencies:
-      '@shikijs/transformers': 1.6.1
+      '@shikijs/transformers': 1.6.2
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.6.1
+      shiki: 1.6.2
       unified: 11.0.4
       unist-util-visit: 5.0.0
 
-  '@shikijs/transformers@1.6.1':
+  '@shikijs/transformers@1.6.2':
     dependencies:
-      shiki: 1.6.1
+      shiki: 1.6.2
 
   '@sideway/address@4.1.5':
     dependencies:
@@ -13256,9 +13256,9 @@ snapshots:
       interpret: 1.4.0
       rechoir: 0.6.2
 
-  shiki@1.6.1:
+  shiki@1.6.2:
     dependencies:
-      '@shikijs/core': 1.6.1
+      '@shikijs/core': 1.6.2
 
   side-channel@1.0.6:
     dependencies:
