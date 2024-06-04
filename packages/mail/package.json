@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "@react-email/components": "^0.0.17",
-    "@react-email/render": "^0.0.13",
+    "@react-email/components": "^0.0.19",
+    "@react-email/render": "^0.0.15",
     "logs": "workspace:*",
     "nodemailer": "^6.9.13",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-email": "^2.1.2"
+    "react-email": "^2.1.4"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
