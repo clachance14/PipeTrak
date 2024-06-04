@@ -101,9 +101,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      cypress:
-        specifier: ^13.9.0
-        version: 13.9.0
       database:
         specifier: workspace:*
         version: link:../../packages/database
@@ -231,6 +228,9 @@ importers:
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
+      cypress:
+        specifier: ^13.9.0
+        version: 13.9.0
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
@@ -518,16 +518,22 @@ importers:
         version: link:../../tooling/typescript
 
   tooling/eslint:
-    dependencies:
+    devDependencies:
       '@next/eslint-plugin-next':
         specifier: ^14.2.3
         version: 14.2.3
+      '@types/eslint':
+        specifier: ^8.56.10
+        version: 8.56.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.9.0
         version: 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
         specifier: ^7.9.0
         version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
       eslint-config-turbo:
         specifier: ^1.13.3
         version: 1.13.3(eslint@8.57.0)
@@ -546,13 +552,6 @@ importers:
       eslint-plugin-tailwindcss:
         specifier: ^3.15.2
         version: 3.15.2(tailwindcss@3.4.3)
-    devDependencies:
-      '@types/eslint':
-        specifier: ^8.56.10
-        version: 8.56.10
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
       tsconfig:
         specifier: workspace:*
         version: link:../typescript
@@ -561,10 +560,6 @@ importers:
         version: 5.4.5
 
   tooling/tailwind:
-    dependencies:
-      color2k:
-        specifier: ^2.0.3
-        version: 2.0.3
     devDependencies:
       '@mertasan/tailwindcss-variables':
         specifier: ^2.7.0
@@ -592,7 +587,7 @@ importers:
         version: 1.0.7(tailwindcss@3.4.3)
 
   tooling/typescript:
-    dependencies:
+    devDependencies:
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -3771,9 +3766,6 @@ packages:
 
   color-string@1.9.1:
     resolution: {integrity: sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==}
-
-  color2k@2.0.3:
-    resolution: {integrity: sha512-zW190nQTIoXcGCaU08DvVNFTmQhUpnJfVuAKfWqUQkflXKpaDdpaYoM0iluLS9lgJNHyBF58KKA2FBEwkD7wog==}
 
   color@3.2.1:
     resolution: {integrity: sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==}
@@ -10046,8 +10038,6 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
-
-  color2k@2.0.3: {}
 
   color@3.2.1:
     dependencies:
