@@ -256,8 +256,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       start-server-and-test:
-        specifier: ^2.0.3
-        version: 2.0.3
+        specifier: ^2.0.4
+        version: 2.0.4
       tailwind-config:
         specifier: workspace:*
         version: link:../../tooling/tailwind
@@ -3990,6 +3990,15 @@ packages:
       supports-color:
         optional: true
 
+  debug@4.3.5:
+    resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   decode-named-character-reference@1.0.2:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
 
@@ -6310,8 +6319,8 @@ packages:
     resolution: {integrity: sha512-KJP1OCML99+8fhOHxwwzyWrlUuVX5GQ0ZpJTd1DFXhdkrvg1szxfHhawXUZ3g9TkXORQd4/WG68jMlQZ2p8wlg==}
     engines: {node: '>=6'}
 
-  start-server-and-test@2.0.3:
-    resolution: {integrity: sha512-QsVObjfjFZKJE6CS6bSKNwWZCKBG6975/jKRPPGFfFh+yOQglSeGXiNWjzgQNXdphcBI9nXbyso9tPfX4YAUhg==}
+  start-server-and-test@2.0.4:
+    resolution: {integrity: sha512-CKNeBTcP0hVqIlNismHMudb9q3lLdAjcVPO13/7gfI66fcJpeIb/o4NzQd1JK/CD+lfWVqr10ZH9Y14+OwlJuw==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -7446,7 +7455,7 @@ snapshots:
       '@babel/traverse': 7.24.6
       '@babel/types': 7.24.6
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -7550,7 +7559,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.24.6
       '@babel/parser': 7.24.6
       '@babel/types': 7.24.6
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -7664,7 +7673,7 @@ snapshots:
   '@esbuild-plugins/node-resolve@0.2.2(esbuild@0.19.12)':
     dependencies:
       '@types/resolve': 1.20.6
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       esbuild: 0.19.12
       escape-string-regexp: 4.0.0
       resolve: 1.22.8
@@ -9861,7 +9870,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 7.13.0(typescript@5.4.5)
       '@typescript-eslint/utils': 7.13.0(eslint@8.57.0)(typescript@5.4.5)
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
     optionalDependencies:
@@ -9877,7 +9886,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 7.12.0
       '@typescript-eslint/visitor-keys': 7.12.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.4
@@ -9892,7 +9901,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 7.13.0
       '@typescript-eslint/visitor-keys': 7.13.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.4
@@ -10251,9 +10260,9 @@ snapshots:
 
   axe-core@4.7.0: {}
 
-  axios@1.6.7(debug@4.3.4):
+  axios@1.6.7(debug@4.3.5):
     dependencies:
-      follow-redirects: 1.15.5(debug@4.3.4)
+      follow-redirects: 1.15.5(debug@4.3.5)
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -10631,6 +10640,10 @@ snapshots:
     optionalDependencies:
       supports-color: 8.1.1
 
+  debug@4.3.5:
+    dependencies:
+      ms: 2.1.2
+
   decode-named-character-reference@1.0.2:
     dependencies:
       character-entities: 2.0.2
@@ -10753,7 +10766,7 @@ snapshots:
   engine.io-client@6.5.3:
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       engine.io-parser: 5.2.2
       ws: 8.11.0
       xmlhttprequest-ssl: 2.0.0
@@ -10773,7 +10786,7 @@ snapshots:
       base64id: 2.0.0
       cookie: 0.4.2
       cors: 2.8.5
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       engine.io-parser: 5.2.2
       ws: 8.11.0
     transitivePeerDependencies:
@@ -11416,9 +11429,9 @@ snapshots:
 
   fn.name@1.1.0: {}
 
-  follow-redirects@1.15.5(debug@4.3.4):
+  follow-redirects@1.15.5(debug@4.3.5):
     optionalDependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
 
   for-each@0.3.3:
     dependencies:
@@ -12577,7 +12590,7 @@ snapshots:
   micromark@4.0.0:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.0
@@ -13535,7 +13548,7 @@ snapshots:
 
   socket.io-adapter@2.5.4:
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       ws: 8.11.0
     transitivePeerDependencies:
       - bufferutil
@@ -13545,7 +13558,7 @@ snapshots:
   socket.io-client@4.7.3:
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       engine.io-client: 6.5.3
       socket.io-parser: 4.2.4
     transitivePeerDependencies:
@@ -13556,7 +13569,7 @@ snapshots:
   socket.io-parser@4.2.4:
     dependencies:
       '@socket.io/component-emitter': 3.1.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -13565,7 +13578,7 @@ snapshots:
       accepts: 1.3.8
       base64id: 2.0.0
       cors: 2.8.5
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       engine.io: 6.5.4
       socket.io-adapter: 2.5.4
       socket.io-parser: 4.2.4
@@ -13632,16 +13645,16 @@ snapshots:
     dependencies:
       type-fest: 0.7.1
 
-  start-server-and-test@2.0.3:
+  start-server-and-test@2.0.4:
     dependencies:
       arg: 5.0.2
       bluebird: 3.7.2
       check-more-types: 2.24.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.5
       execa: 5.1.1
       lazy-ass: 1.6.0
       ps-tree: 1.2.0
-      wait-on: 7.2.0(debug@4.3.4)
+      wait-on: 7.2.0(debug@4.3.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -14197,9 +14210,9 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  wait-on@7.2.0(debug@4.3.4):
+  wait-on@7.2.0(debug@4.3.5):
     dependencies:
-      axios: 1.6.7(debug@4.3.4)
+      axios: 1.6.7(debug@4.3.5)
       joi: 17.12.2
       lodash: 4.17.21
       minimist: 1.2.8
