@@ -12,3 +12,7 @@ updates:
       content-collections:
         patterns:
           - "@content-collections/*"
+      prisma:
+        patterns:
+          - "@prisma/*"
+          - "prisma"
