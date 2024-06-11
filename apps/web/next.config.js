@@ -48,4 +48,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(withContentCollections(nextConfig));
+module.exports = withContentCollections(withNextIntl(nextConfig));
