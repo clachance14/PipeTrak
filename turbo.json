@@ -1,8 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env.*local"
-  ],
+  "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
     "NODE_ENV",
     "PORT",
@@ -28,15 +26,8 @@
   ],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^db:generate",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "dependsOn": ["^db:generate", "^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "check-types": {},
     "clean": {
@@ -50,15 +41,11 @@
     },
     "dev": {
       "cache": false,
-      "dependsOn": [
-        "^db:generate"
-      ],
+      "dependsOn": ["^db:generate"],
       "persistent": true
     },
     "export": {
-      "outputs": [
-        "out/**"
-      ]
+      "outputs": ["out/**"]
     },
     "lint": {}
   }
