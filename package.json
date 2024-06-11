@@ -1,4 +1,5 @@
 {
+  "name": "supastarter-nextjs",
   "private": true,
   "scripts": {
     "build": "dotenv -c -- turbo build",
