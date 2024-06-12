@@ -58,6 +58,10 @@ export function createOauthCallbackHandler(
     const storedCodeVerifier = cookies().get("code_verifier")?.value ?? null;
 
     if (!code || !state || !storedState || state !== storedState) {
+      logger.error(
+        `Invalid state or code parameters for provider ${providerId}`,
+      );
+
       return new Response(null, {
         status: 400,
       });
@@ -155,7 +159,7 @@ export function createOauthCallbackHandler(
         },
       });
     } catch (e) {
-      logger.error(e);
+      logger.error("Could not handle oAuth request", e);
 
       if (e instanceof OAuth2RequestError) {
         return new Response(null, {
