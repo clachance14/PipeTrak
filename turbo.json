@@ -4,6 +4,7 @@
   "globalEnv": [
     "NODE_ENV",
     "PORT",
+    "DATABASE_URL",
     "NEXT_PUBLIC_SITE_URL",
     "VERCEL_URL",
     "LEMONSQUEEZY_WEBHOOK_SECRET",
