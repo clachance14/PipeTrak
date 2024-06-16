@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "^3.1.2",
+    "@lemonsqueezy/lemonsqueezy.js": "^3.2.0",
     "@trpc/server": "11.0.0-rc.402",
     "auth": "workspace:*",
     "database": "workspace:*",
