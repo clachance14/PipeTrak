@@ -19,7 +19,7 @@
     "encoding": "^0.1.13",
     "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
-    "prisma": "^5.15.0",
+    "prisma": "^5.15.1",
     "tsconfig": "workspace:*"
   },
   "eslintConfig": {
