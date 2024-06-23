@@ -84,11 +84,11 @@ importers:
         specifier: ^8.17.3
         version: 8.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/client':
-        specifier: 11.0.0-rc.403
-        version: 11.0.0-rc.403(@trpc/server@11.0.0-rc.403)
+        specifier: 11.0.0-rc.417
+        version: 11.0.0-rc.417(@trpc/server@11.0.0-rc.417)
       '@trpc/react-query':
-        specifier: 11.0.0-rc.403
-        version: 11.0.0-rc.403(@tanstack/react-query@5.45.1(react@18.3.1))(@trpc/client@11.0.0-rc.403(@trpc/server@11.0.0-rc.403))(@trpc/server@11.0.0-rc.403)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 11.0.0-rc.417
+        version: 11.0.0-rc.417(@tanstack/react-query@5.45.1(react@18.3.1))(@trpc/client@11.0.0-rc.417(@trpc/server@11.0.0-rc.417))(@trpc/server@11.0.0-rc.417)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       api:
         specifier: workspace:*
         version: link:../../packages/api
@@ -274,8 +274,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       '@trpc/server':
-        specifier: 11.0.0-rc.403
-        version: 11.0.0-rc.403
+        specifier: 11.0.0-rc.417
+        version: 11.0.0-rc.417
       auth:
         specifier: workspace:*
         version: link:../auth
@@ -3129,22 +3129,22 @@ packages:
     resolution: {integrity: sha512-mPBodDGVL+fl6d90wUREepHa/7lhsghg2A3vFpakEhrhtbIlgNAZiMr7ccTgak5qbHqF14Fwy+W1yFWQt+WmYQ==}
     engines: {node: '>=12'}
 
-  '@trpc/client@11.0.0-rc.403':
-    resolution: {integrity: sha512-4Elc4/PQI1H2Mpt3VWVINtYI8HhuPkvu/xowGDlHhYemmuvR3OqnE4H3I1XiPS9EXDOT397VadTJ5eGhQIZxPA==}
+  '@trpc/client@11.0.0-rc.417':
+    resolution: {integrity: sha512-uXztohI5ygT76jpMoGjh8zlJKR51k5vRt+3EFdFdnyAkyvoWiJgWyzujMZBUoO9VVoMI+6iAUdugyUdoAUTjcg==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.403+ab71a1be6
+      '@trpc/server': 11.0.0-rc.417+94650c185
 
-  '@trpc/react-query@11.0.0-rc.403':
-    resolution: {integrity: sha512-a4emDWo0EBTPULqzC92pJaJYTjM71GzdZfYcKYMxGMaevruUQAgmnXumeTkUUrj3QP6eszxVgolSu69Jw+iiSQ==}
+  '@trpc/react-query@11.0.0-rc.417':
+    resolution: {integrity: sha512-JDCAeWDGhA6m9OMguT5N0Weqtdlk9tS5WAH2zMr8TymiVJWuIDp7PbbLn3XfHF0BgFODrMw+tC45+vlqLPjDGw==}
     peerDependencies:
       '@tanstack/react-query': ^5.40.0
-      '@trpc/client': 11.0.0-rc.403+ab71a1be6
-      '@trpc/server': 11.0.0-rc.403+ab71a1be6
+      '@trpc/client': 11.0.0-rc.417+94650c185
+      '@trpc/server': 11.0.0-rc.417+94650c185
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
 
-  '@trpc/server@11.0.0-rc.403':
-    resolution: {integrity: sha512-DIt0GijW3nzq3zk9rFw1Ly/b6E9eTcsKV+caOMSeJl6A7Pby8QpdKaN8yJZDHhEojULeIVFNE4Izals5T0fQgg==}
+  '@trpc/server@11.0.0-rc.417':
+    resolution: {integrity: sha512-7zbL/ynMC66fqrrOE3/WTSaXJhijPgJ0ZN/Y0SPIx0ylk/DNsZVhGbR80IOKDvj2HJCeXE+eueGp03ziZHM8xw==}
 
   '@tybys/wasm-util@0.8.3':
     resolution: {integrity: sha512-Z96T/L6dUFFxgFJ+pQtkPpne9q7i6kIPYCFnQBHSgSPV9idTsKfIhCss0h5iM9irweZCatkrdeP8yi5uM1eX6Q==}
@@ -9614,19 +9614,19 @@ snapshots:
 
   '@tanstack/table-core@8.17.3': {}
 
-  '@trpc/client@11.0.0-rc.403(@trpc/server@11.0.0-rc.403)':
+  '@trpc/client@11.0.0-rc.417(@trpc/server@11.0.0-rc.417)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.403
+      '@trpc/server': 11.0.0-rc.417
 
-  '@trpc/react-query@11.0.0-rc.403(@tanstack/react-query@5.45.1(react@18.3.1))(@trpc/client@11.0.0-rc.403(@trpc/server@11.0.0-rc.403))(@trpc/server@11.0.0-rc.403)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/react-query@11.0.0-rc.417(@tanstack/react-query@5.45.1(react@18.3.1))(@trpc/client@11.0.0-rc.417(@trpc/server@11.0.0-rc.417))(@trpc/server@11.0.0-rc.417)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/react-query': 5.45.1(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.403(@trpc/server@11.0.0-rc.403)
-      '@trpc/server': 11.0.0-rc.403
+      '@trpc/client': 11.0.0-rc.417(@trpc/server@11.0.0-rc.417)
+      '@trpc/server': 11.0.0-rc.417
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@trpc/server@11.0.0-rc.403': {}
+  '@trpc/server@11.0.0-rc.417': {}
 
   '@tybys/wasm-util@0.8.3':
     dependencies:
