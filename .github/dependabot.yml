@@ -16,3 +16,6 @@ updates:
         patterns:
           - "@prisma/*"
           - "prisma"
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
