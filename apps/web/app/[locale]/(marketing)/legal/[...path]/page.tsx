@@ -50,7 +50,7 @@ export default async function BlogPostPage({
   const { title, body } = page;
 
   return (
-    <div className="container max-w-6xl pb-24">
+    <div className="container max-w-6xl pb-24 pt-32">
       <div className="mx-auto mb-12 max-w-2xl">
         <h1 className="text-center text-4xl font-bold">{title}</h1>
       </div>
