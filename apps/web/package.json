@@ -34,7 +34,7 @@
     "lucide-react": "^0.395.0",
     "mail": "workspace:*",
     "next": "14.2.4",
-    "next-intl": "3.15.0",
+    "next-intl": "3.15.2",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.12",
     "react": "18.3.1",
