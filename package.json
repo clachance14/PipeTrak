@@ -22,7 +22,7 @@
     "tsconfig": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.3.2",
-    "turbo": "^2.0.4",
+    "turbo": "^2.0.5",
     "typescript": "5.4.5"
   }
 }
