@@ -23,6 +23,9 @@
 	},
 	"main": "./index.tsx",
 	"name": "api",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
 	"types": "./**/.tsx",
 	"version": "0.0.0"
 }

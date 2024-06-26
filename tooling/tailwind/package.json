@@ -12,5 +12,8 @@
 	"main": "index.ts",
 	"name": "tailwind-config",
 	"private": true,
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
 	"version": "0.0.0"
 }

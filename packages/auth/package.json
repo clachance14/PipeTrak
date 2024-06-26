@@ -19,6 +19,9 @@
 	},
 	"main": "./index.tsx",
 	"name": "auth",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
 	"types": "./**/.tsx",
 	"version": "0.0.0"
 }

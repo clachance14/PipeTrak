@@ -12,6 +12,9 @@
 	},
 	"main": "./index.ts",
 	"name": "storage",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
 	"types": "./**/.ts",
 	"version": "0.0.0"
 }

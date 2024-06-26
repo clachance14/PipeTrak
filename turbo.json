@@ -30,7 +30,7 @@
 			"dependsOn": ["^db:generate", "^build"],
 			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
 		},
-		"check-types": {},
+		"type-check": {},
 		"clean": {
 			"cache": false
 		},
