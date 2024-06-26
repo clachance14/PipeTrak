@@ -8,46 +8,46 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export function PauseSubscriptionButton({ id }: { id: string }) {
-  const t = useTranslations();
-  const router = useRouter();
-  const { toast } = useToast();
-  const pauseSubscriptionMutation =
-    apiClient.billing.pauseSubscription.useMutation({
-      onSuccess: () => {
-        toast({
-          variant: "success",
-          title: t(
-            "settings.billing.pauseSubscription.notifications.success.title",
-          ),
-        });
-        router.refresh();
-      },
-      onError: () => {
-        toast({
-          variant: "error",
-          title: t(
-            "settings.billing.pauseSubscription.notifications.error.title",
-          ),
-        });
-      },
-    });
+	const t = useTranslations();
+	const router = useRouter();
+	const { toast } = useToast();
+	const pauseSubscriptionMutation =
+		apiClient.billing.pauseSubscription.useMutation({
+			onSuccess: () => {
+				toast({
+					variant: "success",
+					title: t(
+						"settings.billing.pauseSubscription.notifications.success.title",
+					),
+				});
+				router.refresh();
+			},
+			onError: () => {
+				toast({
+					variant: "error",
+					title: t(
+						"settings.billing.pauseSubscription.notifications.error.title",
+					),
+				});
+			},
+		});
 
-  const pauseSubscription = async () => {
-    try {
-      await pauseSubscriptionMutation.mutateAsync({ id });
-    } catch {
-      // TODO: add error notification
-    }
-  };
+	const pauseSubscription = async () => {
+		try {
+			await pauseSubscriptionMutation.mutateAsync({ id });
+		} catch {
+			// TODO: add error notification
+		}
+	};
 
-  return (
-    <Button
-      variant="outline"
-      onClick={() => pauseSubscription()}
-      loading={pauseSubscriptionMutation.isPending}
-    >
-      <PauseIcon className="mr-2 size-4" />
-      {t("settings.billing.pauseSubscription.label")}
-    </Button>
-  );
+	return (
+		<Button
+			variant="outline"
+			onClick={() => pauseSubscription()}
+			loading={pauseSubscriptionMutation.isPending}
+		>
+			<PauseIcon className="mr-2 size-4" />
+			{t("settings.billing.pauseSubscription.label")}
+		</Button>
+	);
 }

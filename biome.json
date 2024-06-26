@@ -1,0 +1,35 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noArrayIndexKey": "off"
+			},
+			"complexity": {
+				"noForEach": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "off",
+				"noUnusedImports": "error"
+			}
+		}
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"files": {
+		"ignore": [
+			".react-email",
+			".next",
+			".turbo",
+			"node_modules/*",
+			".content-collections"
+		]
+	}
+}

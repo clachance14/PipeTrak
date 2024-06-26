@@ -4,11 +4,11 @@ import { UserContextProvider } from "@saas/auth/lib/user-context";
 import type { PropsWithChildren } from "react";
 
 export default function MarketingLayout({ children }: PropsWithChildren) {
-  return (
-    <UserContextProvider initialUser={null}>
-      <NavBar />
-      <main className="min-h-screen">{children}</main>
-      <Footer />
-    </UserContextProvider>
-  );
+	return (
+		<UserContextProvider initialUser={null}>
+			<NavBar />
+			<main className="min-h-screen">{children}</main>
+			<Footer />
+		</UserContextProvider>
+	);
 }

@@ -1,17 +1,27 @@
 {
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.fixAll": true
-  },
-  "tailwindCSS.experimental.classRegex": [
-    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
-  "typescript.preferences.importModuleSpecifier": "shortest",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "eslint.debug": true,
-  "i18n-ally.localesPaths": ["apps/web/locales"],
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.enabledFrameworks": ["next-intl"]
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"tailwindCSS.experimental.classRegex": [
+		["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+	],
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": true
+	},
+	"typescript.preferences.importModuleSpecifier": "shortest",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"i18n-ally.localesPaths": ["apps/web/locales"],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.enabledFrameworks": ["next-intl"]
 }

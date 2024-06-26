@@ -10,101 +10,101 @@ import { v4 as uuid } from "uuid";
 import { CropImageDialog } from "./CropImageDialog";
 
 export function UserAvatarUpload({
-  onSuccess,
-  onError,
+	onSuccess,
+	onError,
 }: {
-  onSuccess: () => void;
-  onError: () => void;
+	onSuccess: () => void;
+	onError: () => void;
 }) {
-  const { user, updateUser } = useUser();
-  const [uploading, setUploading] = useState(false);
-  const [cropDialogOpen, setCropDialogOpen] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
+	const { user, updateUser } = useUser();
+	const [uploading, setUploading] = useState(false);
+	const [cropDialogOpen, setCropDialogOpen] = useState(false);
+	const [image, setImage] = useState<File | null>(null);
 
-  const getSignedUploadUrlMutation =
-    apiClient.uploads.signedUploadUrl.useMutation();
-  const updateUserMutation = apiClient.auth.update.useMutation();
+	const getSignedUploadUrlMutation =
+		apiClient.uploads.signedUploadUrl.useMutation();
+	const updateUserMutation = apiClient.auth.update.useMutation();
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      setImage(acceptedFiles[0]);
-      setCropDialogOpen(true);
-    },
-    accept: {
-      "image/png": [".png"],
-      "image/jpeg": [".jpg", ".jpeg"],
-    },
-    multiple: false,
-  });
+	const { getRootProps, getInputProps } = useDropzone({
+		onDrop: (acceptedFiles) => {
+			setImage(acceptedFiles[0]);
+			setCropDialogOpen(true);
+		},
+		accept: {
+			"image/png": [".png"],
+			"image/jpeg": [".jpg", ".jpeg"],
+		},
+		multiple: false,
+	});
 
-  if (!user) {
-    return null;
-  }
+	if (!user) {
+		return null;
+	}
 
-  const onCrop = async (croppedImageData: Blob | null) => {
-    if (!croppedImageData) {
-      return;
-    }
+	const onCrop = async (croppedImageData: Blob | null) => {
+		if (!croppedImageData) {
+			return;
+		}
 
-    setUploading(true);
-    try {
-      const path = `/${user.id}-${uuid()}.png`;
-      const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
-        path,
-        bucket: "avatars",
-      });
+		setUploading(true);
+		try {
+			const path = `/${user.id}-${uuid()}.png`;
+			const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
+				path,
+				bucket: "avatars",
+			});
 
-      const response = await fetch(uploadUrl, {
-        method: "PUT",
-        body: croppedImageData,
-        headers: {
-          "Content-Type": "image/png",
-        },
-      });
+			const response = await fetch(uploadUrl, {
+				method: "PUT",
+				body: croppedImageData,
+				headers: {
+					"Content-Type": "image/png",
+				},
+			});
 
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
-      }
+			if (!response.ok) {
+				throw new Error("Failed to upload image");
+			}
 
-      const updatedUser = await updateUserMutation.mutateAsync({
-        avatarUrl: path,
-      });
+			const updatedUser = await updateUserMutation.mutateAsync({
+				avatarUrl: path,
+			});
 
-      updateUser({
-        avatarUrl: updatedUser.avatarUrl,
-      });
+			updateUser({
+				avatarUrl: updatedUser.avatarUrl,
+			});
 
-      onSuccess();
-    } catch (e) {
-      onError();
-    } finally {
-      setUploading(false);
-    }
-  };
+			onSuccess();
+		} catch (e) {
+			onError();
+		} finally {
+			setUploading(false);
+		}
+	};
 
-  return (
-    <>
-      <div className="relative rounded-full" {...getRootProps()}>
-        <input {...getInputProps()} />
-        <UserAvatar
-          className="size-24 cursor-pointer text-xl"
-          avatarUrl={user.avatarUrl}
-          name={user.name ?? ""}
-        />
+	return (
+		<>
+			<div className="relative rounded-full" {...getRootProps()}>
+				<input {...getInputProps()} />
+				<UserAvatar
+					className="size-24 cursor-pointer text-xl"
+					avatarUrl={user.avatarUrl}
+					name={user.name ?? ""}
+				/>
 
-        {uploading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
-            <LoaderIcon className="size-6 animate-spin text-primary" />
-          </div>
-        )}
-      </div>
+				{uploading && (
+					<div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
+						<LoaderIcon className="size-6 animate-spin text-primary" />
+					</div>
+				)}
+			</div>
 
-      <CropImageDialog
-        image={image}
-        open={cropDialogOpen}
-        onOpenChange={setCropDialogOpen}
-        onCrop={onCrop}
-      />
-    </>
-  );
+			<CropImageDialog
+				image={image}
+				open={cropDialogOpen}
+				onOpenChange={setCropDialogOpen}
+				onCrop={onCrop}
+			/>
+		</>
+	);
 }

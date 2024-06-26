@@ -13,46 +13,46 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: {
-    absolute: "supastarter.nextjs - Application",
-    default: "supastarter.nextjs- Application",
-    template: "%s | supastarter.nextjs - Application",
-  },
+	title: {
+		absolute: "supastarter.nextjs - Application",
+		default: "supastarter.nextjs- Application",
+		template: "%s | supastarter.nextjs - Application",
+	},
 };
 
 const sansFont = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-sans",
+	subsets: ["latin"],
+	weight: ["400", "500", "600", "700"],
+	variable: "--font-sans",
 });
 
 export default async function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  const locale = await getLocale();
-  const messages = await getMessages();
+	const locale = await getLocale();
+	const messages = await getMessages();
 
-  return (
-    <html lang={locale}>
-      <body
-        className={cn(
-          "bg-background text-foreground min-h-screen font-sans antialiased",
-          sansFont.variable,
-        )}
-      >
-        <NextTopLoader color="var(--colors-primary)" />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider attribute="class">
-            <ApiClientProvider>
-              <GradientBackgroundWrapper>{children}</GradientBackgroundWrapper>
-            </ApiClientProvider>
-          </ThemeProvider>
-          <Toaster />
-        </NextIntlClientProvider>
-        <AnalyticsScript />
-      </body>
-    </html>
-  );
+	return (
+		<html lang={locale}>
+			<body
+				className={cn(
+					"bg-background text-foreground min-h-screen font-sans antialiased",
+					sansFont.variable,
+				)}
+			>
+				<NextTopLoader color="var(--colors-primary)" />
+				<NextIntlClientProvider locale={locale} messages={messages}>
+					<ThemeProvider attribute="class">
+						<ApiClientProvider>
+							<GradientBackgroundWrapper>{children}</GradientBackgroundWrapper>
+						</ApiClientProvider>
+					</ThemeProvider>
+					<Toaster />
+				</NextIntlClientProvider>
+				<AnalyticsScript />
+			</body>
+		</html>
+	);
 }

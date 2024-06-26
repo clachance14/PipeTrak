@@ -9,40 +9,40 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangePasswordForm() {
-  const t = useTranslations();
-  const { toast } = useToast();
-  const router = useRouter();
-  const [password, setPassword] = useState("");
+	const t = useTranslations();
+	const { toast } = useToast();
+	const router = useRouter();
+	const [password, setPassword] = useState("");
 
-  const changePasswordMutation = apiClient.auth.changePassword.useMutation({
-    onSuccess: () => {
-      toast({
-        variant: "success",
-        title: t("settings.notifications.passwordUpdated"),
-      });
-      setPassword("");
-      router.refresh();
-    },
-    onError: () => {
-      toast({
-        variant: "error",
-        title: t("settings.notifications.passwordNotUpdated"),
-      });
-    },
-  });
+	const changePasswordMutation = apiClient.auth.changePassword.useMutation({
+		onSuccess: () => {
+			toast({
+				variant: "success",
+				title: t("settings.notifications.passwordUpdated"),
+			});
+			setPassword("");
+			router.refresh();
+		},
+		onError: () => {
+			toast({
+				variant: "error",
+				title: t("settings.notifications.passwordNotUpdated"),
+			});
+		},
+	});
 
-  return (
-    <ActionBlock
-      title={t("settings.account.changePassword.title")}
-      onSubmit={() => changePasswordMutation.mutate({ password })}
-      isSubmitting={changePasswordMutation.isPending}
-      isSubmitDisabled={!password || password.length < 8}
-    >
-      <PasswordInput
-        className="max-w-sm"
-        value={password}
-        onChange={(value) => setPassword(value)}
-      />
-    </ActionBlock>
-  );
+	return (
+		<ActionBlock
+			title={t("settings.account.changePassword.title")}
+			onSubmit={() => changePasswordMutation.mutate({ password })}
+			isSubmitting={changePasswordMutation.isPending}
+			isSubmitDisabled={!password || password.length < 8}
+		>
+			<PasswordInput
+				className="max-w-sm"
+				value={password}
+				onChange={(value) => setPassword(value)}
+			/>
+		</ActionBlock>
+	);
 }

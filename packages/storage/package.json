@@ -1,27 +1,17 @@
 {
-  "dependencies": {
-    "@aws-sdk/client-s3": "3.437.0",
-    "@aws-sdk/s3-request-presigner": "3.437.0",
-    "@supabase/supabase-js": "^2.43.6",
-    "logs": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/node": "^20.14.7",
-    "eslint": "^8.57.0",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint-config-custom/base"
-    ],
-    "root": true
-  },
-  "main": "./index.ts",
-  "name": "storage",
-  "scripts": {
-    "lint": "eslint \"**/*.ts*\""
-  },
-  "types": "./**/.ts",
-  "version": "0.0.0"
+	"dependencies": {
+		"@aws-sdk/client-s3": "3.437.0",
+		"@aws-sdk/s3-request-presigner": "3.437.0",
+		"@supabase/supabase-js": "^2.43.5",
+		"logs": "workspace:*"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"@types/node": "^20.14.7",
+		"tsconfig": "workspace:*"
+	},
+	"main": "./index.ts",
+	"name": "storage",
+	"types": "./**/.ts",
+	"version": "0.0.0"
 }
