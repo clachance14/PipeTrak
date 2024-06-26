@@ -3,7 +3,7 @@
 		"@react-email/components": "^0.0.19",
 		"@react-email/render": "^0.0.15",
 		"logs": "workspace:*",
-		"nodemailer": "^6.9.13",
+		"nodemailer": "^6.9.14",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"react-email": "^2.1.4"
