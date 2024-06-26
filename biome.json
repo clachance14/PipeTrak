@@ -29,7 +29,8 @@
 			".next",
 			".turbo",
 			"node_modules/*",
-			".content-collections"
+			".content-collections",
+			"./packages/database/src/zod/index.ts"
 		]
 	}
 }
