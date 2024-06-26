@@ -92,7 +92,7 @@ export function LoginForm() {
 			if (signinMode === "password") {
 				await loginWithPasswordMutation.mutateAsync({
 					email,
-					password,
+					password: password as string,
 				});
 
 				handleRedirect();
