@@ -21,8 +21,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       typescript:
-        specifier: 5.4.5
-        version: 5.4.5
+        specifier: 5.5.2
+        version: 5.5.2
 
   apps/web:
     dependencies:
@@ -191,13 +191,13 @@ importers:
         version: 1.8.2
       '@content-collections/core':
         specifier: ^0.6.0
-        version: 0.6.0(typescript@5.4.5)
+        version: 0.6.0(typescript@5.5.2)
       '@content-collections/mdx':
         specifier: ^0.1.3
-        version: 0.1.3(@content-collections/core@0.6.0(typescript@5.4.5))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.1.3(@content-collections/core@0.6.0(typescript@5.5.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@content-collections/next':
         specifier: ^0.2.0
-        version: 0.2.0(@content-collections/core@0.6.0(typescript@5.4.5))(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.2.0(@content-collections/core@0.6.0(typescript@5.5.2))(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@mdx-js/mdx':
         specifier: ^3.0.1
         version: 3.0.1
@@ -6097,8 +6097,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.4.5:
-    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+  typescript@5.5.2:
+    resolution: {integrity: sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7020,7 +7020,7 @@ snapshots:
 
   '@colors/colors@1.6.0': {}
 
-  '@content-collections/core@0.6.0(typescript@5.4.5)':
+  '@content-collections/core@0.6.0(typescript@5.5.2)':
     dependencies:
       '@parcel/watcher': 2.4.1
       camelcase: 8.0.0
@@ -7030,17 +7030,17 @@ snapshots:
       micromatch: 4.0.7
       pluralize: 8.0.0
       serialize-javascript: 6.0.2
-      typescript: 5.4.5
+      typescript: 5.5.2
       yaml: 2.4.5
       zod: 3.23.8
 
-  '@content-collections/integrations@0.1.1(@content-collections/core@0.6.0(typescript@5.4.5))':
+  '@content-collections/integrations@0.1.1(@content-collections/core@0.6.0(typescript@5.5.2))':
     dependencies:
-      '@content-collections/core': 0.6.0(typescript@5.4.5)
+      '@content-collections/core': 0.6.0(typescript@5.5.2)
 
-  '@content-collections/mdx@0.1.3(@content-collections/core@0.6.0(typescript@5.4.5))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@content-collections/mdx@0.1.3(@content-collections/core@0.6.0(typescript@5.5.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@content-collections/core': 0.6.0(typescript@5.4.5)
+      '@content-collections/core': 0.6.0(typescript@5.5.2)
       esbuild: 0.19.12
       mdx-bundler: 10.0.2(esbuild@0.19.12)
       react: 18.3.1
@@ -7049,10 +7049,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@content-collections/next@0.2.0(@content-collections/core@0.6.0(typescript@5.4.5))(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@content-collections/next@0.2.0(@content-collections/core@0.6.0(typescript@5.5.2))(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      '@content-collections/core': 0.6.0(typescript@5.4.5)
-      '@content-collections/integrations': 0.1.1(@content-collections/core@0.6.0(typescript@5.4.5))
+      '@content-collections/core': 0.6.0(typescript@5.5.2)
+      '@content-collections/integrations': 0.1.1(@content-collections/core@0.6.0(typescript@5.5.2))
       next: 14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@cypress/request@3.0.1':
@@ -12637,7 +12637,7 @@ snapshots:
 
   typescript@5.1.6: {}
 
-  typescript@5.4.5: {}
+  typescript@5.5.2: {}
 
   undici-types@5.26.5: {}
 
