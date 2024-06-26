@@ -6,46 +6,46 @@ import { protectedProcedure } from "../../../trpc/base";
 import { cancelSubscription as cancelSubscriptionResolver } from "../provider";
 
 export const cancelSubscription = protectedProcedure
-  .input(
-    z.object({
-      id: z.string(),
-    }),
-  )
-  .mutation(async ({ input: { id }, ctx: { abilities } }) => {
-    const subscription = await db.subscription.findFirst({
-      where: {
-        id,
-      },
-    });
+	.input(
+		z.object({
+			id: z.string(),
+		}),
+	)
+	.mutation(async ({ input: { id }, ctx: { abilities } }) => {
+		const subscription = await db.subscription.findFirst({
+			where: {
+				id,
+			},
+		});
 
-    if (!subscription) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-      });
-    }
+		if (!subscription) {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+			});
+		}
 
-    if (!abilities.isTeamOwner(subscription.teamId)) {
-      throw new TRPCError({
-        code: "FORBIDDEN",
-      });
-    }
+		if (!abilities.isTeamOwner(subscription.teamId)) {
+			throw new TRPCError({
+				code: "FORBIDDEN",
+			});
+		}
 
-    try {
-      await cancelSubscriptionResolver({ id });
+		try {
+			await cancelSubscriptionResolver({ id });
 
-      await db.subscription.update({
-        where: {
-          id,
-        },
-        data: {
-          status: "CANCELED",
-        },
-      });
-    } catch (e) {
-      logger.error(e);
+			await db.subscription.update({
+				where: {
+					id,
+				},
+				data: {
+					status: "CANCELED",
+				},
+			});
+		} catch (e) {
+			logger.error(e);
 
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-      });
-    }
-  });
+			throw new TRPCError({
+				code: "INTERNAL_SERVER_ERROR",
+			});
+		}
+	});

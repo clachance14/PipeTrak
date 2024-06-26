@@ -1,53 +1,47 @@
+import { currentUser } from "@saas/auth/lib/current-user";
 import { SubscriptionOverview } from "@saas/settings/components/SubscriptionOverview";
 import { UpgradePlan } from "@saas/settings/components/UpgradePlan";
-import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
-import { createApiCaller } from "api/trpc/caller";
+import { getApiCaller } from "@shared/lib/api-caller";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata() {
-  const t = await getTranslations();
+	const t = await getTranslations();
 
-  return {
-    title: t("settings.billing.title"),
-  };
+	return {
+		title: t("settings.billing.title"),
+	};
 }
 
 export default async function BillingSettingsPage() {
-  const apiCaller = await createApiCaller();
-  const plans = await apiCaller.billing.plans();
-  const user = await apiCaller.auth.user();
-  const currentTeamId =
-    cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
+	const apiCaller = await getApiCaller();
+	const plans = await apiCaller.billing.plans();
+	const { user, team } = await currentUser();
 
-  if (!user) {
-    redirect("/auth/login");
-  }
+	if (!user) {
+		redirect("/auth/login");
+	}
 
-  const { teamMemberships } = user;
+	if (!team) {
+		redirect("/app/dashboard");
+	}
 
-  const { team } =
-    teamMemberships!.find(
-      (membership) => membership.team.id === currentTeamId,
-    ) ?? teamMemberships![0];
+	const teamSubscription = await apiCaller.team.subscription({
+		teamId: team.id,
+	});
 
-  const teamSubscription = await apiCaller.team.subscription({
-    teamId: team.id,
-  });
-
-  return (
-    <div>
-      <SubscriptionOverview
-        plans={plans}
-        currentSubscription={teamSubscription}
-        className="mb-4"
-      />
-      <UpgradePlan
-        plans={plans}
-        activePlanId={teamSubscription?.planId}
-        teamId={team.id}
-      />
-    </div>
-  );
+	return (
+		<div>
+			<SubscriptionOverview
+				plans={plans}
+				currentSubscription={teamSubscription}
+				className="mb-4"
+			/>
+			<UpgradePlan
+				plans={plans}
+				activePlanId={teamSubscription?.planId}
+				teamId={team.id}
+			/>
+		</div>
+	);
 }

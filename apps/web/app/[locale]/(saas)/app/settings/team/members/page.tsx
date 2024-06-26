@@ -1,47 +1,37 @@
+import { currentUser } from "@saas/auth/lib/current-user";
 import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
 import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";
-import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
-import { createApiCaller } from "api/trpc/caller";
+import { getApiCaller } from "@shared/lib/api-caller";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 export async function generateMetadata() {
-  const t = await getTranslations();
+	const t = await getTranslations();
 
-  return {
-    title: t("settings.team.title"),
-  };
+	return {
+		title: t("settings.team.title"),
+	};
 }
 
 export default async function TeamSettingsPage() {
-  const apiCaller = await createApiCaller();
-  const user = await apiCaller.auth.user();
-  const currentTeamId =
-    cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
+	const apiCaller = await getApiCaller();
+	const { user, team } = await currentUser();
 
-  if (!user) {
-    redirect("/auth/login");
-  }
+	if (!user || !team) {
+		redirect("/auth/login");
+	}
 
-  const { teamMemberships } = user;
+	const memberships = await apiCaller.team.memberships({
+		teamId: team.id,
+	});
 
-  const { team } =
-    teamMemberships!.find(
-      (membership) => membership.team.id === currentTeamId,
-    ) ?? teamMemberships![0];
+	const invitations = await apiCaller.team.invitations({
+		teamId: team.id,
+	});
 
-  const memberships = await apiCaller.team.memberships({
-    teamId: team.id,
-  });
-
-  const invitations = await apiCaller.team.invitations({
-    teamId: team.id,
-  });
-
-  return (
-    <div className="grid grid-cols-1 gap-6">
-      <InviteMemberForm teamId={team.id} />
-      <TeamMembersBlock memberships={memberships} invitations={invitations} />
-    </div>
-  );
+	return (
+		<div className="grid grid-cols-1 gap-6">
+			<InviteMemberForm teamId={team.id} />
+			<TeamMembersBlock memberships={memberships} invitations={invitations} />
+		</div>
+	);
 }

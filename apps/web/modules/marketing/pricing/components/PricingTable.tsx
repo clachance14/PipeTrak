@@ -6,26 +6,26 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export function PricingTable({
-  plans,
+	plans,
 }: {
-  plans: ApiOutput["billing"]["plans"];
+	plans: ApiOutput["billing"]["plans"];
 }) {
-  const t = useTranslations();
-  const router = useRouter();
+	const t = useTranslations();
+	const router = useRouter();
 
-  return (
-    <PricingTablePrimitive
-      plans={plans}
-      onSelectPlan={() => {
-        router.push("/app/settings/team/billing");
-      }}
-      labels={{
-        year: t("pricing.year"),
-        month: t("pricing.month"),
-        yearly: t("pricing.yearly"),
-        monthly: t("pricing.monthly"),
-        subscribe: t("pricing.subscribe"),
-      }}
-    />
-  );
+	return (
+		<PricingTablePrimitive
+			plans={plans}
+			onSelectPlan={() => {
+				router.push("/app/settings/team/billing");
+			}}
+			labels={{
+				year: t("pricing.year"),
+				month: t("pricing.month"),
+				yearly: t("pricing.yearly"),
+				monthly: t("pricing.monthly"),
+				subscribe: t("pricing.subscribe"),
+			}}
+		/>
+	);
 }

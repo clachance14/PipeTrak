@@ -1,21 +1,14 @@
 {
-  "devDependencies": {
-    "@types/node": "^20.14.7",
-    "eslint": "^8.57.0",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint-config-custom/base"
-    ],
-    "root": true
-  },
-  "main": "./index.tsx",
-  "name": "utils",
-  "scripts": {
-    "lint": "eslint \"**/*.ts*\""
-  },
-  "types": "./**/.tsx",
-  "version": "0.0.0"
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"@types/node": "^20.14.7",
+		"tsconfig": "workspace:*"
+	},
+	"main": "./index.tsx",
+	"name": "utils",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
+	"types": "./**/.tsx",
+	"version": "0.0.0"
 }

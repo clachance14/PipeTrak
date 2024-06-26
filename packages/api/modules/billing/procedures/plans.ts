@@ -4,7 +4,7 @@ import { getAllPlans } from "../provider";
 import { SubscriptionPlanModel } from "../types";
 
 export const plans = publicProcedure
-  .output(z.array(SubscriptionPlanModel))
-  .query(async () => {
-    return await getAllPlans();
-  });
+	.output(z.array(SubscriptionPlanModel))
+	.query(async () => {
+		return await getAllPlans();
+	});

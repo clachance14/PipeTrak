@@ -10,13 +10,13 @@ import * as uploadsProcedures from "../modules/uploads/procedures";
 import { router } from "./base";
 
 export const apiRouter = router({
-  auth: router(authProcedures),
-  billing: router(billingProcedures),
-  team: router(teamProcedures),
-  newsletter: router(newsletterProcedures),
-  ai: router(aiProcedures),
-  uploads: router(uploadsProcedures),
-  admin: router(adminProcedures),
+	auth: router(authProcedures),
+	billing: router(billingProcedures),
+	team: router(teamProcedures),
+	newsletter: router(newsletterProcedures),
+	ai: router(aiProcedures),
+	uploads: router(uploadsProcedures),
+	admin: router(adminProcedures),
 });
 
 export type ApiRouter = typeof apiRouter;

@@ -11,49 +11,49 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangeTeamNameForm({
-  initialValue,
-  teamId,
+	initialValue,
+	teamId,
 }: {
-  initialValue: string;
-  teamId: string;
+	initialValue: string;
+	teamId: string;
 }) {
-  const t = useTranslations();
-  const router = useRouter();
-  const { toast } = useToast();
-  const { teamMembership } = useUser();
-  const [name, setName] = useState(initialValue);
+	const t = useTranslations();
+	const router = useRouter();
+	const { toast } = useToast();
+	const { teamMembership } = useUser();
+	const [name, setName] = useState(initialValue);
 
-  const updateTeamMutation = apiClient.team.update.useMutation({
-    onSuccess: ({ id }) => {
-      toast({
-        variant: "success",
-        title: t("settings.notifications.teamNameUpdated"),
-      });
+	const updateTeamMutation = apiClient.team.update.useMutation({
+		onSuccess: ({ id }) => {
+			toast({
+				variant: "success",
+				title: t("settings.notifications.teamNameUpdated"),
+			});
 
-      updateCurrentTeamIdCookie(id);
-      router.refresh();
-    },
-    onError: () => {
-      toast({
-        variant: "error",
-        title: t("settings.notifications.teamNameNotUpdated"),
-      });
-    },
-  });
+			updateCurrentTeamIdCookie(id);
+			router.refresh();
+		},
+		onError: () => {
+			toast({
+				variant: "error",
+				title: t("settings.notifications.teamNameNotUpdated"),
+			});
+		},
+	});
 
-  return (
-    <ActionBlock
-      title={t("settings.team.changeName.title")}
-      onSubmit={() => updateTeamMutation.mutate({ name, id: teamId })}
-      isSubmitting={updateTeamMutation.isPending}
-      isSubmitDisabled={!name || name === initialValue}
-    >
-      <Input
-        className="max-w-sm"
-        value={name}
-        disabled={teamMembership?.role !== "OWNER"}
-        onChange={(e) => setName(e.target.value)}
-      />
-    </ActionBlock>
-  );
+	return (
+		<ActionBlock
+			title={t("settings.team.changeName.title")}
+			onSubmit={() => updateTeamMutation.mutate({ name, id: teamId })}
+			isSubmitting={updateTeamMutation.isPending}
+			isSubmitDisabled={!name || name === initialValue}
+		>
+			<Input
+				className="max-w-sm"
+				value={name}
+				disabled={teamMembership?.role !== "OWNER"}
+				onChange={(e) => setName(e.target.value)}
+			/>
+		</ActionBlock>
+	);
 }

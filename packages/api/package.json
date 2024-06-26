@@ -1,38 +1,31 @@
 {
-  "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "^3.2.0",
-    "@trpc/server": "11.0.0-rc.417",
-    "auth": "workspace:*",
-    "database": "workspace:*",
-    "logs": "workspace:*",
-    "mail": "workspace:*",
-    "next": "14.2.4",
-    "openai": "^4.52.0",
-    "storage": "workspace:*",
-    "stripe": "^16.0.0",
-    "superjson": "^2.2.1",
-    "utils": "workspace:*",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/react": "18.3.3",
-    "encoding": "^0.1.13",
-    "eslint": "^8.57.0",
-    "eslint-config-custom": "workspace:*",
-    "prisma": "^5.15.1",
-    "tsconfig": "workspace:*"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint-config-custom/base"
-    ],
-    "root": true
-  },
-  "main": "./index.tsx",
-  "name": "api",
-  "scripts": {
-    "lint": "eslint \"**/*.ts*\""
-  },
-  "types": "./**/.tsx",
-  "version": "0.0.0"
+	"dependencies": {
+		"@lemonsqueezy/lemonsqueezy.js": "^3.2.0",
+		"@trpc/server": "11.0.0-rc.417",
+		"auth": "workspace:*",
+		"database": "workspace:*",
+		"logs": "workspace:*",
+		"mail": "workspace:*",
+		"next": "14.2.4",
+		"openai": "^4.52.0",
+		"storage": "workspace:*",
+		"stripe": "^15.12.0",
+		"superjson": "^2.2.1",
+		"utils": "workspace:*",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"@types/react": "18.3.3",
+		"encoding": "^0.1.13",
+		"prisma": "^5.15.1",
+		"tsconfig": "workspace:*"
+	},
+	"main": "./index.tsx",
+	"name": "api",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
+	"types": "./**/.tsx",
+	"version": "0.0.0"
 }

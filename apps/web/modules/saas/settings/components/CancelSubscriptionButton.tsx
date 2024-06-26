@@ -8,52 +8,52 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export function CancelSubscriptionButton({
-  id,
-  label,
+	id,
+	label,
 }: {
-  id: string;
-  label: string;
+	id: string;
+	label: string;
 }) {
-  const t = useTranslations();
-  const router = useRouter();
-  const { toast } = useToast();
-  const cancelSubscriptionMutation =
-    apiClient.billing.cancelSubscription.useMutation({
-      onSuccess: () => {
-        toast({
-          variant: "success",
-          title: t(
-            "settings.billing.cancelSubscription.notifications.success.title",
-          ),
-        });
-        router.refresh();
-      },
-      onError: () => {
-        toast({
-          variant: "error",
-          title: t(
-            "settings.billing.cancelSubscription.notifications.error.title",
-          ),
-        });
-      },
-    });
+	const t = useTranslations();
+	const router = useRouter();
+	const { toast } = useToast();
+	const cancelSubscriptionMutation =
+		apiClient.billing.cancelSubscription.useMutation({
+			onSuccess: () => {
+				toast({
+					variant: "success",
+					title: t(
+						"settings.billing.cancelSubscription.notifications.success.title",
+					),
+				});
+				router.refresh();
+			},
+			onError: () => {
+				toast({
+					variant: "error",
+					title: t(
+						"settings.billing.cancelSubscription.notifications.error.title",
+					),
+				});
+			},
+		});
 
-  const cancelSubscription = async () => {
-    try {
-      await cancelSubscriptionMutation.mutateAsync({ id });
-    } catch {
-      // TODO: add error notification
-    }
-  };
+	const cancelSubscription = async () => {
+		try {
+			await cancelSubscriptionMutation.mutateAsync({ id });
+		} catch {
+			// TODO: add error notification
+		}
+	};
 
-  return (
-    <Button
-      variant="outline"
-      onClick={() => cancelSubscription()}
-      loading={cancelSubscriptionMutation.isPending}
-    >
-      <XIcon className="mr-2 size-4" />
-      {label}
-    </Button>
-  );
+	return (
+		<Button
+			variant="outline"
+			onClick={() => cancelSubscription()}
+			loading={cancelSubscriptionMutation.isPending}
+		>
+			<XIcon className="mr-2 size-4" />
+			{label}
+		</Button>
+	);
 }

@@ -1,31 +1,24 @@
 {
-  "dependencies": {
-    "@prisma/client": "^5.15.1",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/node": "20.14.7",
-    "dotenv-cli": "^7.4.2",
-    "eslint": "^8.57.0",
-    "eslint-config-custom": "workspace:*",
-    "prisma": "^5.15.1",
-    "tsconfig": "workspace:*",
-    "zod-prisma-types": "^3.1.8"
-  },
-  "main": "./index.tsx",
-  "name": "database",
-  "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
-    "db:generate": "prisma generate",
-    "db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate",
-    "db:studio": "dotenv -c -e ../../.env -- prisma studio"
-  },
-  "types": "./**/.tsx",
-  "version": "0.0.0",
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "eslint-config-custom/base"
-    ]
-  }
+	"dependencies": {
+		"@prisma/client": "^5.15.1",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"@types/node": "20.14.7",
+		"dotenv-cli": "^7.4.2",
+		"prisma": "^5.15.1",
+		"tsconfig": "workspace:*",
+		"zod-prisma-types": "^3.1.8"
+	},
+	"main": "./index.tsx",
+	"name": "database",
+	"scripts": {
+		"db:generate": "prisma generate",
+		"db:push": "dotenv -c -e ../../.env -- prisma db push --skip-generate",
+		"db:studio": "dotenv -c -e ../../.env -- prisma studio",
+		"type-check": "tsc --noEmit"
+	},
+	"types": "./**/.tsx",
+	"version": "0.0.0"
 }
