@@ -11,7 +11,7 @@ export function PostListItem({ post }: { post: Post }) {
 	return (
 		<div className="rounded-2xl border bg-card/50 p-6">
 			{image && (
-				<div className="relative -mx-4 -mt-4 mb-4 aspect-[16/9] overflow-hidden rounded-xl">
+				<div className="-mx-4 -mt-4 relative mb-4 aspect-[16/9] overflow-hidden rounded-xl">
 					<Image
 						src={image}
 						alt={title}
@@ -28,7 +28,7 @@ export function PostListItem({ post }: { post: Post }) {
 					{tags.map((tag) => (
 						<span
 							key={tag}
-							className="text-xs font-semibold uppercase tracking-wider text-primary"
+							className="font-semibold text-primary text-xs uppercase tracking-wider"
 						>
 							#{tag}
 						</span>
@@ -36,7 +36,7 @@ export function PostListItem({ post }: { post: Post }) {
 				</div>
 			)}
 
-			<Link href={`/blog/${path}`} className="text-xl font-semibold">
+			<Link href={`/blog/${path}`} className="font-semibold text-xl">
 				{title}
 			</Link>
 			{excerpt && <p className="opacity-50">{excerpt}</p>}
@@ -56,12 +56,12 @@ export function PostListItem({ post }: { post: Post }) {
 							</div>
 						)}
 						<div>
-							<p className="text-sm font-semibold opacity-50">{authorName}</p>
+							<p className="font-semibold text-sm opacity-50">{authorName}</p>
 						</div>
 					</div>
 				)}
 
-				<div className="ml-auto mr-0">
+				<div className="mr-0 ml-auto">
 					<p className="text-sm opacity-30">
 						{Intl.DateTimeFormat("en-US").format(new Date(date))}
 					</p>

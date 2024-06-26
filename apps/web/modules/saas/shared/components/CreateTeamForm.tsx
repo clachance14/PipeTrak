@@ -63,7 +63,7 @@ export function CreateTeamForm({
 	return (
 		<form onSubmit={onSubmit}>
 			<div>
-				<label className="mb-2 block text-sm font-medium">
+				<label className="mb-2 block font-medium text-sm">
 					{t("createTeam.name")}
 				</label>
 				<Input type="text" {...register("name", { required: true })} />

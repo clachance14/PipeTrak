@@ -9,10 +9,10 @@ export default async function PricingPage() {
 
 	return (
 		<main>
-			<div className="px-8 pb-24 pt-40">
+			<div className="px-8 pt-40 pb-24">
 				<div className="container">
 					<div className="mb-12 text-center">
-						<h1 className="text-4xl font-bold lg:text-5xl">
+						<h1 className="font-bold text-4xl lg:text-5xl">
 							{t("pricing.title")}
 						</h1>
 						<p className="mt-3 text-lg opacity-50">

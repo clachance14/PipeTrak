@@ -9,7 +9,7 @@ export function PageHeader({
 }) {
 	return (
 		<div className="mb-8">
-			<h2 className="text-2xl font-bold lg:text-3xl">{title}</h2>
+			<h2 className="font-bold text-2xl lg:text-3xl">{title}</h2>
 			<p className="mt-1 opacity-50">{subtitle}</p>
 		</div>
 	);

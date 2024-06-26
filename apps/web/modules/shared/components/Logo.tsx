@@ -10,7 +10,7 @@ export function Logo({
 	return (
 		<span
 			className={cn(
-				"text-foreground flex items-center font-semibold leading-none",
+				"flex items-center font-semibold text-foreground leading-none",
 				className,
 			)}
 		>

@@ -28,7 +28,7 @@ export function ActionBlock({
 
 	return (
 		<Card
-			className={cn(className, danger ? "border-destructive/50 border" : "")}
+			className={cn(className, danger ? "border border-destructive/50" : "")}
 		>
 			<form
 				onSubmit={(e) => {

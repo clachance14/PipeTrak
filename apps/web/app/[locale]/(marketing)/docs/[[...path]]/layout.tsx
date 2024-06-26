@@ -22,7 +22,7 @@ export default async function DocsLayout({
 	});
 
 	return (
-		<div className="container pb-24 pt-32">
+		<div className="container pt-32 pb-24">
 			<div className="grid grid-cols-1 gap-8 md:grid-cols-[200px_auto]">
 				<ContentMenu items={contentStructure} activePath={activePath} />
 

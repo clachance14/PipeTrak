@@ -55,11 +55,11 @@ export function StatsTile({
 	return (
 		<Card>
 			<CardHeader className="pb-2">
-				<CardTitle className="text-sm text-muted-foreground">{title}</CardTitle>
+				<CardTitle className="text-muted-foreground text-sm">{title}</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="flex items-center justify-between">
-					<strong className="text-2xl font-bold">
+					<strong className="font-bold text-2xl">
 						{formattedValue}
 						{context && <small>{context}</small>}
 					</strong>

@@ -126,10 +126,10 @@ export function LoginForm() {
 
 	return (
 		<div>
-			<h1 className="text-3xl font-extrabold md:text-4xl">
+			<h1 className="font-extrabold text-3xl md:text-4xl">
 				{t("auth.login.title")}
 			</h1>
-			<p className="mb-6 mt-4 text-muted-foreground">
+			<p className="mt-4 mb-6 text-muted-foreground">
 				{t("auth.login.subtitle")}
 			</p>
 
@@ -189,7 +189,7 @@ export function LoginForm() {
 											<button
 												type="button"
 												onClick={() => setShowPassword(!showPassword)}
-												className="absolute inset-y-0 right-0 flex items-center pr-4 text-xl text-primary"
+												className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
 											>
 												{showPassword ? (
 													<EyeOffIcon className="size-4" />

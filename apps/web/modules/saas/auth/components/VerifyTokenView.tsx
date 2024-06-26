@@ -48,12 +48,12 @@ export function VerifyTokenView() {
 
 	return (
 		<div>
-			<h1 className="text-3xl font-bold md:text-4xl">
+			<h1 className="font-bold text-3xl md:text-4xl">
 				{tokenVerified
 					? t("auth.confirmation.title")
 					: t("auth.invalidToken.title")}
 			</h1>
-			<p className="mb-4 mt-2 text-muted-foreground">
+			<p className="mt-2 mb-4 text-muted-foreground">
 				{tokenVerified
 					? t("auth.confirmation.message")
 					: t("auth.invalidToken.message")}

@@ -26,7 +26,7 @@ export function PasswordInput({
 			<button
 				type="button"
 				onClick={() => setShowPassword(!showPassword)}
-				className="absolute inset-y-0 right-0 flex items-center pr-4 text-xl text-primary"
+				className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
 			>
 				{showPassword ? (
 					<EyeOffIcon className="size-4" />

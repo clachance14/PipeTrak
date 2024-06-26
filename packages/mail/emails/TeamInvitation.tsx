@@ -22,7 +22,7 @@ export function TeamInvitation({
 
 			<PrimaryButton href={url}>Join the team</PrimaryButton>
 
-			<Text className="text-muted-foreground mt-4 text-sm">
+			<Text className="mt-4 text-muted-foreground text-sm">
 				Or manually copy and paste this link into your browser:
 				<Link href={url}>{url}</Link>
 			</Text>

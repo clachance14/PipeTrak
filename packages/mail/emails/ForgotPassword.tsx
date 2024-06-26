@@ -23,7 +23,7 @@ export function ForgotPassword({
 			<Text>
 				One-time password:
 				<br />
-				<strong className="text-2xl font-bold">{otp}</strong>
+				<strong className="font-bold text-2xl">{otp}</strong>
 			</Text>
 
 			<Text>or use this link:</Text>

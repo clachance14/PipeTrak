@@ -60,7 +60,7 @@ export function OnboardingStep2({
 
 	return (
 		<div>
-			<h3 className="mb-4 text-xl font-bold">{t("onboarding.team.title")}</h3>
+			<h3 className="mb-4 font-bold text-xl">{t("onboarding.team.title")}</h3>
 
 			<Form {...form}>
 				<form

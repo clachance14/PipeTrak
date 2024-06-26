@@ -257,7 +257,7 @@ export function UserList() {
 
 	return (
 		<div className="rounded-lg bg-card p-6 shadow-sm ">
-			<h2 className="mb-4 text-2xl font-semibold">{t("admin.users.title")}</h2>
+			<h2 className="mb-4 font-semibold text-2xl">{t("admin.users.title")}</h2>
 			<Input
 				type="search"
 				placeholder={t("admin.users.search")}

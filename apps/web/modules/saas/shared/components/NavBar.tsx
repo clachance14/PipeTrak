@@ -79,7 +79,7 @@ export function NavBar({
 						<TeamSelect teams={teams} />
 					</div>
 
-					<div className="ml-auto mr-0 flex items-center justify-end gap-4">
+					<div className="mr-0 ml-auto flex items-center justify-end gap-4">
 						<UserMenu />
 					</div>
 				</div>

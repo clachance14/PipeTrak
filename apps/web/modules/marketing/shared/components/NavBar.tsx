@@ -69,7 +69,7 @@ export function NavBar() {
 
 	return (
 		<nav
-			className={`fixed left-0 top-0 z-50 w-full ${isTop ? "shadow-none" : "bg-card/80 shadow-sm backdrop-blur-lg"} transition-shadow duration-200`}
+			className={`fixed top-0 left-0 z-50 w-full ${isTop ? "shadow-none" : "bg-card/80 shadow-sm backdrop-blur-lg"} transition-shadow duration-200`}
 			data-test="navigation"
 		>
 			<div className="container">
@@ -79,7 +79,7 @@ export function NavBar() {
 					<div className="flex flex-1 justify-start">
 						<Link
 							href="/"
-							className="block hover:no-underline active:no-underline"
+							className="block active:no-underline hover:no-underline"
 						>
 							<Logo />
 						</Link>
@@ -91,7 +91,7 @@ export function NavBar() {
 								key={menuItem.href}
 								href={menuItem.href}
 								className={cn(
-									"block px-3 py-2 text-sm font-medium text-foreground/80",
+									"block px-3 py-2 font-medium text-foreground/80 text-sm",
 									isMenuItemActive(menuItem.href)
 										? "font-bold text-foreground"
 										: "",
@@ -127,7 +127,7 @@ export function NavBar() {
 											key={menuItem.href}
 											href={menuItem.href}
 											className={cn(
-												"block px-3 py-2 text-base font-medium text-foreground/80",
+												"block px-3 py-2 font-medium text-base text-foreground/80",
 												isMenuItemActive(menuItem.href)
 													? "font-bold text-foreground"
 													: "",

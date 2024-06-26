@@ -42,7 +42,7 @@ export function Newsletter() {
 			<div className="container">
 				<div className="mb-12 text-center">
 					<KeyIcon className="mx-auto mb-3 size-12 text-primary" />
-					<h1 className="text-3xl font-bold lg:text-4xl">
+					<h1 className="font-bold text-3xl lg:text-4xl">
 						{t("newsletter.title")}
 					</h1>
 					<p className="mt-3 text-lg opacity-70">{t("newsletter.subtitle")}</p>

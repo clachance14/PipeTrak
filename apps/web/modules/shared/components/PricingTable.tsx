@@ -103,7 +103,7 @@ export function PricingTable({
 						>
 							<div className="flex h-full flex-col justify-between gap-4">
 								<div>
-									<h3 className="mb-4 text-2xl font-bold">{plan.name}</h3>
+									<h3 className="mb-4 font-bold text-2xl">{plan.name}</h3>
 									{plan.description && (
 										<div
 											className="prose mb-2 text-muted-foreground"
@@ -123,14 +123,14 @@ export function PricingTable({
 
 								<div>
 									<strong
-										className="text-2xl font-bold text-highlight"
+										className="font-bold text-2xl text-highlight"
 										data-test="price-table-plan-price"
 									>
 										{Intl.NumberFormat("en-US", {
 											style: "currency",
 											currency: variant.currency,
 										}).format(variant.price / 100)}
-										<span className="text-sm font-normal opacity-70">
+										<span className="font-normal text-sm opacity-70">
 											{" / "}
 											{labels[interval]}
 										</span>

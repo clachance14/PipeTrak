@@ -4,7 +4,7 @@ export function Logo({
 	withLabel?: boolean;
 }) {
 	return (
-		<span className="text-primary flex items-center font-semibold leading-none">
+		<span className="flex items-center font-semibold text-primary leading-none">
 			<svg className="h-12 w-12" viewBox="0 0 734 635">
 				<title>acme</title>
 				<path

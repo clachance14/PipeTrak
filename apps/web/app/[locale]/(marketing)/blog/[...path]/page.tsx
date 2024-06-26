@@ -51,15 +51,15 @@ export default async function BlogPostPage({
 	const { title, date, authorName, authorImage, tags, image, body } = post;
 
 	return (
-		<div className="container max-w-6xl pb-24 pt-32">
+		<div className="container max-w-6xl pt-32 pb-24">
 			<div className="mx-auto max-w-2xl">
 				<div className="mb-12">
 					<Link href="/blog">&larr; Back to blog</Link>
 				</div>
 
-				<h1 className="text-4xl font-bold">{title}</h1>
+				<h1 className="font-bold text-4xl">{title}</h1>
 
-				<div className="mt-4 flex items-center  justify-start gap-6">
+				<div className="mt-4 flex items-center justify-start gap-6">
 					{authorName && (
 						<div className="flex items-center">
 							{authorImage && (
@@ -74,12 +74,12 @@ export default async function BlogPostPage({
 								</div>
 							)}
 							<div>
-								<p className="text-sm font-semibold opacity-50">{authorName}</p>
+								<p className="font-semibold text-sm opacity-50">{authorName}</p>
 							</div>
 						</div>
 					)}
 
-					<div className="ml-auto mr-0">
+					<div className="mr-0 ml-auto">
 						<p className="text-sm opacity-30">
 							{Intl.DateTimeFormat("en-US").format(new Date(date))}
 						</p>
@@ -90,7 +90,7 @@ export default async function BlogPostPage({
 							{tags.map((tag) => (
 								<span
 									key={tag}
-									className="text-xs font-semibold uppercase tracking-wider text-primary"
+									className="font-semibold text-primary text-xs uppercase tracking-wider"
 								>
 									#{tag}
 								</span>

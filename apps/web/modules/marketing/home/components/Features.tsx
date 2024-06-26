@@ -19,10 +19,10 @@ export function Features() {
 			<div className="container">
 				{/* Section header */}
 				<div className="text-center">
-					<h1 className="text-4xl font-bold lg:text-5xl">
+					<h1 className="font-bold text-4xl lg:text-5xl">
 						Features your clients will love
 					</h1>
-					<p className="mt-3 text-lg text-foreground/60">
+					<p className="mt-3 text-foreground/60 text-lg">
 						In this section you can showcase the features of your SaaS.
 					</p>
 				</div>
@@ -44,8 +44,8 @@ export function Features() {
 						</div>
 
 						<div>
-							<h3 className="text-3xl font-bold">Feature A</h3>
-							<p className="mt-2 leading-normal text-foreground/60">
+							<h3 className="font-bold text-3xl">Feature A</h3>
+							<p className="mt-2 text-foreground/60 leading-normal">
 								This is a brilliant feature. And below you can see some reasons
 								why. This is basically just a dummy text.
 							</p>
@@ -89,8 +89,8 @@ export function Features() {
 						</div>
 
 						<div className="lg:order-1">
-							<h3 className="text-3xl font-bold">Feature B</h3>
-							<p className="mt-2 leading-normal text-foreground/60">
+							<h3 className="font-bold text-3xl">Feature B</h3>
+							<p className="mt-2 text-foreground/60 leading-normal">
 								This is a brilliant feature. And below you can see some reasons
 								why. This is basically just a dummy text.
 							</p>
@@ -134,8 +134,8 @@ export function Features() {
 						</div>
 
 						<div>
-							<h3 className="text-3xl font-bold">Feature C</h3>
-							<p className="mt-2 leading-normal text-foreground/60">
+							<h3 className="font-bold text-3xl">Feature C</h3>
+							<p className="mt-2 text-foreground/60 leading-normal">
 								This is a brilliant feature. And below you can see some reasons
 								why. This is basically just a dummy text.
 							</p>

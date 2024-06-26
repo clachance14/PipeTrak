@@ -90,7 +90,7 @@ export function UserMenu() {
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>
 					{name}
-					<span className="block text-xs font-normal opacity-70">{email}</span>
+					<span className="block font-normal text-xs opacity-70">{email}</span>
 				</DropdownMenuLabel>
 
 				<DropdownMenuSeparator />

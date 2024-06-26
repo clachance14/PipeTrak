@@ -31,7 +31,7 @@ export default async function DocsPage({
 	return (
 		<div>
 			<div className="mb-8">
-				<h1 className="text-4xl font-bold">{title}</h1>
+				<h1 className="font-bold text-4xl">{title}</h1>
 
 				{subtitle && (
 					<p className="mt-3 text-2xl text-foreground/60">{subtitle}</p>

@@ -7,9 +7,9 @@ import heroImage from "../../../../public/images/hero-image.png";
 
 export function Hero() {
 	return (
-		<div className="container pb-20 pt-44 text-center">
+		<div className="container pt-44 pb-20 text-center">
 			<div className="mb-4 flex justify-center">
-				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight p-px px-4 py-1 text-sm font-normal text-highlight">
+				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight p-px px-4 py-1 font-normal text-highlight text-sm">
 					<span className="flex items-center gap-2 rounded-full font-black text-highlight">
 						<span className="size-2 rounded-full bg-highlight" />
 						New:
@@ -20,11 +20,11 @@ export function Hero() {
 				</div>
 			</div>
 
-			<h1 className="mx-auto max-w-3xl text-balance text-5xl font-bold lg:text-7xl">
+			<h1 className="mx-auto max-w-3xl text-balance font-bold text-5xl lg:text-7xl">
 				Your revolutionary Next.js SaaS
 			</h1>
 
-			<p className="mx-auto mt-4 max-w-lg text-balance text-lg text-foreground/60">
+			<p className="mx-auto mt-4 max-w-lg text-balance text-foreground/60 text-lg">
 				This is a demo application built with supastarter. It will save you a
 				lot of time and effort building your next SaaS.
 			</p>
@@ -42,7 +42,7 @@ export function Hero() {
 			</div>
 
 			<div className="mt-16 px-8 text-center">
-				<h5 className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
+				<h5 className="font-semibold text-foreground/50 text-xs uppercase tracking-wider">
 					Built & shipped with these awesome tools
 				</h5>
 

@@ -28,7 +28,7 @@ export function TableOfContents({
 
 	return (
 		<div className="w-full max-w-64 self-start rounded-lg border p-4">
-			<h3 className="mb-2 text-base font-semibold">
+			<h3 className="mb-2 font-semibold text-base">
 				{t("common.tableOfContents.title")}
 			</h3>
 			<nav className="list-none space-y-2">

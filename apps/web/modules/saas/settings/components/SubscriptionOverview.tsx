@@ -61,7 +61,7 @@ export function SubscriptionOverview({
 			className={className}
 		>
 			<div className="flex items-center gap-2">
-				<h4 className="text-lg font-bold text-primary">
+				<h4 className="font-bold text-lg text-primary">
 					<span>{subscriptionPlan.name} </span>
 					<small className="font-normal">
 						(
