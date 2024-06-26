@@ -18,8 +18,8 @@ importers:
         specifier: workspace:*
         version: link:tooling/typescript
       turbo:
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.0.4
+        version: 2.0.4
       typescript:
         specifier: 5.4.5
         version: 5.4.5
@@ -292,8 +292,8 @@ importers:
         specifier: workspace:*
         version: link:../storage
       stripe:
-        specifier: ^16.0.0
-        version: 16.0.0
+        specifier: ^15.12.0
+        version: 15.12.0
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
@@ -468,8 +468,8 @@ importers:
         specifier: 3.437.0
         version: 3.437.0
       '@supabase/supabase-js':
-        specifier: ^2.43.6
-        version: 2.43.6
+        specifier: ^2.43.5
+        version: 2.43.5
       logs:
         specifier: workspace:*
         version: link:../logs
@@ -2978,8 +2978,8 @@ packages:
     resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
     engines: {node: 4.x || >=6.0.0}
 
-  '@supabase/postgrest-js@1.15.6':
-    resolution: {integrity: sha512-zg3URVhoHOijdqMyn3LIFHh+Pqj5BmRqWAaoSExzIHc4m0kGBMPMjDcleamGhbelAAiKbjpQ04mBgooDliGl5A==}
+  '@supabase/postgrest-js@1.15.5':
+    resolution: {integrity: sha512-YR4TiitTE2hizT7mB99Cl3V9i00RAY5sUxS2/NuWWzkreM7OeYlP2OqnqVwwb4z6ILn+j8x9e/igJDepFhjswQ==}
 
   '@supabase/realtime-js@2.9.5':
     resolution: {integrity: sha512-TEHlGwNGGmKPdeMtca1lFTYCedrhTAv3nZVoSjrKQ+wkMmaERuCe57zkC5KSWFzLYkb5FVHW8Hrr+PX1DDwplQ==}
@@ -2987,8 +2987,8 @@ packages:
   '@supabase/storage-js@2.6.0':
     resolution: {integrity: sha512-REAxr7myf+3utMkI2oOmZ6sdplMZZ71/2NEIEMBZHL9Fkmm3/JnaOZVSRqvG4LStYj2v5WhCruCzuMn6oD/Drw==}
 
-  '@supabase/supabase-js@2.43.6':
-    resolution: {integrity: sha512-6N9x1bDMDXUC7bE1yd5DRgMdgdbL/LYrRVywsW4Zu3sJFPo64wyA/IzmrqhJNSm7CgYysPrpXaKcmD8MsD786Q==}
+  '@supabase/supabase-js@2.43.5':
+    resolution: {integrity: sha512-Y4GukjZWW6ouohMaPlYz8tSz9ykf9jY7w9/RhqKuScmla3Xiklce8eLr8TYAtA+oQYCWxo3RgS3B6O4rd/72FA==}
 
   '@swc/core-darwin-arm64@1.3.101':
     resolution: {integrity: sha512-mNFK+uHNPRXSnfTOG34zJOeMl2waM4hF4a2NY7dkMXrPqw9CoJn4MwTXJcyMiSz1/BnNjjTCHF3Yhj0jPxmkzQ==}
@@ -5862,8 +5862,8 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  stripe@16.0.0:
-    resolution: {integrity: sha512-HNPTzXrSompUxeGqDpbNmPvH/UEzziIxGWvTDTZwIBLlL6CFqR+3YLpV+g4HXOsPKbQRguauptQwVWO7Y/yEGg==}
+  stripe@15.12.0:
+    resolution: {integrity: sha512-slTbYS1WhRJXVB8YXU8fgHizkUrM9KJyrw4Dd8pLEwzKHYyQTIE46EePC2MVbSDZdE24o1GdNtzmJV4PrPpmJA==}
     engines: {node: '>=12.*'}
 
   strnum@1.0.5:
@@ -6036,38 +6036,38 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  turbo-darwin-64@2.0.5:
-    resolution: {integrity: sha512-t/9XpWYIjOhIHUdwiR47SYBGYHkR1zWLxTkTNKZwCSn8BN0cfjPZ1BR6kcwYGxLGBhtl5GBf6A29nq2K7iwAjg==}
+  turbo-darwin-64@2.0.4:
+    resolution: {integrity: sha512-x9mvmh4wudBstML8Z8IOmokLWglIhSfhQwnh2gBCSqabgVBKYvzl8Y+i+UCNPxheCGTgtsPepTcIaKBIyFIcvw==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.0.5:
-    resolution: {integrity: sha512-//5y4RJvnal8CttOLBwlaBqblcQb1qTlIxLN+I8O3E3rPuvHOupNKB9ZJxYIQ8oWf8ns8Ec8cxQ0GSBLTJIMtA==}
+  turbo-darwin-arm64@2.0.4:
+    resolution: {integrity: sha512-/B1Ih8zPRGVw5vw4SlclOf3C/woJ/2T6ieH6u54KT4wypoaVyaiyMqBcziIXycdObIYr7jQ+raHO7q3mhay9/A==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.0.5:
-    resolution: {integrity: sha512-LDtEDU2Gm8p3lKu//aHXZFRKUCVu68BNF9LQ+HmiCKFpNyK7khpMTxIAAUhDqt+AzlrbxtrxcCpCJaWg1JDjHg==}
+  turbo-linux-64@2.0.4:
+    resolution: {integrity: sha512-6aG670e5zOWu6RczEYcB81nEl8EhiGJEvWhUrnAfNEUIMBEH1pR5SsMmG2ol5/m3PgiRM12r13dSqTxCLcHrVg==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.0.5:
-    resolution: {integrity: sha512-84wdrzntErBNxkHcwHxiTZdaginQAxGPnwLTyZj8lpUYI7okPoxy3jKpUeMHN3adm3iDedl/x0mYSIvVVkmOiA==}
+  turbo-linux-arm64@2.0.4:
+    resolution: {integrity: sha512-AXfVOjst+mCtPDFT4tCu08Qrfv12Nj7NDd33AjGwV79NYN1Y1rcFY59UQ4nO3ij3rbcvV71Xc+TZJ4csEvRCSg==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.0.5:
-    resolution: {integrity: sha512-SgaFZ0VW6kHCJogLNuLEleAauAJx2Y48wazZGVRmBpgSUS2AylXesaBMhJaEScYqLz7mIRn6KOgwM8D4wTxI9g==}
+  turbo-windows-64@2.0.4:
+    resolution: {integrity: sha512-QOnUR9hKl0T5gq5h1fAhVEqBSjpcBi/BbaO71YGQNgsr6pAnCQdbG8/r3MYXet53efM0KTdOhieWeO3KLNKybA==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.0.5:
-    resolution: {integrity: sha512-foUxLOZoru0IRNIxm53fkfM4ubas9P0nTFjIcHtd+E8YHeogt8GqTweNre2e6ri1EHDo71emmuQgpuoFCOXZMg==}
+  turbo-windows-arm64@2.0.4:
+    resolution: {integrity: sha512-3v8WpdZy1AxZw0gha0q3caZmm+0gveBQ40OspD6mxDBIS+oBtO5CkxhIXkFJJW+jDKmDlM7wXDIGfMEq+QyNCQ==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.0.5:
-    resolution: {integrity: sha512-+6+hcWr4nwuESlKqUc626HMOTd3QT8hUOc9QM45PP1d4nErGkNOgExm4Pcov3in7LTuadMnB0gcd/BuzkEDIPw==}
+  turbo@2.0.4:
+    resolution: {integrity: sha512-Ilme/2Q5kYw0AeRr+aw3s02+WrEYaY7U8vPnqSZU/jaDG/qd6jHVN6nRWyd/9KXvJGYM69vE6JImoGoyNjLwaw==}
     hasBin: true
 
   tweetnacl@0.14.5:
@@ -8995,7 +8995,7 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  '@supabase/postgrest-js@1.15.6':
+  '@supabase/postgrest-js@1.15.5':
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
@@ -9013,12 +9013,12 @@ snapshots:
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
-  '@supabase/supabase-js@2.43.6':
+  '@supabase/supabase-js@2.43.5':
     dependencies:
       '@supabase/auth-js': 2.64.2
       '@supabase/functions-js': 2.4.1
       '@supabase/node-fetch': 2.6.15
-      '@supabase/postgrest-js': 1.15.6
+      '@supabase/postgrest-js': 1.15.5
       '@supabase/realtime-js': 2.9.5
       '@supabase/storage-js': 2.6.0
     transitivePeerDependencies:
@@ -12393,7 +12393,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stripe@16.0.0:
+  stripe@15.12.0:
     dependencies:
       '@types/node': 20.14.7
       qs: 6.12.1
@@ -12594,32 +12594,32 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  turbo-darwin-64@2.0.5:
+  turbo-darwin-64@2.0.4:
     optional: true
 
-  turbo-darwin-arm64@2.0.5:
+  turbo-darwin-arm64@2.0.4:
     optional: true
 
-  turbo-linux-64@2.0.5:
+  turbo-linux-64@2.0.4:
     optional: true
 
-  turbo-linux-arm64@2.0.5:
+  turbo-linux-arm64@2.0.4:
     optional: true
 
-  turbo-windows-64@2.0.5:
+  turbo-windows-64@2.0.4:
     optional: true
 
-  turbo-windows-arm64@2.0.5:
+  turbo-windows-arm64@2.0.4:
     optional: true
 
-  turbo@2.0.5:
+  turbo@2.0.4:
     optionalDependencies:
-      turbo-darwin-64: 2.0.5
-      turbo-darwin-arm64: 2.0.5
-      turbo-linux-64: 2.0.5
-      turbo-linux-arm64: 2.0.5
-      turbo-windows-64: 2.0.5
-      turbo-windows-arm64: 2.0.5
+      turbo-darwin-64: 2.0.4
+      turbo-darwin-arm64: 2.0.4
+      turbo-linux-64: 2.0.4
+      turbo-linux-arm64: 2.0.4
+      turbo-windows-64: 2.0.4
+      turbo-windows-arm64: 2.0.4
 
   tweetnacl@0.14.5: {}
 
