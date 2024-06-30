@@ -6,6 +6,9 @@ import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import type { PropsWithChildren } from "react";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default function AuthLayout({ children }: PropsWithChildren) {
 	return (
 		<UserContextProvider initialUser={null}>
