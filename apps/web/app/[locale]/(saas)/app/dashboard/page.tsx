@@ -4,6 +4,9 @@ import { PageHeader } from "@saas/shared/components/PageHeader";
 import { Card } from "@ui/components/card";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function Dashboard() {
 	const { user } = await currentUser();
 	const t = await getTranslations();
