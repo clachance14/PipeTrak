@@ -1,5 +1,5 @@
 import { currentUser } from "@saas/auth/lib/current-user";
-import { getApiCaller } from "@shared/lib/api-caller";
+import { createApiCaller } from "api/trpc/caller";
 import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 		redirect("/");
 	}
 
-	const apiCaller = await getApiCaller();
+	const apiCaller = await createApiCaller();
 	const { user } = await currentUser();
 
 	const invitation = await apiCaller.team.invitationById({

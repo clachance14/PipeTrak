@@ -1,7 +1,7 @@
 import { currentUser } from "@saas/auth/lib/current-user";
 import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
 import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";
-import { getApiCaller } from "@shared/lib/api-caller";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 export async function generateMetadata() {
@@ -13,7 +13,7 @@ export async function generateMetadata() {
 }
 
 export default async function TeamSettingsPage() {
-	const apiCaller = await getApiCaller();
+	const apiCaller = await createApiCaller();
 	const { user, team } = await currentUser();
 
 	if (!user || !team) {

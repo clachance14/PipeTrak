@@ -1,10 +1,10 @@
 import { CURRENT_TEAM_ID_COOKIE_NAME } from "@saas/shared/constants";
-import { getApiCaller } from "@shared/lib/api-caller";
+import { createApiCaller } from "api/trpc/caller";
 import { cookies } from "next/headers";
 import "server-only";
 
 export const currentUser = async () => {
-	const apiCaller = await getApiCaller();
+	const apiCaller = await createApiCaller();
 	const user = await apiCaller.auth.user();
 
 	if (!user) {

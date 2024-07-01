@@ -1,9 +1,9 @@
 import { PricingTable } from "@marketing/pricing/components/PricingTable";
-import { getApiCaller } from "@shared/lib/api-caller";
+import { createApiCaller } from "api/trpc/caller";
 import { getTranslations } from "next-intl/server";
 
 export default async function PricingPage() {
-	const apiCaller = await getApiCaller();
+	const apiCaller = await createApiCaller();
 	const plans = await apiCaller.billing.plans();
 	const t = await getTranslations();
 
