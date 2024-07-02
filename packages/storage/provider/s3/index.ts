@@ -35,6 +35,7 @@ const getS3Client = () => {
 	s3Client = new S3Client({
 		region: "auto",
 		endpoint: s3Endpoint,
+		forcePathStyle: true,
 		credentials: {
 			accessKeyId: s3AccessKeyId,
 			secretAccessKey: s3SecretAccessKey,
@@ -52,7 +53,11 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
 	try {
 		return await getS3SignedUrl(
 			s3Client,
-			new PutObjectCommand({ Bucket: bucket, Key: path }),
+			new PutObjectCommand({
+				Bucket: bucket,
+				Key: path,
+				ContentType: "image/jpeg",
+			}),
 			{
 				expiresIn: 60,
 			},

@@ -48,7 +48,7 @@ export function UserAvatarUpload({
 
 		setUploading(true);
 		try {
-			const path = `/${user.id}-${uuid()}.png`;
+			const path = `${user.id}-${uuid()}.png`;
 			const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
 				path,
 				bucket: "avatars",
