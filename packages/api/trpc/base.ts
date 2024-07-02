@@ -47,7 +47,6 @@ const loggerMiddleware = t.middleware(async (opts) => {
 
 	const resultPayload = {
 		input,
-		ctx,
 		meta,
 		duration: `${duration}ms`,
 	};
