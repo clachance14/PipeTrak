@@ -1,4 +1,3 @@
-import { appConfig } from "@config";
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
 import { slugifyHeadline } from "@shared/lib/content";
@@ -7,6 +6,7 @@ import rehypeShiki from "@shikijs/rehype";
 import markdownToc from "markdown-toc";
 import rehypeImgSize from "rehype-img-size";
 import { z } from "zod";
+import { appConfig } from "./config";
 
 function sanitizePath(path: string) {
 	return path
