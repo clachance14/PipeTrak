@@ -211,8 +211,8 @@ importers:
         specifier: ^2.0.13
         version: 2.0.13
       '@types/node':
-        specifier: 20.14.9
-        version: 20.14.9
+        specifier: 20.14.11
+        version: 20.14.11
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -354,8 +354,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
+        specifier: ^20.14.11
+        version: 20.14.11
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -376,8 +376,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@types/node':
-        specifier: 20.14.9
-        version: 20.14.9
+        specifier: 20.14.11
+        version: 20.14.11
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
@@ -401,8 +401,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
+        specifier: ^20.14.11
+        version: 20.14.11
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -441,8 +441,8 @@ importers:
         specifier: ^4.7.2
         version: 4.7.4
       '@types/node':
-        specifier: 20.14.9
-        version: 20.14.9
+        specifier: 20.14.11
+        version: 20.14.11
       '@types/nodemailer':
         specifier: ^6.4.15
         version: 6.4.15
@@ -472,8 +472,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
+        specifier: ^20.14.11
+        version: 20.14.11
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -484,8 +484,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
+        specifier: ^20.14.11
+        version: 20.14.11
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -3199,8 +3199,8 @@ packages:
   '@types/node@18.19.34':
     resolution: {integrity: sha512-eXF4pfBNV5DAMKGbI02NnDtWrQ40hAN558/2vvS4gMpMIxaf6JmD7YjnZbq0Q9TDSSkKBamime8ewRoomHdt4g==}
 
-  '@types/node@20.14.9':
-    resolution: {integrity: sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==}
+  '@types/node@20.14.11':
+    resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
 
   '@types/nodemailer@6.4.15':
     resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
@@ -9312,7 +9312,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
 
   '@types/debug@4.1.12':
     dependencies:
@@ -9364,20 +9364,20 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
       form-data: 4.0.0
 
   '@types/node@18.19.34':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.14.9':
+  '@types/node@20.14.11':
     dependencies:
       undici-types: 5.26.5
 
   '@types/nodemailer@6.4.15':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
 
   '@types/prismjs@1.26.4': {}
 
@@ -9416,7 +9416,7 @@ snapshots:
 
   '@types/webpack@5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
       tapable: 2.2.1
       webpack: 5.92.0(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
@@ -9427,7 +9427,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
     optional: true
 
   '@ungap/structured-clone@1.2.0': {}
@@ -10141,7 +10141,7 @@ snapshots:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.17
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -10952,7 +10952,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -12582,7 +12582,7 @@ snapshots:
 
   stripe@16.2.0:
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.11
       qs: 6.12.1
 
   strnum@1.0.5: {}
