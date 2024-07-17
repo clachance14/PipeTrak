@@ -9,7 +9,7 @@
 		"react-email": "^2.1.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.2",
+		"@biomejs/biome": "1.8.3",
 		"@tailwindcss/line-clamp": "^0.4.4",
 		"@types/mjml": "^4.7.2",
 		"@types/node": "20.14.11",

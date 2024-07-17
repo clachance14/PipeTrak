@@ -5,7 +5,7 @@
 		"logs": "workspace:*"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.2",
+		"@biomejs/biome": "1.8.3",
 		"@types/node": "^20.14.11",
 		"tsconfig": "workspace:*"
 	},
