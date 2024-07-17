@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@react-email/components": "^0.0.21",
-		"@react-email/render": "^0.0.15",
+		"@react-email/render": "^0.0.16",
 		"logs": "workspace:*",
 		"nodemailer": "^6.9.14",
 		"react": "18.3.1",
