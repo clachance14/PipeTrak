@@ -103,7 +103,7 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
 			<CardContent>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="@container">
-						<div className="flex flex-col gap-2 @md:flex-row">
+						<div className="flex @md:flex-row flex-col gap-2">
 							<div className="flex-1">
 								<FormField
 									control={form.control}

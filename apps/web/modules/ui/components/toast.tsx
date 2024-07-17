@@ -18,7 +18,7 @@ const ToastViewport = React.forwardRef<
 	<ToastPrimitives.Viewport
 		ref={ref}
 		className={cn(
-			"fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0 md:max-w-[420px] sm:flex-col",
+			"fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0 sm:flex-col md:max-w-[420px]",
 			className,
 		)}
 		{...props}
@@ -65,7 +65,7 @@ const ToastAction = React.forwardRef<
 	<ToastPrimitives.Action
 		ref={ref}
 		className={cn(
-			"inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 font-medium text-sm transition-colors disabled:pointer-events-none group-[.error]:border-muted/40 group-[.error]:hover:border-destructive/30 group-[.error]:hover:bg-destructive hover:bg-secondary group-[.error]:hover:text-destructive-foreground disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-ring group-[.error]:focus:ring-destructive",
+			"inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 font-medium text-sm transition-colors hover:bg-secondary focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 group-[.error]:border-muted/40 group-[.error]:focus:ring-destructive group-[.error]:hover:border-destructive/30 group-[.error]:hover:bg-destructive group-[.error]:hover:text-destructive-foreground",
 			className,
 		)}
 		{...props}
@@ -80,7 +80,7 @@ const ToastClose = React.forwardRef<
 	<ToastPrimitives.Close
 		ref={ref}
 		className={cn(
-			"absolute top-1 right-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity group-[.error]:hover:text-red-50 group-[.error]:text-red-300 hover:text-foreground focus:opacity-100 group-hover:opacity-100 focus:outline-none focus:ring-1 group-[.error]:focus:ring-red-400 group-[.error]:focus:ring-offset-red-600",
+			"absolute top-1 right-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.error]:text-red-300 group-[.error]:focus:ring-red-400 group-[.error]:focus:ring-offset-red-600 group-[.error]:hover:text-red-50",
 			className,
 		)}
 		toast-close=""

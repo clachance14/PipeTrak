@@ -87,7 +87,7 @@ export function PricingTable({
 				</Tabs>
 			</div>
 
-			<div className="grid gap-4 @md:grid-cols-3">
+			<div className="grid @md:grid-cols-3 gap-4">
 				{sortedAndFilteredPlans.map((plan) => {
 					const variant = plan.variants.find((v) => v.interval === interval);
 
