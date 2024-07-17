@@ -30,4 +30,7 @@ export const appConfig = {
 	teams: {
 		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
 	},
+	auth: {
+		redirectAfterLogout: "/",
+	},
 };

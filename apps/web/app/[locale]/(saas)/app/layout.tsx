@@ -10,6 +10,7 @@ export const revalidate = 0;
 
 export default async function Layout({ children }: PropsWithChildren) {
 	const { user, teamMembership } = await currentUser();
+
 	if (!user) {
 		return redirect("/auth/login");
 	}
