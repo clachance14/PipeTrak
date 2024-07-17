@@ -229,8 +229,8 @@ importers:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.39)
       cypress:
-        specifier: ^13.13.0
-        version: 13.13.0
+        specifier: ^13.13.1
+        version: 13.13.1
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
@@ -3788,8 +3788,8 @@ packages:
     resolution: {integrity: sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==}
     engines: {node: '>=0.10.0'}
 
-  cypress@13.13.0:
-    resolution: {integrity: sha512-ou/MQUDq4tcDJI2FsPaod2FZpex4kpIK43JJlcBgWrX8WX7R/05ZxGTuxedOuZBfxjZxja+fbijZGyxiLP6CFA==}
+  cypress@13.13.1:
+    resolution: {integrity: sha512-8F9UjL5MDUdgC/S5hr8CGLHbS5gGht5UOV184qc2pFny43fnkoaKxlzH/U6//zmGu/xRTaKimNfjknLT8+UDFg==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
 
@@ -9951,7 +9951,7 @@ snapshots:
     dependencies:
       array-find-index: 1.0.2
 
-  cypress@13.13.0:
+  cypress@13.13.1:
     dependencies:
       '@cypress/request': 3.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
