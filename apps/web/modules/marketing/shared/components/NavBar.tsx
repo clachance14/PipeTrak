@@ -79,7 +79,7 @@ export function NavBar() {
 					<div className="flex flex-1 justify-start">
 						<Link
 							href="/"
-							className="block active:no-underline hover:no-underline"
+							className="block hover:no-underline active:no-underline"
 						>
 							<Logo />
 						</Link>
