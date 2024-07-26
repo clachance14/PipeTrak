@@ -77,7 +77,7 @@
 		"rehype-img-size": "^1.0.1",
 		"start-server-and-test": "^2.0.4",
 		"tailwind-config": "workspace:*",
-		"tailwindcss": "3.4.6",
+		"tailwindcss": "3.4.7",
 		"tsconfig": "workspace:*"
 	},
 	"name": "web",
