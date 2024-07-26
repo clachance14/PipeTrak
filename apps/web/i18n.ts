@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 export const importLocale = async (
 	locale: string,
 ): Promise<AbstractIntlMessages> => {
-	return (await import(`./locales/${locale}.json`))
+	return (await import(`i18n/translations/${locale}.json`))
 		.default as AbstractIntlMessages;
 };
 
