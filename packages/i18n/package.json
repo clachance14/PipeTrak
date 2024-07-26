@@ -3,9 +3,6 @@
 		"@biomejs/biome": "1.8.3",
 		"tsconfig": "workspace:*"
 	},
-	"exports": {
-		"./translations": "./translations"
-	},
 	"name": "i18n",
 	"scripts": {
 		"type-check": "tsc --noEmit"
