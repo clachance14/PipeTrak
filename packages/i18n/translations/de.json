@@ -23,7 +23,13 @@
 			},
 			"loading": "Benutzer werden geladen...",
 			"search": "Nach Name oder E-Mail suchen...",
-			"title": "Benutzer verwalten"
+			"title": "Benutzer verwalten",
+			"resendVerificationMail": {
+				"error": "Bestätigungsmail konnte nicht erneut gesendet werden. \nBitte versuche es erneut.",
+				"submitting": "Bestätigungsmail wird erneut gesendet...",
+				"success": "Bestätigungsmail wurde gesendet.",
+				"title": "Bestätigungsmail erneut senden"
+			}
 		}
 	},
 	"auth": {
@@ -144,7 +150,9 @@
 			"dashboard": "Dashboard",
 			"docs": "Dokumentation",
 			"login": "Anmelden",
-			"pricing": "Preise"
+			"pricing": "Preise",
+			"changelog": "Changelog",
+			"faq": "FAQ"
 		},
 		"tableOfContents": {
 			"title": "Auf dieser Seite"
@@ -438,5 +446,13 @@
 			"title": "Team"
 		},
 		"title": "Einstellungen"
+	},
+	"changelog": {
+		"description": "Bleibe über die neuesten Änderungen in unserem Produkt auf dem Laufenden.",
+		"title": "Changelog"
+	},
+	"faq": {
+		"description": "Hast du irgendwelche Fragen? \nWir sind für dich da.",
+		"title": "Häufig gestellte Fragen"
 	}
 }
