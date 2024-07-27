@@ -199,8 +199,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@shikijs/rehype':
-        specifier: ^1.11.1
-        version: 1.11.1
+        specifier: ^1.11.2
+        version: 1.11.2
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
@@ -2774,14 +2774,14 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@shikijs/core@1.11.1':
-    resolution: {integrity: sha512-Qsn8h15SWgv5TDRoDmiHNzdQO2BxDe86Yq6vIHf5T0cCvmfmccJKIzHtep8bQO9HMBZYCtCBzaXdd1MnxZBPSg==}
+  '@shikijs/core@1.11.2':
+    resolution: {integrity: sha512-9IBY31lvOo2uhrZjqRt2wTqfqfrXJnddnIx0PFL5E8a5RQUNOhkx+PD11PogZtyrIHlL4aTYDVlb+eyryzy+pQ==}
 
-  '@shikijs/rehype@1.11.1':
-    resolution: {integrity: sha512-N+JFgAbWT0qI5vOqn8Szs2NNQ31hAhkZcewrX96rzI5H0xigOYSkZh7Gt98sW9sx9W+GQT+1PktqJBO1yAXcjQ==}
+  '@shikijs/rehype@1.11.2':
+    resolution: {integrity: sha512-yAKnFupWCclq5a3dpHsLkkv+uF62pLLJzkeGT+CO5EtlgJhJ9xk7UjoaeJnjtDWz/PK1W3dLscZdQr6m1UNm5A==}
 
-  '@shikijs/transformers@1.11.1':
-    resolution: {integrity: sha512-e6DUvZRylv+V8htF5q3ZuNyPaxJYQnsLyTd2S/K6ePs8t132NJS82LG2vARmtfSFP3I3CcBXfJ73FaCgI9kAMg==}
+  '@shikijs/transformers@1.11.2':
+    resolution: {integrity: sha512-5ge1XsuZvboCID8onSGe546iVHNiSZBZMTCk+CAgTbiLGst8j0KlYKq8aaDGIg7wCt5yntvXDEq1u+pu5rdbdA==}
 
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
@@ -5680,8 +5680,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.11.1:
-    resolution: {integrity: sha512-VHD3Q0EBXaaa245jqayBe5zQyMQUdXBFjmGr9MpDaDpAKRMYn7Ff00DM5MLk26UyKjnml3yQ0O2HNX7PtYVNFQ==}
+  shiki@1.11.2:
+    resolution: {integrity: sha512-WEHfKf+JWEKm/p8BoiE5F4m6VwV6LzY7nFfwRz0nAj+sVD1sRyWiODYScDu3Q8P/Dpi7xKe1TDJF3ZOQnhfT1g==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -8819,22 +8819,22 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shikijs/core@1.11.1':
+  '@shikijs/core@1.11.2':
     dependencies:
       '@types/hast': 3.0.4
 
-  '@shikijs/rehype@1.11.1':
+  '@shikijs/rehype@1.11.2':
     dependencies:
-      '@shikijs/transformers': 1.11.1
+      '@shikijs/transformers': 1.11.2
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
-      shiki: 1.11.1
+      shiki: 1.11.2
       unified: 11.0.5
       unist-util-visit: 5.0.0
 
-  '@shikijs/transformers@1.11.1':
+  '@shikijs/transformers@1.11.2':
     dependencies:
-      shiki: 1.11.1
+      shiki: 1.11.2
 
   '@sideway/address@4.1.5':
     dependencies:
@@ -12340,9 +12340,9 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.11.1:
+  shiki@1.11.2:
     dependencies:
-      '@shikijs/core': 1.11.1
+      '@shikijs/core': 1.11.2
       '@types/hast': 3.0.4
 
   side-channel@1.0.6:
