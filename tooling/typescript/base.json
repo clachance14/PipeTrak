@@ -16,7 +16,10 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"strictNullChecks": true
+		"strictNullChecks": true,
+		"paths": {
+			"@config": ["../../config"]
+		}
 	},
 	"display": "Default",
 	"exclude": ["node_modules"]

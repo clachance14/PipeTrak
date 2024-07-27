@@ -6,3 +6,7 @@ export interface SendEmailParams {
 }
 
 export type SendEmailHandler = (params: SendEmailParams) => Promise<void>;
+
+export interface MailProvider {
+	send: SendEmailHandler;
+}

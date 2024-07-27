@@ -1,8 +1,8 @@
+import { config } from "@config";
 import { logger } from "logs";
-import { config } from "../config";
 import type { SendEmailHandler } from "../types";
 
-const { from } = config;
+const { from } = config.mailing;
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
 	const response = await fetch("https://api.postmarkapp.com/email", {

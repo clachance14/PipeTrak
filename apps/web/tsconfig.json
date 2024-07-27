@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"plugins": [{ "name": "next" }],
 		"paths": {
-			"@config": ["./config"],
+			"@config": ["../../config"],
 			"@analytics": ["./modules/analytics"],
 			"@marketing/*": ["./modules/marketing/*"],
 			"@saas/*": ["./modules/saas/*"],
@@ -18,7 +18,8 @@
 		"**/*.tsx",
 		"**/*.cjs",
 		"**/*.mjs",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"../../config.ts"
 	],
 	"exclude": ["node_modules"]
 }

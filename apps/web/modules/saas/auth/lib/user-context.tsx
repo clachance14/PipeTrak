@@ -1,6 +1,6 @@
 "use client";
 
-import { appConfig } from "@config";
+import { config } from "@config";
 import { apiClient } from "@shared/lib/api-client";
 import { clearCache } from "@shared/lib/cache";
 import type { ApiOutput } from "api/trpc/router";
@@ -68,7 +68,7 @@ export function UserContextProvider({
 			user: null,
 		} satisfies AuthEvent);
 
-		window.location.href = appConfig.auth.redirectAfterLogout;
+		window.location.href = config.auth.redirectAfterLogout;
 	};
 
 	useEffect(() => {
@@ -96,7 +96,7 @@ export function UserContextProvider({
 		const handleAuthEvent = (event: MessageEvent<AuthEvent>) => {
 			if (JSON.stringify(event.data.user) !== JSON.stringify(user)) {
 				if (event.data.type === "logout") {
-					window.location.href = appConfig.auth.redirectAfterLogout;
+					window.location.href = config.auth.redirectAfterLogout;
 				} else if (event.data.type === "loaded") {
 					setUser(event.data.user);
 				}

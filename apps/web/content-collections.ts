@@ -5,7 +5,7 @@ import rehypeShiki from "@shikijs/rehype";
 import markdownToc from "markdown-toc";
 import rehypeImgSize from "rehype-img-size";
 import { z } from "zod";
-import { appConfig } from "./config";
+import { config } from "../../config";
 import { slugifyHeadline } from "./modules/shared/lib/content";
 
 function sanitizePath(path: string) {
@@ -20,7 +20,7 @@ function getLocaleFromFilePath(path: string) {
 	return (
 		path
 			.match(/(\.[a-zA-Z\\-]{2,5})+\.(md|mdx|json)$/)?.[1]
-			?.replace(".", "") ?? appConfig.i18n.defaultLocale
+			?.replace(".", "") ?? config.i18n.defaultLocale
 	);
 }
 
