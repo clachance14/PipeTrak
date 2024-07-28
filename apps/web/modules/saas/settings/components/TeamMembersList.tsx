@@ -17,6 +17,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { apiClient } from "@shared/lib/api-client";
@@ -30,7 +31,6 @@ import {
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { useToast } from "@ui/hooks/use-toast";
 import { LogOutIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 

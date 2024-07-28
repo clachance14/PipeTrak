@@ -1,4 +1,5 @@
 import { Link, Text } from "@react-email/components";
+import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
 
@@ -6,11 +7,13 @@ export function NewUser({
 	url,
 	name,
 	otp,
+	locale,
+	translations,
 }: {
 	url: string;
 	name: string;
 	otp: string;
-}): JSX.Element {
+} & BaseMailProps): JSX.Element {
 	return (
 		<Wrapper>
 			<Text>

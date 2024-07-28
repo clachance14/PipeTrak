@@ -12,6 +12,7 @@ export const config = {
 		},
 		defaultLocale: "en",
 		defaultCurrency: "USD",
+		cookieName: "NEXT_LOCALE",
 	},
 	teams: {
 		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
@@ -20,7 +21,7 @@ export const config = {
 		redirectAfterLogout: "/",
 	},
 	mailing: {
-		provider: "postmark",
+		provider: "console",
 		from: "hello@your-domain.com",
 	},
 } as const satisfies Config;
@@ -30,6 +31,7 @@ export type Config = {
 		locales: { [locale: string]: { currency: string; label: string } };
 		defaultLocale: string;
 		defaultCurrency: string;
+		cookieName: string;
 	};
 	teams: { avatarColors: string[] };
 	auth: { redirectAfterLogout: string };

@@ -1,10 +1,10 @@
+import { redirect } from "@i18n";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import {
 	getActivePathFromUrlParam,
 	getLocalizedDocumentWithFallback,
 } from "@shared/lib/content";
 import { allLegalPages } from "content-collections";
-import { redirect } from "next/navigation";
 
 type Params = {
 	path: string;

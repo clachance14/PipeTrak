@@ -1,14 +1,17 @@
 import { Heading, Link, Text } from "@react-email/components";
+import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
 
 export function TeamInvitation({
 	url,
 	teamName,
+	locale,
+	translations,
 }: {
 	url: string;
 	teamName: string;
-}): JSX.Element {
+} & BaseMailProps): JSX.Element {
 	return (
 		<Wrapper>
 			<Heading className="text-xl">

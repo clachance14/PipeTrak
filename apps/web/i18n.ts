@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 export const importLocale = async (
 	locale: string,
 ): Promise<AbstractIntlMessages> => {
-	return (await import(`i18n/translations/${locale}.json`))
+	return (await import(`i18n/translations/web/${locale}.json`))
 		.default as AbstractIntlMessages;
 };
 
@@ -23,7 +23,6 @@ export const getMessagesForLocale = async (
 };
 
 export default getRequestConfig(async ({ locale }) => {
-	// Validate that the incoming `locale` parameter is valid
 	if (!Object.keys(config.i18n.locales).includes(locale as Locale)) {
 		notFound();
 	}

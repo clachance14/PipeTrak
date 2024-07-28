@@ -1,14 +1,17 @@
 import { Link, Text } from "@react-email/components";
+import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
 
 export function EmailChange({
 	url,
 	name,
+	locale,
+	translations,
 }: {
 	url: string;
 	name: string;
-}): JSX.Element {
+} & BaseMailProps): JSX.Element {
 	return (
 		<Wrapper>
 			<Text>
@@ -26,10 +29,5 @@ export function EmailChange({
 		</Wrapper>
 	);
 }
-
-EmailChange.subjects = {
-	en: "Email changed",
-	de: "Email geändert",
-};
 
 export default EmailChange;

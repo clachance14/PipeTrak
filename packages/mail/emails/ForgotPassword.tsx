@@ -1,4 +1,5 @@
 import { Link, Text } from "@react-email/components";
+import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
 
@@ -6,11 +7,13 @@ export function ForgotPassword({
 	url,
 	name,
 	otp,
+	locale,
+	translations,
 }: {
 	url: string;
 	name: string;
 	otp: string;
-}): JSX.Element {
+} & BaseMailProps): JSX.Element {
 	return (
 		<Wrapper>
 			<Text>
@@ -38,10 +41,5 @@ export function ForgotPassword({
 		</Wrapper>
 	);
 }
-
-ForgotPassword.subjects = {
-	en: "Reset your password",
-	de: "Setzen Sie Ihr Passwort zurück",
-};
 
 export default ForgotPassword;

@@ -2,15 +2,20 @@
 	"dependencies": {
 		"@react-email/components": "^0.0.22",
 		"@react-email/render": "^0.0.17",
+		"i18n": "workspace:*",
+		"lodash-es": "^4.17.21",
 		"logs": "workspace:*",
+		"next-intl": "3.17.2",
 		"nodemailer": "^6.9.14",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"react-email": "^2.1.6"
+		"react-email": "^2.1.6",
+		"use-intl": "^3.17.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
 		"@tailwindcss/line-clamp": "^0.4.4",
+		"@types/lodash-es": "^4.17.12",
 		"@types/mjml": "^4.7.2",
 		"@types/node": "20.14.12",
 		"@types/nodemailer": "^6.4.15",

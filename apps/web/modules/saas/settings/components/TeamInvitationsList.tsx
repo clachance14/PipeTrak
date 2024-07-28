@@ -23,13 +23,13 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { useToast } from "@ui/hooks/use-toast";
 import type { ApiOutput } from "api/trpc/router";
 import { MoreVerticalIcon, UndoIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TeamRoleSelect } from "./TeamRoleSelect";
 

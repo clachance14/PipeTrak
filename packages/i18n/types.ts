@@ -1,3 +1,5 @@
-import type en from "./translations/en.json";
+import type mailMessages from "./translations/mail/en.json";
+import type messages from "./translations/web/en.json";
 
-export type Messages = typeof en;
+export type Messages = typeof messages;
+export type MailMessages = typeof mailMessages;

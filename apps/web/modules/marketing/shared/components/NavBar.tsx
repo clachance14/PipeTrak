@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@i18n";
+import { usePathname } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
@@ -10,7 +11,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 

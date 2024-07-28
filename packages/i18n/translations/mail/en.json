@@ -1,0 +1,9 @@
+{
+	"magicLink": {
+		"subject": "Magic link",
+		"body": "Hello, here is your magic link: {{link}}"
+	},
+	"forgotPassword": {
+		"subject": "Reset your password"
+	}
+}

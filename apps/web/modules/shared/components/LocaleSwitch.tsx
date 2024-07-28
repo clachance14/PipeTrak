@@ -2,6 +2,7 @@
 
 import { config } from "@config";
 import { usePathname } from "@i18n";
+import { useRouter } from "@i18n";
 import { Button } from "@ui/components/button";
 import {
 	DropdownMenu,
@@ -12,7 +13,7 @@ import {
 } from "@ui/components/dropdown-menu";
 import { LanguagesIcon } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const { locales } = config.i18n;

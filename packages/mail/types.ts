@@ -1,3 +1,6 @@
+import type { Locale } from "@config";
+import type { MailMessages } from "i18n/types";
+
 export interface SendEmailParams {
 	to: string;
 	subject: string;
@@ -10,3 +13,8 @@ export type SendEmailHandler = (params: SendEmailParams) => Promise<void>;
 export interface MailProvider {
 	send: SendEmailHandler;
 }
+
+export type BaseMailProps = {
+	locale: Locale;
+	translations: MailMessages;
+};

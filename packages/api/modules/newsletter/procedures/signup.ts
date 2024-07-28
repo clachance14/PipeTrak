@@ -8,9 +8,11 @@ export const signup = publicProcedure
 			email: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { email } }) => {
+	.mutation(async ({ input: { email }, ctx: { locale } }) => {
 		await sendEmail({
 			to: email,
+			locale,
 			templateId: "newsletterSignup",
+			context: {},
 		});
 	});

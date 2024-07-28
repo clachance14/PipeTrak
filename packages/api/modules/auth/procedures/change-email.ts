@@ -18,7 +18,7 @@ export const changeEmail = protectedProcedure
 	)
 	.mutation(
 		async ({
-			ctx: { user, responseHeaders },
+			ctx: { user, responseHeaders, locale },
 			input: { email, callbackUrl },
 		}) => {
 			const updatedUser = await db.user.update({
@@ -45,6 +45,7 @@ export const changeEmail = protectedProcedure
 			await sendEmail({
 				to: email,
 				templateId: "emailChange",
+				locale,
 				context: {
 					name: updatedUser.name ?? updatedUser.email,
 					url: url.toString(),

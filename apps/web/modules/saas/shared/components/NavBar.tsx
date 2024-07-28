@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@i18n";
+import { usePathname } from "@i18n";
 import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import type { ApiOutput } from "api/trpc/router";
@@ -14,7 +15,6 @@ import {
 	Wand2Icon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { useCallback } from "react";
 import { TeamSelect } from "./TeamSelect";

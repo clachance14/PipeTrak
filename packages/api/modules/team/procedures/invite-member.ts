@@ -14,47 +14,50 @@ export const inviteMember = protectedProcedure
 			role: z.enum(["MEMBER", "OWNER"]),
 		}),
 	)
-	.mutation(async ({ input: { teamId, email, role }, ctx: { abilities } }) => {
-		if (!abilities.isTeamOwner(teamId)) {
-			throw new TRPCError({
-				code: "UNAUTHORIZED",
-				message: "No permission to add a member to this team.",
-			});
-		}
+	.mutation(
+		async ({ input: { teamId, email, role }, ctx: { abilities, locale } }) => {
+			if (!abilities.isTeamOwner(teamId)) {
+				throw new TRPCError({
+					code: "UNAUTHORIZED",
+					message: "No permission to add a member to this team.",
+				});
+			}
 
-		try {
-			const invitation = await db.teamInvitation.create({
-				data: {
-					teamId,
-					email,
-					role,
-					expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
-				},
-				include: {
-					team: {
-						select: {
-							name: true,
+			try {
+				const invitation = await db.teamInvitation.create({
+					data: {
+						teamId,
+						email,
+						role,
+						expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+					},
+					include: {
+						team: {
+							select: {
+								name: true,
+							},
 						},
 					},
-				},
-			});
+				});
 
-			// get user
+				// get user
 
-			await sendEmail({
-				templateId: "teamInvitation",
-				to: email,
-				context: {
-					url: `${getBaseUrl()}/team/invitation?code=${invitation.id}`,
-					teamName: invitation.team.name,
-				},
-			});
-		} catch (e) {
-			logger.error(e);
+				await sendEmail({
+					templateId: "teamInvitation",
+					to: email,
+					locale,
+					context: {
+						url: `${getBaseUrl()}/team/invitation?code=${invitation.id}`,
+						teamName: invitation.team.name,
+					},
+				});
+			} catch (e) {
+				logger.error(e);
 
-			throw new TRPCError({
-				code: "INTERNAL_SERVER_ERROR",
-				message: "Could not invite member.",
-			});
-		}
-	});
+				throw new TRPCError({
+					code: "INTERNAL_SERVER_ERROR",
+					message: "Could not invite member.",
+				});
+			}
+		},
+	);

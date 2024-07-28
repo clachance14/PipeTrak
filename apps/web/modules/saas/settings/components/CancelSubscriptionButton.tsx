@@ -1,11 +1,11 @@
 "use client";
 
+import { useRouter } from "@i18n";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { useToast } from "@ui/hooks/use-toast";
 import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 
 export function CancelSubscriptionButton({
 	id,

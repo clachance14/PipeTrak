@@ -1,6 +1,6 @@
+import { redirect } from "@i18n";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { createApiCaller } from "api/trpc/caller";
-import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
