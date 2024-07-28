@@ -17,7 +17,7 @@ export default async function TeamSettingsPage() {
 	const { user, team } = await currentUser();
 
 	if (!user || !team) {
-		redirect("/auth/login");
+		return redirect("/auth/login");
 	}
 
 	const memberships = await apiCaller.team.memberships({

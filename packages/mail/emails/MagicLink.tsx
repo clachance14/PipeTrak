@@ -1,5 +1,4 @@
 import { Link, Text } from "@react-email/components";
-import { createTranslator } from "use-intl";
 import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
@@ -15,10 +14,6 @@ export function MagicLink({
 	name: string;
 	otp: string;
 } & BaseMailProps): JSX.Element {
-	const t = createTranslator({
-		locale,
-		messages: translations,
-	});
 	return (
 		<Wrapper>
 			<Text>

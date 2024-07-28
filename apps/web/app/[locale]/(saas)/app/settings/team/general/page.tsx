@@ -16,7 +16,7 @@ export default async function TeamSettingsPage() {
 	const { team } = await currentUser();
 
 	if (!team) {
-		redirect("/app");
+		return redirect("/app");
 	}
 
 	return (

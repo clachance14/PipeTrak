@@ -44,7 +44,7 @@ export default async function BlogPostPage({
 	);
 
 	if (!post) {
-		redirect("/blog");
+		return redirect("/blog");
 	}
 
 	const { title, date, authorName, authorImage, tags, image, body } = post;

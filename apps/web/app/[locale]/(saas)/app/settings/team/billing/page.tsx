@@ -19,11 +19,11 @@ export default async function BillingSettingsPage() {
 	const { user, team } = await currentUser();
 
 	if (!user) {
-		redirect("/auth/login");
+		return redirect("/auth/login");
 	}
 
 	if (!team) {
-		redirect("/app/dashboard");
+		return redirect("/app/dashboard");
 	}
 
 	const teamSubscription = await apiCaller.team.subscription({

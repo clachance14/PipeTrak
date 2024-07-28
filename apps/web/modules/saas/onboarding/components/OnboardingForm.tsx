@@ -6,6 +6,7 @@ import { apiClient } from "@shared/lib/api-client";
 import { clearCache } from "@shared/lib/cache";
 import { Progress } from "@ui/components/progress";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { OnboardingStep1 } from "./OnboardingStep1";
 import { OnboardingStep2 } from "./OnboardingStep2";
 

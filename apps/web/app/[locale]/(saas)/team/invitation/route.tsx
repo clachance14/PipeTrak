@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 	const code = url.searchParams.get("code");
 
 	if (!code) {
-		redirect("/");
+		return redirect("/");
 	}
 
 	const apiCaller = await createApiCaller();
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
 	});
 
 	if (!invitation) {
-		redirect("/");
+		return redirect("/");
 	}
 
 	if (!user) {
