@@ -42,9 +42,4 @@ export function MagicLink({
 	);
 }
 
-MagicLink.subjects = {
-	en: "Login to supastarter",
-	de: "Anmeldung bei supastarter",
-};
-
 export default MagicLink;

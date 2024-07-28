@@ -1,9 +1,21 @@
 {
 	"magicLink": {
-		"subject": "Magic link",
+		"subject": "Login to supastarter",
 		"body": "Hello, here is your magic link: {{link}}"
 	},
 	"forgotPassword": {
 		"subject": "Reset your password"
+	},
+	"emailChange": {
+		"subject": "Confirm your email change"
+	},
+	"newsletterSignup": {
+		"subject": "Welcome to our newsletter"
+	},
+	"newUser": {
+		"subject": "Welcome to supastarter"
+	},
+	"teamInvitation": {
+		"subject": "You have been invited to join a team"
 	}
 }

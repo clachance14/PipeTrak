@@ -18,9 +18,4 @@ export function NewsletterSignup({
 	);
 }
 
-NewsletterSignup.subjects = {
-	en: "Welcome to our newsletter!",
-	de: "Willkommen bei unserem Newsletter!",
-};
-
 export default NewsletterSignup;

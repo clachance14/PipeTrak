@@ -33,9 +33,4 @@ export function TeamInvitation({
 	);
 }
 
-TeamInvitation.subjects = {
-	en: "You have been invited to join a team",
-	de: "Du wurdest eingeladen, einem Team beizutreten",
-};
-
 export default TeamInvitation;

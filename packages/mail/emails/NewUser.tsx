@@ -42,9 +42,4 @@ export function NewUser({
 	);
 }
 
-NewUser.subjects = {
-	en: "Welcome to supastarter!",
-	de: "Willkommen bei supastarter!",
-};
-
 export default NewUser;
