@@ -18,6 +18,7 @@ export function NewUser({
 	const t = createTranslator({
 		locale,
 		messages: translations,
+		namespace: "mail",
 	});
 
 	return (
