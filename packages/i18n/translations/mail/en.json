@@ -1,21 +1,37 @@
 {
-	"magicLink": {
-		"subject": "Login to supastarter",
-		"body": "Hello, here is your magic link: {{link}}"
-	},
-	"forgotPassword": {
-		"subject": "Reset your password"
+	"common": {
+		"openLinkInBrowser": "If you want to open the link in a different browser than your default one, copy and paste this link:",
+		"useLink": "or use the following link:",
+		"otp": "One-time password"
 	},
 	"emailChange": {
-		"subject": "Confirm your email change"
+		"subject": "Confirm your email change",
+		"body": "Hey {name},\nyou changed your email. Please click the link below to confirm your new email address.",
+		"confirmEmail": "Confirm email"
 	},
-	"newsletterSignup": {
-		"subject": "Welcome to our newsletter"
+	"forgotPassword": {
+		"subject": "Reset your password",
+		"body": "Hey {name},\nyou requested a password reset.\n\nYou can either enter the one-time password below manually in the application",
+		"resetPassword": "Reset password"
+	},
+	"magicLink": {
+		"body": "Hey {name},\nyou requested a login email from supastarter.\n\nYou can either enter the one-time password below manually in the application",
+		"login": "Login",
+		"subject": "Login to supastarter"
 	},
 	"newUser": {
-		"subject": "Welcome to supastarter"
+		"body": "Hey {name},\nthanks for signing up for supastarter.\n\nTo start using our app, please confirm your email address by clicking the link below.",
+		"subject": "Welcome to supastarter",
+		"confirmEmail": "Confirm email"
+	},
+	"newsletterSignup": {
+		"subject": "Welcome to our newsletter",
+		"body": "Thank you for signing up for the supastarter newsletter. We will keep you updated with the latest news and updates."
 	},
 	"teamInvitation": {
-		"subject": "You have been invited to join a team"
+		"subject": "You have been invited to join a team",
+		"join": "Join the team",
+		"headline": "Join the team <strong>{teamName}</strong>",
+		"body": "You have been invited to join the team {teamName}. Click the button below or copy and paste the link into your browser of choice to accept the invitation and join the team."
 	}
 }

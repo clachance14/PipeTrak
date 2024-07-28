@@ -114,7 +114,7 @@ export function LoginForm() {
 				if (email) {
 					redirectSearchParams.set("identifier", email);
 				}
-				router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
+				router.push(`/auth/otp?${redirectSearchParams.toString()}`);
 			}
 		} catch (e) {
 			setServerError({

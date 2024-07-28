@@ -1,4 +1,5 @@
 import { Link, Text } from "@react-email/components";
+import { createTranslator } from "use-intl/core";
 import type { BaseMailProps } from "../types";
 import PrimaryButton from "./components/PrimaryButton";
 import Wrapper from "./components/Wrapper";
@@ -14,28 +15,27 @@ export function MagicLink({
 	name: string;
 	otp: string;
 } & BaseMailProps): JSX.Element {
+	const t = createTranslator({
+		locale,
+		messages: translations,
+	});
+
 	return (
 		<Wrapper>
-			<Text>
-				Hey {name}, <br /> you requested a login email from supastarter.
-				<br />
-				<br /> You can either enter the one-time password below manually in the
-				application
-			</Text>
+			<Text>{t("magicLink.body", { name })}</Text>
 
 			<Text>
-				One-time password:
+				{t("common.otp")}
 				<br />
 				<strong className="font-bold text-2xl">{otp}</strong>
 			</Text>
 
-			<Text>or use this link:</Text>
+			<Text>{t("common.useLink")}</Text>
 
-			<PrimaryButton href={url}>Continue &rarr;</PrimaryButton>
+			<PrimaryButton href={url}>{t("magicLink.login")} &rarr;</PrimaryButton>
 
 			<Text className="text-muted-foreground text-sm">
-				If you want to open the link in a different browser than your default
-				one, copy and paste this link:
+				{t("common.openLinkInBrowser")}
 				<Link href={url}>{url}</Link>
 			</Text>
 		</Wrapper>
