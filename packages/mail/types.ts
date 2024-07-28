@@ -1,5 +1,4 @@
 import type { Locale } from "@config";
-import type { MailMessages } from "i18n/types";
 
 export interface SendEmailParams {
 	to: string;
@@ -16,5 +15,5 @@ export interface MailProvider {
 
 export type BaseMailProps = {
 	locale: Locale;
-	translations: MailMessages;
+	translations: any;
 };

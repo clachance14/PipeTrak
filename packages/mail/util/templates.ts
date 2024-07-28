@@ -1,12 +1,13 @@
 import type { Locale } from "@config";
 import { renderAsync } from "@react-email/render";
+import { getMessagesForLocale } from "i18n/lib";
+import type { Messages } from "i18n/types";
 import { EmailChange } from "../emails/EmailChange";
 import { ForgotPassword } from "../emails/ForgotPassword";
 import { MagicLink } from "../emails/MagicLink";
 import { NewUser } from "../emails/NewUser";
 import { NewsletterSignup } from "../emails/NewsletterSignup";
 import { TeamInvitation } from "../emails/TeamInvitation";
-import { getTranslations } from "./i18n";
 
 export const mailTemplates = {
 	magicLink: MagicLink,
@@ -30,7 +31,7 @@ export async function getTemplate<T extends TemplateId>({
 	locale: Locale;
 }) {
 	const template = mailTemplates[templateId];
-	const translations = await getTranslations(locale);
+	const translations = await getMessagesForLocale(locale);
 
 	const email = template({
 		...(context as any),
@@ -38,9 +39,14 @@ export async function getTemplate<T extends TemplateId>({
 		translations,
 	});
 
+	const subject =
+		"subject" in translations.mail[templateId as keyof Messages["mail"]]
+			? translations.mail[templateId].subject
+			: "";
+
 	const html = await renderAsync(email);
 	const text = await renderAsync(email, { plainText: true });
-	return { html, text };
+	return { html, text, subject };
 }
 
 export type TemplateId = keyof typeof mailTemplates;

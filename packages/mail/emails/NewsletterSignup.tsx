@@ -10,6 +10,7 @@ export function NewsletterSignup({
 	const t = createTranslator({
 		locale,
 		messages: translations,
+		namespace: "mail",
 	});
 
 	return (

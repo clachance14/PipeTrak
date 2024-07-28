@@ -16,6 +16,7 @@ export function EmailChange({
 	const t = createTranslator({
 		locale,
 		messages: translations,
+		namespace: "mail",
 	});
 
 	return (

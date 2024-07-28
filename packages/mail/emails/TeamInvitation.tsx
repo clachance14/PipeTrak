@@ -16,6 +16,7 @@ export function TeamInvitation({
 	const t = createTranslator({
 		locale,
 		messages: translations,
+		namespace: "mail",
 	});
 
 	return (

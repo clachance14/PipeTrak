@@ -1,7 +1,6 @@
 import { config } from "@config";
 import { logger } from "logs";
 import { getProvider } from "../provider";
-import { getTranslatedSubject } from "./i18n";
 import type { TemplateId, mailTemplates } from "./templates";
 import { getTemplate } from "./templates";
 
@@ -23,13 +22,11 @@ export async function sendEmail<T extends TemplateId>(params: {
 
 	const { send } = await getProvider();
 
-	const { html, text } = await getTemplate({
+	const { html, text, subject } = await getTemplate({
 		templateId,
 		context,
 		locale,
 	});
-
-	const subject = await getTranslatedSubject({ locale, templateId });
 
 	try {
 		await send({
