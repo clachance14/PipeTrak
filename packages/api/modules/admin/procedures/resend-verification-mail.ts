@@ -13,7 +13,7 @@ export const resendVerificationMail = adminProcedure
 			userId: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { userId } }) => {
+	.mutation(async ({ input: { userId }, ctx: { locale } }) => {
 		const user = await db.user.findUnique({
 			where: {
 				id: userId,
@@ -50,6 +50,7 @@ export const resendVerificationMail = adminProcedure
 			await sendEmail({
 				templateId: "newUser",
 				to: user.email,
+				locale,
 				context: {
 					url: url.toString(),
 					otp,

@@ -1,11 +1,12 @@
 "use client";
 
+import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
 import { clearCache } from "@shared/lib/cache";
 import { Progress } from "@ui/components/progress";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { OnboardingStep1 } from "./OnboardingStep1";
 import { OnboardingStep2 } from "./OnboardingStep2";
 

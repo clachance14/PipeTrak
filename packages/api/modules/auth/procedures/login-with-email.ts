@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { generateOneTimePassword, generateVerificationToken } from "auth";
 import { db } from "database";
-import { logger } from "logs";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -18,7 +17,7 @@ export const loginWithEmail = publicProcedure
 			callbackUrl: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { email, callbackUrl } }) => {
+	.mutation(async ({ input: { email, callbackUrl }, ctx: { locale } }) => {
 		try {
 			const user = await db.user.findFirst({
 				where: {
@@ -45,6 +44,7 @@ export const loginWithEmail = publicProcedure
 			await sendEmail({
 				templateId: "magicLink",
 				to: email,
+				locale,
 				context: {
 					url: url.toString(),
 					name: user.name ?? user.email,
@@ -52,7 +52,7 @@ export const loginWithEmail = publicProcedure
 				},
 			});
 		} catch (e) {
-			logger.error(e);
+			console.error(e);
 
 			throw new TRPCError({
 				code: "INTERNAL_SERVER_ERROR",

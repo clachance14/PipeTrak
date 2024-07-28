@@ -1,9 +1,8 @@
-import { Link } from "@i18n";
+import { Link, redirect } from "@i18n";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allPosts } from "content-collections";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import { getBaseUrl } from "utils";
 
 type Params = {
@@ -45,7 +44,7 @@ export default async function BlogPostPage({
 	);
 
 	if (!post) {
-		redirect("/blog");
+		return redirect("/blog");
 	}
 
 	const { title, date, authorName, authorImage, tags, image, body } = post;

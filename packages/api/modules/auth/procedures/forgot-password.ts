@@ -18,7 +18,7 @@ export const forgotPassword = publicProcedure
 			callbackUrl: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { email, callbackUrl } }) => {
+	.mutation(async ({ input: { email, callbackUrl }, ctx: { locale } }) => {
 		try {
 			const user = await db.user.findFirst({
 				where: {
@@ -45,6 +45,7 @@ export const forgotPassword = publicProcedure
 			await sendEmail({
 				templateId: "forgotPassword",
 				to: email,
+				locale,
 				context: {
 					url: url.toString(),
 					name: user.name ?? user.email,

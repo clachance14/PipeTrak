@@ -1,25 +1,34 @@
+import { config } from "@config";
 import { logger } from "logs";
-import { send } from "../provider";
-import type { mailTemplates } from "./templates";
+import { getProvider } from "../provider";
+import type { TemplateId, mailTemplates } from "./templates";
 import { getTemplate } from "./templates";
 
-export async function sendEmail<
-	TemplateId extends keyof typeof mailTemplates,
->(params: {
+export async function sendEmail<T extends TemplateId>(params: {
 	to: string;
-	templateId: TemplateId;
-	context?: Parameters<(typeof mailTemplates)[TemplateId]>[0];
+	templateId: T;
+	context: Omit<
+		Parameters<(typeof mailTemplates)[T]>[0],
+		"locale" | "translations"
+	>;
+	locale?: keyof typeof config.i18n.locales;
 }) {
-	const { to, templateId, context } = params;
+	const {
+		to,
+		templateId,
+		context,
+		locale = config.i18n.defaultLocale,
+	} = params;
+
+	const { send } = await getProvider();
 
 	const { html, text, subject } = await getTemplate({
 		templateId,
 		context,
-		locale: "en",
+		locale,
 	});
 
 	try {
-		// send the email
 		await send({
 			to,
 			subject,
@@ -29,7 +38,6 @@ export async function sendEmail<
 		return true;
 	} catch (e) {
 		logger.error(e);
-
 		return false;
 	}
 }

@@ -1,6 +1,6 @@
+import { redirect } from "@i18n";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { createApiCaller } from "api/trpc/caller";
-import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 	const code = url.searchParams.get("code");
 
 	if (!code) {
-		redirect("/");
+		return redirect("/");
 	}
 
 	const apiCaller = await createApiCaller();
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
 	});
 
 	if (!invitation) {
-		redirect("/");
+		return redirect("/");
 	}
 
 	if (!user) {

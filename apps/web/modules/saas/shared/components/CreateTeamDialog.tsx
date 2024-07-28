@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "@i18n";
 import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
 import {
@@ -10,7 +11,6 @@ import {
 } from "@ui/components/dialog";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { CreateTeamForm } from "./CreateTeamForm";
 
 export function CreateTeamDialog() {

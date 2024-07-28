@@ -21,13 +21,13 @@
 				"impersonating": "Impersonating as {name}...",
 				"unimpersonating": "Unimpersonating..."
 			},
+			"loading": "Loading users...",
 			"resendVerificationMail": {
+				"error": "Could not resend verification mail. Please try again.",
 				"submitting": "Resending verification mail...",
 				"success": "Verification mail has been sent.",
-				"title": "Resend verification mail",
-				"error": "Could not resend verification mail. Please try again."
+				"title": "Resend verification mail"
 			},
-			"loading": "Loading users...",
 			"search": "Search for name or email...",
 			"title": "Manage users"
 		}
@@ -151,12 +151,12 @@
 		"locales": {},
 		"menu": {
 			"blog": "Blog",
+			"changelog": "Changelog",
 			"dashboard": "Dashboard",
 			"docs": "Docs",
-			"login": "Login",
-			"pricing": "Pricing",
 			"faq": "FAQ",
-			"changelog": "Changelog"
+			"login": "Login",
+			"pricing": "Pricing"
 		},
 		"tableOfContents": {
 			"title": "On this page"
@@ -193,8 +193,45 @@
 		"welcome": "Welcome {name}!"
 	},
 	"faq": {
-		"title": "Frequently asked questions",
-		"description": "Do you have any questions? We have got you covered."
+		"description": "Do you have any questions? We have got you covered.",
+		"title": "Frequently asked questions"
+	},
+	"mail": {
+		"common": {
+			"openLinkInBrowser": "If you want to open the link in a different browser than your default one, copy and paste this link:",
+			"otp": "One-time password",
+			"useLink": "or use the following link:"
+		},
+		"emailChange": {
+			"body": "Hey {name},\nyou changed your email. Please click the link below to confirm your new email address.",
+			"confirmEmail": "Confirm email",
+			"subject": "Confirm your email change"
+		},
+		"forgotPassword": {
+			"body": "Hey {name},\nyou requested a password reset.\n\nYou can either enter the one-time password below manually in the application",
+			"resetPassword": "Reset password",
+			"subject": "Reset your password"
+		},
+		"magicLink": {
+			"body": "Hey {name},\nyou requested a login email from supastarter.\n\nYou can either enter the one-time password below manually in the application",
+			"login": "Login",
+			"subject": "Login to supastarter"
+		},
+		"newUser": {
+			"body": "Hey {name},\nthanks for signing up for supastarter.\n\nTo start using our app, please confirm your email address by clicking the link below.",
+			"confirmEmail": "Confirm email",
+			"subject": "Welcome to supastarter"
+		},
+		"newsletterSignup": {
+			"body": "Thank you for signing up for the supastarter newsletter. We will keep you updated with the latest news and updates.",
+			"subject": "Welcome to our newsletter"
+		},
+		"teamInvitation": {
+			"body": "You have been invited to join the team {teamName}. Click the button below or copy and paste the link into your browser of choice to accept the invitation and join the team.",
+			"headline": "Join the team <strong>{teamName}</strong>",
+			"join": "Join the team",
+			"subject": "You have been invited to join a team"
+		}
 	},
 	"newsletter": {
 		"email": "Email",
@@ -209,25 +246,25 @@
 		"title": "Get early access"
 	},
 	"onboarding": {
-		"continue": "Continue",
-		"complete": "Complete",
-		"title": "Set up your account",
-		"message": "Just a few quick steps to get you started.",
-		"step": "Step {step} / {total}",
-		"back": "Back",
 		"account": {
-			"name": "Name",
-			"title": "Complete your account",
 			"avatar": "Avatar",
-			"avatarDescription": "Click the circle or drop an image to it to upload your avatar."
+			"avatarDescription": "Click the circle or drop an image to it to upload your avatar.",
+			"name": "Name",
+			"title": "Complete your account"
 		},
-		"team": {
-			"title": "Create a team",
-			"name": "Team name"
-		},
+		"back": "Back",
+		"complete": "Complete",
+		"continue": "Continue",
+		"message": "Just a few quick steps to get you started.",
 		"notifications": {
 			"accountSetupFailed": "We are sorry, but we were unable to set up your account. Please try again later."
-		}
+		},
+		"step": "Step {step} / {total}",
+		"team": {
+			"name": "Team name",
+			"title": "Create a team"
+		},
+		"title": "Set up your account"
 	},
 	"pricing": {
 		"description": "Choose the plan that works best for you.",

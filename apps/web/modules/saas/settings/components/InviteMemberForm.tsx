@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
@@ -22,7 +23,6 @@ import {
 } from "@ui/components/select";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

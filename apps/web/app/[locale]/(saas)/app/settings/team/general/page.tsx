@@ -1,9 +1,9 @@
+import { redirect } from "@i18n";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { ChangeTeamNameForm } from "@saas/settings/components/ChangeTeamNameForm";
 import { DeleteTeamForm } from "@saas/settings/components/DeleteTeamForm";
 import { TeamAvatarForm } from "@saas/settings/components/TeamAvatarForm";
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
 export async function generateMetadata() {
 	const t = await getTranslations();
 
@@ -16,7 +16,7 @@ export default async function TeamSettingsPage() {
 	const { team } = await currentUser();
 
 	if (!team) {
-		redirect("/app");
+		return redirect("/app");
 	}
 
 	return (

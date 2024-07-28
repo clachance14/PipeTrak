@@ -1,10 +1,10 @@
 import { MDXContent } from "@content-collections/mdx/react";
+import { redirect } from "@i18n";
 import { mdxComponents } from "@marketing/blog/utils/mdx-components";
 import { TableOfContents } from "@marketing/shared/components/TableOfContents";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allDocumentationPages } from "content-collections";
 import { getLocale } from "next-intl/server";
-import { redirect } from "next/navigation";
 
 type Params = {
 	path: string | string[];

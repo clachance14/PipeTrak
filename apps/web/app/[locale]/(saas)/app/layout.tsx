@@ -1,8 +1,8 @@
+import { redirect } from "@i18n";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { Footer } from "@saas/shared/components/Footer";
 import { NavBar } from "@saas/shared/components/NavBar";
-import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 export const dynamic = "force-dynamic";

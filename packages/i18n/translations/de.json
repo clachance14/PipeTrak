@@ -22,6 +22,12 @@
 				"unimpersonating": "Imitierung wird aufgehoben..."
 			},
 			"loading": "Benutzer werden geladen...",
+			"resendVerificationMail": {
+				"error": "Bestätigungsmail konnte nicht erneut gesendet werden. \nBitte versuche es erneut.",
+				"submitting": "Bestätigungsmail wird erneut gesendet...",
+				"success": "Bestätigungsmail wurde gesendet.",
+				"title": "Bestätigungsmail erneut senden"
+			},
 			"search": "Nach Name oder E-Mail suchen...",
 			"title": "Benutzer verwalten"
 		}
@@ -133,6 +139,10 @@
 		"description": "In diesem Blog schreibe ich über alles mögliche.",
 		"title": "Mein toller Blog"
 	},
+	"changelog": {
+		"description": "Bleibe über die neuesten Änderungen in unserem Produkt auf dem Laufenden.",
+		"title": "Changelog"
+	},
 	"common": {
 		"confirmation": {
 			"cancel": "Abbrechen",
@@ -141,8 +151,10 @@
 		"locales": {},
 		"menu": {
 			"blog": "Blog",
+			"changelog": "Changelog",
 			"dashboard": "Dashboard",
 			"docs": "Dokumentation",
+			"faq": "FAQ",
 			"login": "Anmelden",
 			"pricing": "Preise"
 		},
@@ -179,6 +191,39 @@
 			"unimpersonate": "Nicht mehr imitieren"
 		},
 		"welcome": "Willkommen {name}!"
+	},
+	"faq": {
+		"description": "Hast du irgendwelche Fragen? \nWir sind für dich da.",
+		"title": "Häufig gestellte Fragen"
+	},
+	"mail": {
+		"common": {
+			"login": "Anmelden",
+			"openLinkInBrowser": "Wenn du den Link in einem anderen Browser als Ihrem Standardbrowser öffnen möchten, kopiere diesen und füge ihn in die Adresszeile deines Browsers ein:",
+			"otp": "Einmaliges Passwort"
+		},
+		"emailChange": {
+			"subject": "Bestätige deine E-Mail-Änderung"
+		},
+		"forgotPassword": {
+			"subject": "Setze dein Passwort zurück"
+		},
+		"magicLink": {
+			"body": "Hey {name},\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
+			"subject": "Anmeldung bei supastarter",
+			"useLink": "oder nutze den folgenden Link:"
+		},
+		"newUser": {
+			"subject": "Willkommen bei supastarter"
+		},
+		"newsletterSignup": {
+			"subject": "Willkommen bei unserem Newsletter"
+		},
+		"teamInvitation": {
+			"headline": "Tritt dem Team <strong>{teamName}</strong> bei",
+			"join": "Tritt dem Team bei",
+			"subject": "Du wurdest eingeladen, einem Team beizutreten"
+		}
 	},
 	"newsletter": {
 		"email": "Email",

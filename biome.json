@@ -19,7 +19,15 @@
 				"noUnusedImports": "error"
 			},
 			"nursery": {
-				"useSortedClasses": "error"
+				"useSortedClasses": "error",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"next/link": "Please import from `@i18n` instead."
+						}
+					}
+				}
 			}
 		}
 	},

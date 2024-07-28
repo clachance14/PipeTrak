@@ -1,5 +1,8 @@
+import type { Locale } from "@config";
 import { renderAsync } from "@react-email/render";
-import EmailChange from "../emails/EmailChange";
+import { getMessagesForLocale } from "i18n/lib";
+import type { Messages } from "i18n/types";
+import { EmailChange } from "../emails/EmailChange";
 import { ForgotPassword } from "../emails/ForgotPassword";
 import { MagicLink } from "../emails/MagicLink";
 import { NewUser } from "../emails/NewUser";
@@ -15,24 +18,35 @@ export const mailTemplates = {
 	emailChange: EmailChange,
 };
 
-export async function getTemplate<
-	TemplateId extends keyof typeof mailTemplates,
->({
+export async function getTemplate<T extends TemplateId>({
 	templateId,
 	context,
 	locale,
 }: {
-	templateId: TemplateId;
-	context: Parameters<(typeof mailTemplates)[TemplateId]>[0];
-	locale: keyof (typeof mailTemplates)[TemplateId]["subjects"];
+	templateId: T;
+	context: Omit<
+		Parameters<(typeof mailTemplates)[T]>[0],
+		"locale" | "translations"
+	>;
+	locale: Locale;
 }) {
 	const template = mailTemplates[templateId];
-	const email = mailTemplates[templateId](context as any);
+	const translations = await getMessagesForLocale(locale);
+
+	const email = template({
+		...(context as any),
+		locale,
+		translations,
+	});
+
 	const subject =
-		locale in template.subjects
-			? (template.subjects as any)[locale]
-			: template.subjects.en;
+		"subject" in translations.mail[templateId as keyof Messages["mail"]]
+			? translations.mail[templateId].subject
+			: "";
+
 	const html = await renderAsync(email);
 	const text = await renderAsync(email, { plainText: true });
 	return { html, text, subject };
 }
+
+export type TemplateId = keyof typeof mailTemplates;

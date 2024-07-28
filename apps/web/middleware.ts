@@ -1,10 +1,10 @@
+import { config as projectConfig } from "@config";
 import createMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
-import { appConfig } from "./config";
 
 const intlMiddleware = createMiddleware({
-	locales: appConfig.i18n.locales,
-	defaultLocale: appConfig.i18n.defaultLocale,
+	locales: Object.keys(projectConfig.i18n.locales),
+	defaultLocale: projectConfig.i18n.defaultLocale,
 	localePrefix: "never",
 });
 

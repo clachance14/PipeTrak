@@ -1,7 +1,8 @@
 "use client";
 
-import { appConfig } from "@config";
+import { config } from "@config";
 import { Link, usePathname } from "@i18n";
+import { useRouter } from "@i18n";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
@@ -32,10 +33,10 @@ import {
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const { locales, localeLabels } = appConfig.i18n;
+const { locales } = config.i18n;
 
 export function UserMenu() {
 	const router = useRouter();
@@ -143,12 +144,10 @@ export function UserMenu() {
 									);
 								}}
 							>
-								{locales.map((locale) => {
+								{Object.entries(locales).map(([locale, { label }]) => {
 									return (
 										<DropdownMenuRadioItem key={locale} value={locale}>
-											{locale in localeLabels
-												? localeLabels[locale as keyof typeof localeLabels]
-												: locale}
+											{label}
 										</DropdownMenuRadioItem>
 									);
 								})}

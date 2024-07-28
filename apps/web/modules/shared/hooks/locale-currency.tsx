@@ -1,12 +1,11 @@
-import { appConfig } from "@config";
+import { config } from "@config";
 import { useLocale } from "next-intl";
 
 export function useLocaleCurrency() {
 	const locale = useLocale();
 	const localeCurrency =
-		Object.entries(appConfig.i18n.localeCurrencies).find(
-			([key]) => key === locale,
-		)?.[1] ?? "USD";
+		Object.entries(config.i18n.locales).find(([key]) => key === locale)?.[1]
+			.currency ?? config.i18n.defaultCurrency;
 
 	return localeCurrency;
 }

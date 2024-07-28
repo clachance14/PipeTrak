@@ -1,11 +1,11 @@
 "use client";
 
+import { useRouter } from "@i18n";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { apiClient } from "@shared/lib/api-client";
 import { PasswordInput } from "@ui/components/password-input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function ChangePasswordForm() {

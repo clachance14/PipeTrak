@@ -1,7 +1,8 @@
 "use client";
 
-import { appConfig } from "@config";
+import { config } from "@config";
 import { usePathname } from "@i18n";
+import { useRouter } from "@i18n";
 import { Button } from "@ui/components/button";
 import {
 	DropdownMenu,
@@ -12,10 +13,10 @@ import {
 } from "@ui/components/dropdown-menu";
 import { LanguagesIcon } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const { localeLabels, locales } = appConfig.i18n;
+const { locales } = config.i18n;
 
 export function LocaleSwitch() {
 	const router = useRouter();
@@ -40,12 +41,10 @@ export function LocaleSwitch() {
 						router.replace(`/${value}/${pathname}?${searchParams.toString()}`);
 					}}
 				>
-					{locales.map((locale) => {
+					{Object.entries(locales).map(([locale, { label }]) => {
 						return (
 							<DropdownMenuRadioItem key={locale} value={locale}>
-								{locale in localeLabels
-									? localeLabels[locale as keyof typeof localeLabels]
-									: locale}
+								{label}
 							</DropdownMenuRadioItem>
 						);
 					})}

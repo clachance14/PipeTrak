@@ -1,4 +1,4 @@
-import { appConfig } from "@config";
+import { config } from "@config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
 import { forwardRef, useMemo } from "react";
@@ -21,7 +21,7 @@ export const TeamAvatar = forwardRef<
 					size={96}
 					name={name}
 					variant="marble"
-					colors={appConfig.teams.avatarColors}
+					colors={config.teams.avatarColors}
 				/>
 			</AvatarFallback>
 		</Avatar>

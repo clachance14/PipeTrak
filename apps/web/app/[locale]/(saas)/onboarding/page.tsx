@@ -1,4 +1,5 @@
 import { Link } from "@i18n";
+import { redirect } from "@i18n";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { OnboardingForm } from "@saas/onboarding/components/OnboardingForm";
@@ -7,7 +8,6 @@ import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
