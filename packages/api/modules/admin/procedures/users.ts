@@ -1,6 +1,7 @@
 import { TeamMembershipSchema, TeamSchema, UserSchema, db } from "database";
 import { z } from "zod";
 import { adminProcedure } from "../../../trpc/base";
+import { getUserAvatarUrl } from "../../auth/lib/avatar-url";
 
 export const users = adminProcedure
 	.input(
@@ -71,6 +72,10 @@ export const users = adminProcedure
 			take: limit,
 			skip: offset,
 		});
+
+		for (const user of users) {
+			user.avatarUrl = await getUserAvatarUrl(user.avatarUrl);
+		}
 
 		const total = await db.user.count({
 			where,
