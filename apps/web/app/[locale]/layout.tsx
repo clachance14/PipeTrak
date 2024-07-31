@@ -1,6 +1,7 @@
 import { AnalyticsScript } from "@analytics";
 import { Toaster } from "@ui/components/toaster";
 import { cn } from "@ui/lib";
+import { Provider as JotaiProvider } from "jotai";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -46,7 +47,11 @@ export default async function RootLayout({
 				<NextIntlClientProvider locale={locale} messages={messages}>
 					<ThemeProvider attribute="class">
 						<ApiClientProvider>
-							<GradientBackgroundWrapper>{children}</GradientBackgroundWrapper>
+							<JotaiProvider>
+								<GradientBackgroundWrapper>
+									{children}
+								</GradientBackgroundWrapper>
+							</JotaiProvider>
 						</ApiClientProvider>
 					</ThemeProvider>
 					<Toaster />
