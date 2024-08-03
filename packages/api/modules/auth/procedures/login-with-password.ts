@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { lucia } from "auth";
-import { verifyPassword } from "auth/lib/password";
+import { verifyPassword } from "auth/lib/hashing";
 import { UserSchema, db } from "database";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -13,7 +13,34 @@ export const loginWithPassword = publicProcedure
 				.email()
 				.min(1)
 				.max(255)
-				.transform((v) => v.toLowerCase()),
+				.transform((v) => v.trim().toLowerCase())
+				.superRefine(async (email, ctx) => {
+					const existingUser = await db.user.findUnique({
+						where: {
+							email,
+						},
+					});
+
+					if (!existingUser) {
+						ctx.addIssue({
+							code: "custom",
+							params: {
+								i18n: {
+									key: "email_not_found",
+								},
+							},
+						});
+					} else if (!existingUser.emailVerified) {
+						ctx.addIssue({
+							code: "custom",
+							params: {
+								i18n: {
+									key: "email_not_verified",
+								},
+							},
+						});
+					}
+				}),
 			password: z.string().min(8).max(255),
 		}),
 	)
@@ -32,7 +59,7 @@ export const loginWithPassword = publicProcedure
 	)
 	.mutation(
 		async ({ input: { email, password }, ctx: { responseHeaders } }) => {
-			const user = await db.user.findFirst({
+			const user = await db.user.findUnique({
 				where: {
 					email,
 				},

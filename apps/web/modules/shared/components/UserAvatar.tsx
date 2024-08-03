@@ -13,6 +13,7 @@ export const UserAvatar = forwardRef<
 		() =>
 			name
 				.split(" ")
+				.slice(0, 2)
 				.map((n) => n[0])
 				.join(""),
 		[name],

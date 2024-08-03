@@ -20,7 +20,7 @@ export const forgotPassword = publicProcedure
 	)
 	.mutation(async ({ input: { email, callbackUrl }, ctx: { locale } }) => {
 		try {
-			const user = await db.user.findFirst({
+			const user = await db.user.findUnique({
 				where: {
 					email,
 				},
@@ -57,7 +57,6 @@ export const forgotPassword = publicProcedure
 
 			throw new TRPCError({
 				code: "INTERNAL_SERVER_ERROR",
-				message: "An unknown error occurred.",
 			});
 		}
 	});

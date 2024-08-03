@@ -3,18 +3,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@i18n";
 import { useRouter } from "@i18n";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
+import { passwordSchema } from "auth/lib/passwords";
 import {
 	AlertTriangleIcon,
 	ArrowRightIcon,
@@ -32,21 +34,26 @@ import { TeamInvitationInfo } from "./TeamInvitationInfo";
 
 const formSchema = z.object({
 	email: z.string().email(),
-	password: z.string().min(8),
+	password: passwordSchema,
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export function SignupForm() {
 	const t = useTranslations();
+	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
 	const router = useRouter();
+
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
 	});
-	const [serverError, setServerError] = useState<null | {
-		title: string;
-		message: string;
-	}>(null);
+
 	const [showPassword, setShowPassword] = useState(false);
 	const searchParams = useSearchParams();
 
@@ -65,7 +72,6 @@ export function SignupForm() {
 	}, [email]);
 
 	const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
-		setServerError(null);
 		try {
 			await signupMutation.mutateAsync({
 				email,
@@ -76,18 +82,19 @@ export function SignupForm() {
 			const redirectSearchParams = new URLSearchParams();
 			redirectSearchParams.set("type", "SIGNUP");
 			redirectSearchParams.set("redirectTo", redirectTo);
+
 			if (invitationCode) {
 				redirectSearchParams.set("invitationCode", invitationCode);
 			}
+
 			if (email) {
 				redirectSearchParams.set("identifier", email);
 			}
 
 			router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
 		} catch (e) {
-			setServerError({
-				title: t("auth.signup.hints.signupFailed.title"),
-				message: t("auth.signup.hints.signupFailed.message"),
+			setApiErrorsToForm(e, form, {
+				defaultError: t("auth.signup.hints.signupFailed"),
 			});
 		}
 	};
@@ -109,18 +116,19 @@ export function SignupForm() {
 				))}
 			</div>
 
-			<hr className=" my-8" />
+			<hr className="my-8" />
 
 			<Form {...form}>
 				<form
-					className="flex flex-col items-stretch gap-8"
+					className="flex flex-col items-stretch gap-6"
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
-					{form.formState.isSubmitted && serverError && (
+					{form.formState.isSubmitted && form.formState.errors.root && (
 						<Alert variant="error">
-							<AlertTriangleIcon className="size-4" />
-							<AlertTitle>{serverError.title}</AlertTitle>
-							<AlertDescription>{serverError.message}</AlertDescription>
+							<AlertTriangleIcon className="size-6" />
+							<AlertDescription>
+								{form.formState.errors.root.message}
+							</AlertDescription>
 						</Alert>
 					)}
 
@@ -133,6 +141,7 @@ export function SignupForm() {
 								<FormControl>
 									<Input {...field} autoComplete="email" />
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -149,7 +158,6 @@ export function SignupForm() {
 											type={showPassword ? "text" : "password"}
 											className="pr-10"
 											{...field}
-											required
 											autoComplete="new-password"
 										/>
 										<button
@@ -165,9 +173,7 @@ export function SignupForm() {
 										</button>
 									</div>
 								</FormControl>
-								<FormDescription>
-									{t("auth.signup.passwordHint")}
-								</FormDescription>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -176,7 +182,7 @@ export function SignupForm() {
 						{t("auth.signup.submit")}
 					</Button>
 
-					<div>
+					<div className="text-center text-sm">
 						<span className="text-muted-foreground">
 							{t("auth.signup.alreadyHaveAccount")}{" "}
 						</span>

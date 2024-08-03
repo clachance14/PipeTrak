@@ -18,7 +18,7 @@ export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt
 
 export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
 
-export const UserVerificationTokenScalarFieldEnumSchema = z.enum(['id','userId','token','expires']);
+export const UserVerificationTokenScalarFieldEnumSchema = z.enum(['id','userId','expires']);
 
 export const UserOneTimePasswordScalarFieldEnumSchema = z.enum(['id','userId','code','type','identifier','expires']);
 
@@ -107,7 +107,6 @@ export type UserOauthAccount = z.infer<typeof UserOauthAccountSchema>
 export const UserVerificationTokenSchema = z.object({
   id: z.string().cuid(),
   userId: z.string(),
-  token: z.string(),
   expires: z.coerce.date(),
 })
 

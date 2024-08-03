@@ -92,6 +92,9 @@ importers:
       boring-avatars:
         specifier: ^1.10.2
         version: 1.10.2
+      change-case:
+        specifier: ^5.4.4
+        version: 5.4.4
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -270,6 +273,9 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../auth
+      change-case:
+        specifier: ^5.4.4
+        version: 5.4.4
       database:
         specifier: workspace:*
         version: link:../database
@@ -294,6 +300,9 @@ importers:
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
+      use-intl:
+        specifier: ^3.17.2
+        version: 3.17.2(react@18.3.1)
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -328,6 +337,9 @@ importers:
       database:
         specifier: workspace:*
         version: link:../database
+      i18n:
+        specifier: workspace:*
+        version: link:../i18n
       logs:
         specifier: workspace:*
         version: link:../logs
@@ -3599,6 +3611,9 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  change-case@5.4.4:
+    resolution: {integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==}
 
   character-entities-html4@2.1.0:
     resolution: {integrity: sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA==}
@@ -9781,6 +9796,8 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  change-case@5.4.4: {}
 
   character-entities-html4@2.1.0: {}
 

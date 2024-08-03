@@ -35,7 +35,6 @@ export const unimpersonate = protectedProcedure
 
 			throw new TRPCError({
 				code: "INTERNAL_SERVER_ERROR",
-				message: "An unknown error occurred.",
 			});
 		}
 	});

@@ -12,7 +12,7 @@ export const resumeSubscription = protectedProcedure
 		}),
 	)
 	.mutation(async ({ input: { id }, ctx: { abilities } }) => {
-		const subscription = await db.subscription.findFirst({
+		const subscription = await db.subscription.findUnique({
 			where: {
 				id,
 			},

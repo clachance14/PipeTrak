@@ -53,7 +53,7 @@ export function SocialSigninButton({
 	const providerData = oAuthProviders[provider];
 
 	return (
-		<Button asChild variant="secondary" type="button" className={className}>
+		<Button asChild variant="outline" type="button" className={className}>
 			<a href={`/api/oauth/${provider}`}>
 				{providerData.icon && (
 					<i className="mr-2 opacity-70">

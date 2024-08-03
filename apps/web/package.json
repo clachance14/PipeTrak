@@ -22,6 +22,7 @@
 		"@trpc/react-query": "11.0.0-rc.467",
 		"api": "workspace:*",
 		"boring-avatars": "^1.10.2",
+		"change-case": "^5.4.4",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"database": "workspace:*",
