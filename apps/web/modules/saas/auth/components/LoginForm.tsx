@@ -2,8 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useRouter } from "@i18n";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -40,15 +41,14 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
 	const t = useTranslations();
+	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
 	const router = useRouter();
 	const { user, loaded } = useUser();
+
 	const [signinMode, setSigninMode] = useState<"password" | "magic-link">(
 		"magic-link",
 	);
-	const [serverError, setServerError] = useState<null | {
-		title: string;
-		message: string;
-	}>(null);
+
 	const [showPassword, setShowPassword] = useState(false);
 	const searchParams = useSearchParams();
 
@@ -72,7 +72,6 @@ export function LoginForm() {
 
 	useEffect(() => {
 		form.reset();
-		setServerError(null);
 	}, [signinMode]);
 
 	const handleRedirect = () => {
@@ -87,7 +86,6 @@ export function LoginForm() {
 	}, [user, loaded]);
 
 	const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
-		setServerError(null);
 		try {
 			if (signinMode === "password") {
 				await loginWithPasswordMutation.mutateAsync({
@@ -117,9 +115,8 @@ export function LoginForm() {
 				router.push(`/auth/otp?${redirectSearchParams.toString()}`);
 			}
 		} catch (e) {
-			setServerError({
-				title: t("auth.login.hints.invalidCredentials.title"),
-				message: t("auth.login.hints.invalidCredentials.message"),
+			setApiErrorsToForm(e, form, {
+				defaultError: t("auth.login.hints.invalidCredentials"),
 			});
 		}
 	};
@@ -141,7 +138,7 @@ export function LoginForm() {
 				))}
 			</div>
 
-			<hr className=" my-8" />
+			<hr className="my-8" />
 
 			<Form {...form}>
 				<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
@@ -150,13 +147,15 @@ export function LoginForm() {
 						activeMode={signinMode}
 						onChange={(value) => setSigninMode(value as typeof signinMode)}
 					/>
-					{form.formState.isSubmitted && serverError && (
-						<Alert variant="error">
-							<AlertTriangleIcon className="size-4" />
-							<AlertTitle>{serverError.title}</AlertTitle>
-							<AlertDescription>{serverError.message}</AlertDescription>
-						</Alert>
-					)}
+					{form.formState.isSubmitted &&
+						form.formState.errors.root?.message && (
+							<Alert variant="error">
+								<AlertTriangleIcon className="size-6" />
+								<AlertDescription>
+									{form.formState.errors.root.message}
+								</AlertDescription>
+							</Alert>
+						)}
 
 					<FormField
 						control={form.control}
@@ -212,6 +211,7 @@ export function LoginForm() {
 					<Button
 						className="w-full"
 						type="submit"
+						variant="secondary"
 						loading={form.formState.isSubmitting}
 					>
 						{signinMode === "password"
@@ -219,7 +219,7 @@ export function LoginForm() {
 							: t("auth.login.sendMagicLink")}
 					</Button>
 
-					<div>
+					<div className="text-center text-sm">
 						<span className="text-muted-foreground">
 							{t("auth.login.dontHaveAnAccount")}{" "}
 						</span>

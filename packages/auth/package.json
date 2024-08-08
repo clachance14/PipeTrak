@@ -3,6 +3,7 @@
 		"@lucia-auth/adapter-prisma": "^4.0.0",
 		"arctic": "^1.9.2",
 		"database": "workspace:*",
+		"i18n": "workspace:*",
 		"logs": "workspace:*",
 		"lucia": "^3.2.0",
 		"mail": "workspace:*",

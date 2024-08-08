@@ -13,13 +13,40 @@ export const loginWithEmail = publicProcedure
 				.email()
 				.min(1)
 				.max(255)
-				.transform((v) => v.toLowerCase()),
+				.transform((v) => v.trim().toLowerCase())
+				.superRefine(async (email, ctx) => {
+					const existingUser = await db.user.findUnique({
+						where: {
+							email,
+						},
+					});
+
+					if (!existingUser) {
+						ctx.addIssue({
+							code: "custom",
+							params: {
+								i18n: {
+									key: "email_not_found",
+								},
+							},
+						});
+					} else if (!existingUser.emailVerified) {
+						ctx.addIssue({
+							code: "custom",
+							params: {
+								i18n: {
+									key: "email_not_verified",
+								},
+							},
+						});
+					}
+				}),
 			callbackUrl: z.string(),
 		}),
 	)
 	.mutation(async ({ input: { email, callbackUrl }, ctx: { locale } }) => {
 		try {
-			const user = await db.user.findFirst({
+			const user = await db.user.findUnique({
 				where: {
 					email,
 				},
@@ -56,7 +83,6 @@ export const loginWithEmail = publicProcedure
 
 			throw new TRPCError({
 				code: "INTERNAL_SERVER_ERROR",
-				message: "An unknown error occurred.",
 			});
 		}
 	});

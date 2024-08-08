@@ -3,10 +3,25 @@ import { getHTTPStatusCodeFromError } from "@trpc/server/unstable-core-do-not-im
 import { UserRoleSchema } from "database";
 import { logger } from "logs";
 import superjson from "superjson";
+import { ZodError } from "zod";
 import type { Context } from "./context";
 
 const t = initTRPC.context<Context>().create({
 	transformer: superjson,
+	errorFormatter: ({ shape, error }) => {
+		return {
+			...shape,
+			data: {
+				...shape.data,
+				zodError:
+					error.cause instanceof ZodError
+						? error.cause.flatten((issue) => {
+								return issue;
+							})
+						: null,
+			},
+		};
+	},
 });
 
 const isAuthenticatedMiddleware = t.middleware(({ ctx, next }) => {
@@ -40,7 +55,7 @@ const isAdminMiddleware = t.middleware(({ ctx, next }) => {
 });
 
 const loggerMiddleware = t.middleware(async (opts) => {
-	const { type, ctx, input, meta, next, path } = opts;
+	const { type, input, meta, next, path } = opts;
 	const start = Date.now();
 	const request = await next(opts);
 	const duration = Date.now() - start;

@@ -2,8 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@i18n";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -17,7 +18,7 @@ import type { UserOneTimePasswordTypeType } from "database";
 import { AlertTriangleIcon, ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,15 +34,15 @@ type FormValues = z.infer<typeof formSchema>;
 export function OtpForm() {
 	const router = useRouter();
 	const t = useTranslations();
-	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
-	});
 	const { user, loaded } = useUser();
-	const [serverError, setServerError] = useState<null | {
-		title: string;
-		message: string;
-	}>(null);
 	const searchParams = useSearchParams();
+	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
+
+	const form = useForm<FormValues>({
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+	});
 
 	const invitationCode = searchParams.get("invitationCode");
 	const identifier = searchParams.get("identifier") ?? "";
@@ -58,7 +59,6 @@ export function OtpForm() {
 		router.replace(redirectTo);
 	};
 
-	// redirect when user has been loaded
 	useEffect(() => {
 		if (user && loaded) {
 			handleRedirect();
@@ -66,7 +66,6 @@ export function OtpForm() {
 	}, [user, loaded]);
 
 	const onSubmit: SubmitHandler<FormValues> = async ({ code }) => {
-		setServerError(null);
 		try {
 			await verifyOtpMutation.mutateAsync({
 				code,
@@ -76,9 +75,8 @@ export function OtpForm() {
 
 			handleRedirect();
 		} catch (e) {
-			setServerError({
-				title: t("auth.verifyOtp.hints.verificationFailed.title"),
-				message: t("auth.verifyOtp.hints.verificationFailed.message"),
+			setApiErrorsToForm(e, form, {
+				defaultError: t("auth.verifyOtp.hints.verificationFailed"),
 			});
 		}
 	};
@@ -99,13 +97,15 @@ export function OtpForm() {
 					className="flex flex-col items-stretch gap-8"
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
-					{form.formState.isSubmitted && serverError && (
-						<Alert variant="error">
-							<AlertTriangleIcon className="size-4" />
-							<AlertTitle>{serverError.title}</AlertTitle>
-							<AlertDescription>{serverError.message}</AlertDescription>
-						</Alert>
-					)}
+					{form.formState.isSubmitted &&
+						form.formState.errors.root?.message && (
+							<Alert variant="error">
+								<AlertTriangleIcon className="size-6" />
+								<AlertDescription>
+									{form.formState.errors.root.message}
+								</AlertDescription>
+							</Alert>
+						)}
 
 					<FormField
 						control={form.control}

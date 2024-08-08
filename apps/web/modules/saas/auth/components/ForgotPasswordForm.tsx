@@ -92,7 +92,7 @@ export function ForgotPasswordForm() {
 
 				{isSubmitted && serverError && (
 					<Alert variant="error">
-						<AlertTriangleIcon className="size-4" />
+						<AlertTriangleIcon className="size-6" />
 						<AlertTitle>{serverError.title}</AlertTitle>
 						<AlertDescription>{serverError.message}</AlertDescription>
 					</Alert>

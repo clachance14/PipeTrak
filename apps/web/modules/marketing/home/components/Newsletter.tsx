@@ -51,7 +51,7 @@ export function Newsletter() {
 				<div className="mx-auto max-w-lg">
 					{isSubmitSuccessful ? (
 						<Alert variant="success">
-							<CheckCircleIcon className="size-4" />
+							<CheckCircleIcon className="size-6" />
 							<AlertTitle>{t("newsletter.hints.success.title")}</AlertTitle>
 							<AlertDescription>
 								{t("newsletter.hints.success.message")}

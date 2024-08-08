@@ -16,7 +16,6 @@ export const logout = protectedProcedure
 
 			throw new TRPCError({
 				code: "INTERNAL_SERVER_ERROR",
-				message: "An unknown error occurred.",
 			});
 		}
 	});

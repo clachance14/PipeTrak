@@ -40,8 +40,6 @@ export const inviteMember = protectedProcedure
 					},
 				});
 
-				// get user
-
 				await sendEmail({
 					templateId: "teamInvitation",
 					to: email,

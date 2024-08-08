@@ -66,14 +66,7 @@
 			"email": "Email",
 			"forgotPassword": "Forgot password?",
 			"hints": {
-				"emailNotVerified": {
-					"message": "Please verify your email before signing in. Check your inbox for the verification mail.",
-					"title": "Email not verified"
-				},
-				"invalidCredentials": {
-					"message": "We are sorry, but the credentials you entered are invalid. Please try again.",
-					"title": "Invalid credentials"
-				},
+				"invalidCredentials": "The email or password you entered are invalid. Please try again.",
 				"linkNotSent": {
 					"message": "We are sorry, but we were unable to send you a magic link. Please try again later.",
 					"title": "Link not sent"
@@ -98,19 +91,13 @@
 			"alreadyHaveAccount": "Already have an account?",
 			"email": "Email",
 			"hints": {
-				"signupFailed": {
-					"message": "We are sorry, but we were unable to create your account. Please try again later.",
-					"title": "Could not create account"
-				},
-				"verifyEmail": {
-					"message": "We have sent you a link to verify your email. Please check your inbox.",
-					"title": "Verify your email"
-				}
+				"signupFailed": "We are sorry, but we were unable to create your account. Please try again later.",
+				"verifyEmail": "We have sent you a link to verify your email. Please check your inbox."
 			},
 			"message": "We are happy that you want to join us. Please fill in the form below to create your account.",
 			"name": "Name",
 			"password": "Password",
-			"passwordHint": "Please enter at least 8 characters.",
+			"passwordHint": "Please use at least 8 characters, one uppercase and lowercase letter, one number and one special character.",
 			"signIn": "Sign in",
 			"submit": "Create account",
 			"title": "Create an account"
@@ -124,10 +111,7 @@
 				"otpTooShort": "The one time password is too short."
 			},
 			"hints": {
-				"verificationFailed": {
-					"message": "We are sorry, the password you entered is invalid. Please try again.",
-					"title": "Invalid one time password"
-				}
+				"verificationFailed": "We are sorry, the password you entered is invalid. Please try again."
 			},
 			"message": "You have mail! Please check your inbox for the one time password we sent you. You can also click the link in the email and this page will redirect you automatically.",
 			"otp": "One time password",
@@ -228,7 +212,7 @@
 		},
 		"teamInvitation": {
 			"body": "You have been invited to join the team {teamName}. Click the button below or copy and paste the link into your browser of choice to accept the invitation and join the team.",
-			"headline": "Join the team <strong>{teamName}</strong>",
+			"headline": "Join the team {teamName}",
 			"join": "Join the team",
 			"subject": "You have been invited to join a team"
 		}
@@ -261,8 +245,10 @@
 		},
 		"step": "Step {step} / {total}",
 		"team": {
+			"joinTeam": "Join the team",
 			"name": "Team name",
-			"title": "Create a team"
+			"title": "Create a team",
+			"joinTeamDescription": "You are joining the team <strong>{teamName}</strong>."
 		},
 		"title": "Set up your account"
 	},
@@ -491,5 +477,129 @@
 			"title": "Team"
 		},
 		"title": "Settings"
+	},
+	"zod": {
+		"errors": {
+			"custom": {
+				"email_already_exists": "This email is already in use.",
+				"email_not_verified": "Please verify your email address first.",
+				"lowercase_character_required": "Please use at least one lowercase character.",
+				"number_required": "Please use at least one number.",
+				"special_character_required": "Please use at least one special character ({character}).",
+				"uppercase_character_required": "Please use at least one uppercase character."
+			},
+			"invalid_arguments": "Invalid function arguments",
+			"invalid_date": "Invalid date",
+			"invalid_enum_value": "Invalid enum value. Expected {- options}, received '{received}'",
+			"invalid_intersection_types": "Intersection results could not be merged",
+			"invalid_literal": "Invalid literal value, expected {expected}",
+			"invalid_return_type": "Invalid function return type",
+			"invalid_string": {
+				"cuid": "Invalid {validation}",
+				"datetime": "Invalid {validation}",
+				"email": "Invalid {validation}",
+				"endsWith": "Invalid input: must end with \"{endsWith}\"",
+				"regex": "Invalid",
+				"startsWith": "Invalid input: must start with \"{startsWith}\"",
+				"url": "Invalid {validation}",
+				"uuid": "Invalid {validation}"
+			},
+			"invalid_type": "Expected {expected}, received {received}",
+			"invalid_type_received_null": "Required",
+			"invalid_type_received_undefined": "Required",
+			"invalid_union": "Invalid input",
+			"invalid_union_discriminator": "Invalid discriminator value. Expected {- options}",
+			"not_finite": "Number must be finite",
+			"not_multiple_of": "Number must be a multiple of {multipleOf}",
+			"too_big": {
+				"array": {
+					"exact": "Array must contain exactly {maximum} element(s)",
+					"inclusive": "Array must contain at most {maximum} element(s)",
+					"not_inclusive": "Array must contain less than {maximum} element(s)"
+				},
+				"date": {
+					"exact": "Date must be exactly {- maximum, datetime}",
+					"inclusive": "Date must be smaller than or equal to {- maximum, datetime}",
+					"not_inclusive": "Date must be smaller than {- maximum, datetime}"
+				},
+				"number": {
+					"exact": "Number must be exactly {maximum}",
+					"inclusive": "Number must be less than or equal to {maximum}",
+					"not_inclusive": "Number must be less than {maximum}"
+				},
+				"set": {
+					"exact": "Invalid input",
+					"inclusive": "Invalid input",
+					"not_inclusive": "Invalid input"
+				},
+				"string": {
+					"exact": "String must contain exactly {maximum} character(s)",
+					"inclusive": "String must contain at most {maximum} character(s)",
+					"not_inclusive": "String must contain under {maximum} character(s)"
+				}
+			},
+			"too_small": {
+				"array": {
+					"exact": "Array must contain exactly {minimum} element(s)",
+					"inclusive": "Array must contain at least {minimum} element(s)",
+					"not_inclusive": "Array must contain more than {minimum} element(s)"
+				},
+				"date": {
+					"exact": "Date must be exactly {- minimum, datetime}",
+					"inclusive": "Date must be greater than or equal to {- minimum, datetime}",
+					"not_inclusive": "Date must be greater than {- minimum, datetime}"
+				},
+				"number": {
+					"exact": "Number must be exactly {minimum}",
+					"inclusive": "Number must be greater than or equal to {minimum}",
+					"not_inclusive": "Number must be greater than {minimum}"
+				},
+				"set": {
+					"exact": "Invalid input",
+					"inclusive": "Invalid input",
+					"not_inclusive": "Invalid input"
+				},
+				"string": {
+					"exact": "String must contain exactly {minimum} character(s)",
+					"inclusive": "String must contain at least {minimum} character(s)",
+					"not_inclusive": "String must contain over {minimum} character(s)"
+				}
+			},
+			"unrecognized_keys": "Unrecognized key(s) in object: {- keys}"
+		},
+		"types": {
+			"array": "array",
+			"bigint": "bigint",
+			"boolean": "boolean",
+			"date": "date",
+			"float": "float",
+			"function": "function",
+			"integer": "integer",
+			"map": "map",
+			"nan": "nan",
+			"never": "never",
+			"null": "null",
+			"number": "number",
+			"object": "object",
+			"promise": "promise",
+			"set": "set",
+			"string": "string",
+			"symbol": "symbol",
+			"undefined": "undefined",
+			"unknown": "unknown",
+			"void": "void"
+		},
+		"validations": {
+			"cuid": "cuid",
+			"cuid2": "cuid2",
+			"datetime": "datetime",
+			"email": "email",
+			"emoji": "emoji",
+			"ip": "up",
+			"regex": "regex",
+			"ulid": "ulid",
+			"url": "url",
+			"uuid": "uuid"
+		}
 	}
 }

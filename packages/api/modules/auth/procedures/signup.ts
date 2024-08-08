@@ -1,8 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { generateOneTimePassword, generateVerificationToken } from "auth";
-import { hashPassword } from "auth/lib/password";
+import { hashPassword } from "auth/lib/hashing";
+import { passwordSchema } from "auth/lib/passwords";
 import { UserRoleSchema, db } from "database";
-import { logger } from "logs";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -15,8 +15,23 @@ export const signup = publicProcedure
 				.email()
 				.min(1)
 				.max(255)
-				.transform((v) => v.toLowerCase()),
-			password: z.string().min(8).max(255),
+				.transform((v) => v.trim().toLowerCase())
+				.refine(
+					async (email) =>
+						!(await db.user.findUnique({
+							where: {
+								email,
+							},
+						})),
+					{
+						params: {
+							i18n: {
+								key: "email_already_exists",
+							},
+						},
+					},
+				),
+			password: passwordSchema,
 			callbackUrl: z.string(),
 		}),
 	)
@@ -24,6 +39,7 @@ export const signup = publicProcedure
 		async ({ input: { email, password, callbackUrl }, ctx: { locale } }) => {
 			try {
 				const hashedPassword = await hashPassword(password);
+
 				const user = await db.user.create({
 					data: {
 						email,
@@ -55,11 +71,10 @@ export const signup = publicProcedure
 					},
 				});
 			} catch (e) {
-				logger.error(e);
+				console.error(e);
 
 				throw new TRPCError({
 					code: "INTERNAL_SERVER_ERROR",
-					message: "An unknown error occurred.",
 				});
 			}
 		},
