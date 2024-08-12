@@ -12,6 +12,6 @@
 	"types": "./**/.tsx",
 	"version": "0.0.0",
 	"dependencies": {
-		"winston": "^3.14.0"
+		"winston": "^3.14.1"
 	}
 }
