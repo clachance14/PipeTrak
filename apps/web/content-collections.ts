@@ -43,7 +43,6 @@ const posts = defineCollection({
 		const body = await compileMDX(context, document, {
 			rehypePlugins: [
 				[
-					// @ts-expect-error https://github.com/unifiedjs/unified/issues/227
 					rehypeShiki,
 					{
 						theme: "nord",
@@ -92,7 +91,6 @@ const documentationPages = defineCollection({
 		const body = await compileMDX(context, document, {
 			rehypePlugins: [
 				[
-					// @ts-expect-error https://github.com/unifiedjs/unified/issues/227
 					rehypeShiki,
 					{
 						theme: "nord",
