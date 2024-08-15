@@ -1,3 +1,4 @@
+import { logger } from "logs";
 import type { SendEmailHandler } from "../types";
 
 export const send: SendEmailHandler = async ({ to, subject, text }) => {
@@ -5,5 +6,5 @@ export const send: SendEmailHandler = async ({ to, subject, text }) => {
 
 	formattedOutput += `Text: ${text}\n\n`;
 
-	console.log(formattedOutput);
+	logger.log(formattedOutput);
 };

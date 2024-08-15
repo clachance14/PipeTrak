@@ -1,5 +1,4 @@
 import { TRPCError, initTRPC } from "@trpc/server";
-import { getHTTPStatusCodeFromError } from "@trpc/server/unstable-core-do-not-import";
 import { UserRoleSchema } from "database";
 import { logger } from "logs";
 import superjson from "superjson";
@@ -55,21 +54,17 @@ const isAdminMiddleware = t.middleware(({ ctx, next }) => {
 });
 
 const loggerMiddleware = t.middleware(async (opts) => {
-	const { type, input, meta, next, path } = opts;
+	const { type, meta, next, path, getRawInput } = opts;
 	const start = Date.now();
 	const request = await next(opts);
 	const duration = Date.now() - start;
 
 	const resultPayload = {
-		input,
+		input: await getRawInput(),
 		meta,
-		duration: `${duration}ms`,
 	};
 
-	const resultCode = request.ok
-		? 200
-		: getHTTPStatusCodeFromError(request.error);
-	const logLabel = `${type.toUpperCase()} ${path} ${resultCode}`;
+	const logLabel = `${type.toUpperCase()} ${path} in ${duration}ms`;
 	request.ok
 		? logger.info(logLabel, resultPayload)
 		: logger.error(logLabel, resultPayload);

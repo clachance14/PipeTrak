@@ -3,6 +3,7 @@ import { generateOneTimePassword, generateVerificationToken } from "auth";
 import { hashPassword } from "auth/lib/hashing";
 import { passwordSchema } from "auth/lib/passwords";
 import { UserRoleSchema, db } from "database";
+import { logger } from "logs";
 import { sendEmail } from "mail";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
@@ -71,7 +72,7 @@ export const signup = publicProcedure
 					},
 				});
 			} catch (e) {
-				console.error(e);
+				logger.error(e);
 
 				throw new TRPCError({
 					code: "INTERNAL_SERVER_ERROR",
