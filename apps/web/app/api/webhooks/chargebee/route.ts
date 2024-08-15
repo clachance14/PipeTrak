@@ -71,7 +71,8 @@ export async function POST(req: Request) {
 			id: String(data.subscription.id),
 			teamId: data.subscription?.cf_team_id,
 			customerId: String(data.customer.id),
-			planId: String(selectedPlanId),
+			// biome-ignore lint/style/noNonNullAssertion: This is a valid assertion
+			planId: String(selectedPlanId!),
 			variantId: String(selectedVariantId),
 			status: statusMap[data.subscription.status],
 			nextPaymentDate: new Date(
