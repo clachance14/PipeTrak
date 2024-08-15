@@ -277,8 +277,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       chargebee-typescript:
-        specifier: ^2.36.0
-        version: 2.36.0
+        specifier: ^2.38.0
+        version: 2.38.0
       database:
         specifier: workspace:*
         version: link:../database
@@ -3618,8 +3618,8 @@ packages:
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
 
-  chargebee-typescript@2.36.0:
-    resolution: {integrity: sha512-m9diNWAVFItOkYoeqb4wB1vsCIDRA1VsdgQSUsmfvA+P2lWtCp7Uxa/HP6XwdQi3ECAtn7s8ho9Ar26+Ybz29A==}
+  chargebee-typescript@2.38.0:
+    resolution: {integrity: sha512-BJ+esL1ysEc9mHZFY1O91PUqIj5EZe37joctc35q3zTv4VlKH+1yEoWWn5PS6NO9lNr4XRzJWtbovpfdSPVnFg==}
     engines: {node: '>=8.0.0'}
 
   check-more-types@2.24.0:
@@ -5444,6 +5444,7 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.10.4:
@@ -9728,7 +9729,7 @@ snapshots:
 
   character-reference-invalid@2.0.1: {}
 
-  chargebee-typescript@2.36.0:
+  chargebee-typescript@2.38.0:
     dependencies:
       q: 1.5.1
 
