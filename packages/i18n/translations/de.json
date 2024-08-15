@@ -200,29 +200,39 @@
 		"common": {
 			"login": "Anmelden",
 			"openLinkInBrowser": "Wenn du den Link in einem anderen Browser als Ihrem Standardbrowser öffnen möchten, kopiere diesen und füge ihn in die Adresszeile deines Browsers ein:",
-			"otp": "Einmaliges Passwort"
+			"otp": "Einmaliges Passwort",
+			"useLink": "oder nutze den folgenden Link:"
 		},
 		"emailChange": {
-			"subject": "Bestätige deine E-Mail-Änderung"
+			"subject": "Bestätige deine E-Mail-Änderung",
+			"body": "Hallo {Name},\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
+			"confirmEmail": "E-Mail bestätigen"
 		},
 		"forgotPassword": {
-			"subject": "Setze dein Passwort zurück"
+			"subject": "Setze dein Passwort zurück",
+			"body": "Hallo {Name},\n\ndu hast eine Passwortzurücksetzung beantragt.\n\n\nDu kannst das unten stehende Einmalpasswort entweder manuell in der Anwendung eingeben",
+			"resetPassword": "Passwort zurücksetzen"
 		},
 		"magicLink": {
 			"body": "Hey {name},\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
 			"subject": "Anmeldung bei supastarter",
-			"useLink": "oder nutze den folgenden Link:"
+			"useLink": "oder nutze den folgenden Link:",
+			"login": "Login"
 		},
 		"newUser": {
-			"subject": "Willkommen bei supastarter"
+			"subject": "Willkommen bei supastarter",
+			"body": "Hallo {Name},\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
+			"confirmEmail": "E-Mail bestätigen"
 		},
 		"newsletterSignup": {
-			"subject": "Willkommen bei unserem Newsletter"
+			"subject": "Willkommen bei unserem Newsletter",
+			"body": "Vielen Dank, dass du dich für den supastarter-Newsletter angemeldet hast. \nWir halten dich mit den neuesten Nachrichten und Updates auf dem Laufenden."
 		},
 		"teamInvitation": {
 			"headline": "Tritt dem Team {teamName} bei",
 			"join": "Tritt dem Team bei",
-			"subject": "Du wurdest eingeladen, einem Team beizutreten"
+			"subject": "Du wurdest eingeladen, einem Team beizutreten",
+			"body": "Du wurdest eingeladen, dem Team {teamName} beizutreten. \nKlicke auf die Schaltfläche unten oder kopiere den Link und füge ihn in den Browser Ihrer Wahl ein, um die Einladung anzunehmen und dem Team beizutreten."
 		}
 	},
 	"newsletter": {
@@ -254,7 +264,9 @@
 		"step": "Schritt {step} / {total}",
 		"team": {
 			"name": "Teamname",
-			"title": "Erstelle ein Team"
+			"title": "Erstelle ein Team",
+			"joinTeam": "Tritt dem Team bei",
+			"joinTeamDescription": "Du trittst dem Team <strong>{teamName}</strong> bei."
 		},
 		"title": "Richte dein Konto ein"
 	},
@@ -491,7 +503,8 @@
 				"lowercase_character_required": "Bitte verwende mindestens einen Kleinbuchstaben.",
 				"number_required": "Bitte verwende mindestens eine Zahl.",
 				"special_character_required": "Bitte verwende mindesten ein Sonderzeiche ({character}).",
-				"uppercase_character_required": "Bitte verwende mindestens einen Großbuchstaben."
+				"uppercase_character_required": "Bitte verwende mindestens einen Großbuchstaben.",
+				"email_not_verified": "Bitte verifiziere zunächst deine E-Mail-Adresse."
 			},
 			"invalid_type": "{expected} erwartet, {received} erhalten",
 			"invalid_type_received_undefined": "Darf nicht leer sein",
@@ -573,7 +586,8 @@
 					"inclusive": "Datum muss kleiner oder gleich {maximum, date, short} sein",
 					"not_inclusive": "Datum muss kleiner als {maximum, date, short} sein"
 				}
-			}
+			},
+			"invalid_type_received_null": "Erforderlich"
 		},
 		"validations": {
 			"email": "E-Mail-Adresse",
