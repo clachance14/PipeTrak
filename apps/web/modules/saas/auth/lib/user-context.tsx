@@ -50,7 +50,7 @@ export function UserContextProvider({
 	const [user, setUser] = useState<User>(initialUser);
 	const userQuery = apiClient.auth.user.useQuery(undefined, {
 		refetchOnWindowFocus: false,
-		refetchOnMount: false,
+		refetchOnMount: true,
 		enabled: !initialUser,
 	});
 	const logoutMutation = apiClient.auth.logout.useMutation();
