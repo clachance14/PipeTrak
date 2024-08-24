@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@react-email/components": "^0.0.23",
-		"@react-email/render": "^0.0.17",
+		"@react-email/render": "^1.0.0",
 		"i18n": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"logs": "workspace:*",
