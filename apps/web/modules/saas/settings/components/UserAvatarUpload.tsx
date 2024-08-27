@@ -51,7 +51,7 @@ export function UserAvatarUpload({
 			const path = `${user.id}-${uuid()}.png`;
 			const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
 				path,
-				bucket: "avatars",
+				bucket: process.env.NEXT_PUBLIC_AVATARS_BUCKET_NAME as string,
 			});
 
 			const response = await fetch(uploadUrl, {

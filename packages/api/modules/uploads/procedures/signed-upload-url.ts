@@ -14,7 +14,7 @@ export const signedUploadUrl = protectedProcedure
 		// ATTENTION: be careful with how you give access to write to the storage
 		// always check if the user has the right to write to the desired bucket before giving them a signed url
 
-		if (bucket === "avatars") {
+		if (bucket === process.env.NEXT_PUBLIC_AVATARS_BUCKET_NAME as string) {
 			return await getSignedUploadUrl(path, { bucket });
 		}
 

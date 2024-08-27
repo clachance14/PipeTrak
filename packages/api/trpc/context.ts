@@ -31,7 +31,7 @@ export async function createContext(
 						...membership.team,
 						avatarUrl: membership.team.avatarUrl
 							? await getSignedUrl(membership.team.avatarUrl, {
-									bucket: "avatars",
+									bucket: process.env.NEXT_PUBLIC_AVATARS_BUCKET_NAME as string,
 									expiresIn: 360,
 								})
 							: null,
