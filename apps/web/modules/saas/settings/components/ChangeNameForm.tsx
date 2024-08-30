@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";

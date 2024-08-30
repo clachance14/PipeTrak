@@ -17,9 +17,9 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
-import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import {

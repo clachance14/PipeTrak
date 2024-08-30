@@ -2,7 +2,7 @@
 
 import { config } from "@config";
 import { usePathname } from "@i18n";
-import { useRouter } from "@i18n";
+import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import {
 	DropdownMenu,

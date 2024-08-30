@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@i18n";
-import { useRouter } from "@i18n";
 import { useFormErrors } from "@shared/hooks/form-errors";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";

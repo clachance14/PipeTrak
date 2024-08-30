@@ -1,8 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useRouter } from "@i18n";
+import { Link } from "@i18n";
 import { useFormErrors } from "@shared/hooks/form-errors";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
@@ -41,7 +42,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
 	const t = useTranslations();
-	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
+	const { setApiErrorsToForm } = useFormErrors();
 	const router = useRouter();
 	const { user, loaded } = useUser();
 

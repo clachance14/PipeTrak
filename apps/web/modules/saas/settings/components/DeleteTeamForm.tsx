@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "@i18n";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import {
 	AlertDialog,

@@ -8,7 +8,7 @@ import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { AlertTriangleIcon, ArrowRightIcon, SendIcon } from "lucide-react";
 
-import { useRouter } from "@i18n";
+import { useRouter } from "@shared/hooks/router";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";

@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "@i18n";
 import { updateCurrentTeamIdCookie } from "@saas/auth/lib/current-team-id";
 import { createTeamDialogOpen } from "@saas/dashboard/state";
+import { useRouter } from "@shared/hooks/router";
 import {
 	Dialog,
 	DialogContent,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "@i18n";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import { useToast } from "@ui/hooks/use-toast";

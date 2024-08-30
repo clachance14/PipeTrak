@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "@i18n";
 import { PricingTable as PricingTablePrimitive } from "@shared/components/PricingTable";
+import { useRouter } from "@shared/hooks/router";
 import type { ApiOutput } from "api/trpc/router";
 import { useTranslations } from "next-intl";
 

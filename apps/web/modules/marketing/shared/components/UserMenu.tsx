@@ -2,10 +2,10 @@
 
 import { config } from "@config";
 import { Link, usePathname } from "@i18n";
-import { useRouter } from "@i18n";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
 import {
 	DropdownMenu,

@@ -140,6 +140,9 @@ importers:
       nextjs-toploader:
         specifier: ^3.6.15
         version: 3.6.15(next@14.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      nprogress:
+        specifier: ^0.2.0
+        version: 0.2.0
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -216,6 +219,9 @@ importers:
       '@types/node':
         specifier: 22.4.2
         version: 22.4.2
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@types/react':
         specifier: 18.3.4
         version: 18.3.4
@@ -3049,6 +3055,9 @@ packages:
   '@types/nodemailer@6.4.15':
     resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
 
+  '@types/nprogress@0.2.3':
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
+
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
@@ -5559,11 +5568,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-intl@3.17.6:
-    resolution: {integrity: sha512-07wyVHSFSfI6M6TjhX/buZUFXnFymSz5LCimIMutTnBY11Vc/ym18j3HpZoQoWH+JYRKCCa4Jfm7NNyVKmgVww==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   use-intl@3.18.1:
     resolution: {integrity: sha512-BFNhVnszG1AB04DbNvJ+TLLd1oBDGergAKI8t9xaE4vDJYZaVKQH4zmpdArbegzTu5U9XMen6w14d1P1hBwKOQ==}
@@ -8311,6 +8315,8 @@ snapshots:
   '@types/nodemailer@6.4.15':
     dependencies:
       '@types/node': 22.4.2
+
+  '@types/nprogress@0.2.3': {}
 
   '@types/prop-types@15.7.12': {}
 
@@ -11229,12 +11235,6 @@ snapshots:
       tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.4
-
-  use-intl@3.17.6(react@18.3.1):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.0
-      intl-messageformat: 10.5.14
-      react: 18.3.1
 
   use-intl@3.18.1(react@18.3.1):
     dependencies:
