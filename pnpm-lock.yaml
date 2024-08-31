@@ -217,8 +217,8 @@ importers:
         specifier: ^2.0.13
         version: 2.0.13
       '@types/node':
-        specifier: 22.4.2
-        version: 22.4.2
+        specifier: 22.5.1
+        version: 22.5.1
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -375,8 +375,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^22.4.2
-        version: 22.4.2
+        specifier: ^22.5.1
+        version: 22.5.1
       '@types/react':
         specifier: 18.3.4
         version: 18.3.4
@@ -397,8 +397,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: 22.4.2
-        version: 22.4.2
+        specifier: 22.5.1
+        version: 22.5.1
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
@@ -422,8 +422,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^22.4.2
-        version: 22.4.2
+        specifier: ^22.5.1
+        version: 22.5.1
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -438,8 +438,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^22.4.2
-        version: 22.4.2
+        specifier: ^22.5.1
+        version: 22.5.1
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -493,8 +493,8 @@ importers:
         specifier: ^4.7.2
         version: 4.7.4
       '@types/node':
-        specifier: 22.4.2
-        version: 22.4.2
+        specifier: 22.5.1
+        version: 22.5.1
       '@types/nodemailer':
         specifier: ^6.4.15
         version: 6.4.15
@@ -524,8 +524,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^22.4.2
-        version: 22.4.2
+        specifier: ^22.5.1
+        version: 22.5.1
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -536,8 +536,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^22.4.2
-        version: 22.4.2
+        specifier: ^22.5.1
+        version: 22.5.1
       tsconfig:
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -3049,8 +3049,8 @@ packages:
   '@types/node@18.19.41':
     resolution: {integrity: sha512-LX84pRJ+evD2e2nrgYCHObGWkiQJ1mL+meAgbvnwk/US6vmMY7S2ygBTGV2Jw91s9vUsLSXeDEkUHZIJGLrhsg==}
 
-  '@types/node@22.4.2':
-    resolution: {integrity: sha512-nAvM3Ey230/XzxtyDcJ+VjvlzpzoHwLsF7JaDRfoI0ytO0mVheerNmM45CtA0yOILXwXXxOrcUWH3wltX+7PSw==}
+  '@types/node@22.5.1':
+    resolution: {integrity: sha512-KkHsxej0j9IW1KKOOAA/XBA0z08UFSrRQHErzEfA3Vgq57eXIMYboIlHJuYIfd+lwCQjtKqUu3UnmKbtUc9yRw==}
 
   '@types/nodemailer@6.4.15':
     resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
@@ -8255,7 +8255,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
 
   '@types/debug@4.1.12':
     dependencies:
@@ -8301,20 +8301,20 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
       form-data: 4.0.0
 
   '@types/node@18.19.41':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.4.2':
+  '@types/node@22.5.1':
     dependencies:
       undici-types: 6.19.6
 
   '@types/nodemailer@6.4.15':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
 
   '@types/nprogress@0.2.3': {}
 
@@ -8345,7 +8345,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
     optional: true
 
   '@ungap/structured-clone@1.2.0': {}
@@ -8891,7 +8891,7 @@ snapshots:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.17
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -10977,7 +10977,7 @@ snapshots:
 
   stripe@16.9.0:
     dependencies:
-      '@types/node': 22.4.2
+      '@types/node': 22.5.1
       qs: 6.12.3
 
   strnum@1.0.5: {}
