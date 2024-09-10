@@ -90,7 +90,7 @@
 		"dev": "next dev",
 		"e2e": "dotenv -c -e ../../.env -- start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
 		"lint": "next lint",
-		"shadcn-ui": "pnpm dlx shadcn-ui@latest",
+		"shadcn-ui": "pnpm dlx shadcn@latest",
 		"start": "next start",
 		"type-check": "tsc --noEmit"
 	},
