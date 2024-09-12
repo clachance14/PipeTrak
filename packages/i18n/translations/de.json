@@ -205,7 +205,7 @@
 		},
 		"emailChange": {
 			"subject": "Bestätige deine E-Mail-Änderung",
-			"body": "Hallo {Name},\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
+			"body": "Hallo {name},\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
 			"confirmEmail": "E-Mail bestätigen"
 		},
 		"forgotPassword": {
@@ -221,7 +221,7 @@
 		},
 		"newUser": {
 			"subject": "Willkommen bei supastarter",
-			"body": "Hallo {Name},\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
+			"body": "Hallo {name},\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
 			"confirmEmail": "E-Mail bestätigen"
 		},
 		"newsletterSignup": {
