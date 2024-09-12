@@ -1,5 +1,5 @@
 import type { Locale } from "@config";
-import { renderAsync } from "@react-email/render";
+import { render } from "@react-email/render";
 import { getMessagesForLocale } from "i18n/lib";
 import type { Messages } from "i18n/types";
 import { EmailChange } from "../emails/EmailChange";
@@ -44,8 +44,8 @@ export async function getTemplate<T extends TemplateId>({
 			? translations.mail[templateId].subject
 			: "";
 
-	const html = await renderAsync(email);
-	const text = await renderAsync(email, { plainText: true });
+	const html = await render(email);
+	const text = await render(email, { plainText: true });
 	return { html, text, subject };
 }
 
