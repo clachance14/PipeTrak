@@ -57,9 +57,9 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
-		"@content-collections/core": "^0.7.0",
+		"@content-collections/core": "^0.7.1",
 		"@content-collections/mdx": "^0.1.5",
-		"@content-collections/next": "^0.2.1",
+		"@content-collections/next": "^0.2.2",
 		"@mdx-js/mdx": "^3.0.1",
 		"@shikijs/rehype": "^1.17.0",
 		"@types/cookie": "^0.6.0",
