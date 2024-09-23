@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
-		"@types/node": "^22.5.4",
+		"@types/node": "^22.5.5",
 		"tsconfig": "workspace:*"
 	},
 	"name": "i18n",
