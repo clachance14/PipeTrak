@@ -298,8 +298,8 @@ importers:
         specifier: 14.2.11
         version: 14.2.11(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       openai:
-        specifier: ^4.58.2
-        version: 4.58.2(encoding@0.1.13)(zod@3.23.8)
+        specifier: ^4.62.1
+        version: 4.62.1(encoding@0.1.13)(zod@3.23.8)
       storage:
         specifier: workspace:*
         version: link:../storage
@@ -2928,9 +2928,6 @@ packages:
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
-  '@types/qs@6.9.15':
-    resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
-
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
@@ -4618,8 +4615,8 @@ packages:
   oniguruma-to-js@0.3.3:
     resolution: {integrity: sha512-m90/WEhgs8g4BxG37+Nu3YrMfJDs2YXtYtIllhsEPR+wP3+K4EZk6dDUvy2v2K4MNFDDOYKL4/yqYPXDqyozTQ==}
 
-  openai@4.58.2:
-    resolution: {integrity: sha512-hIalypYELt7/PcryFpz4Gi1z/8ZDzukWyOhr+jKM6L/GVE+t4NseaENXKt+OxnkkIm/1R2EkdGxgnHrZ0kB5bQ==}
+  openai@4.62.1:
+    resolution: {integrity: sha512-Aa6i4oBR1tV8E2d2p3MvXg57X98i8gZtHq4bQNX274qLKZVX7PXXq5P1FMonTXOrX3zwvkqN1iNccn3XK3CwVg==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -8177,8 +8174,6 @@ snapshots:
 
   '@types/prop-types@15.7.12': {}
 
-  '@types/qs@6.9.15': {}
-
   '@types/react-dom@18.3.0':
     dependencies:
       '@types/react': 18.3.5
@@ -10133,17 +10128,15 @@ snapshots:
 
   oniguruma-to-js@0.3.3: {}
 
-  openai@4.58.2(encoding@0.1.13)(zod@3.23.8):
+  openai@4.62.1(encoding@0.1.13)(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.41
       '@types/node-fetch': 2.6.11
-      '@types/qs': 6.9.15
       abort-controller: 3.0.0
       agentkeepalive: 4.5.0
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
       node-fetch: 2.7.0(encoding@0.1.13)
-      qs: 6.12.3
     optionalDependencies:
       zod: 3.23.8
     transitivePeerDependencies:
