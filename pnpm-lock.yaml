@@ -298,8 +298,8 @@ importers:
         specifier: 14.2.11
         version: 14.2.11(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       openai:
-        specifier: ^4.62.1
-        version: 4.62.1(encoding@0.1.13)(zod@3.23.8)
+        specifier: ^4.63.0
+        version: 4.63.0(encoding@0.1.13)(zod@3.23.8)
       storage:
         specifier: workspace:*
         version: link:../storage
@@ -4615,8 +4615,8 @@ packages:
   oniguruma-to-js@0.3.3:
     resolution: {integrity: sha512-m90/WEhgs8g4BxG37+Nu3YrMfJDs2YXtYtIllhsEPR+wP3+K4EZk6dDUvy2v2K4MNFDDOYKL4/yqYPXDqyozTQ==}
 
-  openai@4.62.1:
-    resolution: {integrity: sha512-Aa6i4oBR1tV8E2d2p3MvXg57X98i8gZtHq4bQNX274qLKZVX7PXXq5P1FMonTXOrX3zwvkqN1iNccn3XK3CwVg==}
+  openai@4.63.0:
+    resolution: {integrity: sha512-Y9V4KODbmrOpqiOmCDVnPfMxMqKLOx8Hwcdn/r8mePq4yv7FSXGnxCs8/jZKO7zCB/IVPWihpJXwJNAIOEiZ2g==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -5469,11 +5469,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-intl@3.19.1:
-    resolution: {integrity: sha512-FUblDZJ/iuXusroBxvzVwXmgjHIef2YHJ0ASRmkMV8whlcRr6QJozBZUR/xB4I0+MMbWDD4GPugUK+MxE2coJA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   use-intl@3.19.4:
     resolution: {integrity: sha512-mMUlie/zWiKfO8erR+17dCBL8tBsMWCadqfu/3fipzxVJ8XzZV477k6EBllXR/WfbamwwDFmb6RgYKhHDxGzYw==}
@@ -10133,7 +10128,7 @@ snapshots:
 
   oniguruma-to-js@0.3.3: {}
 
-  openai@4.62.1(encoding@0.1.13)(zod@3.23.8):
+  openai@4.63.0(encoding@0.1.13)(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.41
       '@types/node-fetch': 2.6.11
@@ -11108,12 +11103,6 @@ snapshots:
       tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.5
-
-  use-intl@3.19.1(react@18.3.1):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.0
-      intl-messageformat: 10.5.14
-      react: 18.3.1
 
   use-intl@3.19.4(react@18.3.1):
     dependencies:
