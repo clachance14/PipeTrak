@@ -11,7 +11,7 @@
 		"next": "14.2.13",
 		"openai": "^4.66.1",
 		"storage": "workspace:*",
-		"stripe": "^16.12.0",
+		"stripe": "^17.0.0",
 		"superjson": "^2.2.1",
 		"use-intl": "^3.20.0",
 		"utils": "workspace:*",
