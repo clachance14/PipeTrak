@@ -7,7 +7,7 @@
 		"logs": "workspace:*",
 		"lucia": "^3.2.0",
 		"mail": "workspace:*",
-		"next": "14.2.13",
+		"next": "14.2.14",
 		"oslo": "^1.2.1",
 		"utils": "workspace:*",
 		"zod": "^3.23.8"
