@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "@i18n";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { TeamAvatar } from "@shared/components/TeamAvatar";
@@ -14,6 +15,7 @@ import { CropImageDialog } from "./CropImageDialog";
 
 export function TeamAvatarForm() {
 	const { toast } = useToast();
+	const router = useRouter();
 	const t = useTranslations();
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
@@ -77,7 +79,7 @@ export function TeamAvatarForm() {
 				title: t("settings.notifications.avatarUpdated"),
 			});
 
-			await reloadUser();
+			router.refresh();
 		} catch (e) {
 			toast({
 				variant: "error",
