@@ -13,7 +13,7 @@
 		"storage": "workspace:*",
 		"stripe": "^17.2.0",
 		"superjson": "^2.2.1",
-		"use-intl": "^3.20.0",
+		"use-intl": "^3.21.1",
 		"utils": "workspace:*",
 		"zod": "^3.23.8"
 	},
