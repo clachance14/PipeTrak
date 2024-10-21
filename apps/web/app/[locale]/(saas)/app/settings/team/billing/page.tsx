@@ -3,7 +3,7 @@ import { currentUser } from "@saas/auth/lib/current-user";
 import { SubscriptionOverview } from "@saas/settings/components/SubscriptionOverview";
 import { UpgradePlan } from "@saas/settings/components/UpgradePlan";
 import { createApiCaller } from "api/trpc/caller";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
 	const t = await getTranslations();
@@ -14,16 +14,17 @@ export async function generateMetadata() {
 }
 
 export default async function BillingSettingsPage() {
+	const locale = await getLocale();
 	const apiCaller = await createApiCaller();
 	const plans = await apiCaller.billing.plans();
 	const { user, team } = await currentUser();
 
 	if (!user) {
-		return redirect("/auth/login");
+		return redirect({ href: "/auth/login", locale });
 	}
 
 	if (!team) {
-		return redirect("/app/dashboard");
+		return redirect({ href: "/app/dashboard", locale });
 	}
 
 	const teamSubscription = await apiCaller.team.subscription({

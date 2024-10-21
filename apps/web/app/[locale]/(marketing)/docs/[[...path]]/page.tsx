@@ -23,7 +23,7 @@ export default async function DocsPage({
 		.sort((page) => (page.locale === locale ? -1 : 1))[0];
 
 	if (!page) {
-		redirect("/");
+		redirect({ href: "/", locale });
 	}
 
 	const { title, subtitle, body, toc } = page;

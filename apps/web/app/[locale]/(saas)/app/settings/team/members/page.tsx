@@ -3,7 +3,7 @@ import { currentUser } from "@saas/auth/lib/current-user";
 import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
 import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";
 import { createApiCaller } from "api/trpc/caller";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 export async function generateMetadata() {
 	const t = await getTranslations();
 
@@ -13,11 +13,12 @@ export async function generateMetadata() {
 }
 
 export default async function TeamSettingsPage() {
+	const locale = await getLocale();
 	const apiCaller = await createApiCaller();
 	const { user, team } = await currentUser();
 
 	if (!user || !team) {
-		return redirect("/auth/login");
+		return redirect({ href: "/auth/login", locale });
 	}
 
 	const memberships = await apiCaller.team.memberships({

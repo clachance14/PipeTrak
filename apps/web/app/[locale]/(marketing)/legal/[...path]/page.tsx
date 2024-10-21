@@ -5,6 +5,7 @@ import {
 	getLocalizedDocumentWithFallback,
 } from "@shared/lib/content";
 import { allLegalPages } from "content-collections";
+import { getLocale } from "next-intl/server";
 
 type Params = {
 	path: string;
@@ -12,10 +13,11 @@ type Params = {
 };
 
 export async function generateMetadata({
-	params: { path, locale },
+	params: { path },
 }: {
 	params: Params;
 }) {
+	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const page = getLocalizedDocumentWithFallback(
 		allLegalPages,
@@ -32,10 +34,11 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({
-	params: { path, locale },
+	params: { path },
 }: {
 	params: Params;
 }) {
+	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const page = getLocalizedDocumentWithFallback(
 		allLegalPages,
@@ -44,7 +47,7 @@ export default async function BlogPostPage({
 	);
 
 	if (!page) {
-		redirect("/");
+		redirect({ href: "/", locale });
 	}
 
 	const { title, body } = page;
