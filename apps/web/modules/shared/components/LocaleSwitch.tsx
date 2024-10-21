@@ -38,8 +38,6 @@ export function LocaleSwitch() {
 					value={value}
 					onValueChange={(value) => {
 						setValue(value);
-						console.log(value);
-						console.log(`/${value}/${pathname}?${searchParams.toString()}`);
 						router.replace(`/${value}/${pathname}?${searchParams.toString()}`);
 					}}
 				>
