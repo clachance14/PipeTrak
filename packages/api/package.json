@@ -4,7 +4,7 @@
 		"@trpc/server": "11.0.0-rc.586",
 		"auth": "workspace:*",
 		"change-case": "^5.4.4",
-		"chargebee-typescript": "^2.40.1",
+		"chargebee-typescript": "^2.41.0",
 		"database": "workspace:*",
 		"logs": "workspace:*",
 		"mail": "workspace:*",
