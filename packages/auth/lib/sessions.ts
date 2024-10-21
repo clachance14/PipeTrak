@@ -4,7 +4,7 @@ import {
 	encodeBase32LowerCaseNoPadding,
 	encodeHexLowerCase,
 } from "@oslojs/encoding";
-import { type User, type UserSession, db } from "database";
+import { type UserSession, db } from "database";
 
 export function generateSessionToken(): string {
 	const bytes = new Uint8Array(20);
@@ -41,16 +41,24 @@ export async function createSession(
 	return session;
 }
 
-export async function validateSessionToken(
-	token: string,
-): Promise<SessionValidationResult> {
+export async function validateSessionToken(token: string) {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 	const result = await db.userSession.findUnique({
 		where: {
 			id: sessionId,
 		},
 		include: {
-			user: true,
+			user: {
+				select: {
+					id: true,
+					avatarUrl: true,
+					email: true,
+					emailVerified: true,
+					name: true,
+					onboardingComplete: true,
+					role: true,
+				},
+			},
 		},
 	});
 	if (result === null) {
@@ -83,6 +91,6 @@ export async function invalidateUserSessions(userId: string): Promise<void> {
 	await db.userSession.deleteMany({ where: { userId } });
 }
 
-export type SessionValidationResult =
-	| { session: UserSession; user: User }
-	| { session: null; user: null };
+export type SessionUser = NonNullable<
+	Awaited<ReturnType<typeof validateSessionToken>>["user"]
+>;
