@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";

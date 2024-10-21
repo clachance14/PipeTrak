@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { InviteMemberForm } from "@saas/settings/components/InviteMemberForm";
 import { TeamMembersBlock } from "@saas/settings/components/TeamMembersBlock";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { Button } from "@ui/components/button";
 import { UndoIcon } from "lucide-react";
 

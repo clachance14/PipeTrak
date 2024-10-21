@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { Footer } from "@saas/shared/components/Footer";

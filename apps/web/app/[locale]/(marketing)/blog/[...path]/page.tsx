@@ -1,4 +1,4 @@
-import { Link, redirect } from "@i18n";
+import { Link, redirect } from "@i18n/routing";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allPosts } from "content-collections";

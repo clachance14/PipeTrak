@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@config";
-import { usePathname } from "@i18n";
+import { usePathname } from "@i18n/routing";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import {
@@ -38,6 +38,8 @@ export function LocaleSwitch() {
 					value={value}
 					onValueChange={(value) => {
 						setValue(value);
+						console.log(value);
+						console.log(`/${value}/${pathname}?${searchParams.toString()}`);
 						router.replace(`/${value}/${pathname}?${searchParams.toString()}`);
 					}}
 				>

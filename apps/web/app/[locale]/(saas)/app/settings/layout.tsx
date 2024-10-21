@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { TeamAvatar } from "@shared/components/TeamAvatar";

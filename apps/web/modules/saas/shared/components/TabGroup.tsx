@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useMemo } from "react";
 

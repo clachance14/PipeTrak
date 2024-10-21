@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { SideMenu } from "@saas/admin/component/SideMenu";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserRoleSchema } from "database";

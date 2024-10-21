@@ -1,5 +1,5 @@
 import { MDXContent } from "@content-collections/mdx/react";
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { mdxComponents } from "@marketing/blog/utils/mdx-components";
 import { TableOfContents } from "@marketing/shared/components/TableOfContents";
 import { getActivePathFromUrlParam } from "@shared/lib/content";

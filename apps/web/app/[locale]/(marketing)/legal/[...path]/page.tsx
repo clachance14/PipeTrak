@@ -1,4 +1,4 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import {
 	getActivePathFromUrlParam,

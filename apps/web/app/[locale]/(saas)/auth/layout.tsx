@@ -1,4 +1,4 @@
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { Footer } from "@saas/shared/components/Footer";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
