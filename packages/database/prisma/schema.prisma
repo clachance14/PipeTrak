@@ -42,6 +42,7 @@ model UserSession {
   userId         String
   expiresAt      DateTime
   impersonatorId String?
+  teamId         String?
   user           User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 
   @@index([userId])

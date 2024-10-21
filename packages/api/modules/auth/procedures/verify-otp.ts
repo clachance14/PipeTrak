@@ -1,5 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { lucia, validateOneTimePassword } from "auth";
+import {
+	createSession,
+	createSessionCookie,
+	generateSessionToken,
+	validateOneTimePassword,
+} from "auth";
 import { UserOneTimePasswordTypeSchema, db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
@@ -43,12 +48,13 @@ export const verifyOtp = publicProcedure
 					});
 				}
 
-				const session = await lucia.createSession(userId, {});
+				const sessionToken = generateSessionToken();
+				await createSession(sessionToken, userId);
 
-				const sessionCookie = lucia.createSessionCookie(session.id);
-				responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
-
-				return session;
+				responseHeaders?.append(
+					"Set-Cookie",
+					createSessionCookie(sessionToken).serialize(),
+				);
 			} catch (e) {
 				logger.error(e);
 

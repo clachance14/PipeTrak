@@ -70,10 +70,7 @@
 					"message": "Bitte überprüfe deine E-Mail-Adresse, bevor du dich anmeldest. Überprüfe deinen Posteingang auf die Bestätigungsmail.",
 					"title": "E-Mail nicht bestätigt"
 				},
-				"invalidCredentials": {
-					"message": "Es tut uns leid, aber die von dir eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
-					"title": "Ungültige Anmeldeinformationen"
-				},
+				"invalidCredentials": "Die von dir eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
 				"linkNotSent": {
 					"message": "Es tut uns leid, aber wir konnten dir keinen magischen Link senden. \nBitte versuche es später noch einmal.",
 					"title": "Link nicht gesendet"

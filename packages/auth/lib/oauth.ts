@@ -2,18 +2,19 @@ import { OAuth2RequestError } from "arctic";
 import { db } from "database";
 import { logger } from "logs";
 import { cookies } from "next/headers";
-import { lucia } from "./lucia";
+import { createSessionCookie } from "./cookies";
+import { createSession, generateSessionToken } from "./sessions";
 
 export function createOauthRedirectHandler(
 	providerId: string,
-	createAuthorizationTokens: () => Promise<{
+	createAuthorizationTokens: () => {
 		state: string;
 		codeVerifier?: string;
 		url: URL;
-	}>,
+	},
 ) {
 	return async () => {
-		const { url, state, codeVerifier } = await createAuthorizationTokens();
+		const { url, state, codeVerifier } = createAuthorizationTokens();
 
 		cookies().set(`${providerId}_oauth_state`, state, {
 			httpOnly: true,
@@ -114,13 +115,10 @@ export function createOauthCallbackHandler(
 					});
 				}
 
-				const session = await lucia.createSession(existingUser.id, {});
-				const sessionCookie = lucia.createSessionCookie(session.id);
-				cookies().set(
-					sessionCookie.name,
-					sessionCookie.value,
-					sessionCookie.attributes,
-				);
+				const sessionToken = generateSessionToken();
+				await createSession(sessionToken, existingUser.id);
+				cookies().set(createSessionCookie(sessionToken));
+
 				return new Response(null, {
 					status: 302,
 					headers: {
@@ -145,13 +143,10 @@ export function createOauthCallbackHandler(
 					userId: newUser.id,
 				},
 			});
-			const session = await lucia.createSession(newUser.id, {});
-			const sessionCookie = lucia.createSessionCookie(session.id);
-			cookies().set(
-				sessionCookie.name,
-				sessionCookie.value,
-				sessionCookie.attributes,
-			);
+			const sessionToken = generateSessionToken();
+			await createSession(sessionToken, newUser.id);
+			cookies().set(createSessionCookie(sessionToken));
+
 			return new Response(null, {
 				status: 302,
 				headers: {

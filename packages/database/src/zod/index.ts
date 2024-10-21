@@ -14,7 +14,7 @@ export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCo
 
 export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword','onboardingComplete']);
 
-export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
+export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId','teamId']);
 
 export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
 
@@ -83,6 +83,7 @@ export const UserSessionSchema = z.object({
   userId: z.string(),
   expiresAt: z.coerce.date(),
   impersonatorId: z.string().nullable(),
+  teamId: z.string().nullable(),
 })
 
 export type UserSession = z.infer<typeof UserSessionSchema>
