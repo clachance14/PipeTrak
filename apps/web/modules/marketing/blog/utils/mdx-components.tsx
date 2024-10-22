@@ -1,4 +1,4 @@
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { slugifyHeadline } from "@shared/lib/content";
 import type { MDXComponents } from "mdx/types";
 import type { ImageProps } from "next/image";

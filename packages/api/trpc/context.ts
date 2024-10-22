@@ -45,7 +45,7 @@ export async function createContext(
 		teamMemberships,
 	});
 
-	const locale = (cookies().get(config.i18n.cookieName)?.value ??
+	const locale = (cookies().get(config.i18n.localeCookieName)?.value ??
 		config.i18n.defaultLocale) as Locale;
 
 	return {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "@i18n";
+import { useRouter } from "@i18n/routing";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { TeamAvatar } from "@shared/components/TeamAvatar";

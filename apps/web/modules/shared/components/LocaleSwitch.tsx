@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@config";
-import { usePathname } from "@i18n";
+import { usePathname } from "@i18n/routing";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import {

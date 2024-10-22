@@ -1,4 +1,4 @@
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import type { ContentStructureItem } from "@shared/lib/content";
 
 function ContentMenuItem({

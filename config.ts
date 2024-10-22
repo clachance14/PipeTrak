@@ -12,7 +12,7 @@ export const config = {
 		},
 		defaultLocale: "en",
 		defaultCurrency: "USD",
-		cookieName: "NEXT_LOCALE",
+		localeCookieName: "NEXT_LOCALE",
 	},
 	teams: {
 		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
@@ -31,7 +31,7 @@ export type Config = {
 		locales: { [locale: string]: { currency: string; label: string } };
 		defaultLocale: string;
 		defaultCurrency: string;
-		cookieName: string;
+		localeCookieName: string;
 	};
 	teams: { avatarColors: string[] };
 	auth: { redirectAfterLogout: string };

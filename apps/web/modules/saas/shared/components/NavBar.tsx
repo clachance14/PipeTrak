@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "@i18n";
-import { usePathname } from "@i18n";
+import { Link } from "@i18n/routing";
+import { usePathname } from "@i18n/routing";
 import { UserMenu } from "@marketing/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import type { ApiOutput } from "api/trpc/router";

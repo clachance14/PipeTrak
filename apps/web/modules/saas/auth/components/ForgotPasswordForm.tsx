@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";

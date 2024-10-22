@@ -1,5 +1,5 @@
 import { MDXContent } from "@content-collections/mdx/react";
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { mdxComponents } from "@marketing/blog/utils/mdx-components";
 import { TableOfContents } from "@marketing/shared/components/TableOfContents";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
@@ -23,7 +23,7 @@ export default async function DocsPage({
 		.sort((page) => (page.locale === locale ? -1 : 1))[0];
 
 	if (!page) {
-		redirect("/");
+		redirect({ href: "/", locale });
 	}
 
 	const { title, subtitle, body, toc } = page;

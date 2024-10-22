@@ -1,17 +1,18 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { SideMenu } from "@saas/admin/component/SideMenu";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserRoleSchema } from "database";
 import { UsersIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
+	const locale = await getLocale();
 	const t = await getTranslations();
 	const { user } = await currentUser();
 
 	if (user?.role !== UserRoleSchema.Values.ADMIN) {
-		redirect("/");
+		redirect({ href: "/", locale });
 	}
 
 	return (

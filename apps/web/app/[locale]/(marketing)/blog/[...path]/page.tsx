@@ -1,7 +1,8 @@
-import { Link, redirect } from "@i18n";
+import { Link, redirect } from "@i18n/routing";
 import { PostContent } from "@marketing/blog/components/PostContent";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
 import { allPosts } from "content-collections";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
 import { getBaseUrl } from "utils";
 
@@ -11,10 +12,11 @@ type Params = {
 };
 
 export async function generateMetadata({
-	params: { path, locale },
+	params: { path },
 }: {
 	params: Params;
 }) {
+	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const post = allPosts.find(
 		(post) => post.path === activePath && locale === post.locale,
@@ -34,17 +36,18 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({
-	params: { path, locale },
+	params: { path },
 }: {
 	params: Params;
 }) {
+	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const post = allPosts.find(
 		(post) => post.path === activePath && locale === post.locale,
 	);
 
 	if (!post) {
-		return redirect("/blog");
+		return redirect({ href: "/blog", locale });
 	}
 
 	const { title, date, authorName, authorImage, tags, image, body } = post;

@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@config";
-import { Link, usePathname } from "@i18n";
+import { Link, usePathname } from "@i18n/routing";
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { UserAvatar } from "@shared/components/UserAvatar";

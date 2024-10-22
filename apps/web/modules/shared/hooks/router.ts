@@ -1,4 +1,4 @@
-import { useRouter as useBaseRouter, usePathname } from "@i18n";
+import { useRouter as useBaseRouter, usePathname } from "@i18n/routing";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import NProgress from "nprogress";
 import { useCallback, useEffect } from "react";

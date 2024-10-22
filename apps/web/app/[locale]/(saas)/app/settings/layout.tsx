@@ -1,16 +1,17 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { TeamAvatar } from "@shared/components/TeamAvatar";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 export default async function SettingsLayout({ children }: PropsWithChildren) {
+	const locale = await getLocale();
 	const t = await getTranslations();
 	const { user, team } = await currentUser();
 
 	if (!user) {
-		return redirect("/auth/login");
+		return redirect({ href: "/auth/login", locale });
 	}
 
 	if (!team) {

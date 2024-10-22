@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import type { Post } from "content-collections";
 import Image from "next/image";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "@i18n";
-import { usePathname } from "@i18n";
+import { Link } from "@i18n/routing";
+import { usePathname } from "@i18n/routing";
 import { useUser } from "@saas/auth/hooks/use-user";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";

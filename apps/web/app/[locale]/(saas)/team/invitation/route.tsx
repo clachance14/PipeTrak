@@ -1,15 +1,17 @@
-import { redirect } from "@i18n";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { createApiCaller } from "api/trpc/caller";
+import { getLocale } from "next-intl/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(request: Request) {
+	const locale = await getLocale();
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 
 	if (!code) {
-		return redirect("/");
+		return redirect({ href: "/", locale });
 	}
 
 	const apiCaller = await createApiCaller();
@@ -20,15 +22,16 @@ export async function GET(request: Request) {
 	});
 
 	if (!invitation) {
-		return redirect("/");
+		return redirect({ href: "/", locale });
 	}
 
 	if (!user) {
-		return redirect(
-			`/auth/login?invitationCode=${invitation.id}&email=${encodeURIComponent(
+		return redirect({
+			href: `/auth/login?invitationCode=${invitation.id}&email=${encodeURIComponent(
 				invitation.email,
 			)}`,
-		);
+			locale,
+		});
 	}
 
 	const team = await apiCaller.team.acceptInvitation({
@@ -36,8 +39,8 @@ export async function GET(request: Request) {
 	});
 
 	if (!team) {
-		redirect("/");
+		return redirect({ href: "/", locale });
 	}
 
-	return redirect("/app/dashboard");
+	return redirect({ href: "/app/dashboard", locale });
 }

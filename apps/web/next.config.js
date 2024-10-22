@@ -1,7 +1,7 @@
 const { withContentCollections } = require("@content-collections/next");
 const nextIntlPlugin = require("next-intl/plugin");
 
-const withNextIntl = nextIntlPlugin("./i18n.ts");
+const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

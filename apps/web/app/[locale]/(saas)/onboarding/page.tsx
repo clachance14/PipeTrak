@@ -1,5 +1,5 @@
-import { Link } from "@i18n";
-import { redirect } from "@i18n";
+import { Link } from "@i18n/routing";
+import { redirect } from "@i18n/routing";
 import { currentUser } from "@saas/auth/lib/current-user";
 import { UserContextProvider } from "@saas/auth/lib/user-context";
 import { OnboardingForm } from "@saas/onboarding/components/OnboardingForm";
@@ -7,7 +7,7 @@ import { Footer } from "@saas/shared/components/Footer";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -21,14 +21,15 @@ export async function generateMetadata() {
 }
 
 export default async function OnboardingPage() {
+	const locale = await getLocale();
 	const { user } = await currentUser();
 
 	if (!user) {
-		return redirect("/auth/login");
+		return redirect({ href: "/auth/login", locale });
 	}
 
 	if (user.onboardingComplete) {
-		return redirect("/app");
+		return redirect({ href: "/app", locale });
 	}
 
 	return (

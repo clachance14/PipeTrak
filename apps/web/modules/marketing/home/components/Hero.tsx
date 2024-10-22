@@ -1,4 +1,4 @@
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { Button } from "@ui/components/button";
 import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";

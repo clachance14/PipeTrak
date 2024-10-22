@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@i18n";
+import { Link } from "@i18n/routing";
 import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { apiClient } from "@shared/lib/api-client";
