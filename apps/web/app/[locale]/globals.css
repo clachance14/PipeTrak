@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+	* {
+		@apply border-border;
+	}
 }
 
 @layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
 
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 }
 
 pre.shiki {
-  @apply mb-4 rounded-lg p-6;
+	@apply mb-4 rounded-lg p-6;
 }

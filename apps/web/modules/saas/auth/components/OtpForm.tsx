@@ -51,7 +51,7 @@ export function OtpForm() {
 	) as UserOneTimePasswordTypeType;
 	const redirectTo = invitationCode
 		? `/team/invitation?code=${invitationCode}`
-		: searchParams.get("redirectTo") ?? "/app";
+		: (searchParams.get("redirectTo") ?? "/app");
 
 	const verifyOtpMutation = apiClient.auth.verifyOtp.useMutation();
 

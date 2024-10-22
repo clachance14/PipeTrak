@@ -54,10 +54,10 @@ export function getContentStructure({
 				? typeof metaData === "string"
 					? metaData
 					: metaData.title
-				: documents
+				: (documents
 						.filter((page) => page.path === rootItemPath)
 						.sort((page) => (page.locale === locale ? -1 : 1))
-						.at(0)?.title ?? pathParts[0];
+						.at(0)?.title ?? pathParts[0]);
 
 			rootItem = {
 				label,

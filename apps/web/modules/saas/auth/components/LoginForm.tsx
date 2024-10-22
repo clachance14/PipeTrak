@@ -62,7 +62,7 @@ export function LoginForm() {
 	const invitationCode = searchParams.get("invitationCode");
 	const redirectTo = invitationCode
 		? `/team/invitation?code=${invitationCode}`
-		: searchParams.get("redirectTo") ?? "/app";
+		: (searchParams.get("redirectTo") ?? "/app");
 	const email = searchParams.get("email");
 
 	useEffect(() => {
