@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 		);
 		const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
 		const signature = Buffer.from(
-			headers().get("x-signature") as string,
+			(await headers()).get("x-signature") as string,
 			"utf8",
 		);
 

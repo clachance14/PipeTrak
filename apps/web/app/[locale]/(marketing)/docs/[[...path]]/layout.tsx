@@ -7,10 +7,13 @@ import {
 import { getLocale } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 
-export default async function DocsLayout({
-	children,
-	params: { path },
-}: PropsWithChildren<{ params: { path: string | string[] } }>) {
+export default async function DocsLayout(
+	props: PropsWithChildren<{ params: Promise<{ path: string | string[] }> }>,
+) {
+	const params = await props.params;
+	const { path } = params;
+	const { children } = props;
+
 	const locale = await getLocale();
 
 	const activePath = Array.isArray(path) ? path.join("/") : path || "";

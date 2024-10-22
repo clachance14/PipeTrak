@@ -15,7 +15,7 @@ export const currentUser = async () => {
 	}
 
 	const currentTeamId =
-		cookies().get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
+		(await cookies()).get(CURRENT_TEAM_ID_COOKIE_NAME)?.value ?? null;
 
 	const { teamMemberships } = user;
 

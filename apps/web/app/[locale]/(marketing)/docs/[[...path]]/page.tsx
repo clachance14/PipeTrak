@@ -10,11 +10,13 @@ type Params = {
 	path: string | string[];
 };
 
-export default async function DocsPage({
-	params: { path },
-}: {
-	params: Params;
+export default async function DocsPage(props: {
+	params: Promise<Params>;
 }) {
+	const params = await props.params;
+
+	const { path } = params;
+
 	const activePath = getActivePathFromUrlParam(path);
 	const locale = await getLocale();
 

@@ -16,7 +16,7 @@ export function createOauthRedirectHandler(
 	return async () => {
 		const { url, state, codeVerifier } = createAuthorizationTokens();
 
-		cookies().set(`${providerId}_oauth_state`, state, {
+		(await cookies()).set(`${providerId}_oauth_state`, state, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV !== "development",
 			path: "/",
@@ -26,7 +26,7 @@ export function createOauthRedirectHandler(
 
 		if (codeVerifier) {
 			// store code verifier as cookie
-			cookies().set("code_verifier", codeVerifier, {
+			(await cookies()).set("code_verifier", codeVerifier, {
 				secure: true, // set to false in localhost
 				path: "/",
 				httpOnly: true,
@@ -55,8 +55,9 @@ export function createOauthCallbackHandler(
 		const code = url.searchParams.get("code");
 		const state = url.searchParams.get("state");
 		const storedState =
-			cookies().get(`${providerId}_oauth_state`)?.value ?? null;
-		const storedCodeVerifier = cookies().get("code_verifier")?.value ?? null;
+			(await cookies()).get(`${providerId}_oauth_state`)?.value ?? null;
+		const storedCodeVerifier =
+			(await cookies()).get("code_verifier")?.value ?? null;
 
 		if (!code || !state || !storedState || state !== storedState) {
 			logger.error(
@@ -117,7 +118,7 @@ export function createOauthCallbackHandler(
 
 				const sessionToken = generateSessionToken();
 				await createSession(sessionToken, existingUser.id);
-				cookies().set(createSessionCookie(sessionToken));
+				(await cookies()).set(createSessionCookie(sessionToken));
 
 				return new Response(null, {
 					status: 302,
@@ -145,7 +146,7 @@ export function createOauthCallbackHandler(
 			});
 			const sessionToken = generateSessionToken();
 			await createSession(sessionToken, newUser.id);
-			cookies().set(createSessionCookie(sessionToken));
+			(await cookies()).set(createSessionCookie(sessionToken));
 
 			return new Response(null, {
 				status: 302,
