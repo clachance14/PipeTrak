@@ -26,11 +26,12 @@ export const user = publicProcedure
 					id: true,
 					name: true,
 				}).nullish(),
+				activeTeamId: z.string().nullish(),
 			})
 			.nullable(),
 	)
 	.query(async ({ ctx: { user, session, teamMemberships } }) => {
-		if (!user) {
+		if (!user || !session) {
 			return null;
 		}
 
@@ -51,5 +52,6 @@ export const user = publicProcedure
 			avatarUrl: await getUserAvatarUrl(user.avatarUrl),
 			teamMemberships,
 			impersonatedBy,
+			activeTeamId: session.teamId,
 		};
 	});
