@@ -1,18 +1,18 @@
 import type { SessionUser } from "auth";
-import type { TeamMembership } from "database";
-import { TeamMemberRoleSchema, UserRoleSchema } from "database";
+import { TeamMemberRoleSchema, UserRoleSchema, db } from "database";
 
-export function defineAbilitiesFor({
-	user,
-	teamMemberships,
-}: {
-	user: SessionUser | null;
-	teamMemberships: TeamMembership[] | null;
-}) {
-	const isAdmin = user?.role === UserRoleSchema.Values.ADMIN;
+export async function defineAbilitiesFor(user: SessionUser) {
+	const teamMemberships =
+		(await db.teamMembership.findMany({
+			where: {
+				userId: user.id,
+			},
+		})) ?? [];
+
+	const isAdmin = user.role === UserRoleSchema.Values.ADMIN;
 
 	const getTeamRole = (teamId: string) =>
-		teamMemberships?.find((m) => m.teamId === teamId)?.role ?? null;
+		teamMemberships.find((m) => m.teamId === teamId)?.role ?? null;
 
 	const isTeamOwner = (teamId: string) =>
 		isAdmin || getTeamRole(teamId) === TeamMemberRoleSchema.Values.OWNER;

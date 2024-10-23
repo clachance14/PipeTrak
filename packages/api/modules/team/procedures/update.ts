@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { TeamSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const update = protectedProcedure
 	.input(
@@ -12,8 +13,9 @@ export const update = protectedProcedure
 		}),
 	)
 	.output(TeamSchema)
-	.mutation(async ({ input: { id, name, avatarUrl }, ctx: { abilities } }) => {
-		if (!abilities.isTeamOwner(id)) {
+	.mutation(async ({ input: { id, name, avatarUrl }, ctx: { user } }) => {
+		const userAbilities = await defineAbilitiesFor(user);
+		if (!userAbilities.isTeamOwner(id)) {
 			throw new TRPCError({
 				code: "UNAUTHORIZED",
 				message: "No permission to update this team.",

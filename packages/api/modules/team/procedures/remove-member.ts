@@ -3,6 +3,7 @@ import { db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const removeMember = protectedProcedure
 	.input(
@@ -10,7 +11,7 @@ export const removeMember = protectedProcedure
 			membershipId: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { membershipId }, ctx: { abilities, user } }) => {
+	.mutation(async ({ input: { membershipId }, ctx: { user } }) => {
 		const membership = await db.teamMembership.findUnique({
 			where: {
 				id: membershipId,
@@ -24,9 +25,10 @@ export const removeMember = protectedProcedure
 			});
 		}
 
+		const userAbilities = await defineAbilitiesFor(user);
 		// user can only remove themselves from a team if they are not the owner
 		if (
-			!abilities.isTeamOwner(membership.teamId) &&
+			!userAbilities.isTeamOwner(membership.teamId) &&
 			membership.userId !== user.id
 		) {
 			throw new TRPCError({

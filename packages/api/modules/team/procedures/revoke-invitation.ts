@@ -3,6 +3,7 @@ import { db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const revokeInvitation = protectedProcedure
 	.input(
@@ -10,7 +11,7 @@ export const revokeInvitation = protectedProcedure
 			invitationId: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { invitationId }, ctx: { abilities } }) => {
+	.mutation(async ({ input: { invitationId }, ctx: { user } }) => {
 		const invitation = await db.teamInvitation.findUnique({
 			where: {
 				id: invitationId,
@@ -28,7 +29,8 @@ export const revokeInvitation = protectedProcedure
 			});
 		}
 
-		if (!abilities.isTeamOwner(invitation.teamId)) {
+		const userAbilities = await defineAbilitiesFor(user);
+		if (!userAbilities.isTeamOwner(invitation.teamId)) {
 			throw new TRPCError({
 				code: "UNAUTHORIZED",
 				message: "No permission to add a member to this team.",

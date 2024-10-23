@@ -5,6 +5,7 @@ import { sendEmail } from "mail";
 import { getBaseUrl } from "utils";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const inviteMember = protectedProcedure
 	.input(
@@ -15,8 +16,9 @@ export const inviteMember = protectedProcedure
 		}),
 	)
 	.mutation(
-		async ({ input: { teamId, email, role }, ctx: { abilities, locale } }) => {
-			if (!abilities.isTeamOwner(teamId)) {
+		async ({ input: { teamId, email, role }, ctx: { user, locale } }) => {
+			const userAbilities = await defineAbilitiesFor(user);
+			if (!userAbilities.isTeamOwner(teamId)) {
 				throw new TRPCError({
 					code: "UNAUTHORIZED",
 					message: "No permission to add a member to this team.",

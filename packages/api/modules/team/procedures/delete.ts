@@ -3,6 +3,7 @@ import { db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const deleteTeam = protectedProcedure
 	.input(
@@ -10,9 +11,10 @@ export const deleteTeam = protectedProcedure
 			id: z.string(),
 		}),
 	)
-	.mutation(async ({ input: { id }, ctx: { abilities } }) => {
+	.mutation(async ({ input: { id }, ctx: { user } }) => {
 		try {
-			if (!abilities.isTeamOwner(id)) {
+			const userAbilities = await defineAbilitiesFor(user);
+			if (!userAbilities.isTeamOwner(id)) {
 				throw new TRPCError({
 					code: "FORBIDDEN",
 				});

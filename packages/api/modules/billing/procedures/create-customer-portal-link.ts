@@ -3,6 +3,7 @@ import { db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 import { createCustomerPortalLink as createCustomerPortalLinkResolver } from "../provider";
 
 export const createCustomerPortalLink = protectedProcedure
@@ -14,7 +15,7 @@ export const createCustomerPortalLink = protectedProcedure
 	)
 	.output(z.string())
 	.mutation(
-		async ({ input: { subscriptionId, redirectUrl }, ctx: { abilities } }) => {
+		async ({ input: { subscriptionId, redirectUrl }, ctx: { user } }) => {
 			const subscription = await db.subscription.findUnique({
 				where: {
 					id: subscriptionId,
@@ -27,7 +28,8 @@ export const createCustomerPortalLink = protectedProcedure
 				});
 			}
 
-			if (!abilities.isTeamOwner(subscription.teamId)) {
+			const userAbilities = await defineAbilitiesFor(user);
+			if (!userAbilities.isTeamOwner(subscription.teamId)) {
 				throw new TRPCError({
 					code: "FORBIDDEN",
 				});

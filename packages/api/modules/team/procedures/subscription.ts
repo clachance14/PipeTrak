@@ -1,6 +1,7 @@
 import { SubscriptionSchema, db } from "database";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const subscription = protectedProcedure
 	.input(
@@ -9,8 +10,9 @@ export const subscription = protectedProcedure
 		}),
 	)
 	.output(SubscriptionSchema.nullable())
-	.query(async ({ input: { teamId }, ctx: { abilities } }) => {
-		if (!abilities.isTeamMember(teamId)) {
+	.query(async ({ input: { teamId }, ctx: { user } }) => {
+		const userAbilities = await defineAbilitiesFor(user);
+		if (!userAbilities.isTeamMember(teamId)) {
 			throw new Error("Unauthorized");
 		}
 

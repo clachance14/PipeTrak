@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { TeamMembershipSchema, db } from "database";
 import { logger } from "logs";
 import { protectedProcedure } from "../../../trpc/base";
+import { defineAbilitiesFor } from "../../auth/abilities";
 
 export const updateMembership = protectedProcedure
 	.input(
@@ -10,7 +11,7 @@ export const updateMembership = protectedProcedure
 			role: true,
 		}),
 	)
-	.mutation(async ({ input: { id, role }, ctx: { abilities, isAdmin } }) => {
+	.mutation(async ({ input: { id, role }, ctx: { user, isAdmin } }) => {
 		const membership = await db.teamMembership.findUnique({
 			where: {
 				id,
@@ -24,8 +25,9 @@ export const updateMembership = protectedProcedure
 			});
 		}
 
+		const userAbilities = await defineAbilitiesFor(user);
 		// user can only remove themselves from a team if they are not the owner
-		if (!isAdmin && !abilities.isTeamOwner(membership.teamId)) {
+		if (!isAdmin && !userAbilities.isTeamOwner(membership.teamId)) {
 			throw new TRPCError({
 				code: "UNAUTHORIZED",
 				message: "No permission to remove a member from this team.",
