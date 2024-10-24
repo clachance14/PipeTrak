@@ -26,7 +26,6 @@ export const user = publicProcedure
 					id: true,
 					name: true,
 				}).nullish(),
-				activeTeamId: z.string().nullish(),
 			})
 			.nullable(),
 	)
