@@ -6,6 +6,7 @@ import {
 	validateVerificationToken,
 } from "auth";
 import { db } from "database";
+import { logger } from "logs";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -50,6 +51,8 @@ export const verifyToken = publicProcedure
 				createSessionCookie(sessionToken).serialize(),
 			);
 		} catch (e) {
+			logger.error(e);
+
 			throw new TRPCError({
 				code: "BAD_REQUEST",
 				message: "Invalid token",
