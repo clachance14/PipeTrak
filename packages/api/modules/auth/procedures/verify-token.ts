@@ -1,6 +1,12 @@
 import { TRPCError } from "@trpc/server";
-import { lucia, validateVerificationToken } from "auth";
+import {
+	createSession,
+	createSessionCookie,
+	generateSessionToken,
+	validateVerificationToken,
+} from "auth";
 import { db } from "database";
+import { logger } from "logs";
 import { z } from "zod";
 import { publicProcedure } from "../../../trpc/base";
 
@@ -37,13 +43,16 @@ export const verifyToken = publicProcedure
 				});
 			}
 
-			const session = await lucia.createSession(userId, {});
+			const sessionToken = generateSessionToken();
+			await createSession(sessionToken, userId);
 
-			const sessionCookie = lucia.createSessionCookie(session.id);
-			responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
-
-			return session;
+			responseHeaders?.append(
+				"Set-Cookie",
+				createSessionCookie(sessionToken).serialize(),
+			);
 		} catch (e) {
+			logger.error(e);
+
 			throw new TRPCError({
 				code: "BAD_REQUEST",
 				message: "Invalid token",

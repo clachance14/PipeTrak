@@ -1,6 +1,6 @@
 import { type Locale, config } from "@config";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { lucia } from "auth";
+import { validateSessionToken } from "auth";
 import { db } from "database";
 import { cookies } from "next/headers";
 import { getSignedUrl } from "storage";
@@ -9,9 +9,9 @@ import { defineAbilitiesFor } from "../modules/auth/abilities";
 export async function createContext(
 	params?: FetchCreateContextFnOptions | { isAdmin?: boolean },
 ) {
-	const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+	const sessionId = cookies().get(config.auth.sessionCookieName)?.value ?? null;
 	const { user, session } = sessionId
-		? await lucia.validateSession(sessionId)
+		? await validateSessionToken(sessionId)
 		: { user: null, session: null };
 
 	const teamMemberships = user
@@ -50,10 +50,10 @@ export async function createContext(
 
 	return {
 		user,
-		teamMemberships,
-		abilities,
 		session,
 		locale,
+		abilities,
+		teamMemberships,
 		responseHeaders:
 			params && "resHeaders" in params ? params.resHeaders : undefined,
 		isAdmin: params && "isAdmin" in params ? params.isAdmin : false,

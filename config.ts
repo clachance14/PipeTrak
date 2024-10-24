@@ -19,6 +19,8 @@ export const config = {
 	},
 	auth: {
 		redirectAfterLogout: "/",
+		sessionCookieName: "auth_session",
+		sessionCookieMaxAge: 60 * 60 * 24 * 30,
 	},
 	mailing: {
 		provider: "plunk",
@@ -34,7 +36,11 @@ export type Config = {
 		localeCookieName: string;
 	};
 	teams: { avatarColors: string[] };
-	auth: { redirectAfterLogout: string };
+	auth: {
+		redirectAfterLogout: string;
+		sessionCookieName: string;
+		sessionCookieMaxAge: number;
+	};
 	mailing: {
 		provider:
 			| "custom"

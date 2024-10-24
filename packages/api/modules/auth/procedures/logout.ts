@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { lucia } from "auth";
+import { createSessionCookie, invalidateSession } from "auth";
 import { logger } from "logs";
 import { z } from "zod";
 import { protectedProcedure } from "../../../trpc/base";
@@ -8,9 +8,11 @@ export const logout = protectedProcedure
 	.input(z.void())
 	.mutation(async ({ ctx: { session, responseHeaders } }) => {
 		try {
-			await lucia.invalidateSession(session.id);
-			const sessionCookie = lucia.createBlankSessionCookie();
-			responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
+			await invalidateSession(session.id);
+			responseHeaders?.append(
+				"Set-Cookie",
+				createSessionCookie(null).serialize(),
+			);
 		} catch (e) {
 			logger.error(e);
 

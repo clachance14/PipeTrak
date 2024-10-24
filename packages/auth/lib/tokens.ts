@@ -1,7 +1,13 @@
+import { type RandomReader, generateRandomString } from "@oslojs/crypto/random";
 import type { UserOneTimePasswordTypeType } from "database";
 import { db } from "database";
-import { isWithinExpirationDate } from "oslo";
-import { alphabet, generateRandomString } from "oslo/crypto";
+
+const random: RandomReader = {
+	read(bytes) {
+		crypto.getRandomValues(bytes);
+	},
+};
+const numberAlphabet = "0123456789";
 
 export const generateVerificationToken = async ({
 	userId,
@@ -18,9 +24,7 @@ export const generateVerificationToken = async ({
 
 	if (storedUserTokens.length > 0) {
 		const reusableStoredToken = storedUserTokens.find((token) => {
-			return isWithinExpirationDate(
-				new Date(Number(token.expires) - expireDuration / 2),
-			);
+			return new Date(Number(token.expires) - expireDuration / 2) >= new Date();
 		});
 		if (reusableStoredToken) {
 			return reusableStoredToken.id;
@@ -58,7 +62,7 @@ export const validateVerificationToken = async ({
 		},
 	});
 
-	if (!isWithinExpirationDate(storedToken.expires)) {
+	if (storedToken.expires < new Date()) {
 		throw new Error("Expired token");
 	}
 
@@ -84,16 +88,14 @@ export const generateOneTimePassword = async ({
 
 	if (storedUserTokens.length > 0) {
 		const reusableStoredToken = storedUserTokens.find((token) => {
-			return isWithinExpirationDate(
-				new Date(Number(token.expires) - expireDuration / 2),
-			);
+			return new Date(Number(token.expires) - expireDuration) >= new Date();
 		});
 		if (reusableStoredToken) {
 			return reusableStoredToken.code;
 		}
 	}
 
-	const otp = generateRandomString(6, alphabet("0-9"));
+	const otp = generateRandomString(random, numberAlphabet, 6);
 
 	await db.userOneTimePassword.create({
 		data: {
@@ -135,7 +137,7 @@ export const validateOneTimePassword = async ({
 		},
 	});
 
-	if (!isWithinExpirationDate(storedOtp.expires)) {
+	if (storedOtp.expires < new Date()) {
 		throw new Error("Expired token");
 	}
 

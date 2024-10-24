@@ -23,13 +23,13 @@ type GoogleUser = {
 
 export const googleRouteHandler = createOauthRedirectHandler(
 	GOOGLE_PROIVDER_ID,
-	async () => {
+	() => {
 		const state = generateState();
 		const codeVerifier = generateCodeVerifier();
-
-		const url = await googleAuth.createAuthorizationURL(state, codeVerifier, {
-			scopes: ["profile", "email"],
-		});
+		const url = googleAuth.createAuthorizationURL(state, codeVerifier, [
+			"profile",
+			"email",
+		]);
 
 		return {
 			state,
@@ -50,7 +50,7 @@ export const googleCallbackRouteHandler = createOauthCallbackHandler(
 			"https://openidconnect.googleapis.com/v1/userinfo",
 			{
 				headers: {
-					Authorization: `Bearer ${tokens.accessToken}`,
+					Authorization: `Bearer ${tokens.accessToken()}`,
 				},
 			},
 		);

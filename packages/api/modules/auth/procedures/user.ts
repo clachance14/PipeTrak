@@ -30,7 +30,7 @@ export const user = publicProcedure
 			.nullable(),
 	)
 	.query(async ({ ctx: { user, session, teamMemberships } }) => {
-		if (!user) {
+		if (!user || !session) {
 			return null;
 		}
 

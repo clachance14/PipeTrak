@@ -1,5 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { lucia } from "auth";
+import {
+	createSession,
+	createSessionCookie,
+	generateSessionToken,
+	invalidateSession,
+} from "auth";
 import { db } from "database";
 import { logger } from "logs";
 import { z } from "zod";
@@ -26,14 +31,17 @@ export const impersonate = adminProcedure
 			}
 
 			try {
-				const newSession = await lucia.createSession(userId, {
+				const newSessionToken = generateSessionToken();
+				await createSession(newSessionToken, userId, {
 					impersonatorId: user.id,
 				});
 
-				await lucia.invalidateSession(session.id);
+				await invalidateSession(session.id);
 
-				const sessionCookie = lucia.createSessionCookie(newSession.id);
-				responseHeaders?.append("Set-Cookie", sessionCookie.serialize());
+				responseHeaders?.append(
+					"Set-Cookie",
+					createSessionCookie(newSessionToken).serialize(),
+				);
 			} catch (e) {
 				logger.error(e);
 
