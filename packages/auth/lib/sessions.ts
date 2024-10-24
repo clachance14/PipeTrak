@@ -19,7 +19,6 @@ export async function createSession(
 	options?: {
 		maxAge?: number;
 		impersonatorId?: string | null;
-		teamId?: string | null;
 	},
 ): Promise<UserSession> {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
@@ -31,7 +30,6 @@ export async function createSession(
 		userId,
 		expiresAt: new Date(Date.now() + maxAge * 1000),
 		impersonatorId,
-		teamId: options?.teamId ?? null,
 	};
 
 	await db.userSession.create({
