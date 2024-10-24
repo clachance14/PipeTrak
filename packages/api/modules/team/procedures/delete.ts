@@ -23,12 +23,6 @@ export const deleteTeam = protectedProcedure
 					id,
 				},
 			});
-
-			await db.userSession.deleteMany({
-				where: {
-					teamId: id,
-				},
-			});
 		} catch (e) {
 			logger.error(e);
 
