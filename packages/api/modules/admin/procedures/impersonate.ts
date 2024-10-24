@@ -34,7 +34,6 @@ export const impersonate = adminProcedure
 				const newSessionToken = generateSessionToken();
 				await createSession(newSessionToken, userId, {
 					impersonatorId: user.id,
-					teamId: session.teamId,
 				});
 
 				await invalidateSession(session.id);
