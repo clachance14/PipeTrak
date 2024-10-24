@@ -307,8 +307,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       use-intl:
-        specifier: ^3.23.2
-        version: 3.23.2(react@18.3.1)
+        specifier: ^3.23.4
+        version: 3.23.4(react@18.3.1)
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -474,8 +474,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       use-intl:
-        specifier: ^3.23.2
-        version: 3.23.2(react@18.3.1)
+        specifier: ^3.23.4
+        version: 3.23.4(react@18.3.1)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -5214,6 +5214,11 @@ packages:
 
   use-intl@3.23.2:
     resolution: {integrity: sha512-lrKb5M6zr9YoHK+OuUsRApPPNEMHX8ntx0PDGZ0fxlMmj6W2u/3y++UB4uE/o0C8Jyn7oiHCjShYjgPjDaB1cg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  use-intl@3.23.4:
+    resolution: {integrity: sha512-89kvDdpebOltbHuRaprlocAgQ4r2cG4V36ySrALsS2GDX3zURqT8ZOqxIghJ8AahAnUbgnPcBgdrGN/6F94oDw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
@@ -10680,6 +10685,12 @@ snapshots:
       '@types/react': 18.3.12
 
   use-intl@3.23.2(react@18.3.1):
+    dependencies:
+      '@formatjs/fast-memoize': 2.2.1
+      intl-messageformat: 10.7.1
+      react: 18.3.1
+
+  use-intl@3.23.4(react@18.3.1):
     dependencies:
       '@formatjs/fast-memoize': 2.2.1
       intl-messageformat: 10.7.1
