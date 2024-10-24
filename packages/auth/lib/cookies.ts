@@ -1,5 +1,5 @@
 import { config } from "@config";
-import { type SerializeOptions, serialize as serializeCookie } from "cookie";
+import { type SerializeOptions, serialize } from "cookie";
 
 export function createSessionCookie(
 	sessionToken: string | null,
@@ -20,6 +20,6 @@ export function createSessionCookie(
 		name,
 		value,
 		...cookieOptions,
-		serialize: () => serializeCookie(name, value, cookieOptions),
+		serialize: () => serialize(name, value, cookieOptions),
 	};
 }
