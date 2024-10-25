@@ -14,9 +14,10 @@ export function createOauthRedirectHandler(
 	},
 ) {
 	return async () => {
+		const cookieStore = await cookies();
 		const { url, state, codeVerifier } = createAuthorizationTokens();
 
-		(await cookies()).set(`${providerId}_oauth_state`, state, {
+		cookieStore.set(`${providerId}_oauth_state`, state, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV !== "development",
 			path: "/",
@@ -26,7 +27,7 @@ export function createOauthRedirectHandler(
 
 		if (codeVerifier) {
 			// store code verifier as cookie
-			(await cookies()).set("code_verifier", codeVerifier, {
+			cookieStore.set("code_verifier", codeVerifier, {
 				secure: true, // set to false in localhost
 				path: "/",
 				httpOnly: true,
@@ -51,13 +52,13 @@ export function createOauthCallbackHandler(
 	}>,
 ) {
 	return async (req: Request) => {
+		const cookieStore = await cookies();
 		const url = new URL(req.url);
 		const code = url.searchParams.get("code");
 		const state = url.searchParams.get("state");
 		const storedState =
-			(await cookies()).get(`${providerId}_oauth_state`)?.value ?? null;
-		const storedCodeVerifier =
-			(await cookies()).get("code_verifier")?.value ?? null;
+			cookieStore.get(`${providerId}_oauth_state`)?.value ?? null;
+		const storedCodeVerifier = cookieStore.get("code_verifier")?.value ?? null;
 
 		if (!code || !state || !storedState || state !== storedState) {
 			logger.error(
@@ -118,7 +119,7 @@ export function createOauthCallbackHandler(
 
 				const sessionToken = generateSessionToken();
 				await createSession(sessionToken, existingUser.id);
-				(await cookies()).set(createSessionCookie(sessionToken));
+				cookieStore.set(createSessionCookie(sessionToken));
 
 				return new Response(null, {
 					status: 302,
@@ -146,7 +147,7 @@ export function createOauthCallbackHandler(
 			});
 			const sessionToken = generateSessionToken();
 			await createSession(sessionToken, newUser.id);
-			(await cookies()).set(createSessionCookie(sessionToken));
+			cookieStore.set(createSessionCookie(sessionToken));
 
 			return new Response(null, {
 				status: 302,

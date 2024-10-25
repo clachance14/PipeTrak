@@ -9,8 +9,9 @@ import { defineAbilitiesFor } from "../modules/auth/abilities";
 export async function createContext(
 	params?: FetchCreateContextFnOptions | { isAdmin?: boolean },
 ) {
+	const cookieStore = await cookies();
 	const sessionId =
-		(await cookies()).get(config.auth.sessionCookieName)?.value ?? null;
+		cookieStore.get(config.auth.sessionCookieName)?.value ?? null;
 	const { user, session } = sessionId
 		? await validateSessionToken(sessionId)
 		: { user: null, session: null };
@@ -46,7 +47,7 @@ export async function createContext(
 		teamMemberships,
 	});
 
-	const locale = ((await cookies()).get(config.i18n.localeCookieName)?.value ??
+	const locale = (cookieStore.get(config.i18n.localeCookieName)?.value ??
 		config.i18n.defaultLocale) as Locale;
 
 	return {
