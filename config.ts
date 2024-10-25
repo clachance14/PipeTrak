@@ -26,6 +26,10 @@ export const config = {
 		provider: "plunk",
 		from: "hello@your-domain.com",
 	},
+	ui: {
+		enabledThemes: ["light", "dark"],
+		defaultTheme: "light",
+	},
 } as const satisfies Config;
 
 export type Config = {
@@ -50,6 +54,10 @@ export type Config = {
 			| "postmark"
 			| "nodemailer";
 		from: string;
+	};
+	ui: {
+		enabledThemes: Array<"light" | "dark">;
+		defaultTheme: Config["ui"]["enabledThemes"][number];
 	};
 };
 

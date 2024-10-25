@@ -160,11 +160,13 @@ export function Hero() {
 					src={heroImage}
 					alt="Our application"
 					className="block rounded-xl dark:hidden"
+					priority
 				/>
 				<Image
 					src={heroImageDark}
 					alt="Our application"
 					className="hidden rounded-xl dark:block"
+					priority
 				/>
 			</div>
 		</div>

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 			"sha256",
 			process.env.STRIPE_WEBHOOK_SECRET as string,
 		);
-		const signatureHeader = headers().get("stripe-signature") as string;
+		const signatureHeader = (await headers()).get("stripe-signature") as string;
 		const signatureParts = signatureHeader
 			.split(",")
 			.map((part) => part.split("="));

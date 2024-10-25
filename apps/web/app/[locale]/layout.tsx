@@ -12,6 +12,7 @@ import { ApiClientProvider } from "@shared/components/ApiClientProvider";
 import { GradientBackgroundWrapper } from "@shared/components/GradientBackgroundWrapper";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import { config } from "@config";
 
 export const metadata: Metadata = {
 	title: {
@@ -36,7 +37,7 @@ export default async function RootLayout({
 	const messages = await getMessages();
 
 	return (
-		<html lang={locale}>
+		<html lang={locale} suppressHydrationWarning>
 			<body
 				className={cn(
 					"min-h-screen bg-background font-sans text-foreground antialiased",
@@ -45,7 +46,13 @@ export default async function RootLayout({
 			>
 				<NextTopLoader color="var(--colors-primary)" />
 				<NextIntlClientProvider locale={locale} messages={messages}>
-					<ThemeProvider attribute="class">
+					<ThemeProvider
+						attribute="class"
+						disableTransitionOnChange
+						enableSystem
+						defaultTheme={config.ui.defaultTheme}
+						themes={config.ui.enabledThemes}
+					>
 						<ApiClientProvider>
 							<JotaiProvider>
 								<GradientBackgroundWrapper>

@@ -1,10 +1,10 @@
-const { withContentCollections } = require("@content-collections/next");
-const nextIntlPlugin = require("next-intl/plugin");
+import { withContentCollections } from "@content-collections/next";
+import type { NextConfig } from "next";
+import nextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
 	transpilePackages: ["api", "auth"],
 	images: {
 		remotePatterns: [
@@ -48,4 +48,4 @@ const nextConfig = {
 	},
 };
 
-module.exports = withContentCollections(withNextIntl(nextConfig));
+export default withContentCollections(withNextIntl(nextConfig));

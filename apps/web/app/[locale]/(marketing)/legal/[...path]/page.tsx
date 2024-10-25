@@ -12,11 +12,13 @@ type Params = {
 	locale: string;
 };
 
-export async function generateMetadata({
-	params: { path },
-}: {
-	params: Params;
+export async function generateMetadata(props: {
+	params: Promise<Params>;
 }) {
+	const params = await props.params;
+
+	const { path } = params;
+
 	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const page = getLocalizedDocumentWithFallback(
@@ -33,11 +35,13 @@ export async function generateMetadata({
 	};
 }
 
-export default async function BlogPostPage({
-	params: { path },
-}: {
-	params: Params;
+export default async function BlogPostPage(props: {
+	params: Promise<Params>;
 }) {
+	const params = await props.params;
+
+	const { path } = params;
+
 	const locale = await getLocale();
 	const activePath = getActivePathFromUrlParam(path);
 	const page = getLocalizedDocumentWithFallback(
