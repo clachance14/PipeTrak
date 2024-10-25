@@ -1,9 +1,9 @@
-import { Link } from "@i18n/routing";
+import { LocaleLink } from "@i18n/routing";
 import { Logo } from "@shared/components/Logo";
 
 export function Footer() {
 	return (
-		<footer className="bg-card py-12 text-card-foreground">
+		<footer className="py-8 text-muted-foreground">
 			<div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<div>
 					<Logo className="opacity-70 grayscale" />
@@ -13,27 +13,27 @@ export function Footer() {
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<Link href="/blog" className="block">
+					<LocaleLink href="/blog" className="block">
 						Blog
-					</Link>
+					</LocaleLink>
 
 					<a href="#features" className="block">
 						Features
 					</a>
 
-					<a href="/pricing" className="block">
+					<a href="/#pricing" className="block">
 						Pricing
 					</a>
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<Link href="/legal/privacy-policy" className="block">
+					<LocaleLink href="/legal/privacy-policy" className="block">
 						Privacy policy
-					</Link>
+					</LocaleLink>
 
-					<Link href="/legal/terms" className="block">
+					<LocaleLink href="/legal/terms" className="block">
 						Terms and conditions
-					</Link>
+					</LocaleLink>
 				</div>
 			</div>
 		</footer>

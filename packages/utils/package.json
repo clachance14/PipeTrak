@@ -2,10 +2,10 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/node": "^22.10.1",
-		"tsconfig": "workspace:*"
+		"@repo/tsconfig": "workspace:*"
 	},
-	"main": "./index.tsx",
-	"name": "utils",
+	"main": "./index.ts",
+	"name": "@repo/utils",
 	"scripts": {
 		"type-check": "tsc --noEmit"
 	},

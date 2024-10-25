@@ -19,7 +19,7 @@
 		"quickfix.biome": "explicit",
 		"source.organizeImports.biome": "explicit"
 	},
-	"typescript.preferences.importModuleSpecifier": "shortest",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"i18n-ally.localesPaths": ["packages/i18n/translations"],
 	"i18n-ally.keystyle": "nested",

@@ -1,5 +1,4 @@
-import { useRouter as useBaseRouter, usePathname } from "@i18n/routing";
-import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter as useBaseRouter, usePathname } from "next/navigation";
 import NProgress from "nprogress";
 import { useCallback, useEffect } from "react";
 
@@ -10,7 +9,7 @@ export const useRouter = () => {
 		NProgress.done();
 	}, [pathname]);
 	const replace = useCallback(
-		(href: string, options?: NavigateOptions) => {
+		(href: string, options?: Parameters<typeof router.replace>[1]) => {
 			href !== pathname && NProgress.start();
 			router.replace(href, options);
 		},
@@ -18,7 +17,7 @@ export const useRouter = () => {
 	);
 
 	const push = useCallback(
-		(href: string, options?: NavigateOptions) => {
+		(href: string, options?: Parameters<typeof router.push>[1]) => {
 			href !== pathname && NProgress.start();
 			router.push(href, options);
 		},

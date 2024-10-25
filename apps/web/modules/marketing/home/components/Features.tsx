@@ -1,167 +1,263 @@
-import Image from "next/image";
+"use client";
 
-import { Button } from "@ui/components/button";
+import { MobileIcon } from "@radix-ui/react-icons";
+import { cn } from "@ui/lib";
 import {
-	ArrowRightIcon,
 	CloudIcon,
-	MousePointerIcon,
+	ComputerIcon,
 	PaperclipIcon,
-	PhoneIcon,
 	StarIcon,
-	UploadIcon,
+	WandIcon,
 } from "lucide-react";
-import heroDarkImage from "../../../../public/images/hero-dark.svg";
+import Image, { type StaticImageData } from "next/image";
+import { type JSXElementConstructor, type ReactNode, useState } from "react";
 import heroImage from "../../../../public/images/hero.svg";
 
+export const featureTabs: Array<{
+	id: string;
+	title: string;
+	icon: JSXElementConstructor<any>;
+	subtitle?: string;
+	description?: ReactNode;
+	image?: StaticImageData;
+	imageBorder?: boolean;
+	stack?: {
+		title: string;
+		href: string;
+		icon: JSXElementConstructor<any>;
+	}[];
+	highlights?: {
+		title: string;
+		description: string;
+		icon: JSXElementConstructor<any>;
+		demoLink?: string;
+		docsLink?: string;
+	}[];
+}> = [
+	{
+		id: "feature1",
+		title: "Feature 1",
+		icon: StarIcon,
+		subtitle: "Do more with our amazing SaaS.",
+		description:
+			"This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
+		stack: [],
+		image: heroImage,
+		imageBorder: false,
+		highlights: [
+			{
+				title: "Benefit 1",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: WandIcon,
+			},
+			{
+				title: "Benefit 2",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: ComputerIcon,
+			},
+			{
+				title: "Benefit 3",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: MobileIcon,
+			},
+		],
+	},
+	{
+		id: "feature2",
+		title: "Feature 2",
+		icon: CloudIcon,
+		subtitle: "Your SaaS can also do this.",
+		description: "Another dummy text for another feature.",
+		stack: [],
+		image: heroImage,
+		imageBorder: false,
+		highlights: [
+			{
+				title: "Benefit 1",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: WandIcon,
+			},
+			{
+				title: "Benefit 2",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: ComputerIcon,
+			},
+			{
+				title: "Benefit 3",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: MobileIcon,
+			},
+		],
+	},
+	{
+		id: "feature3",
+		title: "Feature 3",
+		icon: PaperclipIcon,
+		subtitle: "We even got a third one.",
+		description:
+			"Of course your SaaS will have more features than this, but this is just a dummy text.",
+		stack: [],
+		image: heroImage,
+		imageBorder: false,
+		highlights: [
+			{
+				title: "Benefit 1",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: WandIcon,
+			},
+			{
+				title: "Benefit 2",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: ComputerIcon,
+			},
+			{
+				title: "Benefit 3",
+				description:
+					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				icon: MobileIcon,
+			},
+		],
+	},
+];
+
 export function Features() {
+	const [selectedTab, setSelectedTab] = useState(featureTabs[0].id);
 	return (
-		<section className="py-24 text-card-foreground">
-			<div className="container">
-				{/* Section header */}
-				<div className="text-center">
-					<h1 className="font-bold text-4xl lg:text-5xl">
+		<section id="features" className="scroll-my-20 pt-12 lg:pt-16">
+			<div className="container max-w-5xl">
+				<div className="mx-auto mb-6 lg:mb-0 lg:max-w-5xl lg:text-center">
+					<h2 className="font-bold text-4xl lg:text-5xl">
 						Features your clients will love
-					</h1>
-					<p className="mt-3 text-foreground/60 text-lg">
-						In this section you can showcase the features of your SaaS.
+					</h2>
+					<p className="mt-6 text-balance text-lg opacity-50">
+						In this section you can showcase all the features of your SaaS
+						provides and how they can benefit your clients.
 					</p>
 				</div>
 
-				<div className="mt-12 grid grid-cols-1 gap-8">
-					{/* Feature 1 */}
-					<div className="grid items-center gap-8 rounded-2xl border bg-card/50 p-8 lg:grid-cols-2 lg:gap-16">
-						<div className="overflow-hidden rounded-xl bg-primary/10 p-12">
-							<Image
-								src={heroImage}
-								className="block dark:hidden"
-								alt="Feature 1"
-							/>
-							<Image
-								src={heroDarkImage}
-								className="hidden dark:block"
-								alt="Feature 1"
-							/>
-						</div>
+				<div className="mt-8 mb-4 hidden justify-center lg:flex">
+					{featureTabs.map((tab) => {
+						return (
+							<button
+								type="button"
+								key={tab.id}
+								onClick={() => setSelectedTab(tab.id)}
+								className={cn(
+									"flex w-24 flex-col items-center gap-2 rounded-lg px-4 py-2 md:w-32",
+									selectedTab === tab.id
+										? "bg-primary/5 font-bold text-primary dark:bg-primary/10"
+										: "font-medium text-foreground/80",
+								)}
+							>
+								<tab.icon
+									className={cn(
+										"size-6 md:size-8",
+										selectedTab === tab.id
+											? "text-primary"
+											: "text-foreground opacity-30",
+									)}
+								/>
+								<span className="text-xs md:text-sm">{tab.title}</span>
+							</button>
+						);
+					})}
+				</div>
+			</div>
 
-						<div>
-							<h3 className="font-bold text-3xl">Feature A</h3>
-							<p className="mt-2 text-foreground/60 leading-normal">
-								This is a brilliant feature. And below you can see some reasons
-								why. This is basically just a dummy text.
-							</p>
-							<Button variant="secondary" size="sm" className="mt-4">
-								Learn more
-								<ArrowRightIcon className="ml-2 size-4" />
-							</Button>
+			<div className="bg-card dark:bg-card">
+				<div className="container max-w-5xl">
+					{featureTabs.map((tab) => {
+						const filteredStack = tab.stack || [];
+						const filteredHighlights = tab.highlights || [];
+						return (
+							<div
+								key={tab.id}
+								className={cn(
+									"border-t py-8 first:border-t-0 md:py-12 lg:border-t-0 lg:py-16",
+									selectedTab === tab.id ? "block" : "block lg:hidden",
+								)}
+							>
+								<div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:gap-12">
+									<div>
+										<h3 className="font-normal text-2xl text-foreground/60 leading-normal md:text-3xl">
+											<strong className="text-secondary">{tab.title}. </strong>
+											{tab.subtitle}
+										</h3>
 
-							<div className="mt-6 grid grid-cols-2 gap-4">
-								<div className="text-card-foreground">
-									<StarIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 1</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
+										{tab.description && (
+											<p className="mt-4 text-foreground/60">
+												{tab.description}
+											</p>
+										)}
+
+										{filteredStack?.length > 0 && (
+											<div className="mt-4 flex flex-wrap gap-6">
+												{filteredStack.map((tool, k) => (
+													<a
+														href={tool.href}
+														target="_blank"
+														key={`stack-tool-${k}`}
+														className="flex items-center gap-2"
+														rel="noreferrer"
+													>
+														<tool.icon className="size-6" />
+														<strong className="block text-sm">
+															{tool.title}
+														</strong>
+													</a>
+												))}
+											</div>
+										)}
+									</div>
+									<div>
+										{tab.image && (
+											<Image
+												src={tab.image}
+												alt={tab.title}
+												className={cn(" h-auto w-full max-w-xl", {
+													"rounded-2xl border-4 border-secondary/10":
+														tab.imageBorder,
+												})}
+											/>
+										)}
+									</div>
 								</div>
-								<div className="text-card-foreground">
-									<MousePointerIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 2</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
-								</div>
+
+								{filteredHighlights.length > 0 && (
+									<div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+										{filteredHighlights.map((highlight, k) => (
+											<div
+												key={`highlight-${k}`}
+												className="flex flex-col items-stretch justify-between rounded-lg border p-4"
+											>
+												<div>
+													<highlight.icon
+														className="text-primary text-xl"
+														width="1em"
+														height="1em"
+													/>
+													<strong className="mt-2 block">
+														{highlight.title}
+													</strong>
+													<p className="mt-1 text-sm opacity-50">
+														{highlight.description}
+													</p>
+												</div>
+											</div>
+										))}
+									</div>
+								)}
 							</div>
-						</div>
-					</div>
-
-					{/* Feature 2 */}
-					<div className="grid items-center gap-8 rounded-2xl border bg-card/50 p-8 lg:grid-cols-2 lg:gap-16">
-						<div className="overflow-hidden rounded-xl bg-primary/10 p-12 lg:order-2">
-							<Image
-								src={heroImage}
-								className="block dark:hidden"
-								alt="Feature 2"
-							/>
-							<Image
-								src={heroDarkImage}
-								className="hidden dark:block"
-								alt="Feature 2"
-							/>
-						</div>
-
-						<div className="lg:order-1">
-							<h3 className="font-bold text-3xl">Feature B</h3>
-							<p className="mt-2 text-foreground/60 leading-normal">
-								This is a brilliant feature. And below you can see some reasons
-								why. This is basically just a dummy text.
-							</p>
-							<Button variant="secondary" size="sm" className="mt-4">
-								Learn more
-								<ArrowRightIcon className="ml-2 size-4" />
-							</Button>
-
-							<div className="mt-6 grid grid-cols-2 gap-4">
-								<div className="text-card-foreground">
-									<UploadIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 1</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
-								</div>
-								<div className="text-card-foreground">
-									<CloudIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 2</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					{/* Feature 3 */}
-					<div className="grid items-center gap-8 rounded-2xl border bg-card/50 p-8 lg:grid-cols-2 lg:gap-16">
-						<div className="overflow-hidden rounded-xl bg-primary/10 p-12">
-							<Image
-								src={heroImage}
-								className="block dark:hidden"
-								alt="Feature 3"
-							/>
-							<Image
-								src={heroDarkImage}
-								className="hidden dark:block"
-								alt="Feature 3"
-							/>
-						</div>
-
-						<div>
-							<h3 className="font-bold text-3xl">Feature C</h3>
-							<p className="mt-2 text-foreground/60 leading-normal">
-								This is a brilliant feature. And below you can see some reasons
-								why. This is basically just a dummy text.
-							</p>
-							<Button variant="secondary" size="sm" className="mt-4">
-								Learn more
-								<ArrowRightIcon className="ml-2 size-4" />
-							</Button>
-
-							<div className="mt-6 grid grid-cols-2 gap-4">
-								<div className="text-card-foreground">
-									<PhoneIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 1</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
-								</div>
-								<div className="text-card-foreground">
-									<PaperclipIcon className="size-6 text-3xl text-highlight" />
-									<strong className="mt-2 block">Benefit 2</strong>
-									<p className="text-foreground/60">
-										This is a brilliant benefit.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+						);
+					})}
 				</div>
 			</div>
 		</section>

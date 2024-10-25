@@ -1,8 +1,7 @@
-import { TRPCClientError } from "@trpc/client";
 import { type TranslationValues, useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
 import { ZodIssueCode, ZodParsedType, defaultErrorMap } from "zod";
-import type { ZodErrorMap, ZodIssueOptionalMessage } from "zod";
+import type { ZodErrorMap } from "zod";
 
 /**
  * This error map is a modified version of the on used by zod-i18n
@@ -206,46 +205,6 @@ export function useFormErrors() {
 			errorMap?: ZodErrorMap;
 		},
 	) {
-		if (e instanceof TRPCClientError) {
-			if (e.data?.zodError?.fieldErrors) {
-				Object.entries(e.data.zodError.fieldErrors ?? {}).forEach(
-					([field, errors]) => {
-						const error = ((errors ?? []) as ZodIssueOptionalMessage[])[0];
-
-						if (error) {
-							form.setError(
-								field,
-								zodErrorMap?.(error, {
-									data: {},
-									defaultError: "",
-								}) ?? error,
-							);
-						}
-					},
-				);
-
-				return;
-			}
-
-			if (e.data?.zodError?.formErrors) {
-				const error = (
-					(e.data.zodError.formErrors ?? []) as ZodIssueOptionalMessage[]
-				)[0];
-
-				if (error) {
-					form.setError(
-						"root",
-						zodErrorMap?.(error, {
-							data: {},
-							defaultError: "",
-						}) ?? error,
-					);
-				}
-
-				return;
-			}
-		}
-
 		form.setError("root", {
 			message: defaultError,
 		});

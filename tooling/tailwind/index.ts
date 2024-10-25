@@ -8,10 +8,10 @@ import animatePlugin from "tailwindcss-animate";
 
 export const lightVariables = {
 	colors: {
-		border: "#d8dee6",
+		border: "#e8edf4",
 		input: "#c7ced8",
 		ring: "#4e6df5",
-		background: "#f5f5f8",
+		background: "#fafafe",
 		foreground: "#292b35",
 		primary: "#4e6df5",
 		"primary-foreground": "#f6f7f9",
@@ -29,17 +29,17 @@ export const lightVariables = {
 		"popover-foreground": "#292b35",
 		card: "#ffffff",
 		"card-foreground": "#292b35",
-		highlight: "#e5a158",
+		highlight: "#8571d8",
 		"highlight-foreground": "#ffffff",
 	},
 };
 
 export const darkVariables = {
 	colors: {
-		border: "#282c34",
-		input: "#333741",
+		border: "#2b303d",
+		input: "#4c5362",
 		ring: "#5581f7",
-		background: "#12181d",
+		background: "#070d12",
 		foreground: "#e9eef3",
 		primary: "#5581f7",
 		"primary-foreground": "#091521",
@@ -55,10 +55,10 @@ export const darkVariables = {
 		"accent-foreground": "#f8fafc",
 		popover: "#0d1116",
 		"popover-foreground": "#e9eef3",
-		card: "#0d1116",
+		card: "#1b1f2a",
 		"card-foreground": "#e9eef3",
-		highlight: "#e5a158",
-		"highlight-foreground": "#ffffff",
+		highlight: "#8571d8",
+		"highlight-foreground": "#e9eef3",
 	},
 };
 
@@ -68,10 +68,7 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: "2rem",
-			screens: {
-				"2xl": "1280px",
-			},
+			padding: "1.5rem",
 		},
 		extend: {
 			boxShadow: {

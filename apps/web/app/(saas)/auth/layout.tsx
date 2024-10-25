@@ -1,0 +1,39 @@
+import { LocaleLink } from "@i18n/routing";
+import { SessionProvider } from "@saas/auth/components/SessionProvider";
+import { Footer } from "@saas/shared/components/Footer";
+import { ColorModeToggle } from "@shared/components/ColorModeToggle";
+import { LocaleSwitch } from "@shared/components/LocaleSwitch";
+import { Logo } from "@shared/components/Logo";
+import type { PropsWithChildren } from "react";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default function AuthLayout({ children }: PropsWithChildren) {
+	return (
+		<SessionProvider>
+			<div className="flex min-h-screen w-full p-8">
+				<div className="flex w-full flex-col items-center justify-between gap-8">
+					<div className="container">
+						<div className="flex items-center justify-between">
+							<LocaleLink href="/" className="block">
+								<Logo />
+							</LocaleLink>
+
+							<div className="flex items-center justify-end gap-2">
+								<LocaleSwitch withLocaleInUrl={false} />
+								<ColorModeToggle />
+							</div>
+						</div>
+					</div>
+
+					<main className="w-full max-w-md rounded-lg bg-card p-8 shadow">
+						{children}
+					</main>
+
+					<Footer />
+				</div>
+			</div>
+		</SessionProvider>
+	);
+}

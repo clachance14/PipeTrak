@@ -1,11 +1,12 @@
 import { withContentCollections } from "@content-collections/next";
+import { config } from "@repo/config";
 import type { NextConfig } from "next";
 import nextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-	transpilePackages: ["api", "auth"],
+	transpilePackages: ["@repo/api", "@repo/auth"],
 	images: {
 		remotePatterns: [
 			{
@@ -23,13 +24,13 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
-				source: "/app",
-				destination: "/app/dashboard",
+				source: "/app/settings",
+				destination: "/app/settings/general",
 				permanent: true,
 			},
 			{
-				source: "/app/settings",
-				destination: "/app/settings/account/general",
+				source: "/app/organization-settings",
+				destination: "/app/organization-settings/general",
 				permanent: true,
 			},
 			{
@@ -37,11 +38,25 @@ const nextConfig: NextConfig = {
 				destination: "/app/admin/users",
 				permanent: true,
 			},
+			...(!config.ui.saas.enabled
+				? [
+						{
+							source: "/app/:path*",
+							destination: "/",
+							permanent: false,
+						},
+					]
+				: []),
+			...(!config.ui.marketing.enabled
+				? [
+						{
+							source: "/:path((?!app|auth|api).*)*",
+							destination: "/app",
+							permanent: false,
+						},
+					]
+				: []),
 		];
-	},
-	webpack: (config) => {
-		config.externals.push("@node-rs/argon2");
-		return config;
 	},
 	eslint: {
 		ignoreDuringBuilds: true,

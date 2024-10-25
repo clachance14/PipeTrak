@@ -1,11 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@i18n/routing";
+import { authClient } from "@repo/auth/client";
+import { OrganizationInvitationInfo } from "@saas/organizations/components/OrganizationInvitationInfo";
 import { useFormErrors } from "@shared/hooks/form-errors";
-import { useRouter } from "@shared/hooks/router";
-import { apiClient } from "@shared/lib/api-client";
-import { Alert, AlertDescription } from "@ui/components/alert";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -16,25 +15,30 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import { passwordSchema } from "auth/lib/passwords";
 import {
 	AlertTriangleIcon,
 	ArrowRightIcon,
 	EyeIcon,
 	EyeOffIcon,
+	MailboxIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { parseAsString, useQueryState } from "nuqs";
+import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SocialSigninButton, oAuthProviders } from "./SocialSigninButton";
-import { TeamInvitationInfo } from "./TeamInvitationInfo";
+import {
+	type OAuthProvider,
+	oAuthProviders,
+} from "../constants/oauth-providers";
+import { SocialSigninButton } from "./SocialSigninButton";
 
 const formSchema = z.object({
 	email: z.string().email(),
-	password: passwordSchema,
+	password: z.string().min(1),
+	name: z.string().min(1),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -42,57 +46,45 @@ type FormValues = z.infer<typeof formSchema>;
 export function SignupForm() {
 	const t = useTranslations();
 	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
-	const router = useRouter();
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [invitationId] = useQueryState("invitationId", parseAsString);
+	const [email] = useQueryState("email", parseAsString);
+	const [redirectTo] = useQueryState("redirectTo", parseAsString);
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema, {
 			errorMap: zodErrorMap,
 		}),
 		defaultValues: {
-			email: "",
+			name: "",
+			email: email ?? "",
 			password: "",
 		},
 	});
 
-	const [showPassword, setShowPassword] = useState(false);
-	const searchParams = useSearchParams();
+	const redirectPath = invitationId
+		? `/team/invitation?code=${invitationId}`
+		: (redirectTo ?? "/app");
 
-	const signupMutation = apiClient.auth.signup.useMutation();
-
-	const invitationCode = searchParams.get("invitationCode");
-	const redirectTo = invitationCode
-		? `/team/invitation?code=${invitationCode}`
-		: (searchParams.get("redirectTo") ?? "/app");
-	const email = searchParams.get("email");
-
-	useEffect(() => {
-		if (email) {
-			form.setValue("email", email);
-		}
-	}, [email]);
-
-	const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
+	const onSubmit: SubmitHandler<FormValues> = async ({
+		email,
+		password,
+		name,
+	}) => {
 		try {
-			await signupMutation.mutateAsync({
+			const { error } = await authClient.signUp.email({
 				email,
 				password,
-				callbackUrl: new URL("/auth/verify", window.location.origin).toString(),
+				name,
+				callbackURL: redirectPath,
 			});
 
-			const redirectSearchParams = new URLSearchParams();
-			redirectSearchParams.set("type", "SIGNUP");
-			redirectSearchParams.set("redirectTo", redirectTo);
-
-			if (invitationCode) {
-				redirectSearchParams.set("invitationCode", invitationCode);
+			if (error) {
+				throw error;
 			}
-
-			if (email) {
-				redirectSearchParams.set("identifier", email);
-			}
-
-			router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
 		} catch (e) {
+			console.error(e);
 			setApiErrorsToForm(e, form, {
 				defaultError: t("auth.signup.hints.signupFailed"),
 			});
@@ -101,104 +93,133 @@ export function SignupForm() {
 
 	return (
 		<div>
-			<h1 className="font-bold text-3xl md:text-4xl">
+			<h1 className="font-bold text-2xl md:text-3xl">
 				{t("auth.signup.title")}
 			</h1>
-			<p className="mt-2 mb-6 text-muted-foreground">
+			<p className="mt-1 mb-6 text-muted-foreground">
 				{t("auth.signup.message")}
 			</p>
 
-			{invitationCode && <TeamInvitationInfo className="mb-6" />}
+			{form.formState.isSubmitSuccessful ? (
+				<Alert variant="success">
+					<MailboxIcon className="size-6" />
+					<AlertTitle>{t("auth.signup.hints.verifyEmail")}</AlertTitle>
+				</Alert>
+			) : (
+				<>
+					{invitationId && <OrganizationInvitationInfo className="mb-6" />}
 
-			<div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
-				{Object.keys(oAuthProviders).map((providerId) => (
-					<SocialSigninButton key={providerId} provider={providerId} />
-				))}
-			</div>
-
-			<hr className="my-8" />
-
-			<Form {...form}>
-				<form
-					className="flex flex-col items-stretch gap-6"
-					onSubmit={form.handleSubmit(onSubmit)}
-				>
-					{form.formState.isSubmitted && form.formState.errors.root && (
-						<Alert variant="error">
-							<AlertTriangleIcon className="size-6" />
-							<AlertDescription>
-								{form.formState.errors.root.message}
-							</AlertDescription>
-						</Alert>
-					)}
-
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>{t("auth.signup.email")}</FormLabel>
-								<FormControl>
-									<Input {...field} autoComplete="email" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>{t("auth.signup.password")}</FormLabel>
-								<FormControl>
-									<div className="relative">
-										<Input
-											type={showPassword ? "text" : "password"}
-											className="pr-10"
-											{...field}
-											autoComplete="new-password"
-										/>
-										<button
-											type="button"
-											onClick={() => setShowPassword(!showPassword)}
-											className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
-										>
-											{showPassword ? (
-												<EyeOffIcon className="size-4" />
-											) : (
-												<EyeIcon className="size-4" />
-											)}
-										</button>
-									</div>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<Button loading={form.formState.isSubmitting}>
-						{t("auth.signup.submit")}
-					</Button>
-
-					<div className="text-center text-sm">
-						<span className="text-muted-foreground">
-							{t("auth.signup.alreadyHaveAccount")}{" "}
-						</span>
-						<Link
-							href={`/auth/login${
-								invitationCode
-									? `?invitationCode=${invitationCode}&email=${email}`
-									: ""
-							}`}
+					<Form {...form}>
+						<form
+							className="flex flex-col items-stretch gap-4"
+							onSubmit={form.handleSubmit(onSubmit)}
 						>
-							{t("auth.signup.signIn")}
-							<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
-						</Link>
+							{form.formState.isSubmitted && form.formState.errors.root && (
+								<Alert variant="error">
+									<AlertTriangleIcon className="size-6" />
+									<AlertDescription>
+										{form.formState.errors.root.message}
+									</AlertDescription>
+								</Alert>
+							)}
+
+							<FormField
+								control={form.control}
+								name="name"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("auth.signup.name")}</FormLabel>
+										<FormControl>
+											<Input {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="email"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("auth.signup.email")}</FormLabel>
+										<FormControl>
+											<Input {...field} autoComplete="email" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="password"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("auth.signup.password")}</FormLabel>
+										<FormControl>
+											<div className="relative">
+												<Input
+													type={showPassword ? "text" : "password"}
+													className="pr-10"
+													{...field}
+													autoComplete="new-password"
+												/>
+												<button
+													type="button"
+													onClick={() => setShowPassword(!showPassword)}
+													className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
+												>
+													{showPassword ? (
+														<EyeOffIcon className="size-4" />
+													) : (
+														<EyeIcon className="size-4" />
+													)}
+												</button>
+											</div>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<Button loading={form.formState.isSubmitting}>
+								{t("auth.signup.submit")}
+							</Button>
+						</form>
+					</Form>
+
+					<div className="relative my-6 h-4">
+						<hr className="relative top-2" />
+						<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
+							{t("auth.login.continueWith")}
+						</p>
 					</div>
-				</form>
-			</Form>
+
+					<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
+						{Object.keys(oAuthProviders).map((providerId) => (
+							<SocialSigninButton
+								key={providerId}
+								provider={providerId as OAuthProvider}
+							/>
+						))}
+					</div>
+				</>
+			)}
+
+			<div className="mt-6 text-center text-sm">
+				<span className="text-muted-foreground">
+					{t("auth.signup.alreadyHaveAccount")}{" "}
+				</span>
+				<Link
+					href={`/auth/login${
+						invitationId ? `?invitationId=${invitationId}&email=${email}` : ""
+					}`}
+				>
+					{t("auth.signup.signIn")}
+					<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+				</Link>
+			</div>
 		</div>
 	);
 }

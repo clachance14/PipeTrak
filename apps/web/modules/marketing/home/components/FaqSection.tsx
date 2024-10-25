@@ -36,10 +36,12 @@ export function FaqSection({ className }: { className?: string }) {
 	}
 
 	return (
-		<section className={cn("bg-primary/5 py-16 lg:py-24", className)} id="faq">
-			<div className="container max-w-3xl">
+		<section className={cn("border-t py-12 lg:py-16", className)} id="faq">
+			<div className="container max-w-5xl">
 				<div className="mb-12 text-center">
-					<h1 className="mb-2 font-bold text-5xl">{t("faq.title")}</h1>
+					<h1 className="mb-2 font-bold text-3xl lg:text-4xl">
+						{t("faq.title")}
+					</h1>
 					<p className="text-lg opacity-50">{t("faq.description")}</p>
 				</div>
 				<Accordion type="single" collapsible className="flex flex-col gap-3">

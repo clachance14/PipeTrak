@@ -1,4 +1,4 @@
-import { config } from "@config";
+import { config } from "@repo/config";
 import nodemailer from "nodemailer";
 import type { SendEmailHandler } from "../types";
 

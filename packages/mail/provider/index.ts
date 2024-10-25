@@ -1,4 +1,4 @@
-import { type Config, config } from "@config";
+import { type Config, config } from "@repo/config";
 import type { MailProvider } from "../types";
 
 export async function getProvider() {

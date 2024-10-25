@@ -7,10 +7,6 @@
 		"lint": "biome lint .",
 		"clean": "turbo clean",
 		"format": "biome format . --write",
-		"db:push": "turbo db:push",
-		"db:generate": "turbo db:generate",
-		"db:studio": "pnpm --filter database run db:studio",
-		"mail:preview": "pnpm --filter mail run preview",
 		"e2e": "pnpm --filter web e2e"
 	},
 	"engines": {
@@ -19,8 +15,9 @@
 	"packageManager": "pnpm@9.3.0",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@repo/tsconfig": "workspace:*",
+		"@types/node": "^22.9.0",
 		"dotenv-cli": "^7.4.4",
-		"tsconfig": "workspace:*",
 		"turbo": "^2.3.3",
 		"typescript": "5.6.3"
 	},

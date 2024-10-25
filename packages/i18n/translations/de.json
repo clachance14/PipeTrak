@@ -95,14 +95,8 @@
 			"alreadyHaveAccount": "Du hast bereits ein Konto?",
 			"email": "Email",
 			"hints": {
-				"signupFailed": {
-					"message": "Es tut uns leid, aber wir konnten dein Konto nicht erstellen. \nBitte versuche es später noch einmal.",
-					"title": "Konto konnte nicht erstellt werden"
-				},
-				"verifyEmail": {
-					"message": "Wir haben dir einen Link zur Bestätigung deiner E-Mail-Adresse gesendet. \nBitte überprüfe deinen Posteingang.",
-					"title": "Bestätige deine E-Mail"
-				}
+				"signupFailed": "Es tut uns leid, aber wir konnten dein Konto nicht erstellen. \nBitte versuche es später noch einmal.",
+				"verifyEmail": "Wir haben dir einen Link zur Bestätigung deiner E-Mail-Adresse gesendet. \nBitte überprüfe deinen Posteingang."
 			},
 			"message": "Wir freuen uns, dass du dich uns anschließen möchtest. \nBitte fülle das untenstehende Formular aus, um dein Konto zu erstellen.",
 			"name": "Name",

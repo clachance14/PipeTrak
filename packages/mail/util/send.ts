@@ -1,9 +1,9 @@
-import { config } from "@config";
-import { logger } from "logs";
+import { config } from "@repo/config";
+import { logger } from "@repo/logs";
+import type { mailTemplates } from "../emails";
 import { getProvider } from "../provider";
-import type { TemplateId, mailTemplates } from "./templates";
+import type { TemplateId } from "./templates";
 import { getTemplate } from "./templates";
-
 export async function sendEmail<T extends TemplateId>(params: {
 	to: string;
 	templateId: T;

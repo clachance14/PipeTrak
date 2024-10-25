@@ -1,0 +1,54 @@
+import { db } from "@repo/database";
+import slugify from "@sindresorhus/slugify";
+import { Hono } from "hono";
+import { validator } from "hono-openapi/zod";
+import { nanoid } from "nanoid";
+import { z } from "zod";
+
+export const organizationsRouter = new Hono().basePath("/organizations").get(
+	"/generate-slug",
+	validator(
+		"query",
+		z.object({
+			name: z.string(),
+		}),
+	),
+	async (c) => {
+		const { name } = c.req.valid("query");
+
+		const baseSlug = slugify(name, {
+			lowercase: true,
+		});
+
+		let slug = baseSlug;
+		let hasAvailableSlug = false;
+
+		for (let i = 0; i < 10; i++) {
+			const existing = await db.organization.findUnique({
+				where: {
+					slug,
+				},
+			});
+
+			if (!existing) {
+				hasAvailableSlug = true;
+				break;
+			}
+
+			slug = `${baseSlug}-${nanoid(5)}`;
+		}
+
+		if (!hasAvailableSlug) {
+			return c.json(
+				{
+					error: "No available slug found",
+				},
+				400,
+			);
+		}
+
+		return c.json({
+			slug,
+		});
+	},
+);

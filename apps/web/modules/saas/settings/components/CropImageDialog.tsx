@@ -6,6 +6,7 @@ import {
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
+	DialogTitle,
 } from "@ui/components/dialog";
 import { useMemo, useRef } from "react";
 import type { ReactCropperElement } from "react-cropper";
@@ -44,7 +45,9 @@ export function CropImageDialog({
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
-				<DialogHeader />
+				<DialogHeader>
+					<DialogTitle />
+				</DialogHeader>
 				<div>
 					{imageSrc && (
 						<Cropper

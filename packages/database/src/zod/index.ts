@@ -12,23 +12,23 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const UserScalarFieldEnumSchema = z.enum(['id','email','emailVerified','role','name','avatarUrl','createdAt','hashedPassword','onboardingComplete']);
+export const UserScalarFieldEnumSchema = z.enum(['id','name','email','emailVerified','image','createdAt','updatedAt','username','role','banned','banReason','banExpires','onboardingComplete','locale']);
 
-export const UserSessionScalarFieldEnumSchema = z.enum(['id','userId','expiresAt','impersonatorId']);
+export const SessionScalarFieldEnumSchema = z.enum(['id','expiresAt','ipAddress','userAgent','userId','impersonatedBy','activeOrganizationId','token','createdAt','updatedAt']);
 
-export const UserOauthAccountScalarFieldEnumSchema = z.enum(['id','providerId','providerUserId','userId']);
+export const AccountScalarFieldEnumSchema = z.enum(['id','accountId','providerId','userId','accessToken','refreshToken','idToken','expiresAt','password','accessTokenExpiresAt','refreshTokenExpiresAt','scope','createdAt','updatedAt']);
 
-export const UserVerificationTokenScalarFieldEnumSchema = z.enum(['id','userId','expires']);
+export const VerificationScalarFieldEnumSchema = z.enum(['id','identifier','value','expiresAt','createdAt','updatedAt']);
 
-export const UserOneTimePasswordScalarFieldEnumSchema = z.enum(['id','userId','code','type','identifier','expires']);
+export const PasskeyScalarFieldEnumSchema = z.enum(['id','name','publicKey','userId','webauthnUserID','counter','deviceType','backedUp','transports','createdAt']);
 
-export const TeamScalarFieldEnumSchema = z.enum(['id','name','avatarUrl']);
+export const OrganizationScalarFieldEnumSchema = z.enum(['id','name','slug','logo','createdAt','metadata']);
 
-export const TeamMembershipScalarFieldEnumSchema = z.enum(['id','teamId','userId','role','isCreator']);
+export const MemberScalarFieldEnumSchema = z.enum(['id','organizationId','userId','role','createdAt']);
 
-export const TeamInvitationScalarFieldEnumSchema = z.enum(['id','teamId','email','role','createdAt','expiresAt']);
+export const InvitationScalarFieldEnumSchema = z.enum(['id','organizationId','email','role','status','expiresAt','inviterId']);
 
-export const SubscriptionScalarFieldEnumSchema = z.enum(['id','teamId','customerId','status','planId','variantId','nextPaymentDate']);
+export const PurchaseScalarFieldEnumSchema = z.enum(['id','organizationId','userId','type','customerId','subscriptionId','productId','status','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -36,21 +36,9 @@ export const QueryModeSchema = z.enum(['default','insensitive']);
 
 export const NullsOrderSchema = z.enum(['first','last']);
 
-export const UserRoleSchema = z.enum(['USER','ADMIN']);
+export const PurchaseTypeSchema = z.enum(['SUBSCRIPTION','ONE_TIME']);
 
-export type UserRoleType = `${z.infer<typeof UserRoleSchema>}`
-
-export const UserOneTimePasswordTypeSchema = z.enum(['SIGNUP','LOGIN','PASSWORD_RESET']);
-
-export type UserOneTimePasswordTypeType = `${z.infer<typeof UserOneTimePasswordTypeSchema>}`
-
-export const TeamMemberRoleSchema = z.enum(['MEMBER','OWNER']);
-
-export type TeamMemberRoleType = `${z.infer<typeof TeamMemberRoleSchema>}`
-
-export const SubscriptionStatusSchema = z.enum(['TRIALING','ACTIVE','PAUSED','CANCELED','PAST_DUE','UNPAID','INCOMPLETE','EXPIRED']);
-
-export type SubscriptionStatusType = `${z.infer<typeof SubscriptionStatusSchema>}`
+export type PurchaseTypeType = `${z.infer<typeof PurchaseTypeSchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -61,125 +49,160 @@ export type SubscriptionStatusType = `${z.infer<typeof SubscriptionStatusSchema>
 /////////////////////////////////////////
 
 export const UserSchema = z.object({
-  role: UserRoleSchema,
-  id: z.string().cuid(),
+  id: z.string(),
+  name: z.string(),
   email: z.string(),
   emailVerified: z.boolean(),
-  name: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
+  image: z.string().nullable(),
   createdAt: z.coerce.date(),
-  hashedPassword: z.string().nullable(),
+  updatedAt: z.coerce.date(),
+  username: z.string().nullable(),
+  role: z.string().nullable(),
+  banned: z.boolean().nullable(),
+  banReason: z.string().nullable(),
+  banExpires: z.coerce.date().nullable(),
   onboardingComplete: z.boolean(),
+  locale: z.string().nullable(),
 })
 
 export type User = z.infer<typeof UserSchema>
 
 /////////////////////////////////////////
-// USER SESSION SCHEMA
+// SESSION SCHEMA
 /////////////////////////////////////////
 
-export const UserSessionSchema = z.object({
+export const SessionSchema = z.object({
   id: z.string(),
-  userId: z.string(),
   expiresAt: z.coerce.date(),
-  impersonatorId: z.string().nullable(),
-})
-
-export type UserSession = z.infer<typeof UserSessionSchema>
-
-/////////////////////////////////////////
-// USER OAUTH ACCOUNT SCHEMA
-/////////////////////////////////////////
-
-export const UserOauthAccountSchema = z.object({
-  id: z.string().cuid(),
-  providerId: z.string(),
-  providerUserId: z.string(),
+  ipAddress: z.string().nullable(),
+  userAgent: z.string().nullable(),
   userId: z.string(),
-})
-
-export type UserOauthAccount = z.infer<typeof UserOauthAccountSchema>
-
-/////////////////////////////////////////
-// USER VERIFICATION TOKEN SCHEMA
-/////////////////////////////////////////
-
-export const UserVerificationTokenSchema = z.object({
-  id: z.string().cuid(),
-  userId: z.string(),
-  expires: z.coerce.date(),
-})
-
-export type UserVerificationToken = z.infer<typeof UserVerificationTokenSchema>
-
-/////////////////////////////////////////
-// USER ONE TIME PASSWORD SCHEMA
-/////////////////////////////////////////
-
-export const UserOneTimePasswordSchema = z.object({
-  type: UserOneTimePasswordTypeSchema,
-  id: z.string().cuid(),
-  userId: z.string(),
-  code: z.string(),
-  identifier: z.string(),
-  expires: z.coerce.date(),
-})
-
-export type UserOneTimePassword = z.infer<typeof UserOneTimePasswordSchema>
-
-/////////////////////////////////////////
-// TEAM SCHEMA
-/////////////////////////////////////////
-
-export const TeamSchema = z.object({
-  id: z.string().cuid(),
-  name: z.string(),
-  avatarUrl: z.string().nullable(),
-})
-
-export type Team = z.infer<typeof TeamSchema>
-
-/////////////////////////////////////////
-// TEAM MEMBERSHIP SCHEMA
-/////////////////////////////////////////
-
-export const TeamMembershipSchema = z.object({
-  role: TeamMemberRoleSchema,
-  id: z.string().cuid(),
-  teamId: z.string(),
-  userId: z.string(),
-  isCreator: z.boolean(),
-})
-
-export type TeamMembership = z.infer<typeof TeamMembershipSchema>
-
-/////////////////////////////////////////
-// TEAM INVITATION SCHEMA
-/////////////////////////////////////////
-
-export const TeamInvitationSchema = z.object({
-  role: TeamMemberRoleSchema,
-  id: z.string().cuid(),
-  teamId: z.string(),
-  email: z.string(),
+  impersonatedBy: z.string().nullable(),
+  activeOrganizationId: z.string().nullable(),
+  token: z.string(),
   createdAt: z.coerce.date(),
-  expiresAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
-export type TeamInvitation = z.infer<typeof TeamInvitationSchema>
+export type Session = z.infer<typeof SessionSchema>
 
 /////////////////////////////////////////
-// SUBSCRIPTION SCHEMA
+// ACCOUNT SCHEMA
 /////////////////////////////////////////
 
-export const SubscriptionSchema = z.object({
-  status: SubscriptionStatusSchema,
+export const AccountSchema = z.object({
   id: z.string(),
-  teamId: z.string(),
-  customerId: z.string(),
-  planId: z.string(),
-  variantId: z.string(),
-  nextPaymentDate: z.coerce.date().nullable(),
+  accountId: z.string(),
+  providerId: z.string(),
+  userId: z.string(),
+  accessToken: z.string().nullable(),
+  refreshToken: z.string().nullable(),
+  idToken: z.string().nullable(),
+  expiresAt: z.coerce.date().nullable(),
+  password: z.string().nullable(),
+  accessTokenExpiresAt: z.coerce.date().nullable(),
+  refreshTokenExpiresAt: z.coerce.date().nullable(),
+  scope: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
-export type Subscription = z.infer<typeof SubscriptionSchema>
+export type Account = z.infer<typeof AccountSchema>
+
+/////////////////////////////////////////
+// VERIFICATION SCHEMA
+/////////////////////////////////////////
+
+export const VerificationSchema = z.object({
+  id: z.string(),
+  identifier: z.string(),
+  value: z.string(),
+  expiresAt: z.coerce.date(),
+  createdAt: z.coerce.date().nullable(),
+  updatedAt: z.coerce.date().nullable(),
+})
+
+export type Verification = z.infer<typeof VerificationSchema>
+
+/////////////////////////////////////////
+// PASSKEY SCHEMA
+/////////////////////////////////////////
+
+export const PasskeySchema = z.object({
+  id: z.string(),
+  name: z.string().nullable(),
+  publicKey: z.string(),
+  userId: z.string(),
+  webauthnUserID: z.string(),
+  counter: z.number().int(),
+  deviceType: z.string(),
+  backedUp: z.boolean(),
+  transports: z.string().nullable(),
+  createdAt: z.coerce.date().nullable(),
+})
+
+export type Passkey = z.infer<typeof PasskeySchema>
+
+/////////////////////////////////////////
+// ORGANIZATION SCHEMA
+/////////////////////////////////////////
+
+export const OrganizationSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string().nullable(),
+  logo: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  metadata: z.string().nullable(),
+})
+
+export type Organization = z.infer<typeof OrganizationSchema>
+
+/////////////////////////////////////////
+// MEMBER SCHEMA
+/////////////////////////////////////////
+
+export const MemberSchema = z.object({
+  id: z.string(),
+  organizationId: z.string(),
+  userId: z.string(),
+  role: z.string(),
+  createdAt: z.coerce.date(),
+})
+
+export type Member = z.infer<typeof MemberSchema>
+
+/////////////////////////////////////////
+// INVITATION SCHEMA
+/////////////////////////////////////////
+
+export const InvitationSchema = z.object({
+  id: z.string(),
+  organizationId: z.string(),
+  email: z.string(),
+  role: z.string().nullable(),
+  status: z.string(),
+  expiresAt: z.coerce.date(),
+  inviterId: z.string(),
+})
+
+export type Invitation = z.infer<typeof InvitationSchema>
+
+/////////////////////////////////////////
+// PURCHASE SCHEMA
+/////////////////////////////////////////
+
+export const PurchaseSchema = z.object({
+  type: PurchaseTypeSchema,
+  id: z.string().cuid(),
+  organizationId: z.string().nullable(),
+  userId: z.string().nullable(),
+  customerId: z.string(),
+  subscriptionId: z.string().nullable(),
+  productId: z.string(),
+  status: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+})
+
+export type Purchase = z.infer<typeof PurchaseSchema>

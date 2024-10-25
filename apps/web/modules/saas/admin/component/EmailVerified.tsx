@@ -24,14 +24,12 @@ export function EmailVerified({
 						? t("admin.users.emailVerified.verified")
 						: t("admin.users.emailVerified.waiting")}
 				</TooltipContent>
-				<TooltipTrigger>
-					<div className={cn(className)}>
-						{verified ? (
-							<CheckIcon className="size-3" />
-						) : (
-							<ClockIcon className="size-3" />
-						)}
-					</div>
+				<TooltipTrigger className={cn(className)}>
+					{verified ? (
+						<CheckIcon className="size-3 text-primary" />
+					) : (
+						<ClockIcon className="size-3" />
+					)}
 				</TooltipTrigger>
 			</Tooltip>
 		</TooltipProvider>

@@ -1,4 +1,4 @@
-import { logger } from "logs";
+import { logger } from "@repo/logs";
 import type { SendEmailHandler } from "../types";
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {

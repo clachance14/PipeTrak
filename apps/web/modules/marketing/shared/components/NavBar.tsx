@@ -1,24 +1,30 @@
 "use client";
 
-import { Link } from "@i18n/routing";
-import { usePathname } from "@i18n/routing";
-import { useUser } from "@saas/auth/hooks/use-user";
+import { LocaleLink, useLocalePathname } from "@i18n/routing";
+import { config } from "@repo/config";
+import { useSession } from "@saas/auth/hooks/use-session";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { Button } from "@ui/components/button";
-import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
+import {
+	Sheet,
+	SheetContent,
+	SheetTitle,
+	SheetTrigger,
+} from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
 export function NavBar() {
 	const t = useTranslations();
-	const { user } = useUser();
+	const { user } = useSession();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-	const pathname = usePathname();
+	const localePathname = useLocalePathname();
 	const [isTop, setIsTop] = useState(true);
 
 	const debouncedScrollHandler = useDebounceCallback(
@@ -41,7 +47,7 @@ export function NavBar() {
 
 	useEffect(() => {
 		setMobileMenuOpen(false);
-	}, [pathname]);
+	}, [localePathname]);
 
 	const menuItems: {
 		label: string;
@@ -49,7 +55,7 @@ export function NavBar() {
 	}[] = [
 		{
 			label: t("common.menu.pricing"),
-			href: "/pricing",
+			href: "/#pricing",
 		},
 		{
 			label: t("common.menu.blog"),
@@ -65,7 +71,7 @@ export function NavBar() {
 		},
 	];
 
-	const isMenuItemActive = (href: string) => pathname.startsWith(href);
+	const isMenuItemActive = (href: string) => localePathname.startsWith(href);
 
 	return (
 		<nav
@@ -77,17 +83,17 @@ export function NavBar() {
 					className={`flex items-center justify-stretch gap-6 ${isTop ? "py-8" : "py-4"} transition-[padding] duration-200`}
 				>
 					<div className="flex flex-1 justify-start">
-						<Link
+						<LocaleLink
 							href="/"
 							className="block hover:no-underline active:no-underline"
 						>
 							<Logo />
-						</Link>
+						</LocaleLink>
 					</div>
 
 					<div className="hidden flex-1 items-center justify-center md:flex">
 						{menuItems.map((menuItem) => (
-							<Link
+							<LocaleLink
 								key={menuItem.href}
 								href={menuItem.href}
 								className={cn(
@@ -98,7 +104,7 @@ export function NavBar() {
 								)}
 							>
 								{menuItem.label}
-							</Link>
+							</LocaleLink>
 						))}
 					</div>
 
@@ -121,9 +127,10 @@ export function NavBar() {
 								</Button>
 							</SheetTrigger>
 							<SheetContent className="w-[250px]" side="right">
+								<SheetTitle />
 								<div className="flex flex-col items-start justify-center">
 									{menuItems.map((menuItem) => (
-										<Link
+										<LocaleLink
 											key={menuItem.href}
 											href={menuItem.href}
 											className={cn(
@@ -134,40 +141,43 @@ export function NavBar() {
 											)}
 										>
 											{menuItem.label}
-										</Link>
+										</LocaleLink>
 									))}
 
-									<Link
-										key={user ? "dashboard" : "login"}
+									<NextLink
+										key={user ? "start" : "login"}
 										href={user ? "/app" : "/auth/login"}
 										className="block px-3 py-2 text-base"
 										prefetch={!user}
 									>
 										{user ? t("common.menu.dashboard") : t("common.menu.login")}
-									</Link>
+									</NextLink>
 								</div>
 							</SheetContent>
 						</Sheet>
 
-						{user ? (
-							<Button
-								key="dashboard"
-								className="hidden md:flex"
-								asChild
-								variant="secondary"
-							>
-								<Link href="/app">{t("common.menu.dashboard")}</Link>
-							</Button>
-						) : (
-							<Button
-								key="login"
-								className="hidden md:flex"
-								asChild
-								variant="secondary"
-							>
-								<Link href="/auth/login">{t("common.menu.login")}</Link>
-							</Button>
-						)}
+						{config.ui.saas.enabled &&
+							(user ? (
+								<Button
+									key="dashboard"
+									className="hidden md:flex"
+									asChild
+									variant="secondary"
+								>
+									<NextLink href="/app">{t("common.menu.dashboard")}</NextLink>
+								</Button>
+							) : (
+								<Button
+									key="login"
+									className="hidden md:flex"
+									asChild
+									variant="secondary"
+								>
+									<NextLink href="/auth/login">
+										{t("common.menu.login")}
+									</NextLink>
+								</Button>
+							))}
 					</div>
 				</div>
 			</div>

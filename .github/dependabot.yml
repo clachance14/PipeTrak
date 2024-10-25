@@ -6,9 +6,6 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      trpc:
-        patterns:
-          - "@trpc/*"
       content-collections:
         patterns:
           - "@content-collections/*"

@@ -1,4 +1,4 @@
-import { config } from "@config";
+import { config } from "@repo/config";
 import type { SendEmailHandler } from "../types";
 
 const { from } = config.mailing;

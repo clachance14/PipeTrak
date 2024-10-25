@@ -1,9 +1,11 @@
 "use client";
 
-import { useUser } from "@saas/auth/hooks/use-user";
+import { authClient } from "@repo/auth/client";
+import { config } from "@repo/config";
+import { useSession } from "@saas/auth/hooks/use-session";
+import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
+import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { apiClient } from "@shared/lib/api-client";
-import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuid } from "uuid";
@@ -16,14 +18,12 @@ export function UserAvatarUpload({
 	onSuccess: () => void;
 	onError: () => void;
 }) {
-	const { user, updateUser } = useUser();
+	const { user } = useSession();
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
 
-	const getSignedUploadUrlMutation =
-		apiClient.uploads.signedUploadUrl.useMutation();
-	const updateUserMutation = apiClient.auth.update.useMutation();
+	const getSignedUploadUrlMutation = useSignedUploadUrlMutation();
 
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop: (acceptedFiles) => {
@@ -40,7 +40,6 @@ export function UserAvatarUpload({
 	if (!user) {
 		return null;
 	}
-
 	const onCrop = async (croppedImageData: Blob | null) => {
 		if (!croppedImageData) {
 			return;
@@ -49,12 +48,12 @@ export function UserAvatarUpload({
 		setUploading(true);
 		try {
 			const path = `${user.id}-${uuid()}.png`;
-			const uploadUrl = await getSignedUploadUrlMutation.mutateAsync({
+			const { signedUrl } = await getSignedUploadUrlMutation.mutateAsync({
 				path,
-				bucket: process.env.NEXT_PUBLIC_AVATARS_BUCKET_NAME as string,
+				bucket: config.storage.bucketNames.avatars,
 			});
 
-			const response = await fetch(uploadUrl, {
+			const response = await fetch(signedUrl, {
 				method: "PUT",
 				body: croppedImageData,
 				headers: {
@@ -66,12 +65,8 @@ export function UserAvatarUpload({
 				throw new Error("Failed to upload image");
 			}
 
-			const updatedUser = await updateUserMutation.mutateAsync({
-				avatarUrl: path,
-			});
-
-			updateUser({
-				avatarUrl: updatedUser.avatarUrl,
+			await authClient.updateUser({
+				image: path,
 			});
 
 			onSuccess();
@@ -88,13 +83,13 @@ export function UserAvatarUpload({
 				<input {...getInputProps()} />
 				<UserAvatar
 					className="size-24 cursor-pointer text-xl"
-					avatarUrl={user.avatarUrl}
+					avatarUrl={user.image}
 					name={user.name ?? ""}
 				/>
 
 				{uploading && (
 					<div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
-						<LoaderIcon className="size-6 animate-spin text-primary" />
+						<Spinner className="size-6" />
 					</div>
 				)}
 			</div>

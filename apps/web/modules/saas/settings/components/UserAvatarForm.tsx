@@ -12,9 +12,9 @@ export function UserAvatarForm() {
 	return (
 		<ActionBlock title={t("settings.account.avatar.title")}>
 			<div className="flex items-center gap-4">
-				<div>
-					<p>{t("settings.account.avatar.description")}</p>
-				</div>
+				<p className="text-muted-foreground text-sm">
+					{t("settings.account.avatar.description")}
+				</p>
 
 				<UserAvatarUpload
 					onSuccess={() => {

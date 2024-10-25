@@ -1,17 +1,23 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@i18n/routing";
-import { apiClient } from "@shared/lib/api-client";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { AlertTriangleIcon, ArrowRightIcon, SendIcon } from "lucide-react";
+import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 
+import { authClient } from "@repo/auth/client";
 import { useRouter } from "@shared/hooks/router";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+} from "@ui/components/form";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -29,79 +35,95 @@ export function ForgotPasswordForm() {
 		message: string;
 	}>(null);
 
-	const forgotPasswordMutation = apiClient.auth.forgotPassword.useMutation();
-
-	const {
-		register,
-		handleSubmit,
-		formState: { isSubmitting, isSubmitted },
-	} = useForm<FormValues>({
+	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
+		defaultValues: {
+			email: "",
+		},
 	});
 
-	const onSubmit: SubmitHandler<FormValues> = async ({ email }) => {
+	const onSubmit = form.handleSubmit(async ({ email }) => {
 		try {
-			await forgotPasswordMutation.mutateAsync({
+			const redirectTo = new URL(
+				"/auth/reset-password",
+				window.location.origin,
+			).toString();
+
+			const { error } = await authClient.forgetPassword({
 				email,
-				callbackUrl: new URL("/auth/verify", window.location.origin).toString(),
+				redirectTo,
 			});
 
-			const redirectSearchParams = new URLSearchParams();
-			redirectSearchParams.set("type", "PASSWORD_RESET");
-			if (email) {
-				redirectSearchParams.set("identifier", email);
+			if (error) {
+				throw error;
 			}
-			redirectSearchParams.set("redirectTo", "/app/settings/account/general");
-			router.replace(`/auth/otp?${redirectSearchParams.toString()}`);
 		} catch (e) {
 			setServerError({
 				title: t("auth.forgotPassword.hints.linkNotSent.title"),
 				message: t("auth.forgotPassword.hints.linkNotSent.message"),
 			});
 		}
-	};
+	});
 
 	return (
 		<>
-			<h1 className="font-extrabold text-3xl md:text-4xl">
+			<h1 className="font-extrabold text-2xl md:text-3xl">
 				{t("auth.forgotPassword.title")}
 			</h1>
-			<p className="mt-4 mb-6 text-muted-foreground">
+			<p className="mt-1 mb-6 text-muted-foreground">
 				{t("auth.forgotPassword.message")}{" "}
-				<Link href="/auth/login">
-					{t("auth.forgotPassword.backToSignin")}
-					<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
-				</Link>
 			</p>
 
-			<form
-				className="flex flex-col items-stretch gap-8"
-				onSubmit={handleSubmit(onSubmit)}
-			>
-				<div>
-					<label htmlFor="email" className="mb-1 block font-semibold">
-						{t("auth.forgotPassword.email")}
-					</label>
-					<Input
-						type="email"
-						{...register("email", { required: true })}
-						required
-						autoComplete="email"
-					/>
-				</div>
+			{form.formState.isSubmitSuccessful ? (
+				<Alert variant="success">
+					<MailboxIcon className="size-6" />
+					<AlertTitle>
+						{t("auth.forgotPassword.hints.linkSent.title")}
+					</AlertTitle>
+					<AlertDescription>
+						{t("auth.forgotPassword.hints.linkSent.message")}
+					</AlertDescription>
+				</Alert>
+			) : (
+				<Form {...form}>
+					<form
+						className="flex flex-col items-stretch gap-4"
+						onSubmit={onSubmit}
+					>
+						<FormField
+							control={form.control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("auth.forgotPassword.email")}</FormLabel>
+									<FormControl>
+										<Input {...field} autoComplete="email" />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
 
-				{isSubmitted && serverError && (
-					<Alert variant="error">
-						<AlertTriangleIcon className="size-6" />
-						<AlertTitle>{serverError.title}</AlertTitle>
-						<AlertDescription>{serverError.message}</AlertDescription>
-					</Alert>
-				)}
+						{form.formState.isSubmitted && serverError && (
+							<Alert variant="error">
+								<AlertTriangleIcon className="size-6" />
+								<AlertTitle>{serverError.title}</AlertTitle>
+								<AlertDescription>{serverError.message}</AlertDescription>
+							</Alert>
+						)}
 
-				<Button loading={isSubmitting}>
-					<SendIcon className="mr-2 size-4" /> {t("auth.forgotPassword.submit")}
-				</Button>
-			</form>
+						<Button loading={form.formState.isSubmitting}>
+							{t("auth.forgotPassword.submit")}
+						</Button>
+					</form>
+				</Form>
+			)}
+
+			<div className="mt-6 text-center text-sm">
+				<Link href="/auth/login">
+					<ArrowLeftIcon className="mr-1 inline size-4 align-middle" />
+					{t("auth.forgotPassword.backToSignin")}
+				</Link>
+			</div>
 		</>
 	);
 }

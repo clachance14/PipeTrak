@@ -15,129 +15,160 @@ generator zod {
   addSelectType    = false
 }
 
-enum UserRole {
-  USER
-  ADMIN
-}
-
 model User {
-  id                 String                  @id @default(cuid())
-  email              String                  @unique
-  emailVerified      Boolean                 @default(false)
-  role               UserRole                @default(USER)
-  name               String?
-  avatarUrl          String?
-  createdAt          DateTime                @default(now())
-  hashedPassword     String?
-  onboardingComplete Boolean                 @default(false)
-  oauthAccounts      UserOauthAccount[]
-  sessions           UserSession[]
-  memberships        TeamMembership[]
-  verificationtokens UserVerificationToken[]
-  oneTimePasswords   UserOneTimePassword[]
+  id                 String       @id
+  name               String
+  email              String
+  emailVerified      Boolean
+  image              String?
+  createdAt          DateTime
+  updatedAt          DateTime
+  username           String?
+  role               String?
+  banned             Boolean?
+  banReason          String?
+  banExpires         DateTime?
+  onboardingComplete Boolean      @default(false)
+  locale             String?
+  sessions           Session[]
+  accounts           Account[]
+  passkeys           Passkey[]
+  invitations        Invitation[]
+  purchases          Purchase[]
+
+  @@unique([email])
+  @@unique([username])
+  @@map("user")
 }
 
-model UserSession {
-  id             String   @id
-  userId         String
-  expiresAt      DateTime
-  impersonatorId String?
-  user           User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model UserOauthAccount {
-  id             String @id @default(cuid())
-  providerId     String
-  providerUserId String
-  userId         String
-  user           User   @relation(references: [id], fields: [userId], onDelete: Cascade)
-
-  @@unique([providerId, providerUserId])
-}
-
-model UserVerificationToken {
-  id      String   @id @default(cuid())
-  userId  String
-  user    User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-  expires DateTime
-
-  @@index([userId])
-}
-
-enum UserOneTimePasswordType {
-  SIGNUP
-  LOGIN
-  PASSWORD_RESET
-}
-
-model UserOneTimePassword {
-  id         String                  @id @default(cuid())
-  userId     String
-  user       User                    @relation(references: [id], fields: [userId], onDelete: Cascade)
-  code       String
-  type       UserOneTimePasswordType
-  identifier String
-  expires    DateTime
-}
-
-model Team {
-  id           String           @id @default(cuid())
-  name         String
-  avatarUrl    String?
-  memberships  TeamMembership[]
-  subscription Subscription?
-  invitations  TeamInvitation[]
-}
-
-enum TeamMemberRole {
-  MEMBER
-  OWNER
-}
-
-model TeamMembership {
-  id        String         @id @default(cuid())
-  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
   userId    String
-  role      TeamMemberRole @default(MEMBER)
-  isCreator Boolean        @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([teamId, userId])
+  impersonatedBy String?
+
+  activeOrganizationId String?
+
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@unique([token])
+  @@map("session")
 }
 
-model TeamInvitation {
-  id        String         @id @default(cuid())
-  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String
-  email     String
-  role      TeamMemberRole @default(MEMBER)
-  createdAt DateTime       @default(now())
-  expiresAt DateTime       @updatedAt
+model Account {
+  id           String    @id
+  accountId    String
+  providerId   String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String?
+  refreshToken String?
+  idToken      String?
+  expiresAt    DateTime?
+  password     String?
 
-  @@unique([teamId, email])
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
 }
 
-enum SubscriptionStatus {
-  TRIALING
-  ACTIVE
-  PAUSED
-  CANCELED
-  PAST_DUE
-  UNPAID
-  INCOMPLETE
-  EXPIRED
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+
+  createdAt DateTime?
+  updatedAt DateTime?
+
+  @@map("verification")
 }
 
-model Subscription {
-  id              String             @id
-  team            Team               @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId          String             @unique
-  customerId      String
-  status          SubscriptionStatus
-  planId          String
-  variantId       String
-  nextPaymentDate DateTime?
+model Passkey {
+  id             String    @id
+  name           String?
+  publicKey      String
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  webauthnUserID String
+  counter        Int
+  deviceType     String
+  backedUp       Boolean
+  transports     String?
+  createdAt      DateTime?
+
+  @@map("passkey")
+}
+
+model Organization {
+  id          String       @id
+  name        String
+  slug        String?
+  logo        String?
+  createdAt   DateTime
+  metadata    String?
+  members     Member[]
+  invitations Invitation[]
+  purchases   Purchase[]
+
+  @@unique([slug])
+  @@map("organization")
+}
+
+model Member {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  role           String
+  createdAt      DateTime
+
+  @@unique([userId, organizationId])
+  @@map("member")
+}
+
+model Invitation {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  @@map("invitation")
+}
+
+enum PurchaseType {
+  SUBSCRIPTION
+  ONE_TIME
+}
+
+model Purchase {
+  id             String        @id @default(cuid())
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String?
+  user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String?
+  type           PurchaseType
+  customerId     String
+  subscriptionId String?       @unique
+  productId      String
+  status         String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([subscriptionId])
 }

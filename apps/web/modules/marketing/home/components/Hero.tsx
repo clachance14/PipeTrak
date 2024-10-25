@@ -1,16 +1,17 @@
-import { Link } from "@i18n/routing";
+import { LocaleLink } from "@i18n/routing";
 import { Button } from "@ui/components/button";
 import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import heroImageDark from "../../../../public/images/hero-image-dark.png";
 import heroImage from "../../../../public/images/hero-image.png";
 
 export function Hero() {
 	return (
-		<div className="container pt-44 pb-20 text-center">
+		<div className="container pt-44 pb-12 text-center lg:pb-16">
 			<div className="mb-4 flex justify-center">
-				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight p-px px-4 py-1 font-normal text-highlight text-sm">
-					<span className="flex items-center gap-2 rounded-full font-black text-highlight">
+				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 p-px px-4 py-1 font-normal text-highlight text-sm">
+					<span className="flex items-center gap-2 rounded-full font-semibold text-highlight">
 						<span className="size-2 rounded-full bg-highlight" />
 						New:
 					</span>
@@ -30,14 +31,14 @@ export function Hero() {
 			</p>
 
 			<div className="mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">
-				<Button size="lg" asChild>
+				<Button size="lg" variant="primary" asChild>
 					<Link href="/auth/login">
 						Get started
 						<ArrowRightIcon className="ml-2 size-4" />
 					</Link>
 				</Button>
 				<Button variant="outline" size="lg" asChild>
-					<Link href="/docs">Documentation</Link>
+					<LocaleLink href="/docs">Documentation</LocaleLink>
 				</Button>
 			</div>
 
@@ -155,7 +156,7 @@ export function Hero() {
 				</div>
 			</div>
 
-			<div className="mt-16 rounded-2xl border bg-card/50 p-2 shadow-lg dark:shadow-foreground/10">
+			<div className="mx-auto mt-16 max-w-5xl rounded-2xl border bg-card/50 p-2 shadow-lg dark:shadow-foreground/10">
 				<Image
 					src={heroImage}
 					alt="Our application"

@@ -28,7 +28,7 @@ export function ActionBlock({
 
 	return (
 		<Card
-			className={cn(className, danger ? "border border-destructive/50" : "")}
+			className={cn(danger ? "border border-destructive/50" : "", className)}
 		>
 			<form
 				onSubmit={(e) => {
@@ -46,12 +46,12 @@ export function ActionBlock({
 					{children}
 
 					{typeof onSubmit !== "undefined" && (
-						<div className=" mt-6 flex justify-end border-t pt-3">
+						<div className="mt-6 flex justify-end border-t pt-3">
 							<Button
 								type="submit"
 								disabled={isSubmitDisabled}
 								loading={isSubmitting}
-								variant={danger ? "error" : "default"}
+								variant={danger ? "error" : "secondary"}
 							>
 								{submitLabel ?? t("settings.save")}
 							</Button>

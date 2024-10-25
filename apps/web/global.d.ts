@@ -1,4 +1,4 @@
-import type { Messages } from "i18n/types";
+import type { Messages } from "@repo/i18n";
 import type { JSX as Jsx } from "react/jsx-runtime";
 
 // temporary fix for mdx types

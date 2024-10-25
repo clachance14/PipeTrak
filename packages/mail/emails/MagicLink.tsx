@@ -6,15 +6,11 @@ import Wrapper from "./components/Wrapper";
 
 export function MagicLink({
 	url,
-	name,
-	otp,
 	locale,
 	translations,
 }: {
 	url: string;
-	name: string;
-	otp: string;
-} & BaseMailProps): JSX.Element {
+} & BaseMailProps) {
 	const t = createTranslator({
 		locale,
 		messages: translations,
@@ -23,13 +19,7 @@ export function MagicLink({
 
 	return (
 		<Wrapper>
-			<Text>{t("magicLink.body", { name })}</Text>
-
-			<Text>
-				{t("common.otp")}
-				<br />
-				<strong className="font-bold text-2xl">{otp}</strong>
-			</Text>
+			<Text>{t("magicLink.body")}</Text>
 
 			<Text>{t("common.useLink")}</Text>
 

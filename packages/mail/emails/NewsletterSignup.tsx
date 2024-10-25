@@ -3,10 +3,7 @@ import { createTranslator } from "use-intl/core";
 import type { BaseMailProps } from "../types";
 import Wrapper from "./components/Wrapper";
 
-export function NewsletterSignup({
-	locale,
-	translations,
-}: BaseMailProps): JSX.Element {
+export function NewsletterSignup({ locale, translations }: BaseMailProps) {
 	const t = createTranslator({
 		locale,
 		messages: translations,

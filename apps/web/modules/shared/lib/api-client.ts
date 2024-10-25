@@ -1,4 +1,9 @@
-import { createTRPCReact } from "@trpc/react-query";
-import type { ApiRouter } from "api/trpc/router";
+import type { AppRouter } from "@repo/api";
+import { getBaseUrl } from "@repo/utils";
+import { hc } from "hono/client";
 
-export const apiClient = createTRPCReact<ApiRouter>({});
+export const apiClient = hc<AppRouter>(getBaseUrl(), {
+	init: {
+		credentials: "include",
+	},
+});

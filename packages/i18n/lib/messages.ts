@@ -1,4 +1,4 @@
-import { config } from "@config";
+import { config } from "@repo/config";
 import deepmerge from "deepmerge";
 import type { Messages } from "../types";
 

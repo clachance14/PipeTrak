@@ -14,7 +14,7 @@ export function NewUser({
 	url: string;
 	name: string;
 	otp: string;
-} & BaseMailProps): JSX.Element {
+} & BaseMailProps) {
 	const t = createTranslator({
 		locale,
 		messages: translations,

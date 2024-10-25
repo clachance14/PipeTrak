@@ -1,8 +1,8 @@
 "use client";
 
+import { authClient } from "@repo/auth/client";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useRouter } from "@shared/hooks/router";
-import { apiClient } from "@shared/lib/api-client";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -13,6 +13,7 @@ import {
 	AlertDialogTitle,
 } from "@ui/components/alert-dialog";
 import { Button } from "@ui/components/button";
+import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -20,24 +21,37 @@ import { useState } from "react";
 export function DeleteAccountForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
+	const [deleting, setDeleting] = useState(false);
+	const [password, setPassword] = useState("");
 	const router = useRouter();
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
-	const deleteAccountMutation = apiClient.auth.deleteAccount.useMutation({
-		onSuccess: () => {
-			toast({
-				variant: "success",
-				title: t("settings.notifications.accountDeleted"),
-			});
-			router.replace("/");
-		},
-		onError: () => {
-			toast({
-				variant: "error",
-				title: t("settings.notifications.accountNotDeleted"),
-			});
-		},
-	});
+	const onDelete = async () => {
+		setDeleting(true);
+		await authClient.deleteUser(
+			{
+				password,
+			},
+			{
+				onSuccess: () => {
+					toast({
+						variant: "success",
+						title: t("settings.notifications.accountDeleted"),
+					});
+					router.replace("/");
+				},
+				onError: () => {
+					toast({
+						variant: "error",
+						title: t("settings.notifications.accountNotDeleted"),
+					});
+				},
+				onResponse: (response) => {
+					setDeleting(false);
+				},
+			},
+		);
+	};
 
 	return (
 		<>
@@ -61,6 +75,13 @@ export function DeleteAccountForm() {
 						</AlertDialogTitle>
 						<AlertDialogDescription>
 							{t("settings.account.deleteAccount.confirmation")}
+
+							<Input
+								type="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className="mt-4 w-full"
+							/>
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
@@ -69,9 +90,9 @@ export function DeleteAccountForm() {
 						</AlertDialogCancel>
 						<Button
 							variant="error"
-							loading={deleteAccountMutation.isPending}
+							loading={deleting}
 							onClick={async () => {
-								await deleteAccountMutation.mutateAsync();
+								await onDelete();
 								setShowConfirmation(false);
 							}}
 						>
