@@ -5,7 +5,7 @@
 		"i18n": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"logs": "workspace:*",
-		"next-intl": "3.23.4",
+		"next-intl": "3.23.5",
 		"nodemailer": "^6.9.15",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
