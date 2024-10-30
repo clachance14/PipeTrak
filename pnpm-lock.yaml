@@ -311,8 +311,8 @@ importers:
         specifier: workspace:*
         version: link:../storage
       stripe:
-        specifier: ^17.2.1
-        version: 17.2.1
+        specifier: ^17.3.0
+        version: 17.3.0
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
@@ -5156,8 +5156,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  stripe@17.2.1:
-    resolution: {integrity: sha512-Mwb0SitV/UjxTLSUiTlUQ0VDE/gfyQ7OHDGdvDdvKIH4CNNqobPKlzlWhoZHFFU0OA/YsZyBtPULK4JG86BAAg==}
+  stripe@17.3.0:
+    resolution: {integrity: sha512-WACmytj1MssbIwGwPfAomo61jgldb2B/cB6A3W/Bqs9zId1olVcAa8X7HERkqpw4190GSsbvrD7KnkZogatyvw==}
     engines: {node: '>=12.*'}
 
   strnum@1.0.5:
@@ -10825,7 +10825,7 @@ snapshots:
     dependencies:
       get-stdin: 4.0.1
 
-  stripe@17.2.1:
+  stripe@17.3.0:
     dependencies:
       '@types/node': 22.8.4
       qs: 6.13.0
