@@ -105,6 +105,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cropperjs:
+        specifier: 1.6.2
+        version: 1.6.2
       database:
         specifier: workspace:*
         version: link:../../packages/database

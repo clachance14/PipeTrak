@@ -12,6 +12,8 @@ import { ApiClientProvider } from "@shared/components/ApiClientProvider";
 import { GradientBackgroundWrapper } from "@shared/components/GradientBackgroundWrapper";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import "cropperjs/dist/cropper.css";
+
 import { config } from "@config";
 
 export const metadata: Metadata = {
