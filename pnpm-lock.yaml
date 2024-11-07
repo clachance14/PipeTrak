@@ -308,8 +308,8 @@ importers:
         specifier: 15.0.2
         version: 15.0.2(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       openai:
-        specifier: ^4.70.2
-        version: 4.70.2(encoding@0.1.13)(zod@3.23.8)
+        specifier: ^4.71.1
+        version: 4.71.1(encoding@0.1.13)(zod@3.23.8)
       storage:
         specifier: workspace:*
         version: link:../storage
@@ -4542,8 +4542,8 @@ packages:
   oniguruma-to-js@0.4.3:
     resolution: {integrity: sha512-X0jWUcAlxORhOqqBREgPMgnshB7ZGYszBNspP+tS9hPD3l13CdaXcHbgImoHUHlrvGx/7AvFEkTRhAGYh+jzjQ==}
 
-  openai@4.70.2:
-    resolution: {integrity: sha512-Q2ymi/KPUYv+LJ9rFxeYxpkVAhcrZFTVvnJbdF1pUHg9eMC6lY8PU4TO1XOK5UZzOZuuVicouRwVMi1iDrT4qw==}
+  openai@4.71.1:
+    resolution: {integrity: sha512-C6JNMaQ1eijM0lrjiRUL3MgThVP5RdwNAghpbJFdW0t11LzmyqON8Eh8MuUuEZ+CeD6bgYl2Fkn2BoptVxv9Ug==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -10094,7 +10094,7 @@ snapshots:
     dependencies:
       regex: 4.3.2
 
-  openai@4.70.2(encoding@0.1.13)(zod@3.23.8):
+  openai@4.71.1(encoding@0.1.13)(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.41
       '@types/node-fetch': 2.6.11
