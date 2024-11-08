@@ -28,7 +28,7 @@ export function createOauthRedirectHandler(
 		if (codeVerifier) {
 			// store code verifier as cookie
 			cookieStore.set("code_verifier", codeVerifier, {
-				secure: true, // set to false in localhost
+				secure: process.env.NODE_ENV !== "development",
 				path: "/",
 				httpOnly: true,
 				maxAge: 60 * 10, // 10 min
