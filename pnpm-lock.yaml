@@ -130,8 +130,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logs
       lucide-react:
-        specifier: ^0.455.0
-        version: 0.455.0(react@19.0.0-rc-65a56d0e-20241020)
+        specifier: ^0.456.0
+        version: 0.456.0(react@19.0.0-rc-65a56d0e-20241020)
       mail:
         specifier: workspace:*
         version: link:../../packages/mail
@@ -4158,8 +4158,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.455.0:
-    resolution: {integrity: sha512-XQoi58X4COfjy6s1P4TVsXMhU2r1KsfUTRFyds/yJvdzBNOfu0F9RRIas626T8UaNZzEv4llF7ivh4uLkYp3rw==}
+  lucide-react@0.456.0:
+    resolution: {integrity: sha512-DIIGJqTT5X05sbAsQ+OhA8OtJYyD4NsEMCA/HQW/Y6ToPQ7gwbtujIoeAaup4HpHzV35SQOarKAWH8LYglB6eA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
@@ -5429,11 +5429,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-intl@3.24.0:
-    resolution: {integrity: sha512-lmrARod7yjMYehbyY9xBLjjgnlNcJsl1UAltAPlgspRG7RH6H0JYaGo4C3PZW/BTy0Dgmcvcl8rH/VemzGIhgQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0
 
   use-intl@3.25.0:
     resolution: {integrity: sha512-e9nfJm18rM+naT14oZZYR3FNWd2mRDmNFQJC4R9qh4vhfabDwl0Kd/B6PodYst7U/0oT3qeKKjlz7qG3BvXAaQ==}
@@ -9460,7 +9455,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.455.0(react@19.0.0-rc-65a56d0e-20241020):
+  lucide-react@0.456.0(react@19.0.0-rc-65a56d0e-20241020):
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
@@ -11103,18 +11098,6 @@ snapshots:
       tslib: 2.8.0
     optionalDependencies:
       '@types/react': types-react@19.0.0-rc.1
-
-  use-intl@3.24.0(react@18.3.1):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.1
-      intl-messageformat: 10.7.1
-      react: 18.3.1
-
-  use-intl@3.24.0(react@19.0.0-rc-65a56d0e-20241020):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.1
-      intl-messageformat: 10.7.1
-      react: 19.0.0-rc-65a56d0e-20241020
 
   use-intl@3.25.0(react@18.3.1):
     dependencies:
