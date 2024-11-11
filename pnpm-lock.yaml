@@ -193,8 +193,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/utils
       uuid:
-        specifier: ^11.0.2
-        version: 11.0.2
+        specifier: ^11.0.3
+        version: 11.0.3
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -5748,8 +5748,8 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  uuid@11.0.2:
-    resolution: {integrity: sha512-14FfcOJmqdjbBPdDjFQyk/SdT4NySW4eM0zcG+HqbHP5jzuH56xO3J1DGhgs/cEMCfwYi3HQI1gnTO62iaG+tQ==}
+  uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
     hasBin: true
 
   uuid@8.3.2:
@@ -8325,7 +8325,7 @@ snapshots:
       '@types/aws-lambda': 8.10.145
       express: 4.21.1
       fastify: 5.1.0
-      next: 15.0.2(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      next: 15.0.3(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       ws: 8.17.1
     transitivePeerDependencies:
       - '@babel/core'
@@ -11859,7 +11859,7 @@ snapshots:
   utils-merge@1.0.1:
     optional: true
 
-  uuid@11.0.2: {}
+  uuid@11.0.3: {}
 
   uuid@8.3.2: {}
 
