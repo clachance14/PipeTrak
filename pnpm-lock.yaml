@@ -293,8 +293,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       chargebee-typescript:
-        specifier: ^2.41.0
-        version: 2.41.0
+        specifier: ^2.42.0
+        version: 2.42.0
       database:
         specifier: workspace:*
         version: link:../database
@@ -3185,8 +3185,8 @@ packages:
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
 
-  chargebee-typescript@2.41.0:
-    resolution: {integrity: sha512-/HSdwmxY8NtzpWg41mdvRMGmgT1z1ePi14N+gYB7KIkK1bZito/ca8SxMRzd58DW0hfGjhNS+AmF4ZvsuLT6Rg==}
+  chargebee-typescript@2.42.0:
+    resolution: {integrity: sha512-USG472+z4Ngg5yuRK3611P6UIKZeS7NyVcum5fs6ujIvWAittJx+XrTqaly1YDyQaXkNTi3yNxpiHaHKQe5VQw==}
     engines: {node: '>=8.0.0'}
 
   check-more-types@2.24.0:
@@ -5719,11 +5719,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-intl@3.25.0:
-    resolution: {integrity: sha512-e9nfJm18rM+naT14oZZYR3FNWd2mRDmNFQJC4R9qh4vhfabDwl0Kd/B6PodYst7U/0oT3qeKKjlz7qG3BvXAaQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0
 
   use-intl@3.25.1:
     resolution: {integrity: sha512-Xeyl0+BjlBf6fJr2h5W/CESZ2IQAH7jzXYK4c/ao+qR26jNPW3FXBLjg7eLRxdeI6QaLcYGLtH3WYhC9I0+6Yg==}
@@ -8722,7 +8717,7 @@ snapshots:
 
   character-reference-invalid@2.0.1: {}
 
-  chargebee-typescript@2.41.0:
+  chargebee-typescript@2.42.0:
     dependencies:
       q: 1.5.1
 
@@ -11833,18 +11828,6 @@ snapshots:
       tslib: 2.8.0
     optionalDependencies:
       '@types/react': types-react@19.0.0-rc.1
-
-  use-intl@3.25.0(react@18.3.1):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.1
-      intl-messageformat: 10.7.1
-      react: 18.3.1
-
-  use-intl@3.25.0(react@19.0.0-rc-65a56d0e-20241020):
-    dependencies:
-      '@formatjs/fast-memoize': 2.2.1
-      intl-messageformat: 10.7.1
-      react: 19.0.0-rc-65a56d0e-20241020
 
   use-intl@3.25.1(react@18.3.1):
     dependencies:
