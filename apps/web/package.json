@@ -23,7 +23,7 @@
 		"api": "workspace:*",
 		"boring-avatars": "^1.11.2",
 		"change-case": "^5.4.4",
-		"class-variance-authority": "^0.7.0",
+		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"cropperjs": "1.6.2",
 		"database": "workspace:*",
