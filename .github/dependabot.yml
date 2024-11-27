@@ -16,3 +16,7 @@ updates:
       radix-ui:
         patterns:
           - "@radix-ui/*"
+      next-intl:
+        patterns:
+          - "next-intl"
+          - "use-intl"
