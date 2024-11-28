@@ -121,22 +121,17 @@ export function OrganzationSelect({
 					</DropdownMenuRadioGroup>
 
 					{config.organizations.enableUsersToCreateOrganizations && (
-						<>
-							<DropdownMenuSeparator />
-							<DropdownMenuGroup>
-								<DropdownMenuItem
-									asChild
-									className="!text-primary cursor-pointer text-sm"
-								>
-									<Link href="/app/new-organization">
-										<PlusIcon className="mr-2 size-6 rounded-full bg-primary/20 p-1" />
-										{t(
-											"organizations.organizationSelect.createNewOrganization",
-										)}
-									</Link>
-								</DropdownMenuItem>
-							</DropdownMenuGroup>
-						</>
+						<DropdownMenuGroup>
+							<DropdownMenuItem
+								asChild
+								className="!text-primary cursor-pointer text-sm"
+							>
+								<Link href="/app/new-organization">
+									<PlusIcon className="mr-2 size-6 rounded-full bg-primary/20 p-1" />
+									{t("organizations.organizationSelect.createNewOrganization")}
+								</Link>
+							</DropdownMenuItem>
+						</DropdownMenuGroup>
 					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
