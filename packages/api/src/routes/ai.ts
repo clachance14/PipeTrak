@@ -1,4 +1,4 @@
-import { aiClient, generateText, promptListProductNames } from "@repo/ai";
+import { generateText, promptListProductNames, textModel } from "@repo/ai";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono-openapi/zod";
@@ -23,7 +23,7 @@ export const aiRouter = new Hono().get(
 		const { topic } = c.req.valid("query");
 
 		const response = await generateText({
-			model: aiClient.textModel,
+			model: textModel,
 			messages: [
 				{
 					role: "user",

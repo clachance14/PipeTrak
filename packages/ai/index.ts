@@ -1,21 +1,6 @@
-import OpenAI from "openai";
-import { anthropic } from "./anthropic";
-import { createOpenAI, openai } from "./openai";
+import { openai } from "./provider/openai";
 
-export * from "./ai";
+export * from "ai";
+export * from "./lib";
 
-export const aiClient = {
-	textModel: anthropic("claude-3-5-sonnet-20240620"),
-	providers: {
-		openai,
-		anthropic,
-		groq: createOpenAI({
-			baseURL: "https://api.groq.com/openai/v1",
-			apiKey: process.env.GROQ_CLOUD_API_KEY,
-		}),
-		_native: {
-			// for using transcription or translation functions
-			openai: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }),
-		},
-	},
-};
+export const textModel = openai("gpt-4o");
