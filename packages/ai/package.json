@@ -12,7 +12,7 @@
 		"@repo/tsconfig": "workspace:*",
 		"typescript": "5.6.3"
 	},
-	"main": "./index.tsx",
+	"main": "./index.ts",
 	"name": "@repo/ai",
 	"scripts": {
 		"type-check": "tsc --noEmit"
