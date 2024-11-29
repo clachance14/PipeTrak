@@ -8,7 +8,7 @@ describe("homepage", () => {
 			const nav = cy.get("nav");
 			nav.should("exist");
 
-			const pricingLink = nav.get('a[href="/pricing"]');
+			const pricingLink = nav.get('a[href="/#pricing"]');
 			pricingLink.should("exist");
 			pricingLink.should("contain", "Pricing");
 
