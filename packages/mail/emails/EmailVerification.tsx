@@ -16,19 +16,18 @@ export function EmailVerification({
 	const t = createTranslator({
 		locale,
 		messages: translations,
-		namespace: "mail",
 	});
 
 	return (
 		<Wrapper>
-			<Text>{t("emailVerification.body", { name })}</Text>
+			<Text>{t("mail.emailVerification.body", { name })}</Text>
 
 			<PrimaryButton href={url}>
-				{t("emailVerification.confirmEmail")} &rarr;
+				{t("mail.emailVerification.confirmEmail")} &rarr;
 			</PrimaryButton>
 
 			<Text className="text-muted-foreground text-sm">
-				{t("common.openLinkInBrowser")}
+				{t("mail.common.openLinkInBrowser")}
 				<Link href={url} className="break-all">
 					{url}
 				</Link>

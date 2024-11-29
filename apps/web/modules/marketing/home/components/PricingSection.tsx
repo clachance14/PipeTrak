@@ -151,11 +151,9 @@ export function PricingSection({
 													{"interval" in product && (
 														<span className="font-normal text-xs opacity-60">
 															{" / "}
-															{t(
-																interval === "month"
-																	? "pricing.month"
-																	: "pricing.year",
-															)}
+															{interval === "month"
+																? t("pricing.monthly")
+																: t("pricing.yearly")}
 														</span>
 													)}
 												</strong>
@@ -170,11 +168,9 @@ export function PricingSection({
 														setSelectedPlan(null);
 													}}
 												>
-													{t(
-														product.type === "one-time"
-															? "pricing.purchase"
-															: "pricing.subscribe",
-													)}
+													{product.type === "one-time"
+														? t("pricing.purchase")
+														: t("pricing.subscribe")}
 												</Button>
 											</div>
 										</div>

@@ -15,19 +15,18 @@ export function ForgotPassword({
 	const t = createTranslator({
 		locale,
 		messages: translations,
-		namespace: "mail",
 	});
 
 	return (
 		<Wrapper>
-			<Text>{t("forgotPassword.body")}</Text>
+			<Text>{t("mail.forgotPassword.body")}</Text>
 
 			<PrimaryButton href={url}>
-				{t("forgotPassword.resetPassword")} &rarr;
+				{t("mail.forgotPassword.resetPassword")} &rarr;
 			</PrimaryButton>
 
 			<Text className="text-muted-foreground text-sm">
-				{t("common.openLinkInBrowser")}
+				{t("mail.common.openLinkInBrowser")}
 				<Link href={url}>{url}</Link>
 			</Text>
 		</Wrapper>

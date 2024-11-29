@@ -284,7 +284,7 @@ export function OrganizationList() {
 				</Table>
 			</div>
 
-			{data?.total && data.total > ITEMS_PER_PAGE && (
+			{!!data?.total && data.total > ITEMS_PER_PAGE && (
 				<Pagination
 					className="mt-4"
 					totalItems={data.total}

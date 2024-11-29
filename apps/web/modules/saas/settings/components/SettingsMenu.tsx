@@ -46,7 +46,7 @@ export function SettingsMenu({
 									)}
 									data-active={isActiveMenuItem(subitem.href)}
 								>
-									{subitem.icon}
+									<span className="shrink-0">{subitem.icon}</span>
 									<span>{subitem.title}</span>
 								</Link>
 							</li>

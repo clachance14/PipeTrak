@@ -14,19 +14,20 @@ export function MagicLink({
 	const t = createTranslator({
 		locale,
 		messages: translations,
-		namespace: "mail",
 	});
 
 	return (
 		<Wrapper>
-			<Text>{t("magicLink.body")}</Text>
+			<Text>{t("mail.magicLink.body")}</Text>
 
-			<Text>{t("common.useLink")}</Text>
+			<Text>{t("mail.common.useLink")}</Text>
 
-			<PrimaryButton href={url}>{t("magicLink.login")} &rarr;</PrimaryButton>
+			<PrimaryButton href={url}>
+				{t("mail.magicLink.login")} &rarr;
+			</PrimaryButton>
 
 			<Text className="text-muted-foreground text-sm">
-				{t("common.openLinkInBrowser")}
+				{t("mail.common.openLinkInBrowser")}
 				<Link href={url}>{url}</Link>
 			</Text>
 		</Wrapper>
