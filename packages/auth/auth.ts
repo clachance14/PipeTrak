@@ -32,11 +32,6 @@ export const auth = betterAuth({
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),
-	advanced: {
-		crossSubDomainCookies: {
-			enabled: true,
-		},
-	},
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
 	},
