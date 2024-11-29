@@ -1,38 +1,8 @@
 {
 	"admin": {
 		"menu": {
-			"users": "Benutzer",
-			"organizations": "Organisationen"
-		},
-		"users": {
-			"delete": "Löschen",
-			"deleteUser": {
-				"deleted": "Der Benutzer wurde erfolgreich gelöscht!",
-				"deleting": "Benutzer wird gelöscht...",
-				"notDeleted": "Der Benutzer konnte nicht gelöscht werden. \nBitte versuche es erneut."
-			},
-			"emailVerified": {
-				"verified": "Email verifiziert",
-				"waiting": "E-Mail wartet auf Verifizierung"
-			},
-			"impersonate": "Imitieren",
-			"impersonation": {
-				"impersonating": "Ich gebe mich als {name} aus..."
-			},
-			"loading": "Benutzer werden geladen...",
-			"resendVerificationMail": {
-				"error": "Bestätigungsmail konnte nicht erneut gesendet werden. \nBitte versuche es erneut.",
-				"submitting": "Bestätigungsmail wird erneut gesendet...",
-				"success": "Bestätigungsmail wurde gesendet.",
-				"title": "Bestätigungsmail erneut senden"
-			},
-			"search": "Nach Name oder E-Mail suchen...",
-			"title": "Benutzer verwalten",
-			"confirmDelete": {
-				"confirm": "Löschen",
-				"message": "Bist du sicher, dass du diesen Benutzer löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
-				"title": "Benutzer löschen"
-			}
+			"organizations": "Organisationen",
+			"users": "Benutzer"
 		},
 		"organizations": {
 			"backToList": "Zurück zu Organisationen",
@@ -64,10 +34,55 @@
 			"search": "Suche nach einer Organisation...",
 			"title": "Verwalten von Organisationen"
 		},
-		"title": "Verwaltung"
+		"title": "Verwaltung",
+		"users": {
+			"confirmDelete": {
+				"confirm": "Löschen",
+				"message": "Bist du sicher, dass du diesen Benutzer löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+				"title": "Benutzer löschen"
+			},
+			"delete": "Löschen",
+			"deleteUser": {
+				"deleted": "Der Benutzer wurde erfolgreich gelöscht!",
+				"deleting": "Benutzer wird gelöscht...",
+				"notDeleted": "Der Benutzer konnte nicht gelöscht werden. \nBitte versuche es erneut."
+			},
+			"emailVerified": {
+				"verified": "Email verifiziert",
+				"waiting": "E-Mail wartet auf Verifizierung"
+			},
+			"impersonate": "Imitieren",
+			"impersonation": {
+				"impersonating": "Ich gebe mich als {name} aus..."
+			},
+			"loading": "Benutzer werden geladen...",
+			"resendVerificationMail": {
+				"error": "Bestätigungsmail konnte nicht erneut gesendet werden. \nBitte versuche es erneut.",
+				"submitting": "Bestätigungsmail wird erneut gesendet...",
+				"success": "Bestätigungsmail wurde gesendet.",
+				"title": "Bestätigungsmail erneut senden"
+			},
+			"search": "Nach Name oder E-Mail suchen...",
+			"title": "Benutzer verwalten"
+		}
+	},
+	"app": {
+		"menu": {
+			"accountSettings": "Kontoeinstellungen",
+			"admin": "Verwaltung",
+			"aiDemo": "AI-Demo",
+			"organizationSettings": "Einstellungen der Organisation",
+			"start": "Start"
+		},
+		"userMenu": {
+			"accountSettings": "Kontoeinstellungen",
+			"colorMode": "Farbmodus",
+			"documentation": "Dokumentation",
+			"home": "Startseite",
+			"logout": "Abmeldung"
+		}
 	},
 	"auth": {
-		"confirmation": {},
 		"forgotPassword": {
 			"backToSignin": "Zurück zum Login",
 			"email": "E-Mail",
@@ -85,31 +100,38 @@
 			"submit": "Link senden",
 			"title": "Hast du dein Passwort vergessen?"
 		},
-		"invalidToken": {},
 		"login": {
+			"continueWith": "Oder weiter mit",
 			"createAnAccount": "Ein Konto erstellen",
 			"dontHaveAnAccount": "Du hast noch kein Konto?",
 			"forgotPassword": "Passwort vergessen?",
 			"hints": {
-				"emailNotVerified": {},
 				"invalidCredentials": "Die von dir eingegebenen Anmeldeinformationen sind ungültig. \nBitte versuche es erneut.",
-				"linkNotSent": {},
 				"linkSent": {
 					"message": "Wir haben dir einen Link zum Fortfahren gesendet. \nBitte überprüfe deinen Posteingang.",
 					"title": "Link gesendet"
 				}
 			},
+			"loginWithPasskey": "Anmeldung mit Passkey",
 			"modes": {
 				"magicLink": "Magischer Link",
 				"password": "Passwort"
 			},
 			"submit": "Anmelden",
 			"subtitle": "Bitte gib deine Zugangsdaten ein, um dich anzumelden.",
-			"title": "Willkommen zurück",
-			"continueWith": "Oder weiter mit",
-			"loginWithPasskey": "Anmeldung mit Passkey"
+			"title": "Willkommen zurück"
 		},
-		"setup": {},
+		"resetPassword": {
+			"backToSignin": "Zurück zu Signin",
+			"hints": {
+				"error": "Es tut uns leid, aber wir konnten dein Passwort nicht zurücksetzen. Bitte versuche es erneut.",
+				"success": "Dein Passwort wurde erfolgreich zurückgesetzt."
+			},
+			"message": "Bitte gib ein neues Passwort ein.",
+			"newPassword": "Neues Passwort",
+			"submit": "Passwort zurücksetzen",
+			"title": "Dein Passwort zurücksetzen"
+		},
 		"signup": {
 			"alreadyHaveAccount": "Du hast bereits ein Konto?",
 			"email": "Email",
@@ -123,24 +145,6 @@
 			"signIn": "Anmelden",
 			"submit": "Benutzerkonto erstellen",
 			"title": "Ein Konto erstellen"
-		},
-		"teamInvitation": {},
-		"verifyOtp": {
-			"errors": {},
-			"hints": {
-				"verificationFailed": {}
-			}
-		},
-		"resetPassword": {
-			"backToSignin": "Zurück zu Signin",
-			"hints": {
-				"error": "Es tut uns leid, aber wir konnten dein Passwort nicht zurücksetzen. Bitte versuche es erneut.",
-				"success": "Dein Passwort wurde erfolgreich zurückgesetzt."
-			},
-			"message": "Bitte gib ein neues Passwort ein.",
-			"newPassword": "Neues Passwort",
-			"submit": "Passwort zurücksetzen",
-			"title": "Dein Passwort zurücksetzen"
 		}
 	},
 	"blog": {
@@ -156,7 +160,6 @@
 			"cancel": "Abbrechen",
 			"confirm": "Bestätigen"
 		},
-		"locales": {},
 		"menu": {
 			"blog": "Blog",
 			"changelog": "Changelog",
@@ -169,14 +172,6 @@
 			"title": "Auf dieser Seite"
 		}
 	},
-	"createTeam": {
-		"notifications": {}
-	},
-	"dashboard": {
-		"menu": {},
-		"sidebar": {},
-		"userMenu": {}
-	},
 	"faq": {
 		"description": "Hast du irgendwelche Fragen? \nWir sind für dich da.",
 		"title": "Häufig gestellte Fragen"
@@ -187,8 +182,8 @@
 			"otp": "Einmaliges Passwort",
 			"useLink": "oder nutze den folgenden Link:"
 		},
-		"emailChange": {
-			"subject": "Bestätige deine E-Mail-Änderung",
+		"emailVerification": {
+			"subject": "Bestätige deine E-Mail",
 			"body": "Hallo,\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
 			"confirmEmail": "E-Mail bestätigen"
 		},
@@ -209,29 +204,25 @@
 			"confirmEmail": "E-Mail bestätigen"
 		},
 		"newsletterSignup": {
-			"subject": "Willkommen bei unserem Newsletter",
-			"body": "Vielen Dank, dass du dich für den supastarter-Newsletter angemeldet hast. \nWir halten dich mit den neuesten Nachrichten und Updates auf dem Laufenden."
-		},
-		"teamInvitation": {},
-		"emailVerification": {
-			"body": "Hallo!\nbitte klicke auf den unten stehenden Link, um diese neue E-Mail-Adresse zu bestätigen.",
-			"confirmEmail": "E-Mail verifizieren"
+			"body": "Vielen Dank, dass du dich für den supastarter-Newsletter angemeldet hast. \nWir halten dich mit den neuesten Nachrichten und Updates auf dem Laufenden.",
+			"subject": "Willkommen bei unserem Newsletter"
 		},
 		"organizationInvitation": {
-			"body": "Du bist eingeladen worden, der Organisation {Organisationsname} beizutreten. Klicke auf die Schaltfläche unten oder kopiere den Link und füge ihn in den Browser deiner Wahl ein, um die Einladung anzunehmen und der Organisation beizutreten.",
+			"body": "Du wurdest eingeladen, der Organisation {Organisationsname} beizutreten. Klicke auf den Button unten oder kopiere den Link und füge ihn in den Browser deiner Wahl ein, um die Einladung anzunehmen und der Organisation beizutreten.",
 			"headline": "Beitritt zur Organisation {Organisationsname}",
-			"join": "Tritt der Organisation bei"
+			"join": "Tritt der Organisation bei",
+			"subject": "Du wurdest eingeladen, einer Organisation beizutreten"
 		}
 	},
 	"newsletter": {
 		"email": "Email",
 		"hints": {
+			"error": {
+				"message": "Der Newsletter konnte nicht abonniert werden. Bitte versuche es später noch einmal."
+			},
 			"success": {
 				"message": "Danke, dass du unseren Newsletter abonniert hast. \nWir werden dich auf dem Laufenden halten.",
 				"title": "Erfolgreich angemeldet!"
-			},
-			"error": {
-				"message": "Der Newsletter konnte nicht abonniert werden. Bitte versuche es später noch einmal."
 			}
 		},
 		"submit": "Abonnieren",
@@ -250,283 +241,7 @@
 			"accountSetupFailed": "Es tut uns leid, aber wir konnten dein Konto nicht einrichten. \nBitte versuche es später noch einmal."
 		},
 		"step": "Schritt {step} / {total}",
-		"team": {},
 		"title": "Richte dein Konto ein"
-	},
-	"pricing": {
-		"description": "Wähle das passende Paket für dich aus.",
-		"monthly": "Monatlich",
-		"title": "Preise",
-		"yearly": "Jährlich",
-		"products": {
-			"basic": {
-				"description": "Perfekt für den Einstieg",
-				"features": {
-					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"limitedSupport": "Begrenzte Unterstützung",
-					"oneMember": "1 Mitglied"
-				},
-				"title": "Grundlegend"
-			},
-			"lifetime": {
-				"description": "Einmal kaufen. Für immer verwenden.",
-				"features": {
-					"extendSupport": "Erweiterte Unterstützung",
-					"noRecurringCosts": "Keine wiederkehrenden Kosten",
-					"unlimitedMembers": "Unbeschränkte Mitglieder"
-				},
-				"title": "Lebenslang"
-			},
-			"pro": {
-				"description": "Am besten für Teams",
-				"features": {
-					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"fiveMembers": "Bis zu 5 Mitglieder",
-					"fullSupport": "Volle Unterstützung"
-				},
-				"title": "Pro"
-			}
-		},
-		"recommended": "Empfohlen",
-		"purchase": "Kaufen",
-		"subscribe": "Abonnieren"
-	},
-	"settings": {
-		"account": {
-			"avatar": {
-				"description": "Um deinen Avatar zu ändern, klicke auf das Bild auf der rechten Seite dieses Blocks und wähle eine Datei von deinem Computer zum Hochladen aus.",
-				"title": "Dein Avatar"
-			},
-			"changeEmail": {},
-			"changeName": {
-				"title": "Dein Name"
-			},
-			"changePassword": {},
-			"deleteAccount": {
-				"confirmation": "Bist du sicher, dass du dein Konto löschen möchtest?",
-				"description": "Lösche dein Konto dauerhaft. \nSobald Du dein Konto gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
-				"submit": "Konto löschen",
-				"title": "Konto löschen"
-			},
-			"title": "Account",
-			"language": {
-				"description": "Um die Sprache der App für dein Konto zu ändern, wähle eine Sprache aus der Liste aus und klicke auf Speichern.",
-				"notifications": {
-					"error": "Sprache konnte nicht aktualisiert werden",
-					"success": "Sprache wurde erfolgreich aktualisiert"
-				},
-				"title": "Deine Sprache"
-			},
-			"security": {
-				"activeSessions": {
-					"title": "Aktive Sitzungen"
-				},
-				"changePassword": {
-					"currentPassword": "Aktuelles Passwort",
-					"newPassword": "Neues Passwort",
-					"title": "Dein Passwort"
-				},
-				"connectedAccounts": {
-					"connect": "Verbinden",
-					"disconnect": "Trennen",
-					"title": "Verbundene Konten"
-				},
-				"passkeys": {
-					"notifications": {
-						"addPasskey": {
-							"error": {
-								"title": "Kann keinen Hauptschlüssel hinzufügen"
-							},
-							"success": {
-								"title": "Passkey hinzugefügt"
-							}
-						},
-						"deletePasskey": {
-							"error": {
-								"title": "Der Hauptschlüssel konnte nicht gelöscht werden"
-							},
-							"loading": {
-								"title": "Hauptschlüssel löschen..."
-							},
-							"success": {
-								"title": "Passkey gelöscht"
-							}
-						}
-					},
-					"title": "Passwörter"
-				},
-				"title": "Sicherheit"
-			}
-		},
-		"billing": {
-			"cancelSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht gekündigt werden"
-					},
-					"success": {
-						"title": "Das Abonnement wurde gekündigt"
-					}
-				}
-			},
-			"createCustomerPortal": {
-				"label": "Rechnungsdetails verwalten",
-				"notifications": {
-					"error": {
-						"title": "Es konnte keine Kundenportalsitzung erstellt werden. \nBitte versuche es erneut."
-					}
-				}
-			},
-			"pauseSubscription": {
-				"label": "Pausieren",
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht pausiert werden. \nBitte versuche es erneut."
-					},
-					"success": {
-						"title": "Das Abonnement wurde pausiert."
-					}
-				}
-			},
-			"resumeSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht fortgesetzt werden"
-					},
-					"success": {
-						"title": "Das Abonnement wurde wieder aufgenommen"
-					}
-				}
-			},
-			"subscription": {
-				"cancel": "Kündigen",
-				"freePlan": {},
-				"status": {
-					"active": "Aktiv",
-					"canceled": "Gekündigt",
-					"expired": "Ausgelaufen",
-					"incomplete": "Unvollständig",
-					"past_due": "Überfällig",
-					"paused": "Pausiert",
-					"trialing": "Testversion",
-					"unpaid": "Unbezahlt"
-				},
-				"upgradePlan": "Upgrade deinen Plan"
-			},
-			"title": "Zahlung"
-		},
-		"menu": {
-			"account": {
-				"general": "Allgemein",
-				"title": "Konto",
-				"billing": "Abrechnung",
-				"security": "Sicherheit"
-			},
-			"team": {},
-			"organization": {
-				"billing": "Abrechnung",
-				"general": "Allgemein",
-				"members": "Mitglieder",
-				"title": "Organisation"
-			}
-		},
-		"notifications": {
-			"accountDeleted": "Dein Account wurde gelöscht.",
-			"accountNotDeleted": "Wir konnten Dein Konto nicht löschen. \nBitte versuche es später noch einmal.",
-			"avatarNotUpdated": "Wir konnten deinen Avatar nicht aktualisieren. \nBitte versuche es erneut.",
-			"avatarUpdated": "Dein Avatar wurde aktualisiert.",
-			"nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal.",
-			"nameUpdated": "Dein Name wurde geändert.",
-			"passwordNotUpdated": "Wir konnten dein Passwort nicht aktualisieren. \nBitte versuche es erneut.",
-			"passwordUpdated": "Dein Passwort wurde aktualisiert."
-		},
-		"save": "Speichern",
-		"sections": {},
-		"team": {
-			"changeName": {},
-			"deleteTeam": {},
-			"members": {
-				"invitations": {},
-				"inviteMember": {
-					"notifications": {
-						"error": {},
-						"success": {}
-					}
-				},
-				"notifications": {
-					"removeMember": {
-						"error": {},
-						"loading": {},
-						"success": {}
-					},
-					"revokeInvitation": {
-						"error": {},
-						"loading": {},
-						"success": {}
-					},
-					"updateMembership": {
-						"error": {},
-						"loading": {},
-						"success": {}
-					}
-				},
-				"roles": {}
-			}
-		}
-	},
-	"zod": {
-		"errors": {
-			"custom": {},
-			"invalid_type": "{expected} erwartet, {received} erhalten",
-			"invalid_type_received_undefined": "Darf nicht leer sein",
-			"invalid_literal": "Ungültiger Literalwert, {expected} erwartet",
-			"unrecognized_keys": "Unbekannte Schlüssel im Objekt: {keys}",
-			"invalid_union": "Ungültige Eingabe",
-			"invalid_union_discriminator": "Ungültiger Diskriminatorwert, {options} erwartet",
-			"invalid_enum_value": "Ungültiger Enum-Wert. {options} erwartet, {received} erhalten",
-			"invalid_arguments": "Ungültige Funktionsargumente",
-			"invalid_return_type": "Ungültiger Funktionsrückgabewert",
-			"invalid_date": "Ungültiges Datum",
-			"invalid_intersection_types": "Schnittmengenergebnisse konnten nicht zusammengeführt werden",
-			"not_multiple_of": "Zahl muss ein Vielfaches von {multipleOf} sein",
-			"not_finite": "Zahl muss endlich sein",
-			"invalid_string": {
-				"startsWith": "Ungültige Eingabe: muss mit \"{startsWith}\" beginnen",
-				"endsWith": "Ungültige Eingabe: muss mit \"{endsWith}\" enden"
-			},
-			"too_small": {
-				"array": {},
-				"string": {},
-				"number": {},
-				"set": {},
-				"date": {}
-			},
-			"too_big": {
-				"array": {},
-				"string": {},
-				"number": {},
-				"set": {},
-				"date": {}
-			}
-		},
-		"validations": {},
-		"types": {}
-	},
-	"app": {
-		"menu": {
-			"accountSettings": "Kontoeinstellungen",
-			"admin": "Verwaltung",
-			"aiDemo": "AI-Demo",
-			"organizationSettings": "Einstellungen der Organisation",
-			"start": "Start"
-		},
-		"userMenu": {
-			"accountSettings": "Kontoeinstellungen",
-			"colorMode": "Farbmodus",
-			"documentation": "Dokumentation",
-			"home": "Startseite",
-			"logout": "Abmeldung"
-		}
 	},
 	"organizations": {
 		"createForm": {
@@ -572,6 +287,12 @@
 				"invitations": {
 					"empty": "Es wurden noch keine Mitglieder eingeladen.",
 					"expiresAt": "Läuft am {Datum} ab",
+					"invitationStatus": {
+						"accepted": "Angenommen",
+						"canceled": "Abgebrochen",
+						"pending": "Ausstehend",
+						"rejected": "Abgelehnt"
+					},
 					"revoke": "Einladung widerrufen"
 				},
 				"inviteMember": {
@@ -642,8 +363,214 @@
 			"subtitle": "Willkommen auf der Startseite dieser Organisation!"
 		}
 	},
+	"pricing": {
+		"description": "Wähle das passende Paket für dich aus.",
+		"monthly": "Monatlich",
+		"products": {
+			"basic": {
+				"description": "Perfekt für den Einstieg",
+				"features": {
+					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
+					"limitedSupport": "Begrenzte Unterstützung",
+					"oneMember": "1 Mitglied"
+				},
+				"title": "Grundlegend"
+			},
+			"lifetime": {
+				"description": "Einmal kaufen. Für immer verwenden.",
+				"features": {
+					"extendSupport": "Erweiterte Unterstützung",
+					"noRecurringCosts": "Keine wiederkehrenden Kosten",
+					"unlimitedMembers": "Unbeschränkte Mitglieder"
+				},
+				"title": "Lebenslang"
+			},
+			"pro": {
+				"description": "Am besten für Teams",
+				"features": {
+					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
+					"fiveMembers": "Bis zu 5 Mitglieder",
+					"fullSupport": "Volle Unterstützung"
+				},
+				"title": "Pro"
+			}
+		},
+		"purchase": "Kaufen",
+		"recommended": "Empfohlen",
+		"subscribe": "Abonnieren",
+		"title": "Preise",
+		"yearly": "Jährlich"
+	},
+	"settings": {
+		"account": {
+			"avatar": {
+				"description": "Um deinen Avatar zu ändern, klicke auf das Bild auf der rechten Seite dieses Blocks und wähle eine Datei von deinem Computer zum Hochladen aus.",
+				"title": "Dein Avatar"
+			},
+			"changeName": {
+				"title": "Dein Name"
+			},
+			"deleteAccount": {
+				"confirmation": "Bist du sicher, dass du dein Konto löschen möchtest?",
+				"description": "Lösche dein Konto dauerhaft. \nSobald Du dein Konto gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
+				"submit": "Konto löschen",
+				"title": "Konto löschen"
+			},
+			"language": {
+				"description": "Um die Sprache der App für dein Konto zu ändern, wähle eine Sprache aus der Liste aus und klicke auf Speichern.",
+				"notifications": {
+					"error": "Sprache konnte nicht aktualisiert werden",
+					"success": "Sprache wurde erfolgreich aktualisiert"
+				},
+				"title": "Deine Sprache"
+			},
+			"security": {
+				"activeSessions": {
+					"title": "Aktive Sitzungen"
+				},
+				"changePassword": {
+					"currentPassword": "Aktuelles Passwort",
+					"newPassword": "Neues Passwort",
+					"title": "Dein Passwort"
+				},
+				"connectedAccounts": {
+					"connect": "Verbinden",
+					"disconnect": "Trennen",
+					"title": "Verbundene Konten"
+				},
+				"passkeys": {
+					"notifications": {
+						"addPasskey": {
+							"error": {
+								"title": "Kann keinen Hauptschlüssel hinzufügen"
+							},
+							"success": {
+								"title": "Passkey hinzugefügt"
+							}
+						},
+						"deletePasskey": {
+							"error": {
+								"title": "Der Hauptschlüssel konnte nicht gelöscht werden"
+							},
+							"loading": {
+								"title": "Hauptschlüssel löschen..."
+							},
+							"success": {
+								"title": "Passkey gelöscht"
+							}
+						}
+					},
+					"title": "Passwörter"
+				},
+				"title": "Sicherheit"
+			},
+			"title": "Account"
+		},
+		"billing": {
+			"cancelSubscription": {
+				"notifications": {
+					"error": {
+						"title": "Das Abonnement konnte nicht gekündigt werden"
+					},
+					"success": {
+						"title": "Das Abonnement wurde gekündigt"
+					}
+				}
+			},
+			"createCustomerPortal": {
+				"label": "Rechnungsdetails verwalten",
+				"notifications": {
+					"error": {
+						"title": "Es konnte keine Kundenportalsitzung erstellt werden. \nBitte versuche es erneut."
+					}
+				}
+			},
+			"pauseSubscription": {
+				"label": "Pausieren",
+				"notifications": {
+					"error": {
+						"title": "Das Abonnement konnte nicht pausiert werden. \nBitte versuche es erneut."
+					},
+					"success": {
+						"title": "Das Abonnement wurde pausiert."
+					}
+				}
+			},
+			"resumeSubscription": {
+				"notifications": {
+					"error": {
+						"title": "Das Abonnement konnte nicht fortgesetzt werden"
+					},
+					"success": {
+						"title": "Das Abonnement wurde wieder aufgenommen"
+					}
+				}
+			},
+			"subscription": {
+				"cancel": "Kündigen",
+				"status": {
+					"active": "Aktiv",
+					"canceled": "Gekündigt",
+					"expired": "Ausgelaufen",
+					"incomplete": "Unvollständig",
+					"past_due": "Überfällig",
+					"paused": "Pausiert",
+					"trialing": "Testversion",
+					"unpaid": "Unbezahlt"
+				},
+				"upgradePlan": "Upgrade deinen Plan"
+			},
+			"title": "Zahlung"
+		},
+		"menu": {
+			"account": {
+				"billing": "Abrechnung",
+				"general": "Allgemein",
+				"security": "Sicherheit",
+				"title": "Konto"
+			},
+			"organization": {
+				"billing": "Abrechnung",
+				"general": "Allgemein",
+				"members": "Mitglieder",
+				"title": "Organisation"
+			}
+		},
+		"notifications": {
+			"accountDeleted": "Dein Account wurde gelöscht.",
+			"accountNotDeleted": "Wir konnten Dein Konto nicht löschen. \nBitte versuche es später noch einmal.",
+			"avatarNotUpdated": "Wir konnten deinen Avatar nicht aktualisieren. \nBitte versuche es erneut.",
+			"avatarUpdated": "Dein Avatar wurde aktualisiert.",
+			"nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal.",
+			"nameUpdated": "Dein Name wurde geändert.",
+			"passwordNotUpdated": "Wir konnten dein Passwort nicht aktualisieren. \nBitte versuche es erneut.",
+			"passwordUpdated": "Dein Passwort wurde aktualisiert."
+		},
+		"save": "Speichern"
+	},
 	"start": {
 		"subtitle": "Sieh dir die neuesten Statistiken über dein großartiges Unternehmen an.",
 		"welcome": "Willkommen {name}!"
+	},
+	"zod": {
+		"errors": {
+			"invalid_arguments": "Ungültige Funktionsargumente",
+			"invalid_date": "Ungültiges Datum",
+			"invalid_enum_value": "Ungültiger Enum-Wert. {options} erwartet, {received} erhalten",
+			"invalid_intersection_types": "Schnittmengenergebnisse konnten nicht zusammengeführt werden",
+			"invalid_literal": "Ungültiger Literalwert, {expected} erwartet",
+			"invalid_return_type": "Ungültiger Funktionsrückgabewert",
+			"invalid_string": {
+				"endsWith": "Ungültige Eingabe: muss mit \"{endsWith}\" enden",
+				"startsWith": "Ungültige Eingabe: muss mit \"{startsWith}\" beginnen"
+			},
+			"invalid_type": "{expected} erwartet, {received} erhalten",
+			"invalid_type_received_undefined": "Darf nicht leer sein",
+			"invalid_union": "Ungültige Eingabe",
+			"invalid_union_discriminator": "Ungültiger Diskriminatorwert, {options} erwartet",
+			"not_finite": "Zahl muss endlich sein",
+			"not_multiple_of": "Zahl muss ein Vielfaches von {multipleOf} sein",
+			"unrecognized_keys": "Unbekannte Schlüssel im Objekt: {keys}"
+		}
 	}
 }
