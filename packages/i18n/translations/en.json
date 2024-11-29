@@ -187,22 +187,22 @@
 			"useLink": "or use the following link:"
 		},
 		"emailChange": {
-			"body": "Hey {name},\nyou changed your email. Please click the link below to confirm your new email address.",
+			"body": "Hey,\nyou changed your email. Please click the link below to confirm your new email address.",
 			"confirmEmail": "Confirm email",
 			"subject": "Confirm your email change"
 		},
 		"forgotPassword": {
-			"body": "Hey {name},\nyou requested a password reset.\n\nYou can either enter the one-time password below manually in the application",
+			"body": "Hey,\nyou requested a password reset.\n\nYou can either enter the one-time password below manually in the application",
 			"resetPassword": "Reset password",
 			"subject": "Reset your password"
 		},
 		"magicLink": {
-			"body": "Hey {name},\nyou requested a login email from supastarter.\n\nYou can either enter the one-time password below manually in the application",
+			"body": "Hey,\nyou requested a login email from supastarter.\n\nYou can either enter the one-time password below manually in the application",
 			"login": "Login",
 			"subject": "Login to supastarter"
 		},
 		"newUser": {
-			"body": "Hey {name},\nthanks for signing up for supastarter.\n\nTo start using our app, please confirm your email address by clicking the link below.",
+			"body": "Hey,\nthanks for signing up for supastarter.\n\nTo start using our app, please confirm your email address by clicking the link below.",
 			"confirmEmail": "Confirm email",
 			"subject": "Welcome to supastarter"
 		},
