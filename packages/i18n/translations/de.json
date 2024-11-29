@@ -202,23 +202,23 @@
 		},
 		"emailChange": {
 			"subject": "Bestätige deine E-Mail-Änderung",
-			"body": "Hallo {name},\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
+			"body": "Hallo,\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
 			"confirmEmail": "E-Mail bestätigen"
 		},
 		"forgotPassword": {
 			"subject": "Setze dein Passwort zurück",
-			"body": "Hallo {Name},\n\ndu hast eine Passwortzurücksetzung beantragt.\n\n\nDu kannst das unten stehende Einmalpasswort entweder manuell in der Anwendung eingeben",
+			"body": "Hallo,\n\ndu hast eine Passwortzurücksetzung beantragt.\n\n\nDu kannst das unten stehende Einmalpasswort entweder manuell in der Anwendung eingeben",
 			"resetPassword": "Passwort zurücksetzen"
 		},
 		"magicLink": {
-			"body": "Hey {name},\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
+			"body": "Hey,\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
 			"subject": "Anmeldung bei supastarter",
 			"useLink": "oder nutze den folgenden Link:",
 			"login": "Login"
 		},
 		"newUser": {
 			"subject": "Willkommen bei supastarter",
-			"body": "Hallo {name},\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
+			"body": "Hallo,\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
 			"confirmEmail": "E-Mail bestätigen"
 		},
 		"newsletterSignup": {
