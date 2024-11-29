@@ -41,11 +41,9 @@ export default async function Layout({
 		queryFn: () => session,
 	});
 
-	if (config.organizations.enable) {
+	if (config.organizations.enable && session.session.activeOrganizationId) {
 		await queryClient.prefetchQuery({
-			queryKey: fullOrganizationQueryKey(
-				session.session.activeOrganizationId ?? undefined,
-			),
+			queryKey: fullOrganizationQueryKey(session.session.activeOrganizationId),
 			queryFn: getActiveOrganization,
 		});
 

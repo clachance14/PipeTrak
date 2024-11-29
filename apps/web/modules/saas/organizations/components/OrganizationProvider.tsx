@@ -23,7 +23,9 @@ export function OrganizationProvider({
 	const queryClient = useQueryClient();
 	const { session } = useSession();
 
-	const { data: activeOrganization } = useFullOrganizationQuery();
+	const { data: activeOrganization } = useFullOrganizationQuery(
+		session?.activeOrganizationId ?? undefined,
+	);
 	const { data: allOrganizations } = useOrganizationListQuery();
 
 	const refetchActiveOrganization = async () => {
