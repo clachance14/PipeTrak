@@ -7,6 +7,7 @@ export const OrganizationContext = React.createContext<
 			activeOrganizationUserRole:
 				| ActiveOrganization["members"][number]["role"]
 				| null;
+			isOrganizationAdmin: boolean;
 			loaded: boolean;
 			setActiveOrganization: (organizationId: string | null) => Promise<void>;
 			allOrganizations: Organization[];

@@ -50,7 +50,7 @@ const nextConfig: NextConfig = {
 			...(!config.ui.marketing.enabled
 				? [
 						{
-							source: "/:path((?!app|auth|api).*)*",
+							source: "/:path((?!app|auth|api|image-proxy|onboarding).*)*",
 							destination: "/app",
 							permanent: false,
 						},

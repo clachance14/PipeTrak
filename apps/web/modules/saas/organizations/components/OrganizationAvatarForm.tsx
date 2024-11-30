@@ -22,7 +22,11 @@ export function OrganizationAvatarForm() {
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
-	const { activeOrganization } = useOrganization();
+	const {
+		activeOrganization,
+		refetchActiveOrganization,
+		refetchAllOrganizations,
+	} = useOrganization();
 
 	const getSignedUploadUrlMutation = useSignedUploadUrlMutation();
 
@@ -79,7 +83,8 @@ export function OrganizationAvatarForm() {
 				title: t("settings.notifications.avatarUpdated"),
 			});
 
-			router.refresh();
+			refetchActiveOrganization();
+			refetchAllOrganizations();
 		} catch (e) {
 			toast({
 				variant: "error",
@@ -93,9 +98,9 @@ export function OrganizationAvatarForm() {
 	return (
 		<ActionBlock title={t("settings.account.avatar.title")}>
 			<div className="flex items-center gap-4">
-				<div>
-					<p>{t("settings.account.avatar.description")}</p>
-				</div>
+				<p className="text-muted-foreground text-sm">
+					{t("settings.account.avatar.description")}
+				</p>
 
 				<div className="relative rounded-full" {...getRootProps()}>
 					<input {...getInputProps()} />

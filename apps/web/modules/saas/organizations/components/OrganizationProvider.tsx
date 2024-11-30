@@ -73,8 +73,12 @@ export function OrganizationProvider({
 	}, [allOrganizations, activeOrganization]);
 
 	const activeOrganizationUserRole = activeOrganization?.members.find(
-		(member) => member.id === session?.userId,
+		(member) => member.userId === session?.userId,
 	)?.role;
+
+	const isOrganizationAdmin =
+		!!activeOrganizationUserRole &&
+		["admin", "owner"].includes(activeOrganizationUserRole);
 
 	return (
 		<OrganizationContext.Provider
@@ -82,6 +86,7 @@ export function OrganizationProvider({
 				loaded,
 				activeOrganization: activeOrganization ?? null,
 				activeOrganizationUserRole: activeOrganizationUserRole ?? null,
+				isOrganizationAdmin,
 				allOrganizations: allOrganizations ?? [],
 				setActiveOrganization,
 				refetchActiveOrganization,

@@ -34,7 +34,7 @@
 			"search": "Suche nach einer Organisation...",
 			"title": "Verwalten von Organisationen"
 		},
-		"title": "Verwaltung",
+		"title": "Administration",
 		"users": {
 			"confirmDelete": {
 				"confirm": "Löschen",
@@ -69,9 +69,9 @@
 	"app": {
 		"menu": {
 			"accountSettings": "Kontoeinstellungen",
-			"admin": "Verwaltung",
+			"admin": "Administration",
 			"aiDemo": "AI-Demo",
-			"organizationSettings": "Einstellungen der Organisation",
+			"organizationSettings": "Organisationseinstellungen",
 			"start": "Start"
 		},
 		"userMenu": {
@@ -268,7 +268,7 @@
 			"title": "Deine Organisationen"
 		},
 		"roles": {
-			"admin": "Verwaltung",
+			"admin": "Administration",
 			"member": "Mitglied",
 			"owner": "Eigentümer"
 		},
