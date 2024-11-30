@@ -1,8 +1,9 @@
 "use client";
 
 import { config } from "@repo/config";
+import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
 import { Card } from "@ui/components/card";
-import { ChevronRightIcon, PlusCircleIcon, Users2Icon } from "lucide-react";
+import { ChevronRightIcon, PlusCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useOrganization } from "../hooks/use-organization";
@@ -25,7 +26,11 @@ export function OrganizationsGrid() {
 							setActiveOrganization(organization.id);
 						}}
 					>
-						<Users2Icon className="mb-2 block size-8 text-primary opacity-50" />
+						<OrganizationAvatar
+							name={organization.name}
+							avatarUrl={organization.logo}
+							className="mb-2 size-16 border"
+						/>
 						<span className="flex items-center gap-1 text-base leading-tight">
 							<span className="block font-medium">{organization.name}</span>
 							<ChevronRightIcon className="size-4" />
