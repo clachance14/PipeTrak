@@ -2,7 +2,10 @@
 
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import { useRouter } from "@shared/hooks/router";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -17,7 +20,6 @@ import {
 import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useOrganization } from "../hooks/use-organization";
 import { OrganizationAvatar } from "./OrganizationAvatar";
 
 export function OrganzationSelect({
@@ -27,8 +29,9 @@ export function OrganzationSelect({
 }) {
 	const t = useTranslations();
 	const { user } = useSession();
-	const { activeOrganization, allOrganizations, setActiveOrganization } =
-		useOrganization();
+	const router = useRouter();
+	const { activeOrganization } = useActiveOrganization();
+	const { data: allOrganizations } = useOrganizationListQuery();
 
 	if (!user) {
 		return null;
@@ -71,7 +74,7 @@ export function OrganzationSelect({
 						value={activeOrganization?.id ?? user.id}
 						onValueChange={(value: string) => {
 							if (value === user.id) {
-								setActiveOrganization(null);
+								router.replace("/app");
 							}
 						}}
 					>
@@ -94,9 +97,9 @@ export function OrganzationSelect({
 					</DropdownMenuRadioGroup>
 					<DropdownMenuSeparator />
 					<DropdownMenuRadioGroup
-						value={activeOrganization?.id}
-						onValueChange={(organizationId: string) => {
-							setActiveOrganization(organizationId);
+						value={activeOrganization?.slug}
+						onValueChange={(organizationSlug: string) => {
+							router.replace(`/app/${organizationSlug}`);
 						}}
 					>
 						<DropdownMenuLabel className="text-muted-foreground text-xs">
@@ -104,8 +107,8 @@ export function OrganzationSelect({
 						</DropdownMenuLabel>
 						{allOrganizations?.map((organization) => (
 							<DropdownMenuRadioItem
-								key={organization.id}
-								value={organization.id}
+								key={organization.slug}
+								value={organization.slug}
 								className="flex cursor-pointer items-center justify-center gap-2 pl-3"
 							>
 								<div className="flex flex-1 items-center justify-start gap-2">
@@ -127,7 +130,7 @@ export function OrganzationSelect({
 								className="!text-primary cursor-pointer text-sm"
 							>
 								<Link href="/app/new-organization">
-									<PlusIcon className="mr-2 size-6 rounded-full bg-primary/20 p-1" />
+									<PlusIcon className="mr-2 size-6 rounded-md bg-primary/20 p-1" />
 									{t("organizations.organizationSelect.createNewOrganization")}
 								</Link>
 							</DropdownMenuItem>

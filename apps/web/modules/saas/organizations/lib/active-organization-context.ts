@@ -1,7 +1,7 @@
-import type { ActiveOrganization, Organization } from "@repo/auth";
+import type { ActiveOrganization } from "@repo/auth";
 import React from "react";
 
-export const OrganizationContext = React.createContext<
+export const ActiveOrganizationContext = React.createContext<
 	| {
 			activeOrganization: ActiveOrganization | null;
 			activeOrganizationUserRole:
@@ -10,9 +10,7 @@ export const OrganizationContext = React.createContext<
 			isOrganizationAdmin: boolean;
 			loaded: boolean;
 			setActiveOrganization: (organizationId: string | null) => Promise<void>;
-			allOrganizations: Organization[];
 			refetchActiveOrganization: () => Promise<void>;
-			refetchAllOrganizations: () => Promise<void>;
 	  }
 	| undefined
 >(undefined);

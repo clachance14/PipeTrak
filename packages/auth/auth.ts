@@ -9,6 +9,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import {
 	admin,
 	magicLink,
+	openAPI,
 	organization,
 	passkey,
 	username,
@@ -50,6 +51,24 @@ export const auth = betterAuth({
 			locale: {
 				type: "string",
 				required: false,
+			},
+		},
+		changeEmail: {
+			enabled: true,
+			sendChangeEmailVerification: async (
+				{ user: { email, name }, url },
+				request,
+			) => {
+				const locale = getLocaleFromRequest(request);
+				await sendEmail({
+					to: email,
+					templateId: "emailVerification",
+					context: {
+						url,
+						name,
+					},
+					locale,
+				});
 			},
 		},
 	},
@@ -142,6 +161,7 @@ export const auth = betterAuth({
 				});
 			},
 		}),
+		openAPI(),
 	],
 	onAPIError: {
 		onError(error, ctx) {
@@ -159,3 +179,5 @@ export type ActiveOrganization = typeof auth.$Infer.ActiveOrganization;
 export type Organization = typeof auth.$Infer.Organization;
 
 export type OrganizationMemberRole = typeof auth.$Infer.Member.role;
+
+export type OrganizationInvitationStatus = typeof auth.$Infer.Invitation.status;

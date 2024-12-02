@@ -15,7 +15,6 @@ import {
 import { PasswordInput } from "@ui/components/password-input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,7 +27,7 @@ export function ChangePasswordForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
 	const router = useRouter();
-	const [password, setPassword] = useState("");
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -37,7 +36,7 @@ export function ChangePasswordForm() {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(async (values) =>
+	const onSubmit = form.handleSubmit(async (values) => {
 		authClient.changePassword(
 			{
 				...values,
@@ -47,20 +46,24 @@ export function ChangePasswordForm() {
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.notifications.passwordUpdated"),
+						title: t(
+							"settings.account.security.changePassword.notifications.success",
+						),
 					});
-					setPassword("");
+					form.reset({});
 					router.refresh();
 				},
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.notifications.passwordNotUpdated"),
+						title: t(
+							"settings.account.security.changePassword.notifications.error",
+						),
 					});
 				},
 			},
-		),
-	);
+		);
+	});
 
 	return (
 		<Card>
@@ -71,43 +74,49 @@ export function ChangePasswordForm() {
 			</CardHeader>
 			<Form {...form}>
 				<CardContent>
-					<form onSubmit={onSubmit} className="grid grid-cols-1 gap-4">
-						<FormField
-							control={form.control}
-							name="currentPassword"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										{t(
-											"settings.account.security.changePassword.currentPassword",
-										)}
-									</FormLabel>
+					<form onSubmit={onSubmit}>
+						<div className="grid grid-cols-1 gap-4">
+							<FormField
+								control={form.control}
+								name="currentPassword"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t(
+												"settings.account.security.changePassword.currentPassword",
+											)}
+										</FormLabel>
 
-									<FormControl>
-										<PasswordInput {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+										<FormControl>
+											<PasswordInput {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-						<FormField
-							control={form.control}
-							name="newPassword"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										{t("settings.account.security.changePassword.newPassword")}
-									</FormLabel>
-									<FormControl>
-										<PasswordInput {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<div className=" mt-6 flex justify-end border-t pt-3">
-							<Button type="submit">{t("settings.save")}</Button>
+							<FormField
+								control={form.control}
+								name="newPassword"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t(
+												"settings.account.security.changePassword.newPassword",
+											)}
+										</FormLabel>
+										<FormControl>
+											<PasswordInput {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<div className=" mt-6 flex justify-end border-t pt-3">
+								<Button type="submit" loading={form.formState.isSubmitting}>
+									{t("settings.save")}
+								</Button>
+							</div>
 						</div>
 					</form>
 				</CardContent>

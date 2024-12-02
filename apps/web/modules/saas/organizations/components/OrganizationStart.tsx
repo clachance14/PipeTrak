@@ -8,7 +8,7 @@ export default function OrganizationStart() {
 
 	return (
 		<div className="@container">
-			<div className="grid @xl:grid-cols-3 gap-4">
+			<div className="grid @2xl:grid-cols-3 gap-4">
 				<StatsTile
 					title="New clients"
 					value={344}

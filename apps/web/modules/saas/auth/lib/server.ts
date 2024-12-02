@@ -11,8 +11,11 @@ export const getSession = cache(async () => {
 	return session;
 });
 
-export const getActiveOrganization = cache(async () => {
+export const getActiveOrganization = cache(async (slug: string) => {
 	const activeOrganization = await auth.api.getFullOrganization({
+		query: {
+			organizationSlug: slug,
+		},
 		headers: await headers(),
 	});
 
@@ -25,4 +28,21 @@ export const getOrganizationList = cache(async () => {
 	});
 
 	return organizationList;
+});
+
+export const getUserAccounts = cache(async () => {
+	const userAccounts = await auth.api.listUserAccounts({
+		headers: await headers(),
+	});
+
+	return userAccounts;
+});
+
+export const getOrganizationBySlug = cache(async (slug: string) => {
+	const organization = await auth.api.getFullOrganization({
+		headers: await headers(),
+		slug,
+	});
+
+	return organization;
 });

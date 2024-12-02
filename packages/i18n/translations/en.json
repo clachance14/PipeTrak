@@ -145,11 +145,6 @@
 			"signIn": "Sign in",
 			"submit": "Create account",
 			"title": "Create an account"
-		},
-		"verifyOtp": {
-			"hints": {
-				"verificationFailed": "We are sorry, the password you entered is invalid. Please try again."
-			}
 		}
 	},
 	"blog": {
@@ -408,17 +403,36 @@
 	"settings": {
 		"account": {
 			"avatar": {
-				"description": "To change your avatar click the picture on the right side of this block and select a file from your computer to upload.",
-				"title": "Your avatar"
+				"description": "To change your avatar click the picture in this block and select a file from your computer to upload.",
+				"title": "Your avatar",
+				"notifications": {
+					"error": "Could not update avatar",
+					"success": "Avatar was updated successfully"
+				}
+			},
+			"changeEmail": {
+				"notifications": {
+					"error": "Could not update email",
+					"success": "Email was updated successfully"
+				},
+				"title": "Your email"
 			},
 			"changeName": {
-				"title": "Your name"
+				"title": "Your name",
+				"notifications": {
+					"error": "Could not update name",
+					"success": "Name was updated successfully"
+				}
 			},
 			"deleteAccount": {
 				"confirmation": "Are you sure you want to delete your account?",
 				"description": "Permanently delete your account. Once you delete your account, there is no going back. To confirm, please enter your password below:",
 				"submit": "Delete account",
-				"title": "Delete account"
+				"title": "Delete account",
+				"notifications": {
+					"error": "Could not delete account",
+					"success": "Account was deleted successfully"
+				}
 			},
 			"language": {
 				"description": "To change the language of the app for your account, select a language from the list and click save.",
@@ -435,7 +449,20 @@
 				"changePassword": {
 					"currentPassword": "Current password",
 					"newPassword": "New password",
-					"title": "Your password"
+					"title": "Your password",
+					"notifications": {
+						"success": "Password was updated successfully",
+						"error": "Could not update password"
+					}
+				},
+				"setPassword": {
+					"title": "Your password",
+					"description": "You have not set a password yet. To set one, you need to go through the password reset flow. Click the button below to send an email to reset your password and follow the instructions in the email.",
+					"submit": "Set password",
+					"notifications": {
+						"success": "Password was set successfully",
+						"error": "Could not set password"
+					}
 				},
 				"connectedAccounts": {
 					"connect": "Connect",
@@ -539,16 +566,6 @@
 				"members": "Members",
 				"title": "Organization"
 			}
-		},
-		"notifications": {
-			"accountDeleted": "Your account has been deleted.",
-			"accountNotDeleted": "We were unable to delete your account. Please try again later.",
-			"avatarNotUpdated": "We were unable to update your avatar. Please try again.",
-			"avatarUpdated": "Your avatar has been updated.",
-			"nameUpdateFailed": "Could not update your name. Please try again later.",
-			"nameUpdated": "Your name has been updated.",
-			"passwordNotUpdated": "We were unable to update your password. Please try again.",
-			"passwordUpdated": "Your password has been updated."
 		},
 		"save": "Save"
 	},

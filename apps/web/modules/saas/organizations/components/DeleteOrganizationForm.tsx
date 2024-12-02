@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
-import { useOrganization } from "@saas/organizations/hooks/use-organization";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useRouter } from "@shared/hooks/router";
 import {
@@ -22,7 +22,7 @@ export function DeleteOrganizationForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
 	const router = useRouter();
-	const { activeOrganization, setActiveOrganization } = useOrganization();
+	const { activeOrganization, setActiveOrganization } = useActiveOrganization();
 	const [submitting, setSubmitting] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 

@@ -2,17 +2,19 @@
 
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
 import { Spinner } from "@shared/components/Spinner";
 import { useRouter } from "@shared/hooks/router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuid } from "uuid";
 import { CropImageDialog } from "../../settings/components/CropImageDialog";
-import { useOrganization } from "../hooks/use-organization";
 import { OrganizationAvatar } from "./OrganizationAvatar";
 
 export function OrganizationAvatarForm() {
@@ -22,12 +24,9 @@ export function OrganizationAvatarForm() {
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
-	const {
-		activeOrganization,
-		refetchActiveOrganization,
-		refetchAllOrganizations,
-	} = useOrganization();
-
+	const { activeOrganization, refetchActiveOrganization } =
+		useActiveOrganization();
+	const queryClient = useQueryClient();
 	const getSignedUploadUrlMutation = useSignedUploadUrlMutation();
 
 	const { getRootProps, getInputProps } = useDropzone({
@@ -80,15 +79,17 @@ export function OrganizationAvatarForm() {
 
 			toast({
 				variant: "success",
-				title: t("settings.notifications.avatarUpdated"),
+				title: t("settings.account.avatar.notifications.success"),
 			});
 
 			refetchActiveOrganization();
-			refetchAllOrganizations();
+			queryClient.invalidateQueries({
+				queryKey: organizationListQueryKey,
+			});
 		} catch (e) {
 			toast({
 				variant: "error",
-				title: t("settings.notifications.avatarNotUpdated"),
+				title: t("settings.account.avatar.notifications.error"),
 			});
 		} finally {
 			setUploading(false);

@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import * as React from "react";
 
 import { Spinner } from "@shared/components/Spinner";
@@ -7,7 +7,7 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
 const buttonVariants = cva(
-	"flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+	"flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&>svg+svg]:hidden",
 	{
 		variants: {
 			variant: {
@@ -64,7 +64,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				disabled={disabled ?? loading}
 				{...props}
 			>
-				{loading ? <Spinner className="size-4 text-inherit" /> : children}
+				{loading && <Spinner className="mr-1.5 size-4 text-inherit" />}
+				<Slottable>{children}</Slottable>
 			</Comp>
 		);
 	},

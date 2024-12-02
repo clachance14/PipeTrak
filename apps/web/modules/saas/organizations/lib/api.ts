@@ -1,8 +1,9 @@
+import type {} from "@repo/auth";
 import { authClient } from "@repo/auth/client";
 import { apiClient } from "@shared/lib/api-client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const organizationListQueryKey = ["organizations"] as const;
+export const organizationListQueryKey = ["user", "organizations"] as const;
 export const useOrganizationListQuery = () => {
 	return useQuery({
 		queryKey: organizationListQueryKey,
@@ -18,10 +19,39 @@ export const useOrganizationListQuery = () => {
 	});
 };
 
-export const fullOrganizationQueryKey = (id?: string) =>
-	id ? (["fullOrganization", id] as const) : (["activeOrganization"] as const);
+export const activeOrganizationQueryKey = (slug: string) =>
+	["user", "activeOrganization", slug] as const;
+export const useActiveOrganizationQuery = (
+	slug: string,
+	options?: {
+		enabled?: boolean;
+	},
+) => {
+	return useQuery({
+		queryKey: activeOrganizationQueryKey(slug),
+		queryFn: async () => {
+			const { data, error } = await authClient.organization.getFullOrganization(
+				{
+					query: {
+						organizationSlug: slug,
+					},
+				},
+			);
+
+			if (error) {
+				throw new Error(error.message || "Failed to fetch active organization");
+			}
+
+			return data;
+		},
+		enabled: options?.enabled,
+	});
+};
+
+export const fullOrganizationQueryKey = (id: string) =>
+	["fullOrganization", id] as const;
 export const useFullOrganizationQuery = (
-	id?: string,
+	id: string,
 	options?: {
 		enabled?: boolean;
 	},

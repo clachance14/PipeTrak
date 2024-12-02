@@ -1,7 +1,7 @@
 "use client";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
-import { useOrganization } from "@saas/organizations/hooks/use-organization";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
@@ -21,7 +21,7 @@ export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
-	const { activeOrganization } = useOrganization();
+	const { activeOrganization } = useActiveOrganization();
 
 	const { useSidebarLayout } = config.ui.saas;
 
@@ -70,7 +70,7 @@ export function NavBar() {
 	return (
 		<nav
 			className={cn("w-full", {
-				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[250px]":
+				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px]":
 					useSidebarLayout,
 			})}
 		>

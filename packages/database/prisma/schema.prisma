@@ -35,6 +35,7 @@ model User {
   passkeys           Passkey[]
   invitations        Invitation[]
   purchases          Purchase[]
+  memberships        Member[]
 
   @@unique([email])
   @@unique([username])
@@ -130,6 +131,7 @@ model Member {
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   role           String
   createdAt      DateTime
 

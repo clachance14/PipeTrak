@@ -36,14 +36,14 @@ export function DeleteAccountForm() {
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.notifications.accountDeleted"),
+						title: t("settings.account.deleteAccount.notifications.success"),
 					});
 					router.replace("/");
 				},
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.notifications.accountNotDeleted"),
+						title: t("settings.account.deleteAccount.notifications.error"),
 					});
 				},
 				onResponse: (response) => {

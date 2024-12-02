@@ -1,8 +1,10 @@
 "use client";
 import { authClient } from "@repo/auth/client";
-import { useOrganization } from "@saas/organizations/hooks/use-organization";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useRouter } from "@shared/hooks/router";
+import { useQueryClient } from "@tanstack/react-query";
 import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
@@ -12,7 +14,8 @@ export function ChangeOrganizationNameForm() {
 	const t = useTranslations();
 	const router = useRouter();
 	const { toast } = useToast();
-	const { activeOrganization, refetchAllOrganizations } = useOrganization();
+	const queryClient = useQueryClient();
+	const { activeOrganization } = useActiveOrganization();
 	const [submitting, setSubmitting] = useState(false);
 	const [name, setName] = useState(activeOrganization?.name);
 
@@ -38,7 +41,9 @@ export function ChangeOrganizationNameForm() {
 						),
 					});
 
-					await refetchAllOrganizations();
+					queryClient.invalidateQueries({
+						queryKey: organizationListQueryKey,
+					});
 					router.refresh();
 				},
 				onError: () => {

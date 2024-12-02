@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@repo/config";
-import { useOrganization } from "@saas/organizations/hooks/use-organization";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { usePurchasesQuery } from "@saas/payments/lib/api";
 import { ActionBlock } from "@saas/shared/components/ActionBlock";
 import { useProductInformation } from "@shared/hooks/product-information";
@@ -19,7 +19,7 @@ export function PurchasesOverview({
 	const format = useFormatter();
 	const t = useTranslations();
 	const productInformation = useProductInformation();
-	const { activeOrganization, loaded } = useOrganization();
+	const { activeOrganization, loaded } = useActiveOrganization();
 
 	const { data: purchases } = usePurchasesQuery(activeOrganization?.id, {
 		enabled: loaded,

@@ -5,9 +5,9 @@ export function SidebarContentLayout({
 	sidebar,
 }: { children: React.ReactNode; sidebar: ReactNode }) {
 	return (
-		<div className="">
+		<div className="relative">
 			<div className="flex flex-col items-start gap-4 lg:flex-row lg:gap-8">
-				<div className="w-full lg:max-w-[160px]">{sidebar}</div>
+				<div className="top-4 w-full lg:sticky lg:max-w-[160px]">{sidebar}</div>
 
 				<div className="w-full flex-1">{children}</div>
 			</div>

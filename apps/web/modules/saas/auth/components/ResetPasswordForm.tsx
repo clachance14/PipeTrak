@@ -6,6 +6,8 @@ import { Button } from "@ui/components/button";
 import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 
 import { authClient } from "@repo/auth/client";
+import { config } from "@repo/config";
+import { useSession } from "@saas/auth/hooks/use-session";
 import { useRouter } from "@shared/hooks/router";
 import {
 	Form,
@@ -29,6 +31,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function ResetPasswordForm() {
 	const t = useTranslations();
+	const { user } = useSession();
 	const router = useRouter();
 	const [serverError, setServerError] = useState<null | {
 		title: string;
@@ -50,6 +53,10 @@ export function ResetPasswordForm() {
 
 			if (error) {
 				throw error;
+			}
+
+			if (user) {
+				router.push(config.auth.redirectAfterSignIn);
 			}
 		} catch (e) {
 			setServerError({

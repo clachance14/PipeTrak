@@ -4,17 +4,16 @@ import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { sessionQueryKey } from "@saas/auth/lib/api";
 import {
-	fullOrganizationQueryKey,
-	organizationListQueryKey,
-	useFullOrganizationQuery,
-	useOrganizationListQuery,
+	activeOrganizationQueryKey,
+	useActiveOrganizationQuery,
 } from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { type ReactNode, useEffect, useState } from "react";
-import { OrganizationContext } from "../lib/organization-context";
+import { ActiveOrganizationContext } from "../lib/active-organization-context";
 
-export function OrganizationProvider({
+export function ActiveOrganizationProvider({
 	children,
 }: {
 	children: ReactNode;
@@ -22,18 +21,21 @@ export function OrganizationProvider({
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { session } = useSession();
+	const params = useParams();
 
-	const { data: activeOrganization } = useFullOrganizationQuery(
-		session?.activeOrganizationId ?? undefined,
+	const activeOrganizationSlug = params.organizationSlug as string;
+
+	const { data: activeOrganization } = useActiveOrganizationQuery(
+		activeOrganizationSlug,
+		{
+			enabled: !!activeOrganizationSlug,
+		},
 	);
-	const { data: allOrganizations } = useOrganizationListQuery();
 
 	const refetchActiveOrganization = async () => {
-		await queryClient.refetchQueries({ queryKey: fullOrganizationQueryKey() });
-	};
-
-	const refetchAllOrganizations = async () => {
-		await queryClient.refetchQueries({ queryKey: organizationListQueryKey });
+		await queryClient.refetchQueries({
+			queryKey: activeOrganizationQueryKey(activeOrganizationSlug),
+		});
 	};
 
 	const setActiveOrganization = async (organizationId: string | null) => {
@@ -42,8 +44,12 @@ export function OrganizationProvider({
 				organizationId,
 			});
 
+		if (!newActiveOrganization) {
+			return;
+		}
+
 		await queryClient.setQueryData(
-			fullOrganizationQueryKey(),
+			activeOrganizationQueryKey(newActiveOrganization.slug),
 			newActiveOrganization,
 		);
 
@@ -52,25 +58,21 @@ export function OrganizationProvider({
 				...data,
 				session: {
 					...data?.session,
-					activeOrganizationId: organizationId,
+					activeOrganizationId: newActiveOrganization.id,
 				},
 			};
 		});
 
-		router.refresh();
+		router.replace(`/app/${newActiveOrganization.slug}`);
 	};
 
-	const [loaded, setLoaded] = useState(allOrganizations !== undefined);
+	const [loaded, setLoaded] = useState(activeOrganization !== undefined);
 
 	useEffect(() => {
-		if (
-			!loaded &&
-			allOrganizations !== undefined &&
-			activeOrganization !== undefined
-		) {
+		if (!loaded && activeOrganization !== undefined) {
 			setLoaded(true);
 		}
-	}, [allOrganizations, activeOrganization]);
+	}, [activeOrganization]);
 
 	const activeOrganizationUserRole = activeOrganization?.members.find(
 		(member) => member.userId === session?.userId,
@@ -81,19 +83,17 @@ export function OrganizationProvider({
 		["admin", "owner"].includes(activeOrganizationUserRole);
 
 	return (
-		<OrganizationContext.Provider
+		<ActiveOrganizationContext.Provider
 			value={{
 				loaded,
 				activeOrganization: activeOrganization ?? null,
 				activeOrganizationUserRole: activeOrganizationUserRole ?? null,
 				isOrganizationAdmin,
-				allOrganizations: allOrganizations ?? [],
 				setActiveOrganization,
 				refetchActiveOrganization,
-				refetchAllOrganizations,
 			}}
 		>
 			{children}
-		</OrganizationContext.Provider>
+		</ActiveOrganizationContext.Provider>
 	);
 }

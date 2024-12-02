@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useCreateOrganizationMutation } from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
@@ -17,7 +18,6 @@ import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useOrganization } from "../hooks/use-organization";
 
 const formSchema = z.object({
 	name: z.string().min(3).max(32),
@@ -33,7 +33,7 @@ export function CreateOrganizationForm({
 	const t = useTranslations();
 	const { toast } = useToast();
 	const router = useRouter();
-	const { setActiveOrganization } = useOrganization();
+	const { setActiveOrganization } = useActiveOrganization();
 	const createOrganizationMutation = useCreateOrganizationMutation();
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),

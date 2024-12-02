@@ -15,19 +15,3 @@ export async function getOrganizationMembership(
 
 	return membership;
 }
-
-export async function getOrganizationMemberships(userId: string) {
-	const memberships = await db.member.findMany({
-		where: { userId },
-	});
-
-	return memberships;
-}
-
-export async function getOrganizationBySlug(slug: string) {
-	const organization = await db.organization.findUnique({
-		where: { slug },
-	});
-
-	return organization;
-}

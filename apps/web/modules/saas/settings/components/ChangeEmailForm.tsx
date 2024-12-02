@@ -12,12 +12,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-	name: z.string().min(3),
+	email: z.string().email(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
-export function ChangeNameForm() {
+export function ChangeEmailForm() {
 	const { user, reloadSession } = useSession();
 	const [submitting, setSubmitting] = useState(false);
 	const { toast } = useToast();
@@ -26,31 +26,28 @@ export function ChangeNameForm() {
 	const form = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: user?.name ?? "",
+			email: user?.email ?? "",
 		},
 	});
 
-	const onSubmit = form.handleSubmit(async ({ name }) => {
+	const onSubmit = form.handleSubmit(async ({ email }) => {
 		setSubmitting(true);
 
-		await authClient.updateUser(
-			{ name },
+		await authClient.changeEmail(
+			{ newEmail: email },
 			{
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.account.changeName.notifications.success"),
+						title: t("settings.account.changeEmail.notifications.success"),
 					});
 
 					reloadSession();
-					form.reset({
-						name,
-					});
 				},
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.account.changeName.notifications.error"),
+						title: t("settings.account.changeEmail.notifications.error"),
 					});
 				},
 				onResponse: () => {
@@ -62,14 +59,14 @@ export function ChangeNameForm() {
 
 	return (
 		<ActionBlock
-			title={t("settings.account.changeName.title")}
+			title={t("settings.account.changeEmail.title")}
 			onSubmit={onSubmit}
 			isSubmitting={submitting}
 			isSubmitDisabled={
-				!form.formState.isValid || !form.formState.dirtyFields.name
+				!form.formState.isValid || !form.formState.dirtyFields.email
 			}
 		>
-			<Input type="text" className="max-w-sm" {...form.register("name")} />
+			<Input type="email" className="max-w-sm" {...form.register("email")} />
 		</ActionBlock>
 	);
 }

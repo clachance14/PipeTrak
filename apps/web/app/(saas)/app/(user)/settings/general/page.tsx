@@ -1,4 +1,5 @@
 import { getSession } from "@saas/auth/lib/server";
+import { ChangeEmailForm } from "@saas/settings/components/ChangeEmailForm";
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
 import { DeleteAccountForm } from "@saas/settings/components/DeleteAccountForm";
 import { UserAvatarForm } from "@saas/settings/components/UserAvatarForm";
@@ -26,6 +27,7 @@ export default async function AccountSettingsPage() {
 			<UserAvatarForm />
 			<UserLanguageForm />
 			<ChangeNameForm />
+			<ChangeEmailForm />
 			<DeleteAccountForm />
 		</div>
 	);

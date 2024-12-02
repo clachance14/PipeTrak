@@ -6,7 +6,6 @@ import { useConfirmationAlert } from "@saas/shared/components/ConfirmationAlertP
 import { Pagination } from "@saas/shared/components/Pagination";
 import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import {} from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
 	flexRender,

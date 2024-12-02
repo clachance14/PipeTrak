@@ -8,7 +8,7 @@ export function AppLayout({ children }: PropsWithChildren) {
 	return (
 		<div
 			className={cn("px-0", [
-				config.ui.saas.useSidebarLayout ? "md:ml-[250px] md:pr-4" : "",
+				config.ui.saas.useSidebarLayout ? "md:ml-[280px] md:pr-4" : "",
 			])}
 		>
 			<NavBar />
@@ -17,7 +17,7 @@ export function AppLayout({ children }: PropsWithChildren) {
 					"container mt-4 max-w-6xl rounded-xl bg-card shadow-sm md:rounded-3xl",
 					[
 						config.ui.saas.useSidebarLayout
-							? "min-h-[calc(100vh-6rem)] py-6 md:min-h-[calc(100vh-5.5rem)]"
+							? "ml-0 min-h-[calc(100vh-6rem)] py-6 md:min-h-[calc(100vh-5.5rem)]"
 							: "py-6",
 					],
 				)}

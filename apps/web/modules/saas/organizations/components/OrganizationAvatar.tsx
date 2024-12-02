@@ -30,6 +30,7 @@ export const OrganizationAvatar = forwardRef<
 					name={name}
 					variant="marble"
 					colors={config.organizations.avatarColors}
+					square
 				/>
 			</AvatarFallback>
 		</Avatar>

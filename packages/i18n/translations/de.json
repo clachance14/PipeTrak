@@ -183,25 +183,24 @@
 			"useLink": "oder nutze den folgenden Link:"
 		},
 		"emailVerification": {
-			"subject": "Bestätige deine E-Mail",
-			"body": "Hallo,\n\nDu hast deine E-Mail-Adresse geändert. \nBitte klicke auf den Link unten, um deine neue E-Mail-Adresse zu bestätigen.",
-			"confirmEmail": "E-Mail bestätigen"
+			"body": "Hallo!\nbitte klicke auf den unten stehenden Link, um diese neue E-Mail-Adresse zu bestätigen.",
+			"confirmEmail": "E-Mail verifizieren",
+			"subject": "E-Mail bestätigen"
 		},
 		"forgotPassword": {
-			"subject": "Setze dein Passwort zurück",
-			"body": "Hallo,\n\ndu hast eine Passwortzurücksetzung beantragt.\n\n\nDu kannst das unten stehende Einmalpasswort entweder manuell in der Anwendung eingeben",
-			"resetPassword": "Passwort zurücksetzen"
+			"body": "Hallo {Name},\n\ndu hast eine Passwortzurücksetzung beantragt.\n\n\nDu kannst das unten stehende Einmalpasswort entweder manuell in der Anwendung eingeben",
+			"resetPassword": "Passwort zurücksetzen",
+			"subject": "Passwort zurücksetzen"
 		},
 		"magicLink": {
-			"body": "Hey,\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
-			"subject": "Anmeldung bei supastarter",
-			"useLink": "oder nutze den folgenden Link:",
-			"login": "Login"
+			"body": "Hey {name},\ndu hast eine Anmelde-E-Mail von supastarter angefordert.\n\nDu kannst entweder das Einmalpasswort unten manuell in der Anwendung eingeben",
+			"login": "Login",
+			"subject": "Login bei supastarter"
 		},
 		"newUser": {
-			"subject": "Willkommen bei supastarter",
-			"body": "Hallo,\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
-			"confirmEmail": "E-Mail bestätigen"
+			"body": "Hallo {name},\n\nVielen Dank, dass du dich bei Supastarter angemeldet hast.\n\n\nUm mit der Nutzung unserer App zu beginnen, bestätige bitte deine E-Mail-Adresse, indem du auf den untenstehenden Link klickst.",
+			"confirmEmail": "E-Mail bestätigen",
+			"subject": "E-Mail bestätigen"
 		},
 		"newsletterSignup": {
 			"body": "Vielen Dank, dass du dich für den supastarter-Newsletter angemeldet hast. \nWir halten dich mit den neuesten Nachrichten und Updates auf dem Laufenden.",
@@ -404,7 +403,7 @@
 	"settings": {
 		"account": {
 			"avatar": {
-				"description": "Um deinen Avatar zu ändern, klicke auf das Bild auf der rechten Seite dieses Blocks und wähle eine Datei von deinem Computer zum Hochladen aus.",
+				"description": "Um deinen Avatar zu ändern, klicke auf das Bild in diesem Block und wähle eine Datei von deinem Computer zum Hochladen aus.",
 				"title": "Dein Avatar"
 			},
 			"changeName": {
@@ -431,7 +430,9 @@
 				"changePassword": {
 					"currentPassword": "Aktuelles Passwort",
 					"newPassword": "Neues Passwort",
-					"title": "Dein Passwort"
+					"title": "Dein Passwort",
+					"noPasswordSet": "Sie haben noch kein Passwort festgelegt. Um ein solches festzulegen, müssen Sie den Ablauf der Passwortrücksetzung durchlaufen. Klicken Sie auf die Schaltfläche unten, um eine E-Mail zum Zurücksetzen Ihres Passworts zu senden, und folgen Sie den Anweisungen in der E-Mail.",
+					"setPassword": "Passwort setzen"
 				},
 				"connectedAccounts": {
 					"connect": "Verbinden",
@@ -464,7 +465,14 @@
 				},
 				"title": "Sicherheit"
 			},
-			"title": "Account"
+			"title": "Account",
+			"changeEmail": {
+				"notifications": {
+					"error": "E-Mail konnte nicht aktualisiert werden",
+					"success": "E-Mail wurde erfolgreich aktualisiert"
+				},
+				"title": "Deine E-Mail"
+			}
 		},
 		"billing": {
 			"cancelSubscription": {

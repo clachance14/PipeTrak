@@ -12,24 +12,24 @@ export function UserAvatarForm() {
 	return (
 		<ActionBlock title={t("settings.account.avatar.title")}>
 			<div className="flex items-center gap-4">
-				<p className="text-muted-foreground text-sm">
-					{t("settings.account.avatar.description")}
-				</p>
-
 				<UserAvatarUpload
 					onSuccess={() => {
 						toast({
 							variant: "success",
-							title: t("settings.notifications.avatarUpdated"),
+							title: t("settings.account.avatar.notifications.success"),
 						});
 					}}
 					onError={() => {
 						toast({
 							variant: "error",
-							title: t("settings.notifications.avatarNotUpdated"),
+							title: t("settings.account.avatar.notifications.error"),
 						});
 					}}
 				/>
+
+				<p className="text-muted-foreground text-sm">
+					{t("settings.account.avatar.description")}
+				</p>
 			</div>
 		</ActionBlock>
 	);

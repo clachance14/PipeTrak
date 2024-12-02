@@ -29,13 +29,10 @@ import {
 	SettingsIcon,
 	SunIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
-
-const { locales } = config.i18n;
 
 export function UserMenu({
 	showUserName,
@@ -43,12 +40,8 @@ export function UserMenu({
 	showUserName?: boolean;
 }) {
 	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-	const currentLocale = useLocale();
 	const t = useTranslations();
-	const { user, session, reloadSession } = useSession();
-	const [locale, setLocale] = useState<string>(currentLocale);
+	const { user, reloadSession } = useSession();
 	const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
 	const [theme, setTheme] = useState<string>(currentTheme ?? "system");
 

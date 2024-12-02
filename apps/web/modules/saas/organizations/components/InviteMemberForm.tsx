@@ -65,6 +65,7 @@ export function InviteMemberForm({
 				...values,
 				organizationId,
 			});
+
 			form.reset();
 			router.refresh();
 

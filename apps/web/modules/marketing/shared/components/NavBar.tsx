@@ -126,7 +126,7 @@ export function NavBar() {
 									<MenuIcon className="size-4" />
 								</Button>
 							</SheetTrigger>
-							<SheetContent className="w-[250px]" side="right">
+							<SheetContent className="w-[280px]" side="right">
 								<SheetTitle />
 								<div className="flex flex-col items-start justify-center">
 									{menuItems.map((menuItem) => (

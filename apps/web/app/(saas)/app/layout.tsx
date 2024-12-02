@@ -1,16 +1,9 @@
 import { config } from "@repo/config";
 import { SessionProvider } from "@saas/auth/components/SessionProvider";
 import { sessionQueryKey } from "@saas/auth/lib/api";
-import {
-	getActiveOrganization,
-	getOrganizationList,
-	getSession,
-} from "@saas/auth/lib/server";
-import { OrganizationProvider } from "@saas/organizations/components/OrganizationProvider";
-import {
-	fullOrganizationQueryKey,
-	organizationListQueryKey,
-} from "@saas/organizations/lib/api";
+import { getOrganizationList, getSession } from "@saas/auth/lib/server";
+import { ActiveOrganizationProvider } from "@saas/organizations/components/ActiveOrganizationProvider";
+import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { AppLayout } from "@saas/shared/components/AppLayout";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
 import { getQueryClient } from "@shared/lib/server";
@@ -23,8 +16,10 @@ export const revalidate = 0;
 
 export default async function Layout({
 	children,
+	params,
 }: PropsWithChildren<{ params: Promise<{ organizationSlug?: string }> }>) {
 	const session = await getSession();
+	const { organizationSlug } = await params;
 
 	const queryClient = getQueryClient();
 
@@ -41,12 +36,7 @@ export default async function Layout({
 		queryFn: () => session,
 	});
 
-	if (config.organizations.enable && session.session.activeOrganizationId) {
-		await queryClient.prefetchQuery({
-			queryKey: fullOrganizationQueryKey(session.session.activeOrganizationId),
-			queryFn: getActiveOrganization,
-		});
-
+	if (config.organizations.enable) {
 		await queryClient.prefetchQuery({
 			queryKey: organizationListQueryKey,
 			queryFn: getOrganizationList,
@@ -56,11 +46,11 @@ export default async function Layout({
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<SessionProvider>
-				<OrganizationProvider>
+				<ActiveOrganizationProvider>
 					<ConfirmationAlertProvider>
 						<AppLayout>{children}</AppLayout>
 					</ConfirmationAlertProvider>
-				</OrganizationProvider>
+				</ActiveOrganizationProvider>
 			</SessionProvider>
 		</HydrationBoundary>
 	);
