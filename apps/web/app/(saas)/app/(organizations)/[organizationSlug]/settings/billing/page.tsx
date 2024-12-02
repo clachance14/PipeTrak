@@ -2,6 +2,7 @@ import { getActiveOrganization } from "@saas/auth/lib/server";
 import { PurchasesOverview } from "@saas/settings/components/PurchasesOverview";
 import { UpgradePlan } from "@saas/settings/components/UpgradePlan";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
 	const t = await getTranslations();
@@ -11,11 +12,16 @@ export async function generateMetadata() {
 	};
 }
 
-export default async function BillingSettingsPage() {
-	const organization = await getActiveOrganization();
+export default async function BillingSettingsPage({
+	params,
+}: {
+	params: Promise<{ organizationSlug: string }>;
+}) {
+	const { organizationSlug } = await params;
+	const organization = await getActiveOrganization(organizationSlug);
 
 	if (!organization) {
-		return null;
+		return notFound();
 	}
 
 	return (

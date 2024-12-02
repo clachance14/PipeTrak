@@ -39,7 +39,7 @@ import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
 export function OrganizationMembersList({
 	organizationId,
 }: {
-	organizationId?: string;
+	organizationId: string;
 }) {
 	const t = useTranslations();
 	const router = useRouter();

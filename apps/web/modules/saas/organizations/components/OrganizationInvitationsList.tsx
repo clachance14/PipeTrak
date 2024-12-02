@@ -45,7 +45,7 @@ import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
 export function OrganizationInvitationsList({
 	organizationId,
 }: {
-	organizationId?: string;
+	organizationId: string;
 }) {
 	const t = useTranslations();
 	const { toast } = useToast();

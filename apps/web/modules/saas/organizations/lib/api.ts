@@ -1,4 +1,4 @@
-import type {} from "@repo/auth";
+import type { OrganizationMetadata } from "@repo/auth";
 import { authClient } from "@repo/auth/client";
 import { apiClient } from "@shared/lib/api-client";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -100,11 +100,15 @@ export const createOrganizationMutationKey = ["create-organization"] as const;
 export const useCreateOrganizationMutation = () => {
 	return useMutation({
 		mutationKey: createOrganizationMutationKey,
-		mutationFn: async ({ name }: { name: string }) =>
+		mutationFn: async ({
+			name,
+			metadata,
+		}: { name: string; metadata?: OrganizationMetadata }) =>
 			(
 				await authClient.organization.create({
 					name,
 					slug: await generateOrganizationSlug(name),
+					metadata,
 				})
 			).data,
 	});
@@ -120,14 +124,21 @@ export const useUpdateOrganizationMutation = () => {
 		mutationFn: async ({
 			id,
 			name,
+			metadata,
 			updateSlug,
-		}: { id: string; name: string; updateSlug?: boolean }) =>
+		}: {
+			id: string;
+			name: string;
+			metadata?: OrganizationMetadata;
+			updateSlug?: boolean;
+		}) =>
 			(
 				await authClient.organization.update({
 					organizationId: id,
 					data: {
 						name,
 						slug: updateSlug ? await generateOrganizationSlug(name) : undefined,
+						metadata,
 					},
 				})
 			).data,

@@ -11,8 +11,13 @@ export async function generateMetadata() {
 	};
 }
 
-export default async function OrganizationSettingsPage() {
-	const organization = await getActiveOrganization();
+export default async function OrganizationSettingsPage({
+	params,
+}: {
+	params: Promise<{ organizationSlug: string }>;
+}) {
+	const { organizationSlug } = await params;
+	const organization = await getActiveOrganization(organizationSlug);
 
 	if (!organization) {
 		return notFound();
