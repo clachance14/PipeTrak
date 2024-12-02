@@ -404,11 +404,11 @@
 		"account": {
 			"avatar": {
 				"description": "To change your avatar click the picture in this block and select a file from your computer to upload.",
-				"title": "Your avatar",
 				"notifications": {
 					"error": "Could not update avatar",
 					"success": "Avatar was updated successfully"
-				}
+				},
+				"title": "Your avatar"
 			},
 			"changeEmail": {
 				"notifications": {
@@ -418,21 +418,21 @@
 				"title": "Your email"
 			},
 			"changeName": {
-				"title": "Your name",
 				"notifications": {
 					"error": "Could not update name",
 					"success": "Name was updated successfully"
-				}
+				},
+				"title": "Your name"
 			},
 			"deleteAccount": {
 				"confirmation": "Are you sure you want to delete your account?",
 				"description": "Permanently delete your account. Once you delete your account, there is no going back. To confirm, please enter your password below:",
-				"submit": "Delete account",
-				"title": "Delete account",
 				"notifications": {
 					"error": "Could not delete account",
 					"success": "Account was deleted successfully"
-				}
+				},
+				"submit": "Delete account",
+				"title": "Delete account"
 			},
 			"language": {
 				"description": "To change the language of the app for your account, select a language from the list and click save.",
@@ -449,20 +449,11 @@
 				"changePassword": {
 					"currentPassword": "Current password",
 					"newPassword": "New password",
-					"title": "Your password",
 					"notifications": {
-						"success": "Password was updated successfully",
-						"error": "Could not update password"
-					}
-				},
-				"setPassword": {
-					"title": "Your password",
-					"description": "You have not set a password yet. To set one, you need to go through the password reset flow. Click the button below to send an email to reset your password and follow the instructions in the email.",
-					"submit": "Set password",
-					"notifications": {
-						"success": "Password was set successfully",
-						"error": "Could not set password"
-					}
+						"error": "Could not update password",
+						"success": "Password was updated successfully"
+					},
+					"title": "Your password"
 				},
 				"connectedAccounts": {
 					"connect": "Connect",
@@ -492,6 +483,15 @@
 						}
 					},
 					"title": "Passkeys"
+				},
+				"setPassword": {
+					"description": "You have not set a password yet. To set one, you need to go through the password reset flow. Click the button below to send an email to reset your password and follow the instructions in the email.",
+					"notifications": {
+						"error": "Could not set password",
+						"success": "Password was set successfully"
+					},
+					"submit": "Set password",
+					"title": "Your password"
 				},
 				"title": "Security"
 			},

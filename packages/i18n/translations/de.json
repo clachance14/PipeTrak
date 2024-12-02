@@ -404,14 +404,33 @@
 		"account": {
 			"avatar": {
 				"description": "Um deinen Avatar zu ändern, klicke auf das Bild in diesem Block und wähle eine Datei von deinem Computer zum Hochladen aus.",
+				"notifications": {
+					"error": "Avatar konnte nicht aktualisiert werden",
+					"success": "Avatar wurde erfolgreich aktualisiert"
+				},
 				"title": "Dein Avatar"
 			},
+			"changeEmail": {
+				"notifications": {
+					"error": "E-Mail konnte nicht aktualisiert werden",
+					"success": "E-Mail wurde erfolgreich aktualisiert"
+				},
+				"title": "Deine E-Mail"
+			},
 			"changeName": {
+				"notifications": {
+					"error": "Name konnte nicht aktualisiert werden",
+					"success": "Name wurde erfolgreich aktualisiert"
+				},
 				"title": "Dein Name"
 			},
 			"deleteAccount": {
 				"confirmation": "Bist du sicher, dass du dein Konto löschen möchtest?",
 				"description": "Lösche dein Konto dauerhaft. \nSobald Du dein Konto gelöscht hast, gibt es kein Zurück mehr. \nBitte sei dir sicher, bevor du hier weitermachst.",
+				"notifications": {
+					"error": "Konto konnte nicht gelöscht werden",
+					"success": "Konto wurde erfolgreich gelöscht"
+				},
 				"submit": "Konto löschen",
 				"title": "Konto löschen"
 			},
@@ -430,9 +449,11 @@
 				"changePassword": {
 					"currentPassword": "Aktuelles Passwort",
 					"newPassword": "Neues Passwort",
-					"title": "Dein Passwort",
-					"noPasswordSet": "Sie haben noch kein Passwort festgelegt. Um ein solches festzulegen, müssen Sie den Ablauf der Passwortrücksetzung durchlaufen. Klicken Sie auf die Schaltfläche unten, um eine E-Mail zum Zurücksetzen Ihres Passworts zu senden, und folgen Sie den Anweisungen in der E-Mail.",
-					"setPassword": "Passwort setzen"
+					"notifications": {
+						"error": "Passwort kann nicht aktualisiert werden",
+						"success": "Passwort wurde erfolgreich aktualisiert"
+					},
+					"title": "Dein Passwort"
 				},
 				"connectedAccounts": {
 					"connect": "Verbinden",
@@ -463,16 +484,18 @@
 					},
 					"title": "Passwörter"
 				},
+				"setPassword": {
+					"description": "Du hast noch kein Passwort festgelegt. Um ein solches festzulegen, musst du den Ablauf der Passwortrücksetzung durchlaufen. Klicke auf die Schaltfläche unten, um eine E-Mail zum Zurücksetzen deines Passworts zu senden, und folge den Anweisungen in der E-Mail.",
+					"notifications": {
+						"error": "Passwort konnte nicht gesetzt werden",
+						"success": "Passwort wurde erfolgreich gesetzt"
+					},
+					"submit": "Passwort festlegen",
+					"title": "Dein Passwort"
+				},
 				"title": "Sicherheit"
 			},
-			"title": "Account",
-			"changeEmail": {
-				"notifications": {
-					"error": "E-Mail konnte nicht aktualisiert werden",
-					"success": "E-Mail wurde erfolgreich aktualisiert"
-				},
-				"title": "Deine E-Mail"
-			}
+			"title": "Account"
 		},
 		"billing": {
 			"cancelSubscription": {
@@ -543,16 +566,6 @@
 				"members": "Mitglieder",
 				"title": "Organisation"
 			}
-		},
-		"notifications": {
-			"accountDeleted": "Dein Account wurde gelöscht.",
-			"accountNotDeleted": "Wir konnten Dein Konto nicht löschen. \nBitte versuche es später noch einmal.",
-			"avatarNotUpdated": "Wir konnten deinen Avatar nicht aktualisieren. \nBitte versuche es erneut.",
-			"avatarUpdated": "Dein Avatar wurde aktualisiert.",
-			"nameUpdateFailed": "Dein Name konnte nicht aktualisiert werden. \nBitte versuche es später noch einmal.",
-			"nameUpdated": "Dein Name wurde geändert.",
-			"passwordNotUpdated": "Wir konnten dein Passwort nicht aktualisieren. \nBitte versuche es erneut.",
-			"passwordUpdated": "Dein Passwort wurde aktualisiert."
 		},
 		"save": "Speichern"
 	},
