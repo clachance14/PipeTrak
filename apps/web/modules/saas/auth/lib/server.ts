@@ -12,37 +12,53 @@ export const getSession = cache(async () => {
 });
 
 export const getActiveOrganization = cache(async (slug: string) => {
-	const activeOrganization = await auth.api.getFullOrganization({
-		query: {
-			organizationSlug: slug,
-		},
-		headers: await headers(),
-	});
+	try {
+		const activeOrganization = await auth.api.getFullOrganization({
+			query: {
+				organizationSlug: slug,
+			},
+			headers: await headers(),
+		});
 
-	return activeOrganization;
+		return activeOrganization;
+	} catch (error) {
+		return null;
+	}
 });
 
 export const getOrganizationList = cache(async () => {
-	const organizationList = await auth.api.listOrganizations({
-		headers: await headers(),
-	});
+	try {
+		const organizationList = await auth.api.listOrganizations({
+			headers: await headers(),
+		});
 
-	return organizationList;
+		return organizationList;
+	} catch (error) {
+		return [];
+	}
 });
 
 export const getUserAccounts = cache(async () => {
-	const userAccounts = await auth.api.listUserAccounts({
-		headers: await headers(),
-	});
+	try {
+		const userAccounts = await auth.api.listUserAccounts({
+			headers: await headers(),
+		});
 
-	return userAccounts;
+		return userAccounts;
+	} catch (error) {
+		return [];
+	}
 });
 
 export const getOrganizationBySlug = cache(async (slug: string) => {
-	const organization = await auth.api.getFullOrganization({
-		headers: await headers(),
-		slug,
-	});
+	try {
+		const organization = await auth.api.getFullOrganization({
+			headers: await headers(),
+			slug,
+		});
 
-	return organization;
+		return organization;
+	} catch (error) {
+		return null;
+	}
 });
