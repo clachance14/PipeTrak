@@ -24,13 +24,13 @@
 				"name": "Name der Organisation",
 				"notifications": {
 					"error": "Die Organisation konnte nicht gespeichert werden. Bitte versuche es später noch einmal.",
-					"success": "Die Organisation ist gerettet."
+					"success": "Die Organisation wurde erfolgreich gespeichert."
 				},
 				"save": "Speichern",
 				"updateTitle": "Organisation bearbeiten"
 			},
 			"loading": "Organisationen laden...",
-			"membersCount": "{Zahl} {Zahl, Plural, ein {Mitglied} andere {Mitglieder}}",
+			"membersCount": "{count} {count, plural, one {Mitglied} other {Mitglieder}}",
 			"search": "Suche nach einer Organisation...",
 			"title": "Verwalten von Organisationen"
 		},
