@@ -4,7 +4,6 @@ import { sessionQueryKey } from "@saas/auth/lib/api";
 import { getOrganizationList, getSession } from "@saas/auth/lib/server";
 import { ActiveOrganizationProvider } from "@saas/organizations/components/ActiveOrganizationProvider";
 import { organizationListQueryKey } from "@saas/organizations/lib/api";
-import { AppLayout } from "@saas/shared/components/AppLayout";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
 import { getQueryClient } from "@shared/lib/server";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
@@ -14,12 +13,8 @@ import type { PropsWithChildren } from "react";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function Layout({
-	children,
-	params,
-}: PropsWithChildren<{ params: Promise<{ organizationSlug?: string }> }>) {
+export default async function Layout({ children }: PropsWithChildren) {
 	const session = await getSession();
-	const { organizationSlug } = await params;
 
 	const queryClient = getQueryClient();
 
@@ -47,9 +42,7 @@ export default async function Layout({
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<SessionProvider>
 				<ActiveOrganizationProvider>
-					<ConfirmationAlertProvider>
-						<AppLayout>{children}</AppLayout>
-					</ConfirmationAlertProvider>
+					<ConfirmationAlertProvider>{children}</ConfirmationAlertProvider>
 				</ActiveOrganizationProvider>
 			</SessionProvider>
 		</HydrationBoundary>

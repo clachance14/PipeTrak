@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
-import { OrganizationInvitationInfo } from "@saas/organizations/components/OrganizationInvitationInfo";
+import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
@@ -74,8 +74,8 @@ export function LoginForm() {
 	});
 
 	const redirectPath = invitationId
-		? `/team/invitation?code=${invitationId}`
-		: (redirectTo ?? "/app");
+		? `/app/organization-invitation/${invitationId}`
+		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
 	useEffect(() => {
 		if (sessionLoaded && user) {
@@ -133,7 +133,7 @@ export function LoginForm() {
 				</Alert>
 			) : (
 				<>
-					{invitationId && <OrganizationInvitationInfo className="mb-6" />}
+					{invitationId && <OrganizationInvitationAlert className="mb-6" />}
 
 					<Form {...form}>
 						<form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>

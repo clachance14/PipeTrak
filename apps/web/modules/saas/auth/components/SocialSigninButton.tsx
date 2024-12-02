@@ -3,7 +3,8 @@
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { Button } from "@ui/components/button";
-import { useTranslations } from "next-intl";
+import { useQueryState } from "nuqs";
+import { parseAsString } from "nuqs";
 import { oAuthProviders } from "../constants/oauth-providers";
 
 export function SocialSigninButton({
@@ -13,18 +14,20 @@ export function SocialSigninButton({
 	provider: keyof typeof oAuthProviders;
 	className?: string;
 }) {
-	const t = useTranslations();
+	const [invitationId] = useQueryState("invitationId", parseAsString);
 	const providerData = oAuthProviders[provider];
+
+	const redirectPath = invitationId
+		? `/app/organization-invitation/${invitationId}`
+		: config.auth.redirectAfterSignIn;
+	const callbackURL = new URL(redirectPath, window.location.origin);
 
 	return (
 		<Button
 			onClick={() => {
 				authClient.signIn.social({
 					provider,
-					callbackURL: new URL(
-						config.auth.redirectAfterSignIn,
-						window.location.origin,
-					).toString(),
+					callbackURL: callbackURL.toString(),
 				});
 			}}
 			variant="outline"

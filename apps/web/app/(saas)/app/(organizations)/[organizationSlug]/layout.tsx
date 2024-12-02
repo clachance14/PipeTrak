@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@saas/auth/lib/server";
 import { activeOrganizationQueryKey } from "@saas/organizations/lib/api";
+import { AppWrapper } from "@saas/shared/components/AppWrapper";
 import { getQueryClient } from "@shared/lib/server";
 import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -27,5 +28,5 @@ export default async function OrganizationLayout({
 		queryFn: () => organization,
 	});
 
-	return children;
+	return <AppWrapper>{children}</AppWrapper>;
 }

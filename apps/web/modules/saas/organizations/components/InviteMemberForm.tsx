@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
-import { useRouter } from "@shared/hooks/router";
+import { fullOrganizationQueryKey } from "@saas/organizations/lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import {
@@ -40,7 +41,7 @@ export function InviteMemberForm({
 	organizationId: string;
 }) {
 	const t = useTranslations();
-	const router = useRouter();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const organizationMemberRoles = useOrganizationMemberRoles();
 
@@ -67,7 +68,10 @@ export function InviteMemberForm({
 			});
 
 			form.reset();
-			router.refresh();
+
+			queryClient.invalidateQueries({
+				queryKey: fullOrganizationQueryKey(organizationId),
+			});
 
 			toast({
 				title: t(

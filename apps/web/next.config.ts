@@ -29,8 +29,8 @@ const nextConfig: NextConfig = {
 				permanent: true,
 			},
 			{
-				source: "/app/organization-settings",
-				destination: "/app/organization-settings/general",
+				source: "/app/:organizationSlug/settings",
+				destination: "/app/:organizationSlug/settings/general",
 				permanent: true,
 			},
 			{

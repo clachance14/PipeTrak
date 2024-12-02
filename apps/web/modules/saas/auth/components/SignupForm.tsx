@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
-import { OrganizationInvitationInfo } from "@saas/organizations/components/OrganizationInvitationInfo";
+import { config } from "@repo/config";
+import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useFormErrors } from "@shared/hooks/form-errors";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
@@ -64,8 +65,8 @@ export function SignupForm() {
 	});
 
 	const redirectPath = invitationId
-		? `/team/invitation?code=${invitationId}`
-		: (redirectTo ?? "/app");
+		? `/app/organization-invitation/${invitationId}`
+		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
 	const onSubmit: SubmitHandler<FormValues> = async ({
 		email,
@@ -107,7 +108,7 @@ export function SignupForm() {
 				</Alert>
 			) : (
 				<>
-					{invitationId && <OrganizationInvitationInfo className="mb-6" />}
+					{invitationId && <OrganizationInvitationAlert className="mb-6" />}
 
 					<Form {...form}>
 						<form

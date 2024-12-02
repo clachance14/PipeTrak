@@ -25,12 +25,16 @@ export function NavBar() {
 
 	const { useSidebarLayout } = config.ui.saas;
 
+	const basePath = activeOrganization
+		? `/app/${activeOrganization.slug}`
+		: "/app";
+
 	const menuItems = [
 		{
 			label: t("app.menu.start"),
-			href: "/app",
+			href: basePath,
 			icon: HomeIcon,
-			isActive: pathname === "/app",
+			isActive: pathname === basePath,
 		},
 		{
 			label: t("app.menu.aiDemo"),
@@ -42,9 +46,9 @@ export function NavBar() {
 			? [
 					{
 						label: t("app.menu.organizationSettings"),
-						href: "/app/organization-settings",
+						href: `${basePath}/settings`,
 						icon: SettingsIcon,
-						isActive: pathname.startsWith("/app/organization-settings"),
+						isActive: pathname.startsWith(`${basePath}/settings`),
 					},
 				]
 			: [

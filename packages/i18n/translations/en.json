@@ -253,9 +253,15 @@
 			"subtitle": "Enter a name for your organization to get started. You can change the name later in the organization settings.",
 			"title": "Create an organization"
 		},
-		"organizationInvitation": {
-			"description": "You have been invited to join an organization. By logging in or signing up you will automatically accept the invitation and join the organization.",
-			"title": "Accept organization invitation"
+		"invitationModal": {
+			"description": "You have been invited to join the organization {organizationName}. Do you want to accept the invitation and join the organization?",
+			"title": "Join the organization",
+			"accept": "Accept",
+			"decline": "Decline"
+		},
+		"invitationAlert": {
+			"description": "You need to sign in or create an account to join the organization.",
+			"title": "You have been invited to join an organization."
 		},
 		"organizationSelect": {
 			"createNewOrganization": "Create new organization",
