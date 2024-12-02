@@ -118,8 +118,8 @@ importers:
         specifier: ^8.20.5
         version: 8.20.5(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
       better-auth:
-        specifier: 1.0.8-beta.4
-        version: 1.0.8-beta.4(encoding@0.1.13)
+        specifier: 1.0.8
+        version: 1.0.8(encoding@0.1.13)
       boring-avatars:
         specifier: ^1.11.2
         version: 1.11.2
@@ -436,8 +436,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       better-auth:
-        specifier: 1.0.8-beta.4
-        version: 1.0.8-beta.4(encoding@0.1.13)
+        specifier: 1.0.8
+        version: 1.0.8(encoding@0.1.13)
       cookie:
         specifier: ^1.0.1
         version: 1.0.1
@@ -3817,8 +3817,8 @@ packages:
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
 
-  better-auth@1.0.8-beta.4:
-    resolution: {integrity: sha512-iAJBIwBUxXlytNufLV4J58U5NnAsWnosmiyEiK7EMTALo4a4qihnpcLguR91HACslJlpxm+uRhu5IuugLA5W4g==}
+  better-auth@1.0.8:
+    resolution: {integrity: sha512-hlGagcKbNoGIOg8xO76rbY6rr1/eRF+cXej2peaYMWIF4jEKrtZB41oRN21NEzpxB9W9qXJX44qW86T2GN5ALA==}
 
   better-call@0.3.3-beta.2:
     resolution: {integrity: sha512-pk+dXQGICPphvMKxl1VOWUUDXF4AYC4DQhLFLSBwS/pfgryhfnx1yJhGqApJzy8eJi5aN5+uLSWDGzKJaMuCGQ==}
@@ -10277,7 +10277,7 @@ snapshots:
     dependencies:
       tweetnacl: 0.14.5
 
-  better-auth@1.0.8-beta.4(encoding@0.1.13):
+  better-auth@1.0.8(encoding@0.1.13):
     dependencies:
       '@better-fetch/fetch': 1.1.12
       '@noble/ciphers': 0.6.0
