@@ -20,16 +20,18 @@ export function SocialSigninButton({
 	const redirectPath = invitationId
 		? `/app/organization-invitation/${invitationId}`
 		: config.auth.redirectAfterSignIn;
-	const callbackURL = new URL(redirectPath, window.location.origin);
+
+	const onSignin = () => {
+		const callbackURL = new URL(redirectPath, window.location.origin);
+		authClient.signIn.social({
+			provider,
+			callbackURL: callbackURL.toString(),
+		});
+	};
 
 	return (
 		<Button
-			onClick={() => {
-				authClient.signIn.social({
-					provider,
-					callbackURL: callbackURL.toString(),
-				});
-			}}
+			onClick={() => onSignin()}
 			variant="outline"
 			type="button"
 			className={className}
