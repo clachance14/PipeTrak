@@ -1,5 +1,4 @@
 import { type TranslationValues, useTranslations } from "next-intl";
-import type { UseFormReturn } from "react-hook-form";
 import { ZodIssueCode, ZodParsedType, defaultErrorMap } from "zod";
 import type { ZodErrorMap } from "zod";
 
@@ -194,24 +193,7 @@ export function useFormErrors() {
 		return { message };
 	};
 
-	function setApiErrorsToForm<Form extends UseFormReturn<any, any>>(
-		e: unknown,
-		form: Form,
-		{
-			defaultError,
-			errorMap = zodErrorMap,
-		}: {
-			defaultError: string;
-			errorMap?: ZodErrorMap;
-		},
-	) {
-		form.setError("root", {
-			message: defaultError,
-		});
-	}
-
 	return {
 		zodErrorMap,
-		setApiErrorsToForm,
 	};
 }

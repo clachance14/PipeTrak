@@ -1,7 +1,7 @@
 import { config } from "@repo/config";
 import { logger } from "@repo/logs";
 import type { mailTemplates } from "../emails";
-import { getProvider } from "../provider";
+import { send } from "../provider";
 import type { TemplateId } from "./templates";
 import { getTemplate } from "./templates";
 export async function sendEmail<T extends TemplateId>(params: {
@@ -19,8 +19,6 @@ export async function sendEmail<T extends TemplateId>(params: {
 		context,
 		locale = config.i18n.defaultLocale,
 	} = params;
-
-	const { send } = await getProvider();
 
 	const { html, text, subject } = await getTemplate({
 		templateId,

@@ -22,14 +22,7 @@ export type Config = {
 		redirectAfterLogout: string;
 		sessionCookieMaxAge: number;
 	};
-	mailing: {
-		provider:
-			| "custom"
-			| "console"
-			| "plunk"
-			| "resend"
-			| "postmark"
-			| "nodemailer";
+	mails: {
 		from: string;
 	};
 	storage: {
