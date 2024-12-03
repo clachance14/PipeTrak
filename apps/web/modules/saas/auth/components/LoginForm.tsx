@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
+import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
@@ -55,7 +55,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
 	const t = useTranslations();
-	const { setApiErrorsToForm } = useFormErrors();
+	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const router = useRouter();
 	const { user, loaded: sessionLoaded } = useSession();
 
@@ -106,8 +106,12 @@ export function LoginForm() {
 				}
 			}
 		} catch (e) {
-			setApiErrorsToForm(e, form, {
-				defaultError: t("auth.login.hints.invalidCredentials"),
+			form.setError("root", {
+				message: getAuthErrorMessage(
+					e && typeof e === "object" && "code" in e
+						? (e.code as string)
+						: undefined,
+				),
 			});
 		}
 	};
@@ -148,9 +152,9 @@ export function LoginForm() {
 								form.formState.errors.root?.message && (
 									<Alert variant="error">
 										<AlertTriangleIcon className="size-6" />
-										<AlertDescription>
+										<AlertTitle>
 											{form.formState.errors.root.message}
-										</AlertDescription>
+										</AlertTitle>
 									</Alert>
 								)}
 

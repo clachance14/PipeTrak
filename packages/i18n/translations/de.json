@@ -145,6 +145,10 @@
 			"signIn": "Anmelden",
 			"submit": "Benutzerkonto erstellen",
 			"title": "Ein Konto erstellen"
+		},
+		"errors": {
+			"invalidEmailOrPassword": "Die von dir eingegebenen Anmeldedaten sind ungültig. Bitte überprüfe sie und versuche es erneut.",
+			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
 		}
 	},
 	"blog": {
@@ -253,9 +257,15 @@
 			"subtitle": "Gib einen Namen für deine Organisation ein, um loszulegen. Du kannst den Namen später in den Organisationseinstellungen ändern.",
 			"title": "Erstelle eine Organisation"
 		},
-		"organizationInvitation": {
+		"invitationAlert": {
 			"description": "Du bist eingeladen worden, einer Organisation beizutreten. Wenn du dich anmeldest oder registrierst, akzeptierst du automatisch die Einladung und trittst der Organisation bei.",
 			"title": "Einladung der Organisation annehmen"
+		},
+		"invitationModal": {
+			"accept": "Annehmen",
+			"decline": "Ablehnen",
+			"description": "Du wurdest eingeladen, der Organisation {organizationName} beizutreten. Möchtest du die Einladung annehmen und der Organisation beitreten?",
+			"title": "Organisation beitreten"
 		},
 		"organizationSelect": {
 			"createNewOrganization": "Neue Organisation erstellen",
@@ -583,7 +593,13 @@
 			"invalid_return_type": "Ungültiger Funktionsrückgabewert",
 			"invalid_string": {
 				"endsWith": "Ungültige Eingabe: muss mit \"{endsWith}\" enden",
-				"startsWith": "Ungültige Eingabe: muss mit \"{startsWith}\" beginnen"
+				"startsWith": "Ungültige Eingabe: muss mit \"{startsWith}\" beginnen",
+				"cuid": "Ungültige {validation}",
+				"datetime": "Ungültige {validation}",
+				"email": "Ungültige {validation}",
+				"regex": "Ungültig",
+				"url": "Ungültige {validation}",
+				"uuid": "Ungültige {validation}"
 			},
 			"invalid_type": "{expected} erwartet, {received} erhalten",
 			"invalid_type_received_undefined": "Darf nicht leer sein",
@@ -591,7 +607,95 @@
 			"invalid_union_discriminator": "Ungültiger Diskriminatorwert, {options} erwartet",
 			"not_finite": "Zahl muss endlich sein",
 			"not_multiple_of": "Zahl muss ein Vielfaches von {multipleOf} sein",
-			"unrecognized_keys": "Unbekannte Schlüssel im Objekt: {keys}"
+			"unrecognized_keys": "Unbekannte Schlüssel im Objekt: {keys}",
+			"too_big": {
+				"array": {
+					"exact": "Array muss genau {maximum} Element(e) enthalten",
+					"inclusive": "Array muss höchstens {maximum} Element(e) enthalten",
+					"not_inclusive": "Array muss weniger als {maximum} Element(e) enthalten"
+				},
+				"date": {
+					"exact": "Datum muss genau {- maximum, datetime} sein",
+					"inclusive": "Datum muss kleiner oder gleich {- maximum, datetime} sein",
+					"not_inclusive": "Datum muss kleiner sein als {- maximum, datetime}"
+				},
+				"number": {
+					"exact": "Zahl muss genau {maximum} sein",
+					"inclusive": "Zahl muss kleiner oder gleich {maximum} sein",
+					"not_inclusive": "Zahl muss kleiner sein als {maximum}"
+				},
+				"set": {
+					"exact": "Ungültige Eingabe",
+					"inclusive": "Ungültige Eingabe",
+					"not_inclusive": "Ungültige Eingabe"
+				},
+				"string": {
+					"exact": "String muss genau {maximum} Zeichen enthalten",
+					"inclusive": "Die Zeichenfolge darf höchstens {maximum} Zeichen enthalten",
+					"not_inclusive": "String muss unter {maximum} Zeichen enthalten"
+				}
+			},
+			"too_small": {
+				"array": {
+					"exact": "Array muss genau {minimum} Element(e) enthalten",
+					"inclusive": "Array muss mindestens {minimum} Element(e) enthalten",
+					"not_inclusive": "Array muss mehr als {minimum} Element(e) enthalten"
+				},
+				"date": {
+					"exact": "Datum muss genau {- minimum, datetime} sein",
+					"inclusive": "Datum muss größer oder gleich {- minimum, datetime} sein",
+					"not_inclusive": "Datum muss größer sein als {- minimum, datetime}"
+				},
+				"number": {
+					"exact": "Zahl muss genau {minimum} sein",
+					"inclusive": "Zahl muss größer oder gleich {minimum} sein",
+					"not_inclusive": "Zahl muss größer sein als {minimum}"
+				},
+				"set": {
+					"exact": "Ungültige Eingabe",
+					"inclusive": "Ungültige Eingabe",
+					"not_inclusive": "Ungültige Eingabe"
+				},
+				"string": {
+					"exact": "Zeichenfolge muss genau {minimum} Zeichen enthalten",
+					"inclusive": "Zeichenkette muss mindestens {minimum} Zeichen enthalten",
+					"not_inclusive": "Zeichenfolge muss mehr als {minimum} Zeichen enthalten"
+				}
+			}
+		},
+		"types": {
+			"array": "Array",
+			"bigint": "BigInt",
+			"boolean": "Boolean",
+			"date": "Datum",
+			"float": "Float",
+			"function": "Funktion",
+			"integer": "Integer",
+			"map": "Map",
+			"nan": "NaN",
+			"never": "Nicht definiert",
+			"null": "Null",
+			"number": "Zahl",
+			"object": "Objekt",
+			"promise": "Promise",
+			"set": "Set",
+			"string": "String",
+			"symbol": "Symbol",
+			"undefined": "Undefined",
+			"unknown": "Unbekannt",
+			"void": "Void"
+		},
+		"validations": {
+			"cuid": "Cuid",
+			"cuid2": "Cuid2",
+			"datetime": "Datum",
+			"email": "E-Mail",
+			"emoji": "Emoji",
+			"ip": "IP",
+			"regex": "Regex",
+			"ulid": "Ulid",
+			"url": "URL",
+			"uuid": "Uuid"
 		}
 	}
 }

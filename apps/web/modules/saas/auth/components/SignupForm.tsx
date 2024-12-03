@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
+import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useFormErrors } from "@shared/hooks/form-errors";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
@@ -46,7 +47,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function SignupForm() {
 	const t = useTranslations();
-	const { zodErrorMap, setApiErrorsToForm } = useFormErrors();
+	const { zodErrorMap } = useFormErrors();
+	const { getAuthErrorMessage } = useAuthErrorMessages();
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [invitationId] = useQueryState("invitationId", parseAsString);
@@ -85,9 +87,12 @@ export function SignupForm() {
 				throw error;
 			}
 		} catch (e) {
-			console.error(e);
-			setApiErrorsToForm(e, form, {
-				defaultError: t("auth.signup.hints.signupFailed"),
+			form.setError("root", {
+				message: getAuthErrorMessage(
+					e && typeof e === "object" && "code" in e
+						? (e.code as string)
+						: undefined,
+				),
 			});
 		}
 	};
