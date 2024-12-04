@@ -68,8 +68,8 @@ export default function Wrapper({ children }: PropsWithChildren) {
 					},
 				}}
 			>
-				<Section className="p-1">
-					<Container className="rounded-lg border border-border border-solid bg-card p-6 text-card-foreground">
+				<Section className="bg-background p-4">
+					<Container className="rounded-lg bg-card p-6 text-card-foreground">
 						<Logo />
 						{children}
 					</Container>
