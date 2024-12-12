@@ -40,7 +40,7 @@ export function OrganzationSelect({
 	return (
 		<div className={className}>
 			<DropdownMenu>
-				<DropdownMenuTrigger className="flex w-full items-center justify-between gap-2 rounded-md border px-2 py-1.5 text-left outline-none hover:bg-primary/5 focus-visible:bg-primary/10 focus-visible:ring-none">
+				<DropdownMenuTrigger className="flex w-full items-center justify-between gap-2 rounded-md border bg-card px-2 py-1.5 text-left outline-none focus-visible:bg-primary/10 focus-visible:ring-none">
 					<div className="flex flex-1 items-center justify-start gap-2 text-sm">
 						{activeOrganization ? (
 							<>

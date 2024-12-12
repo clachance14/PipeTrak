@@ -1,4 +1,5 @@
 import { getOrganizationMembership } from "@repo/auth";
+import { type Config, config } from "@repo/config";
 import { PurchaseSchema, db } from "@repo/database";
 import { logger } from "@repo/logs";
 import { createCheckoutLink, createCustomerPortalLink } from "@repo/payments";
@@ -9,6 +10,8 @@ import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
 import { subscriptionRouter } from "./subscription";
+
+const plans = config.payments.plans as Config["payments"]["plans"];
 
 export const paymentsRouter = new Hono()
 	.basePath("/payments")
@@ -80,6 +83,15 @@ export const paymentsRouter = new Hono()
 				c.req.valid("query");
 			const user = c.get("user");
 
+			const plan = Object.entries(plans).find(([planId, plan]) =>
+				plan.prices?.find((price) => price.productId === productId),
+			);
+			const price = plan?.[1].prices?.find(
+				(price) => price.productId === productId,
+			);
+			const trialPeriodDays =
+				price && "trialPeriodDays" in price ? price.trialPeriodDays : undefined;
+
 			try {
 				const checkoutLink = await createCheckoutLink({
 					type,
@@ -88,6 +100,7 @@ export const paymentsRouter = new Hono()
 					name: user.name ?? "",
 					redirectUrl,
 					...(organizationId ? { organizationId } : { userId: user.id }),
+					trialPeriodDays,
 				});
 
 				if (!checkoutLink) {
