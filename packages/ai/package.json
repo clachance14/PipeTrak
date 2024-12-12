@@ -2,14 +2,14 @@
 	"dependencies": {
 		"@ai-sdk/anthropic": "^0.0.56",
 		"@ai-sdk/openai": "^0.0.72",
-		"@ai-sdk/react": "^0.0.70",
-		"ai": "^3.4.33",
+		"@ai-sdk/react": "^1.0.6",
+		"ai": "^4.0.14",
 		"openai": "^4.71.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@types/react": "18.3.12",
 		"@repo/tsconfig": "workspace:*",
+		"@types/react": "19.0.0",
 		"typescript": "5.6.3"
 	},
 	"main": "./index.ts",
