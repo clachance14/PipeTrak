@@ -162,7 +162,7 @@ export function UserList() {
 							<strong className="block">
 								{row.original.name ?? row.original.email}
 							</strong>
-							<small className="flex items-center gap-1 text-muted-foreground">
+							<small className="flex items-center gap-1 text-foreground/60">
 								<span className="block">
 									{!!row.original.name && row.original.email}
 								</span>

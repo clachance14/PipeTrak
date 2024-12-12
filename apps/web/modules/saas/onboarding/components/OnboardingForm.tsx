@@ -41,9 +41,7 @@ export function OnboardingForm() {
 			<h1 className="font-bold text-3xl md:text-4xl">
 				{t("onboarding.title")}
 			</h1>
-			<p className="mt-2 mb-6 text-muted-foreground">
-				{t("onboarding.message")}
-			</p>
+			<p className="mt-2 mb-6 text-foreground/60">{t("onboarding.message")}</p>
 
 			{steps.length > 1 && (
 				<div className="mb-6 flex items-center gap-3">
@@ -51,7 +49,7 @@ export function OnboardingForm() {
 						value={(onboardingStep / steps.length) * 100}
 						className="h-2"
 					/>
-					<span className="shrink-0 text-muted-foreground text-xs">
+					<span className="shrink-0 text-foreground/60 text-xs">
 						{t("onboarding.step", {
 							step: onboardingStep,
 							total: steps.length,

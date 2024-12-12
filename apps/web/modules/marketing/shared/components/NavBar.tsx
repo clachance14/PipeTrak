@@ -58,12 +58,20 @@ export function NavBar() {
 			href: "/#pricing",
 		},
 		{
+			label: t("common.menu.faq"),
+			href: "/#faq",
+		},
+		{
 			label: t("common.menu.blog"),
 			href: "/blog",
 		},
 		{
 			label: t("common.menu.changelog"),
 			href: "/changelog",
+		},
+		{
+			label: t("common.menu.contact"),
+			href: "/contact",
 		},
 		{
 			label: t("common.menu.docs"),
@@ -80,7 +88,7 @@ export function NavBar() {
 		>
 			<div className="container">
 				<div
-					className={`flex items-center justify-stretch gap-6 ${isTop ? "py-8" : "py-4"} transition-[padding] duration-200`}
+					className={`flex items-center justify-stretch gap-6 ${isTop ? "py-6" : "py-4"} transition-[padding] duration-200`}
 				>
 					<div className="flex flex-1 justify-start">
 						<LocaleLink

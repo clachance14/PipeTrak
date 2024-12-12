@@ -1,5 +1,10 @@
-import { PurchasesOverview } from "@saas/settings/components/PurchasesOverview";
-import { UpgradePlan } from "@saas/settings/components/UpgradePlan";
+import { ActivePlan } from "@saas/payments/components/ActivePlan";
+import { ChangePlan } from "@saas/payments/components/ChangePlan";
+import { getActivePlanFromPurchases } from "@saas/payments/lib/active-plan";
+import { purchasesQueryKey } from "@saas/payments/lib/api";
+import { getPurchases } from "@saas/payments/lib/server";
+import { SettingsList } from "@saas/shared/components/SettingsList";
+import { getQueryClient } from "@shared/lib/server";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -11,10 +16,20 @@ export async function generateMetadata() {
 }
 
 export default async function BillingSettingsPage() {
+	const purchases = await getPurchases();
+	const queryClient = getQueryClient();
+
+	await queryClient.prefetchQuery({
+		queryKey: purchasesQueryKey(),
+		queryFn: () => purchases,
+	});
+
+	const activePlan = getActivePlanFromPurchases(purchases);
+
 	return (
-		<>
-			<PurchasesOverview className="mb-4" />
-			<UpgradePlan />
-		</>
+		<SettingsList>
+			<ActivePlan />
+			<ChangePlan activePlanId={activePlan?.id} />
+		</SettingsList>
 	);
 }

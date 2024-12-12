@@ -13,7 +13,7 @@ export function ProductNameGenerator() {
 	const { refetch, data, isFetching } = useQuery({
 		queryKey: ["product-name-generator"],
 		queryFn: async () => {
-			const response = await apiClient.api.ai["generate-product-names"].$get({
+			const response = await apiClient.ai["generate-product-names"].$get({
 				query: { topic },
 			});
 			return response.json();

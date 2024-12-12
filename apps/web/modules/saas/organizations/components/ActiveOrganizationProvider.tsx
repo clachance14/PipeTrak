@@ -1,15 +1,19 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
+import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { sessionQueryKey } from "@saas/auth/lib/api";
 import {
 	activeOrganizationQueryKey,
 	useActiveOrganizationQuery,
 } from "@saas/organizations/lib/api";
+import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { useRouter } from "@shared/hooks/router";
+import { apiClient } from "@shared/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import nProgress from "nprogress";
 import { type ReactNode, useEffect, useState } from "react";
 import { ActiveOrganizationContext } from "../lib/active-organization-context";
 
@@ -38,13 +42,21 @@ export function ActiveOrganizationProvider({
 		});
 	};
 
-	const setActiveOrganization = async (organizationId: string | null) => {
+	const setActiveOrganization = async (organizationSlug: string | null) => {
+		nProgress.start();
 		const { data: newActiveOrganization } =
-			await authClient.organization.setActive({
-				organizationId,
-			});
+			await authClient.organization.setActive(
+				organizationSlug
+					? {
+							organizationSlug,
+						}
+					: {
+							organizationId: null,
+						},
+			);
 
 		if (!newActiveOrganization) {
+			nProgress.done();
 			return;
 		}
 
@@ -52,6 +64,25 @@ export function ActiveOrganizationProvider({
 			activeOrganizationQueryKey(newActiveOrganization.slug),
 			newActiveOrganization,
 		);
+
+		if (config.organizations.enableBilling) {
+			await queryClient.prefetchQuery({
+				queryKey: purchasesQueryKey(newActiveOrganization.id),
+				queryFn: async () => {
+					const response = await apiClient.payments.purchases.$get({
+						query: {
+							organizationId: newActiveOrganization.id,
+						},
+					});
+
+					if (!response.ok) {
+						throw new Error("Failed to fetch purchases");
+					}
+
+					return response.json();
+				},
+			});
+		}
 
 		await queryClient.setQueryData(sessionQueryKey, (data: any) => {
 			return {
@@ -63,7 +94,7 @@ export function ActiveOrganizationProvider({
 			};
 		});
 
-		router.replace(`/app/${newActiveOrganization.slug}`);
+		router.push(`/app/${newActiveOrganization.slug}`);
 	};
 
 	const [loaded, setLoaded] = useState(activeOrganization !== undefined);

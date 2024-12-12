@@ -1,6 +1,7 @@
 import { getActiveOrganization } from "@saas/auth/lib/server";
 import { InviteMemberForm } from "@saas/organizations/components/InviteMemberForm";
 import { OrganizationMembersBlock } from "@saas/organizations/components/OrganizationMembersBlock";
+import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 export async function generateMetadata() {
@@ -24,9 +25,9 @@ export default async function OrganizationSettingsPage({
 	}
 
 	return (
-		<div className="grid grid-cols-1 gap-6">
+		<SettingsList>
 			<InviteMemberForm organizationId={organization.id} />
 			<OrganizationMembersBlock organizationId={organization.id} />
-		</div>
+		</SettingsList>
 	);
 }

@@ -32,14 +32,14 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
 								{
 									title: t("admin.menu.users"),
 									href: "/app/admin/users",
-									icon: <UsersIcon className="size-4 text-primary" />,
+									icon: <UsersIcon className="size-4 opacity-50" />,
 								},
 								...(config.organizations.enable
 									? [
 											{
 												title: t("admin.menu.organizations"),
 												href: "/app/admin/organizations",
-												icon: <Building2Icon className="size-4 text-primary" />,
+												icon: <Building2Icon className="size-4 opacity-50" />,
 											},
 										]
 									: []),

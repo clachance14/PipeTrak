@@ -150,7 +150,7 @@ export function OrganizationMembersList({
 						/>
 						<div>
 							<strong className="block">{row.original.user.name}</strong>
-							<small className="text-muted-foreground">
+							<small className="text-foreground/60">
 								{row.original.user.email}
 							</small>
 						</div>

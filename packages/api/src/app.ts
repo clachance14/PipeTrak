@@ -7,6 +7,7 @@ import { loggerMiddleware } from "./middleware/logger";
 import { adminRouter } from "./routes/admin/router";
 import { aiRouter } from "./routes/ai";
 import { authRouter } from "./routes/auth";
+import { contactRouter } from "./routes/contact/router";
 import { healthRouter } from "./routes/health";
 import { newsletterRouter } from "./routes/newsletter";
 import { organizationsRouter } from "./routes/organizations";
@@ -25,6 +26,7 @@ const appRouter = app
 	.route("/", aiRouter)
 	.route("/", uploadsRouter)
 	.route("/", paymentsRouter)
+	.route("/", contactRouter)
 	.route("/", newsletterRouter)
 	.route("/", organizationsRouter)
 	.route("/", adminRouter)

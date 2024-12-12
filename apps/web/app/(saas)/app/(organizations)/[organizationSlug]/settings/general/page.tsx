@@ -1,6 +1,6 @@
 import { ChangeOrganizationNameForm } from "@saas/organizations/components/ChangeOrganizationNameForm";
-import { DeleteOrganizationForm } from "@saas/organizations/components/DeleteOrganizationForm";
 import { OrganizationAvatarForm } from "@saas/organizations/components/OrganizationAvatarForm";
+import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -13,10 +13,9 @@ export async function generateMetadata() {
 
 export default function OrganizationSettingsPage() {
 	return (
-		<div className="grid grid-cols-1 gap-6">
+		<SettingsList>
 			<OrganizationAvatarForm />
 			<ChangeOrganizationNameForm />
-			<DeleteOrganizationForm />
-		</div>
+		</SettingsList>
 	);
 }

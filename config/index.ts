@@ -92,47 +92,50 @@ export const config = {
 	// Payments
 	payments: {
 		// define the products that should be available in the checkout
-		products: [
-			{
-				type: "subscription",
-				productId: "price_1M9NO0FkmmuOs718SNBdrtPw",
-				referenceId: "basic",
-				interval: "month",
-				price: 9,
-				currency: "USD",
+		plans: {
+			// The free plan is treated differently. It will automatically be assigned if the user has no other plan.
+			free: {
+				availableFor: ["users", "organizations"],
+				isFree: true,
 			},
-			{
-				type: "subscription",
-				productId: "price_1M9NOjFkmmuOs718vaedJF6b",
-				referenceId: "basic",
-				interval: "year",
-				price: 90,
-				currency: "USD",
+			pro: {
+				availableFor: ["users", "organizations"],
+				recommended: true,
+				prices: [
+					{
+						type: "recurring",
+						productId: "price_1M9kHDFkmmuOs718blksnsHJ",
+						interval: "month",
+						amount: 29,
+						currency: "USD",
+						trialPeriodDays: 7,
+					},
+					{
+						type: "recurring",
+						productId: "price_1M9kHqFkmmuOs718XRvjZ8l1",
+						interval: "year",
+						amount: 290,
+						currency: "USD",
+						trialPeriodDays: 7,
+					},
+				],
 			},
-			{
-				type: "subscription",
-				productId: "price_1M9kHDFkmmuOs718blksnsHJ",
-				referenceId: "pro",
-				interval: "month",
-				price: 29,
-				currency: "USD",
+			enterprise: {
+				availableFor: ["users", "organizations"],
+				isEnterprise: true,
 			},
-			{
-				type: "subscription",
-				productId: "price_1M9kHqFkmmuOs718XRvjZ8l1",
-				referenceId: "pro",
-				interval: "year",
-				price: 290,
-				currency: "USD",
-			},
-			{
-				type: "one-time",
-				productId: "price_1PHjoxFkmmuOs718Orzx98rv",
-				referenceId: "lifetime",
-				price: 799,
-				currency: "USD",
-			},
-		],
+			// lifetime: {
+			// 	availableFor: ["users", "organizations"],
+			// 	prices: [
+			// 		{
+			// 			type: "one-time",
+			// 			productId: "price_1PHjoxFkmmuOs718Orzx98rv",
+			// 			amount: 799,
+			// 			currency: "USD",
+			// 		},
+			// 	],
+			// },
+		},
 	},
 } as const satisfies Config;
 

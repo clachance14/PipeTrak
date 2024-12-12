@@ -1,9 +1,9 @@
 "use client";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import {} from "@ui/components/form";
+import {} from "@ui/components/card";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -55,24 +55,15 @@ export function SetPasswordForm() {
 	};
 
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>
-					{t("settings.account.security.setPassword.title")}
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<div>
-					<p className="text-muted-foreground text-sm">
-						{t("settings.account.security.setPassword.description")}
-					</p>
-					<div className=" mt-6 flex justify-end border-t pt-3">
-						<Button type="submit" loading={submitting} onClick={onSubmit}>
-							{t("settings.account.security.setPassword.submit")}
-						</Button>
-					</div>
-				</div>
-			</CardContent>
-		</Card>
+		<SettingsItem
+			title={t("settings.account.security.setPassword.title")}
+			description={t("settings.account.security.setPassword.description")}
+		>
+			<div className="flex justify-end">
+				<Button type="submit" loading={submitting} onClick={onSubmit}>
+					{t("settings.account.security.setPassword.submit")}
+				</Button>
+			</div>
+		</SettingsItem>
 	);
 }

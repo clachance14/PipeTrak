@@ -8,10 +8,10 @@ export const useCancelSubscriptionMutation = () => {
 		mutationKey: cancelSubscriptionMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				typeof apiClient.api.payments.subscription.cancel.$post
+				typeof apiClient.payments.subscription.cancel.$post
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments.subscription.cancel.$post({
+			const response = await apiClient.payments.subscription.cancel.$post({
 				query,
 			});
 
@@ -30,10 +30,10 @@ export const usePauseSubscriptionMutation = () => {
 		mutationKey: pauseSubscriptionMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.payments)["subscription"]["pause"]["$post"]
+				(typeof apiClient.payments)["subscription"]["pause"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments.subscription.pause.$post({
+			const response = await apiClient.payments.subscription.pause.$post({
 				query,
 			});
 
@@ -52,10 +52,10 @@ export const useResumeSubscriptionMutation = () => {
 		mutationKey: resumeSubscriptionMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.payments)["subscription"]["resume"]["$post"]
+				(typeof apiClient.payments)["subscription"]["resume"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments.subscription.resume.$post({
+			const response = await apiClient.payments.subscription.resume.$post({
 				query,
 			});
 
@@ -76,10 +76,10 @@ export const useCreateCustomerPortalLinkMutation = () => {
 		mutationKey: createCustomerPortalLinkMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.payments)["create-customer-portal-link"]["$post"]
+				(typeof apiClient.payments)["create-customer-portal-link"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments[
+			const response = await apiClient.payments[
 				"create-customer-portal-link"
 			].$post({
 				query,
@@ -100,12 +100,10 @@ export const useCreateCheckoutLinkMutation = () => {
 		mutationKey: createCheckoutLinkMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.payments)["create-checkout-link"]["$post"]
+				(typeof apiClient.payments)["create-checkout-link"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments[
-				"create-checkout-link"
-			].$post({
+			const response = await apiClient.payments["create-checkout-link"].$post({
 				query,
 			});
 
@@ -119,7 +117,9 @@ export const useCreateCheckoutLinkMutation = () => {
 };
 
 export const purchasesQueryKey = (organizationId?: string) =>
-	["purchases", organizationId] as const;
+	organizationId
+		? ["organization", "purchases", organizationId]
+		: (["user", "purchases"] as const);
 export const usePurchasesQuery = (
 	organizationId?: string,
 	options?: { enabled?: boolean },
@@ -127,7 +127,7 @@ export const usePurchasesQuery = (
 	return useQuery({
 		queryKey: purchasesQueryKey(organizationId),
 		queryFn: async () => {
-			const response = await apiClient.api.payments.purchases.$get({
+			const response = await apiClient.payments.purchases.$get({
 				query: {
 					organizationId,
 				},
@@ -149,10 +149,10 @@ export const useUpdateSubscriptionMutation = () => {
 		mutationKey: updateSubscriptionMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.payments)["subscription"]["update"]["$post"]
+				(typeof apiClient.payments)["subscription"]["update"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.payments.subscription.update.$post({
+			const response = await apiClient.payments.subscription.update.$post({
 				query,
 			});
 

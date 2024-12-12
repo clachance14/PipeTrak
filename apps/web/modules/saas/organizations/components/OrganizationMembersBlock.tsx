@@ -1,6 +1,5 @@
 "use client";
-
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -16,7 +15,10 @@ export function OrganizationMembersBlock({
 	const [activeTab, setActiveTab] = useState("members");
 
 	return (
-		<ActionBlock title={t("organizations.settings.members.title")}>
+		<SettingsItem
+			title={t("organizations.settings.members.title")}
+			description={t("organizations.settings.members.description")}
+		>
 			<Tabs value={activeTab} onValueChange={(tab) => setActiveTab(tab)}>
 				<TabsList className="mb-4">
 					<TabsTrigger value="members">
@@ -33,6 +35,6 @@ export function OrganizationMembersBlock({
 					<OrganizationInvitationsList organizationId={organizationId} />
 				</TabsContent>
 			</Tabs>
-		</ActionBlock>
+		</SettingsItem>
 	);
 }

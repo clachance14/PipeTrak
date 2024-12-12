@@ -8,7 +8,7 @@ import animatePlugin from "tailwindcss-animate";
 
 export const lightVariables = {
 	colors: {
-		border: "#e8edf4",
+		border: "#e3ebf6",
 		input: "#c7ced8",
 		ring: "#4e6df5",
 		background: "#fafafe",
@@ -29,7 +29,7 @@ export const lightVariables = {
 		"popover-foreground": "#292b35",
 		card: "#ffffff",
 		"card-foreground": "#292b35",
-		highlight: "#8571d8",
+		highlight: "#e5a158",
 		"highlight-foreground": "#ffffff",
 	},
 };
@@ -55,10 +55,10 @@ export const darkVariables = {
 		"accent-foreground": "#f8fafc",
 		popover: "#0d1116",
 		"popover-foreground": "#e9eef3",
-		card: "#1b1f2a",
+		card: "#0d1116",
 		"card-foreground": "#e9eef3",
-		highlight: "#8571d8",
-		"highlight-foreground": "#e9eef3",
+		highlight: "#e5a158",
+		"highlight-foreground": "#ffffff",
 	},
 };
 

@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { fullOrganizationQueryKey } from "@saas/organizations/lib/api";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import {} from "@ui/components/card";
 import {
 	Form,
 	FormControl,
@@ -96,76 +97,69 @@ export function InviteMemberForm({
 	};
 
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>
-					{t("organizations.settings.members.inviteMember.title")}
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="@container">
-						<div className="flex @md:flex-row flex-col gap-2">
-							<div className="flex-1">
-								<FormField
-									control={form.control}
-									name="email"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>
-												{t("organizations.settings.members.inviteMember.email")}
-											</FormLabel>
-											<FormControl>
-												<Input type="email" {...field} />
-											</FormControl>
-										</FormItem>
-									)}
-								/>
-							</div>
-
-							<div>
-								<FormField
-									control={form.control}
-									name="role"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>
-												{t("organizations.settings.members.inviteMember.role")}
-											</FormLabel>
-											<FormControl>
-												<Select
-													onValueChange={field.onChange}
-													defaultValue={field.value}
-												>
-													<SelectTrigger className="w-[180px]">
-														<SelectValue />
-													</SelectTrigger>
-													<SelectContent>
-														{roleOptions.map((option) => (
-															<SelectItem
-																key={option.value}
-																value={option.value}
-															>
-																{option.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-											</FormControl>
-										</FormItem>
-									)}
-								/>
-							</div>
+		<SettingsItem
+			title={t("organizations.settings.members.inviteMember.title")}
+			description={t("organizations.settings.members.inviteMember.description")}
+		>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="@container">
+					<div className="flex @md:flex-row flex-col gap-2">
+						<div className="flex-1">
+							<FormField
+								control={form.control}
+								name="email"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t("organizations.settings.members.inviteMember.email")}
+										</FormLabel>
+										<FormControl>
+											<Input type="email" {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 						</div>
 
-						<div className="mt-6 flex justify-end border-t pt-3">
-							<Button type="submit" loading={form.formState.isSubmitting}>
-								{t("organizations.settings.members.inviteMember.submit")}
-							</Button>
+						<div>
+							<FormField
+								control={form.control}
+								name="role"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t("organizations.settings.members.inviteMember.role")}
+										</FormLabel>
+										<FormControl>
+											<Select
+												onValueChange={field.onChange}
+												defaultValue={field.value}
+											>
+												<SelectTrigger className="w-[180px]">
+													<SelectValue />
+												</SelectTrigger>
+												<SelectContent>
+													{roleOptions.map((option) => (
+														<SelectItem key={option.value} value={option.value}>
+															{option.label}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 						</div>
-					</form>
-				</Form>
-			</CardContent>
-		</Card>
+					</div>
+
+					<div className="mt-4 flex justify-end">
+						<Button type="submit" loading={form.formState.isSubmitting}>
+							{t("organizations.settings.members.inviteMember.submit")}
+						</Button>
+					</div>
+				</form>
+			</Form>
+		</SettingsItem>
 	);
 }

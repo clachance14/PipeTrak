@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@repo/auth/client";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
@@ -81,7 +81,10 @@ export function PasskeysBlock() {
 	};
 
 	return (
-		<ActionBlock title={t("settings.account.security.passkeys.title")}>
+		<SettingsItem
+			title={t("settings.account.security.passkeys.title")}
+			description={t("settings.account.security.passkeys.description")}
+		>
 			<div className="grid grid-cols-1 gap-2">
 				{isPending ? (
 					<>
@@ -122,6 +125,6 @@ export function PasskeysBlock() {
 					Add passkey
 				</Button>
 			</div>
-		</ActionBlock>
+		</SettingsItem>
 	);
 }

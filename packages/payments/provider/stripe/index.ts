@@ -31,7 +31,14 @@ export function getStripeClient() {
 
 export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 	const stripeClient = getStripeClient();
-	const { type, productId, redirectUrl, organizationId, userId } = options;
+	const {
+		type,
+		productId,
+		redirectUrl,
+		organizationId,
+		userId,
+		trialPeriodDays,
+	} = options;
 
 	const metadata = {
 		organization_id: organizationId || null,
@@ -57,6 +64,7 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 			: {
 					subscription_data: {
 						metadata,
+						trial_period_days: trialPeriodDays,
 					},
 				}),
 		metadata,

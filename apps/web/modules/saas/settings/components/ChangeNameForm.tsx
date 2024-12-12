@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
@@ -61,15 +62,22 @@ export function ChangeNameForm() {
 	});
 
 	return (
-		<ActionBlock
-			title={t("settings.account.changeName.title")}
-			onSubmit={onSubmit}
-			isSubmitting={submitting}
-			isSubmitDisabled={
-				!form.formState.isValid || !form.formState.dirtyFields.name
-			}
-		>
-			<Input type="text" className="max-w-sm" {...form.register("name")} />
-		</ActionBlock>
+		<SettingsItem title={t("settings.account.changeName.title")}>
+			<form onSubmit={onSubmit}>
+				<Input type="text" {...form.register("name")} />
+
+				<div className="mt-4 flex justify-end">
+					<Button
+						type="submit"
+						loading={submitting}
+						disabled={
+							!form.formState.isValid || !form.formState.dirtyFields.name
+						}
+					>
+						{t("settings.save")}
+					</Button>
+				</div>
+			</form>
+		</SettingsItem>
 	);
 }

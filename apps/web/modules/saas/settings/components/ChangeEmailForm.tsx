@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
@@ -58,15 +59,30 @@ export function ChangeEmailForm() {
 	});
 
 	return (
-		<ActionBlock
+		<SettingsItem
 			title={t("settings.account.changeEmail.title")}
-			onSubmit={onSubmit}
-			isSubmitting={submitting}
-			isSubmitDisabled={
-				!form.formState.isValid || !form.formState.dirtyFields.email
-			}
+			description={t("settings.account.changeEmail.description")}
 		>
-			<Input type="email" className="max-w-sm" {...form.register("email")} />
-		</ActionBlock>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					onSubmit();
+				}}
+			>
+				<Input type="email" {...form.register("email")} />
+
+				<div className="mt-4 flex justify-end">
+					<Button
+						type="submit"
+						loading={submitting}
+						disabled={
+							!form.formState.isValid || !form.formState.dirtyFields.email
+						}
+					>
+						{t("settings.save")}
+					</Button>
+				</div>
+			</form>
+		</SettingsItem>
 	);
 }

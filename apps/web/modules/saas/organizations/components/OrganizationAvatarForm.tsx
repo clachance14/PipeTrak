@@ -4,7 +4,7 @@ import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { organizationListQueryKey } from "@saas/organizations/lib/api";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
 import { Spinner } from "@shared/components/Spinner";
 import { useRouter } from "@shared/hooks/router";
@@ -97,26 +97,23 @@ export function OrganizationAvatarForm() {
 	};
 
 	return (
-		<ActionBlock title={t("settings.account.avatar.title")}>
-			<div className="flex items-center gap-4">
-				<p className="text-muted-foreground text-sm">
-					{t("settings.account.avatar.description")}
-				</p>
+		<SettingsItem
+			title={t("organizations.settings.logo.title")}
+			description={t("organizations.settings.logo.description")}
+		>
+			<div className="relative rounded-full" {...getRootProps()}>
+				<input {...getInputProps()} />
+				<OrganizationAvatar
+					className="size-24 cursor-pointer text-xl"
+					avatarUrl={activeOrganization.logo}
+					name={activeOrganization.name ?? ""}
+				/>
 
-				<div className="relative rounded-full" {...getRootProps()}>
-					<input {...getInputProps()} />
-					<OrganizationAvatar
-						className="size-24 cursor-pointer text-xl"
-						avatarUrl={activeOrganization.logo}
-						name={activeOrganization.name ?? ""}
-					/>
-
-					{uploading && (
-						<div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
-							<Spinner className="size-6" />
-						</div>
-					)}
-				</div>
+				{uploading && (
+					<div className="absolute inset-0 z-20 flex items-center justify-center bg-card/90">
+						<Spinner className="size-6" />
+					</div>
+				)}
 			</div>
 
 			<CropImageDialog
@@ -125,6 +122,6 @@ export function OrganizationAvatarForm() {
 				onOpenChange={setCropDialogOpen}
 				onCrop={onCrop}
 			/>
-		</ActionBlock>
+		</SettingsItem>
 	);
 }

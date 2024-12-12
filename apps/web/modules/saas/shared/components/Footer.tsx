@@ -6,7 +6,7 @@ export function Footer() {
 	return (
 		<footer
 			className={cn(
-				"container max-w-6xl py-6 text-center text-muted-foreground text-xs",
+				"container max-w-6xl py-6 text-center text-foreground/60 text-xs",
 				[config.ui.saas.useSidebarLayout ? "ml-0" : ""],
 			)}
 		>

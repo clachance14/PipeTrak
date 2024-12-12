@@ -6,6 +6,7 @@ export type CreateCheckoutLink = (params: {
 	redirectUrl?: string;
 	organizationId?: string;
 	userId?: string;
+	trialPeriodDays?: number;
 }) => Promise<string | null>;
 
 export type CreateCustomerPortalLink = (params: {

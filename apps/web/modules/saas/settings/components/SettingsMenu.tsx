@@ -28,7 +28,7 @@ export function SettingsMenu({
 				<div key={i}>
 					<div className="flex items-center justify-start gap-2">
 						{item.avatar}
-						<h2 className="font-semibold text-muted-foreground text-xs">
+						<h2 className="font-semibold text-foreground/60 text-xs">
 							{item.title}
 						</h2>
 					</div>
@@ -39,7 +39,7 @@ export function SettingsMenu({
 								<Link
 									href={subitem.href}
 									className={cn(
-										"lg:-ml-0.5 flex items-center gap-2 border-b-2 py-1.5 text-sm lg:gap-4 lg:border-b-0 lg:border-l-2 lg:pl-2",
+										"lg:-ml-0.5 flex items-center gap-2 border-b-2 py-1.5 text-sm lg:border-b-0 lg:border-l-2 lg:pl-2",
 										isActiveMenuItem(subitem.href)
 											? "border-primary font-bold"
 											: "border-transparent",

@@ -1,3 +1,4 @@
+import { cn } from "@ui/lib";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type React from "react";
@@ -37,7 +38,7 @@ export const Badge = ({
 	status,
 	...props
 }: BadgeProps) => (
-	<span className={badge({ status, className })} {...props}>
+	<span className={cn(badge({ status }), className)} {...props}>
 		{children}
 	</span>
 );

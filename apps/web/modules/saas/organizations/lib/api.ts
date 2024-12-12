@@ -78,7 +78,7 @@ export const useFullOrganizationQuery = (
 };
 
 export const generateOrganizationSlug = async (name: string) => {
-	const response = await apiClient.api.organizations["generate-slug"].$get({
+	const response = await apiClient.organizations["generate-slug"].$get({
 		query: {
 			name,
 		},

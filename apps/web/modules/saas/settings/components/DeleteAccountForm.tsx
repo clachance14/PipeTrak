@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useRouter } from "@shared/hooks/router";
 import {
 	AlertDialog,
@@ -55,14 +55,17 @@ export function DeleteAccountForm() {
 
 	return (
 		<>
-			<ActionBlock
+			<SettingsItem
 				danger
 				title={t("settings.account.deleteAccount.title")}
-				onSubmit={() => setShowConfirmation(true)}
-				submitLabel={t("settings.account.deleteAccount.submit")}
+				description={t("settings.account.deleteAccount.description")}
 			>
-				<p>{t("settings.account.deleteAccount.description")}</p>
-			</ActionBlock>
+				<div className="mt-4 flex justify-end">
+					<Button variant="error" onClick={() => setShowConfirmation(true)}>
+						{t("settings.account.deleteAccount.submit")}
+					</Button>
+				</div>
+			</SettingsItem>
 
 			<AlertDialog
 				open={showConfirmation}

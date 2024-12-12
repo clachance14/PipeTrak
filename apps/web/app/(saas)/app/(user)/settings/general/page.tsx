@@ -1,9 +1,9 @@
 import { getSession } from "@saas/auth/lib/server";
 import { ChangeEmailForm } from "@saas/settings/components/ChangeEmailForm";
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
-import { DeleteAccountForm } from "@saas/settings/components/DeleteAccountForm";
 import { UserAvatarForm } from "@saas/settings/components/UserAvatarForm";
 import { UserLanguageForm } from "@saas/settings/components/UserLanguageForm";
+import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -23,12 +23,11 @@ export default async function AccountSettingsPage() {
 	}
 
 	return (
-		<div className="grid grid-cols-1 gap-4">
+		<SettingsList>
 			<UserAvatarForm />
 			<UserLanguageForm />
 			<ChangeNameForm />
 			<ChangeEmailForm />
-			<DeleteAccountForm />
-		</div>
+		</SettingsList>
 	);
 }

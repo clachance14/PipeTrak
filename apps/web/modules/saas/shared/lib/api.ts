@@ -8,10 +8,10 @@ export const useSignedUploadUrlMutation = () => {
 		mutationKey: signedUploadUrlMutationKey,
 		mutationFn: async (
 			query: InferRequestType<
-				(typeof apiClient.api.uploads)["signed-upload-url"]["$post"]
+				(typeof apiClient.uploads)["signed-upload-url"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.api.uploads["signed-upload-url"].$post({
+			const response = await apiClient.uploads["signed-upload-url"].$post({
 				query,
 			});
 

@@ -9,6 +9,7 @@ import {
 	ChevronRightIcon,
 	HomeIcon,
 	SettingsIcon,
+	UserCog2Icon,
 	UserCogIcon,
 	Wand2Icon,
 } from "lucide-react";
@@ -42,6 +43,12 @@ export function NavBar() {
 			icon: Wand2Icon,
 			isActive: pathname.startsWith("/app/ai-demo"),
 		},
+		{
+			label: t("app.menu.accountSettings"),
+			href: "/app/settings",
+			icon: UserCog2Icon,
+			isActive: pathname.startsWith("/app/settings"),
+		},
 		...(activeOrganization
 			? [
 					{
@@ -51,14 +58,7 @@ export function NavBar() {
 						isActive: pathname.startsWith(`${basePath}/settings`),
 					},
 				]
-			: [
-					{
-						label: t("app.menu.accountSettings"),
-						href: "/app/settings",
-						icon: SettingsIcon,
-						isActive: pathname.startsWith("/app/settings"),
-					},
-				]),
+			: []),
 		...(user?.role === "admin"
 			? [
 					{
@@ -73,20 +73,20 @@ export function NavBar() {
 
 	return (
 		<nav
-			className={cn("w-full", {
-				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px]":
+			className={cn("w-full border-b", {
+				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px] md:border-r md:border-b-0":
 					useSidebarLayout,
 			})}
 		>
 			<div
 				className={cn("container max-w-6xl py-4", {
-					"container max-w-6xl py-4 md:flex md:h-full md:flex-col md:px-4 md:pt-4 md:pb-0":
+					"container max-w-6xl py-4 md:flex md:h-full md:flex-col md:px-6 md:pt-6 md:pb-0":
 						useSidebarLayout,
 				})}
 			>
 				<div className="flex flex-wrap items-center justify-between gap-4">
 					<div
-						className={cn("flex items-center gap-2", {
+						className={cn("flex items-center gap-4 md:gap-2", {
 							"md:flex md:w-full md:flex-col md:items-stretch md:align-stretch":
 								useSidebarLayout,
 						})}
@@ -106,7 +106,9 @@ export function NavBar() {
 								</span>
 
 								<OrganzationSelect
-									className={cn({ "md:mt-2 md:w-full": useSidebarLayout })}
+									className={cn({
+										"md:-mx-2 md:mt-2": useSidebarLayout,
+									})}
 								/>
 							</>
 						)}
@@ -125,7 +127,7 @@ export function NavBar() {
 					className={cn(
 						"no-scrollbar -mx-4 -mb-4 mt-6 flex list-none items-center justify-start gap-4 overflow-x-auto px-4 text-sm",
 						{
-							"md:my-4 md:flex md:flex-col md:items-stretch md:gap-1":
+							"md:mx-0 md:my-4 md:flex md:flex-col md:items-stretch md:gap-1 md:px-0":
 								useSidebarLayout,
 						},
 					)}
@@ -135,20 +137,20 @@ export function NavBar() {
 							<Link
 								href={menuItem.href}
 								className={cn(
-									"flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-1",
+									"flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-3",
 									[
 										menuItem.isActive
 											? "border-primary font-bold"
 											: "border-transparent",
 									],
 									{
-										"md:-mx-4 md:border-b-0 md:border-l-2 md:px-4 md:py-2":
+										"md:-mx-6 md:border-b-0 md:border-l-2 md:px-6 md:py-2":
 											useSidebarLayout,
 									},
 								)}
 							>
 								<menuItem.icon
-									className={`size-4 shrink-0 md:size-5 ${
+									className={`size-4 shrink-0 ${
 										menuItem.isActive ? "text-primary" : "opacity-50"
 									}`}
 								/>
@@ -159,7 +161,7 @@ export function NavBar() {
 				</ul>
 
 				<div
-					className={cn("-mx-4 mt-auto mb-0 hidden p-4", {
+					className={cn("-mx-4 md:-mx-6 mt-auto mb-0 hidden p-4 md:p-4", {
 						"md:block": useSidebarLayout,
 					})}
 				>

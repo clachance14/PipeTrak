@@ -2,7 +2,7 @@ import { webhookHandler as paymentsWebhookHandler } from "@repo/payments";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 
-export const webhooksRouter = new Hono().get(
+export const webhooksRouter = new Hono().post(
 	"/webhooks/payments",
 	describeRoute({
 		tags: ["Webhooks"],

@@ -2,6 +2,7 @@
 
 import { config } from "@repo/config";
 import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { Card } from "@ui/components/card";
 import { ChevronRightIcon, PlusCircleIcon } from "lucide-react";
@@ -10,6 +11,7 @@ import Link from "next/link";
 
 export function OrganizationsGrid() {
 	const t = useTranslations();
+	const { setActiveOrganization } = useActiveOrganization();
 	const { data: allOrganizations } = useOrganizationListQuery();
 
 	return (
@@ -19,21 +21,20 @@ export function OrganizationsGrid() {
 			</h2>
 			<div className="grid @2xl:grid-cols-3 @lg:grid-cols-2 grid-cols-1 gap-4">
 				{allOrganizations?.map((organization) => (
-					<Card key={organization.id}>
-						<Link
-							href={`/app/${organization.slug}`}
-							className="flex items-center gap-4 overflow-hidden p-4"
-						>
-							<OrganizationAvatar
-								name={organization.name}
-								avatarUrl={organization.logo}
-								className="size-12"
-							/>
-							<span className="flex items-center gap-1 text-base leading-tight">
-								<span className="block font-medium">{organization.name}</span>
-								<ChevronRightIcon className="size-4" />
-							</span>
-						</Link>
+					<Card
+						key={organization.id}
+						className="flex cursor-pointer items-center gap-4 overflow-hidden p-4"
+						onClick={() => setActiveOrganization(organization.slug)}
+					>
+						<OrganizationAvatar
+							name={organization.name}
+							avatarUrl={organization.logo}
+							className="size-12"
+						/>
+						<span className="flex items-center gap-1 text-base leading-tight">
+							<span className="block font-medium">{organization.name}</span>
+							<ChevronRightIcon className="size-4" />
+						</span>
 					</Card>
 				))}
 

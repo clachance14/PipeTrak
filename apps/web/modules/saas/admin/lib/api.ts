@@ -17,7 +17,7 @@ export const fetchAdminUsers = async ({
 	currentPage,
 	searchTerm,
 }: FetchAdminUsersParams) => {
-	const response = await apiClient.api.admin.users.$get({
+	const response = await apiClient.admin.users.$get({
 		query: {
 			limit: itemsPerPage.toString(),
 			offset: ((currentPage - 1) * itemsPerPage).toString(),
@@ -55,7 +55,7 @@ export const fetchAdminOrganizations = async ({
 	currentPage,
 	searchTerm,
 }: FetchAdminOrganizationsParams) => {
-	const response = await apiClient.api.admin.organizations.$get({
+	const response = await apiClient.admin.organizations.$get({
 		query: {
 			limit: itemsPerPage.toString(),
 			offset: ((currentPage - 1) * itemsPerPage).toString(),

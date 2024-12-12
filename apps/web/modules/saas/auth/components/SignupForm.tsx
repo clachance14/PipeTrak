@@ -102,9 +102,7 @@ export function SignupForm() {
 			<h1 className="font-bold text-2xl md:text-3xl">
 				{t("auth.signup.title")}
 			</h1>
-			<p className="mt-1 mb-6 text-muted-foreground">
-				{t("auth.signup.message")}
-			</p>
+			<p className="mt-1 mb-6 text-foreground/60">{t("auth.signup.message")}</p>
 
 			{form.formState.isSubmitSuccessful ? (
 				<Alert variant="success">
@@ -214,7 +212,7 @@ export function SignupForm() {
 			)}
 
 			<div className="mt-6 text-center text-sm">
-				<span className="text-muted-foreground">
+				<span className="text-foreground/60">
 					{t("auth.signup.alreadyHaveAccount")}{" "}
 				</span>
 				<Link

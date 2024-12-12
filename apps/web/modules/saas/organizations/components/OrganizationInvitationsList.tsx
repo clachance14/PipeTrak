@@ -63,7 +63,12 @@ export function OrganizationInvitationsList({
 		user?.role === "admin" ||
 		(userOrganizationRole && ["owner", "admin"].includes(userOrganizationRole));
 
-	const invitations = organization?.invitations;
+	const invitations = organization?.invitations
+		?.filter((invitation) => invitation.status !== "canceled")
+		.sort(
+			(a, b) =>
+				new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
+		);
 
 	const revokeInvitation = (invitationId: string) => {
 		const loadingToast = toast({
@@ -125,7 +130,7 @@ export function OrganizationInvitationsList({
 						>
 							{row.original.email}
 						</strong>
-						<small className="flex gap-1 text-muted-foreground">
+						<small className="flex flex-wrap gap-1 text-foreground/60">
 							<span className="flex items-center gap-0.5">
 								<InvitationStatusIcon className="size-3" />
 								{t(

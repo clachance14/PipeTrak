@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@repo/auth/client";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useRouter } from "@shared/hooks/router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
@@ -48,7 +48,10 @@ export function ActiveSessionsBlock() {
 	};
 
 	return (
-		<ActionBlock title={t("settings.account.security.activeSessions.title")}>
+		<SettingsItem
+			title={t("settings.account.security.activeSessions.title")}
+			description={t("settings.account.security.activeSessions.description")}
+		>
 			<div className="grid grid-cols-1 gap-2">
 				{isPending ? (
 					<>
@@ -85,6 +88,6 @@ export function ActiveSessionsBlock() {
 					))
 				)}
 			</div>
-		</ActionBlock>
+		</SettingsItem>
 	);
 }

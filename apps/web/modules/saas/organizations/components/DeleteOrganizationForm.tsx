@@ -2,7 +2,7 @@
 
 import { authClient } from "@repo/auth/client";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useRouter } from "@shared/hooks/router";
 import {
 	AlertDialog,
@@ -62,14 +62,17 @@ export function DeleteOrganizationForm() {
 
 	return (
 		<>
-			<ActionBlock
+			<SettingsItem
 				danger
 				title={t("organizations.settings.deleteOrganization.title")}
-				onSubmit={() => setShowConfirmation(true)}
-				submitLabel={t("organizations.settings.deleteOrganization.submit")}
+				description={t("organizations.settings.deleteOrganization.description")}
 			>
-				<p>{t("organizations.settings.deleteOrganization.description")}</p>
-			</ActionBlock>
+				<div className="mt-4 flex justify-end">
+					<Button variant="error" onClick={() => setShowConfirmation(true)}>
+						{t("organizations.settings.deleteOrganization.submit")}
+					</Button>
+				</div>
+			</SettingsItem>
 
 			<AlertDialog
 				open={showConfirmation}

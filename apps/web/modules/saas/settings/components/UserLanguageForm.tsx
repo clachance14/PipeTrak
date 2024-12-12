@@ -4,7 +4,8 @@ import { updateLocale } from "@i18n/lib/update-locale";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import type { Locale } from "@repo/i18n";
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { useMutation } from "@tanstack/react-query";
 import {
 	Select,
 	SelectContent,
@@ -28,16 +29,23 @@ export function UserLanguageForm() {
 		currentLocale as Locale,
 	);
 
-	const onSubmit = async () => {
-		if (!locale) {
-			return;
-		}
-		try {
+	const updateLocaleMutation = useMutation({
+		mutationFn: async () => {
+			if (!locale) {
+				return;
+			}
+
 			await authClient.updateUser({
 				locale,
 			});
 			await updateLocale(locale);
 			router.refresh();
+		},
+	});
+
+	const saveLocale = async () => {
+		try {
+			await updateLocaleMutation.mutateAsync();
 
 			toast({
 				variant: "success",
@@ -52,32 +60,29 @@ export function UserLanguageForm() {
 	};
 
 	return (
-		<ActionBlock
+		<SettingsItem
 			title={t("settings.account.language.title")}
-			onSubmit={onSubmit}
-			isSubmitDisabled={locale === currentLocale}
+			description={t("settings.account.language.description")}
 		>
-			<div className="flex flex-col items-stretch gap-4">
-				<p className="text-muted-foreground text-sm">
-					{t("settings.account.language.description")}
-				</p>
-
-				<Select
-					value={locale}
-					onValueChange={(value) => setLocale(value as Locale)}
-				>
-					<SelectTrigger className="max-w-sm">
-						<SelectValue />
-					</SelectTrigger>
-					<SelectContent>
-						{Object.entries(locales).map(([key, value]) => (
-							<SelectItem key={key} value={key}>
-								{value.label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-			</div>
-		</ActionBlock>
+			<Select
+				value={locale}
+				onValueChange={(value) => {
+					setLocale(value as Locale);
+					saveLocale();
+				}}
+				disabled={updateLocaleMutation.isPending}
+			>
+				<SelectTrigger>
+					<SelectValue />
+				</SelectTrigger>
+				<SelectContent>
+					{Object.entries(locales).map(([key, value]) => (
+						<SelectItem key={key} value={key}>
+							{value.label}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+		</SettingsItem>
 	);
 }

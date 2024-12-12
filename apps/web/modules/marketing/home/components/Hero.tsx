@@ -10,12 +10,12 @@ export function Hero() {
 	return (
 		<div className="container pt-44 pb-12 text-center lg:pb-16">
 			<div className="mb-4 flex justify-center">
-				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 p-px px-4 py-1 font-normal text-highlight text-sm">
+				<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 bg-card p-px px-4 py-1 font-normal text-highlight text-sm shadow-sm">
 					<span className="flex items-center gap-2 rounded-full font-semibold text-highlight">
 						<span className="size-2 rounded-full bg-highlight" />
 						New:
 					</span>
-					<span className="ml-1 block font-medium">
+					<span className="ml-1 block font-medium text-foreground/60">
 						Amazing feature of your SaaS
 					</span>
 				</div>

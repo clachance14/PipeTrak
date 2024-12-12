@@ -2,6 +2,7 @@ import { config } from "@repo/config";
 import { getActiveOrganization } from "@saas/auth/lib/server";
 import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
+import { PageHeader } from "@saas/shared/components/PageHeader";
 import { SidebarContentLayout } from "@saas/shared/components/SidebarContentLayout";
 import { CreditCardIcon, Settings2Icon, Users2Icon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -37,19 +38,19 @@ export default async function SettingsLayout({
 				{
 					title: t("settings.menu.organization.general"),
 					href: `${organizationSettingsBasePath}/general`,
-					icon: <Settings2Icon className="size-4 text-primary" />,
+					icon: <Settings2Icon className="size-4 opacity-50" />,
 				},
 				{
 					title: t("settings.menu.organization.members"),
 					href: `${organizationSettingsBasePath}/members`,
-					icon: <Users2Icon className="size-4 text-primary" />,
+					icon: <Users2Icon className="size-4 opacity-50" />,
 				},
 				...(config.organizations.enableBilling
 					? [
 							{
 								title: t("settings.menu.organization.billing"),
 								href: `${organizationSettingsBasePath}/billing`,
-								icon: <CreditCardIcon className="size-4 text-primary" />,
+								icon: <CreditCardIcon className="size-4 opacity-50" />,
 							},
 						]
 					: []),
@@ -58,8 +59,14 @@ export default async function SettingsLayout({
 	];
 
 	return (
-		<SidebarContentLayout sidebar={<SettingsMenu menuItems={menuItems} />}>
-			{children}
-		</SidebarContentLayout>
+		<>
+			<PageHeader
+				title={t("organizations.settings.title")}
+				subtitle={t("organizations.settings.subtitle")}
+			/>
+			<SidebarContentLayout sidebar={<SettingsMenu menuItems={menuItems} />}>
+				{children}
+			</SidebarContentLayout>
+		</>
 	);
 }

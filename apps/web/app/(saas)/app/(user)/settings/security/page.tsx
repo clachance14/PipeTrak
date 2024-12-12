@@ -1,8 +1,10 @@
 import { getSession, getUserAccounts } from "@saas/auth/lib/server";
 import { ActiveSessionsBlock } from "@saas/settings/components/ActiveSessionsBlock";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
+import { ConnectedAccountsBlock } from "@saas/settings/components/ConnectedAccountsBlock";
 import { PasskeysBlock } from "@saas/settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@saas/settings/components/SetPassword";
+import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -28,11 +30,11 @@ export default async function AccountSettingsPage() {
 	);
 
 	return (
-		<div className="grid grid-cols-1 gap-4">
-			{/* <ConnectedAccountsBlock /> */}
+		<SettingsList>
 			{userHasPassword ? <ChangePasswordForm /> : <SetPasswordForm />}
+			<ConnectedAccountsBlock />
 			<PasskeysBlock />
 			<ActiveSessionsBlock />
-		</div>
+		</SettingsList>
 	);
 }

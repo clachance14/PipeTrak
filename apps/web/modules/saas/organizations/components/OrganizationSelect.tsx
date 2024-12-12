@@ -1,9 +1,9 @@
 "use client";
-
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
+import { ActivePlanBadge } from "@saas/payments/components/ActivePlanBadge";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { useRouter } from "@shared/hooks/router";
 import {
@@ -30,7 +30,7 @@ export function OrganzationSelect({
 	const t = useTranslations();
 	const { user } = useSession();
 	const router = useRouter();
-	const { activeOrganization } = useActiveOrganization();
+	const { activeOrganization, setActiveOrganization } = useActiveOrganization();
 	const { data: allOrganizations } = useOrganizationListQuery();
 
 	if (!user) {
@@ -47,22 +47,26 @@ export function OrganzationSelect({
 								<OrganizationAvatar
 									name={activeOrganization.name}
 									avatarUrl={activeOrganization.logo}
-									className="hidden size-6 sm:block"
+									className="hidden size-8 sm:block"
 								/>
 								<span className="block flex-1 truncate">
 									{activeOrganization.name}
 								</span>
+								{config.organizations.enableBilling && (
+									<ActivePlanBadge organizationId={activeOrganization.id} />
+								)}
 							</>
 						) : (
 							<>
 								<UserAvatar
-									className="hidden size-6 sm:block"
+									className="hidden size-8 sm:block"
 									name={user.name ?? ""}
 									avatarUrl={user.image}
 								/>
 								<span className="block truncate">
 									{t("organizations.organizationSelect.personalAccount")}
 								</span>
+								{config.users.enableBilling && <ActivePlanBadge />}
 							</>
 						)}
 					</div>
@@ -78,7 +82,7 @@ export function OrganzationSelect({
 							}
 						}}
 					>
-						<DropdownMenuLabel className="text-muted-foreground text-xs">
+						<DropdownMenuLabel className="text-foreground/60 text-xs">
 							{t("organizations.organizationSelect.personalAccount")}
 						</DropdownMenuLabel>
 						<DropdownMenuRadioItem
@@ -87,7 +91,7 @@ export function OrganzationSelect({
 						>
 							<div className="flex flex-1 items-center justify-start gap-2">
 								<UserAvatar
-									className="size-6"
+									className="size-8"
 									name={user.name ?? ""}
 									avatarUrl={user.image}
 								/>
@@ -98,11 +102,11 @@ export function OrganzationSelect({
 					<DropdownMenuSeparator />
 					<DropdownMenuRadioGroup
 						value={activeOrganization?.slug}
-						onValueChange={(organizationSlug: string) => {
-							router.replace(`/app/${organizationSlug}`);
-						}}
+						onValueChange={(organizationSlug: string) =>
+							setActiveOrganization(organizationSlug)
+						}
 					>
-						<DropdownMenuLabel className="text-muted-foreground text-xs">
+						<DropdownMenuLabel className="text-foreground/60 text-xs">
 							{t("organizations.organizationSelect.organizations")}
 						</DropdownMenuLabel>
 						{allOrganizations?.map((organization) => (
@@ -113,7 +117,7 @@ export function OrganzationSelect({
 							>
 								<div className="flex flex-1 items-center justify-start gap-2">
 									<OrganizationAvatar
-										className="size-6"
+										className="size-8"
 										name={organization.name}
 										avatarUrl={organization.logo}
 									/>

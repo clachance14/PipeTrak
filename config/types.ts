@@ -42,21 +42,32 @@ export type Config = {
 		};
 	};
 	payments: {
-		products: Array<
-			{
-				productId: string;
-				referenceId: string;
-				price: number;
-				currency?: string;
-			} & (
-				| {
-						type: "one-time";
-				  }
-				| {
-						type: "subscription";
-						interval: "month" | "year";
-				  }
-			)
-		>;
+		plans: {
+			[id: string]: {
+				availableFor: Array<"users" | "organizations">;
+				hidden?: boolean;
+				isFree?: boolean;
+				isEnterprise?: boolean;
+				recommended?: boolean;
+				prices?: Array<
+					{
+						productId: string;
+						amount: number;
+						currency: string;
+						hidden?: boolean;
+					} & (
+						| {
+								type: "recurring";
+								interval: "month" | "year" | "week";
+								intervalCount?: number;
+								trialPeriodDays?: number;
+						  }
+						| {
+								type: "one-time";
+						  }
+					)
+				>;
+			};
+		};
 	};
 };

@@ -70,7 +70,7 @@ export function ForgotPasswordForm() {
 			<h1 className="font-extrabold text-2xl md:text-3xl">
 				{t("auth.forgotPassword.title")}
 			</h1>
-			<p className="mt-1 mb-6 text-muted-foreground">
+			<p className="mt-1 mb-6 text-foreground/60">
 				{t("auth.forgotPassword.message")}{" "}
 			</p>
 
