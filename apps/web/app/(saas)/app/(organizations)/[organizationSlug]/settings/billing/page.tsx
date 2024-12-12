@@ -1,6 +1,7 @@
 import { getActiveOrganization } from "@saas/auth/lib/server";
+import { ActivePlan } from "@saas/payments/components/ActivePlan";
 import { ChangePlan } from "@saas/payments/components/ChangePlan";
-import { PurchasesOverview } from "@saas/settings/components/PurchasesOverview";
+import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -25,9 +26,9 @@ export default async function BillingSettingsPage({
 	}
 
 	return (
-		<>
-			<PurchasesOverview className="mb-4" />
-			<ChangePlan activeOrganizationId={organization.id} />
-		</>
+		<SettingsList>
+			<ActivePlan organizationId={organization.id} />
+			<ChangePlan />
+		</SettingsList>
 	);
 }
