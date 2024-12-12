@@ -20,7 +20,7 @@ import {
 import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { OrganizationAvatar } from "./OrganizationAvatar";
+import { OrganizationLogo } from "./OrganizationLogo";
 
 export function OrganzationSelect({
 	className,
@@ -44,9 +44,9 @@ export function OrganzationSelect({
 					<div className="flex flex-1 items-center justify-start gap-2 text-sm">
 						{activeOrganization ? (
 							<>
-								<OrganizationAvatar
+								<OrganizationLogo
 									name={activeOrganization.name}
-									avatarUrl={activeOrganization.logo}
+									logoUrl={activeOrganization.logo}
 									className="hidden size-8 sm:block"
 								/>
 								<span className="block flex-1 truncate">
@@ -116,10 +116,10 @@ export function OrganzationSelect({
 								className="flex cursor-pointer items-center justify-center gap-2 pl-3"
 							>
 								<div className="flex flex-1 items-center justify-start gap-2">
-									<OrganizationAvatar
+									<OrganizationLogo
 										className="size-8"
 										name={organization.name}
-										avatarUrl={organization.logo}
+										logoUrl={organization.logo}
 									/>
 									{organization.name}
 								</div>

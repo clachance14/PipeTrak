@@ -1,6 +1,6 @@
 import { config } from "@repo/config";
 import { getActiveOrganization } from "@saas/auth/lib/server";
-import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
+import { OrganizationLogo } from "@saas/organizations/components/OrganizationLogo";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { SidebarContentLayout } from "@saas/shared/components/SidebarContentLayout";
@@ -29,9 +29,9 @@ export default async function SettingsLayout({
 		{
 			title: t("settings.menu.organization.title"),
 			avatar: (
-				<OrganizationAvatar
+				<OrganizationLogo
 					name={organization.name}
-					avatarUrl={organization.logo}
+					logoUrl={organization.logo}
 				/>
 			),
 			items: [

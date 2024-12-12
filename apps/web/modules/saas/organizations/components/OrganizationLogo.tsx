@@ -3,27 +3,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
 import { forwardRef, useMemo } from "react";
 
-export const OrganizationAvatar = forwardRef<
+export const OrganizationLogo = forwardRef<
 	HTMLSpanElement,
 	{
 		name: string;
-		avatarUrl?: string | null;
+		logoUrl?: string | null;
 		className?: string;
 	}
->(({ name, avatarUrl, className }, ref) => {
-	const avatarSrc = useMemo(
+>(({ name, logoUrl, className }, ref) => {
+	const logoSrc = useMemo(
 		() =>
-			avatarUrl
-				? avatarUrl.startsWith("http")
-					? avatarUrl
-					: `/image-proxy/${config.storage.bucketNames.avatars}/${avatarUrl}`
+			logoUrl
+				? logoUrl.startsWith("http")
+					? logoUrl
+					: `/image-proxy/${config.storage.bucketNames.avatars}/${logoUrl}`
 				: undefined,
-		[avatarUrl],
+		[logoUrl],
 	);
 
 	return (
 		<Avatar ref={ref} className={className}>
-			<AvatarImage src={avatarSrc} />
+			<AvatarImage src={logoSrc} />
 			<AvatarFallback>
 				<BoringAvatar
 					size={96}
@@ -37,4 +37,4 @@ export const OrganizationAvatar = forwardRef<
 	);
 });
 
-OrganizationAvatar.displayName = "OrganizationAvatar";
+OrganizationLogo.displayName = "OrganizationLogo";

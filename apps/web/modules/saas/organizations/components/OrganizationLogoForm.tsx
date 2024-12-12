@@ -15,9 +15,9 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuid } from "uuid";
 import { CropImageDialog } from "../../settings/components/CropImageDialog";
-import { OrganizationAvatar } from "./OrganizationAvatar";
+import { OrganizationLogo } from "./OrganizationLogo";
 
-export function OrganizationAvatarForm() {
+export function OrganizationLogoForm() {
 	const { toast } = useToast();
 	const router = useRouter();
 	const t = useTranslations();
@@ -103,9 +103,9 @@ export function OrganizationAvatarForm() {
 		>
 			<div className="relative rounded-full" {...getRootProps()}>
 				<input {...getInputProps()} />
-				<OrganizationAvatar
+				<OrganizationLogo
 					className="size-24 cursor-pointer text-xl"
-					avatarUrl={activeOrganization.logo}
+					logoUrl={activeOrganization.logo}
 					name={activeOrganization.name ?? ""}
 				/>
 

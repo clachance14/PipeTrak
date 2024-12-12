@@ -18,7 +18,7 @@ export function UserAvatarUpload({
 	onSuccess: () => void;
 	onError: () => void;
 }) {
-	const { user } = useSession();
+	const { user, reloadSession } = useSession();
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
@@ -69,6 +69,8 @@ export function UserAvatarUpload({
 				image: path,
 			});
 
+			await reloadSession();
+
 			onSuccess();
 		} catch (e) {
 			onError();
@@ -79,7 +81,7 @@ export function UserAvatarUpload({
 
 	return (
 		<>
-			<div className="relative rounded-full" {...getRootProps()}>
+			<div className="relative size-24 rounded-full" {...getRootProps()}>
 				<input {...getInputProps()} />
 				<UserAvatar
 					className="size-24 cursor-pointer text-xl"

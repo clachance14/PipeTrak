@@ -6,7 +6,7 @@ import {
 	useAdminOrganizationsQuery,
 } from "@saas/admin/lib/api";
 import { getAdminPath } from "@saas/admin/lib/links";
-import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
+import { OrganizationLogo } from "@saas/organizations/components/OrganizationLogo";
 import { useConfirmationAlert } from "@saas/shared/components/ConfirmationAlertProvider";
 import { Pagination } from "@saas/shared/components/Pagination";
 import { Spinner } from "@shared/components/Spinner";
@@ -134,7 +134,7 @@ export function OrganizationList() {
 					},
 				}) => (
 					<div className="flex items-center gap-2">
-						<OrganizationAvatar name={name} avatarUrl={logo} />
+						<OrganizationLogo name={name} logoUrl={logo} />
 						<div className="leading-tight">
 							<Link
 								href={getOrganizationEditPath(id)}

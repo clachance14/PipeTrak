@@ -1,5 +1,5 @@
 import { ChangeOrganizationNameForm } from "@saas/organizations/components/ChangeOrganizationNameForm";
-import { OrganizationAvatarForm } from "@saas/organizations/components/OrganizationAvatarForm";
+import { OrganizationLogoForm } from "@saas/organizations/components/OrganizationLogoForm";
 import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 
@@ -14,7 +14,7 @@ export async function generateMetadata() {
 export default function OrganizationSettingsPage() {
 	return (
 		<SettingsList>
-			<OrganizationAvatarForm />
+			<OrganizationLogoForm />
 			<ChangeOrganizationNameForm />
 		</SettingsList>
 	);

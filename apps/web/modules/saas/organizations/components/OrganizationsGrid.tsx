@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@repo/config";
-import { OrganizationAvatar } from "@saas/organizations/components/OrganizationAvatar";
+import { OrganizationLogo } from "@saas/organizations/components/OrganizationLogo";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { Card } from "@ui/components/card";
@@ -26,9 +26,9 @@ export function OrganizationsGrid() {
 						className="flex cursor-pointer items-center gap-4 overflow-hidden p-4"
 						onClick={() => setActiveOrganization(organization.slug)}
 					>
-						<OrganizationAvatar
+						<OrganizationLogo
 							name={organization.name}
-							avatarUrl={organization.logo}
+							logoUrl={organization.logo}
 							className="size-12"
 						/>
 						<span className="flex items-center gap-1 text-base leading-tight">
