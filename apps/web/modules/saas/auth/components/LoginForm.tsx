@@ -57,7 +57,13 @@ export function LoginForm() {
 		apiClient.auth.loginWithPassword.useMutation();
 	const loginWithEmailMutation = apiClient.auth.loginWithEmail.useMutation();
 
-	const form = useForm<FormValues>({ resolver: zodResolver(formSchema) });
+	const form = useForm<FormValues>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	});
 
 	const invitationCode = searchParams.get("invitationCode");
 	const redirectTo = invitationCode
