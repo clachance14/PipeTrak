@@ -118,7 +118,7 @@ export function NavBar() {
 
 					<div className="flex flex-1 items-center justify-end gap-3">
 						<ColorModeToggle />
-						<LocaleSwitch />
+						{config.i18n.enabled && <LocaleSwitch />}
 
 						<Sheet
 							open={mobileMenuOpen}

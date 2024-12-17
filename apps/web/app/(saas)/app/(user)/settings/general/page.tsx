@@ -1,3 +1,4 @@
+import { config } from "@repo/config";
 import { getSession } from "@saas/auth/lib/server";
 import { ChangeEmailForm } from "@saas/settings/components/ChangeEmailForm";
 import { ChangeNameForm } from "@saas/settings/components/ChangeNameForm";
@@ -25,7 +26,7 @@ export default async function AccountSettingsPage() {
 	return (
 		<SettingsList>
 			<UserAvatarForm />
-			<UserLanguageForm />
+			{config.i18n.enabled && <UserLanguageForm />}
 			<ChangeNameForm />
 			<ChangeEmailForm />
 		</SettingsList>

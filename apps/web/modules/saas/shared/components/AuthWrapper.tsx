@@ -1,3 +1,4 @@
+import { config } from "@repo/config";
 import { Footer } from "@saas/shared/components/Footer";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
@@ -16,7 +17,7 @@ export function AuthWrapper({ children }: PropsWithChildren) {
 						</Link>
 
 						<div className="flex items-center justify-end gap-2">
-							<LocaleSwitch withLocaleInUrl={false} />
+							{config.i18n.enabled && <LocaleSwitch withLocaleInUrl={false} />}
 							<ColorModeToggle />
 						</div>
 					</div>

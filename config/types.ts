@@ -1,5 +1,6 @@
 export type Config = {
 	i18n: {
+		enabled: boolean;
 		locales: { [locale: string]: { currency: string; label: string } };
 		defaultLocale: string;
 		defaultCurrency: string;

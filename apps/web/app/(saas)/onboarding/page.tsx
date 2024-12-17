@@ -41,7 +41,7 @@ export default async function OnboardingPage() {
 						</Link>
 
 						<div className="flex items-center justify-end gap-2">
-							<LocaleSwitch withLocaleInUrl={false} />
+							{config.i18n.enabled && <LocaleSwitch withLocaleInUrl={false} />}
 							<ColorModeToggle />
 						</div>
 					</div>

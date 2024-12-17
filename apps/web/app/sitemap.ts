@@ -8,7 +8,9 @@ import {
 import type { MetadataRoute } from "next";
 
 const baseUrl = getBaseUrl();
-const locales = Object.keys(config.i18n.locales);
+const locales = config.i18n.enabled
+	? Object.keys(config.i18n.locales)
+	: [config.i18n.defaultLocale];
 
 const staticMarketingPages = ["", "/changelog", "/docs"];
 

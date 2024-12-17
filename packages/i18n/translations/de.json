@@ -85,7 +85,26 @@
 	"auth": {
 		"errors": {
 			"invalidEmailOrPassword": "Die von dir eingegebenen Anmeldedaten sind ungültig. Bitte überprüfe sie und versuche es erneut.",
-			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+			"credentialAccountNotFound": "Konto nicht gefunden.",
+			"emailCanNotBeUpdated": "E-Mail konnte nicht aktualisiert werden.",
+			"emailNotVerified": "Bitte verifiziere zunächst deine E-Mail, bevor du dich anmeldest.",
+			"failedToCreateSession": "Eine Sitzung konnte nicht erstellt werden.",
+			"failedToCreateUser": "Benutzer konnte nicht erstellt werden.",
+			"failedToGetSession": "Session konnte nicht geladen werden.",
+			"failedToGetUserInfo": "Benutzerinformationen konnten nicht geladen werden.",
+			"failedToUpdateUser": "Benutzer konnte nicht aktualisiert werden.",
+			"idTokenNotSupported": "ID-Token wird nicht unterstützt.",
+			"invalidEmail": "Die eingegebene E-Mail ist ungültig.",
+			"invalidPassword": "Das eingegebene Passwort ist falsch.",
+			"invalidToken": "Das von dir eingegebene Token ist ungültig oder abgelaufen.",
+			"passwordTooLong": "Das Passwort ist zu lang.",
+			"passwordTooShort": "Das Passwort ist zu kurz.",
+			"providerNotFound": "Dieser Anbieter wird nicht unterstützt.",
+			"socialAccountAlreadyLinked": "Dieses Konto ist bereits mit einem Benutzer verknüpft.",
+			"userAlreadyExists": "Dieser Benutzer existiert bereits.",
+			"userEmailNotFound": "E-Mail nicht gefunden.",
+			"userNotFound": "Dieser Benutzer existiert nicht"
 		},
 		"forgotPassword": {
 			"backToSignin": "Zurück zum Login",
@@ -392,18 +411,24 @@
 				"description": "Perfekt für den Einstieg",
 				"features": {
 					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"limitedSupport": "Begrenzte Unterstützung",
+					"limitedSupport": "Begrenzter Support",
 					"oneMember": "1 Mitglied"
 				},
 				"title": "Grundlegend"
 			},
 			"enterprise": {
-				"title": "Enterprise"
+				"title": "Enterprise",
+				"description": "Maßgeschneiderter Plan für deine Anforderungen",
+				"features": {
+					"enterpriseSupport": "Support für Unternehmen",
+					"unlimitedMembers": "Unbeschränkte Mitglieder",
+					"unlimitedProjects": "Unbegrenzte Projekte"
+				}
 			},
 			"lifetime": {
 				"description": "Einmal kaufen. Für immer verwenden.",
 				"features": {
-					"extendSupport": "Erweiterte Unterstützung",
+					"extendSupport": "Erweiterter Support",
 					"noRecurringCosts": "Keine wiederkehrenden Kosten",
 					"unlimitedMembers": "Unbeschränkte Mitglieder"
 				},
@@ -414,9 +439,18 @@
 				"features": {
 					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
 					"fiveMembers": "Bis zu 5 Mitglieder",
-					"fullSupport": "Volle Unterstützung"
+					"fullSupport": "Voller Support"
 				},
 				"title": "Pro"
+			},
+			"free": {
+				"description": "Kostenloser Start",
+				"features": {
+					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
+					"limitedSupport": "Begrenzter Support",
+					"oneMember": "1 Mitglied"
+				},
+				"title": "Kostenlos"
 			}
 		},
 		"purchase": "Kaufen",
@@ -424,7 +458,9 @@
 		"subscribe": "Abonnieren",
 		"title": "Preise",
 		"year": "Jahr",
-		"yearly": "Jährlich"
+		"yearly": "Jährlich",
+		"contactSales": "Kontakt Vertrieb",
+		"trialPeriod": "{Tage} {Tage, Plural, ein {Tag} andere {Tage}} kostenlose Probe"
 	},
 	"settings": {
 		"account": {
@@ -582,7 +618,8 @@
 					"paused": "Pausiert",
 					"trialing": "Testversion",
 					"unpaid": "Unbezahlt"
-				}
+				},
+				"title": "Dein Abonnement"
 			},
 			"title": "Zahlung"
 		},
@@ -721,5 +758,19 @@
 			"url": "URL",
 			"uuid": "Uuid"
 		}
+	},
+	"contact": {
+		"description": "Wir sind hier, um dir zu helfen. Bitte verwende das untenstehende Formular, um mit uns in Kontakt zu treten.",
+		"form": {
+			"email": "E-Mail",
+			"message": "Nachricht",
+			"name": "Name",
+			"notifications": {
+				"error": "Es tut uns leid, aber wir konnten deine Nachricht nicht senden. Bitte versuche es später noch einmal.",
+				"success": "Deine Nachricht wurde erfolgreich abgeschickt. Wir werden uns so schnell wie möglich bei dir melden."
+			},
+			"submit": "Nachricht senden"
+		},
+		"title": "Kontakt"
 	}
 }

@@ -183,3 +183,5 @@ export type OrganizationMemberRole = typeof auth.$Infer.Member.role;
 export type OrganizationInvitationStatus = typeof auth.$Infer.Invitation.status;
 
 export type OrganizationMetadata = Record<string, unknown> | undefined;
+
+export type AuthError = typeof auth.$

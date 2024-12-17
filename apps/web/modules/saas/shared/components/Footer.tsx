@@ -1,5 +1,4 @@
 import { LocaleLink } from "@i18n/routing";
-import { config } from "@repo/config";
 import { cn } from "@ui/lib";
 
 export function Footer() {
@@ -7,7 +6,6 @@ export function Footer() {
 		<footer
 			className={cn(
 				"container max-w-6xl py-6 text-center text-foreground/60 text-xs",
-				[config.ui.saas.useSidebarLayout ? "ml-0" : ""],
 			)}
 		>
 			<span>
