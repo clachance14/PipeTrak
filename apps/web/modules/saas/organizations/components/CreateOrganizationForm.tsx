@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useCreateOrganizationMutation } from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -33,6 +34,7 @@ export function CreateOrganizationForm({
 	const t = useTranslations();
 	const { toast } = useToast();
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const { setActiveOrganization } = useActiveOrganization();
 	const createOrganizationMutation = useCreateOrganizationMutation();
 	const form = useForm<FormValues>({
@@ -53,7 +55,8 @@ export function CreateOrganizationForm({
 			}
 
 			setActiveOrganization(newOrganization.id);
-			router.replace("/app");
+
+			router.replace(`/app/${newOrganization.slug}`);
 
 			toast({
 				variant: "success",
@@ -68,7 +71,7 @@ export function CreateOrganizationForm({
 	});
 
 	return (
-		<div className="mx-auto w-full max-w-md py-12">
+		<div className="mx-auto w-full max-w-md">
 			<h1 className="font-extrabold text-2xl md:text-3xl">
 				{t("organizations.createForm.title")}
 			</h1>

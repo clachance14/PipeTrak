@@ -10,12 +10,28 @@ import { type NextRequest, NextResponse } from "next/server";
 const intlMiddleware = createMiddleware(routing);
 
 export default async function middleware(req: NextRequest) {
-	if (req.nextUrl.pathname.startsWith("/app")) {
-		if (
-			appConfig.organizations.requireOrganization &&
-			req.nextUrl.pathname === "/app"
-		) {
-			const session = await getSession(req);
+	const { pathname, origin } = req.nextUrl;
+
+	if (pathname.startsWith("/app")) {
+		const response = NextResponse.next();
+
+		if (!appConfig.ui.saas.enabled) {
+			return NextResponse.redirect(new URL("/", origin));
+		}
+
+		const session = await getSession(req);
+		let locale = req.cookies.get(appConfig.i18n.localeCookieName)?.value;
+
+		if (!session) {
+			return NextResponse.redirect(new URL("/auth/login", origin));
+		}
+
+		if (!locale || (session.user.locale && locale !== session.user.locale)) {
+			locale = session.user.locale ?? appConfig.i18n.defaultLocale;
+			response.cookies.set(appConfig.i18n.localeCookieName, locale);
+		}
+
+		if (appConfig.organizations.requireOrganization && pathname === "/app") {
 			const organizations = await getOrganizationsForSession(req);
 			const organization =
 				organizations.find(
@@ -25,12 +41,30 @@ export default async function middleware(req: NextRequest) {
 			return NextResponse.redirect(
 				new URL(
 					organization ? `/app/${organization.slug}` : "/app/new-organization",
-					req.nextUrl.origin,
+					origin,
 				),
 			);
 		}
 
+		return response;
+	}
+
+	if (pathname.startsWith("/auth/")) {
+		if (!appConfig.ui.saas.enabled) {
+			return NextResponse.redirect(new URL("/", origin));
+		}
+
+		const session = await getSession(req);
+
+		if (session) {
+			return NextResponse.redirect(new URL("/app", origin));
+		}
+
 		return NextResponse.next();
+	}
+
+	if (!appConfig.ui.marketing.enabled) {
+		return NextResponse.redirect(new URL("/app", origin));
 	}
 
 	return intlMiddleware(req);
@@ -38,6 +72,6 @@ export default async function middleware(req: NextRequest) {
 
 export const config = {
 	matcher: [
-		"/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+		"/((?!api|image-proxy|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
 	],
 };

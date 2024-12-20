@@ -36,6 +36,10 @@ export const auth = betterAuth({
 	}),
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
+		cookieCache: {
+			enabled: true,
+			maxAge: 60 * 60,
+		},
 	},
 	account: {
 		accountLinking: {

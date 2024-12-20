@@ -1,5 +1,4 @@
 import { withContentCollections } from "@content-collections/next";
-import { config } from "@repo/config";
 import type { NextConfig } from "next";
 import nextIntlPlugin from "next-intl/plugin";
 
@@ -38,24 +37,6 @@ const nextConfig: NextConfig = {
 				destination: "/app/admin/users",
 				permanent: true,
 			},
-			...(!config.ui.saas.enabled
-				? [
-						{
-							source: "/app/:path*",
-							destination: "/",
-							permanent: false,
-						},
-					]
-				: []),
-			...(!config.ui.marketing.enabled
-				? [
-						{
-							source: "/:path((?!app|auth|api|image-proxy|onboarding).*)*",
-							destination: "/app",
-							permanent: false,
-						},
-					]
-				: []),
 		];
 	},
 	eslint: {
