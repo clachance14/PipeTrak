@@ -50,12 +50,7 @@ export const useActiveOrganizationQuery = (
 
 export const fullOrganizationQueryKey = (id: string) =>
 	["fullOrganization", id] as const;
-export const useFullOrganizationQuery = (
-	id: string,
-	options?: {
-		enabled?: boolean;
-	},
-) => {
+export const useFullOrganizationQuery = (id: string) => {
 	return useQuery({
 		queryKey: fullOrganizationQueryKey(id),
 		queryFn: async () => {
@@ -73,7 +68,6 @@ export const useFullOrganizationQuery = (
 
 			return data;
 		},
-		enabled: options?.enabled,
 	});
 };
 

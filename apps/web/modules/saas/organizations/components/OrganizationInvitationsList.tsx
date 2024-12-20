@@ -8,11 +8,7 @@ import {
 	useFullOrganizationQuery,
 } from "@saas/organizations/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
-import type {
-	ColumnDef,
-	ColumnFiltersState,
-	SortingState,
-} from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
 	flexRender,
 	getCoreRowModel,
@@ -34,12 +30,12 @@ import { cn } from "@ui/lib";
 import {
 	CheckIcon,
 	ClockIcon,
+	MailXIcon,
 	MoreVerticalIcon,
-	UndoIcon,
 	XIcon,
 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useMemo } from "react";
 import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
 
 export function OrganizationInvitationsList({
@@ -53,8 +49,6 @@ export function OrganizationInvitationsList({
 	const { user } = useSession();
 	const formatter = useFormatter();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
-	const [sorting, setSorting] = useState<SortingState>([]);
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	const userOrganizationRole = organization?.members.find(
 		(member) => member.userId === user?.id,
@@ -63,12 +57,16 @@ export function OrganizationInvitationsList({
 		user?.role === "admin" ||
 		(userOrganizationRole && ["owner", "admin"].includes(userOrganizationRole));
 
-	const invitations = organization?.invitations
-		?.filter((invitation) => invitation.status !== "canceled")
-		.sort(
-			(a, b) =>
-				new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
-		);
+	const invitations = useMemo(
+		() =>
+			organization?.invitations
+				?.filter((invitation) => invitation.status !== "canceled")
+				.sort(
+					(a, b) =>
+						new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
+				),
+		[organization?.invitations],
+	);
 
 	const revokeInvitation = (invitationId: string) => {
 		const loadingToast = toast({
@@ -77,6 +75,7 @@ export function OrganizationInvitationsList({
 				"organizations.settings.members.notifications.revokeInvitation.loading.description",
 			),
 		});
+
 		authClient.organization.cancelInvitation(
 			{
 				invitationId,
@@ -86,7 +85,8 @@ export function OrganizationInvitationsList({
 					loadingToast.dismiss();
 				},
 				onSuccess: () => {
-					toast({
+					loadingToast.update({
+						id: loadingToast.id,
 						variant: "success",
 						description: t(
 							"organizations.settings.members.notifications.revokeInvitation.success.description",
@@ -97,7 +97,8 @@ export function OrganizationInvitationsList({
 					});
 				},
 				onError: () => {
-					toast({
+					loadingToast.update({
+						id: loadingToast.id,
 						variant: "error",
 						description: t(
 							"organizations.settings.members.notifications.revokeInvitation.error.description",
@@ -154,6 +155,9 @@ export function OrganizationInvitationsList({
 		{
 			accessorKey: "actions",
 			cell: ({ row }) => {
+				const isPending = row.original.status === "pending";
+				const isAccepted = row.original.status === "accepted";
+
 				return (
 					<div className="flex flex-row justify-end gap-2">
 						<OrganizationRoleSelect
@@ -173,9 +177,10 @@ export function OrganizationInvitationsList({
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
 									<DropdownMenuItem
+										disabled={!isPending}
 										onClick={() => revokeInvitation(row.original.id)}
 									>
-										<UndoIcon className="mr-2 size-4" />
+										<MailXIcon className="mr-2 size-4" />
 										{t("organizations.settings.members.invitations.revoke")}
 									</DropdownMenuItem>
 								</DropdownMenuContent>
@@ -190,16 +195,10 @@ export function OrganizationInvitationsList({
 	const table = useReactTable({
 		data: invitations ?? [],
 		columns,
-		onSortingChange: setSorting,
-		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
-		state: {
-			sorting,
-			columnFilters,
-		},
 	});
 
 	return (

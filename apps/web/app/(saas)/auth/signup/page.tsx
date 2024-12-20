@@ -1,5 +1,6 @@
 import { config } from "@repo/config";
 import { SignupForm } from "@saas/auth/components/SignupForm";
+import { getInvitation } from "@saas/auth/lib/server";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { withQuery } from "ufo";
@@ -17,10 +18,30 @@ export async function generateMetadata() {
 export default async function SignupPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+	searchParams: Promise<{
+		[key: string]: string | string[] | undefined;
+		invitationId?: string;
+	}>;
 }) {
-	if (!config.auth.enableSignup) {
-		return redirect(withQuery("/auth/login", await searchParams));
+	const params = await searchParams;
+	const { invitationId } = params;
+
+	if (!config.auth.enableSignup && !invitationId) {
+		return redirect(withQuery("/auth/login", params));
+	}
+
+	if (invitationId) {
+		const invitation = await getInvitation(invitationId);
+
+		if (
+			!invitation ||
+			invitation.status !== "pending" ||
+			invitation.expiresAt.getTime() < new Date().getTime()
+		) {
+			return redirect(withQuery("/auth/login", params));
+		}
+
+		return <SignupForm prefillEmail={invitation.email} />;
 	}
 
 	return <SignupForm />;

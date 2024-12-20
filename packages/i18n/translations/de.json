@@ -79,13 +79,11 @@
 			"colorMode": "Farbmodus",
 			"documentation": "Dokumentation",
 			"home": "Startseite",
-			"logout": "Abmeldung"
+			"logout": "Abmelden"
 		}
 	},
 	"auth": {
 		"errors": {
-			"invalidEmailOrPassword": "Die von dir eingegebenen Anmeldedaten sind ungültig. Bitte überprüfe sie und versuche es erneut.",
-			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
 			"credentialAccountNotFound": "Konto nicht gefunden.",
 			"emailCanNotBeUpdated": "E-Mail konnte nicht aktualisiert werden.",
 			"emailNotVerified": "Bitte verifiziere zunächst deine E-Mail, bevor du dich anmeldest.",
@@ -96,12 +94,15 @@
 			"failedToUpdateUser": "Benutzer konnte nicht aktualisiert werden.",
 			"idTokenNotSupported": "ID-Token wird nicht unterstützt.",
 			"invalidEmail": "Die eingegebene E-Mail ist ungültig.",
+			"invalidEmailOrPassword": "Die von dir eingegebenen Anmeldedaten sind ungültig. Bitte überprüfe sie und versuche es erneut.",
+			"invalidInvitation": "Die Einladung ist ungültig oder abgelaufen.",
 			"invalidPassword": "Das eingegebene Passwort ist falsch.",
 			"invalidToken": "Das von dir eingegebene Token ist ungültig oder abgelaufen.",
 			"passwordTooLong": "Das Passwort ist zu lang.",
 			"passwordTooShort": "Das Passwort ist zu kurz.",
 			"providerNotFound": "Dieser Anbieter wird nicht unterstützt.",
 			"socialAccountAlreadyLinked": "Dieses Konto ist bereits mit einem Benutzer verknüpft.",
+			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
 			"userAlreadyExists": "Dieser Benutzer existiert bereits.",
 			"userEmailNotFound": "E-Mail nicht gefunden.",
 			"userNotFound": "Dieser Benutzer existiert nicht"
@@ -197,6 +198,20 @@
 			"title": "Auf dieser Seite"
 		}
 	},
+	"contact": {
+		"description": "Wir sind hier, um dir zu helfen. Bitte verwende das untenstehende Formular, um mit uns in Kontakt zu treten.",
+		"form": {
+			"email": "E-Mail",
+			"message": "Nachricht",
+			"name": "Name",
+			"notifications": {
+				"error": "Es tut uns leid, aber wir konnten deine Nachricht nicht senden. Bitte versuche es später noch einmal.",
+				"success": "Deine Nachricht wurde erfolgreich abgeschickt. Wir werden uns so schnell wie möglich bei dir melden."
+			},
+			"submit": "Nachricht senden"
+		},
+		"title": "Kontakt"
+	},
 	"faq": {
 		"description": "Hast du irgendwelche Fragen? \nWir sind für dich da.",
 		"title": "Häufig gestellte Fragen"
@@ -232,8 +247,8 @@
 			"subject": "Willkommen bei unserem Newsletter"
 		},
 		"organizationInvitation": {
-			"body": "Du wurdest eingeladen, der Organisation {Organisationsname} beizutreten. Klicke auf den Button unten oder kopiere den Link und füge ihn in den Browser deiner Wahl ein, um die Einladung anzunehmen und der Organisation beizutreten.",
-			"headline": "Beitritt zur Organisation {Organisationsname}",
+			"body": "Du wurdest eingeladen, der Organisation {organizationName} beizutreten. Klicke auf den Button unten oder kopiere den Link und füge ihn in den Browser deiner Wahl ein, um die Einladung anzunehmen und der Organisation beizutreten.",
+			"headline": "Einladung zur Organisation {organizationName}",
 			"join": "Tritt der Organisation bei",
 			"subject": "Du wurdest eingeladen, einer Organisation beizutreten"
 		}
@@ -328,7 +343,8 @@
 						"pending": "Ausstehend",
 						"rejected": "Abgelehnt"
 					},
-					"revoke": "Einladung widerrufen"
+					"revoke": "Einladung widerrufen",
+					"resend": "Einladung erneut senden"
 				},
 				"inviteMember": {
 					"description": "Um ein neues Mitglied einzuladen, sende ihm eine Einladung.",
@@ -402,6 +418,7 @@
 	},
 	"pricing": {
 		"choosePlan": "Plan auswählen",
+		"contactSales": "Vertrieb kontaktieren",
 		"description": "Wähle das passende Paket für dich aus.",
 		"getStarted": "Jetzt loslegen",
 		"month": "Monat",
@@ -414,16 +431,25 @@
 					"limitedSupport": "Begrenzter Support",
 					"oneMember": "1 Mitglied"
 				},
-				"title": "Grundlegend"
+				"title": "Basic"
 			},
 			"enterprise": {
-				"title": "Enterprise",
 				"description": "Maßgeschneiderter Plan für deine Anforderungen",
 				"features": {
 					"enterpriseSupport": "Support für Unternehmen",
 					"unlimitedMembers": "Unbeschränkte Mitglieder",
 					"unlimitedProjects": "Unbegrenzte Projekte"
-				}
+				},
+				"title": "Enterprise"
+			},
+			"free": {
+				"description": "Kostenloser Start",
+				"features": {
+					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
+					"limitedSupport": "Begrenzter Support",
+					"oneMember": "1 Mitglied"
+				},
+				"title": "Free"
 			},
 			"lifetime": {
 				"description": "Einmal kaufen. Für immer verwenden.",
@@ -442,25 +468,15 @@
 					"fullSupport": "Voller Support"
 				},
 				"title": "Pro"
-			},
-			"free": {
-				"description": "Kostenloser Start",
-				"features": {
-					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"limitedSupport": "Begrenzter Support",
-					"oneMember": "1 Mitglied"
-				},
-				"title": "Kostenlos"
 			}
 		},
 		"purchase": "Kaufen",
 		"recommended": "Empfohlen",
 		"subscribe": "Abonnieren",
 		"title": "Preise",
+		"trialPeriod": "{days} {days, plural, one {Tag} other {Tage}} kostenlose Testphase",
 		"year": "Jahr",
-		"yearly": "Jährlich",
-		"contactSales": "Kontakt Vertrieb",
-		"trialPeriod": "{Tage} {Tage, Plural, ein {Tag} andere {Tage}} kostenlose Probe"
+		"yearly": "Jährlich"
 	},
 	"settings": {
 		"account": {
@@ -758,19 +774,5 @@
 			"url": "URL",
 			"uuid": "Uuid"
 		}
-	},
-	"contact": {
-		"description": "Wir sind hier, um dir zu helfen. Bitte verwende das untenstehende Formular, um mit uns in Kontakt zu treten.",
-		"form": {
-			"email": "E-Mail",
-			"message": "Nachricht",
-			"name": "Name",
-			"notifications": {
-				"error": "Es tut uns leid, aber wir konnten deine Nachricht nicht senden. Bitte versuche es später noch einmal.",
-				"success": "Deine Nachricht wurde erfolgreich abgeschickt. Wir werden uns so schnell wie möglich bei dir melden."
-			},
-			"submit": "Nachricht senden"
-		},
-		"title": "Kontakt"
 	}
 }

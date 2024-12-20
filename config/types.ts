@@ -10,6 +10,7 @@ export type Config = {
 		enable: boolean;
 		enableBilling: boolean;
 		enableUsersToCreateOrganizations: boolean;
+		requireOrganization: boolean;
 		avatarColors: string[];
 		forbiddenOrganizationSlugs: string[];
 	};

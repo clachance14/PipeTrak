@@ -16,6 +16,7 @@ import {
 } from "better-auth/plugins";
 import { parse as parseCookies } from "cookie";
 import { getUserByEmail } from "./lib/user";
+import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
 const getLocaleFromRequest = (request?: Request) => {
 	const cookies = parseCookies(request?.headers.get("cookie") ?? "");
@@ -74,8 +75,10 @@ export const auth = betterAuth({
 	},
 	emailAndPassword: {
 		enabled: true,
-		autoSignIn: false,
-		requireEmailVerification: true,
+		// If signup is disabled, the only way to sign up is via an invitation. So in this case we can auto sign in the user, as the email is already verified by the invitation.
+		// If signup is enabled, we can't auto sign in the user, as the email is not verified yet.
+		autoSignIn: !config.auth.enableSignup,
+		requireEmailVerification: config.auth.enableSignup,
 		sendResetPassword: async ({ user, url }, request) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
@@ -90,7 +93,7 @@ export const auth = betterAuth({
 		},
 	},
 	emailVerification: {
-		sendOnSignUp: true,
+		sendOnSignUp: config.auth.enableSignup,
 		sendVerificationEmail: async ({ user: { email, name }, url }, request) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
@@ -135,10 +138,7 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
-			sendInvitationEmail: async (
-				{ email, id, organization, inviter },
-				request,
-			) => {
+			sendInvitationEmail: async ({ email, id, organization }, request) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);
 
@@ -162,6 +162,7 @@ export const auth = betterAuth({
 			},
 		}),
 		openAPI(),
+		invitationOnlyPlugin(),
 	],
 	onAPIError: {
 		onError(error, ctx) {
@@ -183,5 +184,3 @@ export type OrganizationMemberRole = typeof auth.$Infer.Member.role;
 export type OrganizationInvitationStatus = typeof auth.$Infer.Invitation.status;
 
 export type OrganizationMetadata = Record<string, unknown> | undefined;
-
-export type AuthError = typeof auth.$

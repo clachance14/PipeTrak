@@ -6,7 +6,7 @@
 		"@repo/logs": "workspace:*",
 		"@repo/mail": "workspace:*",
 		"@repo/utils": "workspace:*",
-		"better-auth": "1.0.18",
+		"better-auth": "1.0.22",
 		"cookie": "^1.0.1",
 		"next": "15.1.0"
 	},

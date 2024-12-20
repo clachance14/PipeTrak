@@ -104,7 +104,8 @@
       "providerNotFound": "This provider is not suppported.",
       "socialAccountAlreadyLinked": "This account is already linked to a user.",
       "userEmailNotFound": "Email not found.",
-      "userAlreadyExists": "This user already exists."
+      "userAlreadyExists": "This user already exists.",
+      "invalidInvitation": "The invitation is invalid or expired."
     },
     "forgotPassword": {
       "backToSignin": "Back to signin",
@@ -342,7 +343,8 @@
             "pending": "Pending",
             "rejected": "Rejected"
           },
-          "revoke": "Revoke invitation"
+          "revoke": "Revoke invitation",
+          "resend": "Resend invitation"
         },
         "inviteMember": {
           "description": "To invite a new member, send them an invitation.",
@@ -394,6 +396,17 @@
             },
             "success": {
               "description": "Membership was updated successfully"
+            }
+          },
+          "resendInvitation": {
+            "loading": {
+              "description": "Resending invitation..."
+            },
+            "success": {
+              "description": "Invitation sent"
+            },
+            "error": {
+              "description": "Could not sent invitation. Please try again."
             }
           }
         },

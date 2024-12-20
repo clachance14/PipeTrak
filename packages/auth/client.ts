@@ -17,3 +17,7 @@ export const authClient = createAuthClient({
 		passkeyClient(),
 	],
 });
+
+export type AuthClientErrorCodes = typeof authClient.$ERROR_CODES & {
+	INVALID_INVITATION: string;
+};

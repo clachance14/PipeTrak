@@ -4,7 +4,7 @@ export const config = {
 	// Internationalization
 	i18n: {
 		// Whether internationalization should be enabled (if disabled, you still need to define the locale you want to use below and set it as the default locale)
-		enabled: false,
+		enabled: true,
 		// Define all locales here that should be available in the app
 		// You need to define a label that is shown in the language selector and a currency that should be used for pricing with this locale
 		locales: {
@@ -32,6 +32,8 @@ export const config = {
 		enableBilling: true,
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
+		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
+		requireOrganization: true,
 		// These colors are used for placeholder avatar if the organization has no logo uploaded
 		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
@@ -52,7 +54,7 @@ export const config = {
 	// Authentication
 	auth: {
 		// Whether users should be able to create accounts (otherwise users can only be by admins)
-		enableSignup: true,
+		enableSignup: false,
 		// where users should be redirected after the sign in
 		redirectAfterSignIn: "/app",
 		// where users should be redirected after logout

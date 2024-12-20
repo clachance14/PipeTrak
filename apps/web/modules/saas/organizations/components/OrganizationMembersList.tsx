@@ -54,6 +54,8 @@ export function OrganizationMembersList({
 	const userOrganizationRole = organization?.members.find(
 		(member) => member.userId === user?.id,
 	)?.role;
+	const isOrganizationAdmin =
+		userOrganizationRole && ["admin", "owner"].includes(userOrganizationRole);
 
 	const updateMemberRole = async (
 		memberId: string,
@@ -69,6 +71,7 @@ export function OrganizationMembersList({
 			{
 				memberId,
 				role,
+				organizationId,
 			},
 			{
 				onSuccess: async () => {
@@ -103,9 +106,11 @@ export function OrganizationMembersList({
 				"organizations.settings.members.notifications.removeMember.loading.description",
 			),
 		});
+
 		await authClient.organization.removeMember(
 			{
 				memberIdOrEmail: memberId,
+				organizationId,
 			},
 			{
 				onSuccess: async () => {
@@ -182,23 +187,25 @@ export function OrganizationMembersList({
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
-								<DropdownMenuItem
-									disabled={!isUserAdmin && userOrganizationRole === "owner"}
-									className="text-destructive"
-									onClick={async () => removeMember(row.original.id)}
-								>
-									{row.original.user?.id === user?.id ? (
-										<>
-											<LogOutIcon className="mr-2 size-4" />
-											{t("organizations.settings.members.leaveOrganization")}
-										</>
-									) : (
-										<>
-											<TrashIcon className="mr-2 size-4" />
-											{t("organizations.settings.members.removeMember")}
-										</>
-									)}
-								</DropdownMenuItem>
+								{row.original.userId !== user?.id && (
+									<DropdownMenuItem
+										disabled={!isUserAdmin && !isOrganizationAdmin}
+										className="text-destructive"
+										onClick={async () => removeMember(row.original.id)}
+									>
+										<TrashIcon className="mr-2 size-4" />
+										{t("organizations.settings.members.removeMember")}
+									</DropdownMenuItem>
+								)}
+								{row.original.userId === user?.id && (
+									<DropdownMenuItem
+										className="text-destructive"
+										onClick={async () => removeMember(row.original.id)}
+									>
+										<LogOutIcon className="mr-2 size-4" />
+										{t("organizations.settings.members.leaveOrganization")}
+									</DropdownMenuItem>
+								)}
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>

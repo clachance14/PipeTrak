@@ -26,10 +26,12 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { parseAsString, useQueryState } from "nuqs";
+import { useSearchParams } from "next/navigation";
+import {} from "nuqs";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { withQuery } from "ufo";
 import { z } from "zod";
 import {
 	type OAuthProvider,
@@ -57,12 +59,13 @@ export function LoginForm() {
 	const t = useTranslations();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const { user, loaded: sessionLoaded } = useSession();
 
 	const [showPassword, setShowPassword] = useState(false);
-	const [invitationId] = useQueryState("invitationId", parseAsString);
-	const [email] = useQueryState("email", parseAsString);
-	const [redirectTo] = useQueryState("redirectTo", parseAsString);
+	const invitationId = searchParams.get("invitationId");
+	const email = searchParams.get("email");
+	const redirectTo = searchParams.get("redirectTo");
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
@@ -253,11 +256,10 @@ export function LoginForm() {
 								{t("auth.login.dontHaveAnAccount")}{" "}
 							</span>
 							<Link
-								href={`/auth/signup${
-									invitationId
-										? `?invitationId=${invitationId}&email=${email}`
-										: ""
-								}`}
+								href={withQuery(
+									"/auth/signup",
+									Object.fromEntries(searchParams.entries()),
+								)}
 							>
 								{t("auth.login.createAnAccount")}
 								<ArrowRightIcon className="ml-1 inline size-4 align-middle" />

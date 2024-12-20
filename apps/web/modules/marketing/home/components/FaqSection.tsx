@@ -42,13 +42,10 @@ export function FaqSection({ className }: { className?: string }) {
 					</h1>
 					<p className="text-lg opacity-50">{t("faq.description")}</p>
 				</div>
-				<div className="grid grid-cols-1 md:grid-cols-2">
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 					{items.map((item, i) => (
-						<div
-							key={`faq-item-${i}`}
-							className="border-border/50 border-t py-6 first:border-t-0 first:pt-0 last:pb-0 md:p-8 md:even:border-l md:last:pb-8 md:first:pt-8 md:[&:nth-child(2)]:border-t-0"
-						>
-							<h4 className="py-2 font-semibold text-lg">{item.question}</h4>
+						<div key={`faq-item-${i}`} className="rounded-lg border p-4 lg:p-6">
+							<h4 className="mb-2 font-semibold text-lg">{item.question}</h4>
 							<p className="text-foreground/60">{item.answer}</p>
 						</div>
 					))}

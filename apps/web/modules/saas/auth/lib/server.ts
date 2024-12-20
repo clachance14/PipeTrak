@@ -1,5 +1,6 @@
 import "server-only";
 import { auth } from "@repo/auth";
+import { db } from "@repo/database";
 import { headers } from "next/headers";
 import { cache } from "react";
 
@@ -58,6 +59,23 @@ export const getOrganizationBySlug = cache(async (slug: string) => {
 		});
 
 		return organization;
+	} catch (error) {
+		return null;
+	}
+});
+
+export const getInvitation = cache(async (id: string) => {
+	try {
+		const invitation = await db.invitation.findUnique({
+			where: {
+				id,
+			},
+			include: {
+				organization: true,
+			},
+		});
+
+		return invitation;
 	} catch (error) {
 		return null;
 	}

@@ -74,32 +74,36 @@ export function OrganzationSelect({
 					<ChevronsUpDownIcon className="block size-4 opacity-50" />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-full">
-					<DropdownMenuRadioGroup
-						value={activeOrganization?.id ?? user.id}
-						onValueChange={(value: string) => {
-							if (value === user.id) {
-								router.replace("/app");
-							}
-						}}
-					>
-						<DropdownMenuLabel className="text-foreground/60 text-xs">
-							{t("organizations.organizationSelect.personalAccount")}
-						</DropdownMenuLabel>
-						<DropdownMenuRadioItem
-							value={user.id}
-							className="flex cursor-pointer items-center justify-center gap-2 pl-3"
-						>
-							<div className="flex flex-1 items-center justify-start gap-2">
-								<UserAvatar
-									className="size-8"
-									name={user.name ?? ""}
-									avatarUrl={user.image}
-								/>
-								{user.name}
-							</div>
-						</DropdownMenuRadioItem>
-					</DropdownMenuRadioGroup>
-					<DropdownMenuSeparator />
+					{!config.organizations.requireOrganization && (
+						<>
+							<DropdownMenuRadioGroup
+								value={activeOrganization?.id ?? user.id}
+								onValueChange={(value: string) => {
+									if (value === user.id) {
+										router.replace("/app");
+									}
+								}}
+							>
+								<DropdownMenuLabel className="text-foreground/60 text-xs">
+									{t("organizations.organizationSelect.personalAccount")}
+								</DropdownMenuLabel>
+								<DropdownMenuRadioItem
+									value={user.id}
+									className="flex cursor-pointer items-center justify-center gap-2 pl-3"
+								>
+									<div className="flex flex-1 items-center justify-start gap-2">
+										<UserAvatar
+											className="size-8"
+											name={user.name ?? ""}
+											avatarUrl={user.image}
+										/>
+										{user.name}
+									</div>
+								</DropdownMenuRadioItem>
+							</DropdownMenuRadioGroup>
+							<DropdownMenuSeparator />
+						</>
+					)}
 					<DropdownMenuRadioGroup
 						value={activeOrganization?.slug}
 						onValueChange={(organizationSlug: string) =>

@@ -26,10 +26,12 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { parseAsString, useQueryState } from "nuqs";
+import { useRouter, useSearchParams } from "next/navigation";
+import {} from "nuqs";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { withQuery } from "ufo";
 import { z } from "zod";
 import {
 	type OAuthProvider,
@@ -45,26 +47,30 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function SignupForm() {
+export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const t = useTranslations();
+	const router = useRouter();
 	const { zodErrorMap } = useFormErrors();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
+	const searchParams = useSearchParams();
 
 	const [showPassword, setShowPassword] = useState(false);
-	const [invitationId] = useQueryState("invitationId", parseAsString);
-	const [email] = useQueryState("email", parseAsString);
-	const [redirectTo] = useQueryState("redirectTo", parseAsString);
+	const invitationId = searchParams.get("invitationId");
+	const email = searchParams.get("email");
+	const redirectTo = searchParams.get("redirectTo");
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema, {
 			errorMap: zodErrorMap,
 		}),
-		defaultValues: {
+		values: {
 			name: "",
-			email: email ?? "",
+			email: prefillEmail ?? email ?? "",
 			password: "",
 		},
 	});
+
+	const invitationOnlyMode = !config.auth.enableSignup && invitationId;
 
 	const redirectPath = invitationId
 		? `/app/organization-invitation/${invitationId}`
@@ -86,6 +92,13 @@ export function SignupForm() {
 			if (error) {
 				throw error;
 			}
+
+			if (invitationOnlyMode) {
+				await authClient.organization.acceptInvitation({
+					invitationId,
+				});
+				router.push(config.auth.redirectAfterSignIn);
+			}
 		} catch (e) {
 			form.setError("root", {
 				message: getAuthErrorMessage(
@@ -104,7 +117,7 @@ export function SignupForm() {
 			</h1>
 			<p className="mt-1 mb-6 text-foreground/60">{t("auth.signup.message")}</p>
 
-			{form.formState.isSubmitSuccessful ? (
+			{form.formState.isSubmitSuccessful && !invitationOnlyMode ? (
 				<Alert variant="success">
 					<MailboxIcon className="size-6" />
 					<AlertTitle>{t("auth.signup.hints.verifyEmail")}</AlertTitle>
@@ -148,7 +161,11 @@ export function SignupForm() {
 									<FormItem>
 										<FormLabel>{t("auth.signup.email")}</FormLabel>
 										<FormControl>
-											<Input {...field} autoComplete="email" />
+											<Input
+												{...field}
+												autoComplete="email"
+												readOnly={!!prefillEmail}
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -216,9 +233,10 @@ export function SignupForm() {
 					{t("auth.signup.alreadyHaveAccount")}{" "}
 				</span>
 				<Link
-					href={`/auth/login${
-						invitationId ? `?invitationId=${invitationId}&email=${email}` : ""
-					}`}
+					href={withQuery(
+						"/auth/login",
+						Object.fromEntries(searchParams.entries()),
+					)}
 				>
 					{t("auth.signup.signIn")}
 					<ArrowRightIcon className="ml-1 inline size-4 align-middle" />

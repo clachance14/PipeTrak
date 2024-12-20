@@ -44,9 +44,7 @@ export function OrganizationForm({
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const { data: organization } = useFullOrganizationQuery(organizationId, {
-		enabled: !!organizationId,
-	});
+	const { data: organization } = useFullOrganizationQuery(organizationId);
 
 	const updateOrganizationMutation = useUpdateOrganizationMutation();
 	const createOrganizationMutation = useCreateOrganizationMutation();

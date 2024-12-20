@@ -1,10 +1,10 @@
-import type { authClient } from "@repo/auth/client";
+import type { AuthClientErrorCodes } from "@repo/auth/client";
 import { useTranslations } from "next-intl";
 
 export function useAuthErrorMessages() {
 	const t = useTranslations();
 
-	const authErrorMessages: typeof authClient.$ERROR_CODES = {
+	const authErrorMessages: AuthClientErrorCodes = {
 		INVALID_EMAIL_OR_PASSWORD: t("auth.errors.invalidEmailOrPassword"),
 		USER_NOT_FOUND: t("auth.errors.userNotFound"),
 		FAILED_TO_CREATE_USER: t("auth.errors.failedToCreateUser"),
@@ -25,6 +25,7 @@ export function useAuthErrorMessages() {
 		SOCIAL_ACCOUNT_ALREADY_LINKED: t("auth.errors.socialAccountAlreadyLinked"),
 		USER_EMAIL_NOT_FOUND: t("auth.errors.userEmailNotFound"),
 		USER_ALREADY_EXISTS: t("auth.errors.userAlreadyExists"),
+		INVALID_INVITATION: t("auth.errors.invalidInvitation"),
 	};
 
 	const getAuthErrorMessage = (errorCode: string | undefined) => {
