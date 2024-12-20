@@ -54,7 +54,7 @@ export const config = {
 	// Authentication
 	auth: {
 		// Whether users should be able to create accounts (otherwise users can only be by admins)
-		enableSignup: false,
+		enableSignup: true,
 		// where users should be redirected after the sign in
 		redirectAfterSignIn: "/app",
 		// where users should be redirected after logout
