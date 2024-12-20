@@ -13,7 +13,6 @@ import {
 	AlertDialogTitle,
 } from "@ui/components/alert-dialog";
 import { Button } from "@ui/components/button";
-import { Input } from "@ui/components/input";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -22,16 +21,13 @@ export function DeleteAccountForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
 	const [deleting, setDeleting] = useState(false);
-	const [password, setPassword] = useState("");
 	const router = useRouter();
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
 	const onDelete = async () => {
 		setDeleting(true);
 		await authClient.deleteUser(
-			{
-				password,
-			},
+			{},
 			{
 				onSuccess: () => {
 					toast({
@@ -78,13 +74,6 @@ export function DeleteAccountForm() {
 						</AlertDialogTitle>
 						<AlertDialogDescription>
 							{t("settings.account.deleteAccount.confirmation")}
-
-							<Input
-								type="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								className="mt-4 w-full"
-							/>
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>

@@ -7,7 +7,6 @@ import {
 	useFullOrganizationQuery,
 } from "@saas/organizations/lib/api";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import type {
 	ColumnDef,
@@ -42,7 +41,6 @@ export function OrganizationMembersList({
 	organizationId: string;
 }) {
 	const t = useTranslations();
-	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { user } = useSession();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
