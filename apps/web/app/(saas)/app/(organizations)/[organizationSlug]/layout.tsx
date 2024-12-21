@@ -5,7 +5,6 @@ import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { AppWrapper } from "@saas/shared/components/AppWrapper";
 import { getQueryClient } from "@shared/lib/server";
-import {} from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
 

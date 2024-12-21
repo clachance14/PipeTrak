@@ -1,4 +1,3 @@
-import {} from "@ui/components/accordion";
 import { cn } from "@ui/lib";
 import { useTranslations } from "next-intl";
 

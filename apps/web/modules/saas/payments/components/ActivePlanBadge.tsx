@@ -1,6 +1,5 @@
 "use client";
 
-import {} from "@repo/config";
 import { usePlanData } from "@saas/payments/hooks/plan-data";
 import { usePurchases } from "@saas/payments/hooks/purchases";
 import { Badge } from "@ui/components/badge";
