@@ -36,8 +36,6 @@ export const config = {
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
 		requireOrganization: false,
-		// These colors are used for placeholder avatar if the organization has no logo uploaded
-		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
 		forbiddenOrganizationSlugs: [
 			"new-organization",

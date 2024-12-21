@@ -1,4 +1,5 @@
 import { config } from "@repo/config";
+import { lightVariables } from "@repo/tailwind-config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
 import { forwardRef, useMemo } from "react";
@@ -29,7 +30,11 @@ export const OrganizationLogo = forwardRef<
 					size={96}
 					name={name}
 					variant="marble"
-					colors={config.organizations.avatarColors}
+					colors={[
+						lightVariables.colors.primary,
+						lightVariables.colors.accent,
+						lightVariables.colors.highlight,
+					]}
 					square
 				/>
 			</AvatarFallback>

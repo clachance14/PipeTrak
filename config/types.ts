@@ -12,7 +12,6 @@ export type Config = {
 		enableUsersToCreateOrganizations: boolean;
 		requireOrganization: boolean;
 		hideOrganization: boolean;
-		avatarColors: string[];
 		forbiddenOrganizationSlugs: string[];
 	};
 	users: {
