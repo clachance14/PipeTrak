@@ -28,7 +28,8 @@
 				"noUnusedTemplateLiteral": {
 					"level": "error",
 					"fix": "safe"
-				}
+				},
+				"noNonNullAssertion": "warn"
 			}
 		}
 	},

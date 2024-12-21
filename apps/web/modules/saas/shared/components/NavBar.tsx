@@ -37,12 +37,6 @@ export function NavBar() {
 			icon: HomeIcon,
 			isActive: pathname === basePath,
 		},
-		{
-			label: t("app.menu.aiDemo"),
-			href: "/app/ai-demo",
-			icon: Wand2Icon,
-			isActive: pathname.startsWith("/app/ai-demo"),
-		},
 		...(activeOrganization
 			? [
 					{
@@ -53,6 +47,12 @@ export function NavBar() {
 					},
 				]
 			: [
+					{
+						label: t("app.menu.aiDemo"),
+						href: "/app/ai-demo",
+						icon: Wand2Icon,
+						isActive: pathname.startsWith("/app/ai-demo"),
+					},
 					{
 						label: t("app.menu.accountSettings"),
 						href: "/app/settings",
