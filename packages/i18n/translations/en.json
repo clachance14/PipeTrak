@@ -64,7 +64,8 @@
 			},
 			"search": "Search for name or email...",
 			"title": "Manage users"
-		}
+		},
+		"description": "Manage your application."
 	},
 	"app": {
 		"menu": {

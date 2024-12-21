@@ -24,7 +24,7 @@ type ConfirmOptions = {
 	cancelLabel?: string;
 	confirmLabel?: string;
 	destructive?: boolean;
-	onConfirm: () => void;
+	onConfirm: () => Promise<void> | void;
 };
 const ConfirmationAlertContext = createContext<{
 	confirm: (options: ConfirmOptions) => void;
@@ -64,7 +64,10 @@ export function ConfirmationAlertProvider({ children }: PropsWithChildren) {
 						</AlertDialogCancel>
 						<Button
 							variant={confirmOptions?.destructive ? "error" : "primary"}
-							onClick={confirmOptions?.onConfirm}
+							onClick={async () => {
+								await confirmOptions?.onConfirm();
+								setConfirmOptions(null);
+							}}
 						>
 							{confirmOptions?.confirmLabel ?? t("common.confirmation.confirm")}
 						</Button>

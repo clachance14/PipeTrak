@@ -64,7 +64,8 @@
 			},
 			"search": "Nach Name oder E-Mail suchen...",
 			"title": "Benutzer verwalten"
-		}
+		},
+		"description": "Verwalte deine Anwendung."
 	},
 	"app": {
 		"menu": {

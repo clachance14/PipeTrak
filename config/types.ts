@@ -11,6 +11,7 @@ export type Config = {
 		enableBilling: boolean;
 		enableUsersToCreateOrganizations: boolean;
 		requireOrganization: boolean;
+		hideOrganization: boolean;
 		avatarColors: string[];
 		forbiddenOrganizationSlugs: string[];
 	};
@@ -46,7 +47,6 @@ export type Config = {
 	payments: {
 		plans: {
 			[id: string]: {
-				availableFor: Array<"users" | "organizations">;
 				hidden?: boolean;
 				isFree?: boolean;
 				isEnterprise?: boolean;

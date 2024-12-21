@@ -98,7 +98,8 @@ export function PricingTable({
 						let price = prices?.find(
 							(price) =>
 								!price.hidden &&
-								(price.type === "one-time" || price.interval === interval),
+								(price.type === "one-time" || price.interval === interval) &&
+								price.currency === localeCurrency,
 						);
 
 						if (isFree) {
@@ -109,6 +110,10 @@ export function PricingTable({
 								productId: "",
 								type: "recurring",
 							};
+						}
+
+						if (!price && !isEnterprise) {
+							return null;
 						}
 
 						return (

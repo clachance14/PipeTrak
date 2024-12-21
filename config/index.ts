@@ -30,10 +30,12 @@ export const config = {
 		enable: true,
 		// Whether billing for organizations should be enabled (below you can enable it for users instead)
 		enableBilling: true,
+		// Whether the organization should be hidden from the user (use this for multi-tenant applications)
+		hideOrganization: false,
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
-		requireOrganization: true,
+		requireOrganization: false,
 		// These colors are used for placeholder avatar if the organization has no logo uploaded
 		avatarColors: ["#4e6df5", "#e5a158", "#9dbee5", "#ced3d9"],
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
@@ -99,11 +101,9 @@ export const config = {
 		plans: {
 			// The free plan is treated differently. It will automatically be assigned if the user has no other plan.
 			free: {
-				availableFor: ["users", "organizations"],
 				isFree: true,
 			},
 			pro: {
-				availableFor: ["users", "organizations"],
 				recommended: true,
 				prices: [
 					{
@@ -125,11 +125,9 @@ export const config = {
 				],
 			},
 			enterprise: {
-				availableFor: ["users", "organizations"],
 				isEnterprise: true,
 			},
 			// lifetime: {
-			// 	availableFor: ["users", "organizations"],
 			// 	prices: [
 			// 		{
 			// 			type: "one-time",
