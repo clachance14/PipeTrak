@@ -2,7 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
-import { useCreateOrganizationMutation } from "@saas/organizations/lib/api";
+import {
+	organizationListQueryKey,
+	useCreateOrganizationMutation,
+} from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
@@ -54,7 +57,11 @@ export function CreateOrganizationForm({
 				throw new Error("Failed to create organization");
 			}
 
-			setActiveOrganization(newOrganization.id);
+			await setActiveOrganization(newOrganization.id);
+
+			await queryClient.invalidateQueries({
+				queryKey: organizationListQueryKey,
+			});
 
 			router.replace(`/app/${newOrganization.slug}`);
 
