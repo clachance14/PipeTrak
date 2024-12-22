@@ -314,8 +314,8 @@ importers:
         specifier: ^4.0.14
         version: 4.0.14(react@19.0.0)(zod@3.23.8)
       openai:
-        specifier: ^4.71.1
-        version: 4.73.1(encoding@0.1.13)(zod@3.23.8)
+        specifier: ^4.77.0
+        version: 4.77.0(encoding@0.1.13)(zod@3.23.8)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -381,8 +381,8 @@ importers:
         specifier: ^5.0.9
         version: 5.0.9
       openai:
-        specifier: ^4.72.0
-        version: 4.73.1(encoding@0.1.13)(zod@3.23.8)
+        specifier: ^4.77.0
+        version: 4.77.0(encoding@0.1.13)(zod@3.23.8)
       openapi-merge:
         specifier: ^1.3.3
         version: 1.3.3
@@ -5284,8 +5284,8 @@ packages:
   oniguruma-to-es@0.4.1:
     resolution: {integrity: sha512-rNcEohFz095QKGRovP/yqPIKc+nP+Sjs4YTHMv33nMePGKrq/r2eu9Yh4646M5XluGJsUnmwoXuiXE69KDs+fQ==}
 
-  openai@4.73.1:
-    resolution: {integrity: sha512-nWImDJBcUsqrhy7yJScXB4+iqjzbUEgzfA3un/6UnHFdwWhjX24oztj69Ped/njABfOdLcO/F7CeWTI5dt8Xmg==}
+  openai@4.77.0:
+    resolution: {integrity: sha512-WWacavtns/7pCUkOWvQIjyOfcdr9X+9n9Vvb0zFeKVDAqwCMDHB+iSr24SVaBAhplvSG6JrRXFpcNM9gWhOGIw==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -11808,7 +11808,7 @@ snapshots:
       regex: 5.0.1
       regex-recursion: 4.2.1
 
-  openai@4.73.1(encoding@0.1.13)(zod@3.23.8):
+  openai@4.77.0(encoding@0.1.13)(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.41
       '@types/node-fetch': 2.6.11
