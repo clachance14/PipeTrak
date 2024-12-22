@@ -5,8 +5,10 @@
 		"NODE_ENV",
 		"PORT",
 		"DATABASE_URL",
+		"BETTER_AUTH_SECRET",
 		"NEXT_PUBLIC_SITE_URL",
 		"VERCEL_URL",
+		"LEMONSQUEEZY_STORE_ID",
 		"LEMONSQUEEZY_WEBHOOK_SECRET",
 		"LEMONSQUEEZY_API_KEY",
 		"STRIPE_SECRET_KEY",
@@ -27,26 +29,24 @@
 		"PLUNK_API_KEY",
 		"RESEND_API_KEY",
 		"POSTMARK_SERVER_TOKEN",
-		"NEXT_PUBLIC_AVATARS_BUCKET_NAME"
+		"NEXT_PUBLIC_AVATARS_BUCKET_NAME",
+		"OPENAI_API_KEY"
 	],
 	"tasks": {
 		"build": {
-			"dependsOn": ["^db:generate", "^build"],
+			"dependsOn": ["^generate", "^build"],
 			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
 		},
 		"type-check": {},
 		"clean": {
 			"cache": false
 		},
-		"db:generate": {
-			"cache": false
-		},
-		"db:push": {
+		"generate": {
 			"cache": false
 		},
 		"dev": {
 			"cache": false,
-			"dependsOn": ["^db:generate"],
+			"dependsOn": ["^generate"],
 			"persistent": true
 		},
 		"export": {

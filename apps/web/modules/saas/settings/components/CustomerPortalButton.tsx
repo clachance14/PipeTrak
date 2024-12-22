@@ -1,46 +1,43 @@
 "use client";
 
-import { apiClient } from "@shared/lib/api-client";
+import { useCreateCustomerPortalLinkMutation } from "@saas/payments/lib/api";
 import { Button } from "@ui/components/button";
 import { useToast } from "@ui/hooks/use-toast";
 import { CreditCardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function CustomerPortalButton({
-	subscriptionId,
+	purchaseId,
 }: {
-	subscriptionId: string;
+	purchaseId: string;
 }) {
 	const t = useTranslations();
 	const { toast } = useToast();
-	const createCustomerPortalMutation =
-		apiClient.billing.createCustomerPortalLink.useMutation({
-			onError: () => {
-				toast({
-					variant: "error",
-					title: t(
-						"settings.billing.createCustomerPortal.notifications.error.title",
-					),
-				});
-			},
-		});
+	const createCustomerPortalMutation = useCreateCustomerPortalLinkMutation();
 
 	const createCustomerPortal = async () => {
 		try {
-			const url = await createCustomerPortalMutation.mutateAsync({
-				subscriptionId,
-				redirectUrl: window.location.href,
-			});
+			const { customerPortalLink } =
+				await createCustomerPortalMutation.mutateAsync({
+					purchaseId,
+					redirectUrl: window.location.href,
+				});
 
-			window.location.href = url;
+			window.location.href = customerPortalLink;
 		} catch {
-			// TODO: add error notification
+			toast({
+				variant: "error",
+				title: t(
+					"settings.billing.createCustomerPortal.notifications.error.title",
+				),
+			});
 		}
 	};
 
 	return (
 		<Button
-			variant="default"
+			variant="outline"
+			size="sm"
 			onClick={() => createCustomerPortal()}
 			loading={createCustomerPortalMutation.isPending}
 		>

@@ -6,8 +6,8 @@ import {
 	Section,
 	Tailwind,
 } from "@react-email/components";
+import { lightVariables } from "@repo/tailwind-config";
 import type { PropsWithChildren } from "react";
-import { lightVariables } from "tailwind-config";
 import { Logo } from "./Logo";
 
 export default function Wrapper({ children }: PropsWithChildren) {
@@ -68,8 +68,8 @@ export default function Wrapper({ children }: PropsWithChildren) {
 					},
 				}}
 			>
-				<Section className="p-1">
-					<Container className="rounded-lg border border-border border-solid bg-card p-6 text-card-foreground">
+				<Section className="bg-background p-4">
+					<Container className="rounded-lg bg-card p-6 text-card-foreground">
 						<Logo />
 						{children}
 					</Container>

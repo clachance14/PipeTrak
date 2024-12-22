@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUser } from "@saas/auth/hooks/use-user";
+import { authClient } from "@repo/auth/client";
+import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatarUpload } from "@saas/settings/components/UserAvatarUpload";
-import { apiClient } from "@shared/lib/api-client";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -27,9 +27,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
-	const { user } = useUser();
 	const t = useTranslations();
-
+	const { user } = useSession();
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -37,13 +36,11 @@ export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
 		},
 	});
 
-	const updateUserMutation = apiClient.auth.update.useMutation();
-
 	const onSubmit: SubmitHandler<FormValues> = async ({ name }) => {
 		form.clearErrors("root");
 
 		try {
-			await updateUserMutation.mutateAsync({
+			await authClient.updateUser({
 				name,
 			});
 

@@ -9,6 +9,7 @@
 		"inlineSources": false,
 		"isolatedModules": true,
 		"module": "Preserve",
+		"target": "ES2021",
 		"moduleResolution": "bundler",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
@@ -16,10 +17,7 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"strictNullChecks": true,
-		"paths": {
-			"@config": ["../../config"]
-		}
+		"strictNullChecks": true
 	},
 	"display": "Default",
 	"exclude": ["node_modules"]

@@ -1,103 +1,159 @@
 "use client";
-
-import { Link } from "@i18n/routing";
-import { usePathname } from "@i18n/routing";
-import { UserMenu } from "@marketing/shared/components/UserMenu";
+import { config } from "@repo/config";
+import { useSession } from "@saas/auth/hooks/use-session";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
-import type { ApiOutput } from "api/trpc/router";
-import type { Team } from "database";
-import { UserRoleSchema } from "database";
+import { cn } from "@ui/lib";
 import {
 	ChevronRightIcon,
-	GridIcon,
+	HomeIcon,
 	SettingsIcon,
+	UserCog2Icon,
 	UserCogIcon,
 	Wand2Icon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { PropsWithChildren } from "react";
-import { useCallback } from "react";
-import { TeamSelect } from "./TeamSelect";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { OrganzationSelect } from "../../organizations/components/OrganizationSelect";
 
-type User = ApiOutput["auth"]["user"];
-
-export function NavBar({
-	teams,
-	user,
-}: PropsWithChildren<{ teams: Team[]; user: User }>) {
+export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
-	const isAdmin = user?.role === UserRoleSchema.Values.ADMIN;
+	const { user } = useSession();
+	const { activeOrganization } = useActiveOrganization();
+
+	const { useSidebarLayout } = config.ui.saas;
+
+	const basePath = activeOrganization
+		? `/app/${activeOrganization.slug}`
+		: "/app";
 
 	const menuItems = [
 		{
-			label: t("dashboard.menu.dashboard"),
-			href: "/app/dashboard",
-			icon: GridIcon,
+			label: t("app.menu.start"),
+			href: basePath,
+			icon: HomeIcon,
+			isActive: pathname === basePath,
 		},
-		{
-			label: t("dashboard.menu.aiDemo"),
-			href: "/app/ai-demo",
-			icon: Wand2Icon,
-		},
-		{
-			label: t("dashboard.menu.settings"),
-			href: "/app/settings",
-			icon: SettingsIcon,
-		},
-		...(isAdmin
+		...(activeOrganization
 			? [
 					{
-						label: t("dashboard.menu.admin"),
+						label: t("app.menu.organizationSettings"),
+						href: `${basePath}/settings`,
+						icon: SettingsIcon,
+						isActive: pathname.startsWith(`${basePath}/settings`),
+					},
+				]
+			: [
+					{
+						label: t("app.menu.aiDemo"),
+						href: "/app/ai-demo",
+						icon: Wand2Icon,
+						isActive: pathname.startsWith("/app/ai-demo"),
+					},
+					{
+						label: t("app.menu.accountSettings"),
+						href: "/app/settings",
+						icon: UserCog2Icon,
+						isActive: pathname.startsWith("/app/settings"),
+					},
+				]),
+		...(user?.role === "admin"
+			? [
+					{
+						label: t("app.menu.admin"),
 						href: "/app/admin",
 						icon: UserCogIcon,
+						isActive: pathname.startsWith("/app/admin"),
 					},
 				]
 			: []),
 	];
 
-	const isActiveMenuItem = useCallback(
-		(href: string | null) => {
-			return href && pathname.includes(href);
-		},
-		[pathname],
-	);
-
 	return (
-		<nav className="w-full border-b">
-			<div className="container max-w-6xl py-4">
+		<nav
+			className={cn("w-full border-b", {
+				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px] md:border-r md:border-b-0":
+					useSidebarLayout,
+			})}
+		>
+			<div
+				className={cn("container max-w-6xl py-4", {
+					"container max-w-6xl py-4 md:flex md:h-full md:flex-col md:px-6 md:pt-6 md:pb-0":
+						useSidebarLayout,
+				})}
+			>
 				<div className="flex flex-wrap items-center justify-between gap-4">
-					<div className="flex items-center gap-3">
-						<Link href="/" className="block">
+					<div
+						className={cn("flex items-center gap-4 md:gap-2", {
+							"md:flex md:w-full md:flex-col md:items-stretch md:align-stretch":
+								useSidebarLayout,
+						})}
+					>
+						<Link href="/app" className="block">
 							<Logo />
 						</Link>
 
-						<span className="hidden opacity-30 md:block">
-							<ChevronRightIcon className="size-4" />
-						</span>
+						{config.organizations.enable &&
+							!config.organizations.hideOrganization && (
+								<>
+									<span
+										className={cn("hidden opacity-30 md:block", {
+											"md:hidden": useSidebarLayout,
+										})}
+									>
+										<ChevronRightIcon className="size-4" />
+									</span>
 
-						<TeamSelect teams={teams} />
+									<OrganzationSelect
+										className={cn({
+											"md:-mx-2 md:mt-2": useSidebarLayout,
+										})}
+									/>
+								</>
+							)}
 					</div>
 
-					<div className="mr-0 ml-auto flex items-center justify-end gap-4">
+					<div
+						className={cn("mr-0 ml-auto flex items-center justify-end gap-4", {
+							"md:hidden": useSidebarLayout,
+						})}
+					>
 						<UserMenu />
 					</div>
 				</div>
 
-				<ul className="no-scrollbar -mx-8 -mb-4 mt-6 flex list-none items-center justify-start gap-6 overflow-x-auto px-8 text-sm">
+				<ul
+					className={cn(
+						"no-scrollbar -mx-4 -mb-4 mt-6 flex list-none items-center justify-start gap-4 overflow-x-auto px-4 text-sm",
+						{
+							"md:mx-0 md:my-4 md:flex md:flex-col md:items-stretch md:gap-1 md:px-0":
+								useSidebarLayout,
+						},
+					)}
+				>
 					{menuItems.map((menuItem) => (
 						<li key={menuItem.href}>
 							<Link
 								href={menuItem.href}
-								className={`flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-3 ${
-									isActiveMenuItem(menuItem.href)
-										? "border-primary font-bold"
-										: "border-transparent"
-								}`}
+								className={cn(
+									"flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-3",
+									[
+										menuItem.isActive
+											? "border-primary font-bold"
+											: "border-transparent",
+									],
+									{
+										"md:-mx-6 md:border-b-0 md:border-l-2 md:px-6 md:py-2":
+											useSidebarLayout,
+									},
+								)}
 							>
 								<menuItem.icon
 									className={`size-4 shrink-0 ${
-										isActiveMenuItem(menuItem.href) ? "text-primary" : ""
+										menuItem.isActive ? "text-primary" : "opacity-50"
 									}`}
 								/>
 								<span>{menuItem.label}</span>
@@ -105,6 +161,14 @@ export function NavBar({
 						</li>
 					))}
 				</ul>
+
+				<div
+					className={cn("-mx-4 md:-mx-6 mt-auto mb-0 hidden p-4 md:p-4", {
+						"md:block": useSidebarLayout,
+					})}
+				>
+					<UserMenu showUserName />
+				</div>
 			</div>
 		</nav>
 	);

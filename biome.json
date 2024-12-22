@@ -19,15 +19,17 @@
 				"noUnusedImports": "error"
 			},
 			"nursery": {
-				"useSortedClasses": "error",
-				"noRestrictedImports": {
+				"useSortedClasses": {
 					"level": "error",
-					"options": {
-						"paths": {
-							"next/link": "Please import from `@i18n` instead."
-						}
-					}
+					"fix": "safe"
 				}
+			},
+			"style": {
+				"noUnusedTemplateLiteral": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"noNonNullAssertion": "warn"
 			}
 		}
 	},

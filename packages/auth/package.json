@@ -1,25 +1,24 @@
 {
 	"dependencies": {
-		"@node-rs/argon2": "^2.0.0",
-		"@oslojs/crypto": "^1.0.1",
-		"@oslojs/encoding": "^1.1.0",
-		"arctic": "^2.3.0",
+		"@repo/config": "workspace:*",
+		"@repo/database": "workspace:*",
+		"@repo/i18n": "workspace:*",
+		"@repo/logs": "workspace:*",
+		"@repo/mail": "workspace:*",
+		"@repo/utils": "workspace:*",
+		"better-auth": "1.0.22",
 		"cookie": "^1.0.1",
-		"database": "workspace:*",
-		"logs": "workspace:*",
-		"next": "15.0.3",
-		"utils": "workspace:*",
-		"zod": "^3.23.8"
+		"next": "15.1.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@types/node": "^22.10.1",
-		"@types/react": "18.3.12",
-		"tsconfig": "workspace:*"
+		"@repo/tsconfig": "workspace:*",
+		"@types/node": "^22.10.1"
 	},
-	"main": "./index.tsx",
-	"name": "auth",
+	"main": "./index.ts",
+	"name": "@repo/auth",
 	"scripts": {
+		"migrate": "dotenv -e ../../.env.local -- pnpm dlx @better-auth/cli@latest generate --config ./auth.ts --output ../database/prisma/schema.prisma",
 		"type-check": "tsc --noEmit"
 	},
 	"types": "./**/.tsx",

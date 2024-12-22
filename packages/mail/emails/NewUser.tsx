@@ -14,31 +14,30 @@ export function NewUser({
 	url: string;
 	name: string;
 	otp: string;
-} & BaseMailProps): JSX.Element {
+} & BaseMailProps) {
 	const t = createTranslator({
 		locale,
 		messages: translations,
-		namespace: "mail",
 	});
 
 	return (
 		<Wrapper>
-			<Text>{t("newUser.body", { name })}</Text>
+			<Text>{t("mail.newUser.body", { name })}</Text>
 
 			<Text>
-				{t("common.otp")}
+				{t("mail.common.otp")}
 				<br />
 				<strong className="font-bold text-2xl">{otp}</strong>
 			</Text>
 
-			<Text>{t("common.useLink")}</Text>
+			<Text>{t("mail.common.useLink")}</Text>
 
 			<PrimaryButton href={url}>
-				{t("newUser.confirmEmail")} &rarr;
+				{t("mail.newUser.confirmEmail")} &rarr;
 			</PrimaryButton>
 
 			<Text className="text-muted-foreground text-sm">
-				{t("common.openLinkInBrowser")}
+				{t("mail.common.openLinkInBrowser")}
 				<Link href={url}>{url}</Link>
 			</Text>
 		</Wrapper>

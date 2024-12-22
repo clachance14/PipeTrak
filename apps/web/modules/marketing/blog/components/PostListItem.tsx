@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@i18n/routing";
+import { LocaleLink } from "@i18n/routing";
 import type { Post } from "content-collections";
 import Image from "next/image";
 
@@ -19,7 +19,7 @@ export function PostListItem({ post }: { post: Post }) {
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						className="object-cover object-center"
 					/>
-					<Link href={`/blog/${path}`} className="absolute inset-0" />
+					<LocaleLink href={`/blog/${path}`} className="absolute inset-0" />
 				</div>
 			)}
 
@@ -36,9 +36,9 @@ export function PostListItem({ post }: { post: Post }) {
 				</div>
 			)}
 
-			<Link href={`/blog/${path}`} className="font-semibold text-xl">
+			<LocaleLink href={`/blog/${path}`} className="font-semibold text-xl">
 				{title}
-			</Link>
+			</LocaleLink>
 			{excerpt && <p className="opacity-50">{excerpt}</p>}
 
 			<div className="mt-4 flex items-center justify-between">

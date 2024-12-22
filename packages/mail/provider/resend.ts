@@ -1,8 +1,8 @@
-import { config } from "@config";
-import { logger } from "logs";
+import { config } from "@repo/config";
+import { logger } from "@repo/logs";
 import type { SendEmailHandler } from "../types";
 
-const { from } = config.mailing;
+const { from } = config.mails;
 
 export const send: SendEmailHandler = async ({ to, subject, html }) => {
 	const response = await fetch("https://api.resend.com/emails", {

@@ -1,29 +1,28 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/client";
+import { createQueryClient } from "@shared/lib/query-client";
+import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
-import { useState } from "react";
-import superjson from "superjson";
-import { apiClient } from "../lib/api-client";
+
+let clientQueryClientSingleton: QueryClient;
+function getQueryClient() {
+	if (typeof window === "undefined") {
+		return createQueryClient();
+	}
+
+	if (!clientQueryClientSingleton) {
+		clientQueryClientSingleton = createQueryClient();
+	}
+
+	return clientQueryClientSingleton;
+}
 
 export function ApiClientProvider({ children }: PropsWithChildren) {
 	const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
 
-	const [queryClient] = useState(() => new QueryClient());
-	const [trpcClient] = useState(() =>
-		apiClient.createClient({
-			links: [
-				httpBatchLink({
-					url: `${baseUrl}/api`,
-					transformer: superjson,
-				}),
-			],
-		}),
-	);
+	const queryClient = getQueryClient();
+
 	return (
-		<apiClient.Provider client={trpcClient} queryClient={queryClient}>
-			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-		</apiClient.Provider>
+		<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 	);
 }

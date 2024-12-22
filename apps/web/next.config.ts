@@ -5,7 +5,7 @@ import nextIntlPlugin from "next-intl/plugin";
 const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-	transpilePackages: ["api", "auth"],
+	transpilePackages: ["@repo/api", "@repo/auth"],
 	images: {
 		remotePatterns: [
 			{
@@ -23,13 +23,13 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
-				source: "/app",
-				destination: "/app/dashboard",
+				source: "/app/settings",
+				destination: "/app/settings/general",
 				permanent: true,
 			},
 			{
-				source: "/app/settings",
-				destination: "/app/settings/account/general",
+				source: "/app/:organizationSlug/settings",
+				destination: "/app/:organizationSlug/settings/general",
 				permanent: true,
 			},
 			{
@@ -38,10 +38,6 @@ const nextConfig: NextConfig = {
 				permanent: true,
 			},
 		];
-	},
-	webpack: (config) => {
-		config.externals.push("@node-rs/argon2");
-		return config;
 	},
 	eslint: {
 		ignoreDuringBuilds: true,

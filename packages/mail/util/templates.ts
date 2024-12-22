@@ -1,22 +1,7 @@
-import type { Locale } from "@config";
 import { render } from "@react-email/render";
-import { getMessagesForLocale } from "i18n/lib";
-import type { Messages } from "i18n/types";
-import { EmailChange } from "../emails/EmailChange";
-import { ForgotPassword } from "../emails/ForgotPassword";
-import { MagicLink } from "../emails/MagicLink";
-import { NewUser } from "../emails/NewUser";
-import { NewsletterSignup } from "../emails/NewsletterSignup";
-import { TeamInvitation } from "../emails/TeamInvitation";
-
-export const mailTemplates = {
-	magicLink: MagicLink,
-	forgotPassword: ForgotPassword,
-	newUser: NewUser,
-	newsletterSignup: NewsletterSignup,
-	teamInvitation: TeamInvitation,
-	emailChange: EmailChange,
-};
+import { getMessagesForLocale } from "@repo/i18n";
+import type { Locale, Messages } from "@repo/i18n";
+import { mailTemplates } from "../emails";
 
 export async function getTemplate<T extends TemplateId>({
 	templateId,

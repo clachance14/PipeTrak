@@ -6,9 +6,6 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      trpc:
-        patterns:
-          - "@trpc/*"
       content-collections:
         patterns:
           - "@content-collections/*"
@@ -19,3 +16,7 @@ updates:
       radix-ui:
         patterns:
           - "@radix-ui/*"
+      next-intl:
+        patterns:
+          - "next-intl"
+          - "use-intl"

@@ -1,3 +1,4 @@
+import { config } from "@repo/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import { forwardRef, useMemo } from "react";
 
@@ -19,12 +20,20 @@ export const UserAvatar = forwardRef<
 		[name],
 	);
 
-	const avatarSrc = useMemo(() => avatarUrl ?? undefined, [avatarUrl]);
+	const avatarSrc = useMemo(
+		() =>
+			avatarUrl
+				? avatarUrl.startsWith("http")
+					? avatarUrl
+					: `/image-proxy/${config.storage.bucketNames.avatars}/${avatarUrl}`
+				: undefined,
+		[avatarUrl],
+	);
 
 	return (
 		<Avatar ref={ref} className={className}>
 			<AvatarImage src={avatarSrc} />
-			<AvatarFallback className="bg-primary/10 text-primary">
+			<AvatarFallback className="bg-secondary/10 text-secondary">
 				{initials}
 			</AvatarFallback>
 		</Avatar>

@@ -1,4 +1,4 @@
-import type { Locale } from "@config";
+import type { Locale } from "@repo/i18n";
 
 export interface SendEmailParams {
 	to: string;

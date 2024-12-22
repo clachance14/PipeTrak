@@ -1,8 +1,8 @@
 "use client";
 
-import { ActionBlock } from "@saas/shared/components/ActionBlock";
+import { authClient } from "@repo/auth/client";
+import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useRouter } from "@shared/hooks/router";
-import { apiClient } from "@shared/lib/api-client";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -20,35 +20,48 @@ import { useState } from "react";
 export function DeleteAccountForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
+	const [deleting, setDeleting] = useState(false);
 	const router = useRouter();
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
-	const deleteAccountMutation = apiClient.auth.deleteAccount.useMutation({
-		onSuccess: () => {
-			toast({
-				variant: "success",
-				title: t("settings.notifications.accountDeleted"),
-			});
-			router.replace("/");
-		},
-		onError: () => {
-			toast({
-				variant: "error",
-				title: t("settings.notifications.accountNotDeleted"),
-			});
-		},
-	});
+	const onDelete = async () => {
+		setDeleting(true);
+		await authClient.deleteUser(
+			{},
+			{
+				onSuccess: () => {
+					toast({
+						variant: "success",
+						title: t("settings.account.deleteAccount.notifications.success"),
+					});
+					router.replace("/");
+				},
+				onError: () => {
+					toast({
+						variant: "error",
+						title: t("settings.account.deleteAccount.notifications.error"),
+					});
+				},
+				onResponse: (response) => {
+					setDeleting(false);
+				},
+			},
+		);
+	};
 
 	return (
 		<>
-			<ActionBlock
+			<SettingsItem
 				danger
 				title={t("settings.account.deleteAccount.title")}
-				onSubmit={() => setShowConfirmation(true)}
-				submitLabel={t("settings.account.deleteAccount.submit")}
+				description={t("settings.account.deleteAccount.description")}
 			>
-				<p>{t("settings.account.deleteAccount.description")}</p>
-			</ActionBlock>
+				<div className="mt-4 flex justify-end">
+					<Button variant="error" onClick={() => setShowConfirmation(true)}>
+						{t("settings.account.deleteAccount.submit")}
+					</Button>
+				</div>
+			</SettingsItem>
 
 			<AlertDialog
 				open={showConfirmation}
@@ -69,9 +82,9 @@ export function DeleteAccountForm() {
 						</AlertDialogCancel>
 						<Button
 							variant="error"
-							loading={deleteAccountMutation.isPending}
+							loading={deleting}
 							onClick={async () => {
-								await deleteAccountMutation.mutateAsync();
+								await onDelete();
 								setShowConfirmation(false);
 							}}
 						>

@@ -3,22 +3,18 @@ import { createTranslator } from "use-intl/core";
 import type { BaseMailProps } from "../types";
 import Wrapper from "./components/Wrapper";
 
-export function NewsletterSignup({
-	locale,
-	translations,
-}: BaseMailProps): JSX.Element {
+export function NewsletterSignup({ locale, translations }: BaseMailProps) {
 	const t = createTranslator({
 		locale,
 		messages: translations,
-		namespace: "mail",
 	});
 
 	return (
 		<Wrapper>
 			<Section className="bg-card p-8">
 				<Container>
-					<Heading as="h1">{t("newsletterSignup.subject")}</Heading>
-					<Text>{t("newsletterSignup.body")}</Text>
+					<Heading as="h1">{t("mail.newsletterSignup.subject")}</Heading>
+					<Text>{t("mail.newsletterSignup.body")}</Text>
 				</Container>
 			</Section>
 		</Wrapper>

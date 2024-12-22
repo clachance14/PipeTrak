@@ -1,15 +1,20 @@
-import { Link } from "@i18n/routing";
+import { LocaleLink } from "@i18n/routing";
+import { cn } from "@ui/lib";
 
 export function Footer() {
 	return (
-		<footer className="container py-4 text-center text-muted-foreground text-sm">
+		<footer
+			className={cn(
+				"container max-w-6xl py-6 text-center text-foreground/60 text-xs",
+			)}
+		>
 			<span>
 				© {new Date().getFullYear()} supastarter. All rights reserved.
 			</span>
 			<span className="opacity-50"> | </span>
-			<Link href="/legal/privacy-policy">Privacy policy</Link>
+			<LocaleLink href="/legal/privacy-policy">Privacy policy</LocaleLink>
 			<span className="opacity-50"> | </span>
-			<Link href="/legal/terms">Terms and conditions</Link>
+			<LocaleLink href="/legal/terms">Terms and conditions</LocaleLink>
 		</footer>
 	);
 }

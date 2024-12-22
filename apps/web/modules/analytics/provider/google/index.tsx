@@ -2,13 +2,13 @@
 
 import Script from "next/script";
 
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string;
+const googleTagId = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID as string;
 
 export function AnalyticsScript() {
 	return (
 		<Script
 			async
-			src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+			src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`}
 			onLoad={() => {
 				if (typeof window === "undefined") {
 					return;
@@ -20,7 +20,7 @@ export function AnalyticsScript() {
 					(window as any).dataLayer.push(...rest);
 				}
 				gtag("js", new Date());
-				gtag("config", googleAnalyticsId);
+				gtag("config", googleTagId);
 			}}
 		/>
 	);
