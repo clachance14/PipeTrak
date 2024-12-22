@@ -6,6 +6,7 @@ import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { useRouter } from "@shared/hooks/router";
+import { clearCache } from "@shared/lib/cache";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -67,6 +68,7 @@ export function UserMenu({
 		authClient.signOut({
 			fetchOptions: {
 				onSuccess: async () => {
+					await clearCache();
 					await reloadSession();
 					router.push(config.auth.redirectAfterLogout);
 				},
