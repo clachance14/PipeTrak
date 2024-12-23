@@ -214,8 +214,8 @@ importers:
         specifier: ^11.0.2
         version: 11.0.3
       zod:
-        specifier: ^3.23.8
-        version: 3.23.8
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -303,19 +303,19 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: ^0.0.56
-        version: 0.0.56(zod@3.23.8)
+        version: 0.0.56(zod@3.24.1)
       '@ai-sdk/openai':
         specifier: ^1.0.11
-        version: 1.0.11(zod@3.23.8)
+        version: 1.0.11(zod@3.24.1)
       '@ai-sdk/react':
         specifier: ^1.0.7
-        version: 1.0.7(react@19.0.0)(zod@3.23.8)
+        version: 1.0.7(react@19.0.0)(zod@3.24.1)
       ai:
         specifier: ^4.0.14
-        version: 4.0.14(react@19.0.0)(zod@3.23.8)
+        version: 4.0.14(react@19.0.0)(zod@3.24.1)
       openai:
         specifier: ^4.77.0
-        version: 4.77.0(encoding@0.1.13)(zod@3.23.8)
+        version: 4.77.0(encoding@0.1.13)(zod@3.24.1)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -376,13 +376,13 @@ importers:
         version: 4.6.10
       hono-openapi:
         specifier: ^0.1.5
-        version: 0.1.5(@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.23.8))(hono@4.6.10)(openapi-types@12.1.3)(zod-openapi@3.3.0(zod@3.23.8))(zod@3.23.8)
+        version: 0.1.5(@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.24.1))(hono@4.6.10)(openapi-types@12.1.3)(zod-openapi@3.3.0(zod@3.24.1))(zod@3.24.1)
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
       openai:
         specifier: ^4.77.0
-        version: 4.77.0(encoding@0.1.13)(zod@3.23.8)
+        version: 4.77.0(encoding@0.1.13)(zod@3.24.1)
       openapi-merge:
         specifier: ^1.3.3
         version: 1.3.3
@@ -390,8 +390,8 @@ importers:
         specifier: ^3.26.3
         version: 3.26.3(react@19.0.0)
       zod:
-        specifier: ^3.23.8
-        version: 3.23.8
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -461,8 +461,8 @@ importers:
         specifier: workspace:*
         version: link:../../config
       zod:
-        specifier: ^3.23.8
-        version: 3.23.8
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -6338,52 +6338,52 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
 
-  '@ai-sdk/anthropic@0.0.56(zod@3.23.8)':
+  '@ai-sdk/anthropic@0.0.56(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 0.0.26
-      '@ai-sdk/provider-utils': 1.0.22(zod@3.23.8)
-      zod: 3.23.8
+      '@ai-sdk/provider-utils': 1.0.22(zod@3.24.1)
+      zod: 3.24.1
 
-  '@ai-sdk/openai@1.0.11(zod@3.23.8)':
+  '@ai-sdk/openai@1.0.11(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.3
-      '@ai-sdk/provider-utils': 2.0.5(zod@3.23.8)
-      zod: 3.23.8
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
+      zod: 3.24.1
 
-  '@ai-sdk/provider-utils@1.0.22(zod@3.23.8)':
+  '@ai-sdk/provider-utils@1.0.22(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 0.0.26
       eventsource-parser: 1.1.2
       nanoid: 3.3.8
       secure-json-parse: 2.7.0
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
-  '@ai-sdk/provider-utils@2.0.4(zod@3.23.8)':
+  '@ai-sdk/provider-utils@2.0.4(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.2
       eventsource-parser: 3.0.0
       nanoid: 3.3.8
       secure-json-parse: 2.7.0
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
-  '@ai-sdk/provider-utils@2.0.5(zod@3.23.8)':
+  '@ai-sdk/provider-utils@2.0.5(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.3
       eventsource-parser: 3.0.0
       nanoid: 3.3.8
       secure-json-parse: 2.7.0
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
   '@ai-sdk/provider@0.0.26':
     dependencies:
@@ -6397,41 +6397,41 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@1.0.6(react@19.0.0)(zod@3.23.8)':
+  '@ai-sdk/react@1.0.6(react@19.0.0)(zod@3.24.1)':
     dependencies:
-      '@ai-sdk/provider-utils': 2.0.4(zod@3.23.8)
-      '@ai-sdk/ui-utils': 1.0.5(zod@3.23.8)
+      '@ai-sdk/provider-utils': 2.0.4(zod@3.24.1)
+      '@ai-sdk/ui-utils': 1.0.5(zod@3.24.1)
       swr: 2.2.5(react@19.0.0)
       throttleit: 2.1.0
     optionalDependencies:
       react: 19.0.0
-      zod: 3.23.8
+      zod: 3.24.1
 
-  '@ai-sdk/react@1.0.7(react@19.0.0)(zod@3.23.8)':
+  '@ai-sdk/react@1.0.7(react@19.0.0)(zod@3.24.1)':
     dependencies:
-      '@ai-sdk/provider-utils': 2.0.5(zod@3.23.8)
-      '@ai-sdk/ui-utils': 1.0.6(zod@3.23.8)
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
+      '@ai-sdk/ui-utils': 1.0.6(zod@3.24.1)
       swr: 2.2.5(react@19.0.0)
       throttleit: 2.1.0
     optionalDependencies:
       react: 19.0.0
-      zod: 3.23.8
+      zod: 3.24.1
 
-  '@ai-sdk/ui-utils@1.0.5(zod@3.23.8)':
+  '@ai-sdk/ui-utils@1.0.5(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.2
-      '@ai-sdk/provider-utils': 2.0.4(zod@3.23.8)
-      zod-to-json-schema: 3.24.1(zod@3.23.8)
+      '@ai-sdk/provider-utils': 2.0.4(zod@3.24.1)
+      zod-to-json-schema: 3.24.1(zod@3.24.1)
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
-  '@ai-sdk/ui-utils@1.0.6(zod@3.23.8)':
+  '@ai-sdk/ui-utils@1.0.6(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.3
-      '@ai-sdk/provider-utils': 2.0.5(zod@3.23.8)
-      zod-to-json-schema: 3.24.1(zod@3.23.8)
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
+      zod-to-json-schema: 3.24.1(zod@3.24.1)
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -7476,7 +7476,7 @@ snapshots:
       tinyglobby: 0.2.6
       typescript: 5.7.2
       yaml: 2.4.5
-      zod: 3.23.8
+      zod: 3.24.1
 
   '@content-collections/integrations@0.2.1(@content-collections/core@0.8.0(typescript@5.7.2))':
     dependencies:
@@ -7825,10 +7825,10 @@ snapshots:
     dependencies:
       hono: 4.6.10
 
-  '@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.23.8)':
+  '@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.24.1)':
     dependencies:
       hono: 4.6.10
-      zod: 3.23.8
+      zod: 3.24.1
 
   '@hookform/resolvers@3.9.1(react-hook-form@7.53.2(react@19.0.0))':
     dependencies:
@@ -9711,18 +9711,18 @@ snapshots:
       clean-stack: 2.2.0
       indent-string: 4.0.0
 
-  ai@4.0.14(react@19.0.0)(zod@3.23.8):
+  ai@4.0.14(react@19.0.0)(zod@3.24.1):
     dependencies:
       '@ai-sdk/provider': 1.0.2
-      '@ai-sdk/provider-utils': 2.0.4(zod@3.23.8)
-      '@ai-sdk/react': 1.0.6(react@19.0.0)(zod@3.23.8)
-      '@ai-sdk/ui-utils': 1.0.5(zod@3.23.8)
+      '@ai-sdk/provider-utils': 2.0.4(zod@3.24.1)
+      '@ai-sdk/react': 1.0.6(react@19.0.0)(zod@3.24.1)
+      '@ai-sdk/ui-utils': 1.0.5(zod@3.24.1)
       '@opentelemetry/api': 1.9.0
       jsondiffpatch: 0.6.0
-      zod-to-json-schema: 3.24.1(zod@3.23.8)
+      zod-to-json-schema: 3.24.1(zod@3.24.1)
     optionalDependencies:
       react: 19.0.0
-      zod: 3.23.8
+      zod: 3.24.1
 
   ansi-colors@4.1.3: {}
 
@@ -9853,7 +9853,7 @@ snapshots:
       nanostores: 0.11.3
       oslo: 1.2.1
       uncrypto: 0.1.3
-      zod: 3.23.8
+      zod: 3.24.1
     transitivePeerDependencies:
       - encoding
 
@@ -9863,7 +9863,7 @@ snapshots:
       rou3: 0.5.1
       set-cookie-parser: 2.7.1
       uncrypto: 0.1.3
-      zod: 3.23.8
+      zod: 3.24.1
 
   binary-extensions@2.3.0: {}
 
@@ -10800,13 +10800,13 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  hono-openapi@0.1.5(@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.23.8))(hono@4.6.10)(openapi-types@12.1.3)(zod-openapi@3.3.0(zod@3.23.8))(zod@3.23.8):
+  hono-openapi@0.1.5(@hono/zod-validator@0.4.1(hono@4.6.10)(zod@3.24.1))(hono@4.6.10)(openapi-types@12.1.3)(zod-openapi@3.3.0(zod@3.24.1))(zod@3.24.1):
     dependencies:
-      '@hono/zod-validator': 0.4.1(hono@4.6.10)(zod@3.23.8)
+      '@hono/zod-validator': 0.4.1(hono@4.6.10)(zod@3.24.1)
       hono: 4.6.10
       openapi-types: 12.1.3
-      zod: 3.23.8
-      zod-openapi: 3.3.0(zod@3.23.8)
+      zod: 3.24.1
+      zod-openapi: 3.3.0(zod@3.24.1)
 
   hono@4.6.10: {}
 
@@ -11734,7 +11734,7 @@ snapshots:
       regex: 5.0.2
       regex-recursion: 5.0.0
 
-  openai@4.77.0(encoding@0.1.13)(zod@3.23.8):
+  openai@4.77.0(encoding@0.1.13)(zod@3.24.1):
     dependencies:
       '@types/node': 18.19.41
       '@types/node-fetch': 2.6.11
@@ -11744,7 +11744,7 @@ snapshots:
       formdata-node: 4.4.1
       node-fetch: 2.7.0(encoding@0.1.13)
     optionalDependencies:
-      zod: 3.23.8
+      zod: 3.24.1
     transitivePeerDependencies:
       - encoding
 
@@ -12984,9 +12984,9 @@ snapshots:
 
   zhead@2.2.4: {}
 
-  zod-openapi@3.3.0(zod@3.23.8):
+  zod-openapi@3.3.0(zod@3.24.1):
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
   zod-prisma-types@3.2.1(@prisma/client@6.1.0(prisma@6.1.0))(prisma@6.1.0):
     dependencies:
@@ -12995,12 +12995,12 @@ snapshots:
       code-block-writer: 12.0.0
       lodash: 4.17.21
       prisma: 6.1.0
-      zod: 3.23.8
+      zod: 3.24.1
 
-  zod-to-json-schema@3.24.1(zod@3.23.8):
+  zod-to-json-schema@3.24.1(zod@3.24.1):
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
-  zod@3.23.8: {}
+  zod@3.24.1: {}
 
   zwitch@2.0.4: {}
