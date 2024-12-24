@@ -302,8 +302,8 @@ importers:
   packages/ai:
     dependencies:
       '@ai-sdk/anthropic':
-        specifier: ^0.0.56
-        version: 0.0.56(zod@3.24.1)
+        specifier: ^1.0.6
+        version: 1.0.6(zod@3.24.1)
       '@ai-sdk/openai':
         specifier: ^1.0.11
         version: 1.0.11(zod@3.24.1)
@@ -741,8 +741,8 @@ importers:
 
 packages:
 
-  '@ai-sdk/anthropic@0.0.56':
-    resolution: {integrity: sha512-FC/XbeFANFp8rHH+zEZF34cvRu9T42rQxw9QnUzJ1LXTi1cWjxYOx2Zo4vfg0iofxxqgOe4fT94IdT2ERQ89bA==}
+  '@ai-sdk/anthropic@1.0.6':
+    resolution: {integrity: sha512-/9f/CJfR+9rXRV55KSBExMCGeVV7QE5SlagLniak4j74t4/Zg1Aoa69AHftJ78rz/S5srvAB9YtTu52NY+E0mg==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -752,15 +752,6 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
-
-  '@ai-sdk/provider-utils@1.0.22':
-    resolution: {integrity: sha512-YHK2rpj++wnLVc9vPGzGFP3Pjeld2MwhKinetA0zKXOoHAT/Jit5O8kZsxcSlJPu9wvcGT1UGZEjZrtO7PfFOQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      zod:
-        optional: true
 
   '@ai-sdk/provider-utils@2.0.4':
     resolution: {integrity: sha512-GMhcQCZbwM6RoZCri0MWeEWXRt/T+uCxsmHEsTwNvEH3GDjNzchfX25C8ftry2MeEOOn6KfqCLSKomcgK6RoOg==}
@@ -779,10 +770,6 @@ packages:
     peerDependenciesMeta:
       zod:
         optional: true
-
-  '@ai-sdk/provider@0.0.26':
-    resolution: {integrity: sha512-dQkfBDs2lTYpKM8389oopPdQgIU007GQyCbuPPrV+K6MtSII3HBfE0stUIMXUb44L+LK1t6GXPP7wjSzjO6uKg==}
-    engines: {node: '>=18'}
 
   '@ai-sdk/provider@1.0.2':
     resolution: {integrity: sha512-YYtP6xWQyaAf5LiWLJ+ycGTOeBLWrED7LUrvc+SQIWhGaneylqbaGsyQL7VouQUeQ4JZ1qKYZuhmi3W56HADPA==}
@@ -4200,10 +4187,6 @@ packages:
   eventemitter2@6.4.7:
     resolution: {integrity: sha512-tYUSVOGeQPKt/eC1ABfhHy5Xd96N3oIijJvN3O9+TsC28T5V9yX9oEfEK5faP0EFSNVOG97qtAS68GBrQB2hDg==}
 
-  eventsource-parser@1.1.2:
-    resolution: {integrity: sha512-v0eOBUbiaFojBu2s2NPBfYUoRR9GjcDNvCXVaqEf5vVfpIAh9f8RCo4vXTP8c63QRKCFwoLpMpTdPwwhEKVgzA==}
-    engines: {node: '>=14.18'}
-
   eventsource-parser@3.0.0:
     resolution: {integrity: sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA==}
     engines: {node: '>=18.0.0'}
@@ -6341,25 +6324,16 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/anthropic@0.0.56(zod@3.24.1)':
+  '@ai-sdk/anthropic@1.0.6(zod@3.24.1)':
     dependencies:
-      '@ai-sdk/provider': 0.0.26
-      '@ai-sdk/provider-utils': 1.0.22(zod@3.24.1)
+      '@ai-sdk/provider': 1.0.3
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
       zod: 3.24.1
 
   '@ai-sdk/openai@1.0.11(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.3
       '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
-      zod: 3.24.1
-
-  '@ai-sdk/provider-utils@1.0.22(zod@3.24.1)':
-    dependencies:
-      '@ai-sdk/provider': 0.0.26
-      eventsource-parser: 1.1.2
-      nanoid: 3.3.8
-      secure-json-parse: 2.7.0
-    optionalDependencies:
       zod: 3.24.1
 
   '@ai-sdk/provider-utils@2.0.4(zod@3.24.1)':
@@ -6379,10 +6353,6 @@ snapshots:
       secure-json-parse: 2.7.0
     optionalDependencies:
       zod: 3.24.1
-
-  '@ai-sdk/provider@0.0.26':
-    dependencies:
-      json-schema: 0.4.0
 
   '@ai-sdk/provider@1.0.2':
     dependencies:
@@ -10461,8 +10431,6 @@ snapshots:
   event-target-shim@5.0.1: {}
 
   eventemitter2@6.4.7: {}
-
-  eventsource-parser@1.1.2: {}
 
   eventsource-parser@3.0.0: {}
 
