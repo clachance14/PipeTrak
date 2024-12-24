@@ -26,6 +26,14 @@ export default async function middleware(req: NextRequest) {
 			return NextResponse.redirect(new URL("/auth/login", origin));
 		}
 
+		if (
+			appConfig.users.enableOnboarding &&
+			!session.user.onboardingComplete &&
+			pathname !== "/app/onboarding"
+		) {
+			return NextResponse.redirect(new URL("/app/onboarding", origin));
+		}
+
 		if (!locale || (session.user.locale && locale !== session.user.locale)) {
 			locale = session.user.locale ?? appConfig.i18n.defaultLocale;
 			response.cookies.set(appConfig.i18n.localeCookieName, locale);

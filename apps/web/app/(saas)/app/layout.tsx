@@ -9,7 +9,6 @@ import { getPurchases } from "@saas/payments/lib/server";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
 import { getQueryClient } from "@shared/lib/server";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 export const dynamic = "force-dynamic";
@@ -19,14 +18,6 @@ export default async function Layout({ children }: PropsWithChildren) {
 	const session = await getSession();
 
 	const queryClient = getQueryClient();
-
-	if (!session) {
-		return redirect("/auth/login");
-	}
-
-	if (config.users.enableOnboarding && !session.user.onboardingComplete) {
-		return redirect("/onboarding");
-	}
 
 	await queryClient.prefetchQuery({
 		queryKey: sessionQueryKey,
