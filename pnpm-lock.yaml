@@ -112,8 +112,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       '@tanstack/react-query':
-        specifier: ^5.62.8
-        version: 5.62.8(react@19.0.0)
+        specifier: ^5.62.10
+        version: 5.62.10(react@19.0.0)
       '@tanstack/react-table':
         specifier: ^8.20.6
         version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -3346,11 +3346,11 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
 
-  '@tanstack/query-core@5.62.8':
-    resolution: {integrity: sha512-4fV31vDsUyvNGrKIOUNPrZztoyL187bThnoQOvAXEVlZbSiuPONpfx53634MKKdvsDir5NyOGm80ShFaoHS/mw==}
+  '@tanstack/query-core@5.62.9':
+    resolution: {integrity: sha512-lwePd8hNYhyQ4nM/iRQ+Wz2cDtspGeZZHFZmCzHJ7mfKXt+9S301fULiY2IR2byJYY6Z03T427E5PoVfMexHjw==}
 
-  '@tanstack/react-query@5.62.8':
-    resolution: {integrity: sha512-8TUstKxF/fysHonZsWg/hnlDVgasTdHx6Q+f1/s/oPKJBJbKUWPZEHwLTMOZgrZuroLMiqYKJ9w69Abm8mWP0Q==}
+  '@tanstack/react-query@5.62.10':
+    resolution: {integrity: sha512-1e1WpHM5oGf27nWM/NWLY62/X9pbMBWa6ErWYmeuK0OqB9/g9UzA59ogiWbxCmS2wtAFQRhOdHhfSofrkhPl2g==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -5452,6 +5452,7 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.13.0:
@@ -9525,11 +9526,11 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2))
 
-  '@tanstack/query-core@5.62.8': {}
+  '@tanstack/query-core@5.62.9': {}
 
-  '@tanstack/react-query@5.62.8(react@19.0.0)':
+  '@tanstack/react-query@5.62.10(react@19.0.0)':
     dependencies:
-      '@tanstack/query-core': 5.62.8
+      '@tanstack/query-core': 5.62.9
       react: 19.0.0
 
   '@tanstack/react-table@8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
