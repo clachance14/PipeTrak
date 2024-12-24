@@ -20,3 +20,9 @@ updates:
         patterns:
           - "next-intl"
           - "use-intl"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
