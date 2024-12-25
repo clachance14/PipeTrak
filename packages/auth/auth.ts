@@ -11,9 +11,9 @@ import {
 	magicLink,
 	openAPI,
 	organization,
-	passkey,
 	username,
 } from "better-auth/plugins";
+import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
 import { getUserByEmail } from "./lib/user";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";

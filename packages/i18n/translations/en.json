@@ -106,7 +106,8 @@
 			"socialAccountAlreadyLinked": "This account is already linked to a user.",
 			"userEmailNotFound": "Email not found.",
 			"userAlreadyExists": "This user already exists.",
-			"invalidInvitation": "The invitation is invalid or expired."
+			"invalidInvitation": "The invitation is invalid or expired.",
+			"sessionExpired": "The session has expired."
 		},
 		"forgotPassword": {
 			"backToSignin": "Back to signin",

@@ -106,7 +106,8 @@
 			"unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
 			"userAlreadyExists": "Dieser Benutzer existiert bereits.",
 			"userEmailNotFound": "E-Mail nicht gefunden.",
-			"userNotFound": "Dieser Benutzer existiert nicht"
+			"userNotFound": "Dieser Benutzer existiert nicht",
+			"sessionExpired": "Die Sitzung ist abgelaufen."
 		},
 		"forgotPassword": {
 			"backToSignin": "Zurück zum Login",

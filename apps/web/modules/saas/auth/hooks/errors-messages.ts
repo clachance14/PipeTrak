@@ -26,6 +26,7 @@ export function useAuthErrorMessages() {
 		USER_EMAIL_NOT_FOUND: t("auth.errors.userEmailNotFound"),
 		USER_ALREADY_EXISTS: t("auth.errors.userAlreadyExists"),
 		INVALID_INVITATION: t("auth.errors.invalidInvitation"),
+		SESSION_EXPIRED: t("auth.errors.sessionExpired"),
 	};
 
 	const getAuthErrorMessage = (errorCode: string | undefined) => {
