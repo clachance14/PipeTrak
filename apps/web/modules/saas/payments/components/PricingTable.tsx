@@ -82,6 +82,20 @@ export function PricingTable({
 
 	return (
 		<div className={cn("@container", className)}>
+			{hasSubscriptions && (
+				<div className="mb-6 flex @2xl:justify-center">
+					<Tabs
+						value={interval}
+						onValueChange={(value) => setInterval(value as typeof interval)}
+						data-test="price-table-interval-tabs"
+					>
+						<TabsList className="border-foreground/10">
+							<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
+							<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
+						</TabsList>
+					</Tabs>
+				</div>
+			)}
 			<div
 				className={cn("grid grid-cols-1 gap-4", {
 					"@2xl:grid-cols-3": filteredPlans.length % 3 === 0,
@@ -229,21 +243,6 @@ export function PricingTable({
 						);
 					})}
 			</div>
-
-			{hasSubscriptions && (
-				<div className="mt-4 flex justify-end">
-					<Tabs
-						value={interval}
-						onValueChange={(value) => setInterval(value as typeof interval)}
-						data-test="price-table-interval-tabs"
-					>
-						<TabsList className="border-foreground/10">
-							<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
-							<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
-						</TabsList>
-					</Tabs>
-				</div>
-			)}
 		</div>
 	);
 }
