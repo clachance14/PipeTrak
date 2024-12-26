@@ -45,7 +45,7 @@ export default async function SettingsLayout({
 					href: `${organizationSettingsBasePath}/members`,
 					icon: <Users2Icon className="size-4 opacity-50" />,
 				},
-				...(config.organizations.enableBilling
+				...(config.organizations.enable && config.organizations.enableBilling
 					? [
 							{
 								title: t("settings.menu.organization.billing"),
