@@ -81,7 +81,7 @@ export default async function middleware(req: NextRequest) {
 		return response;
 	}
 
-	if (pathname.startsWith("/auth/")) {
+	if (pathname.startsWith("/auth")) {
 		if (!appConfig.ui.saas.enabled) {
 			return NextResponse.redirect(new URL("/", origin));
 		}

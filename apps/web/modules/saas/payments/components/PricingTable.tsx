@@ -197,7 +197,8 @@ export function PricingTable({
 										)}
 
 										{price &&
-											"trialPeriodDays" in price && (
+											"trialPeriodDays" in price &&
+											price.trialPeriodDays && (
 												<div className="mt-4 flex items-center justify-start font-medium text-primary text-sm opacity-80">
 													<BadgePercentIcon className="mr-2 size-4" />
 													{t("pricing.trialPeriod", {
@@ -256,7 +257,7 @@ export function PricingTable({
 										{isEnterprise ? (
 											<Button
 												className="mt-4 w-full"
-												variant="secondary"
+												variant="outline"
 												asChild
 											>
 												<LocaleLink href="/contact">

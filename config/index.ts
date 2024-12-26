@@ -114,9 +114,9 @@ export const config = {
 		// define the products that should be available in the checkout
 		plans: {
 			// The free plan is treated differently. It will automatically be assigned if the user has no other plan.
-			free: {
-				isFree: true,
-			},
+			// free: {
+			// 	isFree: true,
+			// },
 			pro: {
 				recommended: true,
 				prices: [
