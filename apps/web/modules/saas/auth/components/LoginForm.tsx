@@ -71,7 +71,7 @@ export function LoginForm() {
 		defaultValues: {
 			email: email ?? "",
 			password: "",
-			mode: "password",
+			mode: config.auth.enablePasswordLogin ? "password" : "magic-link",
 		},
 	});
 
@@ -141,12 +141,15 @@ export function LoginForm() {
 
 					<Form {...form}>
 						<form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-							<LoginModeSwitch
-								activeMode={signinMode}
-								onChange={(mode) =>
-									form.setValue("mode", mode as typeof signinMode)
-								}
-							/>
+							{config.auth.enableMagicLink &&
+								config.auth.enablePasswordLogin && (
+									<LoginModeSwitch
+										activeMode={signinMode}
+										onChange={(mode) =>
+											form.setValue("mode", mode as typeof signinMode)
+										}
+									/>
+								)}
 
 							{form.formState.isSubmitted &&
 								form.formState.errors.root?.message && (
@@ -171,7 +174,7 @@ export function LoginForm() {
 								)}
 							/>
 
-							{signinMode === "password" && (
+							{config.auth.enablePasswordLogin && signinMode === "password" && (
 								<FormField
 									control={form.control}
 									name="password"
@@ -219,35 +222,44 @@ export function LoginForm() {
 								variant="secondary"
 								loading={form.formState.isSubmitting}
 							>
-								{t("auth.login.submit")}
+								{signinMode === "magic-link"
+									? t("auth.login.sendMagicLink")
+									: t("auth.login.submit")}
 							</Button>
 						</form>
 					</Form>
 
-					<div className="relative my-6 h-4">
-						<hr className="relative top-2" />
-						<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
-							{t("auth.login.continueWith")}
-						</p>
-					</div>
+					{(config.auth.enablePasskeys || config.auth.enableSocialLogin) && (
+						<>
+							<div className="relative my-6 h-4">
+								<hr className="relative top-2" />
+								<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
+									{t("auth.login.continueWith")}
+								</p>
+							</div>
 
-					<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
-						{Object.keys(oAuthProviders).map((providerId) => (
-							<SocialSigninButton
-								key={providerId}
-								provider={providerId as OAuthProvider}
-							/>
-						))}
+							<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
+								{config.auth.enableSocialLogin &&
+									Object.keys(oAuthProviders).map((providerId) => (
+										<SocialSigninButton
+											key={providerId}
+											provider={providerId as OAuthProvider}
+										/>
+									))}
 
-						<Button
-							variant="outline"
-							className="w-full sm:col-span-2"
-							onClick={() => authClient.signIn.passkey()}
-						>
-							<KeyIcon className="mr-1.5 size-4 text-primary" />
-							{t("auth.login.loginWithPasskey")}
-						</Button>
-					</div>
+								{config.auth.enablePasskeys && (
+									<Button
+										variant="outline"
+										className="w-full sm:col-span-2"
+										onClick={() => authClient.signIn.passkey()}
+									>
+										<KeyIcon className="mr-1.5 size-4 text-primary" />
+										{t("auth.login.loginWithPasskey")}
+									</Button>
+								)}
+							</div>
+						</>
+					)}
 
 					{config.auth.enableSignup && (
 						<div className="mt-6 text-center text-sm">

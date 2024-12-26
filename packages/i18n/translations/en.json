@@ -147,7 +147,8 @@
       },
       "submit": "Sign in",
       "subtitle": "Please enter your credentials to sign in.",
-      "title": "Welcome back"
+      "title": "Welcome back",
+      "sendMagicLink": "Send magic link"
     },
     "resetPassword": {
       "backToSignin": "Back to signin",

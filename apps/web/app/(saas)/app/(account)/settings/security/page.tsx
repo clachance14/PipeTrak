@@ -1,3 +1,4 @@
+import { config } from "@repo/config";
 import { getSession, getUserAccounts } from "@saas/auth/lib/server";
 import { ActiveSessionsBlock } from "@saas/settings/components/ActiveSessionsBlock";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
@@ -31,9 +32,10 @@ export default async function AccountSettingsPage() {
 
 	return (
 		<SettingsList>
-			{userHasPassword ? <ChangePasswordForm /> : <SetPasswordForm />}
-			<ConnectedAccountsBlock />
-			<PasskeysBlock />
+			{config.auth.enablePasswordLogin &&
+				(userHasPassword ? <ChangePasswordForm /> : <SetPasswordForm />)}
+			{config.auth.enableSocialLogin && <ConnectedAccountsBlock />}
+			{config.auth.enablePasskeys && <PasskeysBlock />}
 			<ActiveSessionsBlock />
 		</SettingsList>
 	);

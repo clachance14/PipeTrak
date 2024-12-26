@@ -20,6 +20,10 @@ export type Config = {
 	};
 	auth: {
 		enableSignup: boolean;
+		enableMagicLink: boolean;
+		enableSocialLogin: boolean;
+		enablePasskeys: boolean;
+		enablePasswordLogin: boolean;
 		redirectAfterSignIn: string;
 		redirectAfterLogout: string;
 		sessionCookieMaxAge: number;

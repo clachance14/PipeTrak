@@ -147,7 +147,8 @@
       },
       "submit": "Anmelden",
       "subtitle": "Bitte gib deine Zugangsdaten ein, um dich anzumelden.",
-      "title": "Willkommen zurück"
+      "title": "Willkommen zurück",
+      "sendMagicLink": "Anmelde-Link senden"
     },
     "resetPassword": {
       "backToSignin": "Zurück zu Signin",
