@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
+import { OrganizationLogo } from "@saas/organizations/components/OrganizationLogo";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import { CheckIcon, XIcon } from "lucide-react";
@@ -11,10 +12,12 @@ export function OrganizationInvitationModal({
 	invitationId,
 	organizationName,
 	organizationSlug,
+	logoUrl,
 }: {
 	invitationId: string;
 	organizationName: string;
 	organizationSlug: string;
+	logoUrl?: string;
 }) {
 	const t = useTranslations();
 	const router = useRouter();
@@ -55,6 +58,17 @@ export function OrganizationInvitationModal({
 					organizationName,
 				})}
 			</p>
+
+			<div className="mb-6 flex items-center gap-3 rounded-lg border p-2">
+				<OrganizationLogo
+					name={organizationName}
+					logoUrl={logoUrl}
+					className="size-12"
+				/>
+				<div>
+					<strong className="font-medium text-lg">{organizationName}</strong>
+				</div>
+			</div>
 
 			<div className="flex gap-2">
 				<Button

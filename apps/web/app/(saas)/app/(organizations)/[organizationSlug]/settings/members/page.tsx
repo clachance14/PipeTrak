@@ -1,4 +1,4 @@
-import { getActiveOrganization } from "@saas/auth/lib/server";
+import { getActiveOrganization, getSession } from "@saas/auth/lib/server";
 import { InviteMemberForm } from "@saas/organizations/components/InviteMemberForm";
 import { OrganizationMembersBlock } from "@saas/organizations/components/OrganizationMembersBlock";
 import { SettingsList } from "@saas/shared/components/SettingsList";
@@ -17,6 +17,7 @@ export default async function OrganizationSettingsPage({
 }: {
 	params: Promise<{ organizationSlug: string }>;
 }) {
+	const session = await getSession();
 	const { organizationSlug } = await params;
 	const organization = await getActiveOrganization(organizationSlug);
 
@@ -24,9 +25,19 @@ export default async function OrganizationSettingsPage({
 		return notFound();
 	}
 
+	const userRole = session?.user?.role;
+	const userOrganizationRole = organization.members.find(
+		(member) => member.userId === session?.session.userId,
+	)?.role;
+	const userIsOrganizationAdmin =
+		userRole === "admin" ||
+		(userOrganizationRole && ["admin", "owner"].includes(userOrganizationRole));
+
 	return (
 		<SettingsList>
-			<InviteMemberForm organizationId={organization.id} />
+			{userIsOrganizationAdmin && (
+				<InviteMemberForm organizationId={organization.id} />
+			)}
 			<OrganizationMembersBlock organizationId={organization.id} />
 		</SettingsList>
 	);

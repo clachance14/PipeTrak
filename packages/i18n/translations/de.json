@@ -399,6 +399,17 @@
 						"success": {
 							"description": "Die Mitgliedschaft wurde erfolgreich aktualisiert"
 						}
+					},
+					"resendInvitation": {
+						"error": {
+							"description": "Die Einladung konnte nicht gesendet werden. Bitte versuche es erneut."
+						},
+						"loading": {
+							"description": "Einladung erneut senden..."
+						},
+						"success": {
+							"description": "Einladung verschickt"
+						}
 					}
 				},
 				"pendingInvitations": "Ausstehende Einladungen",

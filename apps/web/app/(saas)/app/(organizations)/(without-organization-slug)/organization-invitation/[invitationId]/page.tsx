@@ -1,5 +1,6 @@
 import { auth } from "@repo/auth";
 import { OrganizationInvitationModal } from "@saas/organizations/components/OrganizationInvitationModal";
+import { getOrganizationById } from "@saas/organizations/lib/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -21,10 +22,13 @@ export default async function OrganizationInvitationPage({
 		redirect("/app");
 	}
 
+	const organization = await getOrganizationById(invitation.organizationId);
+
 	return (
 		<OrganizationInvitationModal
 			organizationName={invitation.organizationName}
 			organizationSlug={invitation.organizationSlug}
+			logoUrl={organization?.logo || undefined}
 			invitationId={invitationId}
 		/>
 	);

@@ -2,6 +2,7 @@
 import type { OrganizationMemberRole } from "@repo/auth";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
+import { useOrganizationMemberRoles } from "@saas/organizations/hooks/member-roles";
 import {
 	fullOrganizationQueryKey,
 	useFullOrganizationQuery,
@@ -47,6 +48,7 @@ export function OrganizationMembersList({
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const { toast } = useToast();
+	const memberRoles = useOrganizationMemberRoles();
 
 	const isUserAdmin = user?.role === "admin";
 	const userOrganizationRole = organization?.members.find(
@@ -166,46 +168,51 @@ export function OrganizationMembersList({
 			cell: ({ row }) => {
 				return (
 					<div className="flex flex-row justify-end gap-2">
-						<OrganizationRoleSelect
-							value={row.original.role}
-							onSelect={async (value) =>
-								updateMemberRole(row.original.id, value)
-							}
-							disabled={
-								organization?.members.find(
-									(member) => member.userId === user?.id,
-								)?.role === "member"
-							}
-						/>
-
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button size="icon" variant="ghost">
-									<MoreVerticalIcon className="size-4" />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								{row.original.userId !== user?.id && (
-									<DropdownMenuItem
-										disabled={!isUserAdmin && !isOrganizationAdmin}
-										className="text-destructive"
-										onClick={async () => removeMember(row.original.id)}
-									>
-										<TrashIcon className="mr-2 size-4" />
-										{t("organizations.settings.members.removeMember")}
-									</DropdownMenuItem>
-								)}
-								{row.original.userId === user?.id && (
-									<DropdownMenuItem
-										className="text-destructive"
-										onClick={async () => removeMember(row.original.id)}
-									>
-										<LogOutIcon className="mr-2 size-4" />
-										{t("organizations.settings.members.leaveOrganization")}
-									</DropdownMenuItem>
-								)}
-							</DropdownMenuContent>
-						</DropdownMenu>
+						{isOrganizationAdmin ? (
+							<>
+								<OrganizationRoleSelect
+									value={row.original.role}
+									onSelect={async (value) =>
+										updateMemberRole(row.original.id, value)
+									}
+									disabled={
+										!isOrganizationAdmin || row.original.role === "owner"
+									}
+								/>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button size="icon" variant="ghost">
+											<MoreVerticalIcon className="size-4" />
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										{row.original.userId !== user?.id && (
+											<DropdownMenuItem
+												disabled={!isUserAdmin && !isOrganizationAdmin}
+												className="text-destructive"
+												onClick={async () => removeMember(row.original.id)}
+											>
+												<TrashIcon className="mr-2 size-4" />
+												{t("organizations.settings.members.removeMember")}
+											</DropdownMenuItem>
+										)}
+										{row.original.userId === user?.id && (
+											<DropdownMenuItem
+												className="text-destructive"
+												onClick={async () => removeMember(row.original.id)}
+											>
+												<LogOutIcon className="mr-2 size-4" />
+												{t("organizations.settings.members.leaveOrganization")}
+											</DropdownMenuItem>
+										)}
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</>
+						) : (
+							<span className="font-medium text-foreground/60 text-sm">
+								{memberRoles[row.original.role as keyof typeof memberRoles]}
+							</span>
+						)}
 					</div>
 				);
 			},

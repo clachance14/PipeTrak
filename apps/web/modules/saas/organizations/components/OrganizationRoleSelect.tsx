@@ -1,4 +1,5 @@
 import type { OrganizationMemberRole } from "@repo/auth";
+import { useOrganizationMemberRoles } from "@saas/organizations/hooks/member-roles";
 import {
 	Select,
 	SelectContent,
@@ -6,7 +7,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { useTranslations } from "next-intl";
 
 export function OrganizationRoleSelect({
 	value,
@@ -17,22 +17,14 @@ export function OrganizationRoleSelect({
 	onSelect: (value: OrganizationMemberRole) => void;
 	disabled?: boolean;
 }) {
-	const t = useTranslations();
+	const organizationMemberRoles = useOrganizationMemberRoles();
 
-	const roleOptions: { label: string; value: OrganizationMemberRole }[] = [
-		{
-			label: t("organizations.roles.member"),
-			value: "member",
-		},
-		{
-			label: t("organizations.roles.owner"),
-			value: "owner",
-		},
-		{
-			label: t("organizations.roles.admin"),
-			value: "admin",
-		},
-	];
+	const roleOptions = Object.entries(organizationMemberRoles).map(
+		([value, label]) => ({
+			value,
+			label,
+		}),
+	);
 
 	return (
 		<Select value={value} onValueChange={onSelect} disabled={disabled}>

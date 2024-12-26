@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
+import { OrganizationRoleSelect } from "@saas/organizations/components/OrganizationRoleSelect";
 import { fullOrganizationQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useQueryClient } from "@tanstack/react-query";
@@ -14,19 +15,12 @@ import {
 	FormLabel,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@ui/components/select";
+import {} from "@ui/components/select";
 import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useOrganizationMemberRoles } from "../hooks/use-organization-member-roles";
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -43,14 +37,6 @@ export function InviteMemberForm({
 	const t = useTranslations();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
-	const organizationMemberRoles = useOrganizationMemberRoles();
-
-	const roleOptions = Object.entries(organizationMemberRoles).map(
-		([value, label]) => ({
-			value,
-			label,
-		}),
-	);
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
@@ -130,21 +116,10 @@ export function InviteMemberForm({
 											{t("organizations.settings.members.inviteMember.role")}
 										</FormLabel>
 										<FormControl>
-											<Select
-												onValueChange={field.onChange}
-												defaultValue={field.value}
-											>
-												<SelectTrigger className="w-[180px]">
-													<SelectValue />
-												</SelectTrigger>
-												<SelectContent>
-													{roleOptions.map((option) => (
-														<SelectItem key={option.value} value={option.value}>
-															{option.label}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
+											<OrganizationRoleSelect
+												value={field.value}
+												onSelect={field.onChange}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
