@@ -1,11 +1,12 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
-import { useAdminUsersQuery } from "@saas/admin/lib/api";
+import { adminUsersQueryKey, useAdminUsersQuery } from "@saas/admin/lib/api";
 import { useConfirmationAlert } from "@saas/shared/components/ConfirmationAlertProvider";
 import { Pagination } from "@saas/shared/components/Pagination";
 import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import { useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
 	flexRender,
@@ -27,6 +28,8 @@ import { useToast } from "@ui/hooks/use-toast";
 import {
 	MoreVerticalIcon,
 	Repeat1Icon,
+	ShieldCheckIcon,
+	ShieldXIcon,
 	SquareUserRoundIcon,
 	TrashIcon,
 } from "lucide-react";
@@ -40,6 +43,7 @@ const ITEMS_PER_PAGE = 10;
 
 export function UserList() {
 	const t = useTranslations();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const { confirm } = useConfirmationAlert();
 	const [currentPage, setCurrentPage] = useQueryState(
@@ -142,6 +146,28 @@ export function UserList() {
 		}
 	};
 
+	const assignAdminRole = async (id: string) => {
+		await authClient.admin.setRole({
+			userId: id,
+			role: "admin",
+		});
+
+		await queryClient.invalidateQueries({
+			queryKey: adminUsersQueryKey,
+		});
+	};
+
+	const removeAdminRole = async (id: string) => {
+		await authClient.admin.setRole({
+			userId: id,
+			role: "user",
+		});
+
+		await queryClient.invalidateQueries({
+			queryKey: adminUsersQueryKey,
+		});
+	};
+
 	const columns: ColumnDef<
 		NonNullable<
 			Awaited<ReturnType<typeof authClient.admin.listUsers>>["data"]
@@ -205,6 +231,22 @@ export function UserList() {
 										>
 											<Repeat1Icon className="mr-2 size-4" />
 											{t("admin.users.resendVerificationMail.title")}
+										</DropdownMenuItem>
+									)}
+
+									{row.original.role !== "admin" ? (
+										<DropdownMenuItem
+											onClick={() => assignAdminRole(row.original.id)}
+										>
+											<ShieldCheckIcon className="mr-2 size-4" />
+											{t("admin.users.assignAdminRole")}
+										</DropdownMenuItem>
+									) : (
+										<DropdownMenuItem
+											onClick={() => removeAdminRole(row.original.id)}
+										>
+											<ShieldXIcon className="mr-2 size-4" />
+											{t("admin.users.removeAdminRole")}
 										</DropdownMenuItem>
 									)}
 
