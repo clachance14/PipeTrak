@@ -1,3 +1,4 @@
+import { config } from "@repo/config";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { Hono } from "hono";
@@ -35,9 +36,9 @@ export const contactRouter = new Hono().basePath("/contact").post(
 
 		try {
 			await sendEmail({
-				to: email,
+				to: config.contactForm.to,
 				locale,
-				subject: "Contact form message",
+				subject: config.contactForm.subject,
 				text: `Name: ${name}\n\nEmail: ${email}\n\nMessage: ${message}`,
 			});
 

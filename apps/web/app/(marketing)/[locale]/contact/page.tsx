@@ -1,5 +1,7 @@
 import { ContactForm } from "@marketing/home/components/ContactForm";
+import { config } from "@repo/config";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata() {
 	const t = await getTranslations();
@@ -9,6 +11,10 @@ export async function generateMetadata() {
 }
 
 export default async function ContactPage() {
+	if (!config.contactForm.enabled) {
+		redirect("/");
+	}
+
 	const t = await getTranslations();
 	return (
 		<div className="container max-w-xl pt-32 pb-16">

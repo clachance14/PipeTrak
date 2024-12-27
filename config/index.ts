@@ -101,6 +101,14 @@ export const config = {
 			avatars: process.env.NEXT_PUBLIC_AVATARS_BUCKET_NAME ?? "avatars",
 		},
 	},
+	contactForm: {
+		// whether the contact form should be enabled
+		enabled: true,
+		// the email to which the contact form messages should be sent
+		to: "hello@your-domain.com",
+		// the subject of the email
+		subject: "Contact form message",
+	},
 	// Payments
 	payments: {
 		// define the products that should be available in the checkout

@@ -47,6 +47,11 @@ export type Config = {
 			enabled: boolean;
 		};
 	};
+	contactForm: {
+		enabled: boolean;
+		to: string;
+		subject: string;
+	};
 	payments: {
 		plans: {
 			[id: string]: {

@@ -71,10 +71,14 @@ export function NavBar() {
 			label: t("common.menu.changelog"),
 			href: "/changelog",
 		},
-		{
-			label: t("common.menu.contact"),
-			href: "/contact",
-		},
+		...(config.contactForm.enabled
+			? [
+					{
+						label: t("common.menu.contact"),
+						href: "/contact",
+					},
+				]
+			: []),
 		{
 			label: t("common.menu.docs"),
 			href: "/docs",
