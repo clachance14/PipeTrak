@@ -49,6 +49,8 @@ export function NavBar() {
 		setMobileMenuOpen(false);
 	}, [localePathname]);
 
+	const isDocsPage = localePathname.startsWith("/docs");
+
 	const menuItems: {
 		label: string;
 		href: string;
@@ -83,12 +85,20 @@ export function NavBar() {
 
 	return (
 		<nav
-			className={`fixed top-0 left-0 z-50 w-full ${isTop ? "shadow-none" : "bg-card/80 shadow-sm backdrop-blur-lg"} transition-shadow duration-200`}
+			className={cn(
+				"fixed top-0 left-0 z-50 w-full transition-shadow duration-200",
+				!isTop || isDocsPage
+					? "bg-card/80 shadow-sm backdrop-blur-lg"
+					: "shadow-none",
+			)}
 			data-test="navigation"
 		>
 			<div className="container">
 				<div
-					className={`flex items-center justify-stretch gap-6 ${isTop ? "py-6" : "py-4"} transition-[padding] duration-200`}
+					className={cn(
+						"flex items-center justify-stretch gap-6 transition-[padding] duration-200",
+						!isTop || isDocsPage ? "py-4" : "py-6",
+					)}
 				>
 					<div className="flex flex-1 justify-start">
 						<LocaleLink

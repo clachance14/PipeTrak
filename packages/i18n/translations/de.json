@@ -790,5 +790,8 @@
 			"url": "URL",
 			"uuid": "Uuid"
 		}
+	},
+	"documentation": {
+		"title": "Dokumentation"
 	}
 }

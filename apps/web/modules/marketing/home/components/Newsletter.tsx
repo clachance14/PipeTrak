@@ -33,7 +33,7 @@ export function Newsletter() {
 	});
 
 	return (
-		<section className="bg-card py-16">
+		<section className="py-16">
 			<div className="container">
 				<div className="mb-8 text-center">
 					<KeyIcon className="mx-auto mb-3 size-8 text-primary" />

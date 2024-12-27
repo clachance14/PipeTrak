@@ -1,51 +1,91 @@
 import { MDXContent } from "@content-collections/mdx/react";
-import { localeRedirect } from "@i18n/routing";
-import { mdxComponents } from "@marketing/blog/utils/mdx-components";
-import { TableOfContents } from "@marketing/shared/components/TableOfContents";
-import { getActivePathFromUrlParam } from "@shared/lib/content";
-import { allDocumentationPages } from "content-collections";
-import { getLocale } from "next-intl/server";
+import { config } from "@repo/config";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { docsSource } from "../../../../docs-source";
 
-type Params = {
-	path: string | string[];
-};
-
-export default async function DocsPage(props: {
-	params: Promise<Params>;
+export default async function DocumentationPage(props: {
+	params: Promise<{ path?: string[]; locale: string }>;
 }) {
 	const params = await props.params;
-
-	const { path } = params;
-
-	const activePath = getActivePathFromUrlParam(path);
-	const locale = await getLocale();
-
-	const page = allDocumentationPages
-		.filter((page) => page.path === activePath)
-		.sort((page) => (page.locale === locale ? -1 : 1))[0];
+	setRequestLocale(params.locale);
+	const page = docsSource.getPage(params.path, params.locale);
 
 	if (!page) {
-		return localeRedirect({ href: "/", locale });
+		notFound();
 	}
 
-	const { title, subtitle, body, toc } = page;
-
 	return (
-		<div>
-			<div className="mb-8">
-				<h1 className="font-bold text-4xl">{title}</h1>
-
-				{subtitle && (
-					<p className="mt-3 text-2xl text-foreground/60">{subtitle}</p>
+		<DocsPage
+			toc={page.data.toc}
+			full={page.data.full}
+			breadcrumb={{
+				enabled: true,
+				includePage: true,
+				includeSeparator: true,
+			}}
+			tableOfContent={{
+				enabled: true,
+			}}
+		>
+			<DocsBody>
+				<h1 className="text-foreground">{page.data.title}</h1>
+				{page.data.description && (
+					<p className="-mt-6 text-foreground/50 text-lg lg:text-xl">
+						{page.data.description}
+					</p>
 				)}
-			</div>
-
-			<div className="flex flex-col gap-6 lg:flex-row-reverse">
-				{toc.length > 0 && <TableOfContents items={toc} />}
-				<div className="flex-1 pb-8">
-					<MDXContent code={body} components={mdxComponents} />
+				<div className="prose dark:prose-invert max-w-full prose-a:text-foreground prose-p:text-foreground/80">
+					<MDXContent
+						code={page.data.body}
+						// @ts-expect-error
+						components={{
+							...defaultMdxComponents,
+							Tabs,
+							Tab,
+							Steps,
+							Step,
+							File,
+							Folder,
+							Files,
+							img: (props) => (
+								<ImageZoom
+									{...(props as any)}
+									className="rounded-lg border-4 border-secondary/10"
+								/>
+							),
+						}}
+					/>
 				</div>
-			</div>
-		</div>
+			</DocsBody>
+		</DocsPage>
 	);
+}
+
+export async function generateStaticParams() {
+	return docsSource.getPages().flatMap((page) => ({
+		path: page.slugs,
+		locale: page.locale ?? config.i18n.defaultLocale,
+	}));
+}
+
+export async function generateMetadata(props: {
+	params: Promise<{ path?: string[]; locale: string }>;
+}) {
+	const t = await getTranslations();
+	const params = await props.params;
+	const page = docsSource.getPage(params.path, params.locale);
+
+	if (!page) notFound();
+
+	return {
+		title: `${page.data.title} | ${t("documentation.title")}`,
+		description: page.data.description,
+	};
 }

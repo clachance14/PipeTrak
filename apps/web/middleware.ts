@@ -39,7 +39,11 @@ export default async function middleware(req: NextRequest) {
 			response.cookies.set(appConfig.i18n.localeCookieName, locale);
 		}
 
-		if (appConfig.organizations.requireOrganization && pathname === "/app") {
+		if (
+			appConfig.organizations.enable &&
+			appConfig.organizations.requireOrganization &&
+			pathname === "/app"
+		) {
 			const organizations = await getOrganizationsForSession(req);
 			const organization =
 				organizations.find(

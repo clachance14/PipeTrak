@@ -217,6 +217,9 @@
 		},
 		"title": "Contact us"
 	},
+	"documentation": {
+		"title": "Documentation"
+	},
 	"faq": {
 		"description": "Do you have any questions? We have got you covered.",
 		"title": "Frequently asked questions"

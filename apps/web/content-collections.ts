@@ -1,12 +1,13 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
+import {
+	createDocSchema,
+	createMetaSchema,
+	transformMDX,
+} from "@fumadocs/content-collections/configuration";
 import rehypeShiki from "@shikijs/rehype";
-// @ts-expect-error the markdown-toc package does not have types
-import markdownToc from "markdown-toc";
-import rehypeImgSize from "rehype-img-size";
-import { z } from "zod";
+import { remarkImage } from "fumadocs-core/mdx-plugins";
 import { config } from "../../config";
-import { slugifyHeadline } from "./modules/shared/lib/content";
 
 function sanitizePath(path: string) {
 	return path
@@ -79,68 +80,32 @@ const legalPages = defineCollection({
 	},
 });
 
-const documentationPages = defineCollection({
-	name: "documentationPages",
-	directory: "content/documentation",
-	include: "**/*.{mdx,md}",
-	schema: (z) => ({
-		title: z.string(),
-		subtitle: z.string().optional(),
-	}),
-	transform: async (document, context) => {
-		const body = await compileMDX(context, document, {
-			rehypePlugins: [
+const docs = defineCollection({
+	name: "docs",
+	directory: "content/docs",
+	include: "**/*.mdx",
+	schema: createDocSchema,
+	transform: async (document, context) =>
+		transformMDX(document, context, {
+			remarkPlugins: [
 				[
-					rehypeShiki,
+					remarkImage,
 					{
-						theme: "nord",
+						publicDir: "public",
 					},
 				],
-				[rehypeImgSize, { dir: "public" }],
 			],
-		});
-
-		const toc = markdownToc(document.content, { slugify: slugifyHeadline })
-			.json as {
-			content: string;
-			slug: string;
-			lvl: number;
-		}[];
-
-		return {
-			...document,
-			body,
-			locale: getLocaleFromFilePath(document._meta.filePath),
-			path: sanitizePath(document._meta.path),
-			toc,
-		};
-	},
+		}),
 });
 
-const documentationMeta = defineCollection({
-	name: "documentationMeta",
-	directory: "content/documentation",
-	include: "**/*.json",
+const docsMeta = defineCollection({
+	name: "docsMeta",
+	directory: "content/docs",
+	include: "**/meta.json",
 	parser: "json",
-	schema: () => ({
-		items: z.record(
-			z.union([
-				z.string(),
-				z.object({
-					title: z.string(),
-				}),
-			]),
-		),
-	}),
-	transform: async (document) => {
-		return {
-			data: document.items,
-			path: document._meta.path.split("/").slice(0, -1).join("/"),
-			locale: getLocaleFromFilePath(document._meta.filePath),
-		};
-	},
+	schema: createMetaSchema,
 });
 
 export default defineConfig({
-	collections: [posts, legalPages, documentationPages, documentationMeta],
+	collections: [posts, legalPages, docs, docsMeta],
 });

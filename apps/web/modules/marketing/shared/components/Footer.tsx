@@ -3,7 +3,7 @@ import { Logo } from "@shared/components/Logo";
 
 export function Footer() {
 	return (
-		<footer className="py-8 text-foreground/60">
+		<footer className="border-t py-8 text-foreground/60 text-sm">
 			<div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<div>
 					<Logo className="opacity-70 grayscale" />

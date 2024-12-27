@@ -1,36 +1,33 @@
-import { ContentMenu } from "@marketing/shared/components/ContentMenu";
-import { getContentStructure } from "@shared/lib/content";
-import {
-	allDocumentationMetas,
-	allDocumentationPages,
-} from "content-collections";
-import { getLocale } from "next-intl/server";
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";
+import { docsSource } from "../../../../docs-source";
 
-export default async function DocsLayout(
-	props: PropsWithChildren<{ params: Promise<{ path: string | string[] }> }>,
-) {
-	const params = await props.params;
-	const { path } = params;
-	const { children } = props;
-
-	const locale = await getLocale();
-
-	const activePath = Array.isArray(path) ? path.join("/") : path || "";
-
-	const contentStructure = getContentStructure({
-		documents: allDocumentationPages,
-		meta: allDocumentationMetas,
-		locale,
-	});
+export default async function DocumentationLayout({
+	children,
+	params,
+}: PropsWithChildren<{
+	params: Promise<{ locale: string }>;
+}>) {
+	const t = await getTranslations();
+	const { locale } = await params;
 
 	return (
-		<div className="container pt-32 pb-24">
-			<div className="grid grid-cols-1 gap-8 md:grid-cols-[200px_auto]">
-				<ContentMenu items={contentStructure} activePath={activePath} />
-
-				<div>{children}</div>
-			</div>
+		<div className="pt-[4.5rem]">
+			<DocsLayout
+				tree={docsSource.pageTree[locale]}
+				disableThemeSwitch
+				i18n
+				nav={{
+					title: <strong>{t("documentation.title")}</strong>,
+					url: "/docs",
+				}}
+				sidebar={{
+					defaultOpenLevel: 1,
+				}}
+			>
+				{children}
+			</DocsLayout>
 		</div>
 	);
 }

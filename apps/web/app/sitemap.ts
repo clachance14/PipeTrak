@@ -1,11 +1,8 @@
 import { config } from "@repo/config";
 import { getBaseUrl } from "@repo/utils";
-import {
-	allDocumentationPages,
-	allLegalPages,
-	allPosts,
-} from "content-collections";
+import { allLegalPages, allPosts } from "content-collections";
 import type { MetadataRoute } from "next";
+import { docsSource } from "./docs-source";
 
 const baseUrl = getBaseUrl();
 const locales = config.i18n.enabled
@@ -30,8 +27,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			url: new URL(`/${page.locale}/legal/${page.path}`, baseUrl).href,
 			lastModified: new Date(),
 		})),
-		...allDocumentationPages.map((page) => ({
-			url: new URL(`/${page.locale}/docs/${page.path}`, baseUrl).href,
+		...docsSource.getPages().map((page) => ({
+			url: new URL(`/${page.locale}/docs/${page.slugs.join("/")}`, baseUrl)
+				.href,
 			lastModified: new Date(),
 		})),
 	];
