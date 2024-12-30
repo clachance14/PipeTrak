@@ -51,19 +51,6 @@ export const getUserAccounts = cache(async () => {
 	}
 });
 
-export const getOrganizationBySlug = cache(async (slug: string) => {
-	try {
-		const organization = await auth.api.getFullOrganization({
-			headers: await headers(),
-			slug,
-		});
-
-		return organization;
-	} catch (error) {
-		return null;
-	}
-});
-
 export const getInvitation = cache(async (id: string) => {
 	try {
 		const invitation = await db.invitation.findUnique({
