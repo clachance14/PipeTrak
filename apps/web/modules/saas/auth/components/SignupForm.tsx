@@ -209,7 +209,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 						</form>
 					</Form>
 
-					{(config.auth.enablePasskeys || config.auth.enableSocialLogin) && (
+					{config.auth.enableSignup && config.auth.enableSocialLogin && (
 						<>
 							<div className="relative my-6 h-4">
 								<hr className="relative top-2" />

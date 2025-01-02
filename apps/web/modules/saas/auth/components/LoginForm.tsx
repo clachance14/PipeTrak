@@ -229,7 +229,8 @@ export function LoginForm() {
 						</form>
 					</Form>
 
-					{(config.auth.enablePasskeys || config.auth.enableSocialLogin) && (
+					{(config.auth.enablePasskeys ||
+						(config.auth.enableSignup && config.auth.enableSocialLogin)) && (
 						<>
 							<div className="relative my-6 h-4">
 								<hr className="relative top-2" />
@@ -239,7 +240,8 @@ export function LoginForm() {
 							</div>
 
 							<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
-								{config.auth.enableSocialLogin &&
+								{config.auth.enableSignup &&
+									config.auth.enableSocialLogin &&
 									Object.keys(oAuthProviders).map((providerId) => (
 										<SocialSigninButton
 											key={providerId}
