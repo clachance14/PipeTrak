@@ -26,3 +26,7 @@ updates:
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
+      fumadocs:
+        patterns:
+          - "fumadocs-*"
+          - "@fumadocs/*"
