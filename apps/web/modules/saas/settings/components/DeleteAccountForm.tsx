@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
+import { useSession } from "@saas/auth/hooks/use-session";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useRouter } from "@shared/hooks/router";
 import {
@@ -20,6 +21,7 @@ import { useState } from "react";
 export function DeleteAccountForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
+	const { reloadSession } = useSession();
 	const [deleting, setDeleting] = useState(false);
 	const router = useRouter();
 	const [showConfirmation, setShowConfirmation] = useState(false);
@@ -34,6 +36,7 @@ export function DeleteAccountForm() {
 						variant: "success",
 						title: t("settings.account.deleteAccount.notifications.success"),
 					});
+					reloadSession();
 					router.replace("/");
 				},
 				onError: () => {

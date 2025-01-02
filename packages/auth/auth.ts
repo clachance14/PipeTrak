@@ -58,7 +58,7 @@ export const auth = betterAuth({
 				required: false,
 			},
 		},
-		deleteAccount: {
+		deleteUser: {
 			enabled: true,
 		},
 		changeEmail: {
