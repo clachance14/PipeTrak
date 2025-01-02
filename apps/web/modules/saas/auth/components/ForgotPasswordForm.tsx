@@ -7,7 +7,6 @@ import { Input } from "@ui/components/input";
 import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 
 import { authClient } from "@repo/auth/client";
-import { useRouter } from "@shared/hooks/router";
 import {
 	Form,
 	FormControl,
@@ -29,7 +28,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function ForgotPasswordForm() {
 	const t = useTranslations();
-	const router = useRouter();
 	const [serverError, setServerError] = useState<null | {
 		title: string;
 		message: string;

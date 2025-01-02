@@ -68,7 +68,7 @@ export default async function middleware(req: NextRequest) {
 
 		const session = await getSession(req);
 
-		if (session) {
+		if (session && pathname !== "/auth/reset-password") {
 			return NextResponse.redirect(new URL("/app", origin));
 		}
 
