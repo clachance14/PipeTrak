@@ -148,8 +148,8 @@ importers:
         specifier: ^14.6.4
         version: 14.6.4(@types/react-dom@19.0.0)(@types/react@19.0.0)(next@15.1.3(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.3)(typescript@5.7.2)))
       hono:
-        specifier: ^4.6.14
-        version: 4.6.14
+        specifier: ^4.6.15
+        version: 4.6.15
       jotai:
         specifier: 2.8.0
         version: 2.8.0(@types/react@19.0.0)(react@19.0.0)
@@ -343,7 +343,7 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.13.7
-        version: 1.13.7(hono@4.6.14)
+        version: 1.13.7(hono@4.6.15)
       '@repo/ai':
         specifier: workspace:*
         version: link:../ai
@@ -376,13 +376,13 @@ importers:
         version: link:../utils
       '@scalar/hono-api-reference':
         specifier: ^0.5.165
-        version: 0.5.165(hono@4.6.14)
+        version: 0.5.165(hono@4.6.15)
       '@sindresorhus/slugify':
         specifier: ^2.2.1
         version: 2.2.1
       hono:
-        specifier: ^4.6.14
-        version: 4.6.14
+        specifier: ^4.6.15
+        version: 4.6.15
       hono-openapi:
         specifier: ^0.3.1
         version: 0.3.1(typescript@5.7.2)
@@ -4566,8 +4566,8 @@ packages:
   hono-openapi@0.3.1:
     resolution: {integrity: sha512-8j02qmkE3BJkr+s/tqiauiHy+/OMmM/bvf33G9CZpBRdyM95aVL3fgRj4tNsRdkL+e/rM5+EClozD3jxnwr4eA==}
 
-  hono@4.6.14:
-    resolution: {integrity: sha512-j4VkyUp2xazGJ8eCCLN1Vm/bxdvm/j5ZuU9AIjLu9vapn2M44p9L3Ktr9Vnb2RN2QtcR/wVjZVMlT5k7GJQgPw==}
+  hono@4.6.15:
+    resolution: {integrity: sha512-OiQwvAOAaI2JrABBH69z5rsctHDzFzIKJge0nYXgtzGJ0KftwLWcBXm1upJC23/omNRtnqM0gjRMbtXshPdqhQ==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -7965,37 +7965,37 @@ snapshots:
 
   '@hexagon/base64@1.1.28': {}
 
-  '@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.14)':
+  '@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.15)':
     dependencies:
       arktype: 2.0.0-rc.25
-      hono: 4.6.14
+      hono: 4.6.15
     optional: true
 
-  '@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.14)':
+  '@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.15)':
     dependencies:
       effect: 3.12.0
-      hono: 4.6.14
+      hono: 4.6.15
     optional: true
 
-  '@hono/node-server@1.13.7(hono@4.6.14)':
+  '@hono/node-server@1.13.7(hono@4.6.15)':
     dependencies:
-      hono: 4.6.14
+      hono: 4.6.15
 
-  '@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.14)':
+  '@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.15)':
     dependencies:
       '@sinclair/typebox': 0.34.13
-      hono: 4.6.14
+      hono: 4.6.15
     optional: true
 
-  '@hono/valibot-validator@0.5.1(hono@4.6.14)(valibot@1.0.0-beta.9(typescript@5.7.2))':
+  '@hono/valibot-validator@0.5.1(hono@4.6.15)(valibot@1.0.0-beta.9(typescript@5.7.2))':
     dependencies:
-      hono: 4.6.14
+      hono: 4.6.15
       valibot: 1.0.0-beta.9(typescript@5.7.2)
     optional: true
 
-  '@hono/zod-validator@0.4.1(hono@4.6.14)(zod@3.24.1)':
+  '@hono/zod-validator@0.4.1(hono@4.6.15)(zod@3.24.1)':
     dependencies:
-      hono: 4.6.14
+      hono: 4.6.15
       zod: 3.24.1
     optional: true
 
@@ -9096,10 +9096,10 @@ snapshots:
     dependencies:
       react: 19.0.0
 
-  '@scalar/hono-api-reference@0.5.165(hono@4.6.14)':
+  '@scalar/hono-api-reference@0.5.165(hono@4.6.15)':
     dependencies:
       '@scalar/types': 0.0.25
-      hono: 4.6.14
+      hono: 4.6.15
 
   '@scalar/openapi-types@0.1.5': {}
 
@@ -11125,16 +11125,16 @@ snapshots:
     dependencies:
       json-schema-walker: 2.0.0
     optionalDependencies:
-      '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.14)
-      '@hono/effect-validator': 1.2.0(effect@3.12.0)(hono@4.6.14)
-      '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.14)
-      '@hono/valibot-validator': 0.5.1(hono@4.6.14)(valibot@1.0.0-beta.9(typescript@5.7.2))
-      '@hono/zod-validator': 0.4.1(hono@4.6.14)(zod@3.24.1)
+      '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.15)
+      '@hono/effect-validator': 1.2.0(effect@3.12.0)(hono@4.6.15)
+      '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.15)
+      '@hono/valibot-validator': 0.5.1(hono@4.6.15)(valibot@1.0.0-beta.9(typescript@5.7.2))
+      '@hono/zod-validator': 0.4.1(hono@4.6.15)(zod@3.24.1)
       '@sinclair/typebox': 0.34.13
       '@valibot/to-json-schema': 1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.2))
       arktype: 2.0.0-rc.25
       effect: 3.12.0
-      hono: 4.6.14
+      hono: 4.6.15
       openapi-types: 12.1.3
       valibot: 1.0.0-beta.9(typescript@5.7.2)
       zod: 3.24.1
@@ -11142,7 +11142,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  hono@4.6.14: {}
+  hono@4.6.15: {}
 
   hookable@5.5.3: {}
 
