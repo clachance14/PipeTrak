@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 export function useAuthErrorMessages() {
 	const t = useTranslations();
 
-	const authErrorMessages: AuthClientErrorCodes = {
+	const authErrorMessages: Partial<AuthClientErrorCodes> = {
 		INVALID_EMAIL_OR_PASSWORD: t("auth.errors.invalidEmailOrPassword"),
 		USER_NOT_FOUND: t("auth.errors.userNotFound"),
 		FAILED_TO_CREATE_USER: t("auth.errors.failedToCreateUser"),
@@ -27,6 +27,8 @@ export function useAuthErrorMessages() {
 		USER_ALREADY_EXISTS: t("auth.errors.userAlreadyExists"),
 		INVALID_INVITATION: t("auth.errors.invalidInvitation"),
 		SESSION_EXPIRED: t("auth.errors.sessionExpired"),
+		FAILED_TO_UNLINK_LAST_ACCOUNT: t("auth.errors.failedToUnlinkLastAccount"),
+		ACCOUNT_NOT_FOUND: t("auth.errors.accountNotFound"),
 	};
 
 	const getAuthErrorMessage = (errorCode: string | undefined) => {

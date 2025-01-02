@@ -109,7 +109,9 @@
 			"userAlreadyExists": "Dieser Benutzer existiert bereits.",
 			"userEmailNotFound": "E-Mail nicht gefunden.",
 			"userNotFound": "Dieser Benutzer existiert nicht",
-			"sessionExpired": "Die Sitzung ist abgelaufen."
+			"sessionExpired": "Die Sitzung ist abgelaufen.",
+			"accountNotFound": "Konto nicht gefunden",
+			"failedToUnlinkLastAccount": "Konto kann nicht entkoppelt werden"
 		},
 		"forgotPassword": {
 			"backToSignin": "Zurück zum Login",

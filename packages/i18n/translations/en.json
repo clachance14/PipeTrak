@@ -109,7 +109,9 @@
 			"userEmailNotFound": "Email not found.",
 			"userAlreadyExists": "This user already exists.",
 			"invalidInvitation": "The invitation is invalid or expired.",
-			"sessionExpired": "The session has expired."
+			"sessionExpired": "The session has expired.",
+			"failedToUnlinkLastAccount": "Failed to unlink account",
+			"accountNotFound": "Account not found"
 		},
 		"forgotPassword": {
 			"backToSignin": "Back to signin",
