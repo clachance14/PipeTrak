@@ -1,8 +1,10 @@
 import { Link, Text } from "@react-email/components";
 import { createTranslator } from "use-intl/core";
+import PrimaryButton from "../src/components/PrimaryButton";
+import Wrapper from "../src/components/Wrapper";
+import { defaultTranslations } from "../src/util/translations";
+import { defaultLocale } from "../src/util/translations";
 import type { BaseMailProps } from "../types";
-import PrimaryButton from "./components/PrimaryButton";
-import Wrapper from "./components/Wrapper";
 
 export function MagicLink({
 	url,
@@ -33,5 +35,11 @@ export function MagicLink({
 		</Wrapper>
 	);
 }
+
+MagicLink.PreviewProps = {
+	locale: defaultLocale,
+	translations: defaultTranslations,
+	url: "#",
+};
 
 export default MagicLink;

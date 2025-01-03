@@ -1,6 +1,6 @@
 import { config } from "@repo/config";
 import { logger } from "@repo/logs";
-import type { SendEmailHandler } from "../types";
+import type { SendEmailHandler } from "../../types";
 
 const { from } = config.mails;
 

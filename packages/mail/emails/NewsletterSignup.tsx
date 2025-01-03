@@ -1,7 +1,9 @@
-import { Container, Heading, Section, Text } from "@react-email/components";
+import { Heading, Text } from "@react-email/components";
 import { createTranslator } from "use-intl/core";
+import Wrapper from "../src/components/Wrapper";
+import { defaultTranslations } from "../src/util/translations";
+import { defaultLocale } from "../src/util/translations";
 import type { BaseMailProps } from "../types";
-import Wrapper from "./components/Wrapper";
 
 export function NewsletterSignup({ locale, translations }: BaseMailProps) {
 	const t = createTranslator({
@@ -11,14 +13,17 @@ export function NewsletterSignup({ locale, translations }: BaseMailProps) {
 
 	return (
 		<Wrapper>
-			<Section className="bg-card p-8">
-				<Container>
-					<Heading as="h1">{t("mail.newsletterSignup.subject")}</Heading>
-					<Text>{t("mail.newsletterSignup.body")}</Text>
-				</Container>
-			</Section>
+			<Heading className="text-xl">
+				{t("mail.newsletterSignup.subject")}
+			</Heading>
+			<Text>{t("mail.newsletterSignup.body")}</Text>
 		</Wrapper>
 	);
 }
+
+NewsletterSignup.PreviewProps = {
+	locale: defaultLocale,
+	translations: defaultTranslations,
+};
 
 export default NewsletterSignup;

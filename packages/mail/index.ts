@@ -1,1 +1,1 @@
-export { sendEmail } from "./util/send";
+export { sendEmail } from "./src/util/send";

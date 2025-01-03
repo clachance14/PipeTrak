@@ -1,8 +1,10 @@
 import { Heading, Link, Text } from "@react-email/components";
 import { createTranslator } from "use-intl/core";
+import PrimaryButton from "../src/components/PrimaryButton";
+import Wrapper from "../src/components/Wrapper";
+import { defaultLocale } from "../src/util/translations";
+import { defaultTranslations } from "../src/util/translations";
 import type { BaseMailProps } from "../types";
-import PrimaryButton from "./components/PrimaryButton";
-import Wrapper from "./components/Wrapper";
 
 export function OrganizationInvitation({
 	url,
@@ -39,5 +41,12 @@ export function OrganizationInvitation({
 		</Wrapper>
 	);
 }
+
+OrganizationInvitation.PreviewProps = {
+	locale: defaultLocale,
+	translations: defaultTranslations,
+	url: "#",
+	organizationName: "Acme",
+};
 
 export default OrganizationInvitation;
