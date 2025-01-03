@@ -1,4 +1,5 @@
 import { Heading, Text } from "@react-email/components";
+import React from "react";
 import { createTranslator } from "use-intl/core";
 import Wrapper from "../src/components/Wrapper";
 import { defaultTranslations } from "../src/util/translations";

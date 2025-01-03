@@ -45,5 +45,8 @@
 			".content-collections",
 			"./packages/database/src/zod/index.ts"
 		]
+	},
+	"javascript": {
+		"jsxRuntime": "reactClassic"
 	}
 }

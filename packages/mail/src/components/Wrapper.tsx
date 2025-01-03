@@ -7,7 +7,7 @@ import {
 	Tailwind,
 } from "@react-email/components";
 import { lightVariables } from "@repo/tailwind-config";
-import type { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { Logo } from "./Logo";
 
 export default function Wrapper({ children }: PropsWithChildren) {
