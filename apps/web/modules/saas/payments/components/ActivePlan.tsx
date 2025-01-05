@@ -75,7 +75,7 @@ export function ActivePlan({
 											})}
 								</span>
 							)}
-							{"seatBased" in price && price.seatBased && (
+							{organizationId && "seatBased" in price && price.seatBased && (
 								<span className="font-normal text-xs opacity-60">
 									{" / "}
 									{t("pricing.perSeat")}
