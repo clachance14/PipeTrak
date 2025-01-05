@@ -8,6 +8,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import {
 	admin,
+	createAuthMiddleware,
 	magicLink,
 	openAPI,
 	organization,
@@ -15,6 +16,7 @@ import {
 } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
+import { updateSeatsInOrganizationSubscription } from "./lib/organization";
 import { getUserByEmail } from "./lib/user";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
@@ -46,6 +48,29 @@ export const auth = betterAuth({
 			enabled: true,
 			trustedProviders: ["google", "github"],
 		},
+	},
+	hooks: {
+		after: createAuthMiddleware(async (ctx) => {
+			if (ctx.path.startsWith("/organization/accept-invitation")) {
+				const { invitationId } = ctx.body;
+
+				if (!invitationId) return;
+
+				const invitation = await db.invitation.findUnique({
+					where: { id: invitationId },
+				});
+
+				if (!invitation) return;
+
+				await updateSeatsInOrganizationSubscription(invitation.organizationId);
+			} else if (ctx.path.startsWith("/organization/remove-member")) {
+				const { organizationId } = ctx.body;
+
+				if (!organizationId) return;
+
+				await updateSeatsInOrganizationSubscription(organizationId);
+			}
+		}),
 	},
 	user: {
 		additionalFields: {

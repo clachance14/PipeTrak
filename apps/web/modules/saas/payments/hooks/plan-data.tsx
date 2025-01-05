@@ -19,7 +19,6 @@ export function usePlanData() {
 			title: t("pricing.products.free.title"),
 			description: t("pricing.products.free.description"),
 			features: [
-				t("pricing.products.free.features.oneMember"),
 				t("pricing.products.free.features.anotherFeature"),
 				t("pricing.products.free.features.limitedSupport"),
 			],
@@ -28,7 +27,6 @@ export function usePlanData() {
 			title: t("pricing.products.pro.title"),
 			description: t("pricing.products.pro.description"),
 			features: [
-				t("pricing.products.pro.features.fiveMembers"),
 				t("pricing.products.pro.features.anotherFeature"),
 				t("pricing.products.pro.features.fullSupport"),
 			],
@@ -37,7 +35,6 @@ export function usePlanData() {
 			title: t("pricing.products.enterprise.title"),
 			description: t("pricing.products.enterprise.description"),
 			features: [
-				t("pricing.products.enterprise.features.unlimitedMembers"),
 				t("pricing.products.enterprise.features.unlimitedProjects"),
 				t("pricing.products.enterprise.features.enterpriseSupport"),
 			],
@@ -46,7 +43,6 @@ export function usePlanData() {
 		// 	title: t("pricing.products.lifetime.title"),
 		// 	description: t("pricing.products.lifetime.description"),
 		// 	features: [
-		// 		t("pricing.products.lifetime.features.unlimitedMembers"),
 		// 		t("pricing.products.lifetime.features.noRecurringCosts"),
 		// 		t("pricing.products.lifetime.features.extendSupport"),
 		// 	],

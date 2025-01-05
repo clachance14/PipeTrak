@@ -6,6 +6,7 @@ import {
 } from "@shared/lib/middleware-helpers";
 import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
+import { withQuery } from "ufo";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -23,7 +24,14 @@ export default async function middleware(req: NextRequest) {
 		let locale = req.cookies.get(appConfig.i18n.localeCookieName)?.value;
 
 		if (!session) {
-			return NextResponse.redirect(new URL("/auth/login", origin));
+			return NextResponse.redirect(
+				new URL(
+					withQuery("/auth/login", {
+						redirectTo: pathname,
+					}),
+					origin,
+				),
+			);
 		}
 
 		if (
@@ -31,7 +39,14 @@ export default async function middleware(req: NextRequest) {
 			!session.user.onboardingComplete &&
 			pathname !== "/app/onboarding"
 		) {
-			return NextResponse.redirect(new URL("/app/onboarding", origin));
+			return NextResponse.redirect(
+				new URL(
+					withQuery("/app/onboarding", {
+						redirectTo: pathname,
+					}),
+					origin,
+				),
+			);
 		}
 
 		if (!locale || (session.user.locale && locale !== session.user.locale)) {

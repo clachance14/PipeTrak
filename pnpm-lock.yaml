@@ -438,6 +438,9 @@ importers:
       '@repo/mail':
         specifier: workspace:*
         version: link:../mail
+      '@repo/payments':
+        specifier: workspace:*
+        version: link:../payments
       '@repo/utils':
         specifier: workspace:*
         version: link:../utils

@@ -1,11 +1,8 @@
-import { type TeamPurchase, type UserPurchase, db } from "@repo/database";
+import { type Purchase, db } from "@repo/database";
 import { ChargeBee } from "chargebee-typescript";
 import type {
-	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	PauseSubscription,
-	ResumeSubscription,
 	WebhookHandler,
 } from "../../types";
 
@@ -96,32 +93,6 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	return response.portal_session.access_url;
 };
 
-export const pauseSubscription: PauseSubscription = async ({ id }) => {
-	const chargebeeClient = getChargebeeClient();
-
-	await chargebeeClient.subscription
-		.update_for_items(id, {
-			auto_collection: "off",
-		})
-		.request();
-};
-
-export const cancelSubscription: CancelSubscription = async ({ id }) => {
-	const chargebeeClient = getChargebeeClient();
-
-	await chargebeeClient.subscription.cancel_for_items(id).request();
-};
-
-export const resumeSubscription: ResumeSubscription = async ({ id }) => {
-	const chargebeeClient = getChargebeeClient();
-
-	const response = await chargebeeClient.subscription.reactivate(id).request();
-
-	return {
-		status: response.subscription.status,
-	};
-};
-
 export const webhookHandler: WebhookHandler = async (req: Request) => {
 	try {
 		const payload = (await req.json()) as {
@@ -181,7 +152,7 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 				productId: data.subscription.subscription_items[0].item_price_id,
 				status: data.subscription.status,
 				type: "SUBSCRIPTION",
-			} satisfies Omit<TeamPurchase, "createdAt">;
+			} satisfies Omit<Purchase, "createdAt">;
 
 			await db.purchase.upsert({
 				create: subscription,
@@ -198,7 +169,7 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 				productId: data.subscription.subscription_items[0].item_price_id,
 				status: data.subscription.status,
 				type: "SUBSCRIPTION",
-			} satisfies Omit<UserPurchase, "createdAt">;
+			} satisfies Omit<Purchase, "createdAt">;
 
 			await db.purchase.upsert({
 				create: subscription,

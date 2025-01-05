@@ -71,6 +71,7 @@ export type Config = {
 								interval: "month" | "year" | "week";
 								intervalCount?: number;
 								trialPeriodDays?: number;
+								seatBased?: boolean;
 						  }
 						| {
 								type: "one-time";

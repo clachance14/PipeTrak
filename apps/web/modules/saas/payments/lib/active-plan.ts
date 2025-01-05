@@ -36,6 +36,9 @@ export function getActivePlanFromPurchases(purchases?: Purchases) {
 
 	return {
 		id: activePlan[0] as PlanId,
+		price: activePlan[1].prices?.find(
+			(price) => price.productId === subscriptionPurchase.productId,
+		),
 		status: subscriptionPurchase.status,
 		purchaseId: subscriptionPurchase.id,
 	};

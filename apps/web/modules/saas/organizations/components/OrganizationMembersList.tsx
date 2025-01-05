@@ -1,6 +1,7 @@
 "use client";
 import type { OrganizationMemberRole } from "@repo/auth";
 import { authClient } from "@repo/auth/client";
+import { isOrganizationAdmin } from "@repo/auth/lib/helper";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useOrganizationMemberRoles } from "@saas/organizations/hooks/member-roles";
 import {
@@ -50,12 +51,7 @@ export function OrganizationMembersList({
 	const { toast } = useToast();
 	const memberRoles = useOrganizationMemberRoles();
 
-	const isUserAdmin = user?.role === "admin";
-	const userOrganizationRole = organization?.members.find(
-		(member) => member.userId === user?.id,
-	)?.role;
-	const isOrganizationAdmin =
-		userOrganizationRole && ["admin", "owner"].includes(userOrganizationRole);
+	const userIsOrganizationAdmin = isOrganizationAdmin(organization, user);
 
 	const updateMemberRole = async (
 		memberId: string,
@@ -168,7 +164,7 @@ export function OrganizationMembersList({
 			cell: ({ row }) => {
 				return (
 					<div className="flex flex-row justify-end gap-2">
-						{isOrganizationAdmin ? (
+						{userIsOrganizationAdmin ? (
 							<>
 								<OrganizationRoleSelect
 									value={row.original.role}
@@ -176,7 +172,7 @@ export function OrganizationMembersList({
 										updateMemberRole(row.original.id, value)
 									}
 									disabled={
-										!isOrganizationAdmin || row.original.role === "owner"
+										!userIsOrganizationAdmin || row.original.role === "owner"
 									}
 								/>
 								<DropdownMenu>
@@ -188,7 +184,7 @@ export function OrganizationMembersList({
 									<DropdownMenuContent>
 										{row.original.userId !== user?.id && (
 											<DropdownMenuItem
-												disabled={!isUserAdmin && !isOrganizationAdmin}
+												disabled={!isOrganizationAdmin(organization, user)}
 												className="text-destructive"
 												onClick={async () => removeMember(row.original.id)}
 											>

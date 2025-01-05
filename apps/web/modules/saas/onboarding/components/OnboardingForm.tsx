@@ -5,6 +5,7 @@ import { clearCache } from "@shared/lib/cache";
 import { Progress } from "@ui/components/progress";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { withQuery } from "ufo";
 import { OnboardingStep1 } from "./OnboardingStep1";
 
 export function OnboardingForm() {
@@ -13,12 +14,17 @@ export function OnboardingForm() {
 	const searchParams = useSearchParams();
 
 	const stepSearchParam = searchParams.get("step");
+	const redirectTo = searchParams.get("redirectTo");
 	const onboardingStep = stepSearchParam
 		? Number.parseInt(stepSearchParam, 10)
 		: 1;
 
 	const setStep = (step: number) => {
-		router.replace(`?step=${step}`);
+		router.replace(
+			withQuery(window.location.search ?? "", {
+				step,
+			}),
+		);
 	};
 
 	const onCompleted = async () => {
@@ -27,7 +33,7 @@ export function OnboardingForm() {
 		});
 
 		await clearCache();
-		router.replace("/app");
+		router.replace(redirectTo ?? "/app");
 	};
 
 	const steps = [

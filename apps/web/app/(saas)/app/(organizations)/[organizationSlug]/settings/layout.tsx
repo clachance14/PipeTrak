@@ -1,5 +1,6 @@
+import { isOrganizationAdmin } from "@repo/auth/lib/helper";
 import { config } from "@repo/config";
-import { getActiveOrganization } from "@saas/auth/lib/server";
+import { getActiveOrganization, getSession } from "@saas/auth/lib/server";
 import { OrganizationLogo } from "@saas/organizations/components/OrganizationLogo";
 import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { PageHeader } from "@saas/shared/components/PageHeader";
@@ -16,12 +17,18 @@ export default async function SettingsLayout({
 	params: Promise<{ organizationSlug: string }>;
 }>) {
 	const t = await getTranslations();
+	const session = await getSession();
 	const { organizationSlug } = await params;
 	const organization = await getActiveOrganization(organizationSlug);
 
 	if (!organization) {
 		redirect("/app");
 	}
+
+	const userIsOrganizationAdmin = isOrganizationAdmin(
+		organization,
+		session?.user,
+	);
 
 	const organizationSettingsBasePath = `/app/${organizationSlug}/settings`;
 
@@ -45,7 +52,9 @@ export default async function SettingsLayout({
 					href: `${organizationSettingsBasePath}/members`,
 					icon: <Users2Icon className="size-4 opacity-50" />,
 				},
-				...(config.organizations.enable && config.organizations.enableBilling
+				...(config.organizations.enable &&
+				config.organizations.enableBilling &&
+				userIsOrganizationAdmin
 					? [
 							{
 								title: t("settings.menu.organization.billing"),

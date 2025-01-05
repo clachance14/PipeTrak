@@ -12,7 +12,7 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const UserScalarFieldEnumSchema = z.enum(['id','name','email','emailVerified','image','createdAt','updatedAt','username','role','banned','banReason','banExpires','onboardingComplete','locale']);
+export const UserScalarFieldEnumSchema = z.enum(['id','name','email','emailVerified','image','createdAt','updatedAt','username','role','banned','banReason','banExpires','onboardingComplete','paymentsCustomerId','locale']);
 
 export const SessionScalarFieldEnumSchema = z.enum(['id','expiresAt','ipAddress','userAgent','userId','impersonatedBy','activeOrganizationId','token','createdAt','updatedAt']);
 
@@ -22,7 +22,7 @@ export const VerificationScalarFieldEnumSchema = z.enum(['id','identifier','valu
 
 export const PasskeyScalarFieldEnumSchema = z.enum(['id','name','publicKey','userId','webauthnUserID','counter','deviceType','backedUp','transports','createdAt']);
 
-export const OrganizationScalarFieldEnumSchema = z.enum(['id','name','slug','logo','createdAt','metadata']);
+export const OrganizationScalarFieldEnumSchema = z.enum(['id','name','slug','logo','createdAt','metadata','paymentsCustomerId']);
 
 export const MemberScalarFieldEnumSchema = z.enum(['id','organizationId','userId','role','createdAt']);
 
@@ -62,6 +62,7 @@ export const UserSchema = z.object({
   banReason: z.string().nullable(),
   banExpires: z.coerce.date().nullable(),
   onboardingComplete: z.boolean(),
+  paymentsCustomerId: z.string().nullable(),
   locale: z.string().nullable(),
 })
 
@@ -154,6 +155,7 @@ export const OrganizationSchema = z.object({
   logo: z.string().nullable(),
   createdAt: z.coerce.date(),
   metadata: z.string().nullable(),
+  paymentsCustomerId: z.string().nullable(),
 })
 
 export type Organization = z.infer<typeof OrganizationSchema>

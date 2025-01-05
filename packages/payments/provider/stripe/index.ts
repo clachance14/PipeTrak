@@ -1,13 +1,12 @@
 import { db } from "@repo/database";
 import { logger } from "@repo/logs";
 import Stripe from "stripe";
+import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
-	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	PauseSubscription,
-	ResumeSubscription,
-	UpdateSubscription,
+	GetInvoices,
+	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
 
@@ -35,9 +34,11 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 		type,
 		productId,
 		redirectUrl,
+		customerId,
 		organizationId,
 		userId,
 		trialPeriodDays,
+		seats,
 	} = options;
 
 	const metadata = {
@@ -50,10 +51,11 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 		success_url: redirectUrl ?? "",
 		line_items: [
 			{
-				quantity: 1,
+				quantity: seats ?? 1,
 				price: productId,
 			},
 		],
+		customer: customerId,
 		...(type === "one-time"
 			? {
 					payment_intent_data: {
@@ -87,19 +89,9 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	return response.url;
 };
 
-export const pauseSubscription: PauseSubscription = async ({ id }) => {
-	const stripeClient = getStripeClient();
-
-	await stripeClient.subscriptions.update(id, {
-		pause_collection: {
-			behavior: "void",
-		},
-	});
-};
-
-export const updateSubscription: UpdateSubscription = async ({
+export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	id,
-	productId,
+	seats,
 }) => {
 	const stripeClient = getStripeClient();
 
@@ -109,36 +101,29 @@ export const updateSubscription: UpdateSubscription = async ({
 		throw new Error("Subscription not found.");
 	}
 
-	const response = await stripeClient.subscriptions.update(id, {
+	await stripeClient.subscriptions.update(id, {
 		items: [
 			{
 				id: subscription.items.data[0].id,
-				price: productId,
+				quantity: seats,
 			},
 		],
 	});
-
-	return {
-		status: response.status,
-	};
 };
 
-export const cancelSubscription: CancelSubscription = async ({ id }) => {
+export const getInvoices: GetInvoices = async ({ customerId }) => {
 	const stripeClient = getStripeClient();
 
-	await stripeClient.subscriptions.cancel(id);
-};
-
-export const resumeSubscription: ResumeSubscription = async ({ id }) => {
-	const stripeClient = getStripeClient();
-
-	const response = await stripeClient.subscriptions.resume(id, {
-		billing_cycle_anchor: "unchanged",
+	const invoices = await stripeClient.invoices.list({
+		customer: customerId,
 	});
 
-	return {
-		status: response.status,
-	};
+	return invoices.data.map((invoice) => ({
+		id: invoice.id,
+		date: invoice.created,
+		status: invoice.status ?? undefined,
+		downloadUrl: invoice.hosted_invoice_url ?? undefined,
+	}));
 };
 
 export const webhookHandler: WebhookHandler = async (req) => {
@@ -169,11 +154,12 @@ export const webhookHandler: WebhookHandler = async (req) => {
 	try {
 		switch (event.type) {
 			case "checkout.session.completed": {
-				const checkoutSessionId = event.data.object.id;
-				const { mode, metadata, customer } = event.data.object;
+				const { mode, metadata, customer, id } = event.data.object;
+
+				if (mode === "subscription") break;
 
 				const checkoutSession = await stripeClient.checkout.sessions.retrieve(
-					checkoutSessionId,
+					id,
 					{
 						expand: ["line_items"],
 					},
@@ -187,29 +173,50 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					});
 				}
 
-				if (mode === "subscription") {
-					const subscriptionId = event.data.object.subscription as string;
-					await db.purchase.create({
-						data: {
-							subscriptionId,
-							organizationId: metadata?.organization_id || null,
-							userId: metadata?.user_id || null,
-							customerId: customer as string,
-							type: "SUBSCRIPTION",
-							productId,
-						},
-					});
-				} else if (mode === "payment") {
-					await db.purchase.create({
-						data: {
-							organizationId: metadata?.organization_id || null,
-							userId: metadata?.user_id || null,
-							customerId: customer as string,
-							type: "ONE_TIME",
-							productId,
-						},
+				await db.purchase.create({
+					data: {
+						organizationId: metadata?.organization_id || null,
+						userId: metadata?.user_id || null,
+						customerId: customer as string,
+						type: "ONE_TIME",
+						productId,
+					},
+				});
+
+				await setCustomerIdToEntity(customer as string, {
+					organizationId: metadata?.organization_id,
+					userId: metadata?.user_id,
+				});
+
+				break;
+			}
+			case "customer.subscription.created": {
+				const { metadata, customer, items, id } = event.data.object;
+
+				const productId = items?.data[0].price?.id;
+
+				if (!productId) {
+					return new Response("Missing product ID.", {
+						status: 400,
 					});
 				}
+
+				await db.purchase.create({
+					data: {
+						subscriptionId: id,
+						organizationId: metadata?.organization_id || null,
+						userId: metadata?.user_id || null,
+						customerId: customer as string,
+						type: "SUBSCRIPTION",
+						productId,
+						status: event.data.object.status,
+					},
+				});
+
+				await setCustomerIdToEntity(customer as string, {
+					organizationId: metadata?.organization_id,
+					userId: metadata?.user_id,
+				});
 
 				break;
 			}
@@ -241,6 +248,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 						subscriptionId: event.data.object.id,
 					},
 				});
+
 				break;
 			}
 

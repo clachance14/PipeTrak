@@ -1,24 +1,27 @@
 "use client";
-
-import { useSession } from "@saas/auth/hooks/use-session";
-import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { PricingTable } from "@saas/payments/components/PricingTable";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useTranslations } from "next-intl";
 
-export function ChangePlan({ activePlanId }: { activePlanId?: string }) {
+export function ChangePlan({
+	organizationId,
+	userId,
+	activePlanId,
+}: {
+	organizationId?: string;
+	userId?: string;
+	activePlanId?: string;
+}) {
 	const t = useTranslations();
-	const { user } = useSession();
-	const { activeOrganization } = useActiveOrganization();
 
 	return (
 		<SettingsItem
-			title={t("settings.billing.subscription.changePlan.title")}
-			description={t("settings.billing.subscription.changePlan.description")}
+			title={t("settings.billing.changePlan.title")}
+			description={t("settings.billing.changePlan.description")}
 		>
 			<PricingTable
-				organizationId={activeOrganization?.id}
-				userId={user?.id}
+				organizationId={organizationId}
+				userId={userId}
 				activePlanId={activePlanId}
 			/>
 		</SettingsItem>

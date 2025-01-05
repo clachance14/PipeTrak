@@ -1,19 +1,18 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import {
-	cancelSubscription as cancelSubscriptionResolver,
 	createCheckout,
 	getCustomer,
+	getSubscription,
 	lemonSqueezySetup,
-	updateSubscription as updateSubscriptionResolver,
+	updateSubscriptionItem,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { db } from "@repo/database";
+import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
-	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	PauseSubscription,
-	ResumeSubscription,
-	UpdateSubscription,
+	GetInvoices,
+	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
 
@@ -26,7 +25,7 @@ function initLemonsqueezyApi() {
 export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 	initLemonsqueezyApi();
 
-	const { type, productId, redirectUrl, email, name } = options;
+	const { customerId, seats, productId, redirectUrl, email, name } = options;
 
 	const response = await createCheckout(
 		String(process.env.LEMONSQUEEZY_STORE_ID),
@@ -39,6 +38,12 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 			checkoutData: {
 				email,
 				name,
+				variantQuantities: [
+					{
+						variantId: Number.parseInt(productId),
+						quantity: seats ?? 1,
+					},
+				],
 				custom:
 					"organizationId" in options
 						? {
@@ -64,44 +69,45 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	return response.data?.data.attributes.urls.customer_portal ?? null;
 };
 
-export const pauseSubscription: PauseSubscription = async ({ id }) => {
-	initLemonsqueezyApi();
-
-	await updateSubscriptionResolver(id, {
-		pause: {
-			mode: "free",
-		},
-	});
-};
-
-export const updateSubscription: UpdateSubscription = async ({
+export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	id,
-	productId,
+	seats,
 }) => {
 	initLemonsqueezyApi();
 
-	const response = await updateSubscriptionResolver(id, {
-		variantId: Number(productId),
+	const subscription = await getSubscription(id, {
+		include: ["subscription-items"],
 	});
 
-	return {
-		status: response.data?.data.attributes.status as string,
-	};
+	if (!subscription) {
+		throw new Error("Subscription not found.");
+	}
+
+	const subscriptionItem =
+		subscription.data?.data.relationships["subscription-items"].data?.[0];
+
+	if (!subscriptionItem) {
+		throw new Error("Subscription item not found.");
+	}
+
+	await updateSubscriptionItem(subscriptionItem.id, {
+		quantity: seats,
+	});
 };
 
-export const cancelSubscription: CancelSubscription = async ({ id }) => {
+export const getInvoices: GetInvoices = async ({ customerId }) => {
 	initLemonsqueezyApi();
 
-	await cancelSubscriptionResolver(id);
-};
-
-export const resumeSubscription: ResumeSubscription = async ({ id }) => {
-	const response = await updateSubscriptionResolver(id, {
-		cancelled: false,
+	const response = await getInvoices({
+		customerId,
 	});
-	return {
-		status: response.data?.data.attributes.status as string,
-	};
+
+	return response.map((invoice) => ({
+		id: invoice.id,
+		date: invoice.date,
+		status: invoice.status,
+		downloadUrl: invoice.downloadUrl,
+	}));
 };
 
 export const webhookHandler: WebhookHandler = async (req: Request) => {
@@ -171,6 +177,11 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 					},
 				});
 
+				await setCustomerIdToEntity(String(data.attributes.customer_id), {
+					organizationId: customData.organization_id,
+					userId: customData.user_id,
+				});
+
 				break;
 			}
 			case "subscription_updated":
@@ -218,6 +229,11 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 						productId: String(data.attributes.product_id),
 						type: "ONE_TIME",
 					},
+				});
+
+				await setCustomerIdToEntity(String(data.attributes.customer_id), {
+					organizationId: customData.organization_id,
+					userId: customData.user_id,
 				});
 
 				break;

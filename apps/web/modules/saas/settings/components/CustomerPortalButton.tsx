@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 export function CustomerPortalButton({
 	purchaseId,
 }: {
-	purchaseId: string;
+	purchaseId?: string;
 }) {
 	const t = useTranslations();
 	const { toast } = useToast();

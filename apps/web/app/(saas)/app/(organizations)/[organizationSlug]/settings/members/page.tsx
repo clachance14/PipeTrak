@@ -1,3 +1,4 @@
+import { isOrganizationAdmin } from "@repo/auth/lib/helper";
 import { getActiveOrganization, getSession } from "@saas/auth/lib/server";
 import { InviteMemberForm } from "@saas/organizations/components/InviteMemberForm";
 import { OrganizationMembersBlock } from "@saas/organizations/components/OrganizationMembersBlock";
@@ -25,17 +26,9 @@ export default async function OrganizationSettingsPage({
 		return notFound();
 	}
 
-	const userRole = session?.user?.role;
-	const userOrganizationRole = organization.members.find(
-		(member) => member.userId === session?.session.userId,
-	)?.role;
-	const userIsOrganizationAdmin =
-		userRole === "admin" ||
-		(userOrganizationRole && ["admin", "owner"].includes(userOrganizationRole));
-
 	return (
 		<SettingsList>
-			{userIsOrganizationAdmin && (
+			{isOrganizationAdmin(organization, session?.user) && (
 				<InviteMemberForm organizationId={organization.id} />
 			)}
 			<OrganizationMembersBlock organizationId={organization.id} />

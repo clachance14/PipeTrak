@@ -2,6 +2,7 @@
 
 import type { ActiveOrganization } from "@repo/auth";
 import { authClient } from "@repo/auth/client";
+import { isOrganizationAdmin } from "@repo/auth/lib/helper";
 import { useSession } from "@saas/auth/hooks/use-session";
 import {
 	fullOrganizationQueryKey,
@@ -50,17 +51,12 @@ export function OrganizationInvitationsList({
 	const formatter = useFormatter();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 
-	const userOrganizationRole = organization?.members.find(
-		(member) => member.userId === user?.id,
-	)?.role;
-	const canUserEditInvitations =
-		user?.role === "admin" ||
-		(userOrganizationRole && ["owner", "admin"].includes(userOrganizationRole));
+	const canUserEditInvitations = isOrganizationAdmin(organization, user);
 
 	const invitations = useMemo(
 		() =>
 			organization?.invitations
-				?.filter((invitation) => invitation.status !== "canceled")
+				?.filter((invitation) => invitation.status === "pending")
 				.sort(
 					(a, b) =>
 						new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
