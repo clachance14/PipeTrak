@@ -446,8 +446,7 @@
 				"description": "Perfekt für den Einstieg",
 				"features": {
 					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"limitedSupport": "Begrenzter Support",
-					"oneMember": "1 Mitglied"
+					"limitedSupport": "Begrenzter Support"
 				},
 				"title": "Basic"
 			},
@@ -455,7 +454,6 @@
 				"description": "Maßgeschneiderter Plan für deine Anforderungen",
 				"features": {
 					"enterpriseSupport": "Support für Unternehmen",
-					"unlimitedMembers": "Unbeschränkte Mitglieder",
 					"unlimitedProjects": "Unbegrenzte Projekte"
 				},
 				"title": "Enterprise"
@@ -464,8 +462,7 @@
 				"description": "Kostenloser Start",
 				"features": {
 					"anotherFeature": "Ein weiteres erstaunliches Merkmal",
-					"limitedSupport": "Begrenzter Support",
-					"oneMember": "1 Mitglied"
+					"limitedSupport": "Begrenzter Support"
 				},
 				"title": "Free"
 			},
@@ -473,8 +470,7 @@
 				"description": "Einmal kaufen. Für immer verwenden.",
 				"features": {
 					"extendSupport": "Erweiterter Support",
-					"noRecurringCosts": "Keine wiederkehrenden Kosten",
-					"unlimitedMembers": "Unbeschränkte Mitglieder"
+					"noRecurringCosts": "Keine wiederkehrenden Kosten"
 				},
 				"title": "Lifetime"
 			},
@@ -494,7 +490,8 @@
 		"title": "Preise",
 		"trialPeriod": "{days} {days, plural, one {Tag} other {Tage}} kostenlose Testphase",
 		"year": "Jahr",
-		"yearly": "Jährlich"
+		"yearly": "Jährlich",
+		"perSeat": "Sitz"
 	},
 	"settings": {
 		"account": {
@@ -598,51 +595,15 @@
 			"title": "Kontoeinstellungen"
 		},
 		"billing": {
-			"cancelSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht gekündigt werden"
-					},
-					"success": {
-						"title": "Das Abonnement wurde gekündigt"
-					}
-				}
-			},
 			"createCustomerPortal": {
-				"label": "Rechnungsdetails verwalten",
+				"label": "Abrechung verwalten",
 				"notifications": {
 					"error": {
 						"title": "Es konnte keine Kundenportalsitzung erstellt werden. \nBitte versuche es erneut."
 					}
 				}
 			},
-			"pauseSubscription": {
-				"label": "Pausieren",
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht pausiert werden. \nBitte versuche es erneut."
-					},
-					"success": {
-						"title": "Das Abonnement wurde pausiert."
-					}
-				}
-			},
-			"resumeSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Das Abonnement konnte nicht fortgesetzt werden"
-					},
-					"success": {
-						"title": "Das Abonnement wurde wieder aufgenommen"
-					}
-				}
-			},
-			"subscription": {
-				"cancel": "Kündigen",
-				"changePlan": {
-					"description": "Wähle einen Plan aus, den du abonnieren möchtest.",
-					"title": "Ändere deinen Plan"
-				},
+			"activePlan": {
 				"status": {
 					"active": "Aktiv",
 					"canceled": "Gekündigt",
@@ -653,7 +614,11 @@
 					"trialing": "Testversion",
 					"unpaid": "Unbezahlt"
 				},
-				"title": "Dein Abonnement"
+				"title": "Dein Plan"
+			},
+			"changePlan": {
+				"description": "Wähle einen Plan aus, den du abonnieren möchtest.",
+				"title": "Ändere deinen Plan"
 			},
 			"title": "Zahlung"
 		},

@@ -126,6 +126,7 @@ export const config = {
 						interval: "month",
 						amount: 29,
 						currency: "USD",
+						seatBased: true,
 						trialPeriodDays: 7,
 					},
 					{
@@ -134,6 +135,7 @@ export const config = {
 						interval: "year",
 						amount: 290,
 						currency: "USD",
+						seatBased: true,
 						trialPeriodDays: 7,
 					},
 				],

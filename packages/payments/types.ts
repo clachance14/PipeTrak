@@ -4,9 +4,11 @@ export type CreateCheckoutLink = (params: {
 	email?: string;
 	name?: string;
 	redirectUrl?: string;
+	customerId?: string;
 	organizationId?: string;
 	userId?: string;
 	trialPeriodDays?: number;
+	seats?: number;
 }) => Promise<string | null>;
 
 export type CreateCustomerPortalLink = (params: {
@@ -15,28 +17,24 @@ export type CreateCustomerPortalLink = (params: {
 	redirectUrl?: string;
 }) => Promise<string | null>;
 
-export type PauseSubscription = (params: { id: string }) => Promise<void>;
-
-export type UpdateSubscription = (params: {
+export type SetSubscriptionSeats = (params: {
 	id: string;
-	productId: string;
-}) => Promise<{
-	status: string;
-}>;
+	seats: number;
+}) => Promise<void>;
 
-export type CancelSubscription = (params: { id: string }) => Promise<void>;
-
-export type ResumeSubscription = (params: { id: string }) => Promise<{
-	status: string;
-}>;
+export type GetInvoices = (params: { customerId: string }) => Promise<
+	{
+		id: string;
+		date: number;
+		status?: string;
+		downloadUrl?: string;
+	}[]
+>;
 
 export type WebhookHandler = (req: Request) => Promise<Response>;
 
 export type PaymentProvider = {
 	createCheckoutLink: CreateCheckoutLink;
 	createCustomerPortalLink: CreateCustomerPortalLink;
-	pauseSubscription: PauseSubscription;
-	cancelSubscription: CancelSubscription;
-	resumeSubscription: ResumeSubscription;
 	webhookHandler: WebhookHandler;
 };

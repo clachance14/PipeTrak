@@ -13,14 +13,14 @@ export function SubscriptionStatusBadge({
 	const t = useTranslations();
 
 	const badgeLabels: Record<string, string> = {
-		active: t("settings.billing.subscription.status.active"),
-		canceled: t("settings.billing.subscription.status.canceled"),
-		expired: t("settings.billing.subscription.status.expired"),
-		incomplete: t("settings.billing.subscription.status.incomplete"),
-		past_due: t("settings.billing.subscription.status.past_due"),
-		paused: t("settings.billing.subscription.status.paused"),
-		trialing: t("settings.billing.subscription.status.trialing"),
-		unpaid: t("settings.billing.subscription.status.unpaid"),
+		active: t("settings.billing.activePlan.status.active"),
+		canceled: t("settings.billing.activePlan.status.canceled"),
+		expired: t("settings.billing.activePlan.status.expired"),
+		incomplete: t("settings.billing.activePlan.status.incomplete"),
+		past_due: t("settings.billing.activePlan.status.past_due"),
+		paused: t("settings.billing.activePlan.status.paused"),
+		trialing: t("settings.billing.activePlan.status.trialing"),
+		unpaid: t("settings.billing.activePlan.status.unpaid"),
 	};
 
 	const badgeColors: Record<string, BadgeProps["status"]> = {

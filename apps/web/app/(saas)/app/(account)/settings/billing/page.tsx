@@ -1,3 +1,4 @@
+import { getSession } from "@saas/auth/lib/server";
 import { ActivePlan } from "@saas/payments/components/ActivePlan";
 import { ChangePlan } from "@saas/payments/components/ChangePlan";
 import { getActivePlanFromPurchases } from "@saas/payments/lib/active-plan";
@@ -16,6 +17,7 @@ export async function generateMetadata() {
 }
 
 export default async function BillingSettingsPage() {
+	const session = await getSession();
 	const purchases = await getPurchases();
 	const queryClient = getQueryClient();
 
@@ -29,7 +31,7 @@ export default async function BillingSettingsPage() {
 	return (
 		<SettingsList>
 			{activePlan && <ActivePlan />}
-			<ChangePlan activePlanId={activePlan?.id} />
+			<ChangePlan userId={session?.user.id} activePlanId={activePlan?.id} />
 		</SettingsList>
 	);
 }

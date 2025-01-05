@@ -449,8 +449,7 @@
 				"description": "Perfect to small teams.",
 				"features": {
 					"anotherFeature": "Another amazing feature",
-					"limitedSupport": "Limited support",
-					"oneMember": "1 member"
+					"limitedSupport": "Limited support"
 				},
 				"title": "Basic"
 			},
@@ -458,7 +457,6 @@
 				"description": "Custom plan tailored to your requirements",
 				"features": {
 					"enterpriseSupport": "Enterprise support",
-					"unlimitedMembers": "Unlimited members",
 					"unlimitedProjects": "Unlimited projects"
 				},
 				"title": "Enterprise"
@@ -467,8 +465,7 @@
 				"description": "Start for free",
 				"features": {
 					"anotherFeature": "Another amazing feature",
-					"limitedSupport": "Limited support",
-					"oneMember": "1 member"
+					"limitedSupport": "Limited support"
 				},
 				"title": "Free"
 			},
@@ -476,8 +473,7 @@
 				"description": "Buy once. Use forever.",
 				"features": {
 					"extendSupport": "Extended support",
-					"noRecurringCosts": "No recurring costs",
-					"unlimitedMembers": "Unlimited members"
+					"noRecurringCosts": "No recurring costs"
 				},
 				"title": "Lifetime"
 			},
@@ -497,7 +493,8 @@
 		"title": "Pricing",
 		"trialPeriod": "{days} {days, plural, one {day} other {days}} free trial",
 		"year": "{count, plural, one {year} other {{count} years}}",
-		"yearly": "Yearly"
+		"yearly": "Yearly",
+		"perSeat": "seat"
 	},
 	"settings": {
 		"account": {
@@ -601,51 +598,15 @@
 			"title": "Account settings"
 		},
 		"billing": {
-			"cancelSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Could not cancel subscription"
-					},
-					"success": {
-						"title": "Subscription was canceled"
-					}
-				}
-			},
 			"createCustomerPortal": {
-				"label": "Manage billing details",
+				"label": "Manage billing",
 				"notifications": {
 					"error": {
 						"title": "Could not create a customer portal session. Please try again."
 					}
 				}
 			},
-			"pauseSubscription": {
-				"label": "Pause subscription",
-				"notifications": {
-					"error": {
-						"title": "Could not pause the subscription. Please try again."
-					},
-					"success": {
-						"title": "The subscription was paused."
-					}
-				}
-			},
-			"resumeSubscription": {
-				"notifications": {
-					"error": {
-						"title": "Could not resume subscription"
-					},
-					"success": {
-						"title": "Subscription was resumed"
-					}
-				}
-			},
-			"subscription": {
-				"cancel": "Cancel your subscription",
-				"changePlan": {
-					"description": "Choose a plan to subscribe to.",
-					"title": "Change your plan"
-				},
+			"activePlan": {
 				"status": {
 					"active": "Active",
 					"canceled": "Canceled",
@@ -656,7 +617,11 @@
 					"trialing": "Trialing",
 					"unpaid": "Unpaid"
 				},
-				"title": "Your subscription"
+				"title": "Your plan"
+			},
+			"changePlan": {
+				"description": "Choose a plan to subscribe to.",
+				"title": "Change your plan"
 			},
 			"title": "Billing"
 		},

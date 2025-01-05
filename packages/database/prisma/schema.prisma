@@ -29,6 +29,7 @@ model User {
   banReason          String?
   banExpires         DateTime?
   onboardingComplete Boolean      @default(false)
+  paymentsCustomerId String?
   locale             String?
   sessions           Session[]
   accounts           Account[]
@@ -112,15 +113,16 @@ model Passkey {
 }
 
 model Organization {
-  id          String       @id
-  name        String
-  slug        String?
-  logo        String?
-  createdAt   DateTime
-  metadata    String?
-  members     Member[]
-  invitations Invitation[]
-  purchases   Purchase[]
+  id                 String       @id
+  name               String
+  slug               String?
+  logo               String?
+  createdAt          DateTime
+  metadata           String?
+  paymentsCustomerId String?
+  members            Member[]
+  invitations        Invitation[]
+  purchases          Purchase[]
 
   @@unique([slug])
   @@map("organization")

@@ -42,10 +42,6 @@ export function PricingTable({
 
 	const createCheckoutLinkMutation = useCreateCheckoutLinkMutation();
 
-	const hasSubscriptions = Object.values(plans).some((plan) =>
-		plan.prices?.some((price) => price.type === "recurring"),
-	);
-
 	const onSelectPlan = async (planId: PlanId, productId?: string) => {
 		if (!userId && !organizationId) {
 			router.push("/auth/signup");
@@ -77,13 +73,18 @@ export function PricingTable({
 	};
 
 	const filteredPlans = Object.entries(plans).filter(
-		([planId]) => planId !== activePlanId,
+		([planId]) =>
+			planId !== activePlanId && (!activePlanId || planId !== "free"),
+	);
+
+	const hasSubscriptions = filteredPlans.some(([_, plan]) =>
+		plan.prices?.some((price) => price.type === "recurring"),
 	);
 
 	return (
 		<div className={cn("@container", className)}>
 			{hasSubscriptions && (
-				<div className="mb-6 flex @2xl:justify-center">
+				<div className="mb-6 flex @xl:justify-center">
 					<Tabs
 						value={interval}
 						onValueChange={(value) => setInterval(value as typeof interval)}
@@ -98,8 +99,8 @@ export function PricingTable({
 			)}
 			<div
 				className={cn("grid grid-cols-1 gap-4", {
-					"@2xl:grid-cols-3": filteredPlans.length % 3 === 0,
-					"@2xl:grid-cols-2": filteredPlans.length % 2 === 0,
+					"@xl:grid-cols-3": filteredPlans.length % 3 === 0,
+					"@xl:grid-cols-2": filteredPlans.length % 2 === 0,
 				})}
 			>
 				{filteredPlans
@@ -206,6 +207,12 @@ export function PricingTable({
 															: t("pricing.year", {
 																	count: price.intervalCount ?? 1,
 																})}
+													</span>
+												)}
+												{"seatBased" in price && price.seatBased && (
+													<span className="font-normal text-xs opacity-60">
+														{" / "}
+														{t("pricing.perSeat")}
 													</span>
 												)}
 											</strong>

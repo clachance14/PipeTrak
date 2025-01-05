@@ -16,6 +16,7 @@ import {
 import { Input } from "@ui/components/input";
 import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -35,6 +36,12 @@ export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
 			name: user?.name ?? "",
 		},
 	});
+
+	useEffect(() => {
+		if (user) {
+			form.setValue("name", user.name ?? "");
+		}
+	}, [user]);
 
 	const onSubmit: SubmitHandler<FormValues> = async ({ name }) => {
 		form.clearErrors("root");

@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
+import { isOrganizationAdmin } from "@repo/auth/lib/helper";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { sessionQueryKey } from "@saas/auth/lib/api";
@@ -24,7 +25,7 @@ export function ActiveOrganizationProvider({
 }) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const { session } = useSession();
+	const { session, user } = useSession();
 	const params = useParams();
 
 	const activeOrganizationSlug = params.organizationSlug as string;
@@ -109,17 +110,16 @@ export function ActiveOrganizationProvider({
 		(member) => member.userId === session?.userId,
 	)?.role;
 
-	const isOrganizationAdmin =
-		!!activeOrganizationUserRole &&
-		["admin", "owner"].includes(activeOrganizationUserRole);
-
 	return (
 		<ActiveOrganizationContext.Provider
 			value={{
 				loaded,
 				activeOrganization: activeOrganization ?? null,
 				activeOrganizationUserRole: activeOrganizationUserRole ?? null,
-				isOrganizationAdmin,
+				isOrganizationAdmin:
+					!!activeOrganization &&
+					!!user &&
+					isOrganizationAdmin(activeOrganization, user),
 				setActiveOrganization,
 				refetchActiveOrganization,
 			}}
