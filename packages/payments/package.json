@@ -5,7 +5,8 @@
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
 		"chargebee-typescript": "^2.44.0",
-		"stripe": "^17.5.0"
+		"stripe": "^17.5.0",
+		"ufo": "^1.5.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",

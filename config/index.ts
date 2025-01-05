@@ -122,7 +122,7 @@ export const config = {
 				prices: [
 					{
 						type: "recurring",
-						productId: "price_1M9kHDFkmmuOs718blksnsHJ",
+						productId: "prod_77mnWUvIXKJuLKisxMRTIn",
 						interval: "month",
 						amount: 29,
 						currency: "USD",
@@ -131,7 +131,7 @@ export const config = {
 					},
 					{
 						type: "recurring",
-						productId: "price_1M9kHqFkmmuOs718XRvjZ8l1",
+						productId: "prod_TSRTiZYbv8sOPzHEG7Vvv",
 						interval: "year",
 						amount: 290,
 						currency: "USD",

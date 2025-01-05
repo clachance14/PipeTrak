@@ -614,6 +614,9 @@ importers:
       stripe:
         specifier: ^17.5.0
         version: 17.5.0
+      ufo:
+        specifier: ^1.5.4
+        version: 1.5.4
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
