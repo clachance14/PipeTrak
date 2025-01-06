@@ -27,7 +27,7 @@
 		"@repo/storage": "workspace:*",
 		"@repo/utils": "workspace:*",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@tanstack/react-query": "^5.62.11",
+		"@tanstack/react-query": "^5.62.15",
 		"@tanstack/react-table": "^8.20.6",
 		"better-auth": "1.1.10",
 		"boring-avatars": "^1.11.2",
