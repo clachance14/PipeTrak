@@ -9,7 +9,7 @@ const locales = config.i18n.enabled
 	? Object.keys(config.i18n.locales)
 	: [config.i18n.defaultLocale];
 
-const staticMarketingPages = ["", "/changelog", "/docs"];
+const staticMarketingPages = ["", "/changelog"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	return [
