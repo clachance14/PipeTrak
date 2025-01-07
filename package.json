@@ -6,8 +6,7 @@
 		"dev": "dotenv -c -- turbo dev --concurrency 15",
 		"lint": "biome lint .",
 		"clean": "turbo clean",
-		"format": "biome format . --write",
-		"e2e": "pnpm --filter web e2e"
+		"format": "biome format . --write"
 	},
 	"engines": {
 		"node": ">=20"
