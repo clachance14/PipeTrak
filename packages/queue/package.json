@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@aws-sdk/client-sqs": "^3.721.0",
+		"@aws-sdk/client-sqs": "^3.723.0",
 		"@repo/logs": "workspace:*",
 		"@repo/utils": "workspace:*"
 	},
