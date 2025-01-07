@@ -1,17 +1,8 @@
 import path from "node:path";
-import {
-	type ReporterDescription,
-	defineConfig,
-	devices,
-} from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
-
-const reporters: ReporterDescription[] = [["html"]];
-if (process.env.CI) {
-	reporters.push(["@estruyf/github-actions-reporter"]);
-}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -22,7 +13,7 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 1 : 0,
 	workers: process.env.CI ? 1 : undefined,
-	reporter: reporters,
+	reporter: [["html"]],
 	use: {
 		baseURL: "http://localhost:3000",
 		trace: "on-first-retry",
