@@ -18,12 +18,6 @@
 				"useExhaustiveDependencies": "off",
 				"noUnusedImports": "error"
 			},
-			"nursery": {
-				"useSortedClasses": {
-					"level": "error",
-					"fix": "safe"
-				}
-			},
 			"style": {
 				"noUnusedTemplateLiteral": {
 					"level": "error",
