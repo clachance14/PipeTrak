@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@ai-sdk/anthropic": "^1.0.7",
 		"@ai-sdk/openai": "^1.0.13",
-		"@ai-sdk/react": "^1.0.7",
+		"@ai-sdk/react": "^1.0.8",
 		"ai": "^4.0.30",
 		"openai": "^4.77.3"
 	},
