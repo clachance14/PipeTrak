@@ -38,7 +38,7 @@ importers:
         version: 3.437.0
       '@fumadocs/content-collections':
         specifier: ^1.1.6
-        version: 1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
@@ -142,11 +142,11 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       fumadocs-core:
-        specifier: ^14.6.8
-        version: 14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^14.7.2
+        version: 14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       fumadocs-ui:
-        specifier: ^14.6.8
-        version: 14.6.8(@types/react-dom@19.0.0)(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        specifier: ^14.7.2
+        version: 14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
       hono:
         specifier: ^4.6.16
         version: 4.6.16
@@ -1730,6 +1730,9 @@ packages:
   '@formatjs/icu-skeleton-parser@1.8.11':
     resolution: {integrity: sha512-8LlHHE/yL/zVJZHAX3pbKaCjZKmBIO6aJY1mkVh4RMSEu/2WRZ4Ysvv3kKXJ9M8RJLBHdnk1/dUQFdod1Dt7Dw==}
 
+  '@formatjs/intl-localematcher@0.5.10':
+    resolution: {integrity: sha512-af3qATX+m4Rnd9+wHcjJ4w2ijq+rAVP3CCinJQvFv1kgSu1W6jypUmvleJxcewdxmutM8dmIRZFxO/IQBZmP2Q==}
+
   '@formatjs/intl-localematcher@0.5.9':
     resolution: {integrity: sha512-8zkGu/sv5euxbjfZ/xmklqLyDGQSxsLqg8XOq88JW3cmJtzhCP8EtSJXlaKZnVO4beEaoiT9wj4eIoCQ9smwxA==}
 
@@ -2986,20 +2989,11 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@shikijs/core@1.24.4':
-    resolution: {integrity: sha512-jjLsld+xEEGYlxAXDyGwWsKJ1sw5Pc1pnp4ai2ORpjx2UX08YYTC0NNqQYO1PaghYaR+PvgMOGuvzw2he9sk0Q==}
-
   '@shikijs/core@1.26.1':
     resolution: {integrity: sha512-yeo7sG+WZQblKPclUOKRPwkv1PyoHYkJ4gP9DzhFJbTdueKR7wYTI1vfF/bFi1NTgc545yG/DzvVhZgueVOXMA==}
 
-  '@shikijs/engine-javascript@1.24.4':
-    resolution: {integrity: sha512-TClaQOLvo9WEMJv6GoUsykQ6QdynuKszuORFWCke8qvi6PeLm7FcD9+7y45UenysxEWYpDL5KJaVXTngTE+2BA==}
-
   '@shikijs/engine-javascript@1.26.1':
     resolution: {integrity: sha512-CRhA0b8CaSLxS0E9A4Bzcb3LKBNpykfo9F85ozlNyArxjo2NkijtiwrJZ6eHa+NT5I9Kox2IXVdjUsP4dilsmw==}
-
-  '@shikijs/engine-oniguruma@1.24.4':
-    resolution: {integrity: sha512-Do2ry6flp2HWdvpj2XOwwa0ljZBRy15HKZITzPcNIBOGSeprnA8gOooA/bLsSPuy8aJBa+Q/r34dMmC3KNL/zw==}
 
   '@shikijs/engine-oniguruma@1.26.1':
     resolution: {integrity: sha512-F5XuxN1HljLuvfXv7d+mlTkV7XukC1cawdtOo+7pKgPD83CAB1Sf8uHqP3PK0u7njFH0ZhoXE1r+0JzEgAQ+kg==}
@@ -3013,17 +3007,11 @@ packages:
   '@shikijs/themes@1.26.1':
     resolution: {integrity: sha512-JDxVn+z+wgLCiUhBGx2OQrLCkKZQGzNH3nAxFir4PjUcYiyD8Jdms9izyxIogYmSwmoPTatFTdzyrRKbKlSfPA==}
 
-  '@shikijs/types@1.24.4':
-    resolution: {integrity: sha512-0r0XU7Eaow0PuDxuWC1bVqmWCgm3XqizIaT7SM42K03vc69LGooT0U8ccSR44xP/hGlNx4FKhtYpV+BU6aaKAA==}
-
   '@shikijs/types@1.26.1':
     resolution: {integrity: sha512-d4B00TKKAMaHuFYgRf3L0gwtvqpW4hVdVwKcZYbBfAAQXspgkbWqnFfuFl3MDH6gLbsubOcr+prcnsqah3ny7Q==}
 
   '@shikijs/vscode-textmate@10.0.1':
     resolution: {integrity: sha512-fTIQwLF+Qhuws31iw7Ncl1R3HUDtGwIipiJ9iU+UsDUwMhegFcQKQHd51nZjb7CArq0MvON8rbgCGQYWHUKAdg==}
-
-  '@shikijs/vscode-textmate@9.3.1':
-    resolution: {integrity: sha512-79QfK1393x9Ho60QFyLti+QfdJzRQCVLFb97kOIV7Eo9vQU/roINgk7m24uv0a7AUvN//RDH36FLjjK48v0s9g==}
 
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
@@ -4289,15 +4277,18 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  fumadocs-core@14.6.8:
-    resolution: {integrity: sha512-ajoJbeUwHTkRmxavqUpHfRuj49ABB86m/iMslrS6Dl8o4EpSjvX0ZRM3B1MIjA4nZstbolYVCGhWSH4qD89gZw==}
+  fumadocs-core@14.7.2:
+    resolution: {integrity: sha512-nHsqUxcli3YXmaseWTXxglZd5J8z4PjBpl5qt5Mpj5RmYzozuNtwaOXw5SfNegAzjJtipAyHi2DCy541N6aotA==}
     peerDependencies:
+      '@orama/tokenizers': 2.x.x
       '@oramacloud/client': 1.x.x || 2.x.x
       algoliasearch: 4.24.0
       next: 14.x.x || 15.x.x
       react: 18.x.x || 19.x.x
       react-dom: 18.x.x || 19.x.x
     peerDependenciesMeta:
+      '@orama/tokenizers':
+        optional: true
       '@oramacloud/client':
         optional: true
       algoliasearch:
@@ -4309,9 +4300,10 @@ packages:
       react-dom:
         optional: true
 
-  fumadocs-ui@14.6.8:
-    resolution: {integrity: sha512-z/yKhjl8FWPaFM64dEaJhKUsp8co4PJJmd++s3MYAT/jXbXSXYTIGgz5IsIzqjwoVfU5e766E3GfyzYx4hitAQ==}
+  fumadocs-ui@14.7.2:
+    resolution: {integrity: sha512-cUanyDh9yBEKhePvaJQ9vzcAXeQ3zSeytLzzolXOazr12W1XsNTfeukr9xwXkj0PHdHV6FDrFdbS/G77E3eMOg==}
     peerDependencies:
+      fumadocs-core: 14.7.2
       next: 14.x.x || 15.x.x
       react: 18.x.x || 19.x.x
       react-dom: 18.x.x || 19.x.x
@@ -4464,6 +4456,11 @@ packages:
 
   image-size@1.1.1:
     resolution: {integrity: sha512-541xKlUw6jr/6gGuk92F+mYM5zaFAc5ahphvkqvNe2bQ6gVBkd6bfrmVJ2t4KDAfikAYZyIqTnktX3i6/aQDrQ==}
+    engines: {node: '>=16.x'}
+    hasBin: true
+
+  image-size@1.2.0:
+    resolution: {integrity: sha512-4S8fwbO6w3GeCVN6OPtA9I5IGKkcDMPcKndtUlpJuCwu7JLjtj7JZpwqLuyY2nrmQT3AWsCJLSKPsc2mPBSl3w==}
     engines: {node: '>=16.x'}
     hasBin: true
 
@@ -5189,9 +5186,6 @@ packages:
   oniguruma-to-es@0.10.0:
     resolution: {integrity: sha512-zapyOUOCJxt+xhiNRPPMtfJkHGsZ98HHB9qJEkdT8BGytO/+kpe4m1Ngf0MzbzTmhacn11w9yGeDP6tzDhnCdg==}
 
-  oniguruma-to-es@0.8.1:
-    resolution: {integrity: sha512-dekySTEvCxCj0IgKcA2uUCO/e4ArsqpucDPcX26w9ajx+DvMWLc5eZeJaRQkd7oC/+rwif5gnT900tA34uN9Zw==}
-
   openai@4.77.3:
     resolution: {integrity: sha512-wLDy4+KWHz31HRFMW2+9KQuVuT2QWhs0z94w1Gm1h2Ut9vIHr9/rHZggbykZEfyiaJRVgw8ZS9K6AylDWzvPYw==}
     hasBin: true
@@ -5449,8 +5443,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-medium-image-zoom@5.2.12:
-    resolution: {integrity: sha512-BbQ9jLBFxu6z+viH5tzQzAGqHOJQoYUM7iT1KUkamWKOO6vR1pC33os7LGLrHvOcyySMw74rUdoUCXFdeglwCQ==}
+  react-medium-image-zoom@5.2.13:
+    resolution: {integrity: sha512-KcBL4OsoUQJgIFh6vQgt/6sRGqDy6bQBcsbhGD2tsy4B5Pw3dWrboocVOyIm76RRALEZ6Qwp3EDvIvfEv0m5sg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -5540,17 +5534,11 @@ packages:
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
-  regex-recursion@5.0.0:
-    resolution: {integrity: sha512-UwyOqeobrCCqTXPcsSqH4gDhOjD5cI/b8kjngWgSZbxYh5yVjAwTjO5+hAuPRNiuR70+5RlWSs+U9PVcVcW9Lw==}
-
   regex-recursion@5.1.1:
     resolution: {integrity: sha512-ae7SBCbzVNrIjgSbh7wMznPcQel1DNlDtzensnFxpiNpXt1U2ju/bHugH422r+4LAVS1FpW1YCwilmnNsjum9w==}
 
   regex-utilities@2.3.0:
     resolution: {integrity: sha512-8VhliFJAWRaUiVvREIiW2NXXTmHs4vMNnSzuJVhscgmGav3g9VDxLrQndI3dZZVVdp0ZO/5v0xmX516/7M9cng==}
-
-  regex@5.0.2:
-    resolution: {integrity: sha512-/pczGbKIQgfTMRV0XjABvc5RzLqQmwqxLHdQao2RTXPk+pmTXB2P0IaUHYdYyk412YLwUIkaeMd5T+RzVgTqnQ==}
 
   regex@5.1.1:
     resolution: {integrity: sha512-dN5I359AVGPnwzJm2jN1k0W9LPZ+ePvoOeVMMfqIMFz53sSwXkxaJoxr50ptnsC771lK95BnTrVSZxq0b9yCGw==}
@@ -5690,9 +5678,6 @@ packages:
   shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-
-  shiki@1.24.4:
-    resolution: {integrity: sha512-aVGSFAOAr1v26Hh/+GBIsRVDWJ583XYV7CuNURKRWh9gpGv4OdbisZGq96B9arMYTZhTQkmRF5BrShOSTvNqhw==}
 
   shiki@1.26.1:
     resolution: {integrity: sha512-Gqg6DSTk3wYqaZ5OaYtzjcdxcBvX5kCy24yvRJEgjT5U+WHlmqCThLuBUx0juyxQBi+6ug53IGeuQS07DWwpcw==}
@@ -7630,15 +7615,19 @@ snapshots:
       '@formatjs/ecma402-abstract': 2.3.1
       tslib: 2.8.1
 
+  '@formatjs/intl-localematcher@0.5.10':
+    dependencies:
+      tslib: 2.8.1
+
   '@formatjs/intl-localematcher@0.5.9':
     dependencies:
       tslib: 2.8.1
 
-  '@fumadocs/content-collections@1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@fumadocs/content-collections@1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
       '@content-collections/core': 0.8.0(typescript@5.7.2)
       '@content-collections/mdx': 0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      fumadocs-core: 14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      fumadocs-core: 14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@hapi/hoek@9.3.0': {}
 
@@ -8800,15 +8789,6 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shikijs/core@1.24.4':
-    dependencies:
-      '@shikijs/engine-javascript': 1.24.4
-      '@shikijs/engine-oniguruma': 1.24.4
-      '@shikijs/types': 1.24.4
-      '@shikijs/vscode-textmate': 9.3.1
-      '@types/hast': 3.0.4
-      hast-util-to-html: 9.0.4
-
   '@shikijs/core@1.26.1':
     dependencies:
       '@shikijs/engine-javascript': 1.26.1
@@ -8818,22 +8798,11 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.4
 
-  '@shikijs/engine-javascript@1.24.4':
-    dependencies:
-      '@shikijs/types': 1.24.4
-      '@shikijs/vscode-textmate': 9.3.1
-      oniguruma-to-es: 0.8.1
-
   '@shikijs/engine-javascript@1.26.1':
     dependencies:
       '@shikijs/types': 1.26.1
       '@shikijs/vscode-textmate': 10.0.1
       oniguruma-to-es: 0.10.0
-
-  '@shikijs/engine-oniguruma@1.24.4':
-    dependencies:
-      '@shikijs/types': 1.24.4
-      '@shikijs/vscode-textmate': 9.3.1
 
   '@shikijs/engine-oniguruma@1.26.1':
     dependencies:
@@ -8857,19 +8826,12 @@ snapshots:
     dependencies:
       '@shikijs/types': 1.26.1
 
-  '@shikijs/types@1.24.4':
-    dependencies:
-      '@shikijs/vscode-textmate': 9.3.1
-      '@types/hast': 3.0.4
-
   '@shikijs/types@1.26.1':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.1
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@10.0.1': {}
-
-  '@shikijs/vscode-textmate@9.3.1': {}
 
   '@sideway/address@4.1.5':
     dependencies:
@@ -10409,21 +10371,21 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fumadocs-core@14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
-      '@formatjs/intl-localematcher': 0.5.9
+      '@formatjs/intl-localematcher': 0.5.10
       '@orama/orama': 2.1.1
       '@shikijs/rehype': 1.26.1
       github-slugger: 2.0.0
       hast-util-to-estree: 3.1.0
       hast-util-to-jsx-runtime: 2.3.2
-      image-size: 1.1.1
+      image-size: 1.2.0
       negotiator: 1.0.0
       react-remove-scroll: 2.6.2(@types/react@19.0.0)(react@19.0.0)
       remark: 15.0.1
       remark-gfm: 4.0.0
       scroll-into-view-if-needed: 3.1.0
-      shiki: 1.24.4
+      shiki: 1.26.1
       unist-util-visit: 5.0.0
     optionalDependencies:
       next: 15.1.4(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -10433,7 +10395,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  fumadocs-ui@14.6.8(@types/react-dom@19.0.0)(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))):
+  fumadocs-ui@14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))):
     dependencies:
       '@radix-ui/react-accordion': 1.2.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-collapsible': 1.1.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -10445,7 +10407,7 @@ snapshots:
       '@radix-ui/react-slot': 1.1.1(@types/react@19.0.0)(react@19.0.0)
       '@radix-ui/react-tabs': 1.1.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       class-variance-authority: 0.7.1
-      fumadocs-core: 14.6.8(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      fumadocs-core: 14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lodash.merge: 4.6.2
       lucide-react: 0.469.0(react@19.0.0)
       next: 15.1.4(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -10453,16 +10415,13 @@ snapshots:
       postcss-selector-parser: 7.0.0
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      react-medium-image-zoom: 5.2.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-medium-image-zoom: 5.2.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwind-merge: 2.6.0
     optionalDependencies:
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
     transitivePeerDependencies:
-      - '@oramacloud/client'
       - '@types/react'
       - '@types/react-dom'
-      - algoliasearch
-      - supports-color
 
   function-bind@1.1.2: {}
 
@@ -10696,6 +10655,10 @@ snapshots:
   ieee754@1.2.1: {}
 
   image-size@1.1.1:
+    dependencies:
+      queue: 6.0.2
+
+  image-size@1.2.0:
     dependencies:
       queue: 6.0.2
 
@@ -11649,12 +11612,6 @@ snapshots:
       regex: 5.1.1
       regex-recursion: 5.1.1
 
-  oniguruma-to-es@0.8.1:
-    dependencies:
-      emoji-regex-xs: 1.0.0
-      regex: 5.0.2
-      regex-recursion: 5.0.0
-
   openai@4.77.3(encoding@0.1.13)(zod@3.24.1):
     dependencies:
       '@types/node': 18.19.41
@@ -11936,7 +11893,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-medium-image-zoom@5.2.12(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-medium-image-zoom@5.2.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
@@ -12050,20 +12007,12 @@ snapshots:
 
   regenerator-runtime@0.14.1: {}
 
-  regex-recursion@5.0.0:
-    dependencies:
-      regex-utilities: 2.3.0
-
   regex-recursion@5.1.1:
     dependencies:
       regex: 5.1.1
       regex-utilities: 2.3.0
 
   regex-utilities@2.3.0: {}
-
-  regex@5.0.2:
-    dependencies:
-      regex-utilities: 2.3.0
 
   regex@5.1.1:
     dependencies:
@@ -12267,15 +12216,6 @@ snapshots:
       shebang-regex: 3.0.0
 
   shebang-regex@3.0.0: {}
-
-  shiki@1.24.4:
-    dependencies:
-      '@shikijs/core': 1.24.4
-      '@shikijs/engine-javascript': 1.24.4
-      '@shikijs/engine-oniguruma': 1.24.4
-      '@shikijs/types': 1.24.4
-      '@shikijs/vscode-textmate': 9.3.1
-      '@types/hast': 3.0.4
 
   shiki@1.26.1:
     dependencies:
