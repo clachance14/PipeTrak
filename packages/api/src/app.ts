@@ -42,7 +42,7 @@ app.get(
 			},
 			servers: [
 				{
-					url: `${getBaseUrl()}/api`,
+					url: getBaseUrl(),
 					description: "API server",
 				},
 			],
