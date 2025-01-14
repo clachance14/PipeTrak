@@ -109,6 +109,7 @@ model Passkey {
   backedUp       Boolean
   transports     String?
   createdAt      DateTime?
+  credentialID   String
 
   @@map("passkey")
 }

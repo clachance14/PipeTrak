@@ -42,6 +42,7 @@ export const auth = betterAuth({
 			enabled: true,
 			maxAge: 60 * 60,
 		},
+		freshAge: 0
 	},
 	account: {
 		accountLinking: {

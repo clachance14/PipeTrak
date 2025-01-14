@@ -64,7 +64,7 @@ export const AccountScalarFieldEnumSchema = z.enum(['id','accountId','providerId
 
 export const VerificationScalarFieldEnumSchema = z.enum(['id','identifier','value','expiresAt','createdAt','updatedAt']);
 
-export const PasskeyScalarFieldEnumSchema = z.enum(['id','name','publicKey','userId','webauthnUserID','counter','deviceType','backedUp','transports','createdAt']);
+export const PasskeyScalarFieldEnumSchema = z.enum(['id','name','publicKey','userId','webauthnUserID','counter','deviceType','backedUp','transports','createdAt','credentialID']);
 
 export const OrganizationScalarFieldEnumSchema = z.enum(['id','name','slug','logo','createdAt','metadata','paymentsCustomerId']);
 
@@ -186,6 +186,7 @@ export const PasskeySchema = z.object({
   backedUp: z.boolean(),
   transports: z.string().nullable(),
   createdAt: z.coerce.date().nullable(),
+  credentialID: z.string(),
 })
 
 export type Passkey = z.infer<typeof PasskeySchema>
