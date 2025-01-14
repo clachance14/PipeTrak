@@ -82,7 +82,7 @@ export function ChangePasswordForm() {
 									</FormLabel>
 
 									<FormControl>
-										<PasswordInput {...field} />
+										<PasswordInput autoComplete="current-password" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -98,7 +98,7 @@ export function ChangePasswordForm() {
 										{t("settings.account.security.changePassword.newPassword")}
 									</FormLabel>
 									<FormControl>
-										<PasswordInput {...field} />
+										<PasswordInput autoComplete="new-password" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>

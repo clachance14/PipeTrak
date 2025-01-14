@@ -92,7 +92,7 @@ export function ResetPasswordForm() {
 								<FormItem>
 									<FormLabel>{t("auth.resetPassword.newPassword")}</FormLabel>
 									<FormControl>
-										<PasswordInput {...field} />
+										<PasswordInput autoComplete="new-password" {...field} />
 									</FormControl>
 								</FormItem>
 							)}

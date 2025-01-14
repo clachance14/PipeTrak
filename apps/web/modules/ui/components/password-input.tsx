@@ -8,10 +8,12 @@ export function PasswordInput({
 	value,
 	onChange,
 	className,
+	autoComplete,
 }: {
 	value: string;
 	onChange: (value: string) => void;
 	className?: string;
+	autoComplete?: string;
 }) {
 	const [showPassword, setShowPassword] = React.useState(false);
 
@@ -22,6 +24,7 @@ export function PasswordInput({
 				className="pr-10"
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
+				autoComplete={autoComplete}
 			/>
 			<button
 				type="button"
