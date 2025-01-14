@@ -30,7 +30,7 @@
 		"@tanstack/react-query": "^5.64.0",
 		"@tanstack/react-table": "^8.20.6",
 		"ai": "^4.0.33",
-		"better-auth": "1.1.10",
+		"better-auth": "1.1.11",
 		"boring-avatars": "^1.11.2",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",

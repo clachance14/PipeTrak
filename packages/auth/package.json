@@ -7,7 +7,7 @@
 		"@repo/mail": "workspace:*",
 		"@repo/payments": "workspace:*",
 		"@repo/utils": "workspace:*",
-		"better-auth": "1.1.10",
+		"better-auth": "1.1.11",
 		"cookie": "^1.0.1",
 		"next": "15.1.4"
 	},
