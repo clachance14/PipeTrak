@@ -3,6 +3,7 @@ import { sessionQueryKey, useSessionQuery } from "@saas/auth/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useEffect, useState } from "react";
 import { SessionContext } from "../lib/session-context";
+import { authClient } from "@repo/auth/client";
 
 export function SessionProvider({
 	children,
@@ -26,8 +27,20 @@ export function SessionProvider({
 				loaded,
 				session: session?.session ?? null,
 				user: session?.user ?? null,
-				reloadSession: () =>
-					queryClient.refetchQueries({ queryKey: sessionQueryKey }),
+				reloadSession: async () =>
+					{
+						const {data: newSession, error} = await authClient.getSession({
+							query: {
+								disableCookieCache: true,
+							}
+						});
+
+						if (error) {
+							throw new Error(error.message || "Failed to fetch session");
+						}
+
+						queryClient.setQueryData(sessionQueryKey, () => newSession)
+					},
 			}}
 		>
 			{children}
