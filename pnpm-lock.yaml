@@ -28,8 +28,8 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   apps/web:
     dependencies:
@@ -38,7 +38,7 @@ importers:
         version: 3.437.0
       '@fumadocs/content-collections':
         specifier: ^1.1.6
-        version: 1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 1.1.6(@content-collections/core@0.8.0(typescript@5.7.3))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.3))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
@@ -149,7 +149,7 @@ importers:
         version: 14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       fumadocs-ui:
         specifier: ^14.7.2
-        version: 14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       hono:
         specifier: ^4.6.16
         version: 4.6.16
@@ -215,7 +215,7 @@ importers:
         version: 2.6.0
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       ufo:
         specifier: ^1.5.4
         version: 1.5.4
@@ -234,13 +234,13 @@ importers:
         version: 1.9.4
       '@content-collections/core':
         specifier: ^0.8.0
-        version: 0.8.0(typescript@5.7.2)
+        version: 0.8.0(typescript@5.7.3)
       '@content-collections/mdx':
         specifier: ^0.2.0
-        version: 0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 0.2.0(@content-collections/core@0.8.0(typescript@5.7.3))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@content-collections/next':
         specifier: ^0.2.4
-        version: 0.2.4(@content-collections/core@0.8.0(typescript@5.7.2))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 0.2.4(@content-collections/core@0.8.0(typescript@5.7.3))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.0)
@@ -306,7 +306,7 @@ importers:
         version: 2.0.9
       tailwindcss:
         specifier: 3.4.17
-        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
   config:
     devDependencies:
@@ -342,8 +342,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   packages/api:
     dependencies:
@@ -391,7 +391,7 @@ importers:
         version: 4.6.16
       hono-openapi:
         specifier: ^0.3.1
-        version: 0.3.1(typescript@5.7.2)
+        version: 0.3.1(typescript@5.7.3)
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
@@ -424,8 +424,8 @@ importers:
         specifier: ^6.2.1
         version: 6.2.1
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.3
+        version: 5.7.3
 
   packages/auth:
     dependencies:
@@ -586,7 +586,7 @@ importers:
         version: link:../../tooling/typescript
       '@tailwindcss/line-clamp':
         specifier: ^0.4.4
-        version: 0.4.4(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 0.4.4(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       '@types/node':
         specifier: 22.10.5
         version: 22.10.5
@@ -728,22 +728,22 @@ importers:
         version: 2.7.0(autoprefixer@10.4.20(postcss@8.4.49))(postcss@8.4.49)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 0.1.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       '@tailwindcss/forms':
         specifier: ^0.5.10
-        version: 0.5.10(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 0.5.10(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       '@tailwindcss/typography':
         specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
       '@types/mertasan__tailwindcss-variables':
         specifier: ^2.6.4
-        version: 2.6.4(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+        version: 2.6.4(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
       tailwindcss:
         specifier: ^3.4.17
-        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))
 
   tooling/typescript:
     devDependencies:
@@ -6017,8 +6017,8 @@ packages:
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
-  typescript@5.7.2:
-    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7373,7 +7373,7 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@content-collections/core@0.8.0(typescript@5.7.2)':
+  '@content-collections/core@0.8.0(typescript@5.7.3)':
     dependencies:
       '@parcel/watcher': 2.4.1
       camelcase: 8.0.0
@@ -7384,17 +7384,17 @@ snapshots:
       pluralize: 8.0.0
       serialize-javascript: 6.0.2
       tinyglobby: 0.2.6
-      typescript: 5.7.2
+      typescript: 5.7.3
       yaml: 2.4.5
       zod: 3.24.1
 
-  '@content-collections/integrations@0.2.1(@content-collections/core@0.8.0(typescript@5.7.2))':
+  '@content-collections/integrations@0.2.1(@content-collections/core@0.8.0(typescript@5.7.3))':
     dependencies:
-      '@content-collections/core': 0.8.0(typescript@5.7.2)
+      '@content-collections/core': 0.8.0(typescript@5.7.3)
 
-  '@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.3))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@content-collections/core': 0.8.0(typescript@5.7.2)
+      '@content-collections/core': 0.8.0(typescript@5.7.3)
       esbuild: 0.21.5
       mdx-bundler: 10.0.3(acorn@8.14.0)(esbuild@0.21.5)
       react: 19.0.0
@@ -7404,10 +7404,10 @@ snapshots:
       - acorn
       - supports-color
 
-  '@content-collections/next@0.2.4(@content-collections/core@0.8.0(typescript@5.7.2))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@content-collections/next@0.2.4(@content-collections/core@0.8.0(typescript@5.7.3))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
-      '@content-collections/core': 0.8.0(typescript@5.7.2)
-      '@content-collections/integrations': 0.2.1(@content-collections/core@0.8.0(typescript@5.7.2))
+      '@content-collections/core': 0.8.0(typescript@5.7.3)
+      '@content-collections/integrations': 0.2.1(@content-collections/core@0.8.0(typescript@5.7.3))
       next: 15.1.4(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@cspotcode/source-map-support@0.8.1':
@@ -7699,10 +7699,10 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@fumadocs/content-collections@1.1.6(@content-collections/core@0.8.0(typescript@5.7.2))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@fumadocs/content-collections@1.1.6(@content-collections/core@0.8.0(typescript@5.7.3))(@content-collections/mdx@0.2.0(@content-collections/core@0.8.0(typescript@5.7.3))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
-      '@content-collections/core': 0.8.0(typescript@5.7.2)
-      '@content-collections/mdx': 0.2.0(@content-collections/core@0.8.0(typescript@5.7.2))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@content-collections/core': 0.8.0(typescript@5.7.3)
+      '@content-collections/mdx': 0.2.0(@content-collections/core@0.8.0(typescript@5.7.3))(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       fumadocs-core: 14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@hapi/hoek@9.3.0': {}
@@ -7735,10 +7735,10 @@ snapshots:
       hono: 4.6.16
     optional: true
 
-  '@hono/valibot-validator@0.5.1(hono@4.6.16)(valibot@1.0.0-beta.9(typescript@5.7.2))':
+  '@hono/valibot-validator@0.5.1(hono@4.6.16)(valibot@1.0.0-beta.9(typescript@5.7.3))':
     dependencies:
       hono: 4.6.16
-      valibot: 1.0.0-beta.9(typescript@5.7.2)
+      valibot: 1.0.0-beta.9(typescript@5.7.3)
     optional: true
 
   '@hono/zod-validator@0.4.1(hono@4.6.16)(zod@3.24.1)':
@@ -9514,26 +9514,26 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))':
+  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))':
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
-  '@tailwindcss/forms@0.5.10(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))':
+  '@tailwindcss/forms@0.5.10(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
-  '@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))':
+  '@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))':
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)))':
+  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)))':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
   '@tanstack/query-core@5.64.0': {}
 
@@ -9605,9 +9605,9 @@ snapshots:
 
   '@types/mdx@2.0.13': {}
 
-  '@types/mertasan__tailwindcss-variables@2.6.4(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))':
+  '@types/mertasan__tailwindcss-variables@2.6.4(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))':
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
     transitivePeerDependencies:
       - ts-node
 
@@ -9655,9 +9655,9 @@ snapshots:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.2))':
+  '@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3))':
     dependencies:
-      valibot: 1.0.0-beta.9(typescript@5.7.2)
+      valibot: 1.0.0-beta.9(typescript@5.7.3)
     optional: true
 
   abort-controller@3.0.0:
@@ -10463,7 +10463,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  fumadocs-ui@14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))):
+  fumadocs-ui@14.7.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.2(@types/react@19.0.0)(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.4(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))):
     dependencies:
       '@radix-ui/react-accordion': 1.2.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-collapsible': 1.1.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -10486,7 +10486,7 @@ snapshots:
       react-medium-image-zoom: 5.2.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwind-merge: 2.6.0
     optionalDependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
@@ -10666,22 +10666,22 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  hono-openapi@0.3.1(typescript@5.7.2):
+  hono-openapi@0.3.1(typescript@5.7.3):
     dependencies:
       json-schema-walker: 2.0.0
     optionalDependencies:
       '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.16)
       '@hono/effect-validator': 1.2.0(effect@3.12.0)(hono@4.6.16)
       '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.16)
-      '@hono/valibot-validator': 0.5.1(hono@4.6.16)(valibot@1.0.0-beta.9(typescript@5.7.2))
+      '@hono/valibot-validator': 0.5.1(hono@4.6.16)(valibot@1.0.0-beta.9(typescript@5.7.3))
       '@hono/zod-validator': 0.4.1(hono@4.6.16)(zod@3.24.1)
       '@sinclair/typebox': 0.34.13
-      '@valibot/to-json-schema': 1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.2))
+      '@valibot/to-json-schema': 1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3))
       arktype: 2.0.0-rc.25
       effect: 3.12.0
       hono: 4.6.16
       openapi-types: 12.1.3
-      valibot: 1.0.0-beta.9(typescript@5.7.2)
+      valibot: 1.0.0-beta.9(typescript@5.7.3)
       zod: 3.24.1
       zod-openapi: 4.2.2(zod@3.24.1)
     transitivePeerDependencies:
@@ -11813,13 +11813,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.49
 
-  postcss-load-config@4.0.2(postcss@8.4.49)(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)):
+  postcss-load-config@4.0.2(postcss@8.4.49)(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.4.5
     optionalDependencies:
       postcss: 8.4.49
-      ts-node: 10.9.2(@types/node@22.10.5)(typescript@5.7.2)
+      ts-node: 10.9.2(@types/node@22.10.5)(typescript@5.7.3)
 
   postcss-nested@6.2.0(postcss@8.4.49):
     dependencies:
@@ -12485,11 +12485,11 @@ snapshots:
 
   tailwind-merge@2.6.0: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))):
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
 
-  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2)):
+  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -12508,7 +12508,7 @@ snapshots:
       postcss: 8.4.49
       postcss-import: 15.1.0(postcss@8.4.49)
       postcss-js: 4.0.1(postcss@8.4.49)
-      postcss-load-config: 4.0.2(postcss@8.4.49)(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2))
+      postcss-load-config: 4.0.2(postcss@8.4.49)(ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3))
       postcss-nested: 6.2.0(postcss@8.4.49)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -12562,7 +12562,7 @@ snapshots:
 
   ts-is-present@1.2.2: {}
 
-  ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.2):
+  ts-node@10.9.2(@types/node@22.10.5)(typescript@5.7.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -12576,7 +12576,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.7.2
+      typescript: 5.7.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optional: true
@@ -12625,7 +12625,7 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typescript@5.7.2: {}
+  typescript@5.7.3: {}
 
   ufo@1.5.4: {}
 
@@ -12745,9 +12745,9 @@ snapshots:
   v8-compile-cache-lib@3.0.1:
     optional: true
 
-  valibot@1.0.0-beta.9(typescript@5.7.2):
+  valibot@1.0.0-beta.9(typescript@5.7.3):
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.7.3
     optional: true
 
   validate-npm-package-license@3.0.4:
