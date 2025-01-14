@@ -98,18 +98,17 @@ model Verification {
 }
 
 model Passkey {
-  id             String    @id
-  name           String?
-  publicKey      String
-  userId         String
-  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  webauthnUserID String
-  counter        Int
-  deviceType     String
-  backedUp       Boolean
-  transports     String?
-  createdAt      DateTime?
-  credentialID   String
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
 
   @@map("passkey")
 }
