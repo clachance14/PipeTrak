@@ -118,6 +118,22 @@ export function LoginForm() {
 		}
 	};
 
+	const signInWithPasskey = async () => {
+		try {
+			await authClient.signIn.passkey();
+
+			router.replace(redirectPath);
+		} catch (e) {
+			form.setError("root", {
+				message: getAuthErrorMessage(
+					e && typeof e === "object" && "code" in e
+						? (e.code as string)
+						: undefined,
+				),
+			});
+		}
+	};
+
 	const signinMode = form.watch("mode");
 
 	return (
@@ -253,7 +269,7 @@ export function LoginForm() {
 									<Button
 										variant="outline"
 										className="w-full sm:col-span-2"
-										onClick={() => authClient.signIn.passkey()}
+										onClick={() => signInWithPasskey()}
 									>
 										<KeyIcon className="mr-1.5 size-4 text-primary" />
 										{t("auth.login.loginWithPasskey")}
