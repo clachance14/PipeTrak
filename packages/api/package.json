@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@hono/node-server": "^1.13.7",
 		"@repo/ai": "workspace:*",
 		"@repo/auth": "workspace:*",
 		"@repo/config": "workspace:*",
