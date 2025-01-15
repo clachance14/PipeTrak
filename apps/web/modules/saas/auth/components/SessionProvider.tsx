@@ -27,20 +27,19 @@ export function SessionProvider({
 				loaded,
 				session: session?.session ?? null,
 				user: session?.user ?? null,
-				reloadSession: async () =>
-					{
-						const {data: newSession, error} = await authClient.getSession({
-							query: {
-								disableCookieCache: true,
-							}
-						});
+				reloadSession: async () => {
+					const { data: newSession, error } = await authClient.getSession({
+						query: {
+							disableCookieCache: true,
+						},
+					});
 
-						if (error) {
-							throw new Error(error.message || "Failed to fetch session");
-						}
+					if (error) {
+						throw new Error(error.message || "Failed to fetch session");
+					}
 
-						queryClient.setQueryData(sessionQueryKey, () => newSession)
-					},
+					queryClient.setQueryData(sessionQueryKey, () => newSession);
+				},
 			}}
 		>
 			{children}
