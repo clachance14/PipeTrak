@@ -3,7 +3,10 @@ import type { NextRequest } from "next/server";
 
 export const getSession = async (req: NextRequest): Promise<Session | null> => {
 	const response = await fetch(
-		new URL("/api/auth/get-session", req.nextUrl.origin),
+		new URL(
+			"/api/auth/get-session?disableCookieCache=true",
+			req.nextUrl.origin,
+		),
 		{
 			headers: {
 				cookie: req.headers.get("cookie") || "",
