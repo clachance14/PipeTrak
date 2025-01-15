@@ -37,7 +37,8 @@
 			".turbo",
 			"node_modules/*",
 			".content-collections",
-			"./packages/database/src/zod/index.ts"
+			"./packages/database/src/zod/index.ts",
+			"dist"
 		]
 	},
 	"javascript": {
