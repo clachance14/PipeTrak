@@ -17,7 +17,7 @@
 		"@repo/tailwind-config": "workspace:*",
 		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/line-clamp": "^0.4.4",
-		"@types/node": "22.10.6",
+		"@types/node": "22.10.7",
 		"@types/nodemailer": "^6.4.17",
 		"@types/react": "19.0.7"
 	},
