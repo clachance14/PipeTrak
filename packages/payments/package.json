@@ -10,7 +10,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "^22.10.6"
+		"@types/node": "^22.10.7"
 	},
 	"main": "./index.ts",
 	"name": "@repo/payments",
