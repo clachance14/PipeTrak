@@ -6,27 +6,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      content-collections:
-        patterns:
-          - "@content-collections/*"
-      prisma:
-        patterns:
-          - "@prisma/*"
-          - "prisma"
-      radix-ui:
-        patterns:
-          - "@radix-ui/*"
-      next-intl:
-        patterns:
-          - "next-intl"
-          - "use-intl"
-      react:
-        patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-          - "@types/react-dom"
-      fumadocs:
-        patterns:
-          - "fumadocs-*"
-          - "@fumadocs/*"
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
