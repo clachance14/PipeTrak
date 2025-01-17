@@ -2,11 +2,7 @@ import { getOrganizationMembership } from "@repo/auth";
 import { type Config, config } from "@repo/config";
 import { PurchaseSchema, db } from "@repo/database";
 import { logger } from "@repo/logs";
-import {
-	createCheckoutLink,
-	createCustomerPortalLink,
-	getInvoices,
-} from "@repo/payments";
+import { createCheckoutLink, createCustomerPortalLink } from "@repo/payments";
 import { getCustomerIdFromEntity } from "@repo/payments/src/lib/customer";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
@@ -213,37 +209,5 @@ export const paymentsRouter = new Hono()
 				logger.error("Could not create customer portal link", e);
 				throw new HTTPException(500);
 			}
-		},
-	)
-	.get(
-		"/invoices",
-		authMiddleware,
-		validator("query", z.object({ organizationId: z.string().optional() })),
-		async (c) => {
-			const { organizationId } = c.req.valid("query");
-
-			const customerId = organizationId
-				? (
-						await db.organization.findUnique({
-							where: {
-								id: organizationId,
-							},
-						})
-					)?.paymentsCustomerId
-				: (
-						await db.user.findUnique({
-							where: {
-								id: c.get("user").id,
-							},
-						})
-					)?.paymentsCustomerId;
-
-			if (!customerId) {
-				return c.json([]);
-			}
-
-			const invoices = await getInvoices({ customerId });
-
-			return c.json(invoices);
 		},
 	);

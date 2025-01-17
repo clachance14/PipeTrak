@@ -1,9 +1,9 @@
 "use client";
+import { authClient } from "@repo/auth/client";
 import { sessionQueryKey, useSessionQuery } from "@saas/auth/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useEffect, useState } from "react";
 import { SessionContext } from "../lib/session-context";
-import { authClient } from "@repo/auth/client";
 
 export function SessionProvider({
 	children,
