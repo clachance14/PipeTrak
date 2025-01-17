@@ -22,7 +22,7 @@ export function creemFetch(path: string, init: Parameters<typeof fetch>[1]) {
 			: "https://test-api.creem.io/v1";
 
 	const requestUrl = joinURL(baseUrl, path);
-	console.log("requestUrl", requestUrl);
+
 	return fetch(requestUrl, {
 		...init,
 		headers: {
@@ -136,8 +136,6 @@ export const webhookHandler: WebhookHandler = async (req) => {
 	}
 
 	const payload = JSON.parse(bodyText);
-
-	console.log("payload", payload);
 
 	try {
 		switch (payload.eventType) {
