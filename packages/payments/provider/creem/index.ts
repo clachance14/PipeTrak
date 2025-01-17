@@ -1,12 +1,11 @@
+import { createHmac } from "node:crypto";
+import { db } from "@repo/database";
 import { logger } from "@repo/logs";
 import { joinURL } from "ufo";
 import type {
-	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	PauseSubscription,
-	ResumeSubscription,
-	UpdateSubscription,
+	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
 
@@ -17,7 +16,12 @@ export function creemFetch(path: string, init: Parameters<typeof fetch>[1]) {
 		throw new Error("Missing env variable CREEM_API_KEY");
 	}
 
-	const requestUrl = joinURL("https://test-api.creem.io/v1", path);
+	const baseUrl =
+		process.env.NODE_ENV === "production"
+			? "https://api.creem.io/v1"
+			: "https://test-api.creem.io/v1";
+
+	const requestUrl = joinURL(baseUrl, path);
 	console.log("requestUrl", requestUrl);
 	return fetch(requestUrl, {
 		...init,
@@ -29,16 +33,21 @@ export function creemFetch(path: string, init: Parameters<typeof fetch>[1]) {
 }
 
 export const createCheckoutLink: CreateCheckoutLink = async (options) => {
-	const { productId, redirectUrl, organizationId, userId } = options;
+	const { productId, redirectUrl, organizationId, userId, seats, email } =
+		options;
 
 	const response = await creemFetch("/checkouts", {
 		method: "POST",
 		body: JSON.stringify({
 			product_id: productId,
+			units: seats ?? 1,
 			success_url: redirectUrl ?? undefined,
 			metadata: {
 				organization_id: organizationId || null,
 				user_id: userId || null,
+			},
+			customer: {
+				email,
 			},
 		}),
 	});
@@ -56,7 +65,7 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	customerId,
 }) => {
-	const response = await creemFetch("/billing-portal/sessions", {
+	const response = await creemFetch("/customers/billing", {
 		method: "POST",
 		body: JSON.stringify({
 			customer_id: customerId,
@@ -68,131 +77,142 @@ export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	return customer_portal_link;
 };
 
-export const pauseSubscription: PauseSubscription = async ({ id }) => {};
-
-export const updateSubscription: UpdateSubscription = async ({
+export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	id,
-	productId,
+	seats,
 }) => {
-	return {
-		status: "active",
-	};
-};
+	const response = await creemFetch(`/subscriptions?subscription_id=${id}`, {
+		method: "GET",
+	});
 
-export const cancelSubscription: CancelSubscription = async ({ id }) => {};
+	const { items } = await response.json();
 
-export const resumeSubscription: ResumeSubscription = async ({ id }) => {
-	return {
-		status: "active",
-	};
+	await creemFetch(`/subscriptions/${id}`, {
+		method: "POST",
+		body: JSON.stringify({
+			items: [
+				{
+					id: items[0].id,
+					quantity: seats,
+				},
+			],
+		}),
+	});
 };
 
 export const webhookHandler: WebhookHandler = async (req) => {
-	// const stripeClient = getStripeClient();
-	// if (!req.body) {
-	// 	return new Response("Invalid request.", {
-	// 		status: 400,
-	// 	});
-	// }
-	// let event: Stripe.Event | undefined;
-	// try {
-	// 	event = await stripeClient.webhooks.constructEventAsync(
-	// 		await req.text(),
-	// 		req.headers.get("stripe-signature") as string,
-	// 		process.env.STRIPE_WEBHOOK_SECRET as string,
-	// 	);
-	// } catch (e) {
-	// 	logger.error(e);
-	// 	return new Response("Invalid request.", {
-	// 		status: 400,
-	// 	});
-	// }
-	// try {
-	// 	switch (event.type) {
-	// 		case "checkout.session.completed": {
-	// 			const checkoutSessionId = event.data.object.id;
-	// 			const { mode, metadata, customer } = event.data.object;
-	// 			const checkoutSession = await stripeClient.checkout.sessions.retrieve(
-	// 				checkoutSessionId,
-	// 				{
-	// 					expand: ["line_items"],
-	// 				},
-	// 			);
-	// 			const productId = checkoutSession.line_items?.data[0].price?.id;
-	// 			if (!productId) {
-	// 				return new Response("Missing product ID.", {
-	// 					status: 400,
-	// 				});
-	// 			}
-	// 			if (mode === "subscription") {
-	// 				const subscriptionId = event.data.object.subscription as string;
-	// 				await db.purchase.create({
-	// 					data: {
-	// 						subscriptionId,
-	// 						organizationId: metadata?.organization_id || null,
-	// 						userId: metadata?.user_id || null,
-	// 						customerId: customer as string,
-	// 						type: "SUBSCRIPTION",
-	// 						productId,
-	// 					},
-	// 				});
-	// 			} else if (mode === "payment") {
-	// 				await db.purchase.create({
-	// 					data: {
-	// 						organizationId: metadata?.organization_id || null,
-	// 						userId: metadata?.user_id || null,
-	// 						customerId: customer as string,
-	// 						type: "ONE_TIME",
-	// 						productId,
-	// 					},
-	// 				});
-	// 			}
-	// 			break;
-	// 		}
-	// 		case "customer.subscription.updated": {
-	// 			const subscriptionId = event.data.object.id;
-	// 			const existingPurchase = await db.purchase.findUnique({
-	// 				where: {
-	// 					subscriptionId,
-	// 				},
-	// 			});
-	// 			if (existingPurchase) {
-	// 				await db.purchase.update({
-	// 					data: {
-	// 						status: event.data.object.status,
-	// 						productId: event.data.object.items?.data[0].price?.id,
-	// 					},
-	// 					where: {
-	// 						subscriptionId,
-	// 					},
-	// 				});
-	// 			}
-	// 			break;
-	// 		}
-	// 		case "customer.subscription.deleted": {
-	// 			await db.purchase.delete({
-	// 				where: {
-	// 					subscriptionId: event.data.object.id,
-	// 				},
-	// 			});
-	// 			break;
-	// 		}
-	// 		default:
-	// 			return new Response("Unhandled event type.", {
-	// 				status: 200,
-	// 			});
-	// 	}
-	// 	return new Response(null, { status: 204 });
-	// } catch (error) {
-	// 	return new Response(
-	// 		`Webhook error: ${error instanceof Error ? error.message : ""}`,
-	// 		{
-	// 			status: 400,
-	// 		},
-	// 	);
-	// }
+	if (req.method !== "POST") {
+		return new Response("Method not allowed.", {
+			status: 405,
+		});
+	}
 
-	return new Response("ok", {
-		status: 200,
-	});
+	const signature = req.headers.get("creem-signature");
+
+	if (!signature) {
+		return new Response("Missing signature.", {
+			status: 400,
+		});
+	}
+
+	const secret = process.env.CREEM_WEBHOOK_SECRET as string;
+
+	if (!secret) {
+		return new Response("Missing webhook secret.", {
+			status: 400,
+		});
+	}
+
+	const bodyText = await req.text();
+
+	const computedSignature = createHmac("sha256", secret)
+		.update(bodyText)
+		.digest("hex");
+
+	if (computedSignature !== signature) {
+		return new Response("Invalid signature.", {
+			status: 400,
+		});
+	}
+
+	const payload = JSON.parse(bodyText);
+
+	console.log("payload", payload);
+
+	try {
+		switch (payload.eventType) {
+			case "checkout.completed": {
+				const { product, metadata, object, customer } = payload.object;
+				if (!product?.id) {
+					return new Response("Missing product ID.", {
+						status: 400,
+					});
+				}
+
+				if (object === "subscription") break;
+
+				await db.purchase.create({
+					data: {
+						organizationId: metadata?.organization_id || null,
+						userId: metadata?.user_id || null,
+						customerId: customer as string,
+						type: "ONE_TIME",
+						productId: product.id,
+					},
+				});
+
+				break;
+			}
+			case "subscription.active": {
+				const { id, customer, product, metadata } = payload.object;
+				const existingPurchase = await db.purchase.findUnique({
+					where: {
+						subscriptionId: id,
+					},
+				});
+
+				await db.purchase.upsert({
+					create: {
+						subscriptionId: id,
+						customerId: customer.id,
+						type: "SUBSCRIPTION",
+						productId: product.id,
+						organizationId: metadata?.organization_id || null,
+						userId: metadata?.user_id || null,
+						status: product.status,
+					},
+					update: {
+						status: product.status,
+						productId: product.id,
+					},
+					where: {
+						subscriptionId: id,
+					},
+				});
+				break;
+			}
+			case "subscription.canceled":
+			case "subscription.expired": {
+				const { id } = payload.object;
+				await db.purchase.delete({
+					where: {
+						subscriptionId: id,
+					},
+				});
+				break;
+			}
+			default:
+				return new Response("Unhandled event type.", {
+					status: 200,
+				});
+		}
+		return new Response(null, { status: 204 });
+	} catch (error) {
+		return new Response(
+			`Webhook error: ${error instanceof Error ? error.message : ""}`,
+			{
+				status: 400,
+			},
+		);
+	}
 };

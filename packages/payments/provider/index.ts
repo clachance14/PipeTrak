@@ -1,1 +1,1 @@
-export * from "./creem";
+export * from "./stripe";
