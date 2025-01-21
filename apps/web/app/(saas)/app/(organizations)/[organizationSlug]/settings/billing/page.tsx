@@ -1,7 +1,7 @@
+import { createPurchasesHelper } from "@repo/payments/lib/helper";
 import { getActiveOrganization } from "@saas/auth/lib/server";
 import { ActivePlan } from "@saas/payments/components/ActivePlan";
 import { ChangePlan } from "@saas/payments/components/ChangePlan";
-import { getActivePlanFromPurchases } from "@saas/payments/lib/active-plan";
 import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { SettingsList } from "@saas/shared/components/SettingsList";
@@ -37,7 +37,7 @@ export default async function BillingSettingsPage({
 		queryFn: () => purchases,
 	});
 
-	const activePlan = getActivePlanFromPurchases(purchases);
+	const { activePlan } = createPurchasesHelper(purchases);
 
 	return (
 		<SettingsList>
