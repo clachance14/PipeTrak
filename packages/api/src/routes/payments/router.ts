@@ -2,14 +2,18 @@ import { getOrganizationMembership } from "@repo/auth";
 import { type Config, config } from "@repo/config";
 import { PurchaseSchema, db } from "@repo/database";
 import { logger } from "@repo/logs";
-import { createCheckoutLink, createCustomerPortalLink } from "@repo/payments";
-import { getCustomerIdFromEntity } from "@repo/payments/src/lib/customer";
+import {
+	createCheckoutLink,
+	createCustomerPortalLink,
+	getCustomerIdFromEntity,
+} from "@repo/payments";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
+import { getPurchases } from "./lib/purchases";
 
 const plans = config.payments.plans as Config["payments"]["plans"];
 
@@ -43,13 +47,14 @@ export const paymentsRouter = new Hono()
 		async (c) => {
 			const { organizationId } = c.req.valid("query");
 			const user = c.get("user");
-			const purchases = await db.purchase.findMany({
-				where: organizationId
+
+			const purchases = await getPurchases(
+				organizationId
 					? {
 							organizationId,
 						}
 					: { userId: user.id },
-			});
+			);
 
 			return c.json(purchases);
 		},
@@ -82,10 +87,15 @@ export const paymentsRouter = new Hono()
 				c.req.valid("query");
 			const user = c.get("user");
 
-			const customerId = await getCustomerIdFromEntity({
-				organizationId,
-				userId: user.id,
-			});
+			const customerId = await getCustomerIdFromEntity(
+				organizationId
+					? {
+							organizationId,
+						}
+					: {
+							userId: user.id,
+						},
+			);
 
 			const plan = Object.entries(plans).find(([planId, plan]) =>
 				plan.prices?.find((price) => price.productId === productId),

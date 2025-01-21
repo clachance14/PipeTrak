@@ -17,29 +17,24 @@ export async function setCustomerIdToEntity(
 	}
 }
 
-export const getCustomerIdFromEntity = async ({
-	organizationId,
-	userId,
-}: { organizationId?: string; userId?: string }) => {
-	if (organizationId) {
+export const getCustomerIdFromEntity = async (
+	props: { organizationId: string } | { userId: string },
+) => {
+	if ("organizationId" in props) {
 		return (
 			(
 				await db.organization.findUnique({
-					where: { id: organizationId },
+					where: { id: props.organizationId },
 				})
 			)?.paymentsCustomerId ?? null
 		);
 	}
 
-	if (userId) {
-		return (
-			(
-				await db.user.findUnique({
-					where: { id: userId },
-				})
-			)?.paymentsCustomerId ?? null
-		);
-	}
-
-	return null;
+	return (
+		(
+			await db.user.findUnique({
+				where: { id: props.userId },
+			})
+		)?.paymentsCustomerId ?? null
+	);
 };

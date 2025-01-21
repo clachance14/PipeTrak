@@ -14,6 +14,14 @@
 		"@types/node": "^22.10.7"
 	},
 	"main": "./index.ts",
+	"exports": {
+		".": {
+			"types": "./index.ts",
+			"default": "./index.ts"
+		},
+		"./types": "./types.ts",
+		"./lib/helper": "./src/lib/helper.ts"
+	},
 	"name": "@repo/payments",
 	"scripts": {
 		"type-check": "tsc --noEmit"
