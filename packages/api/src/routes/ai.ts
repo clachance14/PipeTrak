@@ -168,7 +168,7 @@ export const aiRouter = new Hono()
 			const response = streamText({
 				model: textModel,
 				messages,
-				async onFinish({ text, toolCalls, toolResults, finishReason, usage }) {
+				async onFinish({ text }) {
 					await db.aiChat.update({
 						where: { id },
 						data: {

@@ -80,7 +80,7 @@ export function ChangeOrganizationNameForm() {
 					<Button
 						type="submit"
 						disabled={
-							!form.formState.isValid || !form.formState.dirtyFields.name
+							!(form.formState.isValid && form.formState.dirtyFields.name)
 						}
 						loading={form.formState.isSubmitting}
 					>

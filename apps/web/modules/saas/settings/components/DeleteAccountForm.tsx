@@ -45,7 +45,7 @@ export function DeleteAccountForm() {
 						title: t("settings.account.deleteAccount.notifications.error"),
 					});
 				},
-				onResponse: (response) => {
+				onResponse: () => {
 					setDeleting(false);
 				},
 			},

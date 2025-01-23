@@ -76,7 +76,7 @@ export function ChangeEmailForm() {
 						type="submit"
 						loading={submitting}
 						disabled={
-							!form.formState.isValid || !form.formState.dirtyFields.email
+							!(form.formState.isValid && form.formState.dirtyFields.email)
 						}
 					>
 						{t("settings.save")}

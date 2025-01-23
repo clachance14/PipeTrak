@@ -8,7 +8,9 @@ const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY as string;
 
 export function AnalyticsScript() {
 	useEffect(() => {
-		if (!posthogKey) return;
+		if (!posthogKey) {
+			return;
+		}
 
 		posthog.init(posthogKey, {
 			// use eu.i.posthog.com for european users
@@ -20,7 +22,9 @@ export function AnalyticsScript() {
 
 export function useAnalytics() {
 	const trackEvent = (event: string, data?: Record<string, unknown>) => {
-		if (!posthogKey) return;
+		if (!posthogKey) {
+			return;
+		}
 
 		posthog.capture(event, data);
 	};

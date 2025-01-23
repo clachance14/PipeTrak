@@ -12,18 +12,21 @@
 				"noArrayIndexKey": "off"
 			},
 			"complexity": {
-				"noForEach": "off"
+				"noForEach": "off",
+				"useSimplifiedLogicExpression": "warn"
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "off",
-				"noUnusedImports": "error"
+				"noUnusedImports": "error",
+				"noUnusedFunctionParameters": "warn"
 			},
 			"style": {
 				"noUnusedTemplateLiteral": {
 					"level": "error",
 					"fix": "safe"
 				},
-				"noNonNullAssertion": "warn"
+				"noNonNullAssertion": "warn",
+				"useBlockStatements": "warn"
 			}
 		}
 	},
@@ -31,17 +34,15 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": [
-			".react-email",
-			".next",
-			".turbo",
-			"node_modules/*",
-			".content-collections",
-			"./packages/database/src/zod/index.ts",
-			"dist"
-		]
+		"ignore": ["./packages/database/src/zod/index.ts"]
 	},
 	"javascript": {
 		"jsxRuntime": "reactClassic"
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"defaultBranch": "main",
+		"useIgnoreFile": true
 	}
 }

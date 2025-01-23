@@ -20,7 +20,9 @@ export function SetPasswordForm() {
 	const [submitting, setSubmitting] = useState(false);
 
 	const onSubmit = async () => {
-		if (!user) return;
+		if (!user) {
+			return;
+		}
 
 		setSubmitting(true);
 

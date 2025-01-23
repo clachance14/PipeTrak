@@ -147,7 +147,9 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					});
 				}
 
-				if (object === "subscription") break;
+				if (object === "subscription") {
+					break;
+				}
 
 				await db.purchase.create({
 					data: {

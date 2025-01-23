@@ -38,3 +38,7 @@ dist/
 
 # typescript
 *.tsbuildinfo
+
+# other 
+.react-email/
+.content-collections/

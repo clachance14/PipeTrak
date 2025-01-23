@@ -60,13 +60,15 @@ export function AiChat({
 
 	useEffect(() => {
 		(async () => {
-			if (chatId || chatsStatus !== "success") return;
+			if (chatId || chatsStatus !== "success") {
+				return;
+			}
 
-			if (!chats?.length) {
+			if (chats?.length) {
+				setChatId(chats[0].id);
+			} else {
 				await createNewChat();
 				setMessages([]);
-			} else {
-				setChatId(chats[0].id);
 			}
 		})();
 	}, [chatsStatus]);
@@ -90,7 +92,7 @@ export function AiChat({
 					<Button
 						variant="outline"
 						size="sm"
-						className="flex items-center gap-2 w-full mb-4"
+						className="mb-4 flex w-full items-center gap-2"
 						loading={createChatMutation.isPending}
 						onClick={createNewChat}
 					>
@@ -104,8 +106,8 @@ export function AiChat({
 								variant="link"
 								onClick={() => setChatId(chat.id)}
 								className={cn(
-									"h-auto block text-left py-2 w-full hover:no-underline text-foreground",
-									chat.id === chatId && "font-bold bg-primary/10 text-primary",
+									"block h-auto w-full py-2 text-left text-foreground hover:no-underline",
+									chat.id === chatId && "bg-primary/10 font-bold text-primary",
 								)}
 							>
 								<span className="w-full overflow-hidden">
@@ -127,8 +129,8 @@ export function AiChat({
 				</div>
 			}
 		>
-			<div className="h-[calc(100vh-10rem)] flex flex-col -mt-8">
-				<div className="flex flex-col gap-2 flex-1 overflow-y-auto py-8">
+			<div className="-mt-8 flex h-[calc(100vh-10rem)] flex-col">
+				<div className="flex flex-1 flex-col gap-2 overflow-y-auto py-8">
 					{messages.map((message, index) => (
 						<div
 							key={index}
@@ -139,7 +141,7 @@ export function AiChat({
 						>
 							<div
 								className={cn(
-									"flex items-center gap-2 px-4 py-2 rounded-lg text-foreground max-w-2xl whitespace-pre-wrap",
+									"flex max-w-2xl items-center gap-2 whitespace-pre-wrap rounded-lg px-4 py-2 text-foreground",
 									message.role === "user" ? "bg-primary/10" : "bg-secondary/10",
 								)}
 							>
@@ -150,7 +152,7 @@ export function AiChat({
 
 					{isLoading && (
 						<div className="flex justify-start">
-							<div className="flex items-center gap-2 px-4 py-2 rounded-lg text-foreground max-w-2xl bg-secondary/10">
+							<div className="flex max-w-2xl items-center gap-2 rounded-lg bg-secondary/10 px-4 py-2 text-foreground">
 								<EllipsisIcon className="size-6 animate-pulse" />
 							</div>
 						</div>
@@ -159,14 +161,14 @@ export function AiChat({
 
 				<form
 					onSubmit={handleSubmit}
-					className="relative shrink-0 border-none rounded-lg bg-card py-6 pr-14 text-lg pl-6 shadow focus:outline-none focus-visible:ring-0"
+					className="relative shrink-0 rounded-lg border-none bg-card py-6 pr-14 pl-6 text-lg shadow focus:outline-none focus-visible:ring-0"
 				>
 					<Textarea
 						value={input}
 						onChange={handleInputChange}
 						disabled={!hasChat}
 						placeholder="Chat with your AI..."
-						className="border-none bg-transparent focus:outline-none focus-visible:ring-0 p-0 rounded-none min-h-8"
+						className="min-h-8 rounded-none border-none bg-transparent p-0 focus:outline-none focus-visible:ring-0"
 						onKeyDown={(e) => {
 							if (e.key === "Enter" && !e.shiftKey) {
 								e.preventDefault();

@@ -71,7 +71,7 @@ export function ChangeNameForm() {
 						type="submit"
 						loading={submitting}
 						disabled={
-							!form.formState.isValid || !form.formState.dirtyFields.name
+							!(form.formState.isValid && form.formState.dirtyFields.name)
 						}
 					>
 						{t("settings.save")}

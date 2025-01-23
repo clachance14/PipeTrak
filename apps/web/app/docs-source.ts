@@ -21,6 +21,8 @@ export const docsSource = loader({
 			Home,
 		};
 
-		if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
+		if (icon in icons) {
+			return createElement(icons[icon as keyof typeof icons]);
+		}
 	},
 });

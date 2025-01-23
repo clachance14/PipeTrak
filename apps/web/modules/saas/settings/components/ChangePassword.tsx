@@ -109,8 +109,10 @@ export function ChangePasswordForm() {
 								type="submit"
 								loading={form.formState.isSubmitting}
 								disabled={
-									!form.formState.isValid ||
-									!Object.keys(form.formState.dirtyFields).length
+									!(
+										form.formState.isValid &&
+										Object.keys(form.formState.dirtyFields).length
+									)
 								}
 							>
 								{t("settings.save")}

@@ -11,7 +11,7 @@ import { config } from "../../config";
 
 function sanitizePath(path: string) {
 	return path
-		.replace(/(\.[a-zA-Z\\-]{2,5})$/, "")
+		.replace(/(\.[a-zA-Z-]{2,5})$/, "")
 		.replace(/^\//, "")
 		.replace(/\/$/, "")
 		.replace(/index$/, "");
@@ -19,9 +19,8 @@ function sanitizePath(path: string) {
 
 function getLocaleFromFilePath(path: string) {
 	return (
-		path
-			.match(/(\.[a-zA-Z\\-]{2,5})+\.(md|mdx|json)$/)?.[1]
-			?.replace(".", "") ?? config.i18n.defaultLocale
+		path.match(/(\.[a-zA-Z-]{2,5})+\.(md|mdx|json)$/)?.[1]?.replace(".", "") ??
+		config.i18n.defaultLocale
 	);
 }
 

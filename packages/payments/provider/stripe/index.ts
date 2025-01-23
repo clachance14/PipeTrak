@@ -156,7 +156,9 @@ export const webhookHandler: WebhookHandler = async (req) => {
 			case "checkout.session.completed": {
 				const { mode, metadata, customer, id } = event.data.object;
 
-				if (mode === "subscription") break;
+				if (mode === "subscription") {
+					break;
+				}
 
 				const checkoutSession = await stripeClient.checkout.sessions.retrieve(
 					id,

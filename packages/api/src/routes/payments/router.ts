@@ -97,7 +97,7 @@ export const paymentsRouter = new Hono()
 						},
 			);
 
-			const plan = Object.entries(plans).find(([planId, plan]) =>
+			const plan = Object.entries(plans).find(([_planId, plan]) =>
 				plan.prices?.find((price) => price.productId === productId),
 			);
 			const price = plan?.[1].prices?.find(

@@ -26,7 +26,7 @@ export default async function SignupPage({
 	const params = await searchParams;
 	const { invitationId } = params;
 
-	if (!config.auth.enableSignup && !invitationId) {
+	if (!(config.auth.enableSignup || invitationId)) {
 		return redirect(withQuery("/auth/login", params));
 	}
 

@@ -58,7 +58,7 @@ export function createPurchasesHelper(purchases: PurchaseWithoutTimestamps[]) {
 	const hasPurchase = (planId: PlanId) => {
 		return !!purchases?.some((purchase) =>
 			Object.entries(plans)
-				.find(([id, plan]) => id === planId)?.[1]
+				.find(([id]) => id === planId)?.[1]
 				.prices?.some((price) => price.productId === purchase.productId),
 		);
 	};

@@ -11,7 +11,6 @@ import { SubscriptionStatusBadge } from "../../settings/components/SubscriptionS
 
 export function ActivePlan({
 	organizationId,
-	seats,
 }: {
 	organizationId?: string;
 	seats?: number;

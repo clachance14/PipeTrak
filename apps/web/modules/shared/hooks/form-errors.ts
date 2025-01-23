@@ -21,10 +21,14 @@ function joinValues<T extends unknown[]>(array: T, separator = " | "): string {
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
-	if (typeof value !== "object" || value === null) return false;
+	if (typeof value !== "object" || value === null) {
+		return false;
+	}
 
 	for (const key in value) {
-		if (!Object.prototype.hasOwnProperty.call(value, key)) return false;
+		if (!Object.prototype.hasOwnProperty.call(value, key)) {
+			return false;
+		}
 	}
 
 	return true;
@@ -37,7 +41,9 @@ const getKeyAndValues = (
 	values: Record<string, unknown>;
 	key: string;
 } => {
-	if (typeof param === "string") return { key: param, values: {} };
+	if (typeof param === "string") {
+		return { key: param, values: {} };
+	}
 
 	if (isRecord(param)) {
 		const key =

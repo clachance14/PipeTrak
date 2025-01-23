@@ -124,12 +124,14 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 		const type = payload?.event_type ?? null;
 
 		if (
-			!type ||
-			![
-				"subscription_created",
-				"subscription_cancelled",
-				"subscription_changed",
-			].includes(type)
+			!(
+				type &&
+				[
+					"subscription_created",
+					"subscription_cancelled",
+					"subscription_changed",
+				].includes(type)
+			)
 		) {
 			return new Response("Invalid event type.", {
 				status: 400,

@@ -3,14 +3,14 @@ import { getSignedUrl } from "@repo/storage";
 import { NextResponse } from "next/server";
 
 export const GET = async (
-	req: Request,
+	_req: Request,
 	{ params }: { params: Promise<{ path: string[] }> },
 ) => {
 	const { path } = await params;
 
 	const [bucket, filePath] = path;
 
-	if (!bucket || !filePath) {
+	if (!(bucket && filePath)) {
 		return new Response("Invalid path", { status: 400 });
 	}
 

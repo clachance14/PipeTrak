@@ -55,19 +55,25 @@ export const auth = betterAuth({
 			if (ctx.path.startsWith("/organization/accept-invitation")) {
 				const { invitationId } = ctx.body;
 
-				if (!invitationId) return;
+				if (!invitationId) {
+					return;
+				}
 
 				const invitation = await db.invitation.findUnique({
 					where: { id: invitationId },
 				});
 
-				if (!invitation) return;
+				if (!invitation) {
+					return;
+				}
 
 				await updateSeatsInOrganizationSubscription(invitation.organizationId);
 			} else if (ctx.path.startsWith("/organization/remove-member")) {
 				const { organizationId } = ctx.body;
 
-				if (!organizationId) return;
+				if (!organizationId) {
+					return;
+				}
 
 				await updateSeatsInOrganizationSubscription(organizationId);
 			}

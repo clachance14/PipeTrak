@@ -43,7 +43,7 @@ export function PricingTable({
 	const createCheckoutLinkMutation = useCreateCheckoutLinkMutation();
 
 	const onSelectPlan = async (planId: PlanId, productId?: string) => {
-		if (!userId && !organizationId) {
+		if (!(userId || organizationId)) {
 			router.push("/auth/signup");
 		}
 
@@ -127,7 +127,7 @@ export function PricingTable({
 							};
 						}
 
-						if (!price && !isEnterprise) {
+						if (!(price || isEnterprise)) {
 							return null;
 						}
 

@@ -11,7 +11,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 		locale = await getUserLocale();
 	}
 
-	if (!routing.locales.includes(locale) || !config.i18n.enabled) {
+	if (!(routing.locales.includes(locale) && config.i18n.enabled)) {
 		locale = routing.defaultLocale;
 	}
 
