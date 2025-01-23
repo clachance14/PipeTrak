@@ -11,7 +11,7 @@ export function PostListItem({ post }: { post: Post }) {
 	return (
 		<div className="rounded-2xl border bg-card/50 p-6">
 			{image && (
-				<div className="-mx-4 -mt-4 relative mb-4 aspect-[16/9] overflow-hidden rounded-xl">
+				<div className="-mx-4 -mt-4 relative mb-4 aspect-16/9 overflow-hidden rounded-xl">
 					<Image
 						src={image}
 						alt={title}

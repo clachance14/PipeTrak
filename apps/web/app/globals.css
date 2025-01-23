@@ -1,6 +1,32 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 :root {
 	--fd-banner-height: 4.5rem;
@@ -12,23 +38,12 @@
 	}
 }
 
-@layer utilities {
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
-
-	.no-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-}
-
 pre.shiki {
 	@apply mb-4 rounded-lg p-6;
 }
 
 #nd-sidebar {
-	@apply !bg-card top-[4.5rem] md:!h-[calc(100dvh-4.5rem)];
+	@apply bg-card! top-[4.5rem] md:h-[calc(100dvh-4.5rem)]!;
 
 	button[data-search-full] {
 		@apply bg-transparent;
@@ -43,13 +58,13 @@ pre.shiki {
 	h5,
 	h6 {
 		a {
-			@apply !no-underline;
+			@apply no-underline!;
 		}
 	}
 }
 
 div[role="tablist"].bg-secondary {
-	@apply !bg-muted;
+	@apply bg-muted!;
 }
 
 input[cmdk-input] {

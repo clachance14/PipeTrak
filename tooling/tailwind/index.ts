@@ -64,7 +64,7 @@ export const darkVariables = {
 
 export default {
 	content: [],
-	darkMode: ["class"],
+	darkMode: ["class", ""],
 	theme: {
 		container: {
 			center: true,
