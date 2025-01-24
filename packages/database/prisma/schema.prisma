@@ -37,7 +37,7 @@ model User {
   invitations        Invitation[]
   purchases          Purchase[]
   memberships        Member[]
-  AiChat             AiChat[]
+  aiChats            AiChat[]
 
   @@unique([email])
   @@unique([username])
@@ -124,7 +124,7 @@ model Organization {
   members            Member[]
   invitations        Invitation[]
   purchases          Purchase[]
-  AiChat             AiChat[]
+  aiChats            AiChat[]
 
   @@unique([slug])
   @@map("organization")
