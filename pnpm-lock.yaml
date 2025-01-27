@@ -121,8 +121,8 @@ importers:
         specifier: ^8.20.6
         version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       ai:
-        specifier: ^4.1.2
-        version: 4.1.2(react@19.0.0)(zod@3.24.1)
+        specifier: ^4.1.7
+        version: 4.1.7(react@19.0.0)(zod@3.24.1)
       better-auth:
         specifier: 1.1.14
         version: 1.1.14
@@ -151,8 +151,8 @@ importers:
         specifier: ^14.7.7
         version: 14.7.7(@types/react-dom@19.0.0)(@types/react@19.0.0)(fumadocs-core@14.7.7(@types/react@19.0.0)(next@15.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.7)(typescript@5.7.3)))
       hono:
-        specifier: ^4.6.18
-        version: 4.6.18
+        specifier: ^4.6.19
+        version: 4.6.19
       jotai:
         specifier: 2.11.0
         version: 2.11.0(@types/react@19.0.0)(react@19.0.0)
@@ -314,20 +314,20 @@ importers:
   packages/ai:
     dependencies:
       '@ai-sdk/anthropic':
-        specifier: ^1.1.2
-        version: 1.1.2(zod@3.24.1)
+        specifier: ^1.1.4
+        version: 1.1.4(zod@3.24.1)
       '@ai-sdk/openai':
-        specifier: ^1.1.2
-        version: 1.1.2(zod@3.24.1)
+        specifier: ^1.1.4
+        version: 1.1.4(zod@3.24.1)
       '@ai-sdk/react':
-        specifier: ^1.1.2
-        version: 1.1.2(react@19.0.0)(zod@3.24.1)
+        specifier: ^1.1.5
+        version: 1.1.5(react@19.0.0)(zod@3.24.1)
       ai:
-        specifier: ^4.1.2
-        version: 4.1.2(react@19.0.0)(zod@3.24.1)
+        specifier: ^4.1.7
+        version: 4.1.7(react@19.0.0)(zod@3.24.1)
       openai:
-        specifier: ^4.80.0
-        version: 4.80.0(encoding@0.1.13)(zod@3.24.1)
+        specifier: ^4.80.1
+        version: 4.80.1(encoding@0.1.13)(zod@3.24.1)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -376,22 +376,22 @@ importers:
         version: link:../utils
       '@scalar/hono-api-reference':
         specifier: ^0.5.168
-        version: 0.5.168(hono@4.6.18)
+        version: 0.5.168(hono@4.6.19)
       '@sindresorhus/slugify':
         specifier: ^2.2.1
         version: 2.2.1
       hono:
-        specifier: ^4.6.18
-        version: 4.6.18
+        specifier: ^4.6.19
+        version: 4.6.19
       hono-openapi:
         specifier: ^0.4.3
-        version: 0.4.3(@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.18))(@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.18))(@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.18))(@hono/valibot-validator@0.5.1(hono@4.6.18)(valibot@1.0.0-beta.9(typescript@5.7.3)))(@hono/zod-validator@0.4.1(hono@4.6.18)(zod@3.24.1))(@sinclair/typebox@0.34.13)(@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3)))(arktype@2.0.0-rc.25)(effect@3.12.0)(hono@4.6.18)(openapi-types@12.1.3)(valibot@1.0.0-beta.9(typescript@5.7.3))(zod-openapi@4.2.2(zod@3.24.1))(zod@3.24.1)
+        version: 0.4.3(@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.19))(@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.19))(@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.19))(@hono/valibot-validator@0.5.1(hono@4.6.19)(valibot@1.0.0-beta.9(typescript@5.7.3)))(@hono/zod-validator@0.4.1(hono@4.6.19)(zod@3.24.1))(@sinclair/typebox@0.34.13)(@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3)))(arktype@2.0.0-rc.25)(effect@3.12.0)(hono@4.6.19)(openapi-types@12.1.3)(valibot@1.0.0-beta.9(typescript@5.7.3))(zod-openapi@4.2.2(zod@3.24.1))(zod@3.24.1)
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
       openai:
-        specifier: ^4.80.0
-        version: 4.80.0(encoding@0.1.13)(zod@3.24.1)
+        specifier: ^4.80.1
+        version: 4.80.1(encoding@0.1.13)(zod@3.24.1)
       openapi-merge:
         specifier: ^1.3.3
         version: 1.3.3
@@ -728,20 +728,20 @@ importers:
 
 packages:
 
-  '@ai-sdk/anthropic@1.1.2':
-    resolution: {integrity: sha512-AR5/zL+N+zVXABocbi8XTsDR44jAbylh77G4VytoE7rQRFTw2Ht/cOxwrTlRZ6RgJeGYABBMnHK9XbxRVOnsfQ==}
+  '@ai-sdk/anthropic@1.1.4':
+    resolution: {integrity: sha512-qGT3oahdlUw3sb7LPsjlfLeZZxcwLTKSFE1/unC40+MqHG6K6cRFqJmTfsvU6fvG14643aA3G3UenKpGGWzO/A==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
 
-  '@ai-sdk/openai@1.1.2':
-    resolution: {integrity: sha512-9rfcwjl4g1/Bdr2SmgFQr+aw81r62MvIKE7QDHMC4ulFd/Hej2oClROSMpDFZHXzs7RGeb32VkRyCHUWWgN3RQ==}
+  '@ai-sdk/openai@1.1.4':
+    resolution: {integrity: sha512-C1a+p8lXzy684TdgSqQqubmp2YHm1P/mPXNzlcpJUb/T3xl1Uvw597V9wVeEvCynmimXI9WKRvLMQS/XnBljmg==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
 
-  '@ai-sdk/provider-utils@2.1.2':
-    resolution: {integrity: sha512-ezpQT6kzy/2O4yyn/2YigMqynBYjZIOam3/EMNVzju+Ogj+Z+pf27c/Th78ce0A2ltgrXx6xN14sal/HHZNOOw==}
+  '@ai-sdk/provider-utils@2.1.4':
+    resolution: {integrity: sha512-KrGr76ebmN3onrb+bQihgXZyYgYu/kClB+YjFmR1uXQpJG067rCBDWuTHvpI7vwPdQQDvIIgZ+0U5G4V+dN74w==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -753,8 +753,8 @@ packages:
     resolution: {integrity: sha512-hwj/gFNxpDgEfTaYzCYoslmw01IY9kWLKl/wf8xuPvHtQIzlfXWmmUwc8PnCwxyt8cKzIuV0dfUghCf68HQ0SA==}
     engines: {node: '>=18'}
 
-  '@ai-sdk/react@1.1.2':
-    resolution: {integrity: sha512-bBcRsDaNHzCKSIBbPngMeqbnwZ1RFadXQo9XzHoGrvLANYRwuphGNB8XTXYVLC/eXjoaGVGw2wWf/TYigEnCuA==}
+  '@ai-sdk/react@1.1.5':
+    resolution: {integrity: sha512-VTsX7BG3ntUbQtjHU4kqYt1uXQnQDx9/QAgp0/hu4Z2SpVFvf2QNsSCAUExDBvV6PupfITfzPyZmfiZworRZYg==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
@@ -765,8 +765,8 @@ packages:
       zod:
         optional: true
 
-  '@ai-sdk/ui-utils@1.1.2':
-    resolution: {integrity: sha512-+0kfBF4Y9jmlg1KlbNKIxchmXx9PzuReSpgRNWhpU10vfl1eeer4xK/XL2qHnzAWhsMFe/SVZXJIQObk44zNEQ==}
+  '@ai-sdk/ui-utils@1.1.5':
+    resolution: {integrity: sha512-N4/YyDxJ7STcUeE6qv48Rgihly33yMIBeXtADuPEtuObofUcVAEjHSeWWSNuY780m2nocrjOV34XELwMDmZ73w==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -3283,8 +3283,8 @@ packages:
     resolution: {integrity: sha512-kja8j7PjmncONqaTsB8fQ+wE2mSU2DJ9D4XKoJ5PFWIdRMa6SLSN1ff4mOr4jCbfRSsxR4keIiySJU0N9T5hIQ==}
     engines: {node: '>= 8.0.0'}
 
-  ai@4.1.2:
-    resolution: {integrity: sha512-11efhPorWFphIpeCgjW6r/jk4wB5RWUGjxayHblBXCq6YEc7o5ki7vlmSnESprsDkMEfmONBWb/xM8pWjR5O2g==}
+  ai@4.1.7:
+    resolution: {integrity: sha512-UonRhARlF5/IMUxawJp3KAB2d6uWVajR2EtmE4UjcnZmbk4rbS97zH4Xo0bcuqUTg/rODygRk8Iyky5pxUXPUQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
@@ -4167,8 +4167,8 @@ packages:
       zod-openapi:
         optional: true
 
-  hono@4.6.18:
-    resolution: {integrity: sha512-Fu7hEPvdwtPG8LqSAiPn8p8HjD+PDxrP/HVnwRBnwtVKOn5zDDKsw0ma2Xt58oq97Rlp3t/mRNADEV/Ym6cDng==}
+  hono@4.6.19:
+    resolution: {integrity: sha512-Xw5DwU2cewEsQ1DkDCdy6aBJkEBARl5loovoL1gL3/gw81RdaPbXrNJYp3LoQpzpJ7ECC/1OFi/vn3UZTLHFEw==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -5012,8 +5012,8 @@ packages:
   oniguruma-to-es@2.2.0:
     resolution: {integrity: sha512-EEsso27ri0sf+t4uRFEj5C5gvXQj0d0w1Y2qq06b+hDLBnvzO1rWTwEW4C7ytan6nhg4WPwE26eLoiPhHUbvKg==}
 
-  openai@4.80.0:
-    resolution: {integrity: sha512-5TqdNQgjOMxo3CkCvtjzuSwuznO/o3q5aak0MTy6IjRvPtvVA1wAFGJU3eZT1JHzhs2wFb/xtDG0o6Y/2KGCfw==}
+  openai@4.80.1:
+    resolution: {integrity: sha512-+6+bbXFwbIE88foZsBEt36bPkgZPdyFN82clAXG61gnHb2gXdZApDyRrcAHqEtpYICywpqaNo57kOm9dtnb7Cw==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -6052,19 +6052,19 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/anthropic@1.1.2(zod@3.24.1)':
+  '@ai-sdk/anthropic@1.1.4(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
-      '@ai-sdk/provider-utils': 2.1.2(zod@3.24.1)
+      '@ai-sdk/provider-utils': 2.1.4(zod@3.24.1)
       zod: 3.24.1
 
-  '@ai-sdk/openai@1.1.2(zod@3.24.1)':
+  '@ai-sdk/openai@1.1.4(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
-      '@ai-sdk/provider-utils': 2.1.2(zod@3.24.1)
+      '@ai-sdk/provider-utils': 2.1.4(zod@3.24.1)
       zod: 3.24.1
 
-  '@ai-sdk/provider-utils@2.1.2(zod@3.24.1)':
+  '@ai-sdk/provider-utils@2.1.4(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
       eventsource-parser: 3.0.0
@@ -6077,20 +6077,20 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@1.1.2(react@19.0.0)(zod@3.24.1)':
+  '@ai-sdk/react@1.1.5(react@19.0.0)(zod@3.24.1)':
     dependencies:
-      '@ai-sdk/provider-utils': 2.1.2(zod@3.24.1)
-      '@ai-sdk/ui-utils': 1.1.2(zod@3.24.1)
+      '@ai-sdk/provider-utils': 2.1.4(zod@3.24.1)
+      '@ai-sdk/ui-utils': 1.1.5(zod@3.24.1)
       swr: 2.3.0(react@19.0.0)
       throttleit: 2.1.0
     optionalDependencies:
       react: 19.0.0
       zod: 3.24.1
 
-  '@ai-sdk/ui-utils@1.1.2(zod@3.24.1)':
+  '@ai-sdk/ui-utils@1.1.5(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
-      '@ai-sdk/provider-utils': 2.1.2(zod@3.24.1)
+      '@ai-sdk/provider-utils': 2.1.4(zod@3.24.1)
       zod-to-json-schema: 3.24.1(zod@3.24.1)
     optionalDependencies:
       zod: 3.24.1
@@ -7089,33 +7089,33 @@ snapshots:
 
   '@hexagon/base64@1.1.28': {}
 
-  '@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.18)':
+  '@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.19)':
     dependencies:
       arktype: 2.0.0-rc.25
-      hono: 4.6.18
+      hono: 4.6.19
     optional: true
 
-  '@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.18)':
+  '@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.19)':
     dependencies:
       effect: 3.12.0
-      hono: 4.6.18
+      hono: 4.6.19
     optional: true
 
-  '@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.18)':
+  '@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.19)':
     dependencies:
       '@sinclair/typebox': 0.34.13
-      hono: 4.6.18
+      hono: 4.6.19
     optional: true
 
-  '@hono/valibot-validator@0.5.1(hono@4.6.18)(valibot@1.0.0-beta.9(typescript@5.7.3))':
+  '@hono/valibot-validator@0.5.1(hono@4.6.19)(valibot@1.0.0-beta.9(typescript@5.7.3))':
     dependencies:
-      hono: 4.6.18
+      hono: 4.6.19
       valibot: 1.0.0-beta.9(typescript@5.7.3)
     optional: true
 
-  '@hono/zod-validator@0.4.1(hono@4.6.18)(zod@3.24.1)':
+  '@hono/zod-validator@0.4.1(hono@4.6.19)(zod@3.24.1)':
     dependencies:
-      hono: 4.6.18
+      hono: 4.6.19
       zod: 3.24.1
     optional: true
 
@@ -8235,10 +8235,10 @@ snapshots:
     dependencies:
       react: 19.0.0
 
-  '@scalar/hono-api-reference@0.5.168(hono@4.6.18)':
+  '@scalar/hono-api-reference@0.5.168(hono@4.6.19)':
     dependencies:
       '@scalar/types': 0.0.27
-      hono: 4.6.18
+      hono: 4.6.19
 
   '@scalar/openapi-types@0.1.6': {}
 
@@ -8816,12 +8816,12 @@ snapshots:
     dependencies:
       humanize-ms: 1.2.1
 
-  ai@4.1.2(react@19.0.0)(zod@3.24.1):
+  ai@4.1.7(react@19.0.0)(zod@3.24.1):
     dependencies:
       '@ai-sdk/provider': 1.0.6
-      '@ai-sdk/provider-utils': 2.1.2(zod@3.24.1)
-      '@ai-sdk/react': 1.1.2(react@19.0.0)(zod@3.24.1)
-      '@ai-sdk/ui-utils': 1.1.2(zod@3.24.1)
+      '@ai-sdk/provider-utils': 2.1.4(zod@3.24.1)
+      '@ai-sdk/react': 1.1.5(react@19.0.0)(zod@3.24.1)
+      '@ai-sdk/ui-utils': 1.1.5(zod@3.24.1)
       '@opentelemetry/api': 1.9.0
       jsondiffpatch: 0.6.0
     optionalDependencies:
@@ -9790,26 +9790,26 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  hono-openapi@0.4.3(@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.18))(@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.18))(@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.18))(@hono/valibot-validator@0.5.1(hono@4.6.18)(valibot@1.0.0-beta.9(typescript@5.7.3)))(@hono/zod-validator@0.4.1(hono@4.6.18)(zod@3.24.1))(@sinclair/typebox@0.34.13)(@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3)))(arktype@2.0.0-rc.25)(effect@3.12.0)(hono@4.6.18)(openapi-types@12.1.3)(valibot@1.0.0-beta.9(typescript@5.7.3))(zod-openapi@4.2.2(zod@3.24.1))(zod@3.24.1):
+  hono-openapi@0.4.3(@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.19))(@hono/effect-validator@1.2.0(effect@3.12.0)(hono@4.6.19))(@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.19))(@hono/valibot-validator@0.5.1(hono@4.6.19)(valibot@1.0.0-beta.9(typescript@5.7.3)))(@hono/zod-validator@0.4.1(hono@4.6.19)(zod@3.24.1))(@sinclair/typebox@0.34.13)(@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3)))(arktype@2.0.0-rc.25)(effect@3.12.0)(hono@4.6.19)(openapi-types@12.1.3)(valibot@1.0.0-beta.9(typescript@5.7.3))(zod-openapi@4.2.2(zod@3.24.1))(zod@3.24.1):
     dependencies:
       json-schema-walker: 2.0.0
     optionalDependencies:
-      '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.18)
-      '@hono/effect-validator': 1.2.0(effect@3.12.0)(hono@4.6.18)
-      '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.18)
-      '@hono/valibot-validator': 0.5.1(hono@4.6.18)(valibot@1.0.0-beta.9(typescript@5.7.3))
-      '@hono/zod-validator': 0.4.1(hono@4.6.18)(zod@3.24.1)
+      '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.19)
+      '@hono/effect-validator': 1.2.0(effect@3.12.0)(hono@4.6.19)
+      '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.13)(hono@4.6.19)
+      '@hono/valibot-validator': 0.5.1(hono@4.6.19)(valibot@1.0.0-beta.9(typescript@5.7.3))
+      '@hono/zod-validator': 0.4.1(hono@4.6.19)(zod@3.24.1)
       '@sinclair/typebox': 0.34.13
       '@valibot/to-json-schema': 1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.7.3))
       arktype: 2.0.0-rc.25
       effect: 3.12.0
-      hono: 4.6.18
+      hono: 4.6.19
       openapi-types: 12.1.3
       valibot: 1.0.0-beta.9(typescript@5.7.3)
       zod: 3.24.1
       zod-openapi: 4.2.2(zod@3.24.1)
 
-  hono@4.6.18: {}
+  hono@4.6.19: {}
 
   hookable@5.5.3: {}
 
@@ -10990,7 +10990,7 @@ snapshots:
       regex: 5.1.1
       regex-recursion: 5.1.1
 
-  openai@4.80.0(encoding@0.1.13)(zod@3.24.1):
+  openai@4.80.1(encoding@0.1.13)(zod@3.24.1):
     dependencies:
       '@types/node': 18.19.74
       '@types/node-fetch': 2.6.12
