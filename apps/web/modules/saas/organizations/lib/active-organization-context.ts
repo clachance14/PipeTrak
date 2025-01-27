@@ -9,7 +9,9 @@ export const ActiveOrganizationContext = React.createContext<
 				| null;
 			isOrganizationAdmin: boolean;
 			loaded: boolean;
-			setActiveOrganization: (organizationId: string | null) => Promise<void>;
+			setActiveOrganization: (
+				organizationId: string | null,
+			) => Promise<void>;
 			refetchActiveOrganization: () => Promise<void>;
 	  }
 	| undefined

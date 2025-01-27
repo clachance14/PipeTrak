@@ -34,7 +34,9 @@ export function DeleteAccountForm() {
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.account.deleteAccount.notifications.success"),
+						title: t(
+							"settings.account.deleteAccount.notifications.success",
+						),
 					});
 					reloadSession();
 					router.replace("/");
@@ -42,7 +44,9 @@ export function DeleteAccountForm() {
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.account.deleteAccount.notifications.error"),
+						title: t(
+							"settings.account.deleteAccount.notifications.error",
+						),
 					});
 				},
 				onResponse: () => {
@@ -60,7 +64,10 @@ export function DeleteAccountForm() {
 				description={t("settings.account.deleteAccount.description")}
 			>
 				<div className="mt-4 flex justify-end">
-					<Button variant="error" onClick={() => setShowConfirmation(true)}>
+					<Button
+						variant="error"
+						onClick={() => setShowConfirmation(true)}
+					>
 						{t("settings.account.deleteAccount.submit")}
 					</Button>
 				</div>

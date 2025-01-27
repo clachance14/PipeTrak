@@ -1,7 +1,8 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"formatter": {
-		"enabled": true
+		"enabled": true,
+		"useEditorconfig": true
 	},
 	"linter": {
 		"enabled": true,

@@ -160,12 +160,10 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					break;
 				}
 
-				const checkoutSession = await stripeClient.checkout.sessions.retrieve(
-					id,
-					{
+				const checkoutSession =
+					await stripeClient.checkout.sessions.retrieve(id, {
 						expand: ["line_items"],
-					},
-				);
+					});
 
 				const productId = checkoutSession.line_items?.data[0].price?.id;
 
@@ -235,7 +233,8 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					await db.purchase.update({
 						data: {
 							status: event.data.object.status,
-							productId: event.data.object.items?.data[0].price?.id,
+							productId:
+								event.data.object.items?.data[0].price?.id,
 						},
 						where: {
 							subscriptionId,

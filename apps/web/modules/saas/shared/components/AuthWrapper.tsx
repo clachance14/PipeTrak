@@ -17,7 +17,9 @@ export function AuthWrapper({ children }: PropsWithChildren) {
 						</Link>
 
 						<div className="flex items-center justify-end gap-2">
-							{config.i18n.enabled && <LocaleSwitch withLocaleInUrl={false} />}
+							{config.i18n.enabled && (
+								<LocaleSwitch withLocaleInUrl={false} />
+							)}
 							<ColorModeToggle />
 						</div>
 					</div>

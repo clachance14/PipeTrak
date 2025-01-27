@@ -40,7 +40,9 @@ export function ChangeEmailForm() {
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.account.changeEmail.notifications.success"),
+						title: t(
+							"settings.account.changeEmail.notifications.success",
+						),
 					});
 
 					reloadSession();
@@ -48,7 +50,9 @@ export function ChangeEmailForm() {
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.account.changeEmail.notifications.error"),
+						title: t(
+							"settings.account.changeEmail.notifications.error",
+						),
 					});
 				},
 				onResponse: () => {
@@ -76,7 +80,10 @@ export function ChangeEmailForm() {
 						type="submit"
 						loading={submitting}
 						disabled={
-							!(form.formState.isValid && form.formState.dirtyFields.email)
+							!(
+								form.formState.isValid &&
+								form.formState.dirtyFields.email
+							)
 						}
 					>
 						{t("settings.save")}

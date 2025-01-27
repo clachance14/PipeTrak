@@ -56,7 +56,9 @@ async function main() {
 		},
 	});
 	if (
-		!adminUser?.accounts.some((account) => account.providerId === "credential")
+		!adminUser?.accounts.some(
+			(account) => account.providerId === "credential",
+		)
 	) {
 		await db.account.create({
 			data: {

@@ -49,7 +49,11 @@ export function ContentMenu({
 	return (
 		<ul className="-mx-4 list-none space-y-2 pr-4">
 			{items.map((item) => (
-				<ContentMenuItem key={item.path} {...item} activePath={activePath} />
+				<ContentMenuItem
+					key={item.path}
+					{...item}
+					activePath={activePath}
+				/>
 			))}
 		</ul>
 	);

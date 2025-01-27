@@ -24,7 +24,9 @@ export function SettingsItem({
 						{title}
 					</h3>
 					{description && (
-						<p className="m-0 text-foreground/60 text-xs">{description}</p>
+						<p className="m-0 text-foreground/60 text-xs">
+							{description}
+						</p>
 					)}
 				</div>
 				{children}

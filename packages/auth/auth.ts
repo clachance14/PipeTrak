@@ -67,7 +67,9 @@ export const auth = betterAuth({
 					return;
 				}
 
-				await updateSeatsInOrganizationSubscription(invitation.organizationId);
+				await updateSeatsInOrganizationSubscription(
+					invitation.organizationId,
+				);
 			} else if (ctx.path.startsWith("/organization/remove-member")) {
 				const { organizationId } = ctx.body;
 
@@ -133,7 +135,10 @@ export const auth = betterAuth({
 	},
 	emailVerification: {
 		sendOnSignUp: config.auth.enableSignup,
-		sendVerificationEmail: async ({ user: { email, name }, url }, request) => {
+		sendVerificationEmail: async (
+			{ user: { email, name }, url },
+			request,
+		) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
 				to: email,
@@ -177,7 +182,10 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
-			sendInvitationEmail: async ({ email, id, organization }, request) => {
+			sendInvitationEmail: async (
+				{ email, id, organization },
+				request,
+			) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);
 

@@ -114,37 +114,46 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 			<h1 className="font-bold text-2xl md:text-3xl">
 				{t("auth.signup.title")}
 			</h1>
-			<p className="mt-1 mb-6 text-foreground/60">{t("auth.signup.message")}</p>
+			<p className="mt-1 mb-6 text-foreground/60">
+				{t("auth.signup.message")}
+			</p>
 
 			{form.formState.isSubmitSuccessful && !invitationOnlyMode ? (
 				<Alert variant="success">
 					<MailboxIcon className="size-6" />
-					<AlertTitle>{t("auth.signup.hints.verifyEmail")}</AlertTitle>
+					<AlertTitle>
+						{t("auth.signup.hints.verifyEmail")}
+					</AlertTitle>
 				</Alert>
 			) : (
 				<>
-					{invitationId && <OrganizationInvitationAlert className="mb-6" />}
+					{invitationId && (
+						<OrganizationInvitationAlert className="mb-6" />
+					)}
 
 					<Form {...form}>
 						<form
 							className="flex flex-col items-stretch gap-4"
 							onSubmit={form.handleSubmit(onSubmit)}
 						>
-							{form.formState.isSubmitted && form.formState.errors.root && (
-								<Alert variant="error">
-									<AlertTriangleIcon className="size-6" />
-									<AlertDescription>
-										{form.formState.errors.root.message}
-									</AlertDescription>
-								</Alert>
-							)}
+							{form.formState.isSubmitted &&
+								form.formState.errors.root && (
+									<Alert variant="error">
+										<AlertTriangleIcon className="size-6" />
+										<AlertDescription>
+											{form.formState.errors.root.message}
+										</AlertDescription>
+									</Alert>
+								)}
 
 							<FormField
 								control={form.control}
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("auth.signup.name")}</FormLabel>
+										<FormLabel>
+											{t("auth.signup.name")}
+										</FormLabel>
 										<FormControl>
 											<Input {...field} />
 										</FormControl>
@@ -158,7 +167,9 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 								name="email"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("auth.signup.email")}</FormLabel>
+										<FormLabel>
+											{t("auth.signup.email")}
+										</FormLabel>
 										<FormControl>
 											<Input
 												{...field}
@@ -176,18 +187,28 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 								name="password"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("auth.signup.password")}</FormLabel>
+										<FormLabel>
+											{t("auth.signup.password")}
+										</FormLabel>
 										<FormControl>
 											<div className="relative">
 												<Input
-													type={showPassword ? "text" : "password"}
+													type={
+														showPassword
+															? "text"
+															: "password"
+													}
 													className="pr-10"
 													{...field}
 													autoComplete="new-password"
 												/>
 												<button
 													type="button"
-													onClick={() => setShowPassword(!showPassword)}
+													onClick={() =>
+														setShowPassword(
+															!showPassword,
+														)
+													}
 													className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
 												>
 													{showPassword ? (
@@ -209,25 +230,30 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 						</form>
 					</Form>
 
-					{config.auth.enableSignup && config.auth.enableSocialLogin && (
-						<>
-							<div className="relative my-6 h-4">
-								<hr className="relative top-2" />
-								<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
-									{t("auth.login.continueWith")}
-								</p>
-							</div>
+					{config.auth.enableSignup &&
+						config.auth.enableSocialLogin && (
+							<>
+								<div className="relative my-6 h-4">
+									<hr className="relative top-2" />
+									<p className="-translate-x-1/2 absolute top-0 left-1/2 mx-auto inline-block h-4 bg-card px-2 text-center font-medium text-foreground/60 text-sm leading-tight">
+										{t("auth.login.continueWith")}
+									</p>
+								</div>
 
-							<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
-								{Object.keys(oAuthProviders).map((providerId) => (
-									<SocialSigninButton
-										key={providerId}
-										provider={providerId as OAuthProvider}
-									/>
-								))}
-							</div>
-						</>
-					)}
+								<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
+									{Object.keys(oAuthProviders).map(
+										(providerId) => (
+											<SocialSigninButton
+												key={providerId}
+												provider={
+													providerId as OAuthProvider
+												}
+											/>
+										),
+									)}
+								</div>
+							</>
+						)}
 				</>
 			)}
 

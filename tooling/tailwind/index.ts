@@ -73,7 +73,8 @@ export default {
 		extend: {
 			boxShadow: {
 				sm: "0 2px 8px 0 rgb(0, 0, 0, 0.025), 0 0 1px rgba(0,0,0,0.1)",
-				DEFAULT: "0 4px 16px 0 rgb(0, 0, 0, 0.05), 0 0 1px rgba(0,0,0,0.1)",
+				DEFAULT:
+					"0 4px 16px 0 rgb(0, 0, 0, 0.05), 0 0 1px rgba(0,0,0,0.1)",
 				md: "0 6px 24px 0 rgb(0, 0, 0, 0.075), 0 0 1px rgba(0,0,0,0.1)",
 				lg: "0 8px 32px 0 rgb(0, 0, 0, 0.1), 0 0 1px rgba(0,0,0,0.1)",
 				xl: "0 12px 48px 0 rgb(0, 0, 0, 0.125), 0 0 1px rgba(0,0,0,0.1)",
@@ -117,7 +118,9 @@ export default {
 				},
 				destructive: {
 					DEFAULT: colorVariable("--colors-destructive"),
-					foreground: colorVariable("--colors-destructive-foreground"),
+					foreground: colorVariable(
+						"--colors-destructive-foreground",
+					),
 				},
 				success: {
 					DEFAULT: colorVariable("--colors-success"),

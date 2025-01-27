@@ -19,7 +19,10 @@ export function PostListItem({ post }: { post: Post }) {
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						className="object-cover object-center"
 					/>
-					<LocaleLink href={`/blog/${path}`} className="absolute inset-0" />
+					<LocaleLink
+						href={`/blog/${path}`}
+						className="absolute inset-0"
+					/>
 				</div>
 			)}
 
@@ -36,7 +39,10 @@ export function PostListItem({ post }: { post: Post }) {
 				</div>
 			)}
 
-			<LocaleLink href={`/blog/${path}`} className="font-semibold text-xl">
+			<LocaleLink
+				href={`/blog/${path}`}
+				className="font-semibold text-xl"
+			>
 				{title}
 			</LocaleLink>
 			{excerpt && <p className="opacity-50">{excerpt}</p>}
@@ -56,7 +62,9 @@ export function PostListItem({ post }: { post: Post }) {
 							</div>
 						)}
 						<div>
-							<p className="font-semibold text-sm opacity-50">{authorName}</p>
+							<p className="font-semibold text-sm opacity-50">
+								{authorName}
+							</p>
 						</div>
 					</div>
 				)}

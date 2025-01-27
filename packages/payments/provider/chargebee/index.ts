@@ -151,7 +151,8 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 				id,
 				organizationId: data.subscription.cf_organization_id,
 				customerId: data.customer.id,
-				productId: data.subscription.subscription_items[0].item_price_id,
+				productId:
+					data.subscription.subscription_items[0].item_price_id,
 				status: data.subscription.status,
 				type: "SUBSCRIPTION",
 			} satisfies Omit<Purchase, "createdAt">;
@@ -168,7 +169,8 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 				id,
 				userId: data.subscription.cf_user_id,
 				customerId: data.customer.id,
-				productId: data.subscription.subscription_items[0].item_price_id,
+				productId:
+					data.subscription.subscription_items[0].item_price_id,
 				status: data.subscription.status,
 				type: "SUBSCRIPTION",
 			} satisfies Omit<Purchase, "createdAt">;

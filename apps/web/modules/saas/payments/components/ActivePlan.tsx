@@ -37,14 +37,19 @@ export function ActivePlan({
 							<span>{activePlanData.title}</span>
 						</h4>
 						{activePlan.status && (
-							<SubscriptionStatusBadge status={activePlan.status} />
+							<SubscriptionStatusBadge
+								status={activePlan.status}
+							/>
 						)}
 					</div>
 
 					{!!activePlanData.features?.length && (
 						<ul className="mt-2 grid list-none gap-2 text-sm">
 							{activePlanData.features.map((feature, key) => (
-								<li key={key} className="flex items-center justify-start">
+								<li
+									key={key}
+									className="flex items-center justify-start"
+								>
 									<CheckIcon className="mr-2 size-4 text-primary" />
 									<span>{feature}</span>
 								</li>
@@ -74,12 +79,14 @@ export function ActivePlan({
 											})}
 								</span>
 							)}
-							{organizationId && "seatBased" in price && price.seatBased && (
-								<span className="font-normal text-xs opacity-60">
-									{" / "}
-									{t("pricing.perSeat")}
-								</span>
-							)}
+							{organizationId &&
+								"seatBased" in price &&
+								price.seatBased && (
+									<span className="font-normal text-xs opacity-60">
+										{" / "}
+										{t("pricing.perSeat")}
+									</span>
+								)}
 						</strong>
 					)}
 				</div>
@@ -87,7 +94,9 @@ export function ActivePlan({
 				{"purchaseId" in activePlan && (
 					<div className="mt-4 flex justify-end">
 						<div className="flex w-full flex-col flex-wrap gap-2 md:flex-row">
-							<CustomerPortalButton purchaseId={activePlan.purchaseId} />
+							<CustomerPortalButton
+								purchaseId={activePlan.purchaseId}
+							/>
 						</div>
 					</div>
 				)}

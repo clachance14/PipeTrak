@@ -92,7 +92,10 @@ export function UserList() {
 		});
 		await refetch();
 		dismiss();
-		window.location.href = new URL("/app", window.location.origin).toString();
+		window.location.href = new URL(
+			"/app",
+			window.location.origin,
+		).toString();
 	};
 
 	const deleteUser = async (id: string) => {
@@ -192,9 +195,13 @@ export function UserList() {
 								<span className="block">
 									{!!row.original.name && row.original.email}
 								</span>
-								<EmailVerified verified={row.original.emailVerified} />
+								<EmailVerified
+									verified={row.original.emailVerified}
+								/>
 								<strong className="block">
-									{row.original.role === "admin" ? "Admin" : ""}
+									{row.original.role === "admin"
+										? "Admin"
+										: ""}
 								</strong>
 							</small>
 						</div>
@@ -227,23 +234,33 @@ export function UserList() {
 
 									{!row.original.emailVerified && (
 										<DropdownMenuItem
-											onClick={() => resendVerificationMail(row.original.email)}
+											onClick={() =>
+												resendVerificationMail(
+													row.original.email,
+												)
+											}
 										>
 											<Repeat1Icon className="mr-2 size-4" />
-											{t("admin.users.resendVerificationMail.title")}
+											{t(
+												"admin.users.resendVerificationMail.title",
+											)}
 										</DropdownMenuItem>
 									)}
 
 									{row.original.role !== "admin" ? (
 										<DropdownMenuItem
-											onClick={() => assignAdminRole(row.original.id)}
+											onClick={() =>
+												assignAdminRole(row.original.id)
+											}
 										>
 											<ShieldCheckIcon className="mr-2 size-4" />
 											{t("admin.users.assignAdminRole")}
 										</DropdownMenuItem>
 									) : (
 										<DropdownMenuItem
-											onClick={() => removeAdminRole(row.original.id)}
+											onClick={() =>
+												removeAdminRole(row.original.id)
+											}
 										>
 											<ShieldXIcon className="mr-2 size-4" />
 											{t("admin.users.removeAdminRole")}
@@ -253,11 +270,18 @@ export function UserList() {
 									<DropdownMenuItem
 										onClick={() =>
 											confirm({
-												title: t("admin.users.confirmDelete.title"),
-												message: t("admin.users.confirmDelete.message"),
-												confirmLabel: t("admin.users.confirmDelete.confirm"),
+												title: t(
+													"admin.users.confirmDelete.title",
+												),
+												message: t(
+													"admin.users.confirmDelete.message",
+												),
+												confirmLabel: t(
+													"admin.users.confirmDelete.confirm",
+												),
 												destructive: true,
-												onConfirm: () => deleteUser(row.original.id),
+												onConfirm: () =>
+													deleteUser(row.original.id),
 											})
 										}
 									>
@@ -288,7 +312,9 @@ export function UserList() {
 
 	return (
 		<Card className="p-6">
-			<h2 className="mb-4 font-semibold text-2xl">{t("admin.users.title")}</h2>
+			<h2 className="mb-4 font-semibold text-2xl">
+				{t("admin.users.title")}
+			</h2>
 			<Input
 				type="search"
 				placeholder={t("admin.users.search")}
@@ -304,7 +330,9 @@ export function UserList() {
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
+									data-state={
+										row.getIsSelected() && "selected"
+									}
 									className="group"
 								>
 									{row.getVisibleCells().map((cell) => (

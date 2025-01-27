@@ -106,7 +106,9 @@ export function PasskeysBlock() {
 									{passkey.deviceType} {passkey.name}
 								</strong>
 								<small className="block text-foreground/60 text-xs leading-tight">
-									{formatter.dateTime(new Date(passkey.createdAt))}
+									{formatter.dateTime(
+										new Date(passkey.createdAt),
+									)}
 								</small>
 							</div>
 							<Button
@@ -120,7 +122,11 @@ export function PasskeysBlock() {
 						</div>
 					))
 				)}
-				<Button className="w-full" variant="outline" onClick={addPasskey}>
+				<Button
+					className="w-full"
+					variant="outline"
+					onClick={addPasskey}
+				>
 					<PlusIcon className="mr-1.5 size-4" />
 					Add passkey
 				</Button>

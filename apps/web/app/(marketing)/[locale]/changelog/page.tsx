@@ -7,8 +7,12 @@ export default async function PricingPage() {
 	return (
 		<div className="container max-w-3xl pt-32 pb-16">
 			<div className="mb-12 text-balance pt-8 text-center">
-				<h1 className="mb-2 font-bold text-5xl">{t("changelog.title")}</h1>
-				<p className="text-lg opacity-50">{t("changelog.description")}</p>
+				<h1 className="mb-2 font-bold text-5xl">
+					{t("changelog.title")}
+				</h1>
+				<p className="text-lg opacity-50">
+					{t("changelog.description")}
+				</p>
 			</div>
 			<ChangelogSection
 				items={[

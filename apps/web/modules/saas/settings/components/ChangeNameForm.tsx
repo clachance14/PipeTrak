@@ -40,7 +40,9 @@ export function ChangeNameForm() {
 				onSuccess: () => {
 					toast({
 						variant: "success",
-						title: t("settings.account.changeName.notifications.success"),
+						title: t(
+							"settings.account.changeName.notifications.success",
+						),
 					});
 
 					reloadSession();
@@ -51,7 +53,9 @@ export function ChangeNameForm() {
 				onError: () => {
 					toast({
 						variant: "error",
-						title: t("settings.account.changeName.notifications.error"),
+						title: t(
+							"settings.account.changeName.notifications.error",
+						),
 					});
 				},
 				onResponse: () => {
@@ -71,7 +75,10 @@ export function ChangeNameForm() {
 						type="submit"
 						loading={submitting}
 						disabled={
-							!(form.formState.isValid && form.formState.dirtyFields.name)
+							!(
+								form.formState.isValid &&
+								form.formState.dirtyFields.name
+							)
 						}
 					>
 						{t("settings.save")}

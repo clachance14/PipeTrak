@@ -141,28 +141,41 @@ export function LoginForm() {
 			<h1 className="font-extrabold text-2xl md:text-3xl">
 				{t("auth.login.title")}
 			</h1>
-			<p className="mt-1 mb-6 text-foreground/60">{t("auth.login.subtitle")}</p>
+			<p className="mt-1 mb-6 text-foreground/60">
+				{t("auth.login.subtitle")}
+			</p>
 
-			{form.formState.isSubmitSuccessful && signinMode === "magic-link" ? (
+			{form.formState.isSubmitSuccessful &&
+			signinMode === "magic-link" ? (
 				<Alert variant="success">
 					<MailboxIcon className="size-6" />
-					<AlertTitle>{t("auth.login.hints.linkSent.title")}</AlertTitle>
+					<AlertTitle>
+						{t("auth.login.hints.linkSent.title")}
+					</AlertTitle>
 					<AlertDescription>
 						{t("auth.login.hints.linkSent.message")}
 					</AlertDescription>
 				</Alert>
 			) : (
 				<>
-					{invitationId && <OrganizationInvitationAlert className="mb-6" />}
+					{invitationId && (
+						<OrganizationInvitationAlert className="mb-6" />
+					)}
 
 					<Form {...form}>
-						<form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+						<form
+							className="space-y-4"
+							onSubmit={form.handleSubmit(onSubmit)}
+						>
 							{config.auth.enableMagicLink &&
 								config.auth.enablePasswordLogin && (
 									<LoginModeSwitch
 										activeMode={signinMode}
 										onChange={(mode) =>
-											form.setValue("mode", mode as typeof signinMode)
+											form.setValue(
+												"mode",
+												mode as typeof signinMode,
+											)
 										}
 									/>
 								)}
@@ -182,55 +195,75 @@ export function LoginForm() {
 								name="email"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("auth.signup.email")}</FormLabel>
+										<FormLabel>
+											{t("auth.signup.email")}
+										</FormLabel>
 										<FormControl>
-											<Input {...field} autoComplete="email" />
+											<Input
+												{...field}
+												autoComplete="email"
+											/>
 										</FormControl>
 									</FormItem>
 								)}
 							/>
 
-							{config.auth.enablePasswordLogin && signinMode === "password" && (
-								<FormField
-									control={form.control}
-									name="password"
-									render={({ field }) => (
-										<FormItem>
-											<div className="flex justify-between gap-4">
-												<FormLabel>{t("auth.signup.password")}</FormLabel>
-
-												<Link
-													href="/auth/forgot-password"
-													className="text-foreground/60 text-xs"
-												>
-													{t("auth.login.forgotPassword")}
-												</Link>
-											</div>
-											<FormControl>
-												<div className="relative">
-													<Input
-														type={showPassword ? "text" : "password"}
-														className="pr-10"
-														{...field}
-														autoComplete="current-password"
-													/>
-													<button
-														type="button"
-														onClick={() => setShowPassword(!showPassword)}
-														className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
-													>
-														{showPassword ? (
-															<EyeOffIcon className="size-4" />
-														) : (
-															<EyeIcon className="size-4" />
+							{config.auth.enablePasswordLogin &&
+								signinMode === "password" && (
+									<FormField
+										control={form.control}
+										name="password"
+										render={({ field }) => (
+											<FormItem>
+												<div className="flex justify-between gap-4">
+													<FormLabel>
+														{t(
+															"auth.signup.password",
 														)}
-													</button>
+													</FormLabel>
+
+													<Link
+														href="/auth/forgot-password"
+														className="text-foreground/60 text-xs"
+													>
+														{t(
+															"auth.login.forgotPassword",
+														)}
+													</Link>
 												</div>
-											</FormControl>
-										</FormItem>
-									)}
-								/>
-							)}
+												<FormControl>
+													<div className="relative">
+														<Input
+															type={
+																showPassword
+																	? "text"
+																	: "password"
+															}
+															className="pr-10"
+															{...field}
+															autoComplete="current-password"
+														/>
+														<button
+															type="button"
+															onClick={() =>
+																setShowPassword(
+																	!showPassword,
+																)
+															}
+															className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
+														>
+															{showPassword ? (
+																<EyeOffIcon className="size-4" />
+															) : (
+																<EyeIcon className="size-4" />
+															)}
+														</button>
+													</div>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+								)}
 
 							<Button
 								className="w-full"
@@ -246,7 +279,8 @@ export function LoginForm() {
 					</Form>
 
 					{(config.auth.enablePasskeys ||
-						(config.auth.enableSignup && config.auth.enableSocialLogin)) && (
+						(config.auth.enableSignup &&
+							config.auth.enableSocialLogin)) && (
 						<>
 							<div className="relative my-6 h-4">
 								<hr className="relative top-2" />
@@ -258,12 +292,16 @@ export function LoginForm() {
 							<div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
 								{config.auth.enableSignup &&
 									config.auth.enableSocialLogin &&
-									Object.keys(oAuthProviders).map((providerId) => (
-										<SocialSigninButton
-											key={providerId}
-											provider={providerId as OAuthProvider}
-										/>
-									))}
+									Object.keys(oAuthProviders).map(
+										(providerId) => (
+											<SocialSigninButton
+												key={providerId}
+												provider={
+													providerId as OAuthProvider
+												}
+											/>
+										),
+									)}
 
 								{config.auth.enablePasskeys && (
 									<Button

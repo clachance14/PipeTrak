@@ -19,8 +19,9 @@ function sanitizePath(path: string) {
 
 function getLocaleFromFilePath(path: string) {
 	return (
-		path.match(/(\.[a-zA-Z-]{2,5})+\.(md|mdx|json)$/)?.[1]?.replace(".", "") ??
-		config.i18n.defaultLocale
+		path
+			.match(/(\.[a-zA-Z-]{2,5})+\.(md|mdx|json)$/)?.[1]
+			?.replace(".", "") ?? config.i18n.defaultLocale
 	);
 }
 

@@ -47,7 +47,9 @@ export function OnboardingForm() {
 			<h1 className="font-bold text-2xl md:text-3xl">
 				{t("onboarding.title")}
 			</h1>
-			<p className="mt-2 mb-6 text-foreground/60">{t("onboarding.message")}</p>
+			<p className="mt-2 mb-6 text-foreground/60">
+				{t("onboarding.message")}
+			</p>
 
 			{steps.length > 1 && (
 				<div className="mb-6 flex items-center gap-3">

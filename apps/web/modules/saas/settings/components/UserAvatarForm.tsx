@@ -17,7 +17,9 @@ export function UserAvatarForm() {
 				onSuccess={() => {
 					toast({
 						variant: "success",
-						title: t("settings.account.avatar.notifications.success"),
+						title: t(
+							"settings.account.avatar.notifications.success",
+						),
 					});
 				}}
 				onError={() => {

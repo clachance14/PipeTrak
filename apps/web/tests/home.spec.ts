@@ -7,7 +7,9 @@ test.describe("home page", () => {
 			await page.goto("/");
 
 			await expect(
-				page.getByRole("heading", { name: "Your revolutionary Next.js SaaS" }),
+				page.getByRole("heading", {
+					name: "Your revolutionary Next.js SaaS",
+				}),
 			).toBeVisible();
 		});
 	} else {

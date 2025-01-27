@@ -43,7 +43,10 @@ export const aiRouter = new Hono()
 		}
 
 		if (chat.organizationId) {
-			await verifyOrganizationMembership(chat.organizationId, c.get("user").id);
+			await verifyOrganizationMembership(
+				chat.organizationId,
+				c.get("user").id,
+			);
 		} else if (chat.userId !== c.get("user").id) {
 			throw new HTTPException(403, { message: "Forbidden" });
 		}
@@ -93,7 +96,10 @@ export const aiRouter = new Hono()
 			}
 
 			if (chat.organizationId) {
-				await verifyOrganizationMembership(chat.organizationId, user.id);
+				await verifyOrganizationMembership(
+					chat.organizationId,
+					user.id,
+				);
 			} else if (chat.userId !== c.get("user").id) {
 				throw new HTTPException(403, { message: "Forbidden" });
 			}
@@ -160,7 +166,10 @@ export const aiRouter = new Hono()
 			}
 
 			if (chat.organizationId) {
-				await verifyOrganizationMembership(chat.organizationId, user.id);
+				await verifyOrganizationMembership(
+					chat.organizationId,
+					user.id,
+				);
 			} else if (chat.userId !== c.get("user").id) {
 				throw new HTTPException(403, { message: "Forbidden" });
 			}
@@ -172,7 +181,10 @@ export const aiRouter = new Hono()
 					await db.aiChat.update({
 						where: { id },
 						data: {
-							messages: [...messages, { role: "assistant", content: text }],
+							messages: [
+								...messages,
+								{ role: "assistant", content: text },
+							],
 						},
 					});
 				},

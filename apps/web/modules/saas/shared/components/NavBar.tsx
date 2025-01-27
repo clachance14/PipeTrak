@@ -102,16 +102,20 @@ export function NavBar() {
 							!config.organizations.hideOrganization && (
 								<>
 									<span
-										className={cn("hidden opacity-30 md:block", {
-											"md:hidden": useSidebarLayout,
-										})}
+										className={cn(
+											"hidden opacity-30 md:block",
+											{
+												"md:hidden": useSidebarLayout,
+											},
+										)}
 									>
 										<ChevronRightIcon className="size-4" />
 									</span>
 
 									<OrganzationSelect
 										className={cn({
-											"md:-mx-2 md:mt-2": useSidebarLayout,
+											"md:-mx-2 md:mt-2":
+												useSidebarLayout,
 										})}
 									/>
 								</>
@@ -119,9 +123,12 @@ export function NavBar() {
 					</div>
 
 					<div
-						className={cn("mr-0 ml-auto flex items-center justify-end gap-4", {
-							"md:hidden": useSidebarLayout,
-						})}
+						className={cn(
+							"mr-0 ml-auto flex items-center justify-end gap-4",
+							{
+								"md:hidden": useSidebarLayout,
+							},
+						)}
 					>
 						<UserMenu />
 					</div>
@@ -155,7 +162,9 @@ export function NavBar() {
 							>
 								<menuItem.icon
 									className={`size-4 shrink-0 ${
-										menuItem.isActive ? "text-primary" : "opacity-50"
+										menuItem.isActive
+											? "text-primary"
+											: "opacity-50"
 									}`}
 								/>
 								<span>{menuItem.label}</span>
@@ -165,9 +174,12 @@ export function NavBar() {
 				</ul>
 
 				<div
-					className={cn("-mx-4 md:-mx-6 mt-auto mb-0 hidden p-4 md:p-4", {
-						"md:block": useSidebarLayout,
-					})}
+					className={cn(
+						"-mx-4 md:-mx-6 mt-auto mb-0 hidden p-4 md:p-4",
+						{
+							"md:block": useSidebarLayout,
+						},
+					)}
 				>
 					<UserMenu showUserName />
 				</div>

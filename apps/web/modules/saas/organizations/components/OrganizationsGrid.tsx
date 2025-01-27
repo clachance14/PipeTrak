@@ -32,7 +32,9 @@ export function OrganizationsGrid() {
 							className="size-12"
 						/>
 						<span className="flex items-center gap-1 text-base leading-tight">
-							<span className="block font-medium">{organization.name}</span>
+							<span className="block font-medium">
+								{organization.name}
+							</span>
 							<ChevronRightIcon className="size-4" />
 						</span>
 					</Card>
@@ -45,7 +47,9 @@ export function OrganizationsGrid() {
 					>
 						<PlusCircleIcon className="size-6" />
 						<span className="font-medium text-sm">
-							{t("organizations.organizationsGrid.createNewOrganization")}
+							{t(
+								"organizations.organizationsGrid.createNewOrganization",
+							)}
 						</span>
 					</Link>
 				)}

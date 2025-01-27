@@ -48,7 +48,9 @@ export function PricingTable({
 		}
 
 		const plan = plans[planId];
-		const price = plan.prices?.find((price) => price.productId === productId);
+		const price = plan.prices?.find(
+			(price) => price.productId === productId,
+		);
 
 		if (!price) {
 			return;
@@ -57,12 +59,14 @@ export function PricingTable({
 		setLoading(planId);
 
 		try {
-			const { checkoutLink } = await createCheckoutLinkMutation.mutateAsync({
-				type: price.type === "one-time" ? "one-time" : "subscription",
-				productId: price.productId,
-				organizationId,
-				redirectUrl: window.location.href,
-			});
+			const { checkoutLink } =
+				await createCheckoutLinkMutation.mutateAsync({
+					type:
+						price.type === "one-time" ? "one-time" : "subscription",
+					productId: price.productId,
+					organizationId,
+					redirectUrl: window.location.href,
+				});
 
 			window.location.href = checkoutLink;
 		} catch (error) {
@@ -87,12 +91,18 @@ export function PricingTable({
 				<div className="mb-6 flex @xl:justify-center">
 					<Tabs
 						value={interval}
-						onValueChange={(value) => setInterval(value as typeof interval)}
+						onValueChange={(value) =>
+							setInterval(value as typeof interval)
+						}
 						data-test="price-table-interval-tabs"
 					>
 						<TabsList className="border-foreground/10">
-							<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
-							<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
+							<TabsTrigger value="month">
+								{t("pricing.monthly")}
+							</TabsTrigger>
+							<TabsTrigger value="year">
+								{t("pricing.yearly")}
+							</TabsTrigger>
 						</TabsList>
 					</Tabs>
 				</div>
@@ -106,14 +116,16 @@ export function PricingTable({
 				{filteredPlans
 					.filter(([planId]) => planId !== activePlanId)
 					.map(([planId, plan]) => {
-						const { isFree, isEnterprise, prices, recommended } = plan;
+						const { isFree, isEnterprise, prices, recommended } =
+							plan;
 						const { title, description, features } =
 							planData[planId as keyof typeof planData];
 
 						let price = prices?.find(
 							(price) =>
 								!price.hidden &&
-								(price.type === "one-time" || price.interval === interval) &&
+								(price.type === "one-time" ||
+									price.interval === interval) &&
 								price.currency === localeCurrency,
 						);
 
@@ -150,9 +162,13 @@ export function PricingTable({
 											</div>
 										)}
 										<h3
-											className={cn("my-0 font-semibold text-2xl", {
-												"font-bold text-primary": recommended,
-											})}
+											className={cn(
+												"my-0 font-semibold text-2xl",
+												{
+													"font-bold text-primary":
+														recommended,
+												},
+											)}
 										>
 											{title}
 										</h3>
@@ -164,26 +180,31 @@ export function PricingTable({
 
 										{!!features?.length && (
 											<ul className="mt-4 grid list-none gap-2 text-sm">
-												{features.map((feature, key) => (
-													<li
-														key={key}
-														className="flex items-center justify-start"
-													>
-														<CheckIcon className="mr-2 size-4 text-primary" />
-														<span>{feature}</span>
-													</li>
-												))}
+												{features.map(
+													(feature, key) => (
+														<li
+															key={key}
+															className="flex items-center justify-start"
+														>
+															<CheckIcon className="mr-2 size-4 text-primary" />
+															<span>
+																{feature}
+															</span>
+														</li>
+													),
+												)}
 											</ul>
 										)}
 
-										{price && "trialPeriodDays" in price && (
-											<div className="mt-4 flex items-center justify-start font-medium text-primary text-sm opacity-80">
-												<BadgePercentIcon className="mr-2 size-4" />
-												{t("pricing.trialPeriod", {
-													days: price.trialPeriodDays,
-												})}
-											</div>
-										)}
+										{price &&
+											"trialPeriodDays" in price && (
+												<div className="mt-4 flex items-center justify-start font-medium text-primary text-sm opacity-80">
+													<BadgePercentIcon className="mr-2 size-4" />
+													{t("pricing.trialPeriod", {
+														days: price.trialPeriodDays,
+													})}
+												</div>
+											)}
 									</div>
 
 									<div>
@@ -201,12 +222,22 @@ export function PricingTable({
 													<span className="font-normal text-xs opacity-60">
 														{" / "}
 														{interval === "month"
-															? t("pricing.month", {
-																	count: price.intervalCount ?? 1,
-																})
-															: t("pricing.year", {
-																	count: price.intervalCount ?? 1,
-																})}
+															? t(
+																	"pricing.month",
+																	{
+																		count:
+																			price.intervalCount ??
+																			1,
+																	},
+																)
+															: t(
+																	"pricing.year",
+																	{
+																		count:
+																			price.intervalCount ??
+																			1,
+																	},
+																)}
 													</span>
 												)}
 												{organizationId &&
@@ -214,7 +245,9 @@ export function PricingTable({
 													price.seatBased && (
 														<span className="font-normal text-xs opacity-60">
 															{" / "}
-															{t("pricing.perSeat")}
+															{t(
+																"pricing.perSeat",
+															)}
 														</span>
 													)}
 											</strong>
@@ -234,9 +267,16 @@ export function PricingTable({
 										) : (
 											<Button
 												className="mt-4 w-full"
-												variant={recommended ? "primary" : "secondary"}
+												variant={
+													recommended
+														? "primary"
+														: "secondary"
+												}
 												onClick={() =>
-													onSelectPlan(planId as PlanId, price?.productId)
+													onSelectPlan(
+														planId as PlanId,
+														price?.productId,
+													)
 												}
 												loading={loading === planId}
 											>

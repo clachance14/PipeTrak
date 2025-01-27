@@ -48,11 +48,15 @@ export function ConfirmationAlertProvider({ children }: PropsWithChildren) {
 
 			<AlertDialog
 				open={!!confirmOptions}
-				onOpenChange={(open) => setConfirmOptions(open ? confirmOptions : null)}
+				onOpenChange={(open) =>
+					setConfirmOptions(open ? confirmOptions : null)
+				}
 			>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>{confirmOptions?.title}</AlertDialogTitle>
+						<AlertDialogTitle>
+							{confirmOptions?.title}
+						</AlertDialogTitle>
 					</AlertDialogHeader>
 					<AlertDialogDescription>
 						{confirmOptions?.message}
@@ -60,16 +64,22 @@ export function ConfirmationAlertProvider({ children }: PropsWithChildren) {
 
 					<AlertDialogFooter>
 						<AlertDialogCancel>
-							{confirmOptions?.cancelLabel ?? t("common.confirmation.cancel")}
+							{confirmOptions?.cancelLabel ??
+								t("common.confirmation.cancel")}
 						</AlertDialogCancel>
 						<Button
-							variant={confirmOptions?.destructive ? "error" : "primary"}
+							variant={
+								confirmOptions?.destructive
+									? "error"
+									: "primary"
+							}
 							onClick={async () => {
 								await confirmOptions?.onConfirm();
 								setConfirmOptions(null);
 							}}
 						>
-							{confirmOptions?.confirmLabel ?? t("common.confirmation.confirm")}
+							{confirmOptions?.confirmLabel ??
+								t("common.confirmation.confirm")}
 						</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>

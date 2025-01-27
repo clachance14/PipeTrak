@@ -104,7 +104,9 @@ export const paymentsRouter = new Hono()
 				(price) => price.productId === productId,
 			);
 			const trialPeriodDays =
-				price && "trialPeriodDays" in price ? price.trialPeriodDays : undefined;
+				price && "trialPeriodDays" in price
+					? price.trialPeriodDays
+					: undefined;
 
 			const organization = organizationId
 				? await db.organization.findUnique({
@@ -137,7 +139,9 @@ export const paymentsRouter = new Hono()
 					email: user.email,
 					name: user.name ?? "",
 					redirectUrl,
-					...(organizationId ? { organizationId } : { userId: user.id }),
+					...(organizationId
+						? { organizationId }
+						: { userId: user.id }),
 					trialPeriodDays,
 					seats,
 					customerId: customerId ?? undefined,
@@ -190,10 +194,11 @@ export const paymentsRouter = new Hono()
 			}
 
 			if (purchase.organizationId) {
-				const userOrganizationMembership = await getOrganizationMembership(
-					user.id,
-					purchase.organizationId,
-				);
+				const userOrganizationMembership =
+					await getOrganizationMembership(
+						user.id,
+						purchase.organizationId,
+					);
 				if (userOrganizationMembership?.role !== "owner") {
 					throw new HTTPException(403);
 				}

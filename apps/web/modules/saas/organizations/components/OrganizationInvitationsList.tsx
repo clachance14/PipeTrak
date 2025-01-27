@@ -59,7 +59,8 @@ export function OrganizationInvitationsList({
 				?.filter((invitation) => invitation.status === "pending")
 				.sort(
 					(a, b) =>
-						new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime(),
+						new Date(a.expiresAt).getTime() -
+						new Date(b.expiresAt).getTime(),
 				),
 		[organization?.invitations],
 	);
@@ -122,7 +123,8 @@ export function OrganizationInvitationsList({
 					<div className="leading-normal">
 						<strong
 							className={cn("block", {
-								"opacity-50": row.original.status === "canceled",
+								"opacity-50":
+									row.original.status === "canceled",
 							})}
 						>
 							{row.original.email}
@@ -136,12 +138,18 @@ export function OrganizationInvitationsList({
 							</span>
 							<span>-</span>
 							<span>
-								{t("organizations.settings.members.invitations.expiresAt", {
-									date: formatter.dateTime(new Date(row.original.expiresAt), {
-										dateStyle: "medium",
-										timeStyle: "short",
-									}),
-								})}
+								{t(
+									"organizations.settings.members.invitations.expiresAt",
+									{
+										date: formatter.dateTime(
+											new Date(row.original.expiresAt),
+											{
+												dateStyle: "medium",
+												timeStyle: "short",
+											},
+										),
+									},
+								)}
 							</span>
 						</small>
 					</div>
@@ -174,10 +182,14 @@ export function OrganizationInvitationsList({
 								<DropdownMenuContent>
 									<DropdownMenuItem
 										disabled={!isPending}
-										onClick={() => revokeInvitation(row.original.id)}
+										onClick={() =>
+											revokeInvitation(row.original.id)
+										}
 									>
 										<MailXIcon className="mr-2 size-4" />
-										{t("organizations.settings.members.invitations.revoke")}
+										{t(
+											"organizations.settings.members.invitations.revoke",
+										)}
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
@@ -209,15 +221,23 @@ export function OrganizationInvitationsList({
 							>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										{flexRender(
+											cell.column.columnDef.cell,
+											cell.getContext(),
+										)}
 									</TableCell>
 								))}
 							</TableRow>
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={columns.length} className="h-24 text-center">
-								{t("organizations.settings.members.invitations.empty")}
+							<TableCell
+								colSpan={columns.length}
+								className="h-24 text-center"
+							>
+								{t(
+									"organizations.settings.members.invitations.empty",
+								)}
 							</TableCell>
 						</TableRow>
 					)}

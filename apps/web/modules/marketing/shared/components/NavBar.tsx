@@ -172,7 +172,9 @@ export function NavBar() {
 										className="block px-3 py-2 text-base"
 										prefetch={!user}
 									>
-										{user ? t("common.menu.dashboard") : t("common.menu.login")}
+										{user
+											? t("common.menu.dashboard")
+											: t("common.menu.login")}
 									</NextLink>
 								</div>
 							</SheetContent>
@@ -186,7 +188,9 @@ export function NavBar() {
 									asChild
 									variant="secondary"
 								>
-									<NextLink href="/app">{t("common.menu.dashboard")}</NextLink>
+									<NextLink href="/app">
+										{t("common.menu.dashboard")}
+									</NextLink>
 								</Button>
 							) : (
 								<Button

@@ -93,9 +93,14 @@ export function ForgotPasswordForm() {
 							name="email"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("auth.forgotPassword.email")}</FormLabel>
+									<FormLabel>
+										{t("auth.forgotPassword.email")}
+									</FormLabel>
 									<FormControl>
-										<Input {...field} autoComplete="email" />
+										<Input
+											{...field}
+											autoComplete="email"
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -105,7 +110,9 @@ export function ForgotPasswordForm() {
 							<Alert variant="error">
 								<AlertTriangleIcon className="size-6" />
 								<AlertTitle>{serverError.title}</AlertTitle>
-								<AlertDescription>{serverError.message}</AlertDescription>
+								<AlertDescription>
+									{serverError.message}
+								</AlertDescription>
 							</Alert>
 						)}
 

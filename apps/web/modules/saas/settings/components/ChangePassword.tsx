@@ -66,7 +66,9 @@ export function ChangePasswordForm() {
 	});
 
 	return (
-		<SettingsItem title={t("settings.account.security.changePassword.title")}>
+		<SettingsItem
+			title={t("settings.account.security.changePassword.title")}
+		>
 			<Form {...form}>
 				<form onSubmit={onSubmit}>
 					<div className="grid grid-cols-1 gap-4">
@@ -82,7 +84,10 @@ export function ChangePasswordForm() {
 									</FormLabel>
 
 									<FormControl>
-										<PasswordInput autoComplete="current-password" {...field} />
+										<PasswordInput
+											autoComplete="current-password"
+											{...field}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -95,10 +100,15 @@ export function ChangePasswordForm() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
-										{t("settings.account.security.changePassword.newPassword")}
+										{t(
+											"settings.account.security.changePassword.newPassword",
+										)}
 									</FormLabel>
 									<FormControl>
-										<PasswordInput autoComplete="new-password" {...field} />
+										<PasswordInput
+											autoComplete="new-password"
+											{...field}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -111,7 +121,8 @@ export function ChangePasswordForm() {
 								disabled={
 									!(
 										form.formState.isValid &&
-										Object.keys(form.formState.dirtyFields).length
+										Object.keys(form.formState.dirtyFields)
+											.length
 									)
 								}
 							>

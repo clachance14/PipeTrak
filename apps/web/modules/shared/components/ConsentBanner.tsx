@@ -34,8 +34,9 @@ export function ConsentBanner() {
 				<CookieIcon className="block size-4 shrink-0 text-5xl text-primary" />
 				<div>
 					<p className="text-sm leading-normal">
-						We use tracking cookies to understand how you use the product and
-						help us improve it. Please accept cookies to help us improve.
+						We use tracking cookies to understand how you use the
+						product and help us improve it. Please accept cookies to
+						help us improve.
 					</p>
 					<div className="mt-4 flex gap-4">
 						<Button
@@ -45,7 +46,10 @@ export function ConsentBanner() {
 						>
 							Decline
 						</Button>
-						<Button className="flex-1" onClick={() => handleAllow()}>
+						<Button
+							className="flex-1"
+							onClick={() => handleAllow()}
+						>
 							Allow
 						</Button>
 					</div>

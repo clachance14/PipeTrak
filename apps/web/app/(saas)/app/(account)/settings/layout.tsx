@@ -46,7 +46,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 							{
 								title: t("settings.menu.account.billing"),
 								href: "/app/settings/billing",
-								icon: <CreditCardIcon className="size-4 opacity-50" />,
+								icon: (
+									<CreditCardIcon className="size-4 opacity-50" />
+								),
 							},
 						]
 					: []),
@@ -65,7 +67,9 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 				title={t("settings.account.title")}
 				subtitle={t("settings.account.subtitle")}
 			/>
-			<SidebarContentLayout sidebar={<SettingsMenu menuItems={menuItems} />}>
+			<SidebarContentLayout
+				sidebar={<SettingsMenu menuItems={menuItems} />}
+			>
 				{children}
 			</SidebarContentLayout>
 		</>

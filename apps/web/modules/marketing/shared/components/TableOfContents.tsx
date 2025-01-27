@@ -14,7 +14,9 @@ export function TableOfContents({
 		const element = document.getElementById(id);
 		if (element) {
 			const elementPositionY =
-				element.getBoundingClientRect().top + window.scrollY - scrollOffset;
+				element.getBoundingClientRect().top +
+				window.scrollY -
+				scrollOffset;
 			window.scrollTo({ top: elementPositionY, behavior: "smooth" });
 			history.pushState({}, "", `#${id}`);
 		}

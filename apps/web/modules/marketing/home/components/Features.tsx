@@ -138,8 +138,9 @@ export function Features() {
 						Features your clients will love
 					</h2>
 					<p className="mt-6 text-balance text-lg opacity-50">
-						In this section you can showcase all the features of your SaaS
-						provides and how they can benefit your clients.
+						In this section you can showcase all the features of
+						your SaaS provides and how they can benefit your
+						clients.
 					</p>
 				</div>
 
@@ -165,7 +166,9 @@ export function Features() {
 											: "text-foreground opacity-30",
 									)}
 								/>
-								<span className="text-xs md:text-sm">{tab.title}</span>
+								<span className="text-xs md:text-sm">
+									{tab.title}
+								</span>
 							</button>
 						);
 					})}
@@ -182,13 +185,17 @@ export function Features() {
 								key={tab.id}
 								className={cn(
 									"border-t py-8 first:border-t-0 md:py-12 lg:border-t-0 lg:py-16",
-									selectedTab === tab.id ? "block" : "block lg:hidden",
+									selectedTab === tab.id
+										? "block"
+										: "block lg:hidden",
 								)}
 							>
 								<div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:gap-12">
 									<div>
 										<h3 className="font-normal text-2xl text-foreground/60 leading-normal md:text-3xl">
-											<strong className="text-secondary">{tab.title}. </strong>
+											<strong className="text-secondary">
+												{tab.title}.{" "}
+											</strong>
 											{tab.subtitle}
 										</h3>
 
@@ -200,20 +207,22 @@ export function Features() {
 
 										{filteredStack?.length > 0 && (
 											<div className="mt-4 flex flex-wrap gap-6">
-												{filteredStack.map((tool, k) => (
-													<a
-														href={tool.href}
-														target="_blank"
-														key={`stack-tool-${k}`}
-														className="flex items-center gap-2"
-														rel="noreferrer"
-													>
-														<tool.icon className="size-6" />
-														<strong className="block text-sm">
-															{tool.title}
-														</strong>
-													</a>
-												))}
+												{filteredStack.map(
+													(tool, k) => (
+														<a
+															href={tool.href}
+															target="_blank"
+															key={`stack-tool-${k}`}
+															className="flex items-center gap-2"
+															rel="noreferrer"
+														>
+															<tool.icon className="size-6" />
+															<strong className="block text-sm">
+																{tool.title}
+															</strong>
+														</a>
+													),
+												)}
 											</div>
 										)}
 									</div>
@@ -222,10 +231,13 @@ export function Features() {
 											<Image
 												src={tab.image}
 												alt={tab.title}
-												className={cn(" h-auto w-full max-w-xl", {
-													"rounded-2xl border-4 border-secondary/10":
-														tab.imageBorder,
-												})}
+												className={cn(
+													" h-auto w-full max-w-xl",
+													{
+														"rounded-2xl border-4 border-secondary/10":
+															tab.imageBorder,
+													},
+												)}
 											/>
 										)}
 									</div>
@@ -233,26 +245,30 @@ export function Features() {
 
 								{filteredHighlights.length > 0 && (
 									<div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-										{filteredHighlights.map((highlight, k) => (
-											<div
-												key={`highlight-${k}`}
-												className="flex flex-col items-stretch justify-between rounded-lg border p-4"
-											>
-												<div>
-													<highlight.icon
-														className="text-primary text-xl"
-														width="1em"
-														height="1em"
-													/>
-													<strong className="mt-2 block">
-														{highlight.title}
-													</strong>
-													<p className="mt-1 text-sm opacity-50">
-														{highlight.description}
-													</p>
+										{filteredHighlights.map(
+											(highlight, k) => (
+												<div
+													key={`highlight-${k}`}
+													className="flex flex-col items-stretch justify-between rounded-lg border p-4"
+												>
+													<div>
+														<highlight.icon
+															className="text-primary text-xl"
+															width="1em"
+															height="1em"
+														/>
+														<strong className="mt-2 block">
+															{highlight.title}
+														</strong>
+														<p className="mt-1 text-sm opacity-50">
+															{
+																highlight.description
+															}
+														</p>
+													</div>
 												</div>
-											</div>
-										))}
+											),
+										)}
 									</div>
 								)}
 							</div>

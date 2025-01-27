@@ -49,7 +49,10 @@ export default async function middleware(req: NextRequest) {
 			);
 		}
 
-		if (!locale || (session.user.locale && locale !== session.user.locale)) {
+		if (
+			!locale ||
+			(session.user.locale && locale !== session.user.locale)
+		) {
 			locale = session.user.locale ?? appConfig.i18n.defaultLocale;
 			response.cookies.set(appConfig.i18n.localeCookieName, locale);
 		}
@@ -67,7 +70,9 @@ export default async function middleware(req: NextRequest) {
 
 			return NextResponse.redirect(
 				new URL(
-					organization ? `/app/${organization.slug}` : "/app/new-organization",
+					organization
+						? `/app/${organization.slug}`
+						: "/app/new-organization",
 					origin,
 				),
 			);

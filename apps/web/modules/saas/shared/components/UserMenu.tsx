@@ -94,8 +94,12 @@ export function UserMenu({
 						<UserAvatar name={name ?? ""} avatarUrl={image} />
 						{showUserName && (
 							<span className="text-left leading-tight">
-								<span className="font-medium text-sm">{name}</span>
-								<span className="block text-xs opacity-70">{email}</span>
+								<span className="font-medium text-sm">
+									{name}
+								</span>
+								<span className="block text-xs opacity-70">
+									{email}
+								</span>
 							</span>
 						)}
 					</span>
@@ -107,7 +111,9 @@ export function UserMenu({
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>
 					{name}
-					<span className="block font-normal text-xs opacity-70">{email}</span>
+					<span className="block font-normal text-xs opacity-70">
+						{email}
+					</span>
 				</DropdownMenuLabel>
 
 				<DropdownMenuSeparator />

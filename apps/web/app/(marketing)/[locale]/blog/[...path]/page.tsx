@@ -85,14 +85,18 @@ export default async function BlogPostPage(props: {
 								</div>
 							)}
 							<div>
-								<p className="font-semibold text-sm opacity-50">{authorName}</p>
+								<p className="font-semibold text-sm opacity-50">
+									{authorName}
+								</p>
 							</div>
 						</div>
 					)}
 
 					<div className="mr-0 ml-auto">
 						<p className="text-sm opacity-30">
-							{Intl.DateTimeFormat("en-US").format(new Date(date))}
+							{Intl.DateTimeFormat("en-US").format(
+								new Date(date),
+							)}
 						</p>
 					</div>
 

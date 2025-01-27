@@ -49,9 +49,10 @@ export function CreateOrganizationForm({
 
 	const onSubmit = form.handleSubmit(async ({ name }) => {
 		try {
-			const newOrganization = await createOrganizationMutation.mutateAsync({
-				name,
-			});
+			const newOrganization =
+				await createOrganizationMutation.mutateAsync({
+					name,
+				});
 
 			if (!newOrganization) {
 				throw new Error("Failed to create organization");
@@ -93,7 +94,9 @@ export function CreateOrganizationForm({
 						name="name"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>{t("organizations.createForm.name")}</FormLabel>
+								<FormLabel>
+									{t("organizations.createForm.name")}
+								</FormLabel>
 								<FormControl>
 									<Input {...field} autoComplete="email" />
 								</FormControl>

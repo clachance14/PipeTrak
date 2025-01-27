@@ -73,7 +73,9 @@ export function OrganizationInvitationModal({
 					className="size-12"
 				/>
 				<div>
-					<strong className="font-medium text-lg">{organizationName}</strong>
+					<strong className="font-medium text-lg">
+						{organizationName}
+					</strong>
 				</div>
 			</div>
 

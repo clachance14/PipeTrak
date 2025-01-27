@@ -77,7 +77,9 @@ export function ResetPasswordForm() {
 			{form.formState.isSubmitSuccessful ? (
 				<Alert variant="success">
 					<MailboxIcon className="size-6" />
-					<AlertTitle>{t("auth.resetPassword.hints.success")}</AlertTitle>
+					<AlertTitle>
+						{t("auth.resetPassword.hints.success")}
+					</AlertTitle>
 				</Alert>
 			) : (
 				<Form {...form}>
@@ -90,9 +92,14 @@ export function ResetPasswordForm() {
 							name="password"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("auth.resetPassword.newPassword")}</FormLabel>
+									<FormLabel>
+										{t("auth.resetPassword.newPassword")}
+									</FormLabel>
 									<FormControl>
-										<PasswordInput autoComplete="new-password" {...field} />
+										<PasswordInput
+											autoComplete="new-password"
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -103,7 +110,9 @@ export function ResetPasswordForm() {
 								<AlertTriangleIcon className="size-6" />
 								<AlertTitle>{serverError.title}</AlertTitle>
 								{serverError.message && (
-									<AlertDescription>{serverError.message}</AlertDescription>
+									<AlertDescription>
+										{serverError.message}
+									</AlertDescription>
 								)}
 							</Alert>
 						)}

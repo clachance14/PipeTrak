@@ -23,26 +23,40 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			<PageHeader title={t("admin.title")} subtitle={t("admin.description")} />
+			<PageHeader
+				title={t("admin.title")}
+				subtitle={t("admin.description")}
+			/>
 			<SidebarContentLayout
 				sidebar={
 					<SettingsMenu
 						menuItems={[
 							{
-								avatar: <Logo className="size-8" withLabel={false} />,
+								avatar: (
+									<Logo
+										className="size-8"
+										withLabel={false}
+									/>
+								),
 								title: t("admin.title"),
 								items: [
 									{
 										title: t("admin.menu.users"),
 										href: "/app/admin/users",
-										icon: <UsersIcon className="size-4 opacity-50" />,
+										icon: (
+											<UsersIcon className="size-4 opacity-50" />
+										),
 									},
 									...(config.organizations.enable
 										? [
 												{
-													title: t("admin.menu.organizations"),
+													title: t(
+														"admin.menu.organizations",
+													),
 													href: "/app/admin/organizations",
-													icon: <Building2Icon className="size-4 opacity-50" />,
+													icon: (
+														<Building2Icon className="size-4 opacity-50" />
+													),
 												},
 											]
 										: []),

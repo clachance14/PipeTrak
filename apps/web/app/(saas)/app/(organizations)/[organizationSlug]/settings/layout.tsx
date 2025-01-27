@@ -59,7 +59,9 @@ export default async function SettingsLayout({
 							{
 								title: t("settings.menu.organization.billing"),
 								href: `${organizationSettingsBasePath}/billing`,
-								icon: <CreditCardIcon className="size-4 opacity-50" />,
+								icon: (
+									<CreditCardIcon className="size-4 opacity-50" />
+								),
 							},
 						]
 					: []),
@@ -73,7 +75,9 @@ export default async function SettingsLayout({
 				title={t("organizations.settings.title")}
 				subtitle={t("organizations.settings.subtitle")}
 			/>
-			<SidebarContentLayout sidebar={<SettingsMenu menuItems={menuItems} />}>
+			<SidebarContentLayout
+				sidebar={<SettingsMenu menuItems={menuItems} />}
+			>
 				{children}
 			</SidebarContentLayout>
 		</>

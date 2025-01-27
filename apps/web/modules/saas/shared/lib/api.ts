@@ -11,9 +11,11 @@ export const useSignedUploadUrlMutation = () => {
 				(typeof apiClient.uploads)["signed-upload-url"]["$post"]
 			>["query"],
 		) => {
-			const response = await apiClient.uploads["signed-upload-url"].$post({
-				query,
-			});
+			const response = await apiClient.uploads["signed-upload-url"].$post(
+				{
+					query,
+				},
+			);
 
 			if (!response.ok) {
 				throw new Error("Failed to get signed upload url");

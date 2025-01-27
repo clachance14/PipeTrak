@@ -7,7 +7,12 @@ export function SettingsList({ children }: PropsWithChildren) {
 				? children.filter(Boolean).map((child, i) => {
 						return (
 							<div key={`settings-item-${i}`}>
-								{i > 0 && <hr key={`divider-${i}`} className="@xl:my-8 my-6" />}
+								{i > 0 && (
+									<hr
+										key={`divider-${i}`}
+										className="@xl:my-8 my-6"
+									/>
+								)}
 								{child}
 							</div>
 						);

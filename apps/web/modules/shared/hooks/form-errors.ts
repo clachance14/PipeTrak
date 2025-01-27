@@ -47,7 +47,9 @@ const getKeyAndValues = (
 
 	if (isRecord(param)) {
 		const key =
-			"key" in param && typeof param.key === "string" ? param.key : defaultKey;
+			"key" in param && typeof param.key === "string"
+				? param.key
+				: defaultKey;
 		const values =
 			"values" in param && isRecord(param.values) ? param.values : {};
 		return { key, values };
@@ -71,14 +73,21 @@ export function useFormErrors() {
 					message = t("zod.errors.invalid_type_received_undefined");
 				} else {
 					message = t("zod.errors.invalid_type", {
-						expected: t(`zod.types.${issue.expected}` as TranslationKey),
-						received: t(`zod.types.${issue.received}` as TranslationKey),
+						expected: t(
+							`zod.types.${issue.expected}` as TranslationKey,
+						),
+						received: t(
+							`zod.types.${issue.received}` as TranslationKey,
+						),
 					});
 				}
 				break;
 			case ZodIssueCode.invalid_literal:
 				message = t("zod.errors.invalid_literal", {
-					expected: JSON.stringify(issue.expected, jsonStringifyReplacer),
+					expected: JSON.stringify(
+						issue.expected,
+						jsonStringifyReplacer,
+					),
 				});
 				break;
 			case ZodIssueCode.unrecognized_keys:
@@ -147,7 +156,8 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						minimum,
-						count: typeof minimum === "number" ? minimum : undefined,
+						count:
+							typeof minimum === "number" ? minimum : undefined,
 					},
 				);
 				break;
@@ -167,7 +177,8 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						maximum,
-						count: typeof maximum === "number" ? maximum : undefined,
+						count:
+							typeof maximum === "number" ? maximum : undefined,
 					},
 				);
 				break;

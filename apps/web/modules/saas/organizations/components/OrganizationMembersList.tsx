@@ -146,11 +146,16 @@ export function OrganizationMembersList({
 				row.original.user ? (
 					<div className="flex items-center gap-2">
 						<UserAvatar
-							name={row.original.user.name ?? row.original.user.email}
+							name={
+								row.original.user.name ??
+								row.original.user.email
+							}
 							avatarUrl={row.original.user?.image}
 						/>
 						<div>
-							<strong className="block">{row.original.user.name}</strong>
+							<strong className="block">
+								{row.original.user.name}
+							</strong>
 							<small className="text-foreground/60">
 								{row.original.user.email}
 							</small>
@@ -172,7 +177,8 @@ export function OrganizationMembersList({
 										updateMemberRole(row.original.id, value)
 									}
 									disabled={
-										!userIsOrganizationAdmin || row.original.role === "owner"
+										!userIsOrganizationAdmin ||
+										row.original.role === "owner"
 									}
 								/>
 								<DropdownMenu>
@@ -184,21 +190,38 @@ export function OrganizationMembersList({
 									<DropdownMenuContent>
 										{row.original.userId !== user?.id && (
 											<DropdownMenuItem
-												disabled={!isOrganizationAdmin(organization, user)}
+												disabled={
+													!isOrganizationAdmin(
+														organization,
+														user,
+													)
+												}
 												className="text-destructive"
-												onClick={async () => removeMember(row.original.id)}
+												onClick={async () =>
+													removeMember(
+														row.original.id,
+													)
+												}
 											>
 												<TrashIcon className="mr-2 size-4" />
-												{t("organizations.settings.members.removeMember")}
+												{t(
+													"organizations.settings.members.removeMember",
+												)}
 											</DropdownMenuItem>
 										)}
 										{row.original.userId === user?.id && (
 											<DropdownMenuItem
 												className="text-destructive"
-												onClick={async () => removeMember(row.original.id)}
+												onClick={async () =>
+													removeMember(
+														row.original.id,
+													)
+												}
 											>
 												<LogOutIcon className="mr-2 size-4" />
-												{t("organizations.settings.members.leaveOrganization")}
+												{t(
+													"organizations.settings.members.leaveOrganization",
+												)}
 											</DropdownMenuItem>
 										)}
 									</DropdownMenuContent>
@@ -206,7 +229,12 @@ export function OrganizationMembersList({
 							</>
 						) : (
 							<span className="font-medium text-foreground/60 text-sm">
-								{memberRoles[row.original.role as keyof typeof memberRoles]}
+								{
+									memberRoles[
+										row.original
+											.role as keyof typeof memberRoles
+									]
+								}
 							</span>
 						)}
 					</div>
@@ -243,14 +271,20 @@ export function OrganizationMembersList({
 							>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										{flexRender(
+											cell.column.columnDef.cell,
+											cell.getContext(),
+										)}
 									</TableCell>
 								))}
 							</TableRow>
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={columns.length} className="h-24 text-center">
+							<TableCell
+								colSpan={columns.length}
+								className="h-24 text-center"
+							>
 								No results.
 							</TableCell>
 						</TableRow>

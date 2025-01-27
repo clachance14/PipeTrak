@@ -84,10 +84,15 @@ export function InviteMemberForm({
 	return (
 		<SettingsItem
 			title={t("organizations.settings.members.inviteMember.title")}
-			description={t("organizations.settings.members.inviteMember.description")}
+			description={t(
+				"organizations.settings.members.inviteMember.description",
+			)}
 		>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="@container">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="@container"
+				>
 					<div className="flex @md:flex-row flex-col gap-2">
 						<div className="flex-1">
 							<FormField
@@ -96,7 +101,9 @@ export function InviteMemberForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t("organizations.settings.members.inviteMember.email")}
+											{t(
+												"organizations.settings.members.inviteMember.email",
+											)}
 										</FormLabel>
 										<FormControl>
 											<Input type="email" {...field} />
@@ -113,7 +120,9 @@ export function InviteMemberForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t("organizations.settings.members.inviteMember.role")}
+											{t(
+												"organizations.settings.members.inviteMember.role",
+											)}
 										</FormLabel>
 										<FormControl>
 											<OrganizationRoleSelect
@@ -128,8 +137,13 @@ export function InviteMemberForm({
 					</div>
 
 					<div className="mt-4 flex justify-end">
-						<Button type="submit" loading={form.formState.isSubmitting}>
-							{t("organizations.settings.members.inviteMember.submit")}
+						<Button
+							type="submit"
+							loading={form.formState.isSubmitting}
+						>
+							{t(
+								"organizations.settings.members.inviteMember.submit",
+							)}
 						</Button>
 					</div>
 				</form>

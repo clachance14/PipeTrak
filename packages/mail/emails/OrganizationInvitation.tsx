@@ -29,7 +29,9 @@ export function OrganizationInvitation({
 					strong: (chunks) => `<strong>${chunks}</strong>`,
 				})}
 			</Heading>
-			<Text>{t("mail.organizationInvitation.body", { organizationName })}</Text>
+			<Text>
+				{t("mail.organizationInvitation.body", { organizationName })}
+			</Text>
 
 			<PrimaryButton href={url}>
 				{t("mail.organizationInvitation.join")}

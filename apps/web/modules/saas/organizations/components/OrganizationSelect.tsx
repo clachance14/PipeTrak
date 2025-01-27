@@ -30,7 +30,8 @@ export function OrganzationSelect({
 	const t = useTranslations();
 	const { user } = useSession();
 	const router = useRouter();
-	const { activeOrganization, setActiveOrganization } = useActiveOrganization();
+	const { activeOrganization, setActiveOrganization } =
+		useActiveOrganization();
 	const { data: allOrganizations } = useOrganizationListQuery();
 
 	if (!user) {
@@ -53,7 +54,9 @@ export function OrganzationSelect({
 									{activeOrganization.name}
 								</span>
 								{config.organizations.enableBilling && (
-									<ActivePlanBadge organizationId={activeOrganization.id} />
+									<ActivePlanBadge
+										organizationId={activeOrganization.id}
+									/>
 								)}
 							</>
 						) : (
@@ -64,9 +67,13 @@ export function OrganzationSelect({
 									avatarUrl={user.image}
 								/>
 								<span className="block truncate">
-									{t("organizations.organizationSelect.personalAccount")}
+									{t(
+										"organizations.organizationSelect.personalAccount",
+									)}
 								</span>
-								{config.users.enableBilling && <ActivePlanBadge />}
+								{config.users.enableBilling && (
+									<ActivePlanBadge />
+								)}
 							</>
 						)}
 					</div>
@@ -85,7 +92,9 @@ export function OrganzationSelect({
 								}}
 							>
 								<DropdownMenuLabel className="text-foreground/60 text-xs">
-									{t("organizations.organizationSelect.personalAccount")}
+									{t(
+										"organizations.organizationSelect.personalAccount",
+									)}
 								</DropdownMenuLabel>
 								<DropdownMenuRadioItem
 									value={user.id}
@@ -111,7 +120,9 @@ export function OrganzationSelect({
 						}
 					>
 						<DropdownMenuLabel className="text-foreground/60 text-xs">
-							{t("organizations.organizationSelect.organizations")}
+							{t(
+								"organizations.organizationSelect.organizations",
+							)}
 						</DropdownMenuLabel>
 						{allOrganizations?.map((organization) => (
 							<DropdownMenuRadioItem
@@ -139,7 +150,9 @@ export function OrganzationSelect({
 							>
 								<Link href="/app/new-organization">
 									<PlusIcon className="mr-2 size-6 rounded-md bg-primary/20 p-1" />
-									{t("organizations.organizationSelect.createNewOrganization")}
+									{t(
+										"organizations.organizationSelect.createNewOrganization",
+									)}
 								</Link>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>

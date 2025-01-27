@@ -88,7 +88,9 @@ export function OrganizationForm({
 			});
 
 			if (!organization) {
-				router.replace(getAdminPath(`/organizations/${newOrganization.id}`));
+				router.replace(
+					getAdminPath(`/organizations/${newOrganization.id}`),
+				);
 			}
 		} catch (error) {
 			toast({
@@ -110,13 +112,18 @@ export function OrganizationForm({
 				</CardHeader>
 				<CardContent>
 					<Form {...form}>
-						<form onSubmit={onSubmit} className="grid grid-cols-1 gap-4">
+						<form
+							onSubmit={onSubmit}
+							className="grid grid-cols-1 gap-4"
+						>
 							<FormField
 								control={form.control}
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("admin.organizations.form.name")}</FormLabel>
+										<FormLabel>
+											{t("admin.organizations.form.name")}
+										</FormLabel>
 										<FormControl>
 											<Input {...field} />
 										</FormControl>
@@ -143,7 +150,9 @@ export function OrganizationForm({
 
 			{organization && (
 				<>
-					<OrganizationMembersBlock organizationId={organization.id} />
+					<OrganizationMembersBlock
+						organizationId={organization.id}
+					/>
 					<InviteMemberForm organizationId={organization.id} />
 				</>
 			)}

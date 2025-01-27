@@ -22,7 +22,8 @@ export function DeleteOrganizationForm() {
 	const t = useTranslations();
 	const { toast } = useToast();
 	const router = useRouter();
-	const { activeOrganization, setActiveOrganization } = useActiveOrganization();
+	const { activeOrganization, setActiveOrganization } =
+		useActiveOrganization();
 	const [submitting, setSubmitting] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -65,10 +66,15 @@ export function DeleteOrganizationForm() {
 			<SettingsItem
 				danger
 				title={t("organizations.settings.deleteOrganization.title")}
-				description={t("organizations.settings.deleteOrganization.description")}
+				description={t(
+					"organizations.settings.deleteOrganization.description",
+				)}
 			>
 				<div className="mt-4 flex justify-end">
-					<Button variant="error" onClick={() => setShowConfirmation(true)}>
+					<Button
+						variant="error"
+						onClick={() => setShowConfirmation(true)}
+					>
 						{t("organizations.settings.deleteOrganization.submit")}
 					</Button>
 				</div>
@@ -81,10 +87,14 @@ export function DeleteOrganizationForm() {
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-destructive">
-							{t("organizations.settings.deleteOrganization.title")}
+							{t(
+								"organizations.settings.deleteOrganization.title",
+							)}
 						</AlertDialogTitle>
 						<AlertDialogDescription>
-							{t("organizations.settings.deleteOrganization.confirmation")}
+							{t(
+								"organizations.settings.deleteOrganization.confirmation",
+							)}
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
@@ -96,7 +106,9 @@ export function DeleteOrganizationForm() {
 							loading={submitting}
 							onClick={() => onSubmit()}
 						>
-							{t("organizations.settings.deleteOrganization.submit")}
+							{t(
+								"organizations.settings.deleteOrganization.submit",
+							)}
 						</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>

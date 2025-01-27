@@ -30,21 +30,26 @@ export function Toaster() {
 		<ToastProvider>
 			{toasts.map(({ id, title, description, action, ...props }) => {
 				const { icon, variant } = props;
-				const ToastIcon = icon ?? (variant ? variantIcons[variant] : undefined);
+				const ToastIcon =
+					icon ?? (variant ? variantIcons[variant] : undefined);
 				return (
 					<Toast key={id} {...props}>
 						<div className="flex items-center gap-3">
 							{ToastIcon !== undefined && (
 								<ToastIcon
 									className={`size-6 shrink-0 opacity-50 ${
-										variant === "loading" ? "animate-spin" : ""
+										variant === "loading"
+											? "animate-spin"
+											: ""
 									}`}
 								/>
 							)}
 							<div className="grid gap-1">
 								{title && <ToastTitle>{title}</ToastTitle>}
 								{description && (
-									<ToastDescription>{description}</ToastDescription>
+									<ToastDescription>
+										{description}
+									</ToastDescription>
 								)}
 							</div>
 						</div>

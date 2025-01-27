@@ -180,13 +180,18 @@ export function OrganizationList() {
 									<DropdownMenuItem
 										onClick={() =>
 											confirm({
-												title: t("admin.organizations.confirmDelete.title"),
-												message: t("admin.organizations.confirmDelete.message"),
+												title: t(
+													"admin.organizations.confirmDelete.title",
+												),
+												message: t(
+													"admin.organizations.confirmDelete.message",
+												),
 												confirmLabel: t(
 													"admin.organizations.confirmDelete.confirm",
 												),
 												destructive: true,
-												onConfirm: () => deleteOrganization(id),
+												onConfirm: () =>
+													deleteOrganization(id),
 											})
 										}
 									>
@@ -247,7 +252,9 @@ export function OrganizationList() {
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
+									data-state={
+										row.getIsSelected() && "selected"
+									}
 									className="group"
 								>
 									{row.getVisibleCells().map((cell) => (
