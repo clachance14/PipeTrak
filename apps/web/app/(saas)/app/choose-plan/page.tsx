@@ -1,6 +1,8 @@
 import { config } from "@repo/config";
+import { createPurchasesHelper } from "@repo/payments/lib/helper";
 import { getOrganizationList, getSession } from "@saas/auth/lib/server";
 import { PricingTable } from "@saas/payments/components/PricingTable";
+import { getPurchases } from "@saas/payments/lib/server";
 import { AuthWrapper } from "@saas/shared/components/AuthWrapper";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -16,7 +18,7 @@ export async function generateMetadata() {
 	};
 }
 
-export default async function OnboardingPage() {
+export default async function ChoosePlanPage() {
 	const t = await getTranslations();
 	const session = await getSession();
 
@@ -33,6 +35,13 @@ export default async function OnboardingPage() {
 		}
 
 		organizationId = organization.id;
+	}
+
+	const purchases = await getPurchases(organizationId);
+	const { activePlan } = createPurchasesHelper(purchases);
+
+	if (activePlan) {
+		return redirect("/app");
 	}
 
 	return (

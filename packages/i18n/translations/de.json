@@ -760,5 +760,9 @@
 	},
 	"documentation": {
 		"title": "Dokumentation"
+	},
+	"choosePlan": {
+		"title": "Wähle einen Plan",
+		"description": "Um weiterzumachen, wähle bitte einen Plan aus."
 	}
 }

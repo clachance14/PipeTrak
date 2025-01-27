@@ -13,8 +13,7 @@
 				"noArrayIndexKey": "off"
 			},
 			"complexity": {
-				"noForEach": "off",
-				"useSimplifiedLogicExpression": "warn"
+				"noForEach": "off"
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "off",
