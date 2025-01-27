@@ -1,7 +1,9 @@
 import { routing } from "@i18n/routing";
 import { config as appConfig } from "@repo/config";
+import { createPurchasesHelper } from "@repo/payments/lib/helper";
 import {
 	getOrganizationsForSession,
+	getPurchasesForSession,
 	getSession,
 } from "@shared/lib/middleware-helpers";
 import createMiddleware from "next-intl/middleware";
@@ -78,10 +80,39 @@ export default async function middleware(req: NextRequest) {
 			);
 		}
 
+		const hasFreePlan = Object.values(appConfig.payments.plans).some(
+			(plan) => "isFree" in plan,
+		);
+		if (
+			((appConfig.organizations.enable &&
+				appConfig.organizations.enableBilling) ||
+				appConfig.users.enableBilling) &&
+			!hasFreePlan
+		) {
+			const organizationId = appConfig.organizations.enable
+				? session?.session.activeOrganizationId ||
+					(await getOrganizationsForSession(req))?.at(0)?.id
+				: undefined;
+
+			const purchases = await getPurchasesForSession(req, organizationId);
+			const { activePlan } = createPurchasesHelper(purchases);
+
+			const validPathsWithoutPlan = [
+				"/app/choose-plan",
+				"/app/onboarding",
+				"/app/new-organization",
+			];
+			if (!activePlan && !validPathsWithoutPlan.includes(pathname)) {
+				return NextResponse.redirect(
+					new URL("/app/choose-plan", origin),
+				);
+			}
+		}
+
 		return response;
 	}
 
-	if (pathname.startsWith("/auth/")) {
+	if (pathname.startsWith("/auth")) {
 		if (!appConfig.ui.saas.enabled) {
 			return NextResponse.redirect(new URL("/", origin));
 		}

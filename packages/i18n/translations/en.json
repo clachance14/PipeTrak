@@ -760,5 +760,9 @@
 			"url": "url",
 			"uuid": "uuid"
 		}
+	},
+	"choosePlan": {
+		"title": "Choose your plan",
+		"description": "To continue, please select a plan."
 	}
 }

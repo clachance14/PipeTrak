@@ -47,7 +47,7 @@ export const config = {
 	// Users
 	users: {
 		// Whether billing should be enabled for users (above you can enable it for organizations instead)
-		enableBilling: true,
+		enableBilling: false,
 		// Whether you want the user to go through an onboarding form after signup (can be defined in the OnboardingForm.tsx)
 		enableOnboarding: true,
 	},
