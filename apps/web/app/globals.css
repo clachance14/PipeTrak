@@ -1,42 +1,13 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "@repo/tailwind-config/theme.css";
 
-@config '../tailwind.config.ts';
+@plugin "tailwindcss-animate";
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+@source "../node_modules/fumadocs-ui/dist/**/*.js";
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@utility no-scrollbar {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-:root {
-	--fd-banner-height: 4.5rem;
-}
-
-@layer base {
-	* {
-		@apply border-border;
-	}
-}
+@variant dark (&:where(.dark, .dark *));
 
 pre.shiki {
 	@apply mb-4 rounded-lg p-6;

@@ -113,7 +113,7 @@ export function NavBar() {
 						</LocaleLink>
 					</div>
 
-					<div className="hidden flex-1 items-center justify-center md:flex">
+					<div className="hidden flex-1 items-center justify-center lg:flex">
 						{menuItems.map((menuItem) => (
 							<LocaleLink
 								key={menuItem.href}
@@ -140,7 +140,7 @@ export function NavBar() {
 						>
 							<SheetTrigger asChild>
 								<Button
-									className="md:hidden"
+									className="lg:hidden"
 									size="icon"
 									variant="outline"
 									aria-label="Menu"
@@ -184,7 +184,7 @@ export function NavBar() {
 							(user ? (
 								<Button
 									key="dashboard"
-									className="hidden md:flex"
+									className="hidden lg:flex"
 									asChild
 									variant="secondary"
 								>
@@ -195,7 +195,7 @@ export function NavBar() {
 							) : (
 								<Button
 									key="login"
-									className="hidden md:flex"
+									className="hidden lg:flex"
 									asChild
 									variant="secondary"
 								>

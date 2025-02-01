@@ -17,11 +17,7 @@ import { useFormatter } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useCallback, useEffect, useMemo } from "react";
 
-export function AiChat({
-	organizationId,
-}: {
-	organizationId?: string;
-}) {
+export function AiChat({ organizationId }: { organizationId?: string }) {
 	const formatter = useFormatter();
 	const queryClient = useQueryClient();
 	const { data: chats, status: chatsStatus } =
@@ -171,7 +167,7 @@ export function AiChat({
 
 				<form
 					onSubmit={handleSubmit}
-					className="relative shrink-0 rounded-lg border-none bg-card py-6 pr-14 pl-6 text-lg shadow focus:outline-hidden focus-visible:ring-0"
+					className="relative shrink-0 rounded-lg border-none bg-card py-6 pr-14 pl-6 text-lg shadow-sm focus:outline-hidden focus-visible:ring-0"
 				>
 					<Textarea
 						value={input}

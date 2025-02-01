@@ -1,8 +1,10 @@
+"use client";
+
 import { config } from "@repo/config";
-import { lightVariables } from "@repo/tailwind-config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
 import { forwardRef, useMemo } from "react";
+import { useIsClient } from "usehooks-ts";
 
 export const OrganizationLogo = forwardRef<
 	HTMLSpanElement,
@@ -12,6 +14,20 @@ export const OrganizationLogo = forwardRef<
 		className?: string;
 	}
 >(({ name, logoUrl, className }, ref) => {
+	const isClient = useIsClient();
+	const avatarColors = useMemo(() => {
+		if (typeof window === "undefined") {
+			return [];
+		}
+
+		const styles = getComputedStyle(window.document.documentElement);
+		return [
+			styles.getPropertyValue("--color-primary"),
+			styles.getPropertyValue("--color-accent"),
+			styles.getPropertyValue("--color-highlight"),
+		];
+	}, []);
+
 	const logoSrc = useMemo(
 		() =>
 			logoUrl
@@ -22,6 +38,10 @@ export const OrganizationLogo = forwardRef<
 		[logoUrl],
 	);
 
+	if (!isClient) {
+		return null;
+	}
+
 	return (
 		<Avatar ref={ref} className={className}>
 			<AvatarImage src={logoSrc} />
@@ -29,12 +49,8 @@ export const OrganizationLogo = forwardRef<
 				<BoringAvatar
 					size={96}
 					name={name}
-					variant="marble"
-					colors={[
-						lightVariables.colors.primary,
-						lightVariables.colors.accent,
-						lightVariables.colors.highlight,
-					]}
+					variant="sunset"
+					colors={avatarColors}
 					square
 				/>
 			</AvatarFallback>

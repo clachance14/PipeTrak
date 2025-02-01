@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@aws-sdk/client-s3": "3.437.0",
-		"@fumadocs/content-collections": "^1.1.6",
+		"@fumadocs/content-collections": "^1.1.7",
 		"@hookform/resolvers": "^3.10.0",
 		"@radix-ui/react-accordion": "^1.2.2",
 		"@radix-ui/react-alert-dialog": "^1.1.5",
@@ -37,8 +37,8 @@
 		"cropperjs": "1.6.2",
 		"date-fns": "^4.1.0",
 		"deepmerge": "^4.3.1",
-		"fumadocs-core": "^14.7.7",
-		"fumadocs-ui": "^14.7.7",
+		"fumadocs-core": "^15.0.0",
+		"fumadocs-ui": "^15.0.0",
 		"hono": "^4.6.19",
 		"jotai": "2.11.0",
 		"js-cookie": "^3.0.5",
@@ -93,7 +93,8 @@
 		"postcss": "8.5.1",
 		"rehype-img-size": "^1.0.1",
 		"start-server-and-test": "^2.0.10",
-		"tailwindcss": "4.0.0"
+		"tailwindcss": "4.0.0",
+		"tailwindcss-animate": "^1.0.7"
 	},
 	"name": "@repo/web",
 	"private": true,
