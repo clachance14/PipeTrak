@@ -31,10 +31,10 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { useToast } from "@ui/hooks/use-toast";
 import { LogOutIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { toast } from "sonner";
 import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
 
 export function OrganizationMembersList({
@@ -48,7 +48,6 @@ export function OrganizationMembersList({
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const { toast } = useToast();
 	const memberRoles = useOrganizationMemberRoles();
 
 	const userIsOrganizationAdmin = isOrganizationAdmin(organization, user);
@@ -57,80 +56,58 @@ export function OrganizationMembersList({
 		memberId: string,
 		role: OrganizationMemberRole,
 	) => {
-		const loadingToast = toast({
-			variant: "loading",
-			description: t(
-				"organizations.settings.members.notifications.updateMembership.loading.description",
-			),
-		});
-		await authClient.organization.updateMemberRole(
-			{
-				memberId,
-				role,
-				organizationId,
+		toast.promise(
+			async () => {
+				await authClient.organization.updateMemberRole({
+					memberId,
+					role,
+					organizationId,
+				});
 			},
 			{
-				onSuccess: async () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "success",
-						description: t(
-							"organizations.settings.members.notifications.updateMembership.success.description",
-						),
-					});
-					await queryClient.invalidateQueries({
+				loading: t(
+					"organizations.settings.members.notifications.updateMembership.loading.description",
+				),
+				success: () => {
+					queryClient.invalidateQueries({
 						queryKey: fullOrganizationQueryKey(organizationId),
 					});
+
+					return t(
+						"organizations.settings.members.notifications.updateMembership.success.description",
+					);
 				},
-				onError: () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "error",
-						description: t(
-							"organizations.settings.members.notifications.updateMembership.error.description",
-						),
-					});
-				},
+				error: t(
+					"organizations.settings.members.notifications.updateMembership.error.description",
+				),
 			},
 		);
 	};
 
 	const removeMember = async (memberId: string) => {
-		const loadingToast = toast({
-			variant: "loading",
-			description: t(
-				"organizations.settings.members.notifications.removeMember.loading.description",
-			),
-		});
-
-		await authClient.organization.removeMember(
-			{
-				memberIdOrEmail: memberId,
-				organizationId,
+		toast.promise(
+			async () => {
+				await authClient.organization.removeMember({
+					memberIdOrEmail: memberId,
+					organizationId,
+				});
 			},
 			{
-				onSuccess: async () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "success",
-						description: t(
-							"organizations.settings.members.notifications.removeMember.success.description",
-						),
-					});
-
-					await queryClient.invalidateQueries({
+				loading: t(
+					"organizations.settings.members.notifications.removeMember.loading.description",
+				),
+				success: () => {
+					queryClient.invalidateQueries({
 						queryKey: fullOrganizationQueryKey(organizationId),
 					});
+
+					return t(
+						"organizations.settings.members.notifications.removeMember.success.description",
+					);
 				},
-				onError: () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "error",
-						description: t(
-							"organizations.settings.members.notifications.removeMember.error.description",
-						),
-					});
-				},
+				error: t(
+					"organizations.settings.members.notifications.removeMember.error.description",
+				),
 			},
 		);
 	};

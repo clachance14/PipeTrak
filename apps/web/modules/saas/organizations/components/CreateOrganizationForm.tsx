@@ -18,9 +18,9 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -35,7 +35,6 @@ export function CreateOrganizationForm({
 	defaultName?: string;
 }) {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { setActiveOrganization } = useActiveOrganization();
@@ -66,10 +65,7 @@ export function CreateOrganizationForm({
 
 			router.replace(`/app/${newOrganization.slug}`);
 		} catch (e) {
-			toast({
-				title: t("organizations.createForm.notifications.error"),
-				variant: "error",
-			});
+			toast.error(t("organizations.createForm.notifications.error"));
 		}
 	});
 

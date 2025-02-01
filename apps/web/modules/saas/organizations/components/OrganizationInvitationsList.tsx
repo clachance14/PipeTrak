@@ -26,7 +26,6 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { useToast } from "@ui/hooks/use-toast";
 import { cn } from "@ui/lib";
 import {
 	CheckIcon,
@@ -39,13 +38,13 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
 
+import { toast } from "sonner";
 export function OrganizationInvitationsList({
 	organizationId,
 }: {
 	organizationId: string;
 }) {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { user } = useSession();
 	const formatter = useFormatter();
@@ -66,42 +65,27 @@ export function OrganizationInvitationsList({
 	);
 
 	const revokeInvitation = (invitationId: string) => {
-		const loadingToast = toast({
-			variant: "loading",
-			description: t(
-				"organizations.settings.members.notifications.revokeInvitation.loading.description",
-			),
-		});
-
-		authClient.organization.cancelInvitation(
-			{
-				invitationId,
+		toast.promise(
+			async () => {
+				await authClient.organization.cancelInvitation({
+					invitationId,
+				});
 			},
 			{
-				onSettled: () => {
-					loadingToast.dismiss();
-				},
-				onSuccess: () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "success",
-						description: t(
-							"organizations.settings.members.notifications.revokeInvitation.success.description",
-						),
-					});
+				loading: t(
+					"organizations.settings.members.notifications.revokeInvitation.loading.description",
+				),
+				success: () => {
 					queryClient.invalidateQueries({
 						queryKey: fullOrganizationQueryKey(organizationId),
 					});
+					return t(
+						"organizations.settings.members.notifications.revokeInvitation.success.description",
+					);
 				},
-				onError: () => {
-					loadingToast.update({
-						id: loadingToast.id,
-						variant: "error",
-						description: t(
-							"organizations.settings.members.notifications.revokeInvitation.error.description",
-						),
-					});
-				},
+				error: t(
+					"organizations.settings.members.notifications.revokeInvitation.error.description",
+				),
 			},
 		);
 	};

@@ -13,9 +13,9 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { PasswordInput } from "@ui/components/password-input";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -25,7 +25,6 @@ const formSchema = z.object({
 
 export function ChangePasswordForm() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const router = useRouter();
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -44,22 +43,20 @@ export function ChangePasswordForm() {
 			},
 			{
 				onSuccess: () => {
-					toast({
-						variant: "success",
-						title: t(
+					toast.success(
+						t(
 							"settings.account.security.changePassword.notifications.success",
 						),
-					});
+					);
 					form.reset({});
 					router.refresh();
 				},
 				onError: () => {
-					toast({
-						variant: "error",
-						title: t(
+					toast.error(
+						t(
 							"settings.account.security.changePassword.notifications.error",
 						),
-					});
+					);
 				},
 			},
 		);

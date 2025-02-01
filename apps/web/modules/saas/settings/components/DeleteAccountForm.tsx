@@ -14,13 +14,12 @@ import {
 	AlertDialogTitle,
 } from "@ui/components/alert-dialog";
 import { Button } from "@ui/components/button";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function DeleteAccountForm() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const { reloadSession } = useSession();
 	const [deleting, setDeleting] = useState(false);
 	const router = useRouter();
@@ -32,22 +31,18 @@ export function DeleteAccountForm() {
 			{},
 			{
 				onSuccess: () => {
-					toast({
-						variant: "success",
-						title: t(
+					toast.success(
+						t(
 							"settings.account.deleteAccount.notifications.success",
 						),
-					});
+					);
 					reloadSession();
 					router.replace("/");
 				},
 				onError: () => {
-					toast({
-						variant: "error",
-						title: t(
-							"settings.account.deleteAccount.notifications.error",
-						),
-					});
+					toast.error(
+						t("settings.account.deleteAccount.notifications.error"),
+					);
 				},
 				onResponse: () => {
 					setDeleting(false);

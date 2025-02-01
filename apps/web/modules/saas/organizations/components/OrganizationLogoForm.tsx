@@ -7,19 +7,16 @@ import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
 import { Spinner } from "@shared/components/Spinner";
-import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import { CropImageDialog } from "../../settings/components/CropImageDialog";
 import { OrganizationLogo } from "./OrganizationLogo";
 
 export function OrganizationLogoForm() {
-	const { toast } = useToast();
-	const router = useRouter();
 	const t = useTranslations();
 	const [uploading, setUploading] = useState(false);
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
@@ -77,20 +74,14 @@ export function OrganizationLogoForm() {
 				},
 			});
 
-			toast({
-				variant: "success",
-				title: t("settings.account.avatar.notifications.success"),
-			});
+			toast.success(t("settings.account.avatar.notifications.success"));
 
 			refetchActiveOrganization();
 			queryClient.invalidateQueries({
 				queryKey: organizationListQueryKey,
 			});
 		} catch (e) {
-			toast({
-				variant: "error",
-				title: t("settings.account.avatar.notifications.error"),
-			});
+			toast.error(t("settings.account.avatar.notifications.error"));
 		} finally {
 			setUploading(false);
 		}

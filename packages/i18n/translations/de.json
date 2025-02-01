@@ -539,7 +539,12 @@
 			"security": {
 				"activeSessions": {
 					"description": "Dies sind alle aktiven Sitzungen deines Kontos. Klicke auf das X, um eine bestimmte Sitzung zu beenden.",
-					"title": "Aktive Sitzungen"
+					"title": "Aktive Sitzungen",
+					"notifications": {
+						"revokeSession": {
+							"success": "Session beendet"
+						}
+					}
 				},
 				"changePassword": {
 					"currentPassword": "Aktuelles Passwort",

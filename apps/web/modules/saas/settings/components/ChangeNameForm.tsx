@@ -6,10 +6,10 @@ import { useSession } from "@saas/auth/hooks/use-session";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -21,7 +21,6 @@ type FormSchema = z.infer<typeof formSchema>;
 export function ChangeNameForm() {
 	const { user, reloadSession } = useSession();
 	const [submitting, setSubmitting] = useState(false);
-	const { toast } = useToast();
 	const t = useTranslations();
 
 	const form = useForm<FormSchema>({
@@ -38,12 +37,9 @@ export function ChangeNameForm() {
 			{ name },
 			{
 				onSuccess: () => {
-					toast({
-						variant: "success",
-						title: t(
-							"settings.account.changeName.notifications.success",
-						),
-					});
+					toast.success(
+						t("settings.account.changeName.notifications.success"),
+					);
 
 					reloadSession();
 					form.reset({
@@ -51,12 +47,9 @@ export function ChangeNameForm() {
 					});
 				},
 				onError: () => {
-					toast({
-						variant: "error",
-						title: t(
-							"settings.account.changeName.notifications.error",
-						),
-					});
+					toast.error(
+						t("settings.account.changeName.notifications.error"),
+					);
 				},
 				onResponse: () => {
 					setSubmitting(false);

@@ -16,10 +16,10 @@ import {
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
 import {} from "@ui/components/select";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -36,7 +36,6 @@ export function InviteMemberForm({
 }) {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
-	const { toast } = useToast();
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
@@ -59,25 +58,17 @@ export function InviteMemberForm({
 				queryKey: fullOrganizationQueryKey(organizationId),
 			});
 
-			toast({
-				title: t(
+			toast.success(
+				t(
 					"organizations.settings.members.inviteMember.notifications.success.title",
 				),
-				description: t(
-					"organizations.settings.members.inviteMember.notifications.success.description",
-				),
-				variant: "success",
-			});
+			);
 		} catch {
-			toast({
-				title: t(
+			toast.error(
+				t(
 					"organizations.settings.members.inviteMember.notifications.error.title",
 				),
-				description: t(
-					"organizations.settings.members.inviteMember.notifications.error.description",
-				),
-				variant: "error",
-			});
+			);
 		}
 	};
 

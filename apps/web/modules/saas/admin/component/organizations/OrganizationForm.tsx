@@ -24,9 +24,9 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const organizationFormSchema = z.object({
@@ -42,7 +42,6 @@ export function OrganizationForm({
 }) {
 	const t = useTranslations();
 	const router = useRouter();
-	const { toast } = useToast();
 
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 
@@ -82,10 +81,7 @@ export function OrganizationForm({
 				queryKey: adminOrganizationsQueryKey,
 			});
 
-			toast({
-				variant: "success",
-				title: t("admin.organizations.form.notifications.success"),
-			});
+			toast.success(t("admin.organizations.form.notifications.success"));
 
 			if (!organization) {
 				router.replace(
@@ -93,10 +89,7 @@ export function OrganizationForm({
 				);
 			}
 		} catch (error) {
-			toast({
-				variant: "error",
-				title: t("admin.organizations.form.notifications.error"),
-			});
+			toast.error(t("admin.organizations.form.notifications.error"));
 		}
 	});
 

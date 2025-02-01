@@ -1,7 +1,7 @@
 import { AnalyticsScript } from "@analytics";
 import { config } from "@repo/config";
 import { ApiClientProvider } from "@shared/components/ApiClientProvider";
-import { Toaster } from "@ui/components/toaster";
+import { Toaster } from "@ui/components/toast";
 import { cn } from "@ui/lib";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
@@ -41,7 +41,7 @@ export function Document({
 							<JotaiProvider>{children}</JotaiProvider>
 						</ApiClientProvider>
 					</ThemeProvider>
-					<Toaster />
+					<Toaster position="top-right" />
 					<AnalyticsScript />
 				</NuqsAdapter>
 			</body>

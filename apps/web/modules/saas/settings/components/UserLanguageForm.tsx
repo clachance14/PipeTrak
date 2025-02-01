@@ -13,15 +13,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { useToast } from "@ui/hooks/use-toast";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const { locales } = config.i18n;
 
 export function UserLanguageForm() {
-	const { toast } = useToast();
 	const currentLocale = useLocale();
 	const t = useTranslations();
 	const router = useRouter();
@@ -47,15 +46,9 @@ export function UserLanguageForm() {
 		try {
 			await updateLocaleMutation.mutateAsync();
 
-			toast({
-				variant: "success",
-				title: t("settings.account.language.notifications.success"),
-			});
+			toast.success(t("settings.account.language.notifications.success"));
 		} catch {
-			toast({
-				variant: "error",
-				title: t("settings.account.language.notifications.error"),
-			});
+			toast.error(t("settings.account.language.notifications.error"));
 		}
 	};
 

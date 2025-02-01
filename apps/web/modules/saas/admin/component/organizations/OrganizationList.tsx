@@ -28,12 +28,12 @@ import {
 } from "@ui/components/dropdown-menu";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { useToast } from "@ui/hooks/use-toast";
 import { EditIcon, MoreVerticalIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo } from "react";
+import { toast } from "sonner";
 import { withQuery } from "ufo";
 import { useDebounceValue } from "usehooks-ts";
 
@@ -41,7 +41,6 @@ const ITEMS_PER_PAGE = 10;
 
 export function OrganizationList() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const { confirm } = useConfirmationAlert();
 	const queryClient = useQueryClient();
 	const [currentPage, setCurrentPage] = useQueryState(
@@ -87,32 +86,23 @@ export function OrganizationList() {
 	}, [debouncedSearchTerm]);
 
 	const deleteOrganization = async (id: string) => {
-		const deleteOrganizationToast = toast({
-			variant: "loading",
-			title: t("admin.organizations.deleteOrganization.deleting"),
-		});
-		try {
-			await authClient.organization.delete({
-				organizationId: id,
-			});
-			deleteOrganizationToast.update({
-				id: deleteOrganizationToast.id,
-				variant: "success",
-				title: t("admin.organizations.deleteOrganization.deleted"),
-				duration: 5000,
-			});
-
-			queryClient.invalidateQueries({
-				queryKey: adminOrganizationsQueryKey,
-			});
-		} catch {
-			deleteOrganizationToast.update({
-				id: deleteOrganizationToast.id,
-				variant: "error",
-				title: t("admin.organizations.deleteOrganization.notDeleted"),
-				duration: 5000,
-			});
-		}
+		toast.promise(
+			async () => {
+				await authClient.organization.delete({
+					organizationId: id,
+				});
+			},
+			{
+				loading: t("admin.organizations.deleteOrganization.deleting"),
+				success: () => {
+					queryClient.invalidateQueries({
+						queryKey: adminOrganizationsQueryKey,
+					});
+					return t("admin.organizations.deleteOrganization.deleted");
+				},
+				error: t("admin.organizations.deleteOrganization.notDeleted"),
+			},
+		);
 	};
 
 	const columns: ColumnDef<

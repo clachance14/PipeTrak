@@ -4,13 +4,12 @@ import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
-import { useToast } from "@ui/hooks/use-toast";
 import { KeyIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export function PasskeysBlock() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const formatter = useFormatter();
 
@@ -32,52 +31,42 @@ export function PasskeysBlock() {
 			fetchOptions: {
 				onSuccess: () => {
 					queryClient.invalidateQueries({ queryKey: ["passkeys"] });
-					toast({
-						title: t(
+					toast.success(
+						t(
 							"settings.account.security.passkeys.notifications.addPasskey.success.title",
 						),
-					});
+					);
 				},
 				onError: () => {
-					toast({
-						title: t(
+					toast.error(
+						t(
 							"settings.account.security.passkeys.notifications.addPasskey.error.title",
 						),
-					});
+					);
 				},
 			},
 		});
 	};
 
 	const deletePasskey = (id: string) => {
-		const deleteToast = toast({
-			variant: "loading",
-			title: t(
-				"settings.account.security.passkeys.notifications.deletePasskey.loading.title",
-			),
-		});
-
-		authClient.passkey.deletePasskey({
-			id,
-			fetchOptions: {
-				onSuccess: () => {
-					deleteToast.update({
-						id: deleteToast.id,
-						title: t(
-							"settings.account.security.passkeys.notifications.deletePasskey.success.title",
-						),
-					});
-				},
-				onError: () => {
-					deleteToast.update({
-						id: deleteToast.id,
-						title: t(
-							"settings.account.security.passkeys.notifications.deletePasskey.error.title",
-						),
-					});
-				},
+		toast.promise(
+			async () => {
+				await authClient.passkey.deletePasskey({
+					id,
+				});
 			},
-		});
+			{
+				loading: t(
+					"settings.account.security.passkeys.notifications.deletePasskey.loading.title",
+				),
+				success: t(
+					"settings.account.security.passkeys.notifications.deletePasskey.success.title",
+				),
+				error: t(
+					"settings.account.security.passkeys.notifications.deletePasskey.error.title",
+				),
+			},
+		);
 	};
 
 	return (

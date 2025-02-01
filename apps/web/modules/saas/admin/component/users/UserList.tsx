@@ -24,7 +24,6 @@ import {
 } from "@ui/components/dropdown-menu";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { useToast } from "@ui/hooks/use-toast";
 import {
 	MoreVerticalIcon,
 	Repeat1Icon,
@@ -36,6 +35,7 @@ import {
 import { useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo } from "react";
+import { toast } from "sonner";
 import { useDebounceValue } from "usehooks-ts";
 import { EmailVerified } from "../EmailVerified";
 
@@ -44,7 +44,6 @@ const ITEMS_PER_PAGE = 10;
 export function UserList() {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
-	const { toast } = useToast();
 	const { confirm } = useConfirmationAlert();
 	const [currentPage, setCurrentPage] = useQueryState(
 		"currentPage",
@@ -81,17 +80,17 @@ export function UserList() {
 		userId: string,
 		{ name }: { name: string },
 	) => {
-		const { dismiss } = toast({
-			variant: "loading",
-			title: t("admin.users.impersonation.impersonating", {
+		const toastId = toast.loading(
+			t("admin.users.impersonation.impersonating", {
 				name,
 			}),
-		});
+		);
+
 		await authClient.admin.impersonateUser({
 			userId,
 		});
 		await refetch();
-		dismiss();
+		toast.dismiss(toastId);
 		window.location.href = new URL(
 			"/app",
 			window.location.origin,
@@ -99,54 +98,37 @@ export function UserList() {
 	};
 
 	const deleteUser = async (id: string) => {
-		const deleteUserToast = toast({
-			variant: "loading",
-			title: t("admin.users.deleteUser.deleting"),
-		});
-		try {
-			await authClient.admin.removeUser({
-				userId: id,
-			});
-			deleteUserToast.update({
-				id: deleteUserToast.id,
-				variant: "success",
-				title: t("admin.users.deleteUser.deleted"),
-				duration: 5000,
-			});
-		} catch {
-			deleteUserToast.update({
-				id: deleteUserToast.id,
-				variant: "error",
-				title: t("admin.users.deleteUser.notDeleted"),
-				duration: 5000,
-			});
-		}
+		toast.promise(
+			async () => {
+				await authClient.admin.removeUser({
+					userId: id,
+				});
+			},
+			{
+				loading: t("admin.users.deleteUser.deleting"),
+				success: () => {
+					return t("admin.users.deleteUser.deleted");
+				},
+				error: t("admin.users.deleteUser.notDeleted"),
+			},
+		);
 	};
 
 	const resendVerificationMail = async (email: string) => {
-		const resendVerificationMailToast = toast({
-			variant: "loading",
-			title: t("admin.users.resendVerificationMail.submitting"),
-		});
-		try {
-			await authClient.sendVerificationEmail({
-				email,
-			});
-
-			resendVerificationMailToast.update({
-				id: resendVerificationMailToast.id,
-				variant: "success",
-				title: t("admin.users.resendVerificationMail.success"),
-				duration: 5000,
-			});
-		} catch {
-			resendVerificationMailToast.update({
-				id: resendVerificationMailToast.id,
-				variant: "error",
-				title: t("admin.users.resendVerificationMail.error"),
-				duration: 5000,
-			});
-		}
+		toast.promise(
+			async () => {
+				await authClient.sendVerificationEmail({
+					email,
+				});
+			},
+			{
+				loading: t("admin.users.resendVerificationMail.submitting"),
+				success: () => {
+					return t("admin.users.resendVerificationMail.success");
+				},
+				error: t("admin.users.resendVerificationMail.error"),
+			},
+		);
 	};
 
 	const assignAdminRole = async (id: string) => {

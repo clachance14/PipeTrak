@@ -5,24 +5,14 @@ import {
 	oAuthProviders,
 } from "@saas/auth/constants/oauth-providers";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import { useRouter } from "@shared/hooks/router";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
-import { useToast } from "@ui/hooks/use-toast";
 import { CheckCircle2Icon, LinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { z } from "zod";
-
-const formSchema = z.object({
-	currentPassword: z.string(),
-	newPassword: z.string(),
-});
 
 export function ConnectedAccountsBlock() {
 	const t = useTranslations();
-	const { toast } = useToast();
-	const router = useRouter();
 
 	const { data, isPending } = useQuery({
 		queryKey: ["userAccounts"],

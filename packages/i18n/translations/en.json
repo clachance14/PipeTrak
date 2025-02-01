@@ -542,7 +542,12 @@
 			"security": {
 				"activeSessions": {
 					"description": "These are all the active sessions of your account. Click the X to end a specifc session.",
-					"title": "Active sessions"
+					"title": "Active sessions",
+					"notifications": {
+						"revokeSession": {
+							"success": "Session revoked"
+						}
+					}
 				},
 				"changePassword": {
 					"currentPassword": "Current password",

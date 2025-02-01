@@ -2,17 +2,12 @@
 
 import { useCreateCustomerPortalLinkMutation } from "@saas/payments/lib/api";
 import { Button } from "@ui/components/button";
-import { useToast } from "@ui/hooks/use-toast";
 import { CreditCardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
-export function CustomerPortalButton({
-	purchaseId,
-}: {
-	purchaseId?: string;
-}) {
+export function CustomerPortalButton({ purchaseId }: { purchaseId?: string }) {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const createCustomerPortalMutation = useCreateCustomerPortalLinkMutation();
 
 	const createCustomerPortal = async () => {
@@ -25,12 +20,11 @@ export function CustomerPortalButton({
 
 			window.location.href = customerPortalLink;
 		} catch {
-			toast({
-				variant: "error",
-				title: t(
+			toast.error(
+				t(
 					"settings.billing.createCustomerPortal.notifications.error.title",
 				),
-			});
+			);
 		}
 	};
 

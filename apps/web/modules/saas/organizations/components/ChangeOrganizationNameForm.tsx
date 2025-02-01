@@ -8,9 +8,9 @@ import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -22,7 +22,6 @@ type FormSchema = z.infer<typeof formSchema>;
 export function ChangeOrganizationNameForm() {
 	const t = useTranslations();
 	const router = useRouter();
-	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const { activeOrganization } = useActiveOrganization();
 
@@ -50,24 +49,22 @@ export function ChangeOrganizationNameForm() {
 				throw error;
 			}
 
-			toast({
-				variant: "success",
-				title: t(
+			toast.success(
+				t(
 					"organizations.settings.notifications.organizationNameUpdated",
 				),
-			});
+			);
 
 			queryClient.invalidateQueries({
 				queryKey: organizationListQueryKey,
 			});
 			router.refresh();
 		} catch {
-			toast({
-				variant: "error",
-				title: t(
+			toast.error(
+				t(
 					"organizations.settings.notifications.organizationNameNotUpdated",
 				),
-			});
+			);
 		}
 	});
 

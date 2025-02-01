@@ -5,13 +5,12 @@ import { useRouter } from "@shared/hooks/router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
-import { useToast } from "@ui/hooks/use-toast";
 import { ComputerIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export function ActiveSessionsBlock() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
@@ -35,9 +34,11 @@ export function ActiveSessionsBlock() {
 			},
 			{
 				onSuccess: () => {
-					toast({
-						title: "Session revoked",
-					});
+					toast.success(
+						t(
+							"settings.account.security.activeSessions.notifications.revokeSession.success",
+						),
+					);
 
 					queryClient.invalidateQueries({
 						queryKey: ["active-sessions"],

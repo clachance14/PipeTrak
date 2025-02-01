@@ -14,13 +14,12 @@ import {
 	AlertDialogTitle,
 } from "@ui/components/alert-dialog";
 import { Button } from "@ui/components/button";
-import { useToast } from "@ui/hooks/use-toast";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function DeleteOrganizationForm() {
 	const t = useTranslations();
-	const { toast } = useToast();
 	const router = useRouter();
 	const { activeOrganization, setActiveOrganization } =
 		useActiveOrganization();
@@ -39,21 +38,19 @@ export function DeleteOrganizationForm() {
 			},
 			{
 				onSuccess: () => {
-					toast({
-						variant: "success",
-						title: t(
+					toast.success(
+						t(
 							"organizations.settings.notifications.organizationDeleted",
 						),
-					});
+					);
 					router.replace("/app");
 				},
 				onError: () => {
-					toast({
-						variant: "error",
-						title: t(
+					toast.error(
+						t(
 							"organizations.settings.notifications.organizationNotDeleted",
 						),
-					});
+					);
 				},
 			},
 		);
