@@ -22,11 +22,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { OrganizationLogo } from "./OrganizationLogo";
 
-export function OrganzationSelect({
-	className,
-}: {
-	className?: string;
-}) {
+export function OrganzationSelect({ className }: { className?: string }) {
 	const t = useTranslations();
 	const { user } = useSession();
 	const router = useRouter();
@@ -146,7 +142,7 @@ export function OrganzationSelect({
 						<DropdownMenuGroup>
 							<DropdownMenuItem
 								asChild
-								className="!text-primary cursor-pointer text-sm"
+								className="text-primary! cursor-pointer text-sm"
 							>
 								<Link href="/app/new-organization">
 									<PlusIcon className="mr-2 size-6 rounded-md bg-primary/20 p-1" />
