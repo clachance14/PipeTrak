@@ -51,7 +51,7 @@ export function NavBar() {
 						label: t("app.menu.organizationSettings"),
 						href: `${basePath}/settings`,
 						icon: SettingsIcon,
-						isActive: pathname.startsWith(`${basePath}/settings`),
+						isActive: pathname.startsWith(`${basePath}/settings/`),
 					},
 				]
 			: [
@@ -59,7 +59,7 @@ export function NavBar() {
 						label: t("app.menu.accountSettings"),
 						href: "/app/settings",
 						icon: UserCog2Icon,
-						isActive: pathname.startsWith("/app/settings"),
+						isActive: pathname.startsWith("/app/settings/"),
 					},
 				]),
 		...(user?.role === "admin"
@@ -68,7 +68,7 @@ export function NavBar() {
 						label: t("app.menu.admin"),
 						href: "/app/admin",
 						icon: UserCogIcon,
-						isActive: pathname.startsWith("/app/admin"),
+						isActive: pathname.startsWith("/app/admin/"),
 					},
 				]
 			: []),
