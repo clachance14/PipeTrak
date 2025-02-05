@@ -29,7 +29,7 @@ export function Document({
 				)}
 			>
 				<NuqsAdapter>
-					<NextTopLoader color="var(--colors-primary)" />
+					<NextTopLoader color="var(--color-primary)" />
 					<ThemeProvider
 						attribute="class"
 						disableTransitionOnChange
