@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
+import { sessionQueryKey } from "@saas/auth/lib/api";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useRouter } from "@shared/hooks/router";
+import { useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -58,6 +60,7 @@ export function LoginForm() {
 	const t = useTranslations();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const searchParams = useSearchParams();
 	const { user, loaded: sessionLoaded } = useSession();
 
@@ -95,6 +98,10 @@ export function LoginForm() {
 				if (error) {
 					throw error;
 				}
+
+				queryClient.invalidateQueries({
+					queryKey: sessionQueryKey,
+				});
 
 				router.replace(redirectPath);
 			} else {

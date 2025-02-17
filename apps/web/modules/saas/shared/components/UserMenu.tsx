@@ -35,11 +35,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState } from "react";
 
-export function UserMenu({
-	showUserName,
-}: {
-	showUserName?: boolean;
-}) {
+export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 	const router = useRouter();
 	const t = useTranslations();
 	const { user, reloadSession } = useSession();
@@ -69,8 +65,10 @@ export function UserMenu({
 			fetchOptions: {
 				onSuccess: async () => {
 					await clearCache();
-					await reloadSession();
-					router.push(config.auth.redirectAfterLogout);
+					window.location.href = new URL(
+						config.auth.redirectAfterLogout,
+						window.location.origin,
+					).toString();
 				},
 			},
 		});
