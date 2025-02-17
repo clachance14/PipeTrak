@@ -5,7 +5,6 @@ import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { useRouter } from "@shared/hooks/router";
 import { clearCache } from "@shared/lib/cache";
 import {
 	DropdownMenu,
@@ -36,9 +35,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 export function UserMenu({ showUserName }: { showUserName?: boolean }) {
-	const router = useRouter();
 	const t = useTranslations();
-	const { user, reloadSession } = useSession();
+	const { user } = useSession();
 	const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
 	const [theme, setTheme] = useState<string>(currentTheme ?? "system");
 
