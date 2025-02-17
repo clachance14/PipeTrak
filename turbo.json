@@ -22,6 +22,11 @@
 		"export": {
 			"outputs": ["out/**"]
 		},
-		"lint": {}
+		"lint": {},
+		"start": {
+			"cache": false,
+			"dependsOn": ["^generate", "^build"],
+			"persistent": true
+		}
 	}
 }
