@@ -8,7 +8,11 @@ export const useSessionQuery = () => {
 	return useQuery({
 		queryKey: sessionQueryKey,
 		queryFn: async () => {
-			const { data, error } = await authClient.getSession();
+			const { data, error } = await authClient.getSession({
+				query: {
+					disableCookieCache: true,
+				},
+			});
 
 			if (error) {
 				throw new Error(error.message || "Failed to fetch session");
