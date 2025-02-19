@@ -1,5 +1,5 @@
-import { NotFound } from "@marketing/shared/components/NotFound";
+import { notFound } from "next/navigation";
 
-export default function NotFoundPage() {
-	return <NotFound />;
+export default function CatchAll() {
+	notFound();
 }
