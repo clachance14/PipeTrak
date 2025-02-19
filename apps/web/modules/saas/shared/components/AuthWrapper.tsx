@@ -5,7 +5,7 @@ import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
 import Link from "next/link";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, Suspense } from "react";
 
 export function AuthWrapper({
 	children,
@@ -22,7 +22,9 @@ export function AuthWrapper({
 
 						<div className="flex items-center justify-end gap-2">
 							{config.i18n.enabled && (
-								<LocaleSwitch withLocaleInUrl={false} />
+								<Suspense>
+									<LocaleSwitch withLocaleInUrl={false} />
+								</Suspense>
 							)}
 							<ColorModeToggle />
 						</div>

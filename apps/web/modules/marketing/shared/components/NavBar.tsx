@@ -17,7 +17,7 @@ import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
 export function NavBar() {
@@ -132,7 +132,11 @@ export function NavBar() {
 
 					<div className="flex flex-1 items-center justify-end gap-3">
 						<ColorModeToggle />
-						{config.i18n.enabled && <LocaleSwitch />}
+						{config.i18n.enabled && (
+							<Suspense>
+								<LocaleSwitch />
+							</Suspense>
+						)}
 
 						<Sheet
 							open={mobileMenuOpen}
