@@ -22,6 +22,8 @@ const getS3Client = () => {
 		throw new Error("Missing env variable S3_ENDPOINT");
 	}
 
+	const s3Region = (process.env.S3_REGION as string) || "auto";
+
 	const s3AccessKeyId = process.env.S3_ACCESS_KEY_ID as string;
 	if (!s3AccessKeyId) {
 		throw new Error("Missing env variable S3_ACCESS_KEY_ID");
@@ -33,7 +35,7 @@ const getS3Client = () => {
 	}
 
 	s3Client = new S3Client({
-		region: "auto",
+		region: s3Region,
 		endpoint: s3Endpoint,
 		forcePathStyle: true,
 		credentials: {
@@ -47,7 +49,7 @@ const getS3Client = () => {
 
 export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
 	path,
-	{ bucket },
+	{ bucket }
 ) => {
 	const s3Client = getS3Client();
 	try {
@@ -60,7 +62,7 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
 			}),
 			{
 				expiresIn: 60,
-			},
+			}
 		);
 	} catch (e) {
 		logger.error(e);
@@ -71,14 +73,14 @@ export const getSignedUploadUrl: GetSignedUploadUrlHandler = async (
 
 export const getSignedUrl: GetSignedUrlHander = async (
 	path,
-	{ bucket, expiresIn },
+	{ bucket, expiresIn }
 ) => {
 	const s3Client = getS3Client();
 	try {
 		return getS3SignedUrl(
 			s3Client,
 			new GetObjectCommand({ Bucket: bucket, Key: path }),
-			{ expiresIn },
+			{ expiresIn }
 		);
 	} catch (e) {
 		logger.error(e);
