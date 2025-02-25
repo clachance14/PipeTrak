@@ -25,6 +25,10 @@ export function ActivePlan({
 
 	const activePlanData = planData[activePlan.id as keyof typeof planData];
 
+	if (!activePlanData) {
+		return null;
+	}
+
 	const price = "price" in activePlan ? activePlan.price : null;
 
 	return (
