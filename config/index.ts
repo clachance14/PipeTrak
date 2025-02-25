@@ -47,7 +47,7 @@ export const config = {
 	// Users
 	users: {
 		// Whether billing should be enabled for users (above you can enable it for organizations instead)
-		enableBilling: false,
+		enableBilling: true,
 		// Whether you want the user to go through an onboarding form after signup (can be defined in the OnboardingForm.tsx)
 		enableOnboarding: true,
 	},
@@ -142,19 +142,20 @@ export const config = {
 					},
 				],
 			},
+			lifetime: {
+				prices: [
+					{
+						type: "one-time",
+						productId: process.env
+							.NEXT_PUBLIC_PRODUCT_ID_LIFETIME as string,
+						amount: 799,
+						currency: "USD",
+					},
+				],
+			},
 			enterprise: {
 				isEnterprise: true,
 			},
-			// lifetime: {
-			// 	prices: [
-			// 		{
-			// 			type: "one-time",
-			// 			productId: "price_1PHjoxFkmmuOs718Orzx98rv",
-			// 			amount: 799,
-			// 			currency: "USD",
-			// 		},
-			// 	],
-			// },
 		},
 	},
 } as const satisfies Config;

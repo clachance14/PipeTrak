@@ -39,14 +39,14 @@ export function usePlanData() {
 				t("pricing.products.enterprise.features.enterpriseSupport"),
 			],
 		},
-		// lifetime: {
-		// 	title: t("pricing.products.lifetime.title"),
-		// 	description: t("pricing.products.lifetime.description"),
-		// 	features: [
-		// 		t("pricing.products.lifetime.features.noRecurringCosts"),
-		// 		t("pricing.products.lifetime.features.extendSupport"),
-		// 	],
-		// },
+		lifetime: {
+			title: t("pricing.products.lifetime.title"),
+			description: t("pricing.products.lifetime.description"),
+			features: [
+				t("pricing.products.lifetime.features.noRecurringCosts"),
+				t("pricing.products.lifetime.features.extendSupport"),
+			],
+		},
 	};
 
 	return { planData };

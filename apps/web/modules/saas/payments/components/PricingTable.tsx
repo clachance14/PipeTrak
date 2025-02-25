@@ -109,8 +109,9 @@ export function PricingTable({
 			)}
 			<div
 				className={cn("grid grid-cols-1 gap-4", {
-					"@xl:grid-cols-3": filteredPlans.length % 3 === 0,
-					"@xl:grid-cols-2": filteredPlans.length % 2 === 0,
+					"@xl:grid-cols-2": filteredPlans.length >= 2,
+					"@3xl:grid-cols-3": filteredPlans.length >= 3,
+					"@4xl:grid-cols-4": filteredPlans.length >= 4,
 				})}
 			>
 				{filteredPlans

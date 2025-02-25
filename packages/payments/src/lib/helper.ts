@@ -8,39 +8,55 @@ type PurchaseWithoutTimestamps = Omit<Purchase, "createdAt" | "updatedAt">;
 
 function getActivePlanFromPurchases(purchases?: PurchaseWithoutTimestamps[]) {
 	const subscriptionPurchase = purchases?.find(
-		(purchase) => purchase.type === "SUBSCRIPTION",
+		(purchase) => purchase.type === "SUBSCRIPTION"
 	);
 
+	if (subscriptionPurchase) {
+		const plan = Object.entries(plans).find(([_, plan]) =>
+			plan.prices?.some(
+				(price) => price.productId === subscriptionPurchase.productId
+			)
+		);
+
+		return {
+			id: plan?.[0] as PlanId,
+			price: plan?.[1].prices?.find(
+				(price) => price.productId === subscriptionPurchase.productId
+			),
+			status: subscriptionPurchase.status,
+			purchaseId: subscriptionPurchase.id,
+		};
+	}
+
+	const oneTimePurchase = purchases?.find(
+		(purchase) => purchase.type === "ONE_TIME"
+	);
+
+	if (oneTimePurchase) {
+		const plan = Object.entries(plans).find(([_, plan]) =>
+			plan.prices?.some(
+				(price) => price.productId === oneTimePurchase.productId
+			)
+		);
+
+		return {
+			id: plan?.[0] as PlanId,
+			price: plan?.[1].prices?.find(
+				(price) => price.productId === oneTimePurchase.productId
+			),
+			status: "active",
+			purchaseId: oneTimePurchase.id,
+		};
+	}
+
 	const freePlan = Object.entries(plans).find(([_, plan]) => plan.isFree);
-	const freePlanData = freePlan
+
+	return freePlan
 		? {
 				id: freePlan[0] as PlanId,
 				status: "active",
-			}
+		  }
 		: null;
-
-	if (!subscriptionPurchase) {
-		return freePlanData;
-	}
-
-	const activePlan = Object.entries(plans).find(([_, plan]) =>
-		plan.prices?.some(
-			(price) => price.productId === subscriptionPurchase.productId,
-		),
-	);
-
-	if (!activePlan) {
-		return freePlanData;
-	}
-
-	return {
-		id: activePlan[0] as PlanId,
-		price: activePlan[1].prices?.find(
-			(price) => price.productId === subscriptionPurchase.productId,
-		),
-		status: subscriptionPurchase.status,
-		purchaseId: subscriptionPurchase.id,
-	};
 }
 
 export function createPurchasesHelper(purchases: PurchaseWithoutTimestamps[]) {
@@ -59,9 +75,7 @@ export function createPurchasesHelper(purchases: PurchaseWithoutTimestamps[]) {
 		return !!purchases?.some((purchase) =>
 			Object.entries(plans)
 				.find(([id]) => id === planId)?.[1]
-				.prices?.some(
-					(price) => price.productId === purchase.productId,
-				),
+				.prices?.some((price) => price.productId === purchase.productId)
 		);
 	};
 
