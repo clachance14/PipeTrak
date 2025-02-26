@@ -77,7 +77,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 		const event = validateEvent(
 			await req.text(),
 			Object.fromEntries(req.headers.entries()),
-			polarWebhookSecret
+			polarWebhookSecret,
 		);
 
 		switch (event.type) {
