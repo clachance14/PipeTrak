@@ -431,7 +431,10 @@
 				"organizationNotDeleted": "We were unable to delete your organization. Please try again later."
 			},
 			"subtitle": "Manage the settings of the organization.",
-			"title": "Organization"
+			"title": "Organization",
+			"dangerZone": {
+				"title": "Danger zone"
+			}
 		},
 		"start": {
 			"subtitle": "Welcome to the start page of this organization!"
@@ -642,7 +645,8 @@
 				"billing": "Billing",
 				"general": "General",
 				"members": "Members",
-				"title": "Organization"
+				"title": "Organization",
+				"dangerZone": "Danger zone"
 			}
 		},
 		"save": "Save"

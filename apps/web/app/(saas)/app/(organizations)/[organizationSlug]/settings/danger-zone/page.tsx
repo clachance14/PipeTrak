@@ -6,7 +6,7 @@ export async function generateMetadata() {
 	const t = await getTranslations();
 
 	return {
-		title: t("organizations.settings.title"),
+		title: t("organizations.settings.dangerZone.title"),
 	};
 }
 

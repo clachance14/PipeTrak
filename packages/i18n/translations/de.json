@@ -428,7 +428,10 @@
 				"organizationNotDeleted": "Wir konnten deine Organisation nicht löschen. Bitte versuche es später noch einmal."
 			},
 			"subtitle": "Verwalte die Einstellungen der Organisation.",
-			"title": "Organisation"
+			"title": "Organisation",
+			"dangerZone": {
+				"title": "Gefahrenzone"
+			}
 		},
 		"start": {
 			"subtitle": "Willkommen auf der Startseite dieser Organisation!"
@@ -639,7 +642,8 @@
 				"billing": "Abrechnung",
 				"general": "Allgemein",
 				"members": "Mitglieder",
-				"title": "Organisation"
+				"title": "Organisation",
+				"dangerZone": "Gefahrenzone"
 			}
 		},
 		"save": "Speichern"
