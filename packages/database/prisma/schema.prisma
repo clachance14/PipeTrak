@@ -15,6 +15,10 @@ generator zod {
   addSelectType    = false
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 model User {
   id                 String       @id
   name               String
@@ -70,9 +74,9 @@ model Account {
   providerId   String
   userId       String
   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken  String?
-  refreshToken String?
-  idToken      String?
+  accessToken  String? @db.Text
+  refreshToken String? @db.Text
+  idToken      String? @db.Text
   expiresAt    DateTime?
   password     String?
 
@@ -88,7 +92,7 @@ model Account {
 model Verification {
   id         String   @id
   identifier String
-  value      String
+  value      String   @db.Text
   expiresAt  DateTime
 
   createdAt DateTime?
@@ -186,7 +190,8 @@ model AiChat {
   userId         String?
   user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   title          String?
-  messages       Json[]
+  /// [AIChatMessages]
+  messages       Json?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 }

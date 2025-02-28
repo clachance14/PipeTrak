@@ -183,7 +183,10 @@ export const aiRouter = new Hono()
 						data: {
 							messages: [
 								...messages,
-								{ role: "assistant", content: text },
+								{
+									role: "assistant",
+									content: text,
+								},
 							],
 						},
 					});

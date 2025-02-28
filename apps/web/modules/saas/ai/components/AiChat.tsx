@@ -39,7 +39,7 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 	});
 
 	useEffect(() => {
-		if (currentChat?.messages.length) {
+		if (currentChat?.messages?.length) {
 			setMessages(currentChat.messages as unknown as Message[]);
 		}
 	}, [currentChat]);
