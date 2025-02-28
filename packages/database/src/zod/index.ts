@@ -80,29 +80,11 @@ export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const NullableJsonNullValueInputSchema = z.enum(['DbNull','JsonNull',]).transform((value) => value === 'JsonNull' ? Prisma.JsonNull : value === 'DbNull' ? Prisma.DbNull : value);
 
+export const QueryModeSchema = z.enum(['default','insensitive']);
+
 export const NullsOrderSchema = z.enum(['first','last']);
 
-export const UserOrderByRelevanceFieldEnumSchema = z.enum(['id','name','email','image','username','role','banReason','paymentsCustomerId','locale']);
-
-export const SessionOrderByRelevanceFieldEnumSchema = z.enum(['id','ipAddress','userAgent','userId','impersonatedBy','activeOrganizationId','token']);
-
-export const AccountOrderByRelevanceFieldEnumSchema = z.enum(['id','accountId','providerId','userId','accessToken','refreshToken','idToken','password','scope']);
-
-export const VerificationOrderByRelevanceFieldEnumSchema = z.enum(['id','identifier','value']);
-
-export const PasskeyOrderByRelevanceFieldEnumSchema = z.enum(['id','name','publicKey','userId','credentialID','deviceType','transports']);
-
-export const OrganizationOrderByRelevanceFieldEnumSchema = z.enum(['id','name','slug','logo','metadata','paymentsCustomerId']);
-
-export const MemberOrderByRelevanceFieldEnumSchema = z.enum(['id','organizationId','userId','role']);
-
-export const InvitationOrderByRelevanceFieldEnumSchema = z.enum(['id','organizationId','email','role','status','inviterId']);
-
-export const PurchaseOrderByRelevanceFieldEnumSchema = z.enum(['id','organizationId','userId','customerId','subscriptionId','productId','status']);
-
 export const JsonNullValueFilterSchema = z.enum(['DbNull','JsonNull','AnyNull',]).transform((value) => value === 'JsonNull' ? Prisma.JsonNull : value === 'DbNull' ? Prisma.JsonNull : value === 'AnyNull' ? Prisma.AnyNull : value);
-
-export const AiChatOrderByRelevanceFieldEnumSchema = z.enum(['id','organizationId','userId','title']);
 
 export const PurchaseTypeSchema = z.enum(['SUBSCRIPTION','ONE_TIME']);
 
