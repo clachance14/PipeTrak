@@ -16,15 +16,11 @@ export function ActivePlanBadge({
 		return null;
 	}
 
-	console.log(activePlan);
-
 	const activePlanData = planData[activePlan.id as keyof typeof planData];
 
 	if (!activePlanData) {
 		return null;
 	}
-
-	console.log(activePlanData);
 	return (
 		<Badge
 			status="info"
