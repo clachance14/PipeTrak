@@ -39,6 +39,11 @@
 	"javascript": {
 		"jsxRuntime": "reactClassic"
 	},
+	"css": {
+		"formatter": {
+			"enabled": false
+		}
+	},
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
