@@ -1,7 +1,11 @@
+import { auth } from "@repo/auth";
 import { getBaseUrl } from "@repo/utils";
 import { apiReference } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPISpecs } from "hono-openapi";
+import {} from "openapi-merge";
+import {} from "openapi-merge";
+import { mergeOpenApiSchemas } from "./lib/openapi-schema";
 import { corsMiddleware } from "./middleware/cors";
 import { loggerMiddleware } from "./middleware/logger";
 import { adminRouter } from "./routes/admin/router";
@@ -33,7 +37,7 @@ const appRouter = app
 	.route("/", healthRouter);
 
 app.get(
-	"/openapi",
+	"/app-openapi",
 	openAPISpecs(app, {
 		documentation: {
 			info: {
@@ -47,8 +51,22 @@ app.get(
 				},
 			],
 		},
-	}),
+	})
 );
+
+app.get("/openapi", async (c) => {
+	const authSchema = await auth.api.generateOpenAPISchema();
+	const appSchema = await (
+		app.request("/api/app-openapi") as Promise<Response>
+	).then((res) => res.json());
+
+	const mergedSchema = mergeOpenApiSchemas({
+		appSchema,
+		authSchema: authSchema as any,
+	});
+
+	return c.json(mergedSchema);
+});
 
 app.get(
 	"/docs",
@@ -57,7 +75,7 @@ app.get(
 		spec: {
 			url: "/api/openapi",
 		},
-	}),
+	})
 );
 
 export type AppRouter = typeof appRouter;
