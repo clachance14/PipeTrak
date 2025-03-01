@@ -51,7 +51,7 @@ app.get(
 				},
 			],
 		},
-	})
+	}),
 );
 
 app.get("/openapi", async (c) => {
@@ -75,7 +75,7 @@ app.get(
 		spec: {
 			url: "/api/openapi",
 		},
-	})
+	}),
 );
 
 export type AppRouter = typeof appRouter;
