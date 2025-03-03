@@ -101,6 +101,7 @@ export default async function middleware(req: NextRequest) {
 				"/app/choose-plan",
 				"/app/onboarding",
 				"/app/new-organization",
+				"/app/organization-invitation",
 			];
 			if (!activePlan && !validPathsWithoutPlan.includes(pathname)) {
 				return NextResponse.redirect(
