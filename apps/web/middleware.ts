@@ -101,9 +101,12 @@ export default async function middleware(req: NextRequest) {
 				"/app/choose-plan",
 				"/app/onboarding",
 				"/app/new-organization",
-				"/app/organization-invitation",
+				"/app/organization-invitation/",
 			];
-			if (!activePlan && !validPathsWithoutPlan.includes(pathname)) {
+			if (
+				!activePlan &&
+				!validPathsWithoutPlan.some((path) => pathname.startsWith(path))
+			) {
 				return NextResponse.redirect(
 					new URL("/app/choose-plan", origin),
 				);

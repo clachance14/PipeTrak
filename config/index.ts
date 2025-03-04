@@ -42,6 +42,7 @@ export const config = {
 			"admin",
 			"settings",
 			"ai-demo",
+			"organization-invitation",
 		],
 	},
 	// Users
