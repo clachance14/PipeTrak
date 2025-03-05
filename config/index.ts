@@ -124,7 +124,7 @@ export const config = {
 					{
 						type: "recurring",
 						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_PRO_MONTHLY as string,
+							.NEXT_PUBLIC_PRICE_ID_PRO_MONTHLY as string,
 						interval: "month",
 						amount: 29,
 						currency: "USD",
@@ -134,7 +134,7 @@ export const config = {
 					{
 						type: "recurring",
 						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_PRO_YEARLY as string,
+							.NEXT_PUBLIC_PRICE_ID_PRO_YEARLY as string,
 						interval: "year",
 						amount: 290,
 						currency: "USD",
@@ -148,7 +148,7 @@ export const config = {
 					{
 						type: "one-time",
 						productId: process.env
-							.NEXT_PUBLIC_PRODUCT_ID_LIFETIME as string,
+							.NEXT_PUBLIC_PRICE_ID_LIFETIME as string,
 						amount: 799,
 						currency: "USD",
 					},
