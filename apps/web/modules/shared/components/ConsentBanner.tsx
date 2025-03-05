@@ -23,7 +23,7 @@ export function ConsentBanner() {
 
 	return (
 		<div className="fixed left-4 bottom-4 max-w-md z-50">
-			<div className="flex gap-4 rounded-xl border bg-card p-6 text-card-foreground shadow-xl">
+			<div className="flex gap-4 rounded-2xl border bg-card p-4 text-card-foreground shadow-xl">
 				<CookieIcon className="block size-6 shrink-0 text-5xl text-primary/60 mt-1" />
 				<div>
 					<p className="text-sm leading-normal">
