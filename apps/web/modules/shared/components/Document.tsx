@@ -1,6 +1,7 @@
 import { AnalyticsScript } from "@analytics";
 import { config } from "@repo/config";
 import { ApiClientProvider } from "@shared/components/ApiClientProvider";
+import { ConsentBanner } from "@shared/components/ConsentBanner";
 import { Toaster } from "@ui/components/toast";
 import { cn } from "@ui/lib";
 import { GeistSans } from "geist/font/sans";
@@ -39,6 +40,7 @@ export function Document({
 						</ApiClientProvider>
 					</ThemeProvider>
 					<Toaster position="top-right" />
+					<ConsentBanner />
 					<AnalyticsScript />
 				</NuqsAdapter>
 			</body>

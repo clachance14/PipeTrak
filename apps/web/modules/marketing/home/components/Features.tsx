@@ -249,7 +249,7 @@ export function Features() {
 											(highlight, k) => (
 												<div
 													key={`highlight-${k}`}
-													className="flex flex-col items-stretch justify-between rounded-lg bg-card shadow-sm p-4"
+													className="flex flex-col items-stretch justify-between rounded-xl bg-card border p-4"
 												>
 													<div>
 														<highlight.icon

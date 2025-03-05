@@ -43,7 +43,7 @@ export function FaqSection({ className }: { className?: string }) {
 					{items.map((item, i) => (
 						<div
 							key={`faq-item-${i}`}
-							className="rounded-lg bg-card shadow-sm p-4 lg:p-6"
+							className="rounded-lg bg-card border p-4 lg:p-6"
 						>
 							<h4 className="mb-2 font-semibold text-lg">
 								{item.question}

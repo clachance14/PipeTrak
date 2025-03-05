@@ -1,54 +1,46 @@
 "use client";
 
+import { useCookieConsent } from "@shared/hooks/cookie-consent";
 import { Button } from "@ui/components/button";
-import Cookies from "js-cookie";
 import { CookieIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function ConsentBanner() {
-	const [showBanner, setShowBanner] = useState(false);
-
+	const { userHasConsented, allowCookies, declineCookies } =
+		useCookieConsent();
+	const [mounted, setMounted] = useState(false);
 	useEffect(() => {
-		if (!Cookies.get("consent")) {
-			setShowBanner(true);
-		}
+		setMounted(true);
 	}, []);
 
-	if (!showBanner) {
+	if (!mounted) {
 		return null;
 	}
 
-	const handleAllow = () => {
-		Cookies.set("consent", "true", { expires: 30 });
-		setShowBanner(false);
-	};
-
-	const handleDecline = () => {
-		Cookies.set("consent", "false", { expires: 30 });
-		setShowBanner(false);
-	};
+	if (userHasConsented) {
+		return null;
+	}
 
 	return (
-		<div className="fixed right-4 bottom-4 max-w-md">
+		<div className="fixed left-4 bottom-4 max-w-md z-50">
 			<div className="flex gap-4 rounded-xl border bg-card p-6 text-card-foreground shadow-xl">
-				<CookieIcon className="block size-4 shrink-0 text-5xl text-primary" />
+				<CookieIcon className="block size-6 shrink-0 text-5xl text-primary/60 mt-1" />
 				<div>
 					<p className="text-sm leading-normal">
-						We use tracking cookies to understand how you use the
-						product and help us improve it. Please accept cookies to
-						help us improve.
+						This site doesn't use cookies yet, but we added this
+						banner to demo it to you.
 					</p>
-					<div className="mt-4 flex gap-4">
+					<div className="mt-4 flex gap-2">
 						<Button
-							variant="ghost"
+							variant="light"
 							className="flex-1"
-							onClick={() => handleDecline()}
+							onClick={() => declineCookies()}
 						>
 							Decline
 						</Button>
 						<Button
 							className="flex-1"
-							onClick={() => handleAllow()}
+							onClick={() => allowCookies()}
 						>
 							Allow
 						</Button>
