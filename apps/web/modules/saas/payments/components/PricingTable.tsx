@@ -147,7 +147,7 @@ export function PricingTable({
 						return (
 							<div
 								key={planId}
-								className={cn("rounded-xl border bg-card p-6", {
+								className={cn("rounded-3xl border p-6", {
 									"border-2 border-primary": recommended,
 								})}
 								data-test="price-table-plan"
@@ -258,7 +258,7 @@ export function PricingTable({
 										{isEnterprise ? (
 											<Button
 												className="mt-4 w-full"
-												variant="outline"
+												variant="light"
 												asChild
 											>
 												<LocaleLink href="/contact">

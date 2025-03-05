@@ -83,7 +83,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 			<DropdownMenuTrigger asChild>
 				<button
 					type="button"
-					className="flex w-full items-center justify-between gap-2 rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-primary md:w-[100%+1rem] md:p-2 md:hover:bg-primary/5"
+					className="flex cursor-pointer w-full items-center justify-between gap-2 rounded-lg outline-hidden focus-visible:ring-2 focus-visible:ring-primary md:w-[100%+1rem] md:px-2 md:py-1.5 md:hover:bg-primary/5"
 					aria-label="User menu"
 				>
 					<span className="flex items-center gap-2">

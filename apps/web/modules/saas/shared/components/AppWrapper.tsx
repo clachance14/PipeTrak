@@ -13,7 +13,7 @@ export function AppWrapper({ children }: PropsWithChildren) {
 		>
 			<NavBar />
 			<div
-				className={cn(" px-0 ", [
+				className={cn(" px-0 md:px-4 ", [
 					config.ui.saas.useSidebarLayout
 						? "min-h-[calc(100vh-1rem)] md:ml-[280px]"
 						: "",

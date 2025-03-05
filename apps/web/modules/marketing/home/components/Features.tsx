@@ -175,7 +175,7 @@ export function Features() {
 				</div>
 			</div>
 
-			<div className="bg-card dark:bg-card">
+			<div>
 				<div className="container max-w-5xl">
 					{featureTabs.map((tab) => {
 						const filteredStack = tab.stack || [];
@@ -184,7 +184,7 @@ export function Features() {
 							<div
 								key={tab.id}
 								className={cn(
-									"border-t py-8 first:border-t-0 md:py-12 lg:border-t-0 lg:py-16",
+									"border-t py-8 first:border-t-0 md:py-12 lg:border lg:first:border-t lg:rounded-3xl lg:p-6",
 									selectedTab === tab.id
 										? "block"
 										: "block lg:hidden",
@@ -249,7 +249,7 @@ export function Features() {
 											(highlight, k) => (
 												<div
 													key={`highlight-${k}`}
-													className="flex flex-col items-stretch justify-between rounded-lg border p-4"
+													className="flex flex-col items-stretch justify-between rounded-lg bg-card shadow-sm p-4"
 												>
 													<div>
 														<highlight.icon
