@@ -1,7 +1,7 @@
 import { atom, useAtom } from "jotai";
 import Cookies from "js-cookie";
 
-export const consentAtom = atom(false);
+export const consentAtom = atom(Cookies.get("consent") === "true");
 
 export function useCookieConsent() {
 	const [userHasConsented, setUserHasConsented] = useAtom(consentAtom);
