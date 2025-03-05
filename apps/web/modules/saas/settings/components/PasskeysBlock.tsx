@@ -101,7 +101,7 @@ export function PasskeysBlock() {
 								</small>
 							</div>
 							<Button
-								variant="outline"
+								variant="light"
 								size="icon"
 								className="shrink-0"
 								onClick={() => deletePasskey(passkey.id)}
@@ -111,11 +111,7 @@ export function PasskeysBlock() {
 						</div>
 					))
 				)}
-				<Button
-					className="w-full"
-					variant="outline"
-					onClick={addPasskey}
-				>
+				<Button className="w-full" variant="light" onClick={addPasskey}>
 					<PlusIcon className="mr-1.5 size-4" />
 					Add passkey
 				</Button>
