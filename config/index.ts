@@ -74,7 +74,7 @@ export const config = {
 	// Mails
 	mails: {
 		// the from address for mails
-		from: "hello@your-domain.com",
+		from: "noreply@supastarter.dev",
 	},
 	// Frontend
 	ui: {
