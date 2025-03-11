@@ -1,1 +1,1 @@
-export * from "./mailgun";
+export * from "./plunk";
