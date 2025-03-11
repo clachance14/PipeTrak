@@ -8,8 +8,9 @@ export function Footer() {
 				<div>
 					<Logo className="opacity-70 grayscale" />
 					<p className="mt-3 text-sm opacity-70">
-						© {new Date().getFullYear()} supastarter. All rights
-						reserved.
+						<a href="https://supastarter.dev">
+							Built with supastarter
+						</a>
 					</p>
 				</div>
 
