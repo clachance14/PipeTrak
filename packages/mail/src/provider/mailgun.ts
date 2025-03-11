@@ -3,13 +3,15 @@ import { logger } from "@repo/logs";
 import type { SendEmailHandler } from "../../types";
 
 const { from } = config.mails;
-const { MAILGUN_DOMAIN, MAILGUN_API_KEY } = process.env;
-
-if (!MAILGUN_DOMAIN || !MAILGUN_API_KEY) {
-	throw new Error("MAILGUN_DOMAIN and MAILGUN_API_KEY must be set");
-}
 
 export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
+	const mailgunDomain = process.env.MAILGUN_DOMAIN as string;
+	const mailgunApiKey = process.env.MAILGUN_API_KEY as string;
+
+	if (!mailgunDomain || !mailgunApiKey) {
+		throw new Error("MAILGUN_DOMAIN and MAILGUN_API_KEY must be set");
+	}
+
 	const body = new FormData();
 	body.append("from", from);
 	body.append("to", to);
@@ -20,12 +22,12 @@ export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
 	}
 
 	const response = await fetch(
-		`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`,
+		`https://api.mailgun.net/v3/${mailgunDomain}/messages`,
 		{
 			method: "POST",
 			headers: {
 				Authorization: `Basic ${Buffer.from(
-					`api:${MAILGUN_API_KEY}`
+					`api:${mailgunApiKey}`
 				).toString("base64")}`,
 			},
 			body,
