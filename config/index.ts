@@ -74,7 +74,7 @@ export const config = {
 	// Mails
 	mails: {
 		// the from address for mails
-		from: "hello@your-domain.com",
+		from: "Mailgun Sandbox <postmaster@sandbox19b26e8b30684f84a5f83f9bafceae50.mailgun.org>",
 	},
 	// Frontend
 	ui: {
