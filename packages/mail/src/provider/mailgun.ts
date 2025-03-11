@@ -4,10 +4,10 @@ import type { SendEmailHandler } from "../../types";
 
 const { from } = config.mails;
 
-export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
-	const mailgunDomain = process.env.MAILGUN_DOMAIN as string;
-	const mailgunApiKey = process.env.MAILGUN_API_KEY as string;
+const mailgunDomain = process.env.MAILGUN_DOMAIN as string;
+const mailgunApiKey = process.env.MAILGUN_API_KEY as string;
 
+export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
 	if (!mailgunDomain || !mailgunApiKey) {
 		throw new Error("MAILGUN_DOMAIN and MAILGUN_API_KEY must be set");
 	}
@@ -27,11 +27,11 @@ export const send: SendEmailHandler = async ({ to, subject, html, text }) => {
 			method: "POST",
 			headers: {
 				Authorization: `Basic ${Buffer.from(
-					`api:${mailgunApiKey}`,
+					`api:${mailgunApiKey}`
 				).toString("base64")}`,
 			},
 			body,
-		},
+		}
 	);
 
 	if (!response.ok) {
