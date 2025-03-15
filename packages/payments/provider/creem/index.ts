@@ -155,7 +155,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					data: {
 						organizationId: metadata?.organization_id || null,
 						userId: metadata?.user_id || null,
-						customerId: customer as string,
+						customerId: customer.id as string,
 						type: "ONE_TIME",
 						productId: product.id,
 					},
