@@ -76,8 +76,8 @@ export function NavBar() {
 
 	return (
 		<nav
-			className={cn("w-full border-b", {
-				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px] md:border-r md:border-b-0":
+			className={cn("w-full", {
+				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px]":
 					useSidebarLayout,
 			})}
 		>

@@ -13,18 +13,19 @@ export function AppWrapper({ children }: PropsWithChildren) {
 		>
 			<NavBar />
 			<div
-				className={cn(" px-0 md:px-4 ", [
+				className={cn(" md:pr-4 py-4 flex", [
 					config.ui.saas.useSidebarLayout
-						? "min-h-[calc(100vh-1rem)] md:ml-[280px]"
+						? "min-h-[calc(100vh)] md:ml-[280px]"
 						: "",
 				])}
 			>
 				<main
-					className={cn("container max-w-6xl py-6", [
-						config.ui.saas.useSidebarLayout ? "" : "",
-					])}
+					className={cn(
+						"py-6 border rounded-2xl bg-card px-4 md:p-8 min-h-full w-full",
+						[config.ui.saas.useSidebarLayout ? "" : ""],
+					)}
 				>
-					{children}
+					<div className="container px-0">{children}</div>
 				</main>
 			</div>
 		</div>
