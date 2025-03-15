@@ -51,7 +51,10 @@ export const useCreateAiChatMutation = () => {
 		mutationFn: async ({
 			title,
 			organizationId,
-		}: { title?: string; organizationId?: string }) => {
+		}: {
+			title?: string;
+			organizationId?: string;
+		}) => {
 			const response = await apiClient.ai.chats.$post({
 				json: {
 					title,

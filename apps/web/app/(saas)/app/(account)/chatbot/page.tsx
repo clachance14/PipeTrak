@@ -1,22 +1,14 @@
 import { AiChat } from "@saas/ai/components/AiChat";
 import { aiChatListQueryKey, aiChatQueryKey } from "@saas/ai/lib/api";
 import { PageHeader } from "@saas/shared/components/PageHeader";
-import { apiClient } from "@shared/lib/api-client";
-import { getQueryClient } from "@shared/lib/server";
-import { headers } from "next/headers";
+import { getServerApiClient, getServerQueryClient } from "@shared/lib/server";
 
 export default async function AiDemoPage() {
-	const queryClient = getQueryClient();
-
-	const headerObject = Object.fromEntries((await headers()).entries());
+	const queryClient = getServerQueryClient();
+	const apiClient = await getServerApiClient();
 
 	const chats = await (async () => {
-		const response = await apiClient.ai.chats.$get(
-			{},
-			{
-				headers: headerObject,
-			},
-		);
+		const response = await apiClient.ai.chats.$get({});
 
 		if (!response.ok) {
 			throw new Error("Failed to fetch chats");
@@ -34,14 +26,11 @@ export default async function AiDemoPage() {
 		await queryClient.prefetchQuery({
 			queryKey: aiChatQueryKey(chats[0].id),
 			queryFn: async () => {
-				const response = await apiClient.ai.chats[":id"].$get(
-					{
-						param: {
-							id: chats[0].id,
-						},
+				const response = await apiClient.ai.chats[":id"].$get({
+					param: {
+						id: chats[0].id,
 					},
-					{ headers: headerObject },
-				);
+				});
 
 				if (!response.ok) {
 					throw new Error("Failed to fetch chat");

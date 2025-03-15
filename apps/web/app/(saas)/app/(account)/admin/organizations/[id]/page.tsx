@@ -2,7 +2,7 @@ import { auth } from "@repo/auth";
 import { OrganizationForm } from "@saas/admin/component/organizations/OrganizationForm";
 import { getAdminPath } from "@saas/admin/lib/links";
 import { fullOrganizationQueryKey } from "@saas/organizations/lib/api";
-import { getQueryClient } from "@shared/lib/server";
+import { getServerQueryClient } from "@shared/lib/server";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { ArrowLeftIcon } from "lucide-react";
@@ -21,7 +21,7 @@ export default async function OrganizationFormPage({
 	const { backTo } = await searchParams;
 
 	const t = await getTranslations();
-	const queryClient = getQueryClient();
+	const queryClient = getServerQueryClient();
 
 	await queryClient.prefetchQuery({
 		queryKey: fullOrganizationQueryKey(id),

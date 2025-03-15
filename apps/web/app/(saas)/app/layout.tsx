@@ -7,7 +7,7 @@ import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
-import { getQueryClient } from "@shared/lib/server";
+import { getServerQueryClient } from "@shared/lib/server";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 
@@ -17,7 +17,7 @@ export const revalidate = 0;
 export default async function Layout({ children }: PropsWithChildren) {
 	const session = await getSession();
 
-	const queryClient = getQueryClient();
+	const queryClient = getServerQueryClient();
 
 	await queryClient.prefetchQuery({
 		queryKey: sessionQueryKey,

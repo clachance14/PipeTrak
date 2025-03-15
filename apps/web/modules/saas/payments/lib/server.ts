@@ -1,18 +1,13 @@
-import { apiClient } from "@shared/lib/api-client";
-import { headers } from "next/headers";
+import { getServerApiClient } from "@shared/lib/server";
 import { cache } from "react";
 
 export const getPurchases = cache(async (organizationId?: string) => {
-	const response = await apiClient.payments.purchases.$get(
-		{
-			query: {
-				organizationId,
-			},
+	const apiClient = await getServerApiClient();
+	const response = await apiClient.payments.purchases.$get({
+		query: {
+			organizationId,
 		},
-		{
-			headers: Object.fromEntries((await headers()).entries()),
-		},
-	);
+	});
 
 	if (!response.ok) {
 		throw new Error("Failed to fetch purchases");

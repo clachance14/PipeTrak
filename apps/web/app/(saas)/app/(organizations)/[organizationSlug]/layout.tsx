@@ -4,7 +4,7 @@ import { activeOrganizationQueryKey } from "@saas/organizations/lib/api";
 import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { AppWrapper } from "@saas/shared/components/AppWrapper";
-import { getQueryClient } from "@shared/lib/server";
+import { getServerQueryClient } from "@shared/lib/server";
 import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
@@ -24,7 +24,7 @@ export default async function OrganizationLayout({
 		return notFound();
 	}
 
-	const queryClient = getQueryClient();
+	const queryClient = getServerQueryClient();
 
 	await queryClient.prefetchQuery({
 		queryKey: activeOrganizationQueryKey(organizationSlug),

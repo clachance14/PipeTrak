@@ -18,8 +18,6 @@ function getQueryClient() {
 }
 
 export function ApiClientProvider({ children }: PropsWithChildren) {
-	const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-
 	const queryClient = getQueryClient();
 
 	return (

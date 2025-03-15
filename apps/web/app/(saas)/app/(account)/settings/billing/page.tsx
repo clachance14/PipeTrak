@@ -5,7 +5,7 @@ import { ChangePlan } from "@saas/payments/components/ChangePlan";
 import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { SettingsList } from "@saas/shared/components/SettingsList";
-import { getQueryClient } from "@shared/lib/server";
+import { getServerQueryClient } from "@shared/lib/server";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -19,7 +19,7 @@ export async function generateMetadata() {
 export default async function BillingSettingsPage() {
 	const session = await getSession();
 	const purchases = await getPurchases();
-	const queryClient = getQueryClient();
+	const queryClient = getServerQueryClient();
 
 	await queryClient.prefetchQuery({
 		queryKey: purchasesQueryKey(),
