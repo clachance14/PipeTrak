@@ -1,4 +1,4 @@
-import { db } from "@repo/database";
+import { countAllUsers, getUsers } from "@repo/database";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono-openapi/zod";
@@ -25,15 +25,13 @@ export const userRouter = new Hono()
 		async (c) => {
 			const { query, limit, offset } = c.req.valid("query");
 
-			const users = await db.user.findMany({
-				where: {
-					name: { contains: query, mode: "insensitive" },
-				},
-				take: limit,
-				skip: offset,
+			const users = await getUsers({
+				limit,
+				offset,
+				query,
 			});
 
-			const total = await db.user.count();
+			const total = await countAllUsers();
 
 			return c.json({ users, total });
 		},

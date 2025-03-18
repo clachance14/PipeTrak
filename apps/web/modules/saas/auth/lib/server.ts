@@ -1,6 +1,6 @@
 import "server-only";
 import { auth } from "@repo/auth";
-import { db } from "@repo/database";
+import { getInvitationById } from "@repo/database";
 import { headers } from "next/headers";
 import { cache } from "react";
 
@@ -56,16 +56,7 @@ export const getUserAccounts = cache(async () => {
 
 export const getInvitation = cache(async (id: string) => {
 	try {
-		const invitation = await db.invitation.findUnique({
-			where: {
-				id,
-			},
-			include: {
-				organization: true,
-			},
-		});
-
-		return invitation;
+		return await getInvitationById(id);
 	} catch (error) {
 		return null;
 	}

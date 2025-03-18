@@ -1,11 +1,12 @@
 import { config } from "@repo/config";
-import { db } from "@repo/database";
+import { db, getInvitationById } from "@repo/database";
+import { getUserByEmail } from "@repo/database";
 import type { Locale } from "@repo/i18n";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { getBaseUrl } from "@repo/utils";
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
 	admin,
 	createAuthMiddleware,
@@ -17,7 +18,6 @@ import {
 import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
 import { updateSeatsInOrganizationSubscription } from "./lib/organization";
-import { getUserByEmail } from "./lib/user";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
 const getLocaleFromRequest = (request?: Request) => {
@@ -33,8 +33,8 @@ const appUrl = getBaseUrl();
 export const auth = betterAuth({
 	baseURL: appUrl,
 	trustedOrigins: [appUrl],
-	database: prismaAdapter(db, {
-		provider: "postgresql",
+	database: drizzleAdapter(db, {
+		provider: "pg",
 	}),
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
@@ -55,16 +55,14 @@ export const auth = betterAuth({
 					return;
 				}
 
-				const invitation = await db.invitation.findUnique({
-					where: { id: invitationId },
-				});
+				const invitation = await getInvitationById(invitationId);
 
 				if (!invitation) {
 					return;
 				}
 
 				await updateSeatsInOrganizationSubscription(
-					invitation.organizationId,
+					invitation.organizationId
 				);
 			} else if (ctx.path.startsWith("/organization/remove-member")) {
 				const { organizationId } = ctx.body;
@@ -95,7 +93,7 @@ export const auth = betterAuth({
 			enabled: true,
 			sendChangeEmailVerification: async (
 				{ user: { email, name }, url },
-				request,
+				request
 			) => {
 				const locale = getLocaleFromRequest(request);
 				await sendEmail({
@@ -133,7 +131,7 @@ export const auth = betterAuth({
 		sendOnSignUp: config.auth.enableSignup,
 		sendVerificationEmail: async (
 			{ user: { email, name }, url },
-			request,
+			request
 		) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
@@ -180,14 +178,14 @@ export const auth = betterAuth({
 		organization({
 			sendInvitationEmail: async (
 				{ email, id, organization },
-				request,
+				request
 			) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);
 
 				const url = new URL(
 					existingUser ? "/auth/login" : "/auth/signup",
-					getBaseUrl(),
+					getBaseUrl()
 				);
 
 				url.searchParams.set("invitationId", id);

@@ -1,5 +1,5 @@
 import { config } from "@repo/config";
-import { db } from "@repo/database";
+import { getPendingInvitationByEmail } from "@repo/database";
 import type { BetterAuthPlugin } from "better-auth";
 import { APIError } from "better-auth/api";
 import { createAuthMiddleware } from "better-auth/plugins";
@@ -20,12 +20,8 @@ export const invitationOnlyPlugin = () =>
 						const { email } = ctx.body;
 
 						// check if there is an invitation for the email
-						const hasInvitation = await db.invitation.count({
-							where: {
-								email,
-								status: "pending",
-							},
-						});
+						const hasInvitation =
+							await getPendingInvitationByEmail(email);
 
 						if (!hasInvitation) {
 							throw new APIError("BAD_REQUEST", {

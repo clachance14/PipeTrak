@@ -1,4 +1,8 @@
-import { type Purchase, db } from "@repo/database";
+import {
+	createPurchase,
+	getPurchaseBySubscriptionId,
+	updatePurchase,
+} from "@repo/database";
 import { ChargeBee } from "chargebee-typescript";
 import type {
 	CreateCheckoutLink,
@@ -147,41 +151,43 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 		const id = String(data.subscription.id);
 
 		if ("cf_organization_id" in data.subscription) {
-			const subscription = {
-				id,
-				organizationId: data.subscription.cf_organization_id,
-				customerId: data.customer.id,
-				productId:
-					data.subscription.subscription_items[0].item_price_id,
-				status: data.subscription.status,
-				type: "SUBSCRIPTION",
-			} satisfies Omit<Purchase, "createdAt">;
+			const existingPurchase = await getPurchaseBySubscriptionId(id);
 
-			await db.purchase.upsert({
-				create: subscription,
-				update: subscription,
-				where: {
+			if (existingPurchase) {
+				await updatePurchase({
+					id: existingPurchase.id,
+					status: data.subscription.status,
+				});
+			} else {
+				await createPurchase({
 					id,
-				},
-			});
+					organizationId: data.subscription.cf_organization_id,
+					customerId: data.customer.id,
+					productId:
+						data.subscription.subscription_items[0].item_price_id,
+					status: data.subscription.status,
+					type: "SUBSCRIPTION",
+				});
+			}
 		} else {
-			const subscription = {
-				id,
-				userId: data.subscription.cf_user_id,
-				customerId: data.customer.id,
-				productId:
-					data.subscription.subscription_items[0].item_price_id,
-				status: data.subscription.status,
-				type: "SUBSCRIPTION",
-			} satisfies Omit<Purchase, "createdAt">;
+			const existingPurchase = await getPurchaseBySubscriptionId(id);
 
-			await db.purchase.upsert({
-				create: subscription,
-				update: subscription,
-				where: {
+			if (existingPurchase) {
+				await updatePurchase({
+					id: existingPurchase.id,
+					status: data.subscription.status,
+				});
+			} else {
+				await createPurchase({
 					id,
-				},
-			});
+					userId: data.subscription.cf_user_id,
+					customerId: data.customer.id,
+					productId:
+						data.subscription.subscription_items[0].item_price_id,
+					status: data.subscription.status,
+					type: "SUBSCRIPTION",
+				});
+			}
 		}
 	} catch (error: unknown) {
 		return new Response(

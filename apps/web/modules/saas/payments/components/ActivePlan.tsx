@@ -95,7 +95,7 @@ export function ActivePlan({
 					)}
 				</div>
 
-				{"purchaseId" in activePlan && (
+				{"purchaseId" in activePlan && activePlan.purchaseId && (
 					<div className="mt-4 flex justify-end">
 						<div className="flex w-full flex-col flex-wrap gap-2 md:flex-row">
 							<CustomerPortalButton

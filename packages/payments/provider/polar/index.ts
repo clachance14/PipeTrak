@@ -3,7 +3,12 @@ import {
 	WebhookVerificationError,
 	validateEvent,
 } from "@polar-sh/sdk/webhooks.js";
-import { db } from "@repo/database";
+import {
+	createPurchase,
+	deletePurchaseBySubscriptionId,
+	getPurchaseBySubscriptionId,
+	updatePurchase,
+} from "@repo/database";
 import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
 	CreateCheckoutLink,
@@ -94,15 +99,13 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					break;
 				}
 
-				await db.purchase.create({
-					data: {
-						organizationId:
-							(metadata?.organization_id as string) || null,
-						userId: (metadata?.user_id as string) || null,
-						customerId,
-						type: "ONE_TIME",
-						productId: productPriceId,
-					},
+				await createPurchase({
+					organizationId:
+						(metadata?.organization_id as string) || null,
+					userId: (metadata?.user_id as string) || null,
+					customerId,
+					type: "ONE_TIME",
+					productId: productPriceId,
 				});
 
 				await setCustomerIdToEntity(customerId, {
@@ -116,16 +119,14 @@ export const webhookHandler: WebhookHandler = async (req) => {
 				const { metadata, customerId, priceId, id, status } =
 					event.data;
 
-				await db.purchase.create({
-					data: {
-						subscriptionId: id,
-						organizationId: metadata?.organization_id as string,
-						userId: metadata?.user_id as string,
-						customerId,
-						type: "SUBSCRIPTION",
-						productId: priceId,
-						status,
-					},
+				await createPurchase({
+					subscriptionId: id,
+					organizationId: metadata?.organization_id as string,
+					userId: metadata?.user_id as string,
+					customerId,
+					type: "SUBSCRIPTION",
+					productId: priceId,
+					status,
 				});
 
 				await setCustomerIdToEntity(customerId, {
@@ -138,33 +139,22 @@ export const webhookHandler: WebhookHandler = async (req) => {
 			case "subscription.updated": {
 				const { id, status, priceId } = event.data;
 
-				const existingPurchase = await db.purchase.findUnique({
-					where: {
-						subscriptionId: id,
-					},
-				});
+				const existingPurchase = await getPurchaseBySubscriptionId(id);
 
 				if (existingPurchase) {
-					await db.purchase.update({
-						data: {
-							status,
-							productId: priceId,
-						},
-						where: {
-							subscriptionId: id,
-						},
+					await updatePurchase({
+						id: existingPurchase.id,
+						status,
+						productId: priceId,
 					});
 				}
+
 				break;
 			}
 			case "subscription.canceled": {
 				const { id } = event.data;
 
-				await db.purchase.delete({
-					where: {
-						subscriptionId: id,
-					},
-				});
+				await deletePurchaseBySubscriptionId(id);
 
 				break;
 			}

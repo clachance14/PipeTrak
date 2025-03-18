@@ -9,8 +9,7 @@ generator client {
 
 generator zod {
   provider         = "zod-prisma-types"
-  output           = "../src/zod"
-  createInputTypes = false
+  output           = "./zod"
   addIncludeType   = false
   addSelectType    = false
 }
@@ -143,7 +142,7 @@ model Member {
   role           String
   createdAt      DateTime
 
-  @@unique([userId, organizationId])
+  @@unique([organizationId, userId])
   @@map("member")
 }
 

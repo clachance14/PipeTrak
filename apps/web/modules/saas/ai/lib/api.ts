@@ -19,7 +19,7 @@ export const useAiChatListQuery = (organizationId?: string) =>
 				throw new Error("Failed to fetch AI chat list");
 			}
 
-			return response.json();
+			return response.json().then((data) => data.chats);
 		},
 	});
 
@@ -42,7 +42,7 @@ export const useAiChatQuery = (id: string) =>
 				throw new Error("Failed to fetch AI chat");
 			}
 
-			return response.json();
+			return response.json().then((res) => res.chat);
 		},
 	});
 
@@ -66,7 +66,7 @@ export const useCreateAiChatMutation = () => {
 				throw new Error("Failed to create AI chat");
 			}
 
-			return response.json();
+			return response.json().then((res) => res.chat);
 		},
 	});
 };
@@ -83,7 +83,7 @@ export const updateAiChatMutation = () => {
 				throw new Error("Failed to update AI chat");
 			}
 
-			return response.json();
+			return response.json().then((res) => res.chat);
 		},
 	});
 };

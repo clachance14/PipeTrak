@@ -119,12 +119,7 @@ export function OrganizationList() {
 				accessorFn: (row) => row.name,
 				cell: ({
 					row: {
-						original: {
-							id,
-							name,
-							logo,
-							_count: { members: membersCount },
-						},
+						original: { id, name, logo, membersCount },
 					},
 				}) => (
 					<div className="flex items-center gap-2">
