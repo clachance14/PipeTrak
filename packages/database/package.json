@@ -7,7 +7,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "22.13.12",
+		"@types/node": "22.13.13",
 		"dotenv-cli": "^8.0.0",
 		"prisma": "^6.5.0",
 		"prisma-json-types-generator": "^3.2.2",
