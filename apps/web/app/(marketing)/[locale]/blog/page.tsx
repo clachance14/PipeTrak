@@ -1,5 +1,5 @@
 import { PostListItem } from "@marketing/blog/components/PostListItem";
-import { allPosts } from "content-collections";
+import { getAllPosts } from "@marketing/blog/utils/lib/posts";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -13,6 +13,8 @@ export default async function BlogListPage() {
 	const locale = await getLocale();
 	const t = await getTranslations();
 
+	const posts = await getAllPosts();
+
 	return (
 		<div className="container max-w-6xl pt-32 pb-16">
 			<div className="mb-12 pt-8 text-center">
@@ -21,7 +23,7 @@ export default async function BlogListPage() {
 			</div>
 
 			<div className="grid gap-8 md:grid-cols-2">
-				{allPosts
+				{posts
 					.filter((post) => post.published && locale === post.locale)
 					.sort(
 						(a, b) =>

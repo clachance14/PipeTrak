@@ -1,6 +1,7 @@
+import { getAllPosts } from "@marketing/blog/utils/lib/posts";
 import { config } from "@repo/config";
 import { getBaseUrl } from "@repo/utils";
-import { allLegalPages, allPosts } from "content-collections";
+import { allLegalPages } from "content-collections";
 import type { MetadataRoute } from "next";
 import { docsSource } from "./docs-source";
 
@@ -11,7 +12,9 @@ const locales = config.i18n.enabled
 
 const staticMarketingPages = ["", "/changelog"];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const posts = await getAllPosts();
+
 	return [
 		...staticMarketingPages.flatMap((page) =>
 			locales.map((locale) => ({
@@ -19,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 				lastModified: new Date(),
 			})),
 		),
-		...allPosts.map((post) => ({
+		...posts.map((post) => ({
 			url: new URL(`/${post.locale}/blog/${post.path}`, baseUrl).href,
 			lastModified: new Date(),
 		})),

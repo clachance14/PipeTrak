@@ -180,7 +180,8 @@
 	},
 	"blog": {
 		"description": "In diesem Blog schreibe ich über alles mögliche.",
-		"title": "Mein toller Blog"
+		"title": "Mein toller Blog",
+		"back": "Zurück zum Blog"
 	},
 	"changelog": {
 		"description": "Bleibe über die neuesten Änderungen in unserem Produkt auf dem Laufenden.",

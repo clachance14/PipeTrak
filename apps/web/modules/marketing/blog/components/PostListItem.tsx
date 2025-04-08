@@ -1,7 +1,7 @@
 "use client";
 
 import { LocaleLink } from "@i18n/routing";
-import type { Post } from "content-collections";
+import type { Post } from "@marketing/blog/types";
 import Image from "next/image";
 
 export function PostListItem({ post }: { post: Post }) {

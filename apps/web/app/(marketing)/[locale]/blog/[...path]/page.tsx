@@ -1,9 +1,9 @@
 import { LocaleLink, localeRedirect } from "@i18n/routing";
 import { PostContent } from "@marketing/blog/components/PostContent";
+import { getPostBySlug } from "@marketing/blog/utils/lib/posts";
 import { getBaseUrl } from "@repo/utils";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
-import { allPosts } from "content-collections";
-import { getLocale, setRequestLocale } from "next-intl/server";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 
 type Params = {
@@ -11,25 +11,14 @@ type Params = {
 	locale: string;
 };
 
-export function generateStaticParams() {
-	return allPosts.map((post) => ({
-		path: post.path.split("/"),
-		locale: post.locale,
-	}));
-}
-
-export async function generateMetadata(props: {
-	params: Promise<Params>;
-}) {
+export async function generateMetadata(props: { params: Promise<Params> }) {
 	const params = await props.params;
 
 	const { path } = params;
 
 	const locale = await getLocale();
-	const activePath = getActivePathFromUrlParam(path);
-	const post = allPosts.find(
-		(post) => post.path === activePath && locale === post.locale,
-	);
+	const slug = getActivePathFromUrlParam(path);
+	const post = await getPostBySlug(slug, { locale });
 
 	return {
 		title: post?.title,
@@ -38,22 +27,24 @@ export async function generateMetadata(props: {
 			title: post?.title,
 			description: post?.excerpt,
 			images: post?.image
-				? [new URL(post?.image ?? "", getBaseUrl()).toString()]
+				? [
+						post.image.startsWith("http")
+							? post.image
+							: new URL(post.image, getBaseUrl()).toString(),
+					]
 				: [],
 		},
 	};
 }
 
-export default async function BlogPostPage(props: {
-	params: Promise<Params>;
-}) {
+export default async function BlogPostPage(props: { params: Promise<Params> }) {
 	const { path, locale } = await props.params;
 	setRequestLocale(locale);
 
-	const activePath = getActivePathFromUrlParam(path);
-	const post = allPosts.find(
-		(post) => post.path === activePath && locale === post.locale,
-	);
+	const t = await getTranslations();
+
+	const slug = getActivePathFromUrlParam(path);
+	const post = await getPostBySlug(slug, { locale });
 
 	if (!post) {
 		return localeRedirect({ href: "/blog", locale });
@@ -65,7 +56,9 @@ export default async function BlogPostPage(props: {
 		<div className="container max-w-6xl pt-32 pb-24">
 			<div className="mx-auto max-w-2xl">
 				<div className="mb-12">
-					<LocaleLink href="/blog">&larr; Back to blog</LocaleLink>
+					<LocaleLink href="/blog">
+						&larr; {t("blog.back")}
+					</LocaleLink>
 				</div>
 
 				<h1 className="font-bold text-4xl">{title}</h1>
