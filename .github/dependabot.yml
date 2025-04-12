@@ -10,3 +10,6 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
+	ignore:
+		- dependency-name: "cropperjs"
+        	versions: [">1.6.2"]

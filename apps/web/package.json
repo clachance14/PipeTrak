@@ -33,7 +33,7 @@
 		"boring-avatars": "^1.11.2",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
-		"cropperjs": "2.0.0",
+		"cropperjs": "1.6.2",
 		"date-fns": "^4.1.0",
 		"deepmerge": "^4.3.1",
 		"fumadocs-core": "^15.2.6",
