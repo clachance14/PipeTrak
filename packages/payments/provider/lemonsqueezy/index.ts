@@ -47,12 +47,12 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 					"organizationId" in options
 						? {
 								organization_id: options.organizationId,
-						  }
+							}
 						: {
 								user_id: options.userId,
-						  },
+							},
 			},
-		}
+		},
 	);
 
 	return response.data?.data.attributes.url ?? null;
@@ -99,12 +99,12 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 		const text = await req.text();
 		const hmac = createHmac(
 			"sha256",
-			process.env.LEMONSQUEEZY_WEBHOOK_SECRET as string
+			process.env.LEMONSQUEEZY_WEBHOOK_SECRET as string,
 		);
 		const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
 		const signature = Buffer.from(
 			req.headers.get("x-signature") as string,
-			"utf8"
+			"utf8",
 		);
 
 		if (!timingSafeEqual(digest, signature)) {
@@ -166,7 +166,7 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 					{
 						organizationId: customData.organization_id,
 						userId: customData.user_id,
-					}
+					},
 				);
 
 				break;
@@ -223,7 +223,7 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 					{
 						organizationId: customData.organization_id,
 						userId: customData.user_id,
-					}
+					},
 				);
 
 				break;
@@ -242,7 +242,7 @@ export const webhookHandler: WebhookHandler = async (req: Request) => {
 			`Webhook error: ${error instanceof Error ? error.message : ""}`,
 			{
 				status: 400,
-			}
+			},
 		);
 	}
 };

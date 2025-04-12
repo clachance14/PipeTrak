@@ -51,7 +51,7 @@ app.get(
 				},
 			],
 		},
-	})
+	}),
 );
 
 app.get("/openapi", async (c) => {
@@ -73,7 +73,7 @@ app.get(
 	Scalar({
 		theme: "saturn",
 		url: "/api/openapi",
-	})
+	}),
 );
 
 export type AppRouter = typeof appRouter;
