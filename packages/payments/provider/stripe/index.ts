@@ -5,7 +5,6 @@ import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	GetInvoices,
 	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
@@ -62,13 +61,13 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 						metadata,
 					},
 					customer_creation: "always",
-				}
+			  }
 			: {
 					subscription_data: {
 						metadata,
 						trial_period_days: trialPeriodDays,
 					},
-				}),
+			  }),
 		metadata,
 	});
 
@@ -111,21 +110,6 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	});
 };
 
-export const getInvoices: GetInvoices = async ({ customerId }) => {
-	const stripeClient = getStripeClient();
-
-	const invoices = await stripeClient.invoices.list({
-		customer: customerId,
-	});
-
-	return invoices.data.map((invoice) => ({
-		id: invoice.id,
-		date: invoice.created,
-		status: invoice.status ?? undefined,
-		downloadUrl: invoice.hosted_invoice_url ?? undefined,
-	}));
-};
-
 export const webhookHandler: WebhookHandler = async (req) => {
 	const stripeClient = getStripeClient();
 
@@ -141,7 +125,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 		event = await stripeClient.webhooks.constructEventAsync(
 			await req.text(),
 			req.headers.get("stripe-signature") as string,
-			process.env.STRIPE_WEBHOOK_SECRET as string,
+			process.env.STRIPE_WEBHOOK_SECRET as string
 		);
 	} catch (e) {
 		logger.error(e);
@@ -265,7 +249,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 			`Webhook error: ${error instanceof Error ? error.message : ""}`,
 			{
 				status: 400,
-			},
+			}
 		);
 	}
 };

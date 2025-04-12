@@ -156,8 +156,7 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						minimum,
-						count:
-							typeof minimum === "number" ? minimum : undefined,
+						count: typeof minimum === "number" ? minimum : "",
 					},
 				);
 				break;
@@ -177,8 +176,7 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						maximum,
-						count:
-							typeof maximum === "number" ? maximum : undefined,
+						count: typeof maximum === "number" ? maximum : "",
 					},
 				);
 				break;
