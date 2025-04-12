@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 
 // Tables
-export const users = sqliteTable("user", {
+export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
@@ -34,7 +34,7 @@ export const users = sqliteTable("user", {
 	locale: text("locale"),
 });
 
-export const sessions = sqliteTable(
+export const session = sqliteTable(
 	"session",
 	{
 		id: text("id").primaryKey(),
@@ -43,25 +43,23 @@ export const sessions = sqliteTable(
 		userAgent: text("userAgent"),
 		userId: text("userId")
 			.notNull()
-			.references(() => users.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" }),
 		impersonatedBy: text("impersonatedBy"),
 		activeOrganizationId: text("activeOrganizationId"),
 		token: text("token").notNull(),
 		createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
 		updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 	},
-	(table) => ({
-		tokenIdx: uniqueIndex("session_token_idx").on(table.token),
-	}),
+	(table) => [uniqueIndex("session_token_idx").on(table.token)]
 );
 
-export const accounts = sqliteTable("account", {
+export const account = sqliteTable("account", {
 	id: text("id").primaryKey(),
 	accountId: text("accountId").notNull(),
 	providerId: text("providerId").notNull(),
 	userId: text("userId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 	accessToken: text("accessToken"),
 	refreshToken: text("refreshToken"),
 	idToken: text("idToken"),
@@ -78,7 +76,7 @@ export const accounts = sqliteTable("account", {
 	updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 });
 
-export const verifications = sqliteTable("verification", {
+export const verification = sqliteTable("verification", {
 	id: text("id").primaryKey(),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
@@ -87,13 +85,13 @@ export const verifications = sqliteTable("verification", {
 	updatedAt: integer("updatedAt", { mode: "timestamp" }),
 });
 
-export const passkeys = sqliteTable("passkey", {
+export const passkey = sqliteTable("passkey", {
 	id: text("id").primaryKey(),
 	name: text("name"),
 	publicKey: text("publicKey").notNull(),
 	userId: text("userId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 	credentialID: text("credentialID").notNull(),
 	counter: integer("counter").notNull(),
 	deviceType: text("deviceType").notNull(),
@@ -102,7 +100,7 @@ export const passkeys = sqliteTable("passkey", {
 	createdAt: integer("createdAt", { mode: "timestamp" }),
 });
 
-export const organizations = sqliteTable(
+export const organization = sqliteTable(
 	"organization",
 	{
 		id: text("id").primaryKey(),
@@ -113,52 +111,50 @@ export const organizations = sqliteTable(
 		metadata: text("metadata"),
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
-	(table) => ({
-		slugIdx: uniqueIndex("organization_slug_idx").on(table.slug),
-	}),
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
 );
 
-export const members = sqliteTable(
+export const member = sqliteTable(
 	"member",
 	{
 		id: text("id").primaryKey(),
 		organizationId: text("organizationId")
 			.notNull()
-			.references(() => organizations.id, { onDelete: "cascade" }),
+			.references(() => organization.id, { onDelete: "cascade" }),
 		userId: text("userId")
 			.notNull()
-			.references(() => users.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" }),
 		role: text("role").notNull(),
 		createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
 	},
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId,
+			table.organizationId
 		),
-	],
+	]
 );
 
-export const invitations = sqliteTable("invitation", {
+export const invitation = sqliteTable("invitation", {
 	id: text("id").primaryKey(),
 	organizationId: text("organizationId")
 		.notNull()
-		.references(() => organizations.id, { onDelete: "cascade" }),
+		.references(() => organization.id, { onDelete: "cascade" }),
 	email: text("email").notNull(),
 	role: text("role"),
 	status: text("status").notNull(),
 	expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
 	inviterId: text("inviterId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const purchases = sqliteTable("purchase", {
+export const purchase = sqliteTable("purchase", {
 	id: text("id").primaryKey(),
-	organizationId: text("organizationId").references(() => organizations.id, {
+	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
-	userId: text("userId").references(() => users.id, {
+	userId: text("userId").references(() => user.id, {
 		onDelete: "cascade",
 	}),
 	type: text({ enum: ["SUBSCRIPTION", "ONE_TIME"] }).notNull(),
@@ -170,40 +166,40 @@ export const purchases = sqliteTable("purchase", {
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer("updatedAt", { mode: "timestamp" }).default(
-		sql`CURRENT_TIMESTAMP`,
+		sql`CURRENT_TIMESTAMP`
 	),
 });
 
-export const aiChats = sqliteTable("aiChat", {
+export const aiChat = sqliteTable("aiChat", {
 	id: text("id").primaryKey(),
-	organizationId: text("organizationId").references(() => organizations.id, {
+	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
-	userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
+	userId: text("userId").references(() => user.id, { onDelete: "cascade" }),
 	title: text("title"),
 	messages: blob("messages", { mode: "json" }),
 	createdAt: integer("createdAt", { mode: "timestamp" })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer("updatedAt", { mode: "timestamp" }).default(
-		sql`CURRENT_TIMESTAMP`,
+		sql`CURRENT_TIMESTAMP`
 	),
 });
 
 // Relations
-export const usersRelations = relations(users, ({ many }) => ({
-	sessions: many(sessions),
-	accounts: many(accounts),
-	passkeys: many(passkeys),
-	invitations: many(invitations),
-	purchases: many(purchases),
-	memberships: many(members),
-	aiChats: many(aiChats),
+export const userRelations = relations(user, ({ many }) => ({
+	sessions: many(session),
+	accounts: many(account),
+	passkeys: many(passkey),
+	invitations: many(invitation),
+	purchases: many(purchase),
+	memberships: many(member),
+	aiChats: many(aiChat),
 }));
 
-export const organizationsRelations = relations(organizations, ({ many }) => ({
-	members: many(members),
-	invitations: many(invitations),
-	purchases: many(purchases),
-	aiChats: many(aiChats),
+export const organizationRelations = relations(organization, ({ many }) => ({
+	members: many(member),
+	invitations: many(invitation),
+	purchases: many(purchase),
+	aiChats: many(aiChat),
 }));

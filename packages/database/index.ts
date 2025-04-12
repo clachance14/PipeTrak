@@ -1,1 +1,1 @@
-export * from "./orm/drizzle";
+export * from "./drizzle";

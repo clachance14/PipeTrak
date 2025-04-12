@@ -1,5 +1,5 @@
 {
 	"extends": "@repo/tsconfig/base.json",
 	"include": ["**/*.ts"],
-	"exclude": ["dist", "build", "node_modules", "orm/prisma/zod/**/*.ts"]
+	"exclude": ["dist", "build", "node_modules", "prisma/zod/**/*.ts"]
 }

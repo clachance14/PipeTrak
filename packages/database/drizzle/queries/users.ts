@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import type { z } from "zod";
 import { db } from "../client";
-import { accounts, users } from "../schema/postgres";
+import { account, user } from "../schema/postgres";
 import type { UserUpdateSchema } from "../zod";
 
 export async function getUsers({
@@ -14,7 +14,7 @@ export async function getUsers({
 	offset: number;
 	query?: string;
 }) {
-	return await db.query.users.findMany({
+	return await db.query.user.findMany({
 		where: (user, { like }) => like(user.name, `%${query}%`),
 		limit,
 		offset,
@@ -22,17 +22,17 @@ export async function getUsers({
 }
 
 export async function countAllUsers() {
-	return db.$count(users);
+	return db.$count(user);
 }
 
 export async function getUserById(id: string) {
-	return await db.query.users.findFirst({
+	return await db.query.user.findFirst({
 		where: (user, { eq }) => eq(user.id, id),
 	});
 }
 
 export async function getUserByEmail(email: string) {
-	return await db.query.users.findFirst({
+	return await db.query.user.findFirst({
 		where: (user, { eq }) => eq(user.email, email),
 	});
 }
@@ -50,7 +50,7 @@ export async function createUser({
 	emailVerified: boolean;
 	onboardingComplete: boolean;
 }) {
-	const [{ id }] = await db.insert(users).values({
+	const [{ id }] = await db.insert(user).values({
 		id: nanoid(),
 		email,
 		name,
@@ -61,13 +61,13 @@ export async function createUser({
 		updatedAt: new Date(),
 	});
 
-	const user = await getUserById(id);
+	const newUser = await getUserById(id);
 
-	return user;
+	return newUser;
 }
 
 export async function getAccountById(id: string) {
-	return await db.query.accounts.findFirst({
+	return await db.query.account.findFirst({
 		where: (account, { eq }) => eq(account.id, id),
 	});
 }
@@ -83,7 +83,7 @@ export async function createUserAccount({
 	accountId: string;
 	hashedPassword?: string;
 }) {
-	const [{ id }] = await db.insert(accounts).values({
+	const [{ id }] = await db.insert(account).values({
 		id: nanoid(),
 		userId,
 		accountId,
@@ -93,11 +93,13 @@ export async function createUserAccount({
 		password: hashedPassword,
 	});
 
-	const account = await getAccountById(id);
+	const newAccount = await getAccountById(id);
 
-	return account;
+	return newAccount;
 }
 
-export async function updateUser(user: z.infer<typeof UserUpdateSchema>) {
-	return db.update(users).set(user).where(eq(users.id, user.id));
+export async function updateUser(
+	updatedUser: z.infer<typeof UserUpdateSchema>
+) {
+	return db.update(user).set(updatedUser).where(eq(user.id, updatedUser.id));
 }

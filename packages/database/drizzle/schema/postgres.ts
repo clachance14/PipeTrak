@@ -1,23 +1,24 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
 	boolean,
-	int,
+	integer,
 	json,
-	mysqlEnum,
-	mysqlTable,
+	pgEnum,
+	pgTable,
 	text,
 	timestamp,
 	uniqueIndex,
-} from "drizzle-orm/mysql-core";
+	uuid,
+} from "drizzle-orm/pg-core";
 
 // Enums
-export const purchaseTypeEnum = mysqlEnum("PurchaseType", [
+export const purchaseTypeEnum = pgEnum("PurchaseType", [
 	"SUBSCRIPTION",
 	"ONE_TIME",
 ]);
 
 // Tables
-export const users = mysqlTable("user", {
+export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
@@ -35,7 +36,7 @@ export const users = mysqlTable("user", {
 	locale: text("locale"),
 });
 
-export const sessions = mysqlTable(
+export const session = pgTable(
 	"session",
 	{
 		id: text("id").primaryKey(),
@@ -44,23 +45,23 @@ export const sessions = mysqlTable(
 		userAgent: text("userAgent"),
 		userId: text("userId")
 			.notNull()
-			.references(() => users.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" }),
 		impersonatedBy: text("impersonatedBy"),
 		activeOrganizationId: text("activeOrganizationId"),
 		token: text("token").notNull(),
 		createdAt: timestamp("createdAt").notNull(),
 		updatedAt: timestamp("updatedAt").notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)],
+	(table) => [uniqueIndex("session_token_idx").on(table.token)]
 );
 
-export const accounts = mysqlTable("account", {
+export const account = pgTable("account", {
 	id: text("id").primaryKey(),
 	accountId: text("accountId").notNull(),
 	providerId: text("providerId").notNull(),
 	userId: text("userId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 	accessToken: text("accessToken"),
 	refreshToken: text("refreshToken"),
 	idToken: text("idToken"),
@@ -73,7 +74,7 @@ export const accounts = mysqlTable("account", {
 	updatedAt: timestamp("updatedAt").notNull(),
 });
 
-export const verifications = mysqlTable("verification", {
+export const verification = pgTable("verification", {
 	id: text("id").primaryKey(),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
@@ -82,22 +83,22 @@ export const verifications = mysqlTable("verification", {
 	updatedAt: timestamp("updatedAt"),
 });
 
-export const passkeys = mysqlTable("passkey", {
+export const passkey = pgTable("passkey", {
 	id: text("id").primaryKey(),
 	name: text("name"),
 	publicKey: text("publicKey").notNull(),
 	userId: text("userId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 	credentialID: text("credentialID").notNull(),
-	counter: int("counter").notNull(),
+	counter: integer("counter").notNull(),
 	deviceType: text("deviceType").notNull(),
 	backedUp: boolean("backedUp").notNull(),
 	transports: text("transports"),
 	createdAt: timestamp("createdAt"),
 });
 
-export const organizations = mysqlTable(
+export const organization = pgTable(
 	"organization",
 	{
 		id: text("id").primaryKey(),
@@ -108,93 +109,93 @@ export const organizations = mysqlTable(
 		metadata: text("metadata"),
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
-	(table) => ({
-		slugIdx: uniqueIndex("organization_slug_idx").on(table.slug),
-	}),
+
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
 );
 
-export const members = mysqlTable(
+export const member = pgTable(
 	"member",
 	{
 		id: text("id").primaryKey(),
 		organizationId: text("organizationId")
 			.notNull()
-			.references(() => organizations.id, { onDelete: "cascade" }),
+			.references(() => organization.id, { onDelete: "cascade" }),
 		userId: text("userId")
 			.notNull()
-			.references(() => users.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" }),
 		role: text("role").notNull(),
 		createdAt: timestamp("createdAt").notNull(),
 	},
-	(table) => ({
-		userOrgIdx: uniqueIndex("member_user_org_idx").on(
+	(table) => [
+		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId,
+			table.organizationId
 		),
-	}),
+	]
 );
 
-export const invitations = mysqlTable("invitation", {
+export const invitation = pgTable("invitation", {
 	id: text("id").primaryKey(),
 	organizationId: text("organizationId")
 		.notNull()
-		.references(() => organizations.id, { onDelete: "cascade" }),
+		.references(() => organization.id, { onDelete: "cascade" }),
 	email: text("email").notNull(),
 	role: text("role"),
 	status: text("status").notNull(),
 	expiresAt: timestamp("expiresAt").notNull(),
 	inviterId: text("inviterId")
 		.notNull()
-		.references(() => users.id, { onDelete: "cascade" }),
+		.references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const purchases = mysqlTable("purchase", {
-	id: text("id").primaryKey(),
-	organizationId: text("organizationId").references(() => organizations.id, {
+export const purchase = pgTable("purchase", {
+	id: uuid("id").defaultRandom().primaryKey(),
+	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
-	userId: text("userId").references(() => users.id, {
+	userId: text("userId").references(() => user.id, {
 		onDelete: "cascade",
 	}),
-	type: purchaseTypeEnum.notNull(),
+	type: purchaseTypeEnum("type").notNull(),
 	customerId: text("customerId").notNull(),
 	subscriptionId: text("subscriptionId").unique(),
 	productId: text("productId").notNull(),
 	status: text("status"),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt").default(
-		sql`CURRENT_TIMESTAMP(3) on update CURRENT_TIMESTAMP(3)`,
-	),
+	updatedAt: timestamp("updatedAt"),
 });
 
-export const aiChats = mysqlTable("aiChat", {
-	id: text("id").primaryKey(),
-	organizationId: text("organizationId").references(() => organizations.id, {
+export const aiChat = pgTable("aiChat", {
+	id: uuid("id").defaultRandom().primaryKey(),
+	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
-	userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
+	userId: text("userId").references(() => user.id, { onDelete: "cascade" }),
 	title: text("title"),
-	messages: json("messages"),
+	messages: json("messages").$type<
+		{
+			role: "user" | "assistant";
+			content: string;
+		}[]
+	>(),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt").default(
-		sql`CURRENT_TIMESTAMP(3) on update CURRENT_TIMESTAMP(3)`,
-	),
+	updatedAt: timestamp("updatedAt"),
 });
 
 // Relations
-export const usersRelations = relations(users, ({ many }) => ({
-	sessions: many(sessions),
-	accounts: many(accounts),
-	passkeys: many(passkeys),
-	invitations: many(invitations),
-	purchases: many(purchases),
-	memberships: many(members),
-	aiChats: many(aiChats),
+export const userRelations = relations(user, ({ many }) => ({
+	sessions: many(session),
+	accounts: many(account),
+	passkeys: many(passkey),
+	invitations: many(invitation),
+	purchases: many(purchase),
+	memberships: many(member),
+	aiChats: many(aiChat),
 }));
 
-export const organizationsRelations = relations(organizations, ({ many }) => ({
-	members: many(members),
-	invitations: many(invitations),
-	purchases: many(purchases),
-	aiChats: many(aiChats),
+export const organizationRelations = relations(organization, ({ many }) => ({
+	members: many(member),
+	invitations: many(invitation),
+	purchases: many(purchase),
+	aiChats: many(aiChat),
 }));

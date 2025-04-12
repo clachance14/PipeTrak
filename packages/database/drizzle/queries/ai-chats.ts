@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../client";
-import { aiChats } from "../schema/postgres";
+import { aiChat } from "../schema/postgres";
 
 export async function getAiChatsByUserId({
 	limit,
@@ -11,7 +11,7 @@ export async function getAiChatsByUserId({
 	offset: number;
 	userId: string;
 }) {
-	return await db.query.aiChats.findMany({
+	return await db.query.aiChat.findMany({
 		where: (aiChat, { eq }) => eq(aiChat.userId, userId),
 		limit,
 		offset,
@@ -27,7 +27,7 @@ export async function getAiChatsByOrganizationId({
 	offset: number;
 	organizationId: string;
 }) {
-	return await db.query.aiChats.findMany({
+	return await db.query.aiChat.findMany({
 		where: (aiChat, { eq }) => eq(aiChat.organizationId, organizationId),
 		limit,
 		offset,
@@ -35,7 +35,7 @@ export async function getAiChatsByOrganizationId({
 }
 
 export async function getAiChatById(id: string) {
-	return db.query.aiChats.findFirst({
+	return db.query.aiChat.findFirst({
 		where: (aiChat, { eq }) => eq(aiChat.id, id),
 	});
 }
@@ -50,13 +50,13 @@ export async function createAiChat({
 	title?: string;
 }) {
 	const [{ id }] = await db
-		.insert(aiChats)
+		.insert(aiChat)
 		.values({
 			organizationId,
 			userId,
 			title,
 		})
-		.returning({ id: aiChats.id });
+		.returning({ id: aiChat.id });
 
 	const createdChat = await getAiChatById(id);
 
@@ -74,15 +74,15 @@ export async function updateAiChat({
 }: {
 	id: string;
 	title?: string;
-	messages?: typeof aiChats.$inferInsert.messages;
+	messages?: typeof aiChat.$inferInsert.messages;
 }) {
 	return await db
-		.update(aiChats)
+		.update(aiChat)
 		.set({ title, messages })
-		.where(eq(aiChats.id, id))
+		.where(eq(aiChat.id, id))
 		.returning();
 }
 
 export async function deleteAiChat(id: string) {
-	return await db.delete(aiChats).where(eq(aiChats.id, id));
+	return await db.delete(aiChat).where(eq(aiChat.id, id));
 }
