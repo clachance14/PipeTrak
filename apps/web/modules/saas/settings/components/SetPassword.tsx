@@ -6,12 +6,6 @@ import { Button } from "@ui/components/button";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
-
-const formSchema = z.object({
-	currentPassword: z.string(),
-	newPassword: z.string(),
-});
 
 export function SetPasswordForm() {
 	const t = useTranslations();

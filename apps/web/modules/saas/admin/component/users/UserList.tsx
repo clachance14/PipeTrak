@@ -100,9 +100,13 @@ export function UserList() {
 	const deleteUser = async (id: string) => {
 		toast.promise(
 			async () => {
-				await authClient.admin.removeUser({
+				const { error } = await authClient.admin.removeUser({
 					userId: id,
 				});
+
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t("admin.users.deleteUser.deleting"),
@@ -117,9 +121,13 @@ export function UserList() {
 	const resendVerificationMail = async (email: string) => {
 		toast.promise(
 			async () => {
-				await authClient.sendVerificationEmail({
+				const { error } = await authClient.sendVerificationEmail({
 					email,
 				});
+
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t("admin.users.resendVerificationMail.submitting"),

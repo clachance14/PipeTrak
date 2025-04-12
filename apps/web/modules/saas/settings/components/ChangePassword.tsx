@@ -20,7 +20,7 @@ import { z } from "zod";
 
 const formSchema = z.object({
 	currentPassword: z.string().min(1),
-	newPassword: z.string().min(1),
+	newPassword: z.string().min(8),
 });
 
 export function ChangePasswordForm() {
@@ -36,30 +36,26 @@ export function ChangePasswordForm() {
 	});
 
 	const onSubmit = form.handleSubmit(async (values) => {
-		authClient.changePassword(
-			{
-				...values,
-				revokeOtherSessions: true,
-			},
-			{
-				onSuccess: () => {
-					toast.success(
-						t(
-							"settings.account.security.changePassword.notifications.success",
-						),
-					);
-					form.reset({});
-					router.refresh();
-				},
-				onError: () => {
-					toast.error(
-						t(
-							"settings.account.security.changePassword.notifications.error",
-						),
-					);
-				},
-			},
+		const { error } = await authClient.changePassword({
+			...values,
+			revokeOtherSessions: true,
+		});
+
+		if (error) {
+			toast.error(
+				t(
+					"settings.account.security.changePassword.notifications.error",
+				),
+			);
+
+			return;
+		}
+
+		toast.success(
+			t("settings.account.security.changePassword.notifications.success"),
 		);
+		form.reset({});
+		router.refresh();
 	});
 
 	return (

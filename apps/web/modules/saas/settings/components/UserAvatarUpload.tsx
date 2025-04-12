@@ -65,9 +65,13 @@ export function UserAvatarUpload({
 				throw new Error("Failed to upload image");
 			}
 
-			await authClient.updateUser({
+			const { error } = await authClient.updateUser({
 				image: path,
 			});
+
+			if (error) {
+				throw error;
+			}
 
 			await reloadSession();
 

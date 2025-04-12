@@ -67,12 +67,16 @@ export function OrganizationLogoForm() {
 				throw new Error("Failed to upload image");
 			}
 
-			await authClient.organization.update({
+			const { error } = await authClient.organization.update({
 				organizationId: activeOrganization.id,
 				data: {
 					logo: path,
 				},
 			});
+
+			if (error) {
+				throw error;
+			}
 
 			toast.success(t("settings.account.avatar.notifications.success"));
 

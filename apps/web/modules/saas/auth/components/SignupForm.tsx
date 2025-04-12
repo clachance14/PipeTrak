@@ -93,9 +93,15 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 			}
 
 			if (invitationOnlyMode) {
-				await authClient.organization.acceptInvitation({
-					invitationId,
-				});
+				const { error } =
+					await authClient.organization.acceptInvitation({
+						invitationId,
+					});
+
+				if (error) {
+					throw error;
+				}
+
 				router.push(config.auth.redirectAfterSignIn);
 			}
 		} catch (e) {

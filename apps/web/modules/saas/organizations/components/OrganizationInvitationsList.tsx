@@ -67,9 +67,14 @@ export function OrganizationInvitationsList({
 	const revokeInvitation = (invitationId: string) => {
 		toast.promise(
 			async () => {
-				await authClient.organization.cancelInvitation({
-					invitationId,
-				});
+				const { error } =
+					await authClient.organization.cancelInvitation({
+						invitationId,
+					});
+
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t(

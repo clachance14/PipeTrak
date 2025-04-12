@@ -104,14 +104,19 @@ export const useCreateOrganizationMutation = () => {
 		}: {
 			name: string;
 			metadata?: OrganizationMetadata;
-		}) =>
-			(
-				await authClient.organization.create({
-					name,
-					slug: await generateOrganizationSlug(name),
-					metadata,
-				})
-			).data,
+		}) => {
+			const { error, data } = await authClient.organization.create({
+				name,
+				slug: await generateOrganizationSlug(name),
+				metadata,
+			});
+
+			if (error) {
+				throw error;
+			}
+
+			return data;
+		},
 	});
 };
 
@@ -132,18 +137,23 @@ export const useUpdateOrganizationMutation = () => {
 			name: string;
 			metadata?: OrganizationMetadata;
 			updateSlug?: boolean;
-		}) =>
-			(
-				await authClient.organization.update({
-					organizationId: id,
-					data: {
-						name,
-						slug: updateSlug
-							? await generateOrganizationSlug(name)
-							: undefined,
-						metadata,
-					},
-				})
-			).data,
+		}) => {
+			const { error, data } = await authClient.organization.update({
+				organizationId: id,
+				data: {
+					name,
+					slug: updateSlug
+						? await generateOrganizationSlug(name)
+						: undefined,
+					metadata,
+				},
+			});
+
+			if (error) {
+				throw error;
+			}
+
+			return data;
+		},
 	});
 };

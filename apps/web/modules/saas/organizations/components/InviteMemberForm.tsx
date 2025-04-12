@@ -47,10 +47,14 @@ export function InviteMemberForm({
 
 	const onSubmit: SubmitHandler<FormValues> = async (values) => {
 		try {
-			await authClient.organization.inviteMember({
+			const { error } = await authClient.organization.inviteMember({
 				...values,
 				organizationId,
 			});
+
+			if (error) {
+				throw error;
+			}
 
 			form.reset();
 

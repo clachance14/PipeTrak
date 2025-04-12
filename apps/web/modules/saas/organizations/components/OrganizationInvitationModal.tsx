@@ -32,9 +32,14 @@ export function OrganizationInvitationModal({
 		setSubmitting(accept ? "accept" : "reject");
 		try {
 			if (accept) {
-				await authClient.organization.acceptInvitation({
-					invitationId,
-				});
+				const { error } =
+					await authClient.organization.acceptInvitation({
+						invitationId,
+					});
+
+				if (error) {
+					throw error;
+				}
 
 				await queryClient.invalidateQueries({
 					queryKey: organizationListQueryKey,
@@ -42,9 +47,14 @@ export function OrganizationInvitationModal({
 
 				router.replace(`/app/${organizationSlug}`);
 			} else {
-				await authClient.organization.rejectInvitation({
-					invitationId,
-				});
+				const { error } =
+					await authClient.organization.rejectInvitation({
+						invitationId,
+					});
+
+				if (error) {
+					throw error;
+				}
 
 				router.replace("/app");
 			}

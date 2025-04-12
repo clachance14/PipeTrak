@@ -88,9 +88,13 @@ export function OrganizationList() {
 	const deleteOrganization = async (id: string) => {
 		toast.promise(
 			async () => {
-				await authClient.organization.delete({
+				const { error } = await authClient.organization.delete({
 					organizationId: id,
 				});
+
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t("admin.organizations.deleteOrganization.deleting"),
