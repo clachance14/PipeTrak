@@ -5,7 +5,6 @@ import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	GetInvoices,
 	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
@@ -109,21 +108,6 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 			},
 		],
 	});
-};
-
-export const getInvoices: GetInvoices = async ({ customerId }) => {
-	const stripeClient = getStripeClient();
-
-	const invoices = await stripeClient.invoices.list({
-		customer: customerId,
-	});
-
-	return invoices.data.map((invoice) => ({
-		id: invoice.id,
-		date: invoice.created,
-		status: invoice.status ?? undefined,
-		downloadUrl: invoice.hosted_invoice_url ?? undefined,
-	}));
 };
 
 export const webhookHandler: WebhookHandler = async (req) => {

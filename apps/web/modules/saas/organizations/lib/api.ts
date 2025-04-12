@@ -101,7 +101,10 @@ export const useCreateOrganizationMutation = () => {
 		mutationFn: async ({
 			name,
 			metadata,
-		}: { name: string; metadata?: OrganizationMetadata }) =>
+		}: {
+			name: string;
+			metadata?: OrganizationMetadata;
+		}) =>
 			(
 				await authClient.organization.create({
 					name,

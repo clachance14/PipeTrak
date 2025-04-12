@@ -218,11 +218,14 @@ export * from "./lib/organization";
 
 export type Session = typeof auth.$Infer.Session;
 
-export type ActiveOrganization = typeof auth.$Infer.ActiveOrganization;
+export type ActiveOrganization = NonNullable<
+	Awaited<ReturnType<typeof auth.api.getFullOrganization>>
+>;
 
 export type Organization = typeof auth.$Infer.Organization;
 
-export type OrganizationMemberRole = typeof auth.$Infer.Member.role;
+export type OrganizationMemberRole =
+	ActiveOrganization["members"][number]["role"];
 
 export type OrganizationInvitationStatus = typeof auth.$Infer.Invitation.status;
 

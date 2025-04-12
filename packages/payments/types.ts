@@ -22,15 +22,6 @@ export type SetSubscriptionSeats = (params: {
 	seats: number;
 }) => Promise<void>;
 
-export type GetInvoices = (params: { customerId: string }) => Promise<
-	{
-		id: string;
-		date: number;
-		status?: string;
-		downloadUrl?: string;
-	}[]
->;
-
 export type WebhookHandler = (req: Request) => Promise<Response>;
 
 export type PaymentProvider = {

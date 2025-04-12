@@ -1,6 +1,6 @@
 import { auth } from "@repo/auth";
 import { getBaseUrl } from "@repo/utils";
-import { apiReference } from "@scalar/hono-api-reference";
+import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPISpecs } from "hono-openapi";
 import {} from "openapi-merge";
@@ -70,11 +70,9 @@ app.get("/openapi", async (c) => {
 
 app.get(
 	"/docs",
-	apiReference({
+	Scalar({
 		theme: "saturn",
-		spec: {
-			url: "/api/openapi",
-		},
+		url: "/api/openapi",
 	}),
 );
 

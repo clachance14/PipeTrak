@@ -11,7 +11,6 @@ import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
-	GetInvoices,
 	SetSubscriptionSeats,
 	WebhookHandler,
 } from "../../types";
@@ -93,21 +92,6 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	await updateSubscriptionItem(subscriptionItem.id, {
 		quantity: seats,
 	});
-};
-
-export const getInvoices: GetInvoices = async ({ customerId }) => {
-	initLemonsqueezyApi();
-
-	const response = await getInvoices({
-		customerId,
-	});
-
-	return response.map((invoice) => ({
-		id: invoice.id,
-		date: invoice.date,
-		status: invoice.status,
-		downloadUrl: invoice.downloadUrl,
-	}));
 };
 
 export const webhookHandler: WebhookHandler = async (req: Request) => {
