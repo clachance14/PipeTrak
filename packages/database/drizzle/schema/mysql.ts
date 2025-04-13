@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
 	boolean,
 	int,
@@ -160,9 +160,7 @@ export const purchase = mysqlTable("purchase", {
 	productId: text("productId").notNull(),
 	status: text("status"),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt").default(
-		sql`CURRENT_TIMESTAMP(3) on update CURRENT_TIMESTAMP(3)`
-	),
+	updatedAt: timestamp("updatedAt"),
 });
 
 export const aiChat = mysqlTable("aiChat", {
@@ -174,9 +172,7 @@ export const aiChat = mysqlTable("aiChat", {
 	title: text("title"),
 	messages: json("messages"),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt").default(
-		sql`CURRENT_TIMESTAMP(3) on update CURRENT_TIMESTAMP(3)`
-	),
+	updatedAt: timestamp("updatedAt"),
 });
 
 // Relations
