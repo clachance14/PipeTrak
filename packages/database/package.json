@@ -24,7 +24,6 @@
 	"scripts": {
 		"generate": "prisma generate --no-hints --schema=./prisma/schema.prisma",
 		"push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema=./prisma/schema.prisma",
-		"push:drizzle": "dotenv -c -e ../../.env -- drizzle-kit push --config=./drizzle/drizzle.config.ts",
 		"migrate": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
 		"studio": "dotenv -c -e ../../.env -- prisma studio --schema=./prisma/schema.prisma",
 		"type-check": "tsc --noEmit"
