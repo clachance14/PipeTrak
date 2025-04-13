@@ -1,4 +1,4 @@
-import { db } from "@repo/database";
+import { getOrganizationBySlug } from "@repo/database";
 import slugify from "@sindresorhus/slugify";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
@@ -29,11 +29,7 @@ export const organizationsRouter = new Hono().basePath("/organizations").get(
 		let hasAvailableSlug = false;
 
 		for (let i = 0; i < 3; i++) {
-			const existing = await db.organization.findUnique({
-				where: {
-					slug,
-				},
-			});
+			const existing = await getOrganizationBySlug(slug);
 
 			if (!existing) {
 				hasAvailableSlug = true;

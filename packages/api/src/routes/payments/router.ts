@@ -1,6 +1,10 @@
-import { getOrganizationMembership } from "@repo/auth";
 import { type Config, config } from "@repo/config";
-import { PurchaseSchema, db } from "@repo/database";
+import { getOrganizationMembership } from "@repo/database";
+import {
+	PurchaseSchema,
+	getOrganizationById,
+	getPurchaseById,
+} from "@repo/database";
 import { logger } from "@repo/logs";
 import {
 	createCheckoutLink,
@@ -109,18 +113,7 @@ export const paymentsRouter = new Hono()
 					: undefined;
 
 			const organization = organizationId
-				? await db.organization.findUnique({
-						where: {
-							id: organizationId,
-						},
-						include: {
-							_count: {
-								select: {
-									members: true,
-								},
-							},
-						},
-					})
+				? await getOrganizationById(organizationId)
 				: undefined;
 
 			if (organization === null) {
@@ -129,7 +122,7 @@ export const paymentsRouter = new Hono()
 
 			const seats =
 				organization && price && "seatBased" in price && price.seatBased
-					? organization._count.members
+					? organization.members.length
 					: undefined;
 
 			try {
@@ -164,7 +157,7 @@ export const paymentsRouter = new Hono()
 		validator(
 			"query",
 			z.object({
-				purchaseId: z.string().optional(),
+				purchaseId: z.string(),
 				redirectUrl: z.string().optional(),
 			}),
 		),
@@ -183,11 +176,7 @@ export const paymentsRouter = new Hono()
 			const { purchaseId, redirectUrl } = c.req.valid("query");
 			const user = c.get("user");
 
-			const purchase = await db.purchase.findUnique({
-				where: {
-					id: purchaseId,
-				},
-			});
+			const purchase = await getPurchaseById(purchaseId);
 
 			if (!purchase) {
 				throw new HTTPException(403);

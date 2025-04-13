@@ -1,7 +1,12 @@
-import { db } from "@repo/database";
+import {
+	countAllOrganizations,
+	getOrganizationById,
+	getOrganizations,
+} from "@repo/database";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono-openapi/zod";
+import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { adminMiddleware } from "../../middleware/admin";
 
@@ -25,22 +30,13 @@ export const organizationRouter = new Hono()
 		async (c) => {
 			const { query, limit, offset } = c.req.valid("query");
 
-			const organizations = await db.organization.findMany({
-				where: {
-					name: { contains: query, mode: "insensitive" },
-				},
-				include: {
-					_count: {
-						select: {
-							members: true,
-						},
-					},
-				},
-				take: limit,
-				skip: offset,
+			const organizations = await getOrganizations({
+				limit,
+				offset,
+				query,
 			});
 
-			const total = await db.organization.count();
+			const total = await countAllOrganizations();
 
 			return c.json({ organizations, total });
 		},
@@ -48,13 +44,11 @@ export const organizationRouter = new Hono()
 	.get("/:id", async (c) => {
 		const id = c.req.param("id");
 
-		const organization = await db.organization.findUnique({
-			where: { id },
-			include: {
-				members: true,
-				invitations: true,
-			},
-		});
+		const organization = await getOrganizationById(id);
+
+		if (!organization) {
+			throw new HTTPException(404);
+		}
 
 		return c.json(organization);
 	});

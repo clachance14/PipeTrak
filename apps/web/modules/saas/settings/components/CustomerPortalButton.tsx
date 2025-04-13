@@ -6,7 +6,7 @@ import { CreditCardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-export function CustomerPortalButton({ purchaseId }: { purchaseId?: string }) {
+export function CustomerPortalButton({ purchaseId }: { purchaseId: string }) {
 	const t = useTranslations();
 	const createCustomerPortalMutation = useCreateCustomerPortalLinkMutation();
 

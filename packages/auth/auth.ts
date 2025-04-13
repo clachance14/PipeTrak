@@ -1,5 +1,6 @@
 import { config } from "@repo/config";
-import { db } from "@repo/database";
+import { db, getInvitationById } from "@repo/database";
+import { getUserByEmail } from "@repo/database";
 import type { Locale } from "@repo/i18n";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
@@ -17,7 +18,6 @@ import {
 import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
 import { updateSeatsInOrganizationSubscription } from "./lib/organization";
-import { getUserByEmail } from "./lib/user";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
 const getLocaleFromRequest = (request?: Request) => {
@@ -36,6 +36,9 @@ export const auth = betterAuth({
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),
+	advanced: {
+		generateId: false,
+	},
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
 		freshAge: 0,
@@ -55,9 +58,7 @@ export const auth = betterAuth({
 					return;
 				}
 
-				const invitation = await db.invitation.findUnique({
-					where: { id: invitationId },
-				});
+				const invitation = await getInvitationById(invitationId);
 
 				if (!invitation) {
 					return;

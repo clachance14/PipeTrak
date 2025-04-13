@@ -1,18 +1,23 @@
-import { db } from "@repo/database";
+import {
+	getOrganizationById,
+	getUserById,
+	updateOrganization,
+	updateUser,
+} from "@repo/database";
 
 export async function setCustomerIdToEntity(
 	customerId: string,
 	{ organizationId, userId }: { organizationId?: string; userId?: string },
 ) {
 	if (organizationId) {
-		await db.organization.update({
-			where: { id: organizationId },
-			data: { paymentsCustomerId: customerId },
+		await updateOrganization({
+			id: organizationId,
+			paymentsCustomerId: customerId,
 		});
 	} else if (userId) {
-		await db.user.update({
-			where: { id: userId },
-			data: { paymentsCustomerId: customerId },
+		await updateUser({
+			id: userId,
+			paymentsCustomerId: customerId,
 		});
 	}
 }
@@ -22,19 +27,10 @@ export const getCustomerIdFromEntity = async (
 ) => {
 	if ("organizationId" in props) {
 		return (
-			(
-				await db.organization.findUnique({
-					where: { id: props.organizationId },
-				})
-			)?.paymentsCustomerId ?? null
+			(await getOrganizationById(props.organizationId))
+				?.paymentsCustomerId ?? null
 		);
 	}
 
-	return (
-		(
-			await db.user.findUnique({
-				where: { id: props.userId },
-			})
-		)?.paymentsCustomerId ?? null
-	);
+	return (await getUserById(props.userId))?.paymentsCustomerId ?? null;
 };

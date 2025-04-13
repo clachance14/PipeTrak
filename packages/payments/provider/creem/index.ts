@@ -1,5 +1,10 @@
 import { createHmac } from "node:crypto";
-import { db } from "@repo/database";
+import {
+	createPurchase,
+	deletePurchaseBySubscriptionId,
+	getPurchaseBySubscriptionId,
+	updatePurchase,
+} from "@repo/database";
 import { logger } from "@repo/logs";
 import { joinURL } from "ufo";
 import type {
@@ -151,54 +156,44 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					break;
 				}
 
-				await db.purchase.create({
-					data: {
-						organizationId: metadata?.organization_id || null,
-						userId: metadata?.user_id || null,
-						customerId: customer.id as string,
-						type: "ONE_TIME",
-						productId: product.id,
-					},
+				await createPurchase({
+					organizationId: metadata?.organization_id || null,
+					userId: metadata?.user_id || null,
+					customerId: customer as string,
+					type: "ONE_TIME",
+					productId: product.id,
 				});
 
 				break;
 			}
 			case "subscription.active": {
 				const { id, customer, product, metadata } = payload.object;
-				const existingPurchase = await db.purchase.findUnique({
-					where: {
-						subscriptionId: id,
-					},
+				const existingPurchase = await getPurchaseBySubscriptionId(id);
+
+				if (existingPurchase) {
+					await updatePurchase({
+						id: existingPurchase.id,
+						status: product.status,
+						productId: product.id,
+					});
+					break;
+				}
+
+				await createPurchase({
+					subscriptionId: id,
+					customerId: customer.id,
+					type: "SUBSCRIPTION",
+					productId: product.id,
+					organizationId: metadata?.organization_id || null,
+					userId: metadata?.user_id || null,
 				});
 
-				await db.purchase.upsert({
-					create: {
-						subscriptionId: id,
-						customerId: customer.id,
-						type: "SUBSCRIPTION",
-						productId: product.id,
-						organizationId: metadata?.organization_id || null,
-						userId: metadata?.user_id || null,
-						status: product.status,
-					},
-					update: {
-						status: product.status,
-						productId: product.id,
-					},
-					where: {
-						subscriptionId: id,
-					},
-				});
 				break;
 			}
 			case "subscription.canceled":
 			case "subscription.expired": {
 				const { id } = payload.object;
-				await db.purchase.delete({
-					where: {
-						subscriptionId: id,
-					},
-				});
+				await deletePurchaseBySubscriptionId(id);
 				break;
 			}
 			default:
