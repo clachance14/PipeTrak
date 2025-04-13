@@ -32,7 +32,7 @@ export default async function AiDemoPage({
 			throw new Error("Failed to fetch chats");
 		}
 
-		return response.json();
+		return (await response.json()).chats;
 	})();
 
 	await queryClient.prefetchQuery({
