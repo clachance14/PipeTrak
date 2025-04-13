@@ -19,7 +19,14 @@ export const getSession = async (req: NextRequest): Promise<Session | null> => {
 		return null;
 	}
 
-	return await response.json();
+	try {
+		const session = await response.json();
+		console.log("session", session);
+		return session;
+	} catch (error) {
+		console.error("Error parsing session JSON:", error);
+		return null;
+	}
 };
 
 export const getOrganizationsForSession = async (
