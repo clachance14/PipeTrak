@@ -31,7 +31,7 @@ export async function getPurchaseBySubscriptionId(subscriptionId: string) {
 }
 
 export async function createPurchase(
-	insertedPurchase: z.infer<typeof PurchaseInsertSchema>
+	insertedPurchase: z.infer<typeof PurchaseInsertSchema>,
 ) {
 	const [{ id }] = await db
 		.insert(purchase)
@@ -42,7 +42,7 @@ export async function createPurchase(
 }
 
 export async function updatePurchase(
-	updatedPurchase: z.infer<typeof PurchaseUpdateSchema>
+	updatedPurchase: z.infer<typeof PurchaseUpdateSchema>,
 ) {
 	const [{ id }] = await db
 		.update(purchase)

@@ -99,7 +99,7 @@ export async function createUserAccount({
 }
 
 export async function updateUser(
-	updatedUser: z.infer<typeof UserUpdateSchema>
+	updatedUser: z.infer<typeof UserUpdateSchema>,
 ) {
 	return db.update(user).set(updatedUser).where(eq(user.id, updatedUser.id));
 }

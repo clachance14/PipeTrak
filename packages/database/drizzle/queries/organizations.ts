@@ -58,13 +58,13 @@ export async function getOrganizationBySlug(slug: string) {
 
 export async function getOrganizationMembership(
 	organizationId: string,
-	userId: string
+	userId: string,
 ) {
 	return db.query.member.findFirst({
 		where: (member, { eq }) =>
 			and(
 				eq(member.organizationId, organizationId),
-				eq(member.userId, userId)
+				eq(member.userId, userId),
 			),
 		with: {
 			organization: true,
@@ -73,7 +73,7 @@ export async function getOrganizationMembership(
 }
 
 export async function getOrganizationWithPurchasesAndMembersCount(
-	organizationId: string
+	organizationId: string,
 ) {
 	return db.query.organization.findFirst({
 		where: (org, { eq }) => eq(org.id, organizationId),
@@ -96,7 +96,7 @@ export async function getPendingInvitationByEmail(email: string) {
 }
 
 export async function updateOrganization(
-	updatedOrganization: z.infer<typeof OrganizationUpdateSchema>
+	updatedOrganization: z.infer<typeof OrganizationUpdateSchema>,
 ) {
 	return db
 		.update(organization)

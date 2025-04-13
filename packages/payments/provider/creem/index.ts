@@ -207,7 +207,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 			`Webhook error: ${error instanceof Error ? error.message : ""}`,
 			{
 				status: 400,
-			}
+			},
 		);
 	}
 };

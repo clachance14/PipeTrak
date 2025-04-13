@@ -52,7 +52,7 @@ export const session = pgTable(
 		createdAt: timestamp("createdAt").notNull(),
 		updatedAt: timestamp("updatedAt").notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)]
+	(table) => [uniqueIndex("session_token_idx").on(table.token)],
 );
 
 export const account = pgTable("account", {
@@ -110,7 +110,7 @@ export const organization = pgTable(
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
 
-	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)],
 );
 
 export const member = pgTable(
@@ -129,9 +129,9 @@ export const member = pgTable(
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId
+			table.organizationId,
 		),
-	]
+	],
 );
 
 export const invitation = pgTable("invitation", {
@@ -172,12 +172,13 @@ export const aiChat = pgTable("aiChat", {
 	}),
 	userId: text("userId").references(() => user.id, { onDelete: "cascade" }),
 	title: text("title"),
-	messages: json("messages").$type<
-		{
-			role: "user" | "assistant";
-			content: string;
-		}[]
-	>(),
+	messages:
+		json("messages").$type<
+			{
+				role: "user" | "assistant";
+				content: string;
+			}[]
+		>(),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
 	updatedAt: timestamp("updatedAt"),
 });

@@ -50,7 +50,7 @@ export const session = sqliteTable(
 		createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
 		updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)]
+	(table) => [uniqueIndex("session_token_idx").on(table.token)],
 );
 
 export const account = sqliteTable("account", {
@@ -111,7 +111,7 @@ export const organization = sqliteTable(
 		metadata: text("metadata"),
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
-	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)],
 );
 
 export const member = sqliteTable(
@@ -130,9 +130,9 @@ export const member = sqliteTable(
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId
+			table.organizationId,
 		),
-	]
+	],
 );
 
 export const invitation = sqliteTable("invitation", {
@@ -166,7 +166,7 @@ export const purchase = sqliteTable("purchase", {
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer("updatedAt", { mode: "timestamp" }).default(
-		sql`CURRENT_TIMESTAMP`
+		sql`CURRENT_TIMESTAMP`,
 	),
 });
 
@@ -182,7 +182,7 @@ export const aiChat = sqliteTable("aiChat", {
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer("updatedAt", { mode: "timestamp" }).default(
-		sql`CURRENT_TIMESTAMP`
+		sql`CURRENT_TIMESTAMP`,
 	),
 });
 
