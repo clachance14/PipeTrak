@@ -34,7 +34,7 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": ["./packages/database/orm/prisma/zod/index.ts"]
+		"ignore": ["./packages/database/prisma/zod/index.ts"]
 	},
 	"javascript": {
 		"jsxRuntime": "reactClassic"

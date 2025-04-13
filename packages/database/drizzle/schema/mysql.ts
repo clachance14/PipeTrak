@@ -57,7 +57,7 @@ export const session = mysqlTable(
 		createdAt: timestamp("createdAt").notNull(),
 		updatedAt: timestamp("updatedAt").notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)]
+	(table) => [uniqueIndex("session_token_idx").on(table.token)],
 );
 
 export const account = mysqlTable("account", {
@@ -120,7 +120,7 @@ export const organization = mysqlTable(
 		metadata: text("metadata"),
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
-	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)],
 );
 
 export const member = mysqlTable(
@@ -141,9 +141,9 @@ export const member = mysqlTable(
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId
+			table.organizationId,
 		),
-	]
+	],
 );
 
 export const invitation = mysqlTable("invitation", {
