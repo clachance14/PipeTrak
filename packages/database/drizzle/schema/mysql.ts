@@ -1,3 +1,4 @@
+import { createId as cuid } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
 	boolean,
@@ -8,6 +9,7 @@ import {
 	text,
 	timestamp,
 	uniqueIndex,
+	varchar,
 } from "drizzle-orm/mysql-core";
 
 // Enums
@@ -18,7 +20,9 @@ export const purchaseTypeEnum = mysqlEnum("PurchaseType", [
 
 // Tables
 export const user = mysqlTable("user", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("emailVerified").notNull().default(false),
@@ -38,7 +42,9 @@ export const user = mysqlTable("user", {
 export const session = mysqlTable(
 	"session",
 	{
-		id: text("id").primaryKey(),
+		id: varchar("id", { length: 255 })
+			.$defaultFn(() => cuid())
+			.primaryKey(),
 		expiresAt: timestamp("expiresAt").notNull(),
 		ipAddress: text("ipAddress"),
 		userAgent: text("userAgent"),
@@ -51,11 +57,13 @@ export const session = mysqlTable(
 		createdAt: timestamp("createdAt").notNull(),
 		updatedAt: timestamp("updatedAt").notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)],
+	(table) => [uniqueIndex("session_token_idx").on(table.token)]
 );
 
 export const account = mysqlTable("account", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	accountId: text("accountId").notNull(),
 	providerId: text("providerId").notNull(),
 	userId: text("userId")
@@ -74,7 +82,9 @@ export const account = mysqlTable("account", {
 });
 
 export const verification = mysqlTable("verification", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: timestamp("expiresAt").notNull(),
@@ -83,7 +93,9 @@ export const verification = mysqlTable("verification", {
 });
 
 export const passkey = mysqlTable("passkey", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	name: text("name"),
 	publicKey: text("publicKey").notNull(),
 	userId: text("userId")
@@ -108,13 +120,15 @@ export const organization = mysqlTable(
 		metadata: text("metadata"),
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
-	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)],
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
 );
 
 export const member = mysqlTable(
 	"member",
 	{
-		id: text("id").primaryKey(),
+		id: varchar("id", { length: 255 })
+			.$defaultFn(() => cuid())
+			.primaryKey(),
 		organizationId: text("organizationId")
 			.notNull()
 			.references(() => organization.id, { onDelete: "cascade" }),
@@ -127,13 +141,15 @@ export const member = mysqlTable(
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId,
+			table.organizationId
 		),
-	],
+	]
 );
 
 export const invitation = mysqlTable("invitation", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId")
 		.notNull()
 		.references(() => organization.id, { onDelete: "cascade" }),
@@ -147,7 +163,9 @@ export const invitation = mysqlTable("invitation", {
 });
 
 export const purchase = mysqlTable("purchase", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
@@ -164,7 +182,9 @@ export const purchase = mysqlTable("purchase", {
 });
 
 export const aiChat = mysqlTable("aiChat", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),

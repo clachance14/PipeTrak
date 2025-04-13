@@ -6,7 +6,7 @@ import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { getBaseUrl } from "@repo/utils";
 import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { prismaAdapter } from "better-auth/adapters/prisma";
 import {
 	admin,
 	createAuthMiddleware,
@@ -33,9 +33,12 @@ const appUrl = getBaseUrl();
 export const auth = betterAuth({
 	baseURL: appUrl,
 	trustedOrigins: [appUrl],
-	database: drizzleAdapter(db, {
-		provider: "pg",
+	database: prismaAdapter(db, {
+		provider: "postgresql",
 	}),
+	advanced: {
+		generateId: false,
+	},
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
 		freshAge: 0,
@@ -62,7 +65,7 @@ export const auth = betterAuth({
 				}
 
 				await updateSeatsInOrganizationSubscription(
-					invitation.organizationId,
+					invitation.organizationId
 				);
 			} else if (ctx.path.startsWith("/organization/remove-member")) {
 				const { organizationId } = ctx.body;
@@ -93,7 +96,7 @@ export const auth = betterAuth({
 			enabled: true,
 			sendChangeEmailVerification: async (
 				{ user: { email, name }, url },
-				request,
+				request
 			) => {
 				const locale = getLocaleFromRequest(request);
 				await sendEmail({
@@ -131,7 +134,7 @@ export const auth = betterAuth({
 		sendOnSignUp: config.auth.enableSignup,
 		sendVerificationEmail: async (
 			{ user: { email, name }, url },
-			request,
+			request
 		) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
@@ -178,14 +181,14 @@ export const auth = betterAuth({
 		organization({
 			sendInvitationEmail: async (
 				{ email, id, organization },
-				request,
+				request
 			) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);
 
 				const url = new URL(
 					existingUser ? "/auth/login" : "/auth/signup",
-					getBaseUrl(),
+					getBaseUrl()
 				);
 
 				url.searchParams.set("invitationId", id);

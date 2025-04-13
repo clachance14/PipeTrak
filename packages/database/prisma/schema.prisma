@@ -10,6 +10,7 @@ generator client {
 generator zod {
   provider         = "zod-prisma-types"
   output           = "./zod"
+  createInputTypes = true
   addIncludeType   = false
   addSelectType    = false
 }
@@ -19,7 +20,7 @@ generator json {
 }
 
 model User {
-  id                 String       @id
+  id                 String       @id @default(cuid())
   name               String
   email              String
   emailVerified      Boolean
@@ -48,7 +49,7 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   expiresAt DateTime
   ipAddress String?
   userAgent String?
@@ -68,7 +69,7 @@ model Session {
 }
 
 model Account {
-  id           String    @id
+  id           String    @id @default(cuid())
   accountId    String
   providerId   String
   userId       String
@@ -89,7 +90,7 @@ model Account {
 }
 
 model Verification {
-  id         String   @id
+  id         String   @id @default(cuid())
   identifier String
   value      String   @db.Text
   expiresAt  DateTime
@@ -101,7 +102,7 @@ model Verification {
 }
 
 model Passkey {
-  id           String    @id
+  id           String    @id @default(cuid())
   name         String?
   publicKey    String
   userId       String
@@ -117,7 +118,7 @@ model Passkey {
 }
 
 model Organization {
-  id                 String       @id
+  id                 String       @id @default(cuid())
   name               String
   slug               String?
   logo               String?
@@ -134,7 +135,7 @@ model Organization {
 }
 
 model Member {
-  id             String       @id
+  id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String
@@ -147,7 +148,7 @@ model Member {
 }
 
 model Invitation {
-  id             String       @id
+  id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   email          String
@@ -189,8 +190,8 @@ model AiChat {
   userId         String?
   user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   title          String?
-  /// [AIChatMessages]
-  messages       Json?
+  /// [Array<{role: "user" | "assistant"; content: string;}>]
+  messages       Json @default("[]") /// @zod.custom.use(z.array(z.object({ role: z.enum(['user', 'assistant']), content: z.string() })))
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 }

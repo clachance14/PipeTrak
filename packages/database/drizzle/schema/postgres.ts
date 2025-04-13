@@ -1,3 +1,4 @@
+import { createId as cuid } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
 	boolean,
@@ -8,7 +9,7 @@ import {
 	text,
 	timestamp,
 	uniqueIndex,
-	uuid,
+	varchar,
 } from "drizzle-orm/pg-core";
 
 // Enums
@@ -19,7 +20,9 @@ export const purchaseTypeEnum = pgEnum("PurchaseType", [
 
 // Tables
 export const user = pgTable("user", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("emailVerified").notNull().default(false),
@@ -39,7 +42,9 @@ export const user = pgTable("user", {
 export const session = pgTable(
 	"session",
 	{
-		id: text("id").primaryKey(),
+		id: varchar("id", { length: 255 })
+			.$defaultFn(() => cuid())
+			.primaryKey(),
 		expiresAt: timestamp("expiresAt").notNull(),
 		ipAddress: text("ipAddress"),
 		userAgent: text("userAgent"),
@@ -52,11 +57,13 @@ export const session = pgTable(
 		createdAt: timestamp("createdAt").notNull(),
 		updatedAt: timestamp("updatedAt").notNull(),
 	},
-	(table) => [uniqueIndex("session_token_idx").on(table.token)],
+	(table) => [uniqueIndex("session_token_idx").on(table.token)]
 );
 
 export const account = pgTable("account", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	accountId: text("accountId").notNull(),
 	providerId: text("providerId").notNull(),
 	userId: text("userId")
@@ -75,7 +82,9 @@ export const account = pgTable("account", {
 });
 
 export const verification = pgTable("verification", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: timestamp("expiresAt").notNull(),
@@ -84,7 +93,9 @@ export const verification = pgTable("verification", {
 });
 
 export const passkey = pgTable("passkey", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	name: text("name"),
 	publicKey: text("publicKey").notNull(),
 	userId: text("userId")
@@ -101,7 +112,9 @@ export const passkey = pgTable("passkey", {
 export const organization = pgTable(
 	"organization",
 	{
-		id: text("id").primaryKey(),
+		id: varchar("id", { length: 255 })
+			.$defaultFn(() => cuid())
+			.primaryKey(),
 		name: text("name").notNull(),
 		slug: text("slug"),
 		logo: text("logo"),
@@ -110,13 +123,15 @@ export const organization = pgTable(
 		paymentsCustomerId: text("paymentsCustomerId"),
 	},
 
-	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)],
+	(table) => [uniqueIndex("organization_slug_idx").on(table.slug)]
 );
 
 export const member = pgTable(
 	"member",
 	{
-		id: text("id").primaryKey(),
+		id: varchar("id", { length: 255 })
+			.$defaultFn(() => cuid())
+			.primaryKey(),
 		organizationId: text("organizationId")
 			.notNull()
 			.references(() => organization.id, { onDelete: "cascade" }),
@@ -129,13 +144,15 @@ export const member = pgTable(
 	(table) => [
 		uniqueIndex("member_user_org_idx").on(
 			table.userId,
-			table.organizationId,
+			table.organizationId
 		),
-	],
+	]
 );
 
 export const invitation = pgTable("invitation", {
-	id: text("id").primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId")
 		.notNull()
 		.references(() => organization.id, { onDelete: "cascade" }),
@@ -149,7 +166,9 @@ export const invitation = pgTable("invitation", {
 });
 
 export const purchase = pgTable("purchase", {
-	id: uuid("id").defaultRandom().primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
@@ -166,19 +185,20 @@ export const purchase = pgTable("purchase", {
 });
 
 export const aiChat = pgTable("aiChat", {
-	id: uuid("id").defaultRandom().primaryKey(),
+	id: varchar("id", { length: 255 })
+		.$defaultFn(() => cuid())
+		.primaryKey(),
 	organizationId: text("organizationId").references(() => organization.id, {
 		onDelete: "cascade",
 	}),
 	userId: text("userId").references(() => user.id, { onDelete: "cascade" }),
 	title: text("title"),
-	messages:
-		json("messages").$type<
-			{
-				role: "user" | "assistant";
-				content: string;
-			}[]
-		>(),
+	messages: json("messages").$type<
+		{
+			role: "user" | "assistant";
+			content: string;
+		}[]
+	>(),
 	createdAt: timestamp("createdAt").defaultNow().notNull(),
 	updatedAt: timestamp("updatedAt"),
 });

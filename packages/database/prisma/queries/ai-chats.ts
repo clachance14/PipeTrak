@@ -1,4 +1,5 @@
 import { db } from "../client";
+import type { AiChat } from "../zod";
 
 export async function getAiChatsByUserId({
 	limit,
@@ -69,7 +70,7 @@ export async function updateAiChat({
 }: {
 	id: string;
 	title?: string;
-	messages?: PrismaJson.AIChatMessages;
+	messages?: AiChat["messages"];
 }) {
 	return await db.aiChat.update({
 		where: {
