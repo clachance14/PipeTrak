@@ -181,6 +181,8 @@ model Purchase {
   updatedAt      DateTime      @updatedAt
 
   @@index([subscriptionId])
+
+  @@map("purchase")
 }
 
 model AiChat {
@@ -194,4 +196,6 @@ model AiChat {
   messages       Json @default("[]") /// @zod.custom.use(z.array(z.object({ role: z.enum(['user', 'assistant']), content: z.string() })))
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+
+  @@map("ai_chat")
 }
