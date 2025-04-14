@@ -28,13 +28,6 @@
  
 	--font-sans: var(--font-geist-sans);
 
-	--shadow-xs: 0 2px 8px 0 rgb(0, 0, 0, 0.025), 0 0 1px rgba(0, 0, 0, 0.1);
-	--shadow-sm: 0 4px 16px 0 rgb(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
-	--shadow-md: 0 6px 24px 0 rgb(0, 0, 0, 0.075), 0 0 1px rgba(0, 0, 0, 0.1);
-	--shadow-lg: 0 8px 32px 0 rgb(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1);
-	--shadow-xl: 0 12px 48px 0 rgb(0, 0, 0, 0.125), 0 0 1px rgba(0, 0, 0, 0.1);
-	--shadow-2xl: 0 16px 64px 0 rgb(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
-
 	--animation-accordion-down: accordion-down 0.2s ease-out;
 	--animation-accordion-up: accordion-up 0.2s ease-out;
 

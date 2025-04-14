@@ -174,7 +174,7 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 						onChange={handleInputChange}
 						disabled={!hasChat}
 						placeholder="Chat with your AI..."
-						className="min-h-8 rounded-none border-none bg-transparent p-0 focus:outline-hidden focus-visible:ring-0"
+						className="min-h-8 rounded-none border-none bg-transparent p-0 focus:outline-hidden focus-visible:ring-0 shadow-none"
 						onKeyDown={(e) => {
 							if (e.key === "Enter" && !e.shiftKey) {
 								e.preventDefault();
