@@ -601,7 +601,11 @@
 					"submit": "Set password",
 					"title": "Your password"
 				},
-				"title": "Security"
+				"title": "Security",
+				"twoFactor": {
+					"title": "Two-factor authentication",
+					"description": "Add an extra layer of security to your account."
+				}
 			},
 			"subtitle": "Manage the settings of your personal account.",
 			"title": "Account settings"
