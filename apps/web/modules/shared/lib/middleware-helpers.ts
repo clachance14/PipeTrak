@@ -21,7 +21,6 @@ export const getSession = async (req: NextRequest): Promise<Session | null> => {
 
 	try {
 		const session = await response.json();
-		console.log("session", session);
 		return session;
 	} catch (error) {
 		console.error("Error parsing session JSON:", error);
