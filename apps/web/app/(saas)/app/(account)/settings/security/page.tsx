@@ -5,6 +5,7 @@ import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
 import { ConnectedAccountsBlock } from "@saas/settings/components/ConnectedAccountsBlock";
 import { PasskeysBlock } from "@saas/settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@saas/settings/components/SetPassword";
+import { TwoFactorBlock } from "@saas/settings/components/TwoFactorBlock";
 import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -40,6 +41,7 @@ export default async function AccountSettingsPage() {
 				))}
 			{config.auth.enableSocialLogin && <ConnectedAccountsBlock />}
 			{config.auth.enablePasskeys && <PasskeysBlock />}
+			{config.auth.enableTwoFactor && <TwoFactorBlock />}
 			<ActiveSessionsBlock />
 		</SettingsList>
 	);

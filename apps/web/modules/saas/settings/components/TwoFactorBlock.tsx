@@ -8,13 +8,13 @@ import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-export function PasskeysBlock() {
+export function TwoFactorBlock() {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
 	const { user } = useSession();
 
-	const { data: passkeys, isPending } = useQuery({
-		queryKey: ["passkeys"],
+	const { data: accounts, isPending } = useQuery({
+		queryKey: ["accounts"],
 		queryFn: async () => {
 			const { data, error } = await authClient.listAccounts();
 
@@ -47,6 +47,11 @@ export function PasskeysBlock() {
 			},
 		});
 	};
+
+	console.log(accounts);
+	if (!accounts?.some((account) => account.provider === "credential")) {
+		return null;
+	}
 
 	return (
 		<SettingsItem

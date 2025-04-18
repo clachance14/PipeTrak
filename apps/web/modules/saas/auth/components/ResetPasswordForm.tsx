@@ -1,12 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Alert, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 
 import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
+import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useRouter } from "@shared/hooks/router";
 import {
@@ -15,11 +16,12 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@ui/components/form";
 import { PasswordInput } from "@ui/components/password-input";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -33,10 +35,9 @@ export function ResetPasswordForm() {
 	const t = useTranslations();
 	const { user } = useSession();
 	const router = useRouter();
-	const [serverError, setServerError] = useState<null | {
-		title: string;
-		message?: string;
-	}>(null);
+	const { getAuthErrorMessage } = useAuthErrorMessages();
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
@@ -48,6 +49,7 @@ export function ResetPasswordForm() {
 	const onSubmit = form.handleSubmit(async ({ password }) => {
 		try {
 			const { error } = await authClient.resetPassword({
+				token: token ?? undefined,
 				newPassword: password,
 			});
 
@@ -59,8 +61,12 @@ export function ResetPasswordForm() {
 				router.push(config.auth.redirectAfterSignIn);
 			}
 		} catch (e) {
-			setServerError({
-				title: t("auth.resetPassword.hints.error"),
+			form.setError("root", {
+				message: getAuthErrorMessage(
+					e && typeof e === "object" && "code" in e
+						? (e.code as string)
+						: undefined,
+				),
 			});
 		}
 	});
@@ -87,6 +93,15 @@ export function ResetPasswordForm() {
 						className="flex flex-col items-stretch gap-4"
 						onSubmit={onSubmit}
 					>
+						{form.formState.errors.root && (
+							<Alert variant="error">
+								<AlertTriangleIcon className="size-6" />
+								<AlertTitle>
+									{form.formState.errors.root.message}
+								</AlertTitle>
+							</Alert>
+						)}
+
 						<FormField
 							control={form.control}
 							name="password"
@@ -101,21 +116,10 @@ export function ResetPasswordForm() {
 											{...field}
 										/>
 									</FormControl>
+									<FormMessage />
 								</FormItem>
 							)}
 						/>
-
-						{form.formState.isSubmitted && serverError && (
-							<Alert variant="error">
-								<AlertTriangleIcon className="size-6" />
-								<AlertTitle>{serverError.title}</AlertTitle>
-								{serverError.message && (
-									<AlertDescription>
-										{serverError.message}
-									</AlertDescription>
-								)}
-							</Alert>
-						)}
 
 						<Button loading={form.formState.isSubmitting}>
 							{t("auth.resetPassword.submit")}

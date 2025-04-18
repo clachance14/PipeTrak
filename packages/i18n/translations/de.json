@@ -592,8 +592,8 @@
 				"setPassword": {
 					"description": "Du hast noch kein Passwort festgelegt. Um ein solches festzulegen, musst du den Ablauf der Passwortrücksetzung durchlaufen. Klicke auf die Schaltfläche unten, um eine E-Mail zum Zurücksetzen deines Passworts zu senden, und folge den Anweisungen in der E-Mail.",
 					"notifications": {
-						"error": "Passwort konnte nicht gesetzt werden",
-						"success": "Passwort wurde erfolgreich gesetzt"
+						"error": "Der Link zum Festlegen des Passworts konnte nicht gesendet werden. Bitte versuche es erneut.",
+						"success": "Prüfen deinen Posteingang auf den Link, um Ihr Passwort festzulegen."
 					},
 					"submit": "Passwort festlegen",
 					"title": "Dein Passwort"

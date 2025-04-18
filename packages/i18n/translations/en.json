@@ -595,8 +595,8 @@
 				"setPassword": {
 					"description": "You have not set a password yet. To set one, you need to go through the password reset flow. Click the button below to send an email to reset your password and follow the instructions in the email.",
 					"notifications": {
-						"error": "Could not set password",
-						"success": "Password was set successfully"
+						"error": "Could not send link to set password. Please try again.",
+						"success": "Check your inbox for the link to set your password."
 					},
 					"submit": "Set password",
 					"title": "Your password"
