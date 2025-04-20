@@ -1,8 +1,9 @@
 "use client";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
+import { useUserAccountsQuery } from "@saas/auth/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import {
@@ -36,21 +37,10 @@ export function TwoFactorBlock() {
 		"password",
 	);
 	const [totpURI, setTotpURI] = useState("");
-
 	const [password, setPassword] = useState("");
 	const [totpCode, setTotpCode] = useState("");
-	const { data: accounts } = useQuery({
-		queryKey: ["accounts"],
-		queryFn: async () => {
-			const { data, error } = await authClient.listAccounts();
 
-			if (error) {
-				throw error;
-			}
-
-			return data;
-		},
-	});
+	const { data: accounts } = useUserAccountsQuery();
 
 	useEffect(() => {
 		setPassword("");

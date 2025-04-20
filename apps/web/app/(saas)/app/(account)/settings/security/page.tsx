@@ -1,5 +1,10 @@
 import { config } from "@repo/config";
-import { getSession, getUserAccounts } from "@saas/auth/lib/server";
+import { userAccountQueryKey, userPasskeyQueryKey } from "@saas/auth/lib/api";
+import {
+	getSession,
+	getUserAccounts,
+	getUserPasskeys,
+} from "@saas/auth/lib/server";
 import { ActiveSessionsBlock } from "@saas/settings/components/ActiveSessionsBlock";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePassword";
 import { ConnectedAccountsBlock } from "@saas/settings/components/ConnectedAccountsBlock";
@@ -7,6 +12,7 @@ import { PasskeysBlock } from "@saas/settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@saas/settings/components/SetPassword";
 import { TwoFactorBlock } from "@saas/settings/components/TwoFactorBlock";
 import { SettingsList } from "@saas/shared/components/SettingsList";
+import { getServerQueryClient } from "@shared/lib/server";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -30,6 +36,20 @@ export default async function AccountSettingsPage() {
 	const userHasPassword = userAccounts?.some(
 		(account) => account.provider === "credential",
 	);
+
+	const queryClient = getServerQueryClient();
+
+	await queryClient.prefetchQuery({
+		queryKey: userAccountQueryKey,
+		queryFn: () => getUserAccounts(),
+	});
+
+	if (config.auth.enablePasskeys) {
+		await queryClient.prefetchQuery({
+			queryKey: userPasskeyQueryKey,
+			queryFn: () => getUserPasskeys(),
+		});
+	}
 
 	return (
 		<SettingsList>
