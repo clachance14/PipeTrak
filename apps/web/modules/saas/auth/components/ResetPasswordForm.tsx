@@ -73,7 +73,7 @@ export function ResetPasswordForm() {
 
 	return (
 		<>
-			<h1 className="font-extrabold text-2xl md:text-3xl">
+			<h1 className="font-bold text-xl md:text-2xl">
 				{t("auth.resetPassword.title")}
 			</h1>
 			<p className="mt-1 mb-6 text-foreground/60">
@@ -82,7 +82,7 @@ export function ResetPasswordForm() {
 
 			{form.formState.isSubmitSuccessful ? (
 				<Alert variant="success">
-					<MailboxIcon className="size-6" />
+					<MailboxIcon />
 					<AlertTitle>
 						{t("auth.resetPassword.hints.success")}
 					</AlertTitle>
@@ -95,7 +95,7 @@ export function ResetPasswordForm() {
 					>
 						{form.formState.errors.root && (
 							<Alert variant="error">
-								<AlertTriangleIcon className="size-6" />
+								<AlertTriangleIcon />
 								<AlertTitle>
 									{form.formState.errors.root.message}
 								</AlertTitle>

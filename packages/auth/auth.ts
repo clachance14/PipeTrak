@@ -34,7 +34,7 @@ const appUrl = getBaseUrl();
 export const auth = betterAuth({
 	baseURL: appUrl,
 	trustedOrigins: [appUrl],
-	appname: config.appName,
+	appName: config.appName,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),

@@ -111,10 +111,13 @@ export function PasskeysBlock() {
 						</div>
 					))
 				)}
-				<Button className="w-full" variant="light" onClick={addPasskey}>
-					<PlusIcon className="mr-1.5 size-4" />
-					Add passkey
-				</Button>
+
+				<div className="flex justify-start">
+					<Button variant="light" onClick={addPasskey}>
+						<PlusIcon className="mr-1.5 size-4" />
+						Add passkey
+					</Button>
+				</div>
 			</div>
 		</SettingsItem>
 	);
