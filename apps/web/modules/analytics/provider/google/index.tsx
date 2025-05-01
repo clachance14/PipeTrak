@@ -28,11 +28,11 @@ export function AnalyticsScript() {
 
 export function useAnalytics() {
 	const trackEvent = (event: string, data?: Record<string, unknown>) => {
-		if (typeof window === "undefined" || !(window as any).gta) {
+		if (typeof window === "undefined" || !(window as any).gtag) {
 			return;
 		}
 
-		(window as any).gta("event", event, data);
+		(window as any).gtag("event", event, data);
 	};
 
 	return {
