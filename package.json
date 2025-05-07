@@ -16,9 +16,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "^22.15.3",
+		"@types/node": "^22.15.14",
 		"dotenv-cli": "^8.0.0",
-		"turbo": "^2.5.2",
+		"turbo": "^2.5.3",
 		"typescript": "5.8.3"
 	},
 	"pnpm": {
