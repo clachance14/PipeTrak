@@ -12,11 +12,11 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "22.15.14",
+		"@types/node": "22.15.21",
 		"dotenv-cli": "^8.0.0",
 		"drizzle-kit": "^0.31.1",
-		"prisma": "^6.7.0",
-		"prisma-json-types-generator": "^3.3.1",
+		"prisma": "^6.8.2",
+		"prisma-json-types-generator": "^3.4.2",
 		"zod-prisma-types": "^3.2.4"
 	},
 	"main": "./index.ts",
