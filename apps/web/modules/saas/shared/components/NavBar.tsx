@@ -158,6 +158,7 @@ export function NavBar() {
 											useSidebarLayout,
 									},
 								)}
+								prefetch
 							>
 								<menuItem.icon
 									className={`size-4 shrink-0 ${
