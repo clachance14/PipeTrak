@@ -39,7 +39,9 @@ export const auth = betterAuth({
 		provider: "postgresql",
 	}),
 	advanced: {
-		generateId: false,
+		database: {
+			generateId: false,
+		},
 	},
 	session: {
 		expiresIn: config.auth.sessionCookieMaxAge,
