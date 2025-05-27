@@ -43,6 +43,7 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 		userId,
 		trialPeriodDays,
 		seats,
+		email,
 	} = options;
 
 	const metadata = {
@@ -60,6 +61,7 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 			},
 		],
 		customer: customerId,
+		customer_email: email,
 		...(type === "one-time"
 			? {
 					payment_intent_data: {
