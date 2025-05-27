@@ -48,7 +48,7 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 	}
 
 	const response = await polarClient.checkouts.create({
-		productPriceId: productId,
+		products: [productId],
 		successUrl: redirectUrl ?? "",
 		metadata,
 		customerId: customerId || undefined,
