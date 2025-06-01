@@ -45,6 +45,7 @@ export function PricingTable({
 	const onSelectPlan = async (planId: PlanId, productId?: string) => {
 		if (!(userId || organizationId)) {
 			router.push("/auth/signup");
+			return;
 		}
 
 		const plan = plans[planId];
