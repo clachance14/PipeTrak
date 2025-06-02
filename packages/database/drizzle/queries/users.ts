@@ -49,15 +49,20 @@ export async function createUser({
 	emailVerified: boolean;
 	onboardingComplete: boolean;
 }) {
-	const [{ id }] = await db.insert(user).values({
-		email,
-		name,
-		role,
-		emailVerified,
-		onboardingComplete,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	});
+	const [{ id }] = await db
+		.insert(user)
+		.values({
+			email,
+			name,
+			role,
+			emailVerified,
+			onboardingComplete,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		})
+		.returning({
+			id: user.id,
+		});
 
 	const newUser = await getUserById(id);
 
@@ -81,14 +86,19 @@ export async function createUserAccount({
 	accountId: string;
 	hashedPassword?: string;
 }) {
-	const [{ id }] = await db.insert(account).values({
-		userId,
-		accountId,
-		providerId,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-		password: hashedPassword,
-	});
+	const [{ id }] = await db
+		.insert(account)
+		.values({
+			userId,
+			accountId,
+			providerId,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			password: hashedPassword,
+		})
+		.returning({
+			id: account.id,
+		});
 
 	const newAccount = await getAccountById(id);
 
