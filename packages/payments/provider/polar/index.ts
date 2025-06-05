@@ -11,6 +11,7 @@ import {
 } from "@repo/database";
 import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
+	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
 	SetSubscriptionSeats,
@@ -71,6 +72,12 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async () => {
 	throw new Error("Not implemented");
 };
 
+export const cancelSubscription: CancelSubscription = async (id) => {
+	await polarClient.subscriptions.revoke({
+		id,
+	});
+};
+
 export const webhookHandler: WebhookHandler = async (req) => {
 	try {
 		if (!req.body) {
@@ -87,13 +94,8 @@ export const webhookHandler: WebhookHandler = async (req) => {
 
 		switch (event.type) {
 			case "order.created": {
-				const {
-					metadata,
-					customer,
-					customerId,
-					subscription,
-					productPriceId,
-				} = event.data;
+				const { metadata, customerId, subscription, productId } =
+					event.data;
 
 				if (subscription) {
 					break;
@@ -105,7 +107,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					userId: (metadata?.user_id as string) || null,
 					customerId,
 					type: "ONE_TIME",
-					productId: productPriceId,
+					productId,
 				});
 
 				await setCustomerIdToEntity(customerId, {
@@ -116,7 +118,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 				break;
 			}
 			case "subscription.created": {
-				const { metadata, customerId, priceId, id, status } =
+				const { metadata, customerId, productId, id, status } =
 					event.data;
 
 				await createPurchase({
@@ -125,7 +127,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					userId: metadata?.user_id as string,
 					customerId,
 					type: "SUBSCRIPTION",
-					productId: priceId,
+					productId,
 					status,
 				});
 
@@ -137,7 +139,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 				break;
 			}
 			case "subscription.updated": {
-				const { id, status, priceId } = event.data;
+				const { id, status, productId } = event.data;
 
 				const existingPurchase = await getPurchaseBySubscriptionId(id);
 
@@ -145,7 +147,7 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					await updatePurchase({
 						id: existingPurchase.id,
 						status,
-						productId: priceId,
+						productId,
 					});
 				}
 

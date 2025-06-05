@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import {
+	cancelSubscription as cancelSubscriptionResolver,
 	createCheckout,
 	getCustomer,
 	getSubscription,
@@ -14,6 +15,7 @@ import {
 } from "@repo/database";
 import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
+	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
 	SetSubscriptionSeats,
@@ -97,6 +99,12 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 	await updateSubscriptionItem(subscriptionItem.id, {
 		quantity: seats,
 	});
+};
+
+export const cancelSubscription: CancelSubscription = async (id) => {
+	initLemonsqueezyApi();
+
+	await cancelSubscriptionResolver(id);
 };
 
 export const webhookHandler: WebhookHandler = async (req: Request) => {

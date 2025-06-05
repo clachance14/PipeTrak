@@ -8,6 +8,7 @@ import { logger } from "@repo/logs";
 import Stripe from "stripe";
 import { setCustomerIdToEntity } from "../../src/lib/customer";
 import type {
+	CancelSubscription,
 	CreateCheckoutLink,
 	CreateCustomerPortalLink,
 	SetSubscriptionSeats,
@@ -115,6 +116,12 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async ({
 			},
 		],
 	});
+};
+
+export const cancelSubscription: CancelSubscription = async (id) => {
+	const stripeClient = getStripeClient();
+
+	await stripeClient.subscriptions.cancel(id);
 };
 
 export const webhookHandler: WebhookHandler = async (req) => {
