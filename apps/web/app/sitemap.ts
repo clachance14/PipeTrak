@@ -15,8 +15,6 @@ const staticMarketingPages = ["", "/changelog"];
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const posts = await getAllPosts();
 
-	console.log(docsSource.getPages());
-
 	return [
 		...staticMarketingPages.flatMap((page) =>
 			locales.map((locale) => ({
