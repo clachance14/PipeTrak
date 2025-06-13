@@ -47,7 +47,7 @@ export function LocaleSwitch({
 
 						if (withLocaleInUrl) {
 							localeRouter.replace(
-								`/${localePathname}?${searchParams.toString()}`,
+								`${localePathname}?${searchParams.toString()}`,
 								{
 									locale: value,
 								},
