@@ -185,8 +185,8 @@ export const paymentsRouter = new Hono()
 			if (purchase.organizationId) {
 				const userOrganizationMembership =
 					await getOrganizationMembership(
-						user.id,
 						purchase.organizationId,
+						user.id,
 					);
 				if (userOrganizationMembership?.role !== "owner") {
 					throw new HTTPException(403);
