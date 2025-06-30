@@ -45,7 +45,7 @@ export function NavBar() {
 			icon: BotMessageSquareIcon,
 			isActive: pathname.includes("/chatbot"),
 		},
-		...(activeOrganization
+		...(activeOrganization && !config.organizations.hideOrganization
 			? [
 					{
 						label: t("app.menu.organizationSettings"),
