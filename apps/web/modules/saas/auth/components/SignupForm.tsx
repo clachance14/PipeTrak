@@ -38,11 +38,18 @@ import {
 } from "../constants/oauth-providers";
 import { SocialSigninButton } from "./SocialSigninButton";
 
-const formSchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(1),
-	name: z.string().min(1),
-});
+const formSchema = z
+	.object({
+		email: z.string().email(),
+		name: z.string().min(1),
+	})
+	.extend(
+		config.auth.enablePasswordLogin
+			? {
+					password: z.string().min(1),
+				}
+			: {},
+	);
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -65,7 +72,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 		values: {
 			name: "",
 			email: prefillEmail ?? email ?? "",
-			password: "",
+			password: config.auth.enablePasswordLogin ? "" : undefined,
 		},
 	});
 
@@ -81,12 +88,18 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 		name,
 	}) => {
 		try {
-			const { error } = await authClient.signUp.email({
-				email,
-				password,
-				name,
-				callbackURL: redirectPath,
-			});
+			const { error } = await (config.auth.enablePasswordLogin
+				? await authClient.signUp.email({
+						email,
+						password,
+						name,
+						callbackURL: redirectPath,
+					})
+				: authClient.signIn.magicLink({
+						email,
+						name,
+						callbackURL: redirectPath,
+					}));
 
 			if (error) {
 				throw error;
@@ -188,47 +201,49 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 								)}
 							/>
 
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											{t("auth.signup.password")}
-										</FormLabel>
-										<FormControl>
-											<div className="relative">
-												<Input
-													type={
-														showPassword
-															? "text"
-															: "password"
-													}
-													className="pr-10"
-													{...field}
-													autoComplete="new-password"
-												/>
-												<button
-													type="button"
-													onClick={() =>
-														setShowPassword(
-															!showPassword,
-														)
-													}
-													className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
-												>
-													{showPassword ? (
-														<EyeOffIcon className="size-4" />
-													) : (
-														<EyeIcon className="size-4" />
-													)}
-												</button>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							{config.auth.enablePasswordLogin && (
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>
+												{t("auth.signup.password")}
+											</FormLabel>
+											<FormControl>
+												<div className="relative">
+													<Input
+														type={
+															showPassword
+																? "text"
+																: "password"
+														}
+														className="pr-10"
+														{...field}
+														autoComplete="new-password"
+													/>
+													<button
+														type="button"
+														onClick={() =>
+															setShowPassword(
+																!showPassword,
+															)
+														}
+														className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
+													>
+														{showPassword ? (
+															<EyeOffIcon className="size-4" />
+														) : (
+															<EyeIcon className="size-4" />
+														)}
+													</button>
+												</div>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							)}
 
 							<Button loading={form.formState.isSubmitting}>
 								{t("auth.signup.submit")}
