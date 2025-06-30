@@ -5,7 +5,6 @@ import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -28,7 +27,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { withQuery } from "ufo";
 import { z } from "zod";
@@ -38,25 +36,15 @@ import {
 } from "../constants/oauth-providers";
 import { SocialSigninButton } from "./SocialSigninButton";
 
-const formSchema = z
-	.object({
-		email: z.string().email(),
-		name: z.string().min(1),
-	})
-	.extend(
-		config.auth.enablePasswordLogin
-			? {
-					password: z.string().min(1),
-				}
-			: {},
-	);
-
-type FormValues = z.infer<typeof formSchema>;
+const formSchema = z.object({
+	email: z.string().email(),
+	name: z.string().min(1),
+	password: z.string(),
+});
 
 export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const t = useTranslations();
 	const router = useRouter();
-	const { zodErrorMap } = useFormErrors();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const searchParams = useSearchParams();
 
@@ -65,14 +53,12 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const email = searchParams.get("email");
 	const redirectTo = searchParams.get("redirectTo");
 
-	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+	const form = useForm({
+		resolver: zodResolver(formSchema),
 		values: {
 			name: "",
 			email: prefillEmail ?? email ?? "",
-			password: config.auth.enablePasswordLogin ? "" : undefined,
+			password: "",
 		},
 	});
 
@@ -82,11 +68,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 		? `/app/organization-invitation/${invitationId}`
 		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
-	const onSubmit: SubmitHandler<FormValues> = async ({
-		email,
-		password,
-		name,
-	}) => {
+	const onSubmit = form.handleSubmit(async ({ email, password, name }) => {
 		try {
 			const { error } = await (config.auth.enablePasswordLogin
 				? await authClient.signUp.email({
@@ -126,7 +108,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 				),
 			});
 		}
-	};
+	});
 
 	return (
 		<div>
@@ -153,7 +135,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 					<Form {...form}>
 						<form
 							className="flex flex-col items-stretch gap-4"
-							onSubmit={form.handleSubmit(onSubmit)}
+							onSubmit={onSubmit}
 						>
 							{form.formState.isSubmitted &&
 								form.formState.errors.root && (
