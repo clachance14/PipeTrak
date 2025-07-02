@@ -6,8 +6,8 @@ import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getServerQueryClient } from "@shared/lib/server";
-import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
 	const t = await getTranslations();

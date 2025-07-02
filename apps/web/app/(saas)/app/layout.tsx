@@ -8,7 +8,7 @@ import { purchasesQueryKey } from "@saas/payments/lib/api";
 import { getPurchases } from "@saas/payments/lib/server";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
 import { getServerQueryClient } from "@shared/lib/server";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 
 export const dynamic = "force-dynamic";

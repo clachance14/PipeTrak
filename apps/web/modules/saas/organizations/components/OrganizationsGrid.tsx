@@ -6,8 +6,8 @@ import { useActiveOrganization } from "@saas/organizations/hooks/use-active-orga
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { Card } from "@ui/components/card";
 import { ChevronRightIcon, PlusCircleIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function OrganizationsGrid() {
 	const t = useTranslations();

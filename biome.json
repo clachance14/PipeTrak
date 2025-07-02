@@ -26,15 +26,27 @@
 					"fix": "safe"
 				},
 				"noNonNullAssertion": "warn",
-				"useBlockStatements": "warn"
+				"useBlockStatements": "warn",
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error"
 			}
 		}
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
-		"ignore": ["./packages/database/prisma/zod/index.ts"]
+		"includes": [
+			"**",
+			"!packages/database/prisma/zod/index.ts",
+			"!tooling/tailwind/tailwind-animate.css",
+			"!packages/database/prisma/zod/index.ts"
+		]
 	},
 	"javascript": {
 		"jsxRuntime": "reactClassic"

@@ -31,7 +31,7 @@ function initLemonsqueezyApi() {
 export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 	initLemonsqueezyApi();
 
-	const { customerId, seats, productId, redirectUrl, email, name } = options;
+	const { seats, productId, redirectUrl, email, name } = options;
 
 	const response = await createCheckout(
 		String(process.env.LEMONSQUEEZY_STORE_ID),

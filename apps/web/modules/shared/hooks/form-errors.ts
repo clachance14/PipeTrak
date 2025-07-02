@@ -1,6 +1,6 @@
 import { type TranslationValues, useTranslations } from "next-intl";
-import { ZodIssueCode, ZodParsedType, defaultErrorMap } from "zod";
 import type { ZodErrorMap } from "zod";
+import { defaultErrorMap, ZodIssueCode, ZodParsedType } from "zod";
 
 /**
  * This error map is a modified version of the on used by zod-i18n
@@ -26,7 +26,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> => {
 	}
 
 	for (const key in value) {
-		if (!Object.prototype.hasOwnProperty.call(value, key)) {
+		if (!Object.hasOwn(value, key)) {
 			return false;
 		}
 	}

@@ -1,12 +1,12 @@
 "use client";
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";
-import * as React from "react";
-
 import { cn } from "@ui/lib";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { XIcon } from "lucide-react";
+import * as React from "react";
+
 const Sheet = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;

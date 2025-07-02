@@ -84,7 +84,7 @@ export function OrganizationLogoForm() {
 			queryClient.invalidateQueries({
 				queryKey: organizationListQueryKey,
 			});
-		} catch (e) {
+		} catch {
 			toast.error(t("settings.account.avatar.notifications.error"));
 		} finally {
 			setUploading(false);

@@ -76,7 +76,7 @@ export function UserAvatarUpload({
 			await reloadSession();
 
 			onSuccess();
-		} catch (e) {
+		} catch {
 			onError();
 		} finally {
 			setUploading(false);

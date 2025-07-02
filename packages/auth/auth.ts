@@ -4,8 +4,8 @@ import {
 	getInvitationById,
 	getPurchasesByOrganizationId,
 	getPurchasesByUserId,
+	getUserByEmail,
 } from "@repo/database";
-import { getUserByEmail } from "@repo/database";
 import type { Locale } from "@repo/i18n";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
@@ -98,7 +98,8 @@ export const auth = betterAuth({
 				if (userId || organizationId) {
 					const purchases = organizationId
 						? await getPurchasesByOrganizationId(organizationId)
-						: await getPurchasesByUserId(userId!);
+						: // biome-ignore lint/style/noNonNullAssertion: This is a valid case
+							await getPurchasesByUserId(userId!);
 					const subscriptions = purchases.filter(
 						(purchase) =>
 							purchase.type === "SUBSCRIPTION" &&
@@ -108,6 +109,7 @@ export const auth = betterAuth({
 					if (subscriptions.length > 0) {
 						for (const subscription of subscriptions) {
 							await cancelSubscription(
+								// biome-ignore lint/style/noNonNullAssertion: This is a valid case
 								subscription.subscriptionId!,
 							);
 						}

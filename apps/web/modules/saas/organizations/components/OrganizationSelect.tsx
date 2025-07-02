@@ -18,8 +18,8 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { OrganizationLogo } from "./OrganizationLogo";
 
 export function OrganzationSelect({ className }: { className?: string }) {

@@ -1,9 +1,9 @@
 import { config } from "@repo/config";
 import { getSignedUploadUrl } from "@repo/storage";
 import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
-import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { authMiddleware } from "../middleware/auth";
 

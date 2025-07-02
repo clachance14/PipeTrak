@@ -29,8 +29,8 @@ import {
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { EditIcon, MoreVerticalIcon, PlusIcon, TrashIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo } from "react";
 import { toast } from "sonner";

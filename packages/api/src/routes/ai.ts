@@ -9,9 +9,9 @@ import {
 	updateAiChat,
 } from "@repo/database";
 import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
-import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { authMiddleware } from "../middleware/auth";
 import { verifyOrganizationMembership } from "./organizations/lib/membership";

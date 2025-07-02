@@ -4,9 +4,9 @@ import {
 	getOrganizations,
 } from "@repo/database";
 import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono-openapi/zod";
-import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { adminMiddleware } from "../../middleware/admin";
 

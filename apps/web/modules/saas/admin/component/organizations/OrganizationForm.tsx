@@ -88,7 +88,7 @@ export function OrganizationForm({
 					getAdminPath(`/organizations/${newOrganization.id}`),
 				);
 			}
-		} catch (error) {
+		} catch {
 			toast.error(t("admin.organizations.form.notifications.error"));
 		}
 	});

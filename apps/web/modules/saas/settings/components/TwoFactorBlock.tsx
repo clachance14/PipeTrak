@@ -87,7 +87,7 @@ export function TwoFactorBlock() {
 	const disableTwoFactorMutation = useMutation({
 		mutationKey: ["disableTwoFactor"],
 		mutationFn: async () => {
-			const { data, error } = await authClient.twoFactor.disable({
+			const { error } = await authClient.twoFactor.disable({
 				password,
 			});
 

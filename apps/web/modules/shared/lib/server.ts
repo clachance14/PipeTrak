@@ -1,8 +1,8 @@
 import "server-only";
-import { createQueryClient } from "@shared/lib/query-client";
 
 import type { AppRouter } from "@repo/api";
 import { getBaseUrl } from "@repo/utils";
+import { createQueryClient } from "@shared/lib/query-client";
 import { hc } from "hono/client";
 import { headers } from "next/headers";
 import { cache } from "react";
