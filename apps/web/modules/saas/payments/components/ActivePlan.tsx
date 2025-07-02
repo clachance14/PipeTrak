@@ -3,7 +3,6 @@
 import { usePlanData } from "@saas/payments/hooks/plan-data";
 import { usePurchases } from "@saas/payments/hooks/purchases";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import {} from "@ui/components/table";
 import { BadgeCheckIcon, CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CustomerPortalButton } from "../../settings/components/CustomerPortalButton";

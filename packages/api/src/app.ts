@@ -4,8 +4,6 @@ import { getBaseUrl } from "@repo/utils";
 import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPISpecs } from "hono-openapi";
-import {} from "openapi-merge";
-import {} from "openapi-merge";
 import { mergeOpenApiSchemas } from "./lib/openapi-schema";
 import { corsMiddleware } from "./middleware/cors";
 import { loggerMiddleware } from "./middleware/logger";

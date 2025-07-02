@@ -26,7 +26,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> => {
 	}
 
 	for (const key in value) {
-		if (!Object.prototype.hasOwnProperty.call(value, key)) {
+		if (!Object.hasOwn(value, key)) {
 			return false;
 		}
 	}

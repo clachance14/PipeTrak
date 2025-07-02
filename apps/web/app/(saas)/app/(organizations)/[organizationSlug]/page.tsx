@@ -22,7 +22,9 @@ export async function generateMetadata({
 
 export default async function OrganizationPage({
 	params,
-}: { params: Promise<{ organizationSlug: string }> }) {
+}: {
+	params: Promise<{ organizationSlug: string }>;
+}) {
 	const { organizationSlug } = await params;
 	const t = await getTranslations();
 
