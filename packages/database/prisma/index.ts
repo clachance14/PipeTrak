@@ -1,6 +1,6 @@
 export * from "./client";
-export * from "./zod";
 export * from "./queries";
+export * from "./zod";
 
 declare global {
 	namespace PrismaJson {}

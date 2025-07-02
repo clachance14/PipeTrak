@@ -6,8 +6,8 @@ import {
 	getPurchasesForSession,
 	getSession,
 } from "@shared/lib/middleware-helpers";
-import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
 import { withQuery } from "ufo";
 
 const intlMiddleware = createMiddleware(routing);

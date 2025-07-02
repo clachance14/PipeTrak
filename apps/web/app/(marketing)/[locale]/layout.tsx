@@ -5,9 +5,9 @@ import { SessionProvider } from "@saas/auth/components/SessionProvider";
 import { Document } from "@shared/components/Document";
 import { I18nProvider as FumadocsI18nProvider } from "fumadocs-ui/i18n";
 import { RootProvider as FumadocsRootProvider } from "fumadocs-ui/provider";
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 const locales = Object.keys(config.i18n.locales);

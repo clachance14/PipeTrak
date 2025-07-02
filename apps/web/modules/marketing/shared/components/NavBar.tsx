@@ -15,8 +15,8 @@ import {
 } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import NextLink from "next/link";
+import { useTranslations } from "next-intl";
 import { Suspense, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 

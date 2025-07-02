@@ -1,4 +1,4 @@
-import { type Session, auth } from "@repo/auth";
+import { auth, type Session } from "@repo/auth";
 import { createMiddleware } from "hono/factory";
 
 export const adminMiddleware = createMiddleware<{

@@ -23,9 +23,9 @@ import {
 	EyeOffIcon,
 	MailboxIcon,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { withQuery } from "ufo";

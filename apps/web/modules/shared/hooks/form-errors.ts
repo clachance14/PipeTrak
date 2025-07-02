@@ -1,6 +1,6 @@
 import { type TranslationValues, useTranslations } from "next-intl";
-import { ZodIssueCode, ZodParsedType, defaultErrorMap } from "zod";
 import type { ZodErrorMap } from "zod";
+import { defaultErrorMap, ZodIssueCode, ZodParsedType } from "zod";
 
 /**
  * This error map is a modified version of the on used by zod-i18n

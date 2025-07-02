@@ -1,4 +1,4 @@
-import { type MergeInput, isErrorResult, merge } from "openapi-merge";
+import { isErrorResult, type MergeInput, merge } from "openapi-merge";
 
 export function mergeOpenApiSchemas({
 	appSchema,
