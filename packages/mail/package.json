@@ -16,7 +16,7 @@
 		"@biomejs/biome": "2.0.6",
 		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/line-clamp": "^0.4.4",
-		"@types/node": "24.0.8",
+		"@types/node": "24.0.10",
 		"@types/nodemailer": "^6.4.17",
 		"@types/react": "19.1.8"
 	},
