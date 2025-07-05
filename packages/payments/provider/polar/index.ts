@@ -18,23 +18,31 @@ import type {
 	WebhookHandler,
 } from "../../types";
 
-const polarAccessToken = process.env.POLAR_ACCESS_TOKEN as string;
-const polarWebhookSecret = process.env.POLAR_WEBHOOK_SECRET as string;
+let polarClient: Polar;
 
-if (!polarAccessToken) {
-	throw new Error("Missing env variable POLAR_ACCESS_TOKEN");
+function getPolarClient() {
+	if (polarClient) {
+		return polarClient;
+	}
+
+	const polarAccessToken = process.env.POLAR_ACCESS_TOKEN as string;
+
+	if (!polarAccessToken) {
+		throw new Error("Missing env variable POLAR_ACCESS_TOKEN");
+	}
+
+	polarClient = new Polar({
+		accessToken: polarAccessToken,
+		server:
+			process.env.NODE_ENV === "production" ? "production" : "sandbox",
+	});
+
+	return polarClient;
 }
-
-if (!polarWebhookSecret) {
-	throw new Error("Missing env variable POLAR_WEBHOOK_SECRET");
-}
-
-const polarClient = new Polar({
-	accessToken: polarAccessToken,
-	server: process.env.NODE_ENV === "production" ? "production" : "sandbox",
-});
 
 export const createCheckoutLink: CreateCheckoutLink = async (options) => {
+	const polarClient = getPolarClient();
+
 	const { productId, redirectUrl, customerId, organizationId, userId } =
 		options;
 
@@ -61,6 +69,8 @@ export const createCheckoutLink: CreateCheckoutLink = async (options) => {
 export const createCustomerPortalLink: CreateCustomerPortalLink = async ({
 	customerId,
 }) => {
+	const polarClient = getPolarClient();
+
 	const response = await polarClient.customerSessions.create({
 		customerId: customerId,
 	});
@@ -73,12 +83,22 @@ export const setSubscriptionSeats: SetSubscriptionSeats = async () => {
 };
 
 export const cancelSubscription: CancelSubscription = async (id) => {
+	const polarClient = getPolarClient();
+
 	await polarClient.subscriptions.revoke({
 		id,
 	});
 };
 
 export const webhookHandler: WebhookHandler = async (req) => {
+	const polarWebhookSecret = process.env.POLAR_WEBHOOK_SECRET as string;
+
+	if (!polarWebhookSecret) {
+		return new Response("Missing env variable POLAR_WEBHOOK_SECRET", {
+			status: 500,
+		});
+	}
+
 	try {
 		if (!req.body) {
 			return new Response("No body", {
