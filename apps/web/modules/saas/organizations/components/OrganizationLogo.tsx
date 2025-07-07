@@ -3,17 +3,20 @@
 import { config } from "@repo/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
-import { forwardRef, useMemo } from "react";
+import { useMemo } from "react";
 import { useIsClient } from "usehooks-ts";
 
-export const OrganizationLogo = forwardRef<
-	HTMLSpanElement,
-	{
-		name: string;
-		logoUrl?: string | null;
-		className?: string;
-	}
->(({ name, logoUrl, className }, ref) => {
+export const OrganizationLogo = ({
+	name,
+	logoUrl,
+	className,
+	ref,
+}: HTMLSpanElement & {
+	name: string;
+	logoUrl?: string | null;
+	className?: string;
+	ref?: React.Ref<HTMLSpanElement>;
+}) => {
 	const isClient = useIsClient();
 	const avatarColors = useMemo(() => {
 		if (typeof window === "undefined") {
@@ -56,6 +59,6 @@ export const OrganizationLogo = forwardRef<
 			</AvatarFallback>
 		</Avatar>
 	);
-});
+};
 
 OrganizationLogo.displayName = "OrganizationLogo";

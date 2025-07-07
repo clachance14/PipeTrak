@@ -41,34 +41,27 @@ export type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement> &
 	VariantProps<typeof buttonVariants>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	(
-		{
-			className,
-			children,
-			variant,
-			size,
-			asChild = false,
-			loading,
-			disabled,
-			...props
-		},
-		ref,
-	) => {
-		const Comp = asChild ? Slot : "button";
-		return (
-			<Comp
-				className={cn(buttonVariants({ variant, size, className }))}
-				ref={ref}
-				disabled={disabled || loading}
-				{...props}
-			>
-				{loading && <Spinner className="mr-1.5 size-4 text-inherit" />}
-				<Slottable>{children}</Slottable>
-			</Comp>
-		);
-	},
-);
-Button.displayName = "Button";
+const Button = ({
+	className,
+	children,
+	variant,
+	size,
+	asChild = false,
+	loading,
+	disabled,
+	...props
+}: ButtonProps) => {
+	const Comp = asChild ? Slot : "button";
+	return (
+		<Comp
+			className={cn(buttonVariants({ variant, size, className }))}
+			disabled={disabled || loading}
+			{...props}
+		>
+			{loading && <Spinner className="mr-1.5 size-4 text-inherit" />}
+			<Slottable>{children}</Slottable>
+		</Comp>
+	);
+};
 
 export { Button, buttonVariants };
