@@ -432,9 +432,6 @@ importers:
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
-      prisma:
-        specifier: ^6.11.1
-        version: 6.11.1(typescript@5.8.3)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -485,7 +482,7 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2
       '@prisma/client':
-        specifier: ^6.11.1
+        specifier: ^6.10.0
         version: 6.11.1(prisma@6.11.1(typescript@5.8.3))(typescript@5.8.3)
       '@repo/config':
         specifier: workspace:*
@@ -519,7 +516,7 @@ importers:
         specifier: ^0.31.1
         version: 0.31.4
       prisma:
-        specifier: ^6.11.1
+        specifier: ^6.10.0
         version: 6.11.1(typescript@5.8.3)
       prisma-json-types-generator:
         specifier: ^3.5.1
