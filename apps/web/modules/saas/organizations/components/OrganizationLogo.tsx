@@ -11,11 +11,10 @@ export const OrganizationLogo = ({
 	logoUrl,
 	className,
 	ref,
-}: HTMLSpanElement & {
+}: React.ComponentProps<typeof Avatar> & {
 	name: string;
 	logoUrl?: string | null;
 	className?: string;
-	ref?: React.Ref<HTMLSpanElement>;
 }) => {
 	const isClient = useIsClient();
 	const avatarColors = useMemo(() => {

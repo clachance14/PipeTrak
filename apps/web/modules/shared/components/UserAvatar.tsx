@@ -7,11 +7,10 @@ export const UserAvatar = ({
 	avatarUrl,
 	className,
 	ref,
-}: HTMLSpanElement & {
+}: React.ComponentProps<typeof Avatar> & {
 	name: string;
 	avatarUrl?: string | null;
 	className?: string;
-	ref?: React.Ref<HTMLSpanElement>;
 }) => {
 	const initials = useMemo(
 		() =>
