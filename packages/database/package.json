@@ -15,7 +15,7 @@
 		"dotenv-cli": "^8.0.0",
 		"drizzle-kit": "^0.31.1",
 		"prisma": "^6.11.1",
-		"prisma-json-types-generator": "^3.4.2",
+		"prisma-json-types-generator": "^3.5.1",
 		"zod-prisma-types": "^3.2.4"
 	},
 	"main": "./index.ts",
