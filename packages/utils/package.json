@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
+		"@biomejs/biome": "2.1.0",
 		"@types/node": "^24.0.10",
 		"@repo/tsconfig": "workspace:*"
 	},

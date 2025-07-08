@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
+		"@biomejs/biome": "2.1.0",
 		"tailwindcss": "^4.1.11"
 	},
 	"main": "theme.css",
