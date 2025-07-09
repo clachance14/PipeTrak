@@ -11,7 +11,7 @@
 		"cookie": "^1.0.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
+		"@biomejs/biome": "2.1.0",
 		"@repo/tsconfig": "workspace:*",
 		"@types/node": "^24.0.10"
 	},
