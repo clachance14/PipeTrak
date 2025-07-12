@@ -6,6 +6,7 @@ import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { ActivePlanBadge } from "@saas/payments/components/ActivePlanBadge";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import { useRouter } from "@shared/hooks/router";
+import { clearCache } from "@shared/lib/cache";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -81,8 +82,9 @@ export function OrganzationSelect({ className }: { className?: string }) {
 						<>
 							<DropdownMenuRadioGroup
 								value={activeOrganization?.id ?? user.id}
-								onValueChange={(value: string) => {
+								onValueChange={async (value: string) => {
 									if (value === user.id) {
+										await clearCache();
 										router.replace("/app");
 									}
 								}}
@@ -111,9 +113,10 @@ export function OrganzationSelect({ className }: { className?: string }) {
 					)}
 					<DropdownMenuRadioGroup
 						value={activeOrganization?.slug}
-						onValueChange={(organizationSlug: string) =>
-							setActiveOrganization(organizationSlug)
-						}
+						onValueChange={async (organizationSlug: string) => {
+							await clearCache();
+							setActiveOrganization(organizationSlug);
+						}}
 					>
 						<DropdownMenuLabel className="text-foreground/60 text-xs">
 							{t(
