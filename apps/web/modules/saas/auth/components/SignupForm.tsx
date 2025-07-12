@@ -65,7 +65,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const invitationOnlyMode = !config.auth.enableSignup && invitationId;
 
 	const redirectPath = invitationId
-		? `/app/organization-invitation/${invitationId}`
+		? `/organization-invitation/${invitationId}`
 		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
 	const onSubmit = form.handleSubmit(async ({ email, password, name }) => {

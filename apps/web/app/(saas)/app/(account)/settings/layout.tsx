@@ -18,7 +18,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 	const session = await getSession();
 
 	if (!session) {
-		return redirect("/auth/login");
+		redirect("/auth/login");
 	}
 
 	const menuItems = [

@@ -44,7 +44,7 @@ export function OtpForm() {
 	const redirectTo = searchParams.get("redirectTo");
 
 	const redirectPath = invitationId
-		? `/app/organization-invitation/${invitationId}`
+		? `/organization-invitation/${invitationId}`
 		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
 	const form = useForm<FormValues>({
