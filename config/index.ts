@@ -30,13 +30,13 @@ export const config = {
 		// Whether organizations are enabled in general
 		enable: true,
 		// Whether billing for organizations should be enabled (below you can enable it for users instead)
-		enableBilling: true,
+		enableBilling: false,
 		// Whether the organization should be hidden from the user (use this for multi-tenant applications)
 		hideOrganization: false,
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
-		requireOrganization: false,
+		requireOrganization: true,
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
 		forbiddenOrganizationSlugs: [
 			"new-organization",

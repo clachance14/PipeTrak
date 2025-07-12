@@ -1,6 +1,7 @@
 import { auth } from "@repo/auth";
 import { getOrganizationById } from "@repo/database";
 import { OrganizationInvitationModal } from "@saas/organizations/components/OrganizationInvitationModal";
+import { AuthWrapper } from "@saas/shared/components/AuthWrapper";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -25,11 +26,13 @@ export default async function OrganizationInvitationPage({
 	const organization = await getOrganizationById(invitation.organizationId);
 
 	return (
-		<OrganizationInvitationModal
-			organizationName={invitation.organizationName}
-			organizationSlug={invitation.organizationSlug}
-			logoUrl={organization?.logo || undefined}
-			invitationId={invitationId}
-		/>
+		<AuthWrapper>
+			<OrganizationInvitationModal
+				organizationName={invitation.organizationName}
+				organizationSlug={invitation.organizationSlug}
+				logoUrl={organization?.logo || undefined}
+				invitationId={invitationId}
+			/>
+		</AuthWrapper>
 	);
 }

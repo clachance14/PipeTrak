@@ -79,7 +79,7 @@ export function LoginForm() {
 	});
 
 	const redirectPath = invitationId
-		? `/app/organization-invitation/${invitationId}`
+		? `/organization-invitation/${invitationId}`
 		: (redirectTo ?? config.auth.redirectAfterSignIn);
 
 	useEffect(() => {

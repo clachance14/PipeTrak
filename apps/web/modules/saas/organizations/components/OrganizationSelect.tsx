@@ -144,7 +144,7 @@ export function OrganzationSelect({ className }: { className?: string }) {
 								asChild
 								className="text-primary! cursor-pointer text-sm"
 							>
-								<Link href="/app/new-organization">
+								<Link href="/new-organization">
 									<PlusIcon className="mr-2 size-6 rounded-md bg-primary/20 p-1" />
 									{t(
 										"organizations.organizationSelect.createNewOrganization",

@@ -20,11 +20,11 @@ export default async function OnboardingPage() {
 	const session = await getSession();
 
 	if (!session) {
-		return redirect("/auth/login");
+		redirect("/auth/login");
 	}
 
 	if (!config.users.enableOnboarding || session.user.onboardingComplete) {
-		return redirect("/app");
+		redirect("/app");
 	}
 
 	return (

@@ -23,7 +23,7 @@ export default async function ChoosePlanPage() {
 	const session = await getSession();
 
 	if (!session) {
-		return redirect("/auth/login");
+		redirect("/auth/login");
 	}
 
 	let organizationId: string | undefined;
@@ -31,7 +31,7 @@ export default async function ChoosePlanPage() {
 		const organization = (await getOrganizationList()).at(0);
 
 		if (!organization) {
-			redirect("/app/new-organization");
+			redirect("/new-organization");
 		}
 
 		organizationId = organization.id;
@@ -41,7 +41,7 @@ export default async function ChoosePlanPage() {
 	const { activePlan } = createPurchasesHelper(purchases);
 
 	if (activePlan) {
-		return redirect("/app");
+		redirect("/app");
 	}
 
 	return (

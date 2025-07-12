@@ -16,7 +16,7 @@ export default async function AccountSettingsPage() {
 	const session = await getSession();
 
 	if (!session) {
-		return redirect("/auth/login");
+		redirect("/auth/login");
 	}
 
 	return (

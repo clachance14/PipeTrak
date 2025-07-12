@@ -1,6 +1,7 @@
 import { config } from "@repo/config";
 import { getOrganizationList } from "@saas/auth/lib/server";
 import { CreateOrganizationForm } from "@saas/organizations/components/CreateOrganizationForm";
+import { AuthWrapper } from "@saas/shared/components/AuthWrapper";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -14,8 +15,12 @@ export default async function NewOrganizationPage() {
 			(!config.organizations.requireOrganization ||
 				organizations.length > 0))
 	) {
-		return redirect("/app");
+		redirect("/app");
 	}
 
-	return <CreateOrganizationForm />;
+	return (
+		<AuthWrapper>
+			<CreateOrganizationForm />
+		</AuthWrapper>
+	);
 }

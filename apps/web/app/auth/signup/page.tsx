@@ -27,7 +27,7 @@ export default async function SignupPage({
 	const { invitationId } = params;
 
 	if (!(config.auth.enableSignup || invitationId)) {
-		return redirect(withQuery("/auth/login", params));
+		redirect(withQuery("/auth/login", params));
 	}
 
 	if (invitationId) {
@@ -38,7 +38,7 @@ export default async function SignupPage({
 			invitation.status !== "pending" ||
 			invitation.expiresAt.getTime() < Date.now()
 		) {
-			return redirect(withQuery("/auth/login", params));
+			redirect(withQuery("/auth/login", params));
 		}
 
 		return <SignupForm prefillEmail={invitation.email} />;
