@@ -102,7 +102,7 @@ const docs = defineCollection({
 const docsMeta = defineCollection({
 	name: "docsMeta",
 	directory: "content/docs",
-	include: "**/meta.json",
+	include: "**/meta*.json",
 	parser: "json",
 	schema: z.object(createMetaSchema(z)),
 });
