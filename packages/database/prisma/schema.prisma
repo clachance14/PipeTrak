@@ -1,6 +1,7 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -45,6 +46,13 @@ model User {
     members            Member[]
     twofactors         TwoFactor[]
     aiChats            AiChat[]
+    
+    // PipeTrak relations
+    createdProjects    Project[]    @relation("ProjectCreator")
+    installedComponents Component[] @relation("ComponentInstaller")
+    completedMilestones ComponentMilestone[] @relation("MilestoneCompleter")
+    importJobs         ImportJob[]  @relation("ImportJobUser")
+    auditLogs          AuditLog[]   @relation("AuditLogUser")
 
     @@unique([email])
     @@unique([username])
@@ -142,6 +150,9 @@ model Organization {
     invitations        Invitation[]
     purchases          Purchase[]
     aiChats            AiChat[]
+    
+    // PipeTrak relations
+    projects           Project[]
 
     @@unique([slug])
     @@map("organization")
@@ -210,4 +221,302 @@ model AiChat {
     updatedAt      DateTime      @updatedAt
 
     @@map("ai_chat")
+}
+
+// PipeTrak Extensions
+
+enum ProjectStatus {
+    ACTIVE
+    COMPLETED
+    ARCHIVED
+}
+
+enum WorkflowType {
+    MILESTONE_DISCRETE    // Checkbox milestones
+    MILESTONE_PERCENTAGE  // Percentage entry milestones  
+    MILESTONE_QUANTITY    // Quantity entry milestones
+}
+
+enum ComponentStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    COMPLETED
+    ON_HOLD
+}
+
+enum ImportStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+}
+
+enum AuditAction {
+    CREATE
+    UPDATE  
+    DELETE
+}
+
+model Project {
+    id             String   @id @default(cuid())
+    organizationId String
+    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    
+    // RENAMED: name → jobName
+    jobName        String   // Renamed from 'name'
+    // NEW: jobNumber field with constraints
+    jobNumber      String   @db.VarChar(10) // Max 10 characters for job numbers
+    description    String?
+    status         ProjectStatus @default(ACTIVE)
+    
+    // Metadata
+    location       String?
+    startDate      DateTime?
+    targetDate     DateTime?
+    
+    // Audit fields
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    createdBy      String
+    creator        User @relation("ProjectCreator", fields: [createdBy], references: [id])
+    
+    // Relations
+    drawings       Drawing[]
+    components     Component[]
+    milestoneTemplates MilestoneTemplate[]
+    importJobs     ImportJob[]
+    auditLogs      AuditLog[]
+    
+    // UPDATED: Indexes for performance and constraints
+    @@unique([organizationId, jobNumber], name: "unique_org_job_number")
+    @@index([organizationId], name: "idx_project_organization")
+    @@index([organizationId, status], name: "idx_project_org_status")
+    @@index([jobNumber], name: "idx_project_job_number") // For cross-org job number searches
+}
+
+model Drawing {
+    id          String   @id @default(cuid())
+    projectId   String
+    project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Drawing identification
+    number      String   // e.g., "P&ID-001"
+    title       String
+    revision    String?
+    
+    // Hierarchy support
+    parentId    String?
+    parent      Drawing? @relation("DrawingHierarchy", fields: [parentId], references: [id])
+    children    Drawing[] @relation("DrawingHierarchy")
+    
+    // File references
+    filePath    String?
+    fileUrl     String?
+    
+    // Audit fields
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    
+    // Relations  
+    components  Component[]
+    
+    @@unique([projectId, number])
+    @@index([projectId, parentId])
+}
+
+model MilestoneTemplate {
+    id          String   @id @default(cuid())
+    projectId   String
+    project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Template identification
+    name        String   // e.g., "Full", "Reduced", "Insulation"
+    description String?
+    
+    // Milestone definitions (JSON array)
+    /// [Array<{name: string, weight: number, order: number}>]
+    milestones  Json     /// @zod.custom.use(z.array(z.object({ name: z.string(), weight: z.number(), order: z.number() })))
+    
+    // Usage tracking
+    isDefault   Boolean  @default(false)
+    usageCount  Int      @default(0)
+    
+    // Audit fields
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    
+    // Relations
+    components  Component[]
+    
+    @@unique([projectId, name])
+    @@index([projectId, isDefault])
+}
+
+model Component {
+    id                 String   @id @default(cuid())
+    projectId          String
+    project            Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    drawingId          String   // Required - components must belong to a drawing
+    drawing            Drawing  @relation(fields: [drawingId], references: [id])
+    milestoneTemplateId String
+    milestoneTemplate  MilestoneTemplate @relation(fields: [milestoneTemplateId], references: [id])
+    
+    // Component identification
+    componentId        String   // Business ID from Excel (part number)
+    instanceNumber     Int      @default(1) // Instance number on this drawing (1, 2, 3...)
+    totalInstancesOnDrawing Int? // Total instances of this component on this drawing
+    displayId          String?  // Generated: "GSWAZ1DZZASG5331-1" or "GSWAZ1DZZASG5331 (1 of 3)"
+    type              String   // e.g., "Spool", "Valve", "Support"
+    workflowType      WorkflowType
+    
+    // Physical attributes
+    spec              String?
+    size              String?
+    material          String?
+    pressureRating    String?
+    description       String?
+    
+    // Organizational attributes
+    area              String?
+    system            String?
+    testPackage       String?
+    testPressure      Float?
+    testRequired      String?
+    
+    // Quantity fields (for milestone_quantity workflow)
+    totalLength       Float?
+    lengthUnit        String?  // "ft", "m", etc.
+    totalQuantity     Float?
+    quantityUnit      String?
+    
+    // Calculated progress
+    completionPercent Float    @default(0) // 0-100
+    
+    // Status tracking
+    status            ComponentStatus @default(NOT_STARTED)
+    
+    // Audit fields  
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+    installationDate  DateTime?
+    installerUserId   String?
+    installer         User?    @relation("ComponentInstaller", fields: [installerUserId], references: [id])
+    
+    // Relations
+    milestones        ComponentMilestone[]
+    auditLogs         AuditLog[]
+    
+    // Unique constraint per drawing (not project)
+    @@unique([drawingId, componentId, instanceNumber])
+    
+    // Indexes for querying
+    @@index([drawingId, componentId]) // All instances of a component on a drawing
+    @@index([projectId, componentId]) // All instances across project
+    @@index([projectId, drawingId])
+    @@index([projectId, type])
+    @@index([projectId, area])
+    @@index([projectId, system]) 
+    @@index([projectId, testPackage])
+    @@index([projectId, status])
+    @@index([projectId, workflowType])
+    // Composite index for common filtering patterns
+    @@index([projectId, area, system, type, status])
+}
+
+model ComponentMilestone {
+    id          String   @id @default(cuid())
+    componentId String
+    component   Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+    
+    // Milestone identification (from template)
+    milestoneName String  // e.g., "Receive", "Erect", "Connect"
+    milestoneOrder Int    // Order within template
+    weight        Float   // ROC weight (0-100)
+    
+    // Completion tracking
+    isCompleted   Boolean @default(false)
+    
+    // Workflow-specific fields
+    percentageValue Float?  // For milestone_percentage
+    quantityValue   Float?  // For milestone_quantity
+    quantityUnit    String? // For milestone_quantity
+    
+    // Audit fields
+    completedAt   DateTime?
+    completedBy   String?
+    completer     User?    @relation("MilestoneCompleter", fields: [completedBy], references: [id])
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    
+    @@unique([componentId, milestoneName])
+    @@index([componentId, milestoneOrder])
+    @@index([componentId, isCompleted])
+}
+
+model ImportJob {
+    id        String   @id @default(cuid())
+    projectId String
+    project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    userId    String
+    user      User     @relation("ImportJobUser", fields: [userId], references: [id])
+    
+    // Job details
+    filename       String
+    originalPath   String?
+    status         ImportStatus @default(PENDING)
+    
+    // Processing results
+    totalRows      Int?
+    processedRows  Int?
+    errorRows      Int?
+    
+    // Error tracking (JSON array)
+    /// [Array<{row: number, field: string, error: string, value: any}>]
+    errors         Json?    /// @zod.custom.use(z.array(z.object({ row: z.number(), field: z.string(), error: z.string(), value: z.any() })))
+    
+    // Performance tracking
+    startedAt      DateTime?
+    completedAt    DateTime?
+    duration       Int?     // seconds
+    
+    // Audit fields
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    
+    @@index([projectId, status])
+    @@index([userId, createdAt])
+}
+
+model AuditLog {
+    id        String   @id @default(cuid())
+    projectId String
+    project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    userId    String
+    user      User     @relation("AuditLogUser", fields: [userId], references: [id])
+    
+    // Component relation (optional - only when entityType is "Component")
+    componentId   String?
+    component     Component? @relation(fields: [componentId], references: [id], onDelete: Cascade)
+    
+    // Record identification
+    entityType    String  // "Component", "ComponentMilestone", etc.
+    entityId      String  // ID of the changed record
+    action        AuditAction
+    
+    // Change tracking (JSON)
+    /// {[field: string]: {old: any, new: any}}
+    changes       Json    /// @zod.custom.use(z.record(z.object({ old: z.any(), new: z.any() })))
+    
+    // Context
+    ipAddress     String?
+    userAgent     String?
+    sessionId     String?
+    
+    // Audit fields
+    timestamp     DateTime @default(now())
+    
+    @@index([projectId, entityType, entityId])
+    @@index([projectId, userId, timestamp])
+    @@index([projectId, timestamp])
 }
