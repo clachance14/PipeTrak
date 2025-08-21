@@ -1,0 +1,8 @@
+DRAWING,SPEC,TYPE,DESCRIPTION,SIZE,QTY,CMDTY CODE
+P-TEST01,HC-05,VALVE,Test Valve - Should get Reduced Set,2,1,VALVE001
+P-TEST01,HC-05,GASKET,Test Gasket - Should get Reduced Set,2,1,GASKET001
+P-TEST01,HC-05,SUPPORT,Test Support - Should get Reduced Set,3,1,SUPPORT001
+P-TEST02,HC-05,FITTING,Test Fitting - Should get Reduced Set,1,2,FITTING001
+P-TEST02,HC-05,INSTRUMENT,Test Instrument - Should get Reduced Set,1,1,INSTR001
+P-TEST03,HC-05,SPOOL,Test Spool - Should get Full Set,4,1,SPOOL001
+P-TEST03,HC-05,FIELD_WELD,Test Field Weld - Should get Field Weld Template,N/A,1,FW001

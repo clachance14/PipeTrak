@@ -1,0 +1,9 @@
+componentId,type,workflowType,drawingId,spec,size,material,area,system,description,totalQuantity
+TEST_VALVE_001,VALVE,MILESTONE_DISCRETE,TEST_DWG_001,A105,"2""",Carbon Steel,Test Area,Test System,Test valve for template assignment,1
+TEST_GASKET_001,GASKET,MILESTONE_DISCRETE,TEST_DWG_001,RF,"4""",Spiral Wound,Test Area,Test System,Test gasket for template assignment,1
+TEST_SPOOL_001,SPOOL,MILESTONE_PERCENTAGE,TEST_DWG_001,SCH40,"6""",Carbon Steel,Test Area,Test System,Test spool for template assignment,1
+TEST_FITTING_001,FITTING,MILESTONE_DISCRETE,TEST_DWG_001,WELD,"3""",Stainless Steel,Test Area,Test System,Test fitting for template assignment,1
+TEST_SUPPORT_001,SUPPORT,MILESTONE_DISCRETE,TEST_DWG_001,U-BOLT,"4""",Carbon Steel,Test Area,Test System,Test support for template assignment,1
+TEST_FIELD_WELD_001,FIELD_WELD,MILESTONE_DISCRETE,TEST_DWG_001,WELD,"6""",Carbon Steel,Test Area,Test System,Test field weld for template assignment,1
+TEST_INSULATION_001,INSULATION,MILESTONE_QUANTITY,TEST_DWG_001,MINERAL_WOOL,"6""",Mineral Wool,Test Area,Test System,Test insulation for template assignment,10
+TEST_PAINT_001,PAINT,MILESTONE_QUANTITY,TEST_DWG_001,EPOXY,"6""",Paint System,Test Area,Test System,Test paint for template assignment,100

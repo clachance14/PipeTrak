@@ -10,7 +10,7 @@ export async function getComponents(projectId: string): Promise<ComponentWithMil
   try {
     const apiClient = await getServerApiClient();
     const response = await apiClient.pipetrak.components.$get({
-      query: { projectId, limit: "1000" }
+      query: { projectId, limit: "10000" }
     });
 
     if (!response.ok) {

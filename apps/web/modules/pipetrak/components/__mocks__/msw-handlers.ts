@@ -1,9 +1,13 @@
 import { http, HttpResponse } from 'msw';
 import { mockComponents, mockProject, generateMockComponents } from '../__fixtures__/components';
+import { milestoneHandlers, milestoneErrorHandlers, milestoneDelayHandlers } from './milestone-handlers';
 
 const API_BASE = 'http://localhost:3000/api/pipetrak';
 
 export const handlers = [
+  // Include milestone handlers
+  ...milestoneHandlers,
+  
   // Get components
   http.get(`${API_BASE}/components`, ({ request }) => {
     const url = new URL(request.url);
@@ -133,6 +137,8 @@ export const handlers = [
 
 // Error handlers for testing error scenarios
 export const errorHandlers = [
+  ...milestoneErrorHandlers,
+  
   http.get(`${API_BASE}/components`, () => {
     return new HttpResponse(null, { status: 500 });
   }),
@@ -148,6 +154,8 @@ export const errorHandlers = [
 
 // Network delay handlers for testing loading states
 export const delayHandlers = [
+  ...milestoneDelayHandlers,
+  
   http.get(`${API_BASE}/components`, async () => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     return HttpResponse.json(mockComponents);

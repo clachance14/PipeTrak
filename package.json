@@ -5,10 +5,16 @@
 		"build": "dotenv -c -- turbo build",
 		"dev": "dotenv -c -- turbo dev --concurrency 15",
 		"start": "dotenv -c -- turbo start",
-		"lint": "biome lint --assist-enabled . ",
+		"lint": "biome lint . ",
 		"check": "biome check",
 		"clean": "turbo clean",
-		"format": "biome format . --write"
+		"format": "biome format . --write",
+		"db:migrate": "pnpm --filter database migrate",
+		"db:push": "pnpm --filter database push",
+		"db:generate": "pnpm --filter database generate",
+		"db:studio": "pnpm --filter database studio",
+		"typecheck": "turbo run type-check",
+		"test": "turbo run test"
 	},
 	"engines": {
 		"node": ">=20"
@@ -19,6 +25,7 @@
 		"@repo/tsconfig": "workspace:*",
 		"@types/node": "^24.0.10",
 		"dotenv-cli": "^8.0.0",
+		"rimraf": "^6.0.1",
 		"turbo": "^2.5.4",
 		"typescript": "5.8.3"
 	},

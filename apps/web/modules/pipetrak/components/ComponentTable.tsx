@@ -2,21 +2,27 @@
 
 import { DataTable } from "../shared/components/DataTable";
 import { Button } from "@ui/components/button";
-import { Edit, MoreHorizontal } from "lucide-react";
+import { Edit, MoreHorizontal, Target } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import type { Component, TableColumn } from "../types";
+import { TableMilestoneColumn } from "./milestones/integration/TableMilestoneColumn";
+import { MilestoneUpdateEngine } from "./milestones/core/MilestoneUpdateEngine";
+import { RealtimeManager } from "./milestones/realtime/RealtimeManager";
+import type { ComponentWithMilestones, TableColumn } from "../types";
 
 interface ComponentTableProps {
-  components: Component[];
+  components: ComponentWithMilestones[];
   loading?: boolean;
-  onEdit?: (component: Component) => void;
+  projectId: string;
+  userId: string;
+  onEdit?: (component: ComponentWithMilestones) => void;
   onBulkEdit?: (componentIds: string[]) => void;
-  onRowClick?: (component: Component) => void;
+  onRowClick?: (component: ComponentWithMilestones) => void;
+  onMilestoneClick?: (component: ComponentWithMilestones, milestoneId?: string) => void;
   pagination?: {
     page: number;
     totalPages: number;
@@ -27,17 +33,20 @@ interface ComponentTableProps {
 export function ComponentTable({
   components,
   loading = false,
+  projectId,
+  userId,
   onEdit,
   onBulkEdit,
   onRowClick,
+  onMilestoneClick,
   pagination,
 }: ComponentTableProps) {
   const columns: TableColumn[] = [
     {
-      key: 'componentNumber',
+      key: 'componentId',
       label: 'Component #',
       sortable: true,
-      width: 150,
+      width: '150',
     },
     {
       key: 'description',
@@ -48,58 +57,69 @@ export function ComponentTable({
       key: 'discipline',
       label: 'Discipline',
       sortable: true,
-      width: 120,
+      width: '120',
     },
     {
       key: 'area',
       label: 'Area',
       sortable: true,
-      width: 100,
+      width: '100',
     },
     {
-      key: 'progress',
-      label: 'Progress',
-      type: 'progress',
-      width: 150,
+      key: 'milestones',
+      label: 'Milestones',
+      width: '250',
     },
     {
       key: 'actions',
       label: '',
-      width: 50,
+      width: '50',
     },
   ];
 
   const tableData = components.map(component => ({
     ...component,
-    progress: calculateProgress(component),
+    milestones: (
+      <TableMilestoneColumn 
+        component={component}
+        className="max-w-[250px]"
+      />
+    ),
     actions: (
       <ComponentActions 
         component={component}
         onEdit={() => onEdit?.(component)}
+        onMilestoneClick={() => onMilestoneClick?.(component)}
       />
     ),
   }));
 
   return (
-    <DataTable
-      columns={columns}
-      data={tableData}
-      loading={loading}
-      empty={components.length === 0}
-      emptyMessage="No components found. Try adjusting your filters or import some data."
-      onRowClick={onRowClick}
-      stickyHeader
-      pagination={pagination}
-    />
+    <RealtimeManager projectId={projectId} userId={userId}>
+      <MilestoneUpdateEngine projectId={projectId}>
+        <DataTable
+          columns={columns}
+          data={tableData as any}
+          loading={loading}
+          empty={components.length === 0}
+          emptyMessage="No components found. Try adjusting your filters or import some data."
+          onRowClick={onRowClick}
+          stickyHeader
+          pagination={pagination}
+        />
+      </MilestoneUpdateEngine>
+    </RealtimeManager>
   );
 }
 
 function ComponentActions({ 
   component, 
-  onEdit 
+  onEdit,
+  onMilestoneClick
 }: { 
-  component: Component; 
+  component: ComponentWithMilestones; 
   onEdit: () => void;
+  onMilestoneClick?: () => void;
 }) {
   return (
     <DropdownMenu>
@@ -114,7 +134,8 @@ function ComponentActions({
           <Edit className="mr-2 h-4 w-4" />
           Edit Component
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onMilestoneClick}>
+          <Target className="mr-2 h-4 w-4" />
           View Milestones
         </DropdownMenuItem>
         <DropdownMenuItem>
@@ -125,13 +146,13 @@ function ComponentActions({
   );
 }
 
-function calculateProgress(component: Component): number {
+function calculateProgress(component: ComponentWithMilestones): number {
   if (!component.milestones || component.milestones.length === 0) {
     return 0;
   }
 
   const completedCount = component.milestones.filter(
-    m => m.status === 'COMPLETED'
+    m => m.isCompleted
   ).length;
 
   return Math.round((completedCount / component.milestones.length) * 100);

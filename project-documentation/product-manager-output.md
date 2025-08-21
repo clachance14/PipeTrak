@@ -1,522 +1,407 @@
-# PipeTrak Phase 3: Core Features Implementation - Product Specifications
-
-**Version:** 1.0  
-**Date:** January 8, 2025  
-**Product Manager:** Claude (PM Role)  
-**Phase:** 3 - Core Features Implementation  
-**Prerequisites:** Phase 2 Backend Complete (APIs, Database, Supabase Functions)
-
----
+# PipeTrak Reporting Module - Product Requirements Specification
 
 ## Executive Summary
 
 ### Elevator Pitch
-Replace Excel with a construction-native tracking system that lets foremen update pipe installation from their phones while PMs see real-time progress on dashboards.
+Excel-quality reporting with real-time field data, giving PMs instant visibility into project progress without the spreadsheet juggling.
 
 ### Problem Statement
-Field crews waste 30+ minutes daily re-entering paper notes into Excel. PMs wait until Friday for progress reports. Nobody trusts the data because five different spreadsheets show different numbers.
+Project Managers currently spend 4-6 hours weekly manually compiling progress reports from multiple Excel sheets, with data that's already 2-3 days stale. Field updates don't reach reports until the weekly compilation, creating blind spots that risk schedule slippage and test package delays.
 
 ### Target Audience
-- **Primary**: Foremen with tablets checking off installed components in 100°F field conditions
-- **Secondary**: Project Managers on laptops analyzing progress for weekly client reports
-- **Tertiary**: Field Engineers importing IFC drawing data and correcting field discrepancies
+- **Primary**: Project Managers (desktop/laptop, office environment)
+- **Secondary**: Field Engineers (tablet/laptop, site office)
+- **Tertiary**: Foremen (mobile/tablet, quick field reference)
 
 ### Unique Selling Proposition
-Drawing-first navigation + milestone credit calculation + Excel-speed editing = construction teams actually use it.
+Drawing-first progress tracking with ROC-weighted milestone credits, delivering Excel-familiar reports that auto-update with every field entry, eliminating the Friday report scramble.
 
 ### Success Metrics
-- ≤2% import error rate on 100k-row files
-- ≤1.0s component list load (10k virtualized rows)
-- ≥95% component coverage after initial import
-- ≤250ms milestone update commit time
-- ≥80% daily active foremen after 2 weeks
+- ≤5 seconds report generation for 100k components
+- ≤30 seconds Excel export for 1M rows
+- ≥95% PM adoption within 2 weeks (replacing manual Excel reports)
+- ≤1% discrepancy between field updates and report visibility
+- ≥90% reduction in weekly reporting effort (from 6 hours to 30 minutes)
 
 ---
 
 ## Feature Specifications
 
-### Feature 1: Component Management UI
+### Feature 1: Progress Summary Report with ROC Calculations
 
-**User Story**: As a field engineer, I want to view and edit components like Excel, so that adoption doesn't require retraining.
+#### User Stories
+- **As a PM**, I want to see overall project completion weighted by ROC credits, so that I can report accurate progress to stakeholders without manual calculations
+- **As a Field Engineer**, I want to drill down from summary to component details, so that I can identify bottlenecks without switching screens
+- **As a Foreman**, I want to see my area's progress compared to others, so that I know if we're ahead or behind schedule
 
-**Acceptance Criteria**:
-- Given 10,000 components, when I load the list, then virtualized rows display in ≤1.5s
-- Given I'm editing a cell, when I press Tab, then focus moves to next cell with data saved
-- Given I select 50 rows, when I bulk update area, then all rows update in ≤2s
-- Given I filter by ISO "P-35F11", when results load, then only matching components show
-- Given I'm on mobile, when I tap a row, then detail view opens with touch-friendly buttons
-- Given bad data entry, when I save, then inline validation shows specific error
-- Given I paste from Excel, when data validates, then cells populate maintaining structure
+#### Acceptance Criteria
 
-**Edge Cases**:
-- Duplicate component IDs show warning but allow save
-- Missing ISO drawings highlight in yellow with "Drawing Not Found" badge
-- Offline edits queue with conflict resolution on reconnect
-- Empty test package/area/system allowed but flagged
-- Special characters in component IDs preserved exactly
+**Report Generation**
+- Given a project with 100k components, when requesting progress summary, then report displays within 5 seconds
+- Given mixed milestone states, when calculating progress, then ROC weights are correctly applied per component type
+- Given incomplete data, when generating report, then "unknown" components are excluded from percentage but shown in count
 
-**Priority**: P0 - Core functionality required for any field use
+**Data Display**
+- Given progress data, when viewing summary, then display shows:
+  - Overall completion % (ROC-weighted and simple count)
+  - Components complete/total with visual progress bar
+  - Area breakdown with completion % per area
+  - System breakdown with completion % per system
+  - Test Package readiness summary (ready/blocked/pending)
+  - Top 5 critical path items blocking completion
 
-**Dependencies**: 
-- Component API endpoints (GET /api/pipetrak/components with filters)
-- Drawing lookup table for validation
-- User session for audit trail
-- Virtual scroll library (TanStack Virtual)
+**Drill-Down Capability**
+- Given summary view, when clicking on an area, then display filtered component list for that area
+- Given system summary, when clicking percentage, then show milestone distribution chart
+- Given test package status, when clicking "blocked", then list specific blocking components
 
-**Technical Constraints**:
-- Max 10k rows rendered (paginate beyond)
-- 50MB browser memory limit for data cache
-- Debounce saves to 500ms
-- Batch API calls in groups of 100
+**Export Functionality**
+- Given report view, when exporting to PDF, then maintain formatting, charts, and company branding
+- Given report view, when exporting to Excel, then create sheets for summary, areas, systems, and details
+- Given large dataset, when exporting, then show progress indicator with cancel option
 
-**UX Considerations**:
-- Sticky header with filters always visible
-- Column freeze for componentId and description
-- Keyboard shortcuts: Ctrl+S save, Ctrl+Z undo, Ctrl+C/V copy/paste
-- Row height 44px minimum for touch
-- Loading skeleton shows during data fetch
-- Toast notifications for save success/failure
+**Edge Cases**
+- Components with no area assigned show in "Unassigned" category
+- Missing ROC configurations default to standard weights with warning indicator
+- Circular milestone dependencies trigger validation error
+- Export files >50MB trigger download link instead of direct download
 
----
+#### Priority
+**P0** - Core functionality required for MVP launch
 
-### Feature 2: Milestone Update System
+#### Dependencies
+- ROCConfigurations table populated with org defaults
+- ComponentMilestones table with current state data
+- Dashboard functions (get_project_metrics, get_area_system_metrics) operational
+- Supabase storage configured for large exports
 
-**User Story**: As a foreman, I want to quickly update component milestones from my phone, so that progress is captured in real-time.
+#### Technical Constraints
+- Use existing dashboard RPC functions for data retrieval
+- Cache calculated values for 5 minutes using ReportingCache table
+- Implement virtual scrolling for component lists >1000 rows
+- Stream Excel generation for exports >100k rows
 
-**Acceptance Criteria**:
-- Given discrete workflow, when I tap checkbox, then milestone toggles with haptic feedback
-- Given percentage workflow, when I enter "75", then progress bar updates to 75%
-- Given quantity workflow, when I enter "150 ft", then system calculates % based on total
-- Given I complete final milestone, when saved, then component status becomes "COMPLETED"
-- Given another user updated, when I refresh, then latest values show with "Updated by" note
-- Given bulk selection, when I mark "Received", then all selected components update
-- Given I undo an update, when confirmed, then milestone reverts with audit entry
-
-**Edge Cases**:
-- Can't complete milestone 3 if milestone 2 incomplete (for sequential workflows)
-- Over 100% entry shows error "Maximum 100%"
-- Negative values rejected with inline error
-- Concurrent updates show conflict dialog
-- Test milestone requires test package assignment
-
-**Priority**: P0 - Primary field interaction point
-
-**Dependencies**:
-- Milestone update API (PUT /api/pipetrak/milestones/batch)
-- Component workflow type definitions
-- Milestone templates with ROC weights
-- User authentication for completedBy field
-
-**Technical Constraints**:
-- Optimistic UI updates with rollback on failure
-- Queue updates when offline (localStorage)
-- Max 100 components per bulk update
-- Debounce percentage inputs to 1s
-
-**UX Considerations**:
-- Checkbox size 44x44px minimum
-- Percentage input with slider for touch
-- Quantity input with unit selector dropdown
-- Progress rings show visual completion
-- Color coding: gray=pending, blue=in progress, green=complete
-- Swipe gestures for quick navigation between components
+#### UX Considerations
+- Sticky headers for area/system tables during scroll
+- Color-coded progress bars (red <25%, yellow 25-75%, green >75%)
+- Expandable/collapsible sections for mobile viewing
+- Print-optimized CSS for PDF generation
+- Keyboard shortcuts (Ctrl+E for export, Space to expand section)
 
 ---
 
-### Feature 3: ISO Drawing Navigation
+### Feature 2: Detailed Component Report
 
-**User Story**: As a PM, I want to navigate drawings hierarchically, so that I can drill from area ISOs to spool details.
+#### User Stories
+- **As a PM**, I want to export all component data with current status, so that I can perform custom analysis in Excel
+- **As a Field Engineer**, I want to filter components by multiple criteria, so that I can create targeted work packages
+- **As a Foreman**, I want to see components grouped by location, so that I can plan efficient work sequences
 
-**Acceptance Criteria**:
-- Given project has 100 ISOs, when I load drawing list, then tree view shows with counts
-- Given I search "P-35F", when typing, then autocomplete suggests "P-35F11", "P-35F12"
-- Given I click ISO "P-35F11", when it loads, then component list filters to that ISO
-- Given ISO has child spools, when I expand, then "SP-1234", "SP-1235" appear indented
-- Given I'm on component, when I click "View on ISO", then drawing viewer opens
-- Given drawing has 0 components, when listed, then shows with "Empty" badge
+#### Acceptance Criteria
 
-**Edge Cases**:
-- Orphaned components (no ISO) appear under "Unassigned" section
-- Deleted ISOs preserve component data with warning
-- Circular parent references blocked with validation
-- ISO number changes cascade to components
-- Large drawings (>1000 components) show count with warning
+**Data Completeness**
+- Given component query, when generating report, then include ALL fields:
+  - Component ID, Drawing, Line Number, Area, System, Test Package
+  - All milestone states with completion dates
+  - Current % complete (ROC-weighted)
+  - Last update timestamp and user
+  - Notes/comments if present
+  - Installation sequence/priority
 
-**Priority**: P0 - Core navigation paradigm
+**Filtering Capabilities**
+- Given filter panel, when setting criteria, then support:
+  - Multi-select for areas, systems, test packages
+  - Date range for milestone completions
+  - Completion percentage ranges
+  - Component type selection
+  - Text search across ID/line number/description
+  - Stalled components (no updates in X days)
 
-**Dependencies**:
-- Drawing API with parent/child relationships
-- Component counts per drawing (aggregated)
-- Drawing metadata (revision, title)
-- Tree view component library
+**Sorting & Grouping**
+- Given component list, when sorting, then maintain sub-sorts (e.g., Area → System → Component)
+- Given grouping option, when selected, then show collapsible groups with subtotals
+- Given custom sort, when applied, then persist preference for session
 
-**Technical Constraints**:
-- Lazy load child nodes on expand
-- Cache expanded state in sessionStorage
-- Max depth 5 levels (ISO → Spool → Sub-assembly)
-- Virtual scroll for >100 drawings
+**Export Formats**
+- Given filtered data, when exporting to Excel, then:
+  - Create separate sheets per component type if >10k rows
+  - Include filter criteria in header rows
+  - Apply conditional formatting for completion status
+  - Add data validation for re-import capability
+- Given export request >1M rows, when processing, then queue as background job with email notification
 
-**UX Considerations**:
-- Indent child drawings 24px per level
-- Icons differentiate ISO/Spool/GA types
-- Component count badges right-aligned
-- Search highlights matching text
-- Breadcrumb shows current path
-- Mobile: collapsible sidebar with hamburger menu
+**Performance Requirements**
+- Initial load ≤2 seconds for 10k virtualized rows
+- Filter application ≤500ms for 100k components
+- Export generation ≤30 seconds for 1M rows
+- Sort operation ≤250ms client-side
 
----
+**Edge Cases**
+- Duplicate component IDs highlighted with warning badge
+- Missing required fields shown with "MISSING" indicator
+- Orphaned milestones (no parent component) listed separately
+- Export interruption creates resumable download
 
-### Feature 4: Project Dashboard
+#### Priority
+**P0** - Required for PM workflow migration from Excel
 
-**User Story**: As a project manager, I want to see overall progress and trends, so that I can report to clients weekly.
+#### Dependencies
+- Component table with all field relationships
+- Advanced filter UI components
+- Background job queue for large exports
+- Email service for export notifications
 
-**Acceptance Criteria**:
-- Given project has 402 milestones, when dashboard loads, then overall % shows in ≤2s
-- Given I select "Area 401", when filtered, then charts update to show only that area
-- Given last 7 days activity, when timeline loads, then shows who updated what
-- Given I click "Export", when processing, then Excel downloads with all visible data
-- Given poor connection, when loading, then cached data shows with "Offline" badge
-- Given I select date range, when applied, then ROC curve shows progress over time
+#### Technical Constraints
+- Use server-side filtering for datasets >10k
+- Implement cursor-based pagination for infinite scroll
+- Stream Excel generation to prevent memory overflow
+- Limit concurrent exports to 3 per user
 
-**Edge Cases**:
-- Zero progress shows "Not Started" vs error
-- Future-dated milestones excluded from % 
-- Deleted components removed from calculations
-- Test packages without components show 0%
-- Excel export >65k rows splits to multiple sheets
-
-**Priority**: P0 - Executive visibility required
-
-**Dependencies**:
-- Progress calculation RPC functions
-- Audit log for activity timeline
-- Excel export library (ExcelJS)
-- Charting library (Recharts)
-- Component aggregation queries
-
-**Technical Constraints**:
-- Dashboard data cached 5 minutes
-- Calculations done server-side (RPC)
-- Max 10k points on charts
-- Export limited to 100k rows
-
-**UX Considerations**:
-- Cards for key metrics (total %, components, milestones)
-- Donut charts for area/system breakdown
-- Line chart for ROC curve
-- Activity timeline with user avatars
-- Responsive grid layout (mobile stacks vertical)
-- Print-friendly CSS for reports
+#### UX Considerations
+- Column picker for customizable views
+- Freeze panes for ID/Drawing columns
+- Right-click context menu for quick actions
+- Inline edit for authorized users (future)
+- Auto-save filter presets per user
 
 ---
 
-### Feature 5: Import System
+### Feature 3: Test Package Readiness Report
 
-**User Story**: As a field engineer, I want to import IFC data from Excel, so that initial setup takes hours not weeks.
+#### User Stories
+- **As a PM**, I want to see which test packages are ready for testing, so that I can coordinate with commissioning team
+- **As a Field Engineer**, I want to identify components blocking test packages, so that I can prioritize completion
+- **As a Foreman**, I want a mobile-friendly checklist view, so that I can verify readiness in the field
 
-**Acceptance Criteria**:
-- Given 50MB Excel file, when uploaded, then parsing begins with progress bar
-- Given columns don't match, when mapping screen shows, then I can drag columns to match
-- Given 1000 rows with 10 errors, when validated, then error report shows row numbers
-- Given I fix mappings, when I retry, then validation reruns without re-upload
-- Given import succeeds, when complete, then summary shows "990 imported, 10 skipped"
-- Given duplicate component IDs, when detected, then options show: skip/update/create new
+#### Acceptance Criteria
 
-**Edge Cases**:
-- Files >100MB rejected with size error
-- Non-Excel formats (.txt) show format error
-- Missing required columns block import
-- ISO numbers not in system highlighted for review
-- Special characters preserved (don't sanitize)
-- Empty rows ignored without error
-- Partial success commits good rows
+**Readiness Calculation**
+- Given test package components, when calculating status, then:
+  - "Ready" = 100% of components at Test milestone or beyond
+  - "Nearly Ready" = ≥95% complete with list of remaining items
+  - "Blocked" = <95% with critical path analysis
+  - "Not Started" = <10% complete
 
-**Priority**: P0 - Cannot start project without data import
+**Blocking Component Analysis**
+- Given blocked package, when viewing details, then show:
+  - List of incomplete components with current milestone
+  - Estimated days to completion based on velocity
+  - Responsible foreman/area for each blocker
+  - Priority score based on downstream dependencies
 
-**Dependencies**:
-- File upload API with streaming
-- Excel parser (SheetJS)
-- Import job queue system
-- Column mapping storage
-- Validation rule engine
+**Visual Indicators**
+- Given readiness status, when displaying, then use:
+  - Green checkmark for Ready packages
+  - Yellow warning for Nearly Ready with count badge
+  - Red X for Blocked with blocker count
+  - Gray dash for Not Started
 
-**Technical Constraints**:
-- Client-side parsing for <10MB files
-- Server-side parsing for larger files
-- Max 100k rows per import
-- Chunked processing (1000 rows/batch)
-- WebSocket for progress updates
+**Field-Optimized View**
+- Given mobile device, when viewing report, then:
+  - Single-column layout with expandable packages
+  - Swipe actions for status updates
+  - Offline capability with sync indicators
+  - Large touch targets for gloved hands
 
-**UX Considerations**:
-- Drag-drop upload zone
-- Column mapping with preview
-- Validation errors in scrollable table
-- Row-level error details on hover
-- Sample template download link
-- Progress bar with row counter
-- Success notification with summary
+**Export Options**
+- Given report view, when exporting to PDF, then create field-ready checklist format
+- Given email export, when selected, then send to distribution list with status summary
+- Given Excel export, when generated, then include pivot table for management rollup
 
----
+**Edge Cases**
+- Components in multiple test packages counted in each
+- Partial test packages (subset testing) handled separately
+- Missing test package assignments shown in "Unassigned" section
+- Conflicting milestone data triggers data quality alert
 
-### Feature 6: Mobile Field Interface
+#### Priority
+**P0** - Critical for commissioning coordination
 
-**User Story**: As a foreman, I want to update components from my phone in the field, so that progress is captured immediately.
+#### Dependencies
+- Test package assignment data complete
+- Milestone velocity calculations available
+- Mobile-responsive UI framework
+- Offline storage capability
 
-**Acceptance Criteria**:
-- Given I'm on 4G, when I load component list, then data appears in ≤3s
-- Given I have gloves on, when I tap milestone, then 44x44px target registers
-- Given sun glare, when viewing, then high contrast mode maintains readability
-- Given I lose connection, when I update, then changes queue with sync icon
-- Given I search "GA-401", when typing, then results filter as I type
-- Given battery at 10%, when active, then reduced animations save power
+#### Technical Constraints
+- Cache readiness calculations for 15 minutes
+- Limit blocking analysis to 3 levels deep
+- Mobile view supports devices ≥375px width
+- PDF generation ≤10 seconds for 50 packages
 
-**Edge Cases**:
-- Offline mode shows cached data with warning
-- Sync conflicts show both versions for choice
-- Large lists (>1000) prompt for filter
-- Session timeout redirects to login
-- Background sync when app minimized
-
-**Priority**: P0 - Field adoption critical
-
-**Dependencies**:
-- PWA service worker for offline
-- IndexedDB for local storage
-- Touch gesture library
-- Responsive CSS framework
-- Push notification system (future)
-
-**Technical Constraints**:
-- Initial load <50MB
-- Offline storage <100MB
-- Touch targets minimum 44x44px
-- Support iOS Safari 14+
-- Support Android Chrome 90+
-
-**UX Considerations**:
-- Bottom tab navigation (thumb reach)
-- Pull-to-refresh gesture
-- Swipe between components
-- Large fonts (minimum 16px)
-- High contrast toggle
-- Haptic feedback on actions
-- Loading states for slow connections
+#### UX Considerations
+- Traffic light colors for instant recognition
+- Expandable details without navigation
+- Pin important packages to top
+- Quick filter pills for status types
+- Pull-to-refresh on mobile
 
 ---
 
-## Requirements Documentation
+### Feature 4: Trend Analysis Report
 
-### Functional Requirements
+#### User Stories
+- **As a PM**, I want to see progress trends over time, so that I can identify if we're accelerating or slowing down
+- **As a Field Engineer**, I want to predict completion dates, so that I can communicate realistic timelines
+- **As a Foreman**, I want to see my crew's productivity trend, so that I can identify training needs
 
-#### User Flows
+#### Acceptance Criteria
 
-**Import Flow**:
-1. Upload Excel/CSV → Parse headers → Column mapping → Validation → Error review → Fix or skip → Import → Summary
+**Trend Calculations**
+- Given historical snapshots, when calculating trends, then show:
+  - Daily/weekly/monthly completion rates
+  - 7-day, 14-day, 30-day moving averages
+  - Velocity by milestone type
+  - Area/system-specific trends
+  - Crew productivity metrics
 
-**Component Update Flow**:
-1. Select ISO → Filter components → Select component → Update milestones → Auto-save → Sync indicator → Confirmation
+**Forecasting**
+- Given current velocity, when projecting completion, then:
+  - Calculate linear projection from last 30 days
+  - Show best/worst/likely scenarios
+  - Include confidence intervals
+  - Flag if projection exceeds target date
 
-**Dashboard Flow**:
-1. Load dashboard → Select filters (area/system) → View metrics → Drill into details → Export report
+**Bottleneck Identification**
+- Given trend data, when analyzing, then identify:
+  - Milestones with declining velocity
+  - Areas falling behind average
+  - Stalled components (no progress in X days)
+  - Resource constraints (crew bottlenecks)
 
-#### State Management
+**Visualization Requirements**
+- Given trend data, when displaying, then show:
+  - Line charts for progress over time
+  - Burndown charts for remaining work
+  - Stacked area charts for milestone distribution
+  - Heat maps for area/day productivity
+  - Gantt view for critical path
 
-**Client State**:
-- Current filters/sort
-- Selected components
-- Offline queue
-- Column preferences
-- Expanded tree nodes
+**Comparative Analysis**
+- Given multiple areas/systems, when comparing, then:
+  - Show side-by-side trend lines
+  - Calculate relative performance indices
+  - Identify top/bottom performers
+  - Show variance from plan
 
-**Server State**:
-- Component data
-- Milestone status
-- User sessions
-- Import jobs
-- Audit logs
+**Export Capabilities**
+- Given charts, when exporting to PDF, then maintain full resolution
+- Given data, when exporting to Excel, then include raw data + pivot tables
+- Given PowerPoint export, when selected, then create executive presentation format
 
-**Optimistic Updates**:
-- Milestone checkboxes update immediately
-- Rollback on API failure
-- Queue for offline sync
+**Edge Cases**
+- Missing snapshot dates interpolated with warning
+- Negative velocity (rework) shown in red
+- Seasonal adjustments for weather delays
+- Data quality issues flagged in footnotes
 
-#### Validation Rules
+#### Priority
+**P1** - High value for schedule management
 
-**Import Validation**:
-- Required: componentId, type, workflowType
-- ISO format: Letter-NumberLetterNumber (e.g., P-35F11)
-- Spool format: SP-Number (e.g., SP-1234)
-- Line format: Size-Service-Number-Spec (e.g., 8-PG-1001-CS1)
-- Workflow type must match: MILESTONE_DISCRETE | MILESTONE_PERCENTAGE | MILESTONE_QUANTITY
-- Component type maps to workflow type per PRD rules
+#### Dependencies
+- ProgressSnapshots table with 30+ days of history
+- Chart.js or similar visualization library
+- Statistical analysis functions
+- PowerPoint generation library
 
-**Milestone Validation**:
-- Sequential milestones enforce order
-- Percentage 0-100 range
-- Quantity must be positive
-- Test milestone requires testPackage
-- Cannot uncomplete if later milestone complete
+#### Technical Constraints
+- Calculate trends from max 90 days of data
+- Limit chart points to 500 for performance
+- Cache forecast calculations for 1 hour
+- Support maximum 10 concurrent trend lines
 
-#### Integration Points
-
-**Supabase Tables**:
-- Component: Main data table
-- ComponentMilestone: Progress tracking
-- Drawing: ISO hierarchy
-- MilestoneTemplate: ROC definitions
-- ImportJob: Import status
-- AuditLog: Change history
-
-**API Endpoints**:
-- GET /api/pipetrak/components (list/filter)
-- PUT /api/pipetrak/components/:id (update)
-- PUT /api/pipetrak/milestones/batch (bulk update)
-- GET /api/pipetrak/drawings (hierarchy)
-- POST /api/pipetrak/import (upload)
-- GET /api/pipetrak/progress (dashboard)
-
-**RPC Functions**:
-- calculate_project_progress()
-- get_component_summary()
-- process_import_batch()
-
----
-
-### Non-Functional Requirements
-
-#### Performance Targets
-
-**Page Load**:
-- Component list: ≤1.5s (10k virtualized)
-- Dashboard: ≤2.0s (with charts)
-- ISO tree: ≤1.0s (lazy loaded)
-- Search results: ≤500ms
-
-**Data Operations**:
-- Single save: ≤250ms
-- Bulk update (100): ≤2s
-- Import parse (10k): ≤10s
-- Excel export (10k): ≤5s
-
-**Mobile Performance**:
-- First paint: ≤2s on 4G
-- Interaction: ≤100ms response
-- Offline sync: ≤30s on reconnect
-
-#### Scalability
-
-**Data Limits**:
-- 1M components per project (Phase 0 goal)
-- 10k components per ISO
-- 100k rows per import
-- 1000 concurrent users
-
-**Implementation**:
-- Database indexes on all filter columns
-- Pagination with cursor-based navigation
-- Virtual scrolling for long lists
-- Server-side filtering/sorting
-- CDN for static assets
-- Queue system for imports
-
-#### Security
-
-**MVP Approach**:
-- Authentication required (better-auth)
-- All users see all data
-- UI-based role checking
-- Audit log all changes
-- HTTPS only
-
-**Future RLS**:
-- Row-level security by project
-- Role-based permissions
-- Field vs office features
-- Organization isolation
-
-#### Accessibility
-
-**WCAG AA Compliance**:
-- Keyboard navigation
-- Screen reader labels
-- Color contrast 4.5:1
-- Focus indicators
-- Error announcements
-- Alternative text
+#### UX Considerations
+- Interactive charts with hover details
+- Date range picker with presets
+- Toggle between absolute/percentage views
+- Export chart as image option
+- Responsive design for tablet viewing
 
 ---
 
-### User Experience Requirements
+### Feature 5: Audit Trail Report
 
-#### Information Architecture
+#### User Stories
+- **As a PM**, I want to see all changes made to components, so that I can verify accurate data entry
+- **As a QA Manager**, I want to track who updated what and when, so that I can ensure compliance
+- **As a Foreman**, I want to see my crew's daily updates, so that I can verify work was recorded
 
-```
-Project (SDO Tank)
-├── Dashboard
-│   ├── Progress Cards
-│   ├── Area Breakdown
-│   ├── System Progress
-│   └── Recent Activity
-├── ISOs
-│   ├── ISO List (P-35F11, etc)
-│   │   └── Components
-│   │       └── Milestones
-│   └── Spool List (SP-1234, etc)
-│       └── Components
-├── Components
-│   ├── List View (filterable)
-│   ├── Detail View
-│   └── Bulk Edit
-├── Import
-│   ├── Upload
-│   ├── Mapping
-│   └── Jobs
-└── Reports
-    └── Export
-```
+#### Acceptance Criteria
 
-#### Progressive Disclosure
+**Change Tracking**
+- Given component changes, when displaying audit trail, then show:
+  - Timestamp of change (timezone-aware)
+  - User who made change (name and role)
+  - Field changed with before/after values
+  - Change source (mobile app, web, import)
+  - Related drawing/area/system context
 
-**Default View**: Simple list with key fields
-**Advanced**: Show via "More" button:
-- Additional filters
-- Bulk operations
-- Audit history
-- Custom fields
+**Filtering Options**
+- Given audit data, when filtering, then support:
+  - Date/time range with minute precision
+  - User selection (individual or crew)
+  - Component type filtering
+  - Change type (milestone, status, data correction)
+  - Area/system/test package filters
 
-#### Error Prevention
+**Compliance Features**
+- Given regulatory requirements, when generating report, then:
+  - Include digital signatures/timestamps
+  - Show data integrity checksums
+  - Flag unauthorized changes
+  - Track failed update attempts
+  - Include system version info
 
-**Import Templates**:
-- Download sample with headers
-- Required columns marked
-- Format examples in header row
-- Validation before commit
+**Summary Statistics**
+- Given date range, when generating summary, then show:
+  - Total changes by user
+  - Changes by hour/day distribution
+  - Most active components
+  - Average updates per component
+  - Data quality metrics (corrections vs. progress)
 
-**Data Entry**:
-- Dropdown for known values
-- Auto-complete for ISOs
-- Format hints in placeholders
-- Confirm dialogs for destructive actions
+**Export Formats**
+- Given audit data, when exporting, then provide:
+  - CSV with all fields for analysis
+  - PDF with pagination and headers
+  - Digitally signed export for compliance
+  - JSON format for system integration
 
-#### Feedback Patterns
+**Performance Optimization**
+- Given large audit dataset, when querying, then:
+  - Use server-side pagination
+  - Index on timestamp and user
+  - Compress old audit data
+  - Archive after 90 days
 
-**Success**:
-- Green toast (top-right)
-- Checkmark animation
-- Progress bar completion
-- Updated count badges
+**Edge Cases**
+- Bulk updates shown as grouped entries
+- System-generated changes marked clearly
+- Failed updates included with error reason
+- Time zone differences handled correctly
+- Deleted components retain audit history
 
-**Errors**:
-- Red inline messages
-- Specific error details
-- Suggested fixes
-- Retry options
+#### Priority
+**P1** - Required for compliance and QA
 
-**Loading**:
-- Skeleton screens
-- Progress bars with counts
-- Spinning indicators
-- "Loading..." text for screen readers
+#### Dependencies
+- Audit logging middleware in place
+- User session tracking
+- Timezone handling utilities
+- Digital signature capability
+
+#### Technical Constraints
+- Retain audit data for minimum 7 years
+- Query performance ≤3 seconds for 1M records
+- Export size limit 100MB per request
+- Real-time audit streaming for active monitoring
+
+#### UX Considerations
+- Timeline view for visual scanning
+- Diff view for before/after comparison
+- User avatars for quick recognition
+- Collapsible detail rows
+- Search highlighting in results
 
 ---
 
@@ -524,285 +409,192 @@ Project (SDO Tank)
 
 ### Milestone & Credit Definition
 
-#### Component Type Mappings
+All reports must respect the following ROC credit rules:
 
-| Component Type | Workflow Type | Milestone Set | Credit Rules |
-|---|---|---|---|
-| Spool | MILESTONE_DISCRETE | Full (7 milestones) | 5/30/30/15/5/10/5 |
-| Piping (footage) | MILESTONE_QUANTITY | Full (7 milestones) | Quantity-based |
-| Support | MILESTONE_DISCRETE | Reduced (5) | 10/60/10/15/5 |
-| Valve | MILESTONE_DISCRETE | Reduced (5) | 10/60/10/15/5 |
-| Gasket | MILESTONE_DISCRETE | Reduced (5) | 10/60/10/15/5 |
-| Threaded Pipe | MILESTONE_PERCENTAGE | Threaded (6) | 25/25/30/5/10/5 |
-| Field Weld | MILESTONE_DISCRETE | Reduced (5) | 10/60/10/15/5 |
-| Insulation | MILESTONE_QUANTITY | Two-step (2) | 60/40 |
-| Instrument | MILESTONE_DISCRETE | Reduced (5) | 10/60/10/15/5 |
-| Paint | MILESTONE_QUANTITY | Two-step (2) | 40/60 |
+#### Standard Credit Distributions
+- **Full Milestones** (Spools/Piping): Receive(5%), Erect(30%), Connect(30%), Support(15%), Punch(5%), Test(10%), Restore(5%)
+- **Reduced Milestones** (Valves/Supports): Receive(10%), Install(60%), Punch(10%), Test(15%), Restore(5%)
+- **Threaded Pipe**: Fabricate(25%), Erect(25%), Connect(30%), Punch(5%), Test(10%), Restore(5%)
+- **Insulation**: Insulate(60%), Metal Out(40%)
+- **Paint**: Primer(40%), Finish Coat(60%)
 
 #### Calculation Rules
-
-**Discrete**: `completion% = Σ(completed milestone weights)`
-
-**Percentage**: `completion% = Σ(milestone% × weight)`
-
-**Quantity**: `completion% = (quantity ÷ total) × Σ(milestone weights)`
-
-#### Special Rules
-
-- Test milestone requires testPackage assignment
-- Threaded pipe includes fabrication milestone
-- Field welds count fit-up as "Received"
-- Cannot exceed 100% regardless of calculation
-
----
+- Progress % = Σ(Milestone % × ROC Weight) for completed milestones
+- Partial milestones multiply entered % by weight
+- Quantity milestones convert (completed/total) × weight
+- Organization overrides take precedence over defaults
 
 ### Import Mapping Spec
 
-#### Required Columns
-- `COMPONENT_ID` or `TAG` → componentId
-- `TYPE` → type (maps to workflow)
-- `ISO` or `DRAWING` → drawingId (lookup)
+Reports must handle imported data with these validations:
 
-#### Optional Columns
-- `SPOOL` → metadata.spoolNumber
-- `LINE_NUMBER` → metadata.lineNumber
-- `SPEC` → spec
-- `SIZE` → size
-- `MATERIAL` → material
-- `AREA` → area
-- `SYSTEM` → system
-- `TEST_PACKAGE` or `TEST_PKG` → testPackage
-- `TEST_PRESSURE` → metadata.testPressure
-- `TEST_REQUIRED` → metadata.testRequired
-- `DESCRIPTION` or `DESC` → description
-- `LENGTH` or `QTY` → totalLength or totalQuantity
-- `UNIT` → lengthUnit or quantityUnit
+#### Required Columns for Report Generation
+- componentId (unique identifier)
+- drawingNumber (for grouping)
+- projectId (for filtering)
+- milestone_* columns (current state)
 
-#### Validation Rules
+#### Optional Enhancement Columns
+- area (for breakdown reports)
+- system (for system analysis)
+- testPackage (for readiness reports)
+- priority (for sequencing)
+- notes (for audit context)
 
-**Row Level**:
-- Component ID not empty
-- Type maps to valid workflow
-- ISO exists in Drawing table (warning if not)
-- Numeric fields parse correctly
-- No SQL injection attempts
-
-**Duplicate Detection**:
-- By componentId within project
-- By componentId + instanceNumber within ISO
-- Options: Skip, Update, Create with suffix
-
-#### Partial Success Behavior
-- Valid rows import immediately
-- Invalid rows go to remediation queue
-- Download error report with row numbers
-- Fix and re-upload just failed rows
-
-#### Template Notes
-```
-# Column headers (first row)
-COMPONENT_ID, TYPE, ISO, SPOOL, LINE_NUMBER, SPEC, SIZE, AREA, SYSTEM, TEST_PKG
-
-# Example data
-GA-401-001, GASKET, P-35F11, SP-1234, 8-PG-1001-CS1, 150#, 8", Area 401, Cooling Water, TP-001
-VLV-401-001, VALVE, P-35F11, , 8-PG-1001-CS1, 150# GATE, 8", Area 401, Cooling Water, TP-001
-```
-
----
+#### Data Quality Handling
+- Missing areas default to "UNASSIGNED"
+- Invalid milestones logged but excluded from calculations
+- Duplicate IDs flagged in data quality section
+- Null values in calculations treated as zero
 
 ### Data Model Impact
 
-#### Tables Modified
+#### Tables Touched by Reporting Module
 
-**Component**:
-- All CRUD operations
-- Bulk updates for area/system/testPackage
-- Instance tracking for gaskets/supports
+**Read Operations**
+- Project (context and metadata)
+- Component (base data)
+- ComponentMilestones (current state)
+- MilestoneTemplates (ROC weights)
+- Drawing (grouping and context)
+- Area, System, TestPackage (categorization)
 
-**ComponentMilestone**:
-- Bulk updates for progress
-- Completion tracking with user/timestamp
+**Write Operations**
+- ReportingCache (performance optimization)
+- ProgressSnapshots (trend data)
+- ReportGenerations (export tracking)
+- AuditLog (compliance tracking)
 
-**Drawing**:
-- Hierarchy navigation
-- Component count aggregation
-
-**ImportJob**:
-- Status tracking
-- Error collection
-
-**AuditLog**:
-- Every change logged
-- Before/after values
-- User and timestamp
-
-#### Indexes Required
-- component.drawingId (ISO filtering)
-- component.area + system (dashboard)
-- component.testPackage (test reports)
-- component.componentId (search)
-- componentMilestone.componentId (joins)
-
-#### RPC Functions
-- calculate_project_progress(projectId)
-- get_area_summary(projectId, area)
-- get_system_summary(projectId, system)
-- get_test_package_summary(projectId, testPackage)
-- process_import_validation(jobId, mappings)
-
----
+**New Indexes Required**
+```sql
+CREATE INDEX idx_component_milestone_date ON "ComponentMilestones"("updatedAt", "componentId");
+CREATE INDEX idx_component_area_system ON "Component"("area", "system", "projectId");
+CREATE INDEX idx_audit_user_date ON "AuditLog"("userId", "timestamp", "projectId");
+CREATE INDEX idx_snapshot_project_date ON "ProgressSnapshots"("projectId", "snapshotDate");
+```
 
 ### Table UX Contract ("Excel-like")
 
+All report tables must support:
+
 #### Keyboard Navigation
-- Arrow keys: Move between cells
-- Tab/Shift+Tab: Next/previous cell
-- Enter: Edit mode toggle
-- Esc: Cancel edit
-- Ctrl+S: Save all
-- Ctrl+Z: Undo
-- Ctrl+A: Select all
-- Ctrl+C/V: Copy/paste
+- Arrow keys for cell navigation
+- Tab/Shift+Tab for column movement
+- Enter to expand row details
+- Space to toggle selections
+- Ctrl+A to select all visible
+- Ctrl+C to copy selection
+- Ctrl+Shift+E to export
 
-#### Inline Edit Patterns
-- Single click: Select row
-- Double click: Edit cell
-- F2: Edit current cell
-- Type to replace
-- Tab to save and next
+#### Inline Interactions
+- Click column header to sort
+- Drag column borders to resize
+- Right-click for context menu
+- Double-click to auto-fit column
+- Shift+click for range selection
 
-#### Bulk Actions
-- Checkbox column for selection
-- Shift+click for range
-- Ctrl+click for individual
-- Actions menu for selected
-- Confirmation for >10 rows
+#### Bulk Operations
+- Select multiple rows with checkboxes
+- Apply filters to selection
+- Export selected rows only
+- Bulk update capabilities (future)
 
-#### Filters
-- Column header dropdowns
-- Multi-select values
-- Search within column
-- Clear all option
-- Save filter sets
-
-#### Column Features
-- Resize by dragging
-- Reorder by dragging
-- Pin/freeze columns
-- Show/hide columns
-- Sort ascending/descending
-
-#### Virtual Scrolling
-- Render visible +/- 5 rows
-- Smooth scroll behavior
-- Jump to row number
-- Maintain selection on scroll
-
----
+#### Visual Cues
+- Sticky headers during scroll
+- Zebra striping for readability
+- Hover highlights for rows
+- Sort indicators in headers
+- Filter badges showing active filters
 
 ### MVP vs Later
 
-#### MVP Scope (Phase 3)
-- Core CRUD operations
-- Basic milestone updates
-- Simple dashboard
-- Excel import (one-time)
-- Desktop + mobile web
-- Audit logging
-- ISO-based navigation
+#### MVP Scope (Launch Required)
+- All 5 report types with basic functionality
+- Excel/PDF export for all reports
+- ROC calculations with org defaults
+- 5-minute caching strategy
+- Mobile-responsive layouts
+- Basic audit trail (last 90 days)
 
-#### Deferred to Phase 4+
-- RLS/role permissions
-- Manhour tracking
-- P6 schedule integration
-- Photo attachments
-- Offline mobile app
-- Push notifications
-- Custom fields
-- Advanced analytics
-- Drawing viewer
-- Barcode scanning
-- Email reports
-- API integrations
-
----
+#### Post-MVP Enhancements
+- Custom report builder
+- Scheduled report delivery
+- Advanced forecasting algorithms
+- Real-time collaborative viewing
+- API access for external systems
+- Manhour tracking integration
+- Role-based report access
+- Custom ROC configurations per project
+- Report templates and presets
+- Automated anomaly detection
 
 ### Test Plan Seeds
 
-#### Good Import CSV
+#### Sample Data Requirements
+
+**Progress Summary Test**
 ```csv
-COMPONENT_ID,TYPE,ISO,AREA,SYSTEM,TEST_PKG
-SP-401-001,SPOOL,P-35F11,Area 401,Cooling Water,TP-001
-VLV-401-001,VALVE,P-35F11,Area 401,Cooling Water,TP-001
-GA-401-001,GASKET,P-35F11,Area 401,Cooling Water,TP-001
+projectId,componentCount,completionRange,expectedROC
+PROJ001,10000,0-100,67.5
+PROJ002,50000,25-75,45.2
+PROJ003,100000,90-100,95.8
 ```
 
-#### Bad Import CSV (errors)
-```csv
-COMPONENT_ID,TYPE,ISO,AREA
-,SPOOL,P-35F11,Area 401  # Missing ID
-SP-401-002,INVALID,P-99X99,Area 401  # Bad type and ISO
-SP-401-003,SPOOL,P-35F11,Area401System  # Bad area format
-```
+**Edge Case Test Data**
+- Components with circular dependencies
+- Missing milestone definitions
+- Duplicate component IDs
+- Null area/system values
+- Future-dated completions
+- Negative progress scenarios
 
-#### Edge Cases
-- 100k row file (performance)
-- Unicode characters (preservation)
-- Formula cells (extract values)
-- Merged cells (reject)
-- Multiple sheets (first only)
-- Empty rows (skip)
+**Performance Test Data**
+- 1M components across 1000 drawings
+- 10k test packages with complex dependencies
+- 90 days of snapshot history
+- 100k audit log entries
 
-#### E2E Test Flows
-1. Import → Filter → Update → Export → Verify
-2. Bulk select → Update area → Check dashboard
-3. Mobile update → Desktop refresh → See change
-4. Complete all milestones → Status = COMPLETED
-5. Import duplicates → Update option → Merge data
+**Export Test Scenarios**
+- Single-page PDF (≤50 components)
+- Multi-page PDF (10k components)
+- Small Excel (1k rows)
+- Large Excel (1M rows)
+- Interrupted download recovery
 
 ---
 
-## Critical Questions Answered
+## Critical Questions Checklist
 
-☑ **Which workaround are we replacing?**
-Excel pivot tables with manual VBA macros that crash with >10k rows
-
-☑ **Smallest valuable slice?**
-Import ISO data → View components → Update milestones → See dashboard (4 screens)
-
-☑ **Risks & Mitigations?**
-- Risk: 100k component performance → Mitigation: Virtual scroll + pagination
-- Risk: Offline field updates → Mitigation: Queue in localStorage with sync
-- Risk: Bad Excel formats → Mitigation: Template + validation + error report
-
-☑ **Platform Constraints?**
-- Supastarter auth/org structure enforced
-- Supabase 500MB storage limit → External for files
-- Vercel 10s function timeout → Queue long imports
+☐ **Existing Workaround**: Currently using manual Excel pivots taking 6 hours weekly - we beat this with 30-minute automated reports
+☐ **Immediate Value**: Progress Summary Report delivers value Day 1 by eliminating Friday report compilation
+☐ **Smallest Slice**: Start with Progress Summary + Component Details only, add trending after first month of snapshots
+☐ **Risks Identified**: 
+  - Large dataset performance (mitigated by caching and pagination)
+  - Complex ROC calculations (mitigated by database functions)
+  - Excel export memory limits (mitigated by streaming)
+☐ **Platform Constraints**: 
+  - Supabase 25MB RPC limit (use pagination)
+  - Vercel 60-second timeout (use background jobs)
+  - React table virtualization for large datasets
 
 ---
+
+## Output Standards Validation
+
+- ✅ **Unambiguous**: Each requirement has specific metrics and thresholds
+- ✅ **Testable**: All acceptance criteria include given/when/then scenarios
+- ✅ **Traceable**: Requirements linked to user stories and technical architecture
+- ✅ **Complete**: Covers all five report types with full specifications
+- ✅ **Feasible**: Based on existing dashboard functions and Supabase capabilities
 
 ## Documentation Process Confirmation
 
-1. **Understanding Confirmed**: Creating Phase 3 specifications for construction-focused pipe tracking with ISO-based navigation
-
+1. **Understanding Confirmed**: Based on PipeTrak reporting module technical architecture, creating product specifications for 5 report types
 2. **Assumptions**: 
-   - Backend complete with 81 components loaded
-   - Supastarter/Next.js/Supabase stack
-   - Better-auth for users
-   - Excel-like UX critical
-   - Mobile-first for field
-
-3. **Planning Complete**: Six core features specified with acceptance criteria, validation rules, and implementation details
-
-4. **Quality Review**: 
-   - ✓ Performance targets defined
-   - ✓ Excel-like UX specified  
-   - ✓ MVP scope bounded
-   - ✓ Construction terminology used
-
-5. **Deliverable**: Complete specifications ready for engineering implementation
-
----
-
-*This document provides comprehensive specifications for PipeTrak Phase 3 implementation. Each feature includes testable criteria, specific validation rules, and clear UI/UX requirements that map directly to the completed backend infrastructure.*
+   - Leveraging existing dashboard RPC functions
+   - ROCConfigurations table manages credit weights
+   - ReportingCache provides 5-minute TTL optimization
+   - Supabase storage handles large exports
+3. **Structured Planning**: Delivered complete specifications following PipeTrak format
+4. **Quality Review**: Verified performance targets, Excel-like UX, and MVP scoping
+5. **Final Deliverable**: Complete product specifications for reporting module implementation

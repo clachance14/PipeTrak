@@ -21,7 +21,24 @@ import { MobileComponentCard } from "./MobileComponentCard";
 import { MobileDrawingGroup } from "./MobileDrawingGroup";
 import { DrawingGroup } from "./DrawingGroup";
 import { BulkUpdateModal } from "./BulkUpdateModal";
+import { BulkMilestoneModal } from "./BulkMilestoneModal";
 import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
+import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
+import { ComponentHoverCard } from "./ComponentHoverCard";
+import { FieldWeldQuickView } from "./FieldWeldQuickView";
+import { FilterBar, type FilterState } from "./FilterBar";
+import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditMilestoneColumn";
+import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
+import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
+import { applyComponentFilters } from "../lib/bulk-update-utils";
+import { createBulkUpdateService } from "../lib/bulk-update-service";
+import { 
+  VIEW_PRESETS, 
+  applyViewPreset, 
+  getSavedPreset,
+  getDefaultPreset,
+  type ViewPreset 
+} from "../view-presets";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import {
@@ -34,6 +51,8 @@ import {
 import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
+import { Switch } from "@ui/components/switch";
+import { Label } from "@ui/components/label";
 import {
   Tooltip,
   TooltipContent,
@@ -65,7 +84,18 @@ import {
   EyeOff,
   Maximize2,
   Minimize2,
-  GripVertical
+  GripVertical,
+  Settings2,
+  HardHat,
+  Wrench,
+  BarChart3,
+  Table2,
+  Zap,
+  CheckCircle2,
+  AlertTriangle,
+  XCircle,
+  Clock,
+  FlameKindling
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@ui/lib";
@@ -76,6 +106,7 @@ import { apiClient } from "@shared/lib/api-client";
 interface ComponentTableProps {
   components: ComponentWithMilestones[];
   projectId: string;
+  userId?: string;
 }
 
 // Editable cell component for inline editing
@@ -195,11 +226,11 @@ function ProgressCell({ getValue }: { getValue: () => any }) {
   );
 }
 
-export function ComponentTable({ components: initialComponents, projectId }: ComponentTableProps) {
+export function ComponentTable({ components: initialComponents, projectId, userId = '' }: ComponentTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useState(initialComponents);
-  const [sorting, setSorting] = useState<SortingState>([{ id: 'drawingNumber', desc: false }]);
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'componentId', desc: false }]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -212,20 +243,23 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
   const [showMilestoneModal, setShowMilestoneModal] = useState(false);
   const [mobileSelectedIds, setMobileSelectedIds] = useState<Set<string>>(new Set());
   const [expandedDrawings, setExpandedDrawings] = useState<Set<string>>(new Set());
+  const [activePreset, setActivePreset] = useState<ViewPreset>(getDefaultPreset());
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+  const [selectedMobileComponent, setSelectedMobileComponent] = useState<ComponentWithMilestones | null>(null);
   
   // Default column IDs in the order they appear
   const defaultColumnIds = [
     'select',
-    'drawingNumber', 
     'componentId',
+    'instance',
     'type',
     'size',
     'spec',
     'material',
-    'description',
     'area',
     'system',
     'testPackage',
+    'milestones',
     'status',
     'completionPercent'
   ];
@@ -235,11 +269,16 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
   const [draggedColumn, setDraggedColumn] = useState<string | null>(null);
   const [targetColumn, setTargetColumn] = useState<string | null>(null);
 
-  // Filter states
-  const [filterArea, setFilterArea] = useState<string>("all");
-  const [filterSystem, setFilterSystem] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [filterDrawing, setFilterDrawing] = useState<string>("all");
+  // New filter states
+  const [filters, setFilters] = useState<FilterState>({
+    area: 'all',
+    testPackage: 'all', 
+    system: 'all',
+    type: 'all',
+    status: 'all',
+    search: ''
+  });
+  const [showBulkMilestoneModal, setShowBulkMilestoneModal] = useState(false);
 
   // Refs
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -258,7 +297,6 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
         // Hide less critical columns on smaller screens
         newVisibility.spec = false;
         newVisibility.material = false;
-        newVisibility.type = false;
         newVisibility.size = false;
       } else if (width < 1400) {
         // Hide only spec and material on medium screens
@@ -277,25 +315,81 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Load saved column sizes, order, and expanded drawings from localStorage after mount
+  // Load saved preset and column settings from localStorage after mount
   useEffect(() => {
+    // Load saved preset or use default
+    const savedPreset = getSavedPreset();
+    setActivePreset(savedPreset);
+    
+    // Apply preset settings if no custom settings are saved
     const savedSizes = localStorage.getItem('pipetrak-column-sizes');
-    if (savedSizes) {
-      try {
-        const parsed = JSON.parse(savedSizes);
-        setColumnSizing(parsed);
-      } catch (e) {
-        console.error('Failed to parse saved column sizes:', e);
+    const savedOrder = localStorage.getItem('pipetrak-column-order');
+    const savedVisibility = localStorage.getItem('pipetrak-column-visibility');
+    
+    if (!savedSizes && !savedOrder && !savedVisibility) {
+      // No custom settings, apply preset
+      applyViewPreset(
+        savedPreset,
+        setColumnVisibility,
+        setColumnSizing,
+        setColumnOrder
+      );
+    } else {
+      // Load custom settings
+      if (savedSizes) {
+        try {
+          const parsed = JSON.parse(savedSizes);
+          setColumnSizing(parsed);
+        } catch (e) {
+          console.error('Failed to parse saved column sizes:', e);
+        }
+      }
+      
+      if (savedOrder) {
+        try {
+          const parsed = JSON.parse(savedOrder);
+          setColumnOrder(parsed);
+        } catch (e) {
+          console.error('Failed to parse saved column order:', e);
+        }
+      }
+      
+      if (savedVisibility) {
+        try {
+          const parsed = JSON.parse(savedVisibility);
+          // Ensure type column is always visible
+          parsed.type = true;
+          setColumnVisibility(parsed);
+        } catch (e) {
+          console.error('Failed to parse saved column visibility:', e);
+        }
       }
     }
     
-    const savedOrder = localStorage.getItem('pipetrak-column-order');
-    if (savedOrder) {
-      try {
-        const parsed = JSON.parse(savedOrder);
-        setColumnOrder(parsed);
-      } catch (e) {
-        console.error('Failed to parse saved column order:', e);
+    // Force type column to be visible and ensure instance column is visible
+    setColumnVisibility(prev => ({
+      ...prev,
+      type: true,
+      instance: true
+    }));
+    
+    // Clear any old localStorage settings that might conflict
+    // This can be removed after users have updated their settings
+    if (typeof window !== 'undefined') {
+      const savedVis = localStorage.getItem('pipetrak-column-visibility');
+      if (savedVis) {
+        try {
+          const parsed = JSON.parse(savedVis);
+          if (parsed.type === false || parsed.description === true) {
+            // User has old settings, clear and reset
+            localStorage.removeItem('pipetrak-column-visibility');
+            localStorage.removeItem('pipetrak-column-order');
+            localStorage.removeItem('pipetrak-active-preset');
+          }
+        } catch (e) {
+          // Invalid saved data, clear it
+          localStorage.removeItem('pipetrak-column-visibility');
+        }
       }
     }
     
@@ -338,6 +432,15 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     
     localStorage.setItem('pipetrak-expanded-drawings', JSON.stringify(Array.from(expandedDrawings)));
   }, [expandedDrawings]);
+  
+  // Save column visibility to localStorage when it changes
+  useEffect(() => {
+    if (!hasLoadedSizesRef.current) return;
+    
+    if (Object.keys(columnVisibility).length > 0) {
+      localStorage.setItem('pipetrak-column-visibility', JSON.stringify(columnVisibility));
+    }
+  }, [columnVisibility]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -373,134 +476,106 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
         maxSize: 60,
         enableResizing: false,
         header: ({ table }) => (
-          <input
-            type="checkbox"
-            checked={table.getIsAllPageRowsSelected()}
-            onChange={table.getToggleAllPageRowsSelectedHandler()}
-            className="h-4 w-4"
-          />
-        ),
-        cell: ({ row }) => (
-          <input
-            type="checkbox"
-            checked={row.getIsSelected()}
-            onChange={row.getToggleSelectedHandler()}
-            className="h-4 w-4"
-          />
-        ),
-      },
-      // Drawing column - PRIMARY CONTEXT (leftmost)
-      {
-        accessorKey: 'drawingNumber',
-        size: 180,
-        minSize: 120,
-        maxSize: 300,
-        header: ({ column }) => (
-          <div className="flex items-center gap-1 font-semibold">
-            <MapPin className="h-4 w-4 text-blue-600" />
-            <span>ISO/Drawing</span>
-            <button
-              onClick={() => column.toggleSorting()}
-              className="hover:bg-gray-200 p-1 rounded ml-auto"
-            >
-              {column.getIsSorted() === 'asc' ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : column.getIsSorted() === 'desc' ? (
-                <ChevronDown className="h-4 w-4" />
-              ) : (
-                <ChevronsUpDown className="h-4 w-4" />
-              )}
-            </button>
+          <div className="flex items-center justify-center">
+            <input
+              type="checkbox"
+              checked={table.getIsAllPageRowsSelected()}
+              onChange={table.getToggleAllPageRowsSelectedHandler()}
+              className="h-4 w-4"
+            />
           </div>
         ),
-        cell: ({ getValue }) => {
-          const value = getValue() as string || '-';
-          return (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="font-medium text-[15px] text-blue-900 px-2 break-all">
-                    {value}
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{value}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          );
-        },
-        enableSorting: true,
+        cell: ({ row }) => (
+          <div className="flex items-center justify-center">
+            <input
+              type="checkbox"
+              checked={row.getIsSelected()}
+              onChange={row.getToggleSelectedHandler()}
+              onClick={(e) => e.stopPropagation()}
+              className="h-4 w-4"
+            />
+          </div>
+        ),
       },
-      // Component ID (second frozen column)
+      // Component ID (primary column) with hover card
       {
         accessorKey: 'componentId',
-        size: 250,
-        minSize: 180,
-        maxSize: 400,
+        size: 200,
+        minSize: 150,
+        maxSize: 250,
         header: 'Component ID',
-        cell: ({ getValue }) => {
+        cell: ({ row, getValue }) => {
           const value = getValue() as string;
+          const component = row.original;
           return (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="font-mono font-bold text-[15px] text-gray-900 px-2 break-all">
-                    {value}
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="font-mono">{value}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <ComponentHoverCard
+              component={component}
+              onEdit={() => router.push(`/app/pipetrak/${projectId}/components/${component.id}/edit`)}
+              onViewHistory={() => toast.info('History view coming soon')}
+              onAddNote={() => toast.info('Notes feature coming soon')}
+            >
+              <div className="font-mono font-bold text-[13px] text-gray-900 px-2 whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer hover:text-blue-600 transition-colors" title={value}>
+                {value}
+              </div>
+            </ComponentHoverCard>
           );
         },
         enableSorting: true,
       },
-      // Type
+      // Instance Information
+      {
+        id: 'instance',
+        header: 'Instance',
+        cell: ({ row }) => {
+          const component = row.original;
+          const instanceNumber = component.instanceNumber || 1;
+          const totalInstances = component.totalInstancesOnDrawing || 1;
+          
+          if (totalInstances === 1) {
+            return (
+              <div className="px-2 text-sm text-gray-600">
+                1
+              </div>
+            );
+          }
+          
+          return (
+            <div className="px-2">
+              <Badge 
+                variant="secondary" 
+                className="bg-blue-50 text-blue-700 border-blue-200 font-medium"
+              >
+                {instanceNumber} of {totalInstances}
+              </Badge>
+            </div>
+          );
+        },
+        size: 100,
+        minSize: 80,
+        maxSize: 120,
+        enableSorting: true,
+        sortingFn: (rowA, rowB) => {
+          const a = rowA.original.instanceNumber || 1;
+          const b = rowB.original.instanceNumber || 1;
+          return a - b;
+        },
+      },
+      // Type (was description) - Enhanced with field weld indicators
       {
         accessorKey: 'type',
         header: 'Type',
-        cell: EditableCell,
-        size: 100,
-        minSize: 60,
-        maxSize: 150,
-        enableSorting: true,
-      },
-      // Size
-      {
-        accessorKey: 'size',
-        header: 'Size',
-        cell: EditableCell,
-        size: 80, // Reduced from 100
-        enableSorting: true,
-      },
-      // Spec
-      {
-        accessorKey: 'spec',
-        header: 'Spec',
-        cell: EditableCell,
-        size: 100, // Reduced from 120
-        enableSorting: true,
-      },
-      // Material
-      {
-        accessorKey: 'material',
-        header: 'Material',
-        cell: EditableCell,
-        size: 100, // Reduced from 130
-        enableSorting: true,
-      },
-      // Description
-      {
-        accessorKey: 'description',
-        header: 'Description',
         cell: ({ getValue, row, column, table }) => {
           const initialValue = getValue();
           const [value, setValue] = useState(initialValue);
           const [isEditing, setIsEditing] = useState(false);
           const inputRef = useRef<HTMLInputElement>(null);
+          const component = row.original;
+          
+          // Get organization slug from URL for field weld quick view
+          const router = useRouter();
+          const organizationSlug = typeof window !== 'undefined' 
+            ? window.location.pathname.split('/')[2] 
+            : '';
 
           const onBlur = () => {
             setIsEditing(false);
@@ -543,26 +618,155 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
           }
 
           const displayValue = value as string || '-';
+          const isFieldWeld = displayValue === 'FIELD_WELD';
+          
+          // Get QC status for field welds
+          const getFieldWeldBadges = () => {
+            if (!isFieldWeld || !component.fieldWelds || component.fieldWelds.length === 0) {
+              return null;
+            }
+            
+            const fieldWeld = component.fieldWelds[0];
+            const badges = [];
+            
+            // NDE status badge
+            if (fieldWeld.ndeResult) {
+              switch (fieldWeld.ndeResult.toLowerCase()) {
+                case 'accept':
+                  badges.push(
+                    <Badge key="nde" variant="default" className="h-4 text-xs bg-green-100 text-green-800">
+                      <CheckCircle2 className="h-2 w-2 mr-1" />
+                      NDE OK
+                    </Badge>
+                  );
+                  break;
+                case 'reject':
+                  badges.push(
+                    <Badge key="nde" variant="destructive" className="h-4 text-xs">
+                      <XCircle className="h-2 w-2 mr-1" />
+                      NDE Reject
+                    </Badge>
+                  );
+                  break;
+                case 'repair':
+                  badges.push(
+                    <Badge key="nde" variant="secondary" className="h-4 text-xs bg-orange-100 text-orange-800">
+                      <AlertTriangle className="h-2 w-2 mr-1" />
+                      Repair
+                    </Badge>
+                  );
+                  break;
+              }
+            } else {
+              badges.push(
+                <Badge key="nde" variant="outline" className="h-4 text-xs">
+                  <Clock className="h-2 w-2 mr-1" />
+                  NDE Pending
+                </Badge>
+              );
+            }
+            
+            // PWHT status badge
+            if (fieldWeld.pwhtRequired) {
+              if (fieldWeld.datePwht) {
+                badges.push(
+                  <Badge key="pwht" variant="default" className="h-4 text-xs bg-blue-100 text-blue-800">
+                    <FlameKindling className="h-2 w-2 mr-1" />
+                    PWHT OK
+                  </Badge>
+                );
+              } else {
+                badges.push(
+                  <Badge key="pwht" variant="secondary" className="h-4 text-xs bg-yellow-100 text-yellow-800">
+                    <FlameKindling className="h-2 w-2 mr-1" />
+                    PWHT Req
+                  </Badge>
+                );
+              }
+            }
+            
+            return badges;
+          };
+          
+          const fieldWeldBadges = getFieldWeldBadges();
+          
+          const typeDisplay = (
+            <div 
+              onDoubleClick={() => setIsEditing(true)}
+              className="w-full min-h-[52px] flex flex-col gap-1 px-2 py-1 cursor-text hover:bg-gray-50"
+            >
+              <div className="flex items-center gap-2">
+                {isFieldWeld && (
+                  <Zap className="h-4 w-4 text-orange-500 flex-shrink-0" title="Field Weld" />
+                )}
+                <span className="text-sm font-medium">
+                  {isFieldWeld ? 'Field Weld' : displayValue}
+                </span>
+              </div>
+              
+              {fieldWeldBadges && fieldWeldBadges.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {fieldWeldBadges}
+                </div>
+              )}
+            </div>
+          );
+          
+          // Wrap field welds in quick view, others in tooltip
+          if (isFieldWeld) {
+            return (
+              <FieldWeldQuickView
+                component={component}
+                organizationSlug={organizationSlug}
+                projectId={projectId}
+              >
+                {typeDisplay}
+              </FieldWeldQuickView>
+            );
+          }
+          
           return (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div 
-                    onDoubleClick={() => setIsEditing(true)}
-                    className="w-full min-h-[52px] flex items-center px-2 cursor-text hover:bg-gray-50 text-sm whitespace-normal leading-snug"
-                  >
-                    {displayValue}
-                  </div>
+                  {typeDisplay}
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p>{displayValue}</p>
+                <TooltipContent>
+                  <p>Component Type: {displayValue}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Double-click to edit</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           );
         },
-        size: 350, // Increased from 250
-        enableSorting: false,
+        size: 250,
+        minSize: 180,
+        maxSize: 350,
+        enableSorting: true,
+      },
+      // Size
+      {
+        accessorKey: 'size',
+        header: 'Size',
+        cell: EditableCell,
+        size: 80, // Reduced from 100
+        enableSorting: true,
+      },
+      // Spec
+      {
+        accessorKey: 'spec',
+        header: 'Spec',
+        cell: EditableCell,
+        size: 100, // Reduced from 120
+        enableSorting: true,
+      },
+      // Material
+      {
+        accessorKey: 'material',
+        header: 'Material',
+        cell: EditableCell,
+        size: 100, // Reduced from 130
+        enableSorting: true,
       },
       // Area
       {
@@ -588,6 +792,26 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
         size: 100, // Reduced from 130
         enableSorting: true,
       },
+      // Milestones Column - NEW
+      {
+        id: 'milestones',
+        header: 'Milestones',
+        cell: ({ row }) => {
+          const component = row.original;
+          return (
+            <DirectEditMilestoneColumn
+              component={component}
+              className="min-w-[250px]"
+              expandedByDefault={false}
+            />
+          );
+        },
+        size: 350, // Expanded width for milestone editing
+        minSize: 250,
+        maxSize: 500,
+        enableSorting: false,
+        enableResizing: true,
+      },
       // Status
       {
         accessorKey: 'status',
@@ -608,59 +832,10 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     []
   );
 
-  // Extract unique values for filters
-  const areas = useMemo(() => {
-    const uniqueAreas = new Set(data.map(c => c.area).filter(Boolean));
-    return Array.from(uniqueAreas).sort();
-  }, [data]);
-
-  const systems = useMemo(() => {
-    const uniqueSystems = new Set(data.map(c => c.system).filter(Boolean));
-    return Array.from(uniqueSystems).sort();
-  }, [data]);
-
-  const drawings = useMemo(() => {
-    const uniqueDrawings = new Set(data.map(c => c.drawingNumber).filter(Boolean));
-    return Array.from(uniqueDrawings).sort();
-  }, [data]);
-
-  // Apply filters to data
+  // Apply new filters to data
   const filteredData = useMemo(() => {
-    let filtered = [...data];
-
-    // Apply dropdown filters
-    if (filterArea !== "all") {
-      filtered = filtered.filter(c => c.area === filterArea);
-    }
-    if (filterSystem !== "all") {
-      filtered = filtered.filter(c => c.system === filterSystem);
-    }
-    if (filterStatus !== "all") {
-      filtered = filtered.filter(c => c.status === filterStatus);
-    }
-    if (filterDrawing !== "all") {
-      filtered = filtered.filter(c => c.drawingNumber === filterDrawing);
-    }
-
-    // Apply global search
-    if (globalFilter) {
-      const search = globalFilter.toLowerCase();
-      filtered = filtered.filter(component => {
-        return (
-          component.componentId?.toLowerCase().includes(search) ||
-          component.type?.toLowerCase().includes(search) ||
-          component.description?.toLowerCase().includes(search) ||
-          component.spec?.toLowerCase().includes(search) ||
-          component.material?.toLowerCase().includes(search) ||
-          component.drawingNumber?.toLowerCase().includes(search) ||
-          component.area?.toLowerCase().includes(search) ||
-          component.system?.toLowerCase().includes(search)
-        );
-      });
-    }
-
-    return filtered;
-  }, [data, filterArea, filterSystem, filterStatus, filterDrawing, globalFilter]);
+    return applyComponentFilters(data, filters);
+  }, [data, filters]);
 
   // Create table instance
   const table = useReactTable({
@@ -685,6 +860,8 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     getFilteredRowModel: getFilteredRowModel(),
     columnResizeMode: 'onChange',
     enableColumnResizing: true,
+    enableRowSelection: true,
+    getRowId: (row) => row.id, // Use component ID as row identifier
     meta: {
       updateData: async (rowIndex: number, columnId: string, value: any) => {
         const component = filteredData[rowIndex];
@@ -813,7 +990,24 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     const completed = filteredData.filter(c => c.status === "COMPLETED").length;
     const avgProgress = filteredData.reduce((sum, c) => sum + (c.completionPercent || 0), 0) / total || 0;
 
-    return { total, notStarted, inProgress, completed, avgProgress };
+    // Field weld-specific statistics
+    const fieldWelds = filteredData.filter(c => c.type === 'FIELD_WELD');
+    const fieldWeldStats = {
+      total: fieldWelds.length,
+      withNDE: fieldWelds.filter(c => c.fieldWelds?.[0]?.ndeResult).length,
+      ndeAccepted: fieldWelds.filter(c => c.fieldWelds?.[0]?.ndeResult?.toLowerCase() === 'accept').length,
+      pwhtRequired: fieldWelds.filter(c => c.fieldWelds?.[0]?.pwhtRequired).length,
+      pwhtCompleted: fieldWelds.filter(c => c.fieldWelds?.[0]?.pwhtRequired && c.fieldWelds?.[0]?.datePwht).length,
+    };
+
+    return { 
+      total, 
+      notStarted, 
+      inProgress, 
+      completed, 
+      avgProgress,
+      fieldWeldStats 
+    };
   }, [filteredData]);
 
   // Column reordering helper functions
@@ -836,7 +1030,7 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
 
   const handleDragStart = (e: React.DragEvent, columnId: string) => {
     // Don't allow dragging of select column or frozen columns
-    if (columnId === 'select' || columnId === 'drawingNumber' || columnId === 'componentId') {
+    if (columnId === 'select' || columnId === 'componentId') {
       e.preventDefault();
       return;
     }
@@ -859,7 +1053,7 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
 
   const handleDragEnter = (columnId: string) => {
     // Don't allow dropping on select column or frozen columns
-    if (columnId === 'select' || columnId === 'drawingNumber' || columnId === 'componentId') {
+    if (columnId === 'select' || columnId === 'componentId') {
       return;
     }
     setTargetColumn(columnId);
@@ -874,7 +1068,7 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     e.preventDefault();
     
     // Don't allow dropping on select column or frozen columns
-    if (columnId === 'select' || columnId === 'drawingNumber' || columnId === 'componentId') {
+    if (columnId === 'select' || columnId === 'componentId') {
       setDraggedColumn(null);
       setTargetColumn(null);
       return;
@@ -900,35 +1094,68 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     setTargetColumn(null);
   };
 
+  // Select All Filtered handler
+  const selectAllFiltered = () => {
+    const newSelection: RowSelectionState = {};
+    filteredData.forEach((component) => {
+      newSelection[component.id] = true;
+    });
+    setRowSelection(newSelection);
+    toast.success(`Selected all ${filteredData.length} filtered components`);
+  };
+
+  // Clear all selections
+  const clearAllSelections = () => {
+    setRowSelection({});
+    setMobileSelectedIds(new Set());
+    toast.success("Cleared all selections");
+  };
+
+  // Get selected components
+  const selectedComponents = useMemo(() => {
+    if (isMobile) {
+      return filteredData.filter(c => mobileSelectedIds.has(c.id));
+    } else {
+      return table.getFilteredSelectedRowModel().rows.map(r => r.original);
+    }
+  }, [isMobile, filteredData, mobileSelectedIds, table]);
+
   // Bulk update handler
   const handleBulkUpdateSubmit = async (updates: any) => {
-    const selectedRows = isMobile 
-      ? filteredData.filter(c => mobileSelectedIds.has(c.id))
-      : table.getFilteredSelectedRowModel().rows.map(r => r.original);
-    
-    // TODO: Make actual API calls to update components
-    for (const component of selectedRows) {
-      try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Update local state
-        setData(prev => prev.map(c => 
-          c.id === component.id ? { ...c, ...updates } : c
-        ));
-      } catch (error) {
-        console.error(`Failed to update component ${component.id}:`, error);
+    try {
+      // Use the bulk update service for property updates
+      const service = createBulkUpdateService();
+      
+      // For property updates (not milestones), we'll need a different API endpoint
+      // For now, keep the original implementation as this is for the old BulkUpdateModal
+      // which handles property updates, not milestone updates
+      for (const component of selectedComponents) {
+        try {
+          // Update local state optimistically
+          setData(prev => prev.map(c => 
+            c.id === component.id ? { ...c, ...updates } : c
+          ));
+        } catch (error) {
+          console.error(`Failed to update component ${component.id}:`, error);
+          toast.error(`Failed to update component ${component.componentId}`);
+        }
       }
+    } catch (error) {
+      console.error("Bulk update failed:", error);
+      toast.error("Failed to update components");
     }
     
     // Clear selections
-    if (isMobile) {
-      setMobileSelectedIds(new Set());
-    } else {
-      setRowSelection({});
-    }
+    clearAllSelections();
   };
 
+  // Handle milestone updates - defined at top level for both mobile and desktop
+  const handleComponentMilestoneUpdate = useCallback((componentId: string, updates: any) => {
+    setData(prev => prev.map(c => 
+      c.id === componentId ? { ...c, ...updates } : c
+    ));
+  }, []);
+  
   // Group components by drawing number for all views
   const componentsByDrawing = useMemo(() => {
     const groups = new Map<string, ComponentWithMilestones[]>();
@@ -985,8 +1212,14 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     };
     
     return (
-      <>
-        <div className="space-y-4 pb-20">
+      <RealtimeManager projectId={projectId} userId={userId}>
+        <MilestoneUpdateEngine 
+          projectId={projectId} 
+          components={data}
+          onComponentUpdate={handleComponentMilestoneUpdate}
+        >
+          <>
+            <div className="space-y-4 pb-20">
           {/* Mobile header with search and bulk actions */}
           <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b pb-4">
             <div className="space-y-3">
@@ -1101,6 +1334,13 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
                 onEdit={(componentId) => {
                   router.push(`/app/pipetrak/${projectId}/components/${componentId}/edit`);
                 }}
+                onOpenMilestones={(componentId) => {
+                  const component = data.find(c => c.id === componentId);
+                  if (component) {
+                    setSelectedMobileComponent(component);
+                    setMobileSheetOpen(true);
+                  }
+                }}
               />
             ))}
           </div>
@@ -1116,9 +1356,9 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
           >
             <Filter className="h-6 w-6" />
           </Button>
-        </div>
+            </div>
 
-        {/* Bulk Update Modal */}
+            {/* Bulk Update Modal */}
         <BulkUpdateModal
           isOpen={showBulkUpdateModal}
           onClose={() => setShowBulkUpdateModal(false)}
@@ -1137,7 +1377,21 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
           }}
           isMobile={true}
         />
-      </>
+        
+            {/* Mobile Milestone Sheet for individual component milestones */}
+            {selectedMobileComponent && (
+              <MobileMilestoneSheet
+                isOpen={mobileSheetOpen}
+                onClose={() => {
+                  setMobileSheetOpen(false);
+                  setSelectedMobileComponent(null);
+                }}
+                component={selectedMobileComponent}
+              />
+            )}
+          </>
+        </MilestoneUpdateEngine>
+      </RealtimeManager>
     );
   }
 
@@ -1147,45 +1401,101 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
       "space-y-6",
       isFullScreen && "h-full flex flex-col"
     )}>
-      {/* Filters and Search */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-1 items-center gap-2 max-w-md">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search components..."
-                value={globalFilter}
-                onChange={(e) => setGlobalFilter(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleRefresh}
-              disabled={isPending}
-            >
-              <RefreshCw className={cn("h-4 w-4", isPending && "animate-spin")} />
-            </Button>
-          </div>
+      {/* New FilterBar Component */}
+      <FilterBar 
+        components={data}
+        onFilterChange={setFilters}
+        filteredCount={filteredData.length}
+        totalCount={data.length}
+      />
 
-          <div className="flex gap-2">
-            {Object.keys(rowSelection).length > 0 && (
-              <>
-                <Button variant="default" size="sm" onClick={handleBulkUpdate}>
-                  Bulk Update ({Object.keys(rowSelection).length})
+      {/* Selection Tools and Actions */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {filteredData.length > 0 && (
+            <>
+              <Button variant="outline" size="sm" onClick={selectAllFiltered}>
+                Select All {filteredData.length}
+              </Button>
+              {selectedComponents.length > 0 && (
+                <Button variant="outline" size="sm" onClick={clearAllSelections}>
+                  Clear Selection
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setShowMilestoneModal(true)}
-                >
-                  Update Milestones ({Object.keys(rowSelection).length})
+              )}
+            </>
+          )}
+          
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleRefresh}
+            disabled={isPending}
+          >
+            <RefreshCw className={cn("h-4 w-4", isPending && "animate-spin")} />
+          </Button>
+        </div>
+
+        <div className="flex gap-2">
+          {selectedComponents.length > 0 && (
+            <>
+              <Button variant="default" size="sm" onClick={handleBulkUpdate}>
+                Bulk Update ({selectedComponents.length})
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setShowBulkMilestoneModal(true)}
+              >
+                Update Milestones ({selectedComponents.length})
+              </Button>
+            </>
+          )}
+            
+            {/* View Preset Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  {activePreset.name}
                 </Button>
-              </>
-            )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                <div className="px-2 py-1.5 text-sm font-semibold">View Presets</div>
+                {VIEW_PRESETS.map(preset => {
+                  const Icon = preset.id === 'field' ? HardHat :
+                              preset.id === 'technical' ? Wrench :
+                              preset.id === 'manager' ? BarChart3 : Table2;
+                  return (
+                    <DropdownMenuItem
+                      key={preset.id}
+                      onClick={() => {
+                        setActivePreset(preset);
+                        applyViewPreset(
+                          preset,
+                          setColumnVisibility,
+                          setColumnSizing,
+                          setColumnOrder
+                        );
+                        toast.success(`Switched to ${preset.name}`);
+                      }}
+                      className={cn(
+                        "cursor-pointer",
+                        activePreset.id === preset.id && "bg-accent"
+                      )}
+                    >
+                      <Icon className="mr-2 h-4 w-4" />
+                      <div className="flex-1">
+                        <p className="font-medium">{preset.name}</p>
+                        <p className="text-xs text-muted-foreground">{preset.description}</p>
+                      </div>
+                      {activePreset.id === preset.id && (
+                        <Check className="ml-2 h-4 w-4" />
+                      )}
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
             
             {/* Column visibility dropdown */}
             <DropdownMenu>
@@ -1201,7 +1511,7 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
                   .getAllColumns()
                   .filter(column => 
                     column.getCanHide() && 
-                    !['select', 'drawingNumber', 'componentId'].includes(column.id)
+                    !['select', 'componentId', 'instance'].includes(column.id)
                   )
                   .map(column => {
                     return (
@@ -1253,6 +1563,24 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
               Import
             </Button>
             
+            {/* QC Module Link - Show when field welds exist */}
+            {data.some(c => c.type === 'FIELD_WELD') && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  const organizationSlug = typeof window !== 'undefined' 
+                    ? window.location.pathname.split('/')[2] 
+                    : '';
+                  router.push(`/app/${organizationSlug}/pipetrak/${projectId}/qc/field-welds`);
+                }}
+                className="border-orange-200 text-orange-700 hover:bg-orange-50"
+              >
+                <Zap className="mr-2 h-4 w-4 text-orange-500" />
+                QC Module
+              </Button>
+            )}
+            
             {/* Full-screen toggle */}
             <Button
               variant="outline"
@@ -1269,95 +1597,37 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
           </div>
         </div>
 
-        {/* Filter dropdowns */}
-        <div className="flex flex-wrap gap-2">
-          <Select value={filterDrawing} onValueChange={setFilterDrawing}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Drawings" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Drawings</SelectItem>
-              {drawings.map(drawing => (
-                <SelectItem key={drawing} value={drawing || ""}>
-                  {drawing}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={filterArea} onValueChange={setFilterArea}>
-            <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="All Areas" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Areas</SelectItem>
-              {areas.map(area => (
-                <SelectItem key={area} value={area || ""}>
-                  Area {area}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={filterSystem} onValueChange={setFilterSystem}>
-            <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="All Systems" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Systems</SelectItem>
-              {systems.map(system => (
-                <SelectItem key={system} value={system || ""}>
-                  {system}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="All Statuses" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="NOT_STARTED">Not Started</SelectItem>
-              <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-              <SelectItem value="COMPLETED">Completed</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Summary Stats - Hide in full-screen mode */}
+        {/* Summary Stats - Hide in full-screen mode */}
       {!isFullScreen && (
-        <div className="grid grid-cols-5 gap-4">
-        <Card>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Total Components</p>
-            <p className="text-2xl font-bold">{stats.total}</p>
+            <p className="text-sm text-blue-700 font-medium">Total Components</p>
+            <p className="text-2xl font-bold text-blue-900">{stats.total}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200">
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Not Started</p>
-            <p className="text-2xl font-bold text-gray-600">{stats.notStarted}</p>
+            <p className="text-sm text-gray-700 font-medium">Not Started</p>
+            <p className="text-2xl font-bold text-gray-800">{stats.notStarted}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">In Progress</p>
-            <p className="text-2xl font-bold text-blue-600">{stats.inProgress}</p>
+            <p className="text-sm text-orange-700 font-medium">In Progress</p>
+            <p className="text-2xl font-bold text-orange-900">{stats.inProgress}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Completed</p>
-            <p className="text-2xl font-bold text-green-600">{stats.completed}</p>
+            <p className="text-sm text-green-700 font-medium">Completed</p>
+            <p className="text-2xl font-bold text-green-900">{stats.completed}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Avg Progress</p>
-            <p className="text-2xl font-bold">{Math.round(stats.avgProgress)}%</p>
+            <p className="text-sm text-purple-700 font-medium">Avg Progress</p>
+            <p className="text-2xl font-bold text-purple-900">{Math.round(stats.avgProgress)}%</p>
           </CardContent>
         </Card>
       </div>
@@ -1421,23 +1691,26 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
               columnVisibility={columnVisibility}
               rowSelection={rowSelection}
               onRowSelectionChange={(componentIds, selected) => {
-                const newSelection = { ...rowSelection };
-                if (selected) {
-                  componentIds.forEach(id => {
-                    newSelection[id] = true;
-                  });
-                } else {
-                  componentIds.forEach(id => {
-                    delete newSelection[id];
-                  });
-                }
-                setRowSelection(newSelection);
+                setRowSelection(prev => {
+                  const newSelection = { ...prev };
+                  if (selected) {
+                    componentIds.forEach(id => {
+                      newSelection[id] = true;
+                    });
+                  } else {
+                    componentIds.forEach(id => {
+                      delete newSelection[id];
+                    });
+                  }
+                  return newSelection;
+                });
               }}
               onComponentUpdate={(componentId, field, value) => {
                 setData(prev => prev.map(c => 
                   c.id === componentId ? { ...c, [field]: value } : c
                 ));
               }}
+              onColumnSizingChange={setColumnSizing}
               draggedColumn={draggedColumn}
               targetColumn={targetColumn}
               onDragStart={setDraggedColumn}
@@ -1478,30 +1751,64 @@ export function ComponentTable({ components: initialComponents, projectId }: Com
     );
   }
 
-  // Normal view
+  // Normal view - wrap with milestone management
   return (
-    <>
-      {tableContent}
-      
-      {/* Bulk Update Modal for desktop */}
-      <BulkUpdateModal
-        isOpen={showBulkUpdateModal}
-        onClose={() => setShowBulkUpdateModal(false)}
-        selectedComponents={table.getFilteredSelectedRowModel().rows.map(r => r.original)}
-        onUpdate={handleBulkUpdateSubmit}
-      />
-      
-      {/* Milestone Update Modal for desktop */}
-      <MilestoneUpdateModal
-        components={table.getFilteredSelectedRowModel().rows.map(r => r.original)}
-        isOpen={showMilestoneModal}
-        onClose={() => setShowMilestoneModal(false)}
-        onUpdate={() => {
-          // Refresh data after milestone updates
-          handleRefresh();
-        }}
-        isMobile={false}
-      />
-    </>
+    <RealtimeManager projectId={projectId} userId={userId}>
+      <MilestoneUpdateEngine 
+        projectId={projectId} 
+        components={data}
+        onComponentUpdate={handleComponentMilestoneUpdate}
+      >
+        <>
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-lg">
+            <CardContent className="p-6">
+              {tableContent}
+            </CardContent>
+          </Card>
+          
+          {/* Bulk Update Modal for desktop */}
+          <BulkUpdateModal
+            isOpen={showBulkUpdateModal}
+            onClose={() => setShowBulkUpdateModal(false)}
+            selectedComponents={table.getFilteredSelectedRowModel().rows.map(r => r.original)}
+            onUpdate={handleBulkUpdateSubmit}
+          />
+          
+          {/* New Bulk Milestone Modal for desktop */}
+          <BulkMilestoneModal
+            selectedComponents={selectedComponents}
+            isOpen={showBulkMilestoneModal}
+            onClose={() => setShowBulkMilestoneModal(false)}
+            projectId={projectId}
+            onBulkUpdate={async (updates) => {
+              try {
+                // Create bulk update service with projectId
+                const service = createBulkUpdateService();
+                
+                // Add projectId to updates if not already included
+                const updatesWithProject = {
+                  ...updates,
+                  projectId
+                };
+                
+                // Execute the bulk update
+                const result = await service.performBulkUpdate(updatesWithProject);
+                
+                // Refresh data after updates
+                setTimeout(() => {
+                  handleRefresh();
+                }, 500);
+                
+                return result;
+                
+              } catch (error) {
+                console.error("Bulk update failed:", error);
+                throw error;
+              }
+            }}
+          />
+        </>
+      </MilestoneUpdateEngine>
+    </RealtimeManager>
   );
 }

@@ -17,6 +17,7 @@ import { organizationsRouter } from "./routes/organizations/router";
 import { paymentsRouter } from "./routes/payments/router";
 import { uploadsRouter } from "./routes/uploads";
 import { webhooksRouter } from "./routes/webhooks";
+import { pipetrakRouter } from "./routes/pipetrak/router";
 
 export const app = new Hono().basePath("/api");
 
@@ -24,7 +25,7 @@ app.use(loggerMiddleware);
 app.use(corsMiddleware);
 
 const appRouter = app
-	.route("/", authRouter)
+	.route("/auth", authRouter)  // Mount authRouter at /auth prefix
 	.route("/", webhooksRouter)
 	.route("/", aiRouter)
 	.route("/", uploadsRouter)
@@ -33,7 +34,8 @@ const appRouter = app
 	.route("/", newsletterRouter)
 	.route("/", organizationsRouter)
 	.route("/", adminRouter)
-	.route("/", healthRouter);
+	.route("/", healthRouter)
+	.route("/pipetrak", pipetrakRouter);
 
 app.get(
 	"/app-openapi",

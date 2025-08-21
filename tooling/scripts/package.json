@@ -1,21 +1,43 @@
 {
 	"dependencies": {
+		"@paralleldrive/cuid2": "^2.2.2",
+		"@repo/auth": "workspace:*",
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
-		"@repo/auth": "workspace:*",
-		"@repo/utils": "workspace:*"
+		"@repo/utils": "workspace:*",
+		"@types/pg": "^8.15.5",
+		"csv-parse": "^5.5.3",
+		"dotenv": "^17.1.0",
+		"pg": "^8.16.3",
+		"xlsx": "^0.18.5"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.0",
 		"@repo/tsconfig": "workspace:*",
 		"@types/node": "^24.0.10",
 		"nanoid": "^5.1.5",
-		"tsx": "^4.19.4"
+		"tsx": "^4.20.3"
 	},
 	"name": "@repo/scripts",
 	"private": true,
 	"scripts": {
 		"create:user": "dotenv -c -e ../../.env -- tsx ./src/create-user.ts",
+		"import": "dotenv -c -e ../../.env -- tsx ./src/universal-import.ts",
+		"import:excel": "dotenv -c -e ../../.env -- tsx ./src/import-excel.ts",
+		"seed:sdo": "dotenv -c -e ../../.env -- tsx ./src/seed-sdo-tank.ts",
+		"seed:demo": "dotenv -c -e ../../.env -- tsx ./src/seed-pipetrak.ts",
+		"seed:weld-types": "dotenv -c -e ../../.env -- tsx ./src/seed-weld-types.ts",
+		"cleanup-seed": "dotenv -c -e ../../.env -- tsx ./src/cleanup-and-seed.ts",
+		"apply-sql": "dotenv -c -e ../../.env -- tsx ./src/apply-supabase-sql.ts",
+		"migrate:tables": "dotenv -c -e ../../.env -- tsx ./src/migrate-pipetrak-tables.ts",
+		"verify:tables": "dotenv -c -e ../../.env -- tsx ./src/verify-tables.ts",
+		"clean:components": "dotenv -c -e ../../.env -- tsx ./src/clean-components.ts",
+		"migrate:component-type": "dotenv -c -e ../../.env -- tsx ./src/apply-component-type-migration.ts",
+		"test:excel-import": "dotenv -c -e ../../.env -- tsx ./src/test-excel-import.ts",
+		"test:db-component": "dotenv -c -e ../../.env -- tsx ./src/test-db-component-creation.ts",
+		"check:enum": "dotenv -c -e ../../.env -- tsx ./src/check-enum-exists.ts",
+		"fix:component-type": "dotenv -c -e ../../.env -- tsx ./src/fix-component-type-migration.ts",
+		"test:full-import": "dotenv -c -e ../../.env -- tsx ./src/test-full-import.ts",
 		"type-check": "tsc --noEmit"
 	},
 	"version": "0.0.0"

@@ -1,0 +1,79 @@
+
+> supastarter-nextjs@ dev /home/clachance14/projects/PipeTrak
+> dotenv -c -- turbo dev --concurrency 15
+
+turbo 2.5.4
+
+• Packages in scope: @repo/ai, @repo/api, @repo/auth, @repo/config, @repo/database, @repo/i18n, @repo/logs, @repo/mail, @repo/payments, @repo/scripts, @repo/storage, @repo/tailwind-config, @repo/tsconfig, @repo/utils, @repo/web
+• Running dev in 15 packages
+• Remote caching disabled
+@repo/database:generate: cache bypass, force executing fd949b5d4a5eaa47
+@repo/database:generate: 
+@repo/database:generate: > @repo/database@0.0.0 generate /home/clachance14/projects/PipeTrak/packages/database
+@repo/database:generate: > prisma generate --no-hints --schema=./prisma/schema.prisma
+@repo/database:generate: 
+@repo/database:generate: Prisma schema loaded from prisma/schema.prisma
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Prisma Client (v6.11.1) to ./prisma/generated/client in 217ms
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Zod Prisma Types to ./prisma/zod in 640ms
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Prisma Json Types Generator (3.5.1) to ./prisma in 640ms
+@repo/database:generate: 
+@repo/web:dev: cache bypass, force executing 9fd3f7ac6e98c1a3
+@repo/web:dev: 
+@repo/web:dev: > @repo/web@0.0.0 dev /home/clachance14/projects/PipeTrak/apps/web
+@repo/web:dev: > next dev --turbo
+@repo/web:dev: 
+@repo/web:dev: Starting content-collections content-collections.ts
+@repo/web:dev: build started ...
+@repo/web:dev: ... finished build of 4 collections and 14 documents in 48ms
+@repo/web:dev: start watching ...
+@repo/web:dev:    ▲ Next.js 15.3.5 (Turbopack)
+@repo/web:dev:    - Local:        http://localhost:3000
+@repo/web:dev:    - Network:      http://10.255.255.254:3000
+@repo/web:dev: 
+@repo/web:dev:  ✓ Starting...
+@repo/web:dev:  ○ Compiling middleware ...
+@repo/web:dev:  ✓ Compiled middleware in 984ms
+@repo/web:dev:  ✓ Ready in 2.6s
+@repo/web:dev:  ○ Compiling /api/[[...rest]] ...
+@repo/web:dev:  ✓ Compiled /api/[[...rest]] in 5.7s
+@repo/web:dev: <-- GET /api/auth/session
+@repo/web:dev: --> GET /api/auth/session [33m404[0m 4ms
+@repo/web:dev:  GET /api/auth/session 404 in 9325ms
+@repo/web:dev: <-- GET /api/openapi
+@repo/web:dev: <-- GET /api/app-openapi
+@repo/web:dev: --> GET /api/app-openapi [32m200[0m 16ms
+@repo/web:dev: --> GET /api/openapi [32m200[0m 74ms
+@repo/web:dev:  GET /api/openapi 200 in 356ms
+@repo/web:dev: <-- GET /api/openapi
+@repo/web:dev: <-- GET /api/app-openapi
+@repo/web:dev: --> GET /api/app-openapi [32m200[0m 1ms
+@repo/web:dev: --> GET /api/openapi [32m200[0m 31ms
+@repo/web:dev:  GET /api/openapi 200 in 154ms
+@repo/web:dev: <-- GET /api/openapi
+@repo/web:dev: <-- GET /api/app-openapi
+@repo/web:dev: --> GET /api/app-openapi [32m200[0m 0ms
+@repo/web:dev: --> GET /api/openapi [32m200[0m 23ms
+@repo/web:dev:  GET /api/openapi 200 in 147ms
+@repo/web:dev: <-- GET /api/openapi
+@repo/web:dev: <-- GET /api/app-openapi
+@repo/web:dev: --> GET /api/app-openapi [32m200[0m 3ms
+@repo/web:dev: --> GET /api/openapi [32m200[0m 38ms
+@repo/web:dev:  GET /api/openapi 200 in 166ms
+@repo/web:dev: <-- GET /api/openapi
+@repo/web:dev: <-- GET /api/app-openapi
+@repo/web:dev: --> GET /api/app-openapi [32m200[0m 1ms
+@repo/web:dev: --> GET /api/openapi [32m200[0m 31ms
+@repo/web:dev:  GET /api/openapi 200 in 125ms
+@repo/web:dev: <-- GET /api/auth/sign-up
+@repo/web:dev: --> GET /api/auth/sign-up [33m404[0m 0ms
+@repo/web:dev:  GET /api/auth/sign-up 404 in 124ms
+@repo/web:dev: <-- GET /api/auth/two-factor/enable
+@repo/web:dev: --> GET /api/auth/two-factor/enable [33m404[0m 0ms
+@repo/web:dev:  GET /api/auth/two-factor/enable 404 in 119ms
+@repo/web:dev:  ELIFECYCLE  Command failed.
+  x Internal errors encountered: external process killed a task
+
+ ELIFECYCLE  Command failed with exit code 1.

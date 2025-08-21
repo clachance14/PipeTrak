@@ -223,6 +223,9 @@ export interface ComponentWithMilestones extends Component {
   milestoneTemplate?: MilestoneTemplate;
   description?: string | null;
   drawingNumber?: string | null; // For display purposes
+  instanceNumber?: number; // Instance number on drawing
+  totalInstancesOnDrawing?: number; // Total instances on drawing
+  displayId?: string | null; // Generated display ID
 }
 
 // Table column type for DataTable

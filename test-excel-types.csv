@@ -1,0 +1,7 @@
+componentId,type,workflowType,drawingId,spec,size,material,area,system,description,totalQuantity
+SUPPORT_001,Support,MILESTONE_DISCRETE,DWG_001,G4G-1412-05,4",Carbon Steel,Area A,System 1,Pipe support bracket,1
+GASKET_001,Gasket,MILESTONE_DISCRETE,DWG_001,RF,6",Spiral Wound,Area A,System 1,Flange gasket,1
+VALVE_001,Valve,MILESTONE_DISCRETE,DWG_001,A105,2",Carbon Steel,Area A,System 1,Gate valve,1
+FLANGE_001,Flange,MILESTONE_DISCRETE,DWG_001,RF,4",Carbon Steel,Area A,System 1,Weld neck flange,1
+FITTING_001,Fitting,MILESTONE_DISCRETE,DWG_001,WELD,3",Stainless Steel,Area A,System 1,90 degree elbow,1
+INSTRUMENT_001,Instrument,MILESTONE_DISCRETE,DWG_001,SS,1/2",Stainless Steel,Area A,System 1,Pressure gauge,1

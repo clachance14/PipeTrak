@@ -1,0 +1,11 @@
+componentId,type,workflowType,drawingId,spec,size,material,area,system,description
+VALVE001,VALVE,MILESTONE_DISCRETE,DWG001,A105,2",Carbon Steel,Area A,System 1,Main isolation valve
+VALVE001,VALVE,MILESTONE_DISCRETE,DWG001,A105,2",Carbon Steel,Area A,System 1,Main isolation valve
+VALVE001,VALVE,MILESTONE_DISCRETE,DWG001,A105,2",Carbon Steel,Area A,System 1,Main isolation valve
+GASKET001,GASKET,MILESTONE_DISCRETE,DWG001,RF,4",Spiral Wound,Area A,System 1,Flange gasket
+GASKET001,GASKET,MILESTONE_DISCRETE,DWG001,RF,4",Spiral Wound,Area A,System 1,Flange gasket
+PIPE001,SPOOL,MILESTONE_PERCENTAGE,DWG002,SCH40,6",Carbon Steel,Area B,System 2,Main header pipe
+PIPE001,SPOOL,MILESTONE_PERCENTAGE,DWG002,SCH40,6",Carbon Steel,Area B,System 2,Main header pipe
+PIPE001,SPOOL,MILESTONE_PERCENTAGE,DWG002,SCH40,6",Carbon Steel,Area B,System 2,Main header pipe
+PIPE001,SPOOL,MILESTONE_PERCENTAGE,DWG002,SCH40,6",Carbon Steel,Area B,System 2,Main header pipe
+FITTING001,FITTING,MILESTONE_DISCRETE,DWG003,WELD,3",Stainless Steel,Area C,System 3,90 degree elbow

@@ -1,0 +1,4 @@
+Weld ID,Component Type,Drawing ID,Weld Size,Schedule,Base Metal,X-ray Percent,PWHT Required,NDE Types,Welder Stencil,Date Welded,Area,System,Test Package,Comments
+FW-001,FIELD_WELD,test-drawing-1,6",Sch 40,A106 Gr B,100,TRUE,"RT,PT",WLD001,2025-01-15,Unit 1,Main Steam,TP-001,Full penetration weld
+FW-002,FIELD_WELD,test-drawing-1,4",Sch 80,A53 Gr B,50,FALSE,"PT,VT",WLD002,2025-01-16,Unit 1,Main Steam,TP-001,Fillet weld
+FW-003,FIELD_WELD,test-drawing-2,8",Sch 40,A106 Gr B,75,TRUE,"RT,MT,PT",WLD001,2025-01-17,Unit 2,Feed Water,TP-002,Socket weld

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Hono } from "hono";
 import { authMiddleware } from "../../middleware/auth";
 import { WorkflowType, ComponentStatus } from "@repo/database/prisma/generated/client";
+import { broadcastComponentUpdate } from "./realtime";
 
 // Component validation schemas
 const ComponentCreateSchema = z.object({
@@ -42,7 +43,7 @@ const ComponentFilterSchema = z.object({
   status: z.nativeEnum(ComponentStatus).optional(),
   type: z.string().optional(),
   search: z.string().optional(),
-  limit: z.coerce.number().min(1).max(1000).default(100),
+  limit: z.coerce.number().min(1).max(10000).default(100),
   offset: z.coerce.number().min(0).default(0),
   sortBy: z.enum(["componentId", "type", "area", "system", "completionPercent", "updatedAt"]).default("componentId"),
   sortOrder: z.enum(["asc", "desc"]).default("asc"),
@@ -51,6 +52,10 @@ const ComponentFilterSchema = z.object({
 const BulkUpdateSchema = z.object({
   componentIds: z.array(z.string()),
   updates: ComponentUpdateSchema,
+  options: z.object({
+    validateOnly: z.boolean().optional().default(false),
+    atomic: z.boolean().optional().default(true),
+  }).optional().default({}),
 });
 
 export const componentsRouter = new Hono()
@@ -96,6 +101,25 @@ export const componentsRouter = new Hono()
           installer: {
             select: { id: true, name: true, email: true },
           },
+          fieldWelds: {
+            select: {
+              id: true,
+              weldIdNumber: true,
+              dateWelded: true,
+              weldSize: true,
+              schedule: true,
+              ndeResult: true,
+              pwhtRequired: true,
+              datePwht: true,
+              comments: true,
+              welder: {
+                select: { id: true, stencil: true, name: true },
+              },
+              weldType: {
+                select: { code: true, description: true },
+              },
+            },
+          },
         },
         take: limit,
         skip: offset,
@@ -113,10 +137,18 @@ export const componentsRouter = new Hono()
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid query parameters", details: error.errors }, 400);
+        return c.json({ 
+          code: "INVALID_INPUT",
+          message: "Invalid query parameters", 
+          details: error.errors 
+        }, 400);
       }
       console.error("Error fetching components:", error);
-      return c.json({ error: "Failed to fetch components" }, 500);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch components",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -142,6 +174,25 @@ export const componentsRouter = new Hono()
           installer: {
             select: { id: true, name: true, email: true },
           },
+          fieldWelds: {
+            select: {
+              id: true,
+              weldIdNumber: true,
+              dateWelded: true,
+              weldSize: true,
+              schedule: true,
+              ndeResult: true,
+              pwhtRequired: true,
+              datePwht: true,
+              comments: true,
+              welder: {
+                select: { id: true, stencil: true, name: true },
+              },
+              weldType: {
+                select: { code: true, description: true },
+              },
+            },
+          },
           auditLogs: {
             orderBy: { timestamp: "desc" },
             take: 10,
@@ -155,12 +206,36 @@ export const componentsRouter = new Hono()
       });
 
       if (!component) {
-        return c.json({ error: "Component not found" }, 404);
+        return c.json({ 
+          code: "NOT_FOUND",
+          message: "Component not found" 
+        }, 404);
+      }
+
+      // Verify user has access to this component's project
+      const userId = c.get("user")?.id;
+      const hasAccess = await prisma.member.findFirst({
+        where: {
+          userId,
+          organizationId: component.project.organizationId,
+        },
+      });
+
+      if (!hasAccess) {
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Access denied to this component" 
+        }, 403);
       }
 
       return c.json(component);
     } catch (error) {
-      return c.json({ error: "Failed to fetch component" }, 500);
+      console.error("Fetch component error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch component",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -194,10 +269,51 @@ export const componentsRouter = new Hono()
         }, 403);
       }
 
+      // Handle instance tracking for this drawing/component combination
+      let instanceNumber = 1;
+      let totalInstancesOnDrawing = 1;
+      
+      if (data.drawingId) {
+        // Find existing instances of this component on the same drawing
+        const existingInstances = await prisma.component.findMany({
+          where: {
+            drawingId: data.drawingId,
+            componentId: data.componentId,
+            status: { not: "DELETED" },
+          },
+          orderBy: { instanceNumber: "asc" },
+        });
+        
+        instanceNumber = existingInstances.length > 0 
+          ? Math.max(...existingInstances.map(c => c.instanceNumber)) + 1 
+          : 1;
+        totalInstancesOnDrawing = existingInstances.length + 1;
+        
+        // Update all existing instances with new total count
+        if (existingInstances.length > 0) {
+          await prisma.component.updateMany({
+            where: {
+              drawingId: data.drawingId,
+              componentId: data.componentId,
+              status: { not: "DELETED" },
+            },
+            data: { totalInstancesOnDrawing },
+          });
+        }
+      }
+      
+      // Generate displayId
+      const displayId = totalInstancesOnDrawing > 1 
+        ? `${data.componentId} (${instanceNumber} of ${totalInstancesOnDrawing})`
+        : data.componentId;
+
       // Create component
       const component = await prisma.component.create({
         data: {
           ...data,
+          instanceNumber,
+          totalInstancesOnDrawing,
+          displayId,
           status: ComponentStatus.NOT_STARTED,
           completionPercent: 0,
         },
@@ -205,6 +321,28 @@ export const componentsRouter = new Hono()
           milestones: true,
         },
       });
+
+      // Create milestones for the component based on template
+      if (data.milestoneTemplateId) {
+        const template = await prisma.milestoneTemplate.findUnique({
+          where: { id: data.milestoneTemplateId },
+        });
+        
+        if (template && template.milestones) {
+          const milestoneData = template.milestones as any[];
+          const milestones = milestoneData.map((milestone, index) => ({
+            componentId: component.id,
+            milestoneName: milestone.name,
+            milestoneOrder: index,
+            weight: milestone.weight || 1,
+            isCompleted: false,
+          }));
+          
+          await prisma.componentMilestone.createMany({
+            data: milestones,
+          });
+        }
+      }
 
       // Create audit log
       await prisma.auditLog.create({
@@ -214,21 +352,32 @@ export const componentsRouter = new Hono()
           entityType: "component",
           entityId: component.id,
           action: "CREATE",
-          changes: Object.keys(component).reduce((acc, key) => {
-            if (key !== 'id' && key !== 'createdAt' && key !== 'updatedAt') {
-              acc[key] = { old: null, new: (component as any)[key] };
-            }
-            return acc;
-          }, {} as any),
+          changes: {
+            componentId: { old: null, new: component.componentId },
+            instanceNumber: { old: null, new: instanceNumber },
+            displayId: { old: null, new: displayId },
+            status: { old: null, new: component.status },
+            type: { old: null, new: component.type },
+            workflowType: { old: null, new: component.workflowType },
+          },
         },
       });
 
       return c.json(component, 201);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({ 
+          code: "INVALID_INPUT",
+          message: "Invalid input", 
+          details: error.errors 
+        }, 400);
       }
-      return c.json({ error: "Failed to create component" }, 500);
+      console.error("Create component error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to create component",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -261,11 +410,37 @@ export const componentsRouter = new Hono()
       // Update component
       const component = await prisma.component.update({
         where: { id },
-        data: updates,
+        data: {
+          ...updates,
+          updatedAt: new Date(),
+        },
         include: {
-          milestones: true,
+          milestones: {
+            orderBy: { milestoneOrder: "asc" },
+          },
+          drawing: { select: { number: true, title: true } },
+          milestoneTemplate: { select: { name: true } },
         },
       });
+
+      // Recalculate completion percentage if milestone-related fields changed
+      if (updates.milestoneTemplateId || Object.keys(updates).some(key => key.includes('milestone'))) {
+        await recalculateComponentCompletion(id);
+      }
+
+      // Broadcast component update to realtime subscribers
+      await broadcastComponentUpdate(
+        existing.projectId,
+        component.id,
+        {
+          action: 'update',
+          status: component.status,
+          completionPercent: component.completionPercent,
+          drawingId: component.drawingId,
+          changes: updates,
+        },
+        userId
+      );
 
       // Create audit log
       await prisma.auditLog.create({
@@ -288,17 +463,26 @@ export const componentsRouter = new Hono()
       return c.json(component);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({ 
+          code: "INVALID_INPUT",
+          message: "Invalid input", 
+          details: error.errors 
+        }, 400);
       }
-      return c.json({ error: "Failed to update component" }, 500);
+      console.error("Update component error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to update component",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
   // Bulk update components
-  .patch("/bulk", async (c) => {
+  .post("/bulk-update", async (c) => {
     try {
       const body = await c.req.json();
-      const { componentIds, updates } = BulkUpdateSchema.parse(body);
+      const { componentIds, updates, options = {} } = BulkUpdateSchema.parse(body);
       const userId = c.get("user")?.id;
 
       // Verify user has access to all components
@@ -316,18 +500,57 @@ export const componentsRouter = new Hono()
       });
 
       if (components.length !== componentIds.length) {
-        return c.json({ error: "Some components not found or access denied" }, 403);
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Some components not found or access denied",
+          details: {
+            requested: componentIds.length,
+            accessible: components.length
+          }
+        }, 403);
       }
 
-      // Update all components
-      const updatePromises = componentIds.map((id) =>
-        prisma.component.update({
-          where: { id },
-          data: updates,
-        })
-      );
+      // If validation only, return early
+      if (options.validateOnly) {
+        return c.json({
+          valid: components.length,
+          invalid: 0,
+          components: components.map(c => ({ id: c.id, componentId: c.componentId })),
+        });
+      }
 
-      const updatedComponents = await prisma.$transaction(updatePromises);
+      // Update all components in transaction if atomic mode
+      let updatedComponents;
+      if (options.atomic) {
+        const updatePromises = componentIds.map((id) =>
+          prisma.component.update({
+            where: { id },
+            data: updates,
+            include: {
+              milestones: true,
+            },
+          })
+        );
+        updatedComponents = await prisma.$transaction(updatePromises);
+      } else {
+        // Non-atomic updates
+        updatedComponents = [];
+        for (const id of componentIds) {
+          try {
+            const updated = await prisma.component.update({
+              where: { id },
+              data: updates,
+              include: {
+                milestones: true,
+              },
+            });
+            updatedComponents.push(updated);
+          } catch (error) {
+            console.error(`Failed to update component ${id}:`, error);
+            // Continue with other components in non-atomic mode
+          }
+        }
+      }
 
       // Create audit logs
       const auditLogs = components.map((existing, index) => ({
@@ -348,22 +571,40 @@ export const componentsRouter = new Hono()
       await prisma.auditLog.createMany({ data: auditLogs });
 
       return c.json({
-        updated: updatedComponents.length,
+        successful: updatedComponents.length,
+        failed: componentIds.length - updatedComponents.length,
         components: updatedComponents,
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({ 
+          code: "INVALID_INPUT",
+          message: "Invalid input", 
+          details: error.errors 
+        }, 400);
       }
-      return c.json({ error: "Failed to update components" }, 500);
+      console.error("Bulk component update error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to update components",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
-  // Delete component
+  // Soft delete component (mark as DELETED)
   .delete("/:id", async (c) => {
     try {
       const id = c.req.param("id");
       const userId = c.get("user")?.id;
+      const hardDelete = c.req.query("hard") === "true";
+
+      if (!userId) {
+        return c.json({ 
+          code: "UNAUTHENTICATED", 
+          message: "User not authenticated" 
+        }, 401);
+      }
 
       // Verify user has admin access to the project
       const component = await prisma.component.findFirst({
@@ -383,11 +624,26 @@ export const componentsRouter = new Hono()
       });
 
       if (!component) {
-        return c.json({ error: "Component not found or insufficient permissions" }, 403);
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Component not found or insufficient permissions" 
+        }, 403);
       }
 
-      // Delete component (cascades to milestones)
-      await prisma.component.delete({ where: { id } });
+      let deletedComponent;
+      if (hardDelete) {
+        // Hard delete (cascades to milestones)
+        deletedComponent = await prisma.component.delete({ where: { id } });
+      } else {
+        // Soft delete - mark as DELETED
+        deletedComponent = await prisma.component.update({
+          where: { id },
+          data: { 
+            status: "DELETED",
+            updatedAt: new Date(),
+          },
+        });
+      }
 
       // Create audit log
       await prisma.auditLog.create({
@@ -396,19 +652,151 @@ export const componentsRouter = new Hono()
           userId,
           entityType: "component",
           entityId: id,
-          action: "DELETE",
-          changes: Object.keys(component).reduce((acc, key) => {
-            if (key !== 'id' && key !== 'createdAt' && key !== 'updatedAt') {
-              acc[key] = { old: (component as any)[key], new: null };
-            }
-            return acc;
-          }, {} as any),
+          action: hardDelete ? "HARD_DELETE" : "SOFT_DELETE",
+          changes: hardDelete ? 
+            Object.keys(component).reduce((acc, key) => {
+              if (key !== 'id' && key !== 'createdAt' && key !== 'updatedAt') {
+                acc[key] = { old: (component as any)[key], new: null };
+              }
+              return acc;
+            }, {} as any) :
+            { status: { old: component.status, new: "DELETED" } },
         },
       });
 
-      return c.json({ success: true });
+      return c.json({ 
+        success: true, 
+        deleted: hardDelete ? "permanently" : "soft",
+        component: deletedComponent
+      });
     } catch (error) {
-      return c.json({ error: "Failed to delete component" }, 500);
+      console.error("Delete component error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to delete component",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Component search with advanced filters
+  .post("/search", async (c) => {
+    try {
+      const body = await c.req.json();
+      const filters = z.object({
+        projectId: z.string(),
+        search: z.string().optional(),
+        areas: z.array(z.string()).optional(),
+        systems: z.array(z.string()).optional(),
+        testPackages: z.array(z.string()).optional(),
+        statuses: z.array(z.nativeEnum(ComponentStatus)).optional(),
+        types: z.array(z.string()).optional(),
+        completionRange: z.object({
+          min: z.number().min(0).max(100),
+          max: z.number().min(0).max(100),
+        }).optional(),
+        dateRange: z.object({
+          start: z.string().datetime(),
+          end: z.string().datetime(),
+        }).optional(),
+        limit: z.number().min(1).max(1000).default(100),
+        offset: z.number().min(0).default(0),
+        sortBy: z.enum(["componentId", "type", "area", "system", "completionPercent", "updatedAt"]).default("componentId"),
+        sortOrder: z.enum(["asc", "desc"]).default("asc"),
+      }).parse(body);
+      
+      const userId = c.get("user")?.id;
+      if (!userId) {
+        return c.json({ code: "UNAUTHENTICATED", message: "User not authenticated" }, 401);
+      }
+
+      // Verify project access
+      const project = await prisma.project.findFirst({
+        where: {
+          id: filters.projectId,
+          organization: {
+            members: {
+              some: { userId },
+            },
+          },
+        },
+      });
+
+      if (!project) {
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied" 
+        }, 403);
+      }
+
+      // Build advanced where clause
+      const where: any = {
+        projectId: filters.projectId,
+        status: { not: "DELETED" }, // Exclude soft-deleted components
+      };
+      
+      if (filters.search) {
+        where.OR = [
+          { componentId: { contains: filters.search, mode: "insensitive" } },
+          { description: { contains: filters.search, mode: "insensitive" } },
+          { spec: { contains: filters.search, mode: "insensitive" } },
+        ];
+      }
+      
+      if (filters.areas?.length) where.area = { in: filters.areas };
+      if (filters.systems?.length) where.system = { in: filters.systems };
+      if (filters.testPackages?.length) where.testPackage = { in: filters.testPackages };
+      if (filters.statuses?.length) where.status = { in: filters.statuses };
+      if (filters.types?.length) where.type = { in: filters.types };
+      
+      if (filters.completionRange) {
+        where.completionPercent = {
+          gte: filters.completionRange.min,
+          lte: filters.completionRange.max,
+        };
+      }
+      
+      if (filters.dateRange) {
+        where.updatedAt = {
+          gte: new Date(filters.dateRange.start),
+          lte: new Date(filters.dateRange.end),
+        };
+      }
+
+      const [total, components] = await prisma.$transaction([
+        prisma.component.count({ where }),
+        prisma.component.findMany({
+          where,
+          include: {
+            drawing: { select: { number: true, title: true } },
+            milestoneTemplate: { select: { name: true } },
+            milestones: {
+              select: { milestoneName: true, isCompleted: true, completedAt: true },
+              orderBy: { milestoneOrder: "asc" },
+            },
+          },
+          take: filters.limit,
+          skip: filters.offset,
+          orderBy: { [filters.sortBy]: filters.sortOrder },
+        }),
+      ]);
+
+      return c.json({
+        data: components,
+        pagination: {
+          total,
+          limit: filters.limit,
+          offset: filters.offset,
+          hasMore: filters.offset + filters.limit < total,
+        },
+        filters: filters, // Echo back the applied filters
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return c.json({ code: "INVALID_INPUT", message: "Invalid search filters", details: error.errors }, 400);
+      }
+      console.error("Component search error:", error);
+      return c.json({ code: "INTERNAL_ERROR", message: "Failed to search components" }, 500);
     }
   })
 
@@ -478,6 +866,435 @@ export const componentsRouter = new Hono()
         bySystem: systemStats,
       });
     } catch (error) {
-      return c.json({ error: "Failed to fetch statistics" }, 500);
+      console.error("Component statistics error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch statistics",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Bulk import components
+  .post("/bulk-import", async (c) => {
+    try {
+      const body = await c.req.json();
+      const { projectId, components, mappings, options = {} } = z.object({
+        projectId: z.string(),
+        components: z.array(z.record(z.any())),
+        mappings: z.record(z.string()).optional(),
+        options: z.object({
+          validateOnly: z.boolean().optional(),
+          skipDuplicates: z.boolean().optional(),
+          updateExisting: z.boolean().optional(),
+          generateIds: z.boolean().optional().default(true),
+          rollbackOnError: z.boolean().optional().default(false),
+        }).optional(),
+      }).parse(body);
+
+      const userId = c.get("user")?.id;
+      if (!userId) {
+        return c.json({ code: "UNAUTHENTICATED", message: "User not authenticated" }, 401);
+      }
+
+      // Verify user has admin access to the project
+      const project = await prisma.project.findFirst({
+        where: {
+          id: projectId,
+          organization: {
+            members: {
+              some: {
+                userId,
+                role: { in: ["owner", "admin"] },
+              },
+            },
+          },
+        },
+      });
+
+      if (!project) {
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Project not found or insufficient permissions" 
+        }, 403);
+      }
+
+      // Get existing drawings for validation
+      const existingDrawings = new Set(
+        (await prisma.drawing.findMany({
+          where: { projectId },
+          select: { id: true },
+        })).map(d => d.id)
+      );
+
+      // Apply column mappings if provided
+      let mappedComponents = components;
+      if (mappings) {
+        mappedComponents = components.map(row => {
+          const mapped: any = {};
+          Object.entries(mappings).forEach(([field, column]) => {
+            if (column && row[column] !== undefined) {
+              mapped[field] = row[column];
+            }
+          });
+          return mapped;
+        });
+      }
+
+      // Auto-generate component IDs if needed
+      if (options.generateIds) {
+        const { generateBatchComponentIds } = await import("../../lib/component-id-generator");
+        const componentData = mappedComponents.map(c => ({
+          type: c.componentType || c.type,
+          description: c.description,
+          componentId: c.commodityCode || c.componentId, // Use commodity code as componentId
+        }));
+        
+        const generatedIds = generateBatchComponentIds(componentData);
+        mappedComponents = mappedComponents.map((comp, idx) => {
+          const generated = generatedIds.find(g => g.originalIndex === idx);
+          if (generated?.generated) {
+            return { ...comp, componentId: generated.componentId };
+          }
+          return comp;
+        });
+      }
+
+      // Validation phase
+      const errors: any[] = [];
+      const validComponents: any[] = [];
+      
+      mappedComponents.forEach((comp, index) => {
+        const rowErrors: string[] = [];
+        
+        // Required field validation
+        if (!comp.drawingId) {
+          rowErrors.push("Drawing ID is required");
+        } else if (!existingDrawings.has(comp.drawingId)) {
+          rowErrors.push(`Drawing ${comp.drawingId} not found`);
+        }
+        
+        if (!comp.componentId) {
+          rowErrors.push("Component ID is required (could not auto-generate)");
+        }
+        
+        if (rowErrors.length > 0) {
+          errors.push({
+            row: index + 1,
+            componentId: comp.componentId || "UNKNOWN",
+            errors: rowErrors,
+          });
+        } else {
+          validComponents.push({
+            ...comp,
+            projectId,
+            status: comp.status || "NOT_STARTED",
+            completionPercent: comp.completionPercent || 0,
+          });
+        }
+      });
+
+      // If validation only, return results
+      if (options.validateOnly) {
+        return c.json({
+          valid: validComponents.length,
+          invalid: errors.length,
+          errors,
+          preview: validComponents.slice(0, 10),
+        });
+      }
+
+      // If there are errors and rollbackOnError is true, stop
+      if (errors.length > 0 && options.rollbackOnError) {
+        return c.json({
+          code: "VALIDATION_ERROR",
+          message: "Validation failed",
+          errors,
+        }, 400);
+      }
+
+      // Process import
+      let successCount = 0;
+      let skipCount = 0;
+      let updateCount = 0;
+      const importErrors: any[] = [];
+
+      // Group components by drawing for instance tracking
+      const componentsByDrawing = new Map<string, any[]>();
+      validComponents.forEach(comp => {
+        const drawingId = comp.drawingId;
+        if (!componentsByDrawing.has(drawingId)) {
+          componentsByDrawing.set(drawingId, []);
+        }
+        componentsByDrawing.get(drawingId)!.push(comp);
+      });
+
+      // Process each drawing's components
+      for (const [drawingId, drawingComponents] of componentsByDrawing) {
+        // Get existing components for this drawing
+        const existingComponentsInDrawing = await prisma.component.findMany({
+          where: { projectId, drawingId },
+          select: { componentId: true, instanceNumber: true },
+        });
+
+        // Track instance numbers per component ID
+        const instanceTracker = new Map<string, number>();
+        existingComponentsInDrawing.forEach(c => {
+          const current = instanceTracker.get(c.componentId) || 0;
+          instanceTracker.set(c.componentId, Math.max(current, c.instanceNumber));
+        });
+
+        // Process components for this drawing
+        for (const comp of drawingComponents) {
+          try {
+            // Check if component exists
+            const existingComponent = await prisma.component.findFirst({
+              where: {
+                projectId,
+                componentId: comp.componentId,
+                drawingId: comp.drawingId,
+              },
+            });
+
+            if (existingComponent && options.skipDuplicates) {
+              skipCount++;
+              continue;
+            }
+
+            // Calculate instance number
+            const currentInstance = instanceTracker.get(comp.componentId) || 0;
+            const instanceNumber = currentInstance + 1;
+            instanceTracker.set(comp.componentId, instanceNumber);
+
+            // Calculate total instances (if multiple in same import)
+            const totalInstances = drawingComponents.filter(c => 
+              c.componentId === comp.componentId
+            ).length + currentInstance;
+
+            // Generate display ID
+            const displayId = totalInstances > 1 
+              ? `${comp.componentId} (${instanceNumber} of ${totalInstances})`
+              : comp.componentId;
+
+            const componentData = {
+              ...comp,
+              instanceNumber,
+              totalInstancesOnDrawing: totalInstances,
+              displayId,
+            };
+
+            if (existingComponent && options.updateExisting) {
+              // Update existing component
+              await prisma.component.update({
+                where: { id: existingComponent.id },
+                data: componentData,
+              });
+              updateCount++;
+            } else if (!existingComponent) {
+              // Create new component
+              await prisma.component.create({
+                data: componentData,
+              });
+              successCount++;
+            }
+          } catch (error: any) {
+            importErrors.push({
+              componentId: comp.componentId,
+              error: error.message,
+            });
+          }
+        }
+      }
+
+      // Create audit log for bulk import
+      await prisma.auditLog.create({
+        data: {
+          projectId,
+          userId,
+          entityType: "bulk_import",
+          entityId: projectId,
+          action: "IMPORT",
+          changes: {
+            totalRows: mappedComponents.length,
+            successful: successCount,
+            updated: updateCount,
+            skipped: skipCount,
+            errors: importErrors.length,
+          },
+        },
+      });
+
+      return c.json({
+        success: true,
+        summary: {
+          total: mappedComponents.length,
+          created: successCount,
+          updated: updateCount,
+          skipped: skipCount,
+          errors: importErrors.length,
+        },
+        errors: importErrors,
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return c.json({ 
+          code: "INVALID_INPUT",
+          message: "Invalid input", 
+          details: error.errors 
+        }, 400);
+      }
+      console.error("Bulk import error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to import components",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Recalculate component completion percentages
+  .post("/recalculate/:componentId", async (c) => {
+    try {
+      const componentId = c.req.param("componentId");
+      const userId = c.get("user")?.id;
+      
+      if (!userId) {
+        return c.json({ code: "UNAUTHENTICATED", message: "User not authenticated" }, 401);
+      }
+
+      // Verify user has access to the component
+      const component = await prisma.component.findFirst({
+        where: {
+          id: componentId,
+          project: {
+            organization: {
+              members: {
+                some: { userId },
+              },
+            },
+          },
+        },
+        include: {
+          milestones: true,
+          milestoneTemplate: true,
+        },
+      });
+
+      if (!component) {
+        return c.json({ 
+          code: "ACCESS_DENIED",
+          message: "Component not found or access denied" 
+        }, 403);
+      }
+
+      // Recalculate completion percentage
+      const oldCompletion = component.completionPercent;
+      await recalculateComponentCompletion(componentId);
+      
+      // Get updated component
+      const updatedComponent = await prisma.component.findUnique({
+        where: { id: componentId },
+        include: {
+          milestones: {
+            orderBy: { milestoneOrder: "asc" },
+          },
+        },
+      });
+
+      return c.json({
+        success: true,
+        componentId,
+        completion: {
+          old: oldCompletion,
+          new: updatedComponent?.completionPercent || 0,
+          changed: Math.abs((updatedComponent?.completionPercent || 0) - oldCompletion) > 0.01,
+        },
+        component: updatedComponent,
+      });
+    } catch (error) {
+      console.error("Recalculate completion error:", error);
+      return c.json({ 
+        code: "INTERNAL_ERROR",
+        message: "Failed to recalculate completion",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   });
+
+// Helper function to recalculate component completion
+async function recalculateComponentCompletion(componentId: string) {
+  const component = await prisma.component.findUnique({
+    where: { id: componentId },
+    include: {
+      milestones: true,
+      milestoneTemplate: true,
+    },
+  });
+
+  if (!component) return;
+
+  let completionPercent = 0;
+  const milestoneData = component.milestoneTemplate.milestones as any[];
+
+  if (component.workflowType === "MILESTONE_DISCRETE") {
+    // Calculate based on completed milestones with weights
+    let totalWeight = 0;
+    let completedWeight = 0;
+
+    component.milestones.forEach((milestone) => {
+      const weight = milestoneData[milestone.milestoneOrder]?.weight || 1;
+      totalWeight += weight;
+      if (milestone.isCompleted) {
+        completedWeight += weight;
+      }
+    });
+
+    completionPercent = totalWeight > 0 ? (completedWeight / totalWeight) * 100 : 0;
+
+  } else if (component.workflowType === "MILESTONE_PERCENTAGE") {
+    // Average the percentages with weights
+    let totalWeight = 0;
+    let weightedSum = 0;
+
+    component.milestones.forEach((milestone) => {
+      const weight = milestoneData[milestone.milestoneOrder]?.weight || 1;
+      totalWeight += weight;
+      weightedSum += (milestone.percentageValue || 0) * weight;
+    });
+
+    completionPercent = totalWeight > 0 ? weightedSum / totalWeight : 0;
+
+  } else if (component.workflowType === "MILESTONE_QUANTITY") {
+    // Calculate based on quantities with weights
+    let totalWeight = 0;
+    let weightedSum = 0;
+
+    component.milestones.forEach((milestone) => {
+      const weight = milestoneData[milestone.milestoneOrder]?.weight || 1;
+      totalWeight += weight;
+      if (milestone.quantityValue && component.totalQuantity && component.totalQuantity > 0) {
+        const percentage = (milestone.quantityValue / component.totalQuantity) * 100;
+        weightedSum += percentage * weight;
+      }
+    });
+
+    completionPercent = totalWeight > 0 ? weightedSum / totalWeight : 0;
+  }
+
+  // Ensure completion is between 0 and 100
+  completionPercent = Math.min(Math.max(completionPercent, 0), 100);
+
+  // Update component status based on completion
+  const status = 
+    completionPercent === 0 ? "NOT_STARTED" :
+    completionPercent < 100 ? "IN_PROGRESS" :
+    "COMPLETED";
+
+  await prisma.component.update({
+    where: { id: componentId },
+    data: {
+      completionPercent,
+      status,
+    },
+  });
+}

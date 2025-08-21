@@ -3,6 +3,7 @@
 		"@paralleldrive/cuid2": "^2.2.2",
 		"@prisma/client": "6.11.1",
 		"@repo/config": "workspace:*",
+		"decimal.js": "^10.6.0",
 		"drizzle-orm": "^0.44.2",
 		"drizzle-zod": "0.7.1",
 		"pg": "^8.16.0",
@@ -11,6 +12,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.1.0",
 		"@repo/tsconfig": "workspace:*",
+		"@types/decimal.js": "^7.4.3",
 		"@types/node": "24.0.10",
 		"dotenv-cli": "^8.0.0",
 		"drizzle-kit": "^0.31.1",
@@ -23,6 +25,7 @@
 	"scripts": {
 		"generate": "prisma generate --no-hints --schema=./prisma/schema.prisma",
 		"push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema=./prisma/schema.prisma",
+		"push:force": "dotenv -c -e ../../.env -- prisma db push --accept-data-loss --skip-generate --schema=./prisma/schema.prisma",
 		"migrate": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
 		"studio": "dotenv -c -e ../../.env -- prisma studio --schema=./prisma/schema.prisma",
 		"type-check": "tsc --noEmit"
