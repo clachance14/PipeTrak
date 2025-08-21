@@ -25,17 +25,39 @@ cp apps/web/.env.example apps/web/.env.local
 nano apps/web/.env.local
 ```
 
+### Critical: Timestamp Handling
+
+All timestamps in the system are stored in **milliseconds** (using `Date.now()`). When displaying:
+- **DO NOT** multiply by 1000 (it's already in milliseconds)
+- Use `new Date(timestamp)` directly for date objects
+- Example: `new Date(metrics.generatedAt).toLocaleString()`
+
+### Client/Server Code Separation Pattern
+
+When using Prisma or other server-only code:
+1. Create an API route in `/app/api/`
+2. Create a client-side function in `lib/client-api.ts`
+3. Never import server code directly in client components
+
+```typescript
+// ❌ WRONG - Client component
+import { fetchData } from "./data-loaders"; // Has Prisma import
+
+// ✅ CORRECT - Client component  
+import { fetchDataClient } from "./client-api"; // Calls API route
+```
+
 ### Required Environment Variables
 
 ```bash
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+# Supabase (CRITICAL - Must have valid API keys)
+NEXT_PUBLIC_SUPABASE_URL=https://[PROJECT_REF].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key  # Get from Supabase dashboard
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key  # Get from Supabase dashboard
 
 # Database (Prisma)
-DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres
-DIRECT_URL=postgresql://postgres:postgres@localhost:54322/postgres
+DATABASE_URL=postgresql://postgres:[PASSWORD]@[HOST]:6543/postgres  # Connection pooler
+DIRECT_URL=postgresql://postgres:[PASSWORD]@[HOST]:5432/postgres    # Direct connection
 
 # Auth (Better Auth)
 BETTER_AUTH_SECRET=generate-random-32-char-string
@@ -44,6 +66,19 @@ BETTER_AUTH_URL=http://localhost:3000
 # Application
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NODE_ENV=development
+
+# For local development with SSL issues
+NODE_TLS_REJECT_UNAUTHORIZED=0  # Only for development!
+```
+
+### Getting Supabase API Keys
+```bash
+# Run this script to check your API keys
+cd tooling/scripts
+pnpm tsx src/get-supabase-keys.ts
+
+# Test database connection
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/test-db-connection.ts
 ```
 
 ---
@@ -225,6 +260,13 @@ pnpm e2e:ci
 
 # Update Playwright browsers
 pnpm exec playwright install
+
+# Test dashboard RPC functions with real data
+cd tooling/scripts
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/test-dashboard-functions-real.ts
+
+# Test authentication flow
+pnpm tsx src/test-auth-flow.ts
 ```
 
 ### Build Commands
@@ -371,21 +413,45 @@ pnpm shadcn-ui add button card dialog
 
 ## Troubleshooting
 
+> 📖 **NEW**: See comprehensive database guides:
+> - [Database Operations Guide](./database-operations-guide.md) - Complete reference
+> - [Database Quick Reference](./database-quick-reference.md) - Copy-paste commands
+
 ### Database Connection Issues
 
 ```bash
-# Check if Supabase is running
-pnpm supabase status
-
-# Check database URL
+# Check if Supabase is running (cloud)
 echo $DATABASE_URL
 
-# Test connection
-cd packages/database
-pnpm prisma db pull
+# Test connection with SSL workaround
+cd tooling/scripts
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/test-connections.ts
 
-# Reset connection pool
-pnpm supabase db reset
+# Apply dashboard functions to Supabase
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/apply-dashboard-functions.ts
+
+# Deploy real-time system
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/deploy-realtime-system.ts
+
+# Check which tables exist
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/verify-tables.ts
+
+# NEW: Example using standardized SQL executor
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/execute-sql-example.ts
+```
+
+### Dashboard and RPC Functions
+
+```bash
+# Test dashboard functions with real data
+cd tooling/scripts
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/test-dashboard-functions-real.ts
+
+# Apply migrations manually
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/apply-migrations.ts
+
+# Clean and reseed test data
+NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm tsx src/cleanup-and-seed.ts
 ```
 
 ### Migration Issues

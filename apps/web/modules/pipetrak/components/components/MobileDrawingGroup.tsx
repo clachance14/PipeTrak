@@ -15,7 +15,9 @@ import {
   AlertCircle,
   Clock,
   Users,
-  Minus
+  Minus,
+  Target,
+  TrendingUp
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import { MobileComponentCard } from "./MobileComponentCard";
@@ -32,6 +34,7 @@ interface MobileDrawingGroupProps {
   onComponentClick: (componentId: string) => void;
   onQuickUpdate: (componentId: string, status: string) => void;
   onEdit: (componentId: string) => void;
+  onOpenMilestones?: (componentId: string) => void;
 }
 
 export function MobileDrawingGroup({
@@ -44,9 +47,10 @@ export function MobileDrawingGroup({
   onSelectAll,
   onComponentClick,
   onQuickUpdate,
-  onEdit
+  onEdit,
+  onOpenMilestones
 }: MobileDrawingGroupProps) {
-  // Calculate drawing-level statistics
+  // Calculate drawing-level statistics including milestones
   const stats = useMemo(() => {
     const total = components.length;
     const completed = components.filter(c => c.status === "COMPLETED").length;
@@ -60,6 +64,43 @@ export function MobileDrawingGroup({
     const allSelected = selectedInGroup === total && total > 0;
     const someSelected = selectedInGroup > 0 && selectedInGroup < total;
     
+    // Calculate milestone statistics
+    let totalMilestones = 0;
+    let completedMilestones = 0;
+    const milestoneDistribution = new Map<string, number>();
+    
+    components.forEach(component => {
+      if (component.milestones && component.milestones.length > 0) {
+        totalMilestones += component.milestones.length;
+        completedMilestones += component.milestones.filter(m => m.isCompleted).length;
+        
+        // Find current milestone for distribution
+        const currentMilestone = component.milestones.find(m => !m.isCompleted);
+        const currentMilestoneName = currentMilestone 
+          ? currentMilestone.milestoneName 
+          : "All Complete";
+        
+        milestoneDistribution.set(
+          currentMilestoneName, 
+          (milestoneDistribution.get(currentMilestoneName) || 0) + 1
+        );
+      }
+    });
+    
+    // Get most common current milestone
+    let mostCommonMilestone = "";
+    let maxCount = 0;
+    milestoneDistribution.forEach((count, name) => {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommonMilestone = name;
+      }
+    });
+    
+    const milestoneProgress = totalMilestones > 0 
+      ? Math.round((completedMilestones / totalMilestones) * 100) 
+      : 0;
+    
     return {
       total,
       completed,
@@ -68,7 +109,12 @@ export function MobileDrawingGroup({
       avgProgress,
       selectedInGroup,
       allSelected,
-      someSelected
+      someSelected,
+      totalMilestones,
+      completedMilestones,
+      milestoneProgress,
+      mostCommonMilestone,
+      componentsAtMilestone: maxCount
     };
   }, [components, selectedIds]);
 
@@ -107,108 +153,72 @@ export function MobileDrawingGroup({
           stats.selectedInGroup > 0 && "ring-2 ring-primary"
         )}
       >
-        <CardContent className="p-4">
-          <div className="space-y-3">
-            {/* Main Header Row */}
-            <div className="flex items-start justify-between">
-              <div className="flex items-start gap-3 flex-1">
-                {/* Selection Checkbox */}
-                <div className="pt-1">
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleSelectAll();
-                    }}
-                    className="cursor-pointer"
-                  >
-                    {stats.someSelected && !stats.allSelected ? (
-                      // Custom indeterminate state
-                      <div className="h-5 w-5 rounded border-2 border-primary bg-primary flex items-center justify-center">
-                        <Minus className="h-3 w-3 text-primary-foreground" />
-                      </div>
-                    ) : (
-                      <Checkbox
-                        checked={stats.allSelected}
-                        onCheckedChange={handleSelectAll}
-                        onClick={(e) => e.stopPropagation()}
-                        className="h-5 w-5"
-                      />
-                    )}
+        <CardContent className="p-2">
+          <div className="space-y-1.5">
+            {/* Compact Header Row */}
+            <div className="flex items-center gap-2">
+              {/* Selection Checkbox */}
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelectAll();
+                }}
+                className="cursor-pointer"
+              >
+                {stats.someSelected && !stats.allSelected ? (
+                  <div className="h-5 w-5 rounded border-2 border-primary bg-primary flex items-center justify-center">
+                    <Minus className="h-3 w-3 text-primary-foreground" />
                   </div>
-                </div>
-                
-                {/* Drawing Info */}
-                <div 
-                  className="flex-1 cursor-pointer"
-                  onClick={onToggleExpand}
-                >
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-blue-600" />
-                    <h3 className="font-bold text-base">
-                      {drawingNumber || "No Drawing"}
-                    </h3>
-                    {isExpanded ? (
-                      <ChevronDown className="h-5 w-5 text-gray-500" />
-                    ) : (
-                      <ChevronRight className="h-5 w-5 text-gray-500" />
-                    )}
-                  </div>
-                  
-                  {/* Component Count and Status */}
-                  <div className="flex items-center gap-3 mt-2">
-                    <Badge variant="outline" className="text-xs">
-                      <Package2 className="h-3 w-3 mr-1" />
-                      {stats.total} component{stats.total !== 1 ? 's' : ''}
-                    </Badge>
-                    
-                    {stats.selectedInGroup > 0 && (
-                      <Badge variant="default" className="text-xs">
-                        <Users className="h-3 w-3 mr-1" />
-                        {stats.selectedInGroup} selected
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+                ) : (
+                  <Checkbox
+                    checked={stats.allSelected}
+                    onCheckedChange={handleSelectAll}
+                    onClick={(e) => e.stopPropagation()}
+                    className="h-5 w-5"
+                  />
+                )}
               </div>
               
-              {/* Status Icon */}
-              <div className="pt-1">
-                {getStatusIcon()}
+              {/* Drawing Info - Single Line */}
+              <div 
+                className="flex-1 cursor-pointer flex items-center justify-between"
+                onClick={onToggleExpand}
+              >
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-blue-600" />
+                  <h3 className="font-semibold text-sm">
+                    {drawingNumber || "No Drawing"}
+                  </h3>
+                  <Badge variant="outline" className="text-xs">
+                    {stats.total}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  {stats.selectedInGroup > 0 && (
+                    <Badge variant="default" className="text-xs">
+                      {stats.selectedInGroup}
+                    </Badge>
+                  )}
+                  {getStatusIcon()}
+                  {isExpanded ? (
+                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                  ) : (
+                    <ChevronRight className="h-4 w-4 text-gray-500" />
+                  )}
+                </div>
               </div>
             </div>
             
-            {/* Progress Section */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Overall Progress</span>
-                <span className="font-bold">{stats.avgProgress}%</span>
-              </div>
-              <Progress value={stats.avgProgress} className="h-2" />
-              
-              {/* Status Breakdown - Only show when collapsed */}
-              {!isExpanded && (
-                <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2">
-                  {stats.completed > 0 && (
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3 text-fieldComplete" />
-                      {stats.completed} complete
-                    </span>
-                  )}
-                  {stats.inProgress > 0 && (
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3 text-blue-600" />
-                      {stats.inProgress} in progress
-                    </span>
-                  )}
-                  {stats.notStarted > 0 && (
-                    <span className="flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3 text-fieldPending" />
-                      {stats.notStarted} not started
-                    </span>
-                  )}
+            {/* Compact Progress Bar - No text label */}
+            {stats.totalMilestones > 0 && (
+              <div className="flex items-center gap-2">
+                <Progress value={stats.avgProgress} className="flex-1 h-2" />
+                <div className="flex items-center gap-1 text-xs">
+                  <span className="font-medium">{stats.completedMilestones}/{stats.totalMilestones}</span>
+                  <span className="text-muted-foreground">({stats.avgProgress}%)</span>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
             
             {/* Quick Actions - Show when collapsed and items selected */}
             {!isExpanded && stats.selectedInGroup > 0 && (
@@ -269,6 +279,7 @@ export function MobileDrawingGroup({
                 onClick={() => onComponentClick(component.id)}
                 onQuickUpdate={(status) => onQuickUpdate(component.id, status)}
                 onEdit={() => onEdit(component.id)}
+                onOpenMilestones={onOpenMilestones ? () => onOpenMilestones(component.id) : undefined}
               />
             ))
           )}

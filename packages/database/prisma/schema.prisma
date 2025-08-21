@@ -53,6 +53,12 @@ model User {
     completedMilestones ComponentMilestone[] @relation("MilestoneCompleter")
     importJobs         ImportJob[]  @relation("ImportJobUser")
     auditLogs          AuditLog[]   @relation("AuditLogUser")
+    
+    // Reporting relations
+    reportingCacheCreated ReportingCache[] @relation("CacheCreator")
+    rocConfigsCreated     ROCConfigurations[] @relation("ROCConfigCreator")
+    snapshotsGenerated    ProgressSnapshots[] @relation("SnapshotGenerator")
+    reportGenerationsRequested ReportGenerations[] @relation("ReportRequester")
 
     @@unique([email])
     @@unique([username])
@@ -153,6 +159,9 @@ model Organization {
     
     // PipeTrak relations
     projects           Project[]
+    
+    // Reporting relations
+    rocConfigurations  ROCConfigurations[]
 
     @@unique([slug])
     @@map("organization")
@@ -244,6 +253,33 @@ enum ComponentStatus {
     ON_HOLD
 }
 
+enum ComponentType {
+    // Piping Components
+    SPOOL
+    PIPING_FOOTAGE
+    THREADED_PIPE
+    FITTING         // NEW: Pipe fittings (elbows, tees, reducers, etc.)
+    
+    // Mechanical Components  
+    VALVE
+    FLANGE          // NEW: Flanges (weld neck, slip-on, blind, etc.)
+    GASKET
+    SUPPORT
+    
+    // Field Work
+    FIELD_WELD
+    
+    // Instrumentation
+    INSTRUMENT
+    
+    // Secondary Systems
+    INSULATION
+    PAINT
+    
+    // Generic fallback
+    OTHER
+}
+
 enum ImportStatus {
     PENDING
     PROCESSING
@@ -271,6 +307,7 @@ model Project {
     status         ProjectStatus @default(ACTIVE)
     
     // Metadata
+    client         String?  // Client name for the project
     location       String?
     startDate      DateTime?
     targetDate     DateTime?
@@ -287,6 +324,16 @@ model Project {
     milestoneTemplates MilestoneTemplate[]
     importJobs     ImportJob[]
     auditLogs      AuditLog[]
+    
+    // Reporting relations
+    reportingCache    ReportingCache[]
+    rocConfigurations ROCConfigurations[]
+    progressSnapshots ProgressSnapshots[]
+    reportGenerations ReportGenerations[]
+    
+    // QC relations
+    welders           Welder[]
+    fieldWelds        FieldWeld[]
     
     // UPDATED: Indexes for performance and constraints
     @@unique([organizationId, jobNumber], name: "unique_org_job_number")
@@ -320,6 +367,7 @@ model Drawing {
     
     // Relations  
     components  Component[]
+    fieldWelds  FieldWeld[]
     
     @@unique([projectId, number])
     @@index([projectId, parentId])
@@ -364,10 +412,11 @@ model Component {
     
     // Component identification
     componentId        String   // Business ID from Excel (part number)
+    weldId             String?  @unique // Weld ID for FIELD_WELD components only (links to FieldWeld.weldIdNumber)
     instanceNumber     Int      @default(1) // Instance number on this drawing (1, 2, 3...)
     totalInstancesOnDrawing Int? // Total instances of this component on this drawing
     displayId          String?  // Generated: "GSWAZ1DZZASG5331-1" or "GSWAZ1DZZASG5331 (1 of 3)"
-    type              String   // e.g., "Spool", "Valve", "Support"
+    type              ComponentType   // Component type enum
     workflowType      WorkflowType
     
     // Physical attributes
@@ -390,6 +439,9 @@ model Component {
     totalQuantity     Float?
     quantityUnit      String?
     
+    // Import notes (comments from Excel)
+    notes             String?
+    
     // Calculated progress
     completionPercent Float    @default(0) // 0-100
     
@@ -406,6 +458,7 @@ model Component {
     // Relations
     milestones        ComponentMilestone[]
     auditLogs         AuditLog[]
+    fieldWelds        FieldWeld[]  // Field welds linked by weldId
     
     // Unique constraint per drawing (not project)
     @@unique([drawingId, componentId, instanceNumber])
@@ -420,6 +473,7 @@ model Component {
     @@index([projectId, testPackage])
     @@index([projectId, status])
     @@index([projectId, workflowType])
+    @@index([weldId]) // For field weld lookups
     // Composite index for common filtering patterns
     @@index([projectId, area, system, type, status])
 }
@@ -446,12 +500,15 @@ model ComponentMilestone {
     completedAt   DateTime?
     completedBy   String?
     completer     User?    @relation("MilestoneCompleter", fields: [completedBy], references: [id])
+    effectiveDate DateTime @default(now()) @db.Date // Date when work was actually completed (for backdating)
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
     
     @@unique([componentId, milestoneName])
     @@index([componentId, milestoneOrder])
     @@index([componentId, isCompleted])
+    @@index([effectiveDate])
+    @@index([componentId, effectiveDate])
 }
 
 model ImportJob {
@@ -519,4 +576,281 @@ model AuditLog {
     @@index([projectId, entityType, entityId])
     @@index([projectId, userId, timestamp])
     @@index([projectId, timestamp])
+}
+
+// Reporting Infrastructure Models
+
+enum ReportType {
+    PROGRESS_SUMMARY
+    COMPONENT_DETAILS
+    TEST_READINESS
+    TREND_ANALYSIS
+    AUDIT_TRAIL
+}
+
+enum ReportStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+}
+
+enum OutputFormat {
+    JSON
+    CSV
+    EXCEL
+    PDF
+}
+
+enum DeliveryMethod {
+    DOWNLOAD
+    EMAIL
+    API
+}
+
+enum GenerationMethod {
+    MANUAL
+    SCHEDULED
+    REALTIME
+}
+
+model ReportingCache {
+    id                   String   @id @default(cuid())
+    projectId            String
+    project              Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Cache details
+    reportType           String   // ReportType enum values
+    cacheKey             String   // Hash of filter parameters
+    filters              Json     @default("{}") /// @zod.custom.use(z.record(z.any()))
+    result               Json     /// @zod.custom.use(z.any())
+    
+    // Cache metadata
+    calculatedAt         DateTime @default(now())
+    expiresAt            DateTime // Default: NOW() + 5 minutes
+    calculationDuration  Int?     // Milliseconds for performance tracking
+    rowCount             Int?     // Number of records in result
+    createdBy            String?
+    creator              User?    @relation("CacheCreator", fields: [createdBy], references: [id])
+    
+    @@unique([projectId, reportType, cacheKey], name: "idx_cache_unique")
+    @@index([expiresAt], name: "idx_cache_expiry")
+    @@index([projectId, reportType], name: "idx_cache_project_type")
+    @@index([calculatedAt], name: "idx_cache_calculated")
+}
+
+model ROCConfigurations {
+    id                String   @id @default(cuid())
+    organizationId    String
+    organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    projectId         String?  // NULL = org default
+    project           Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Configuration details
+    componentType     String?  // NULL = applies to all types
+    milestoneWeights  Json     @default("{\"Receive\": 10, \"Erect\": 30, \"Connect\": 40, \"Test\": 15, \"Complete\": 5}") /// @zod.custom.use(z.record(z.number()))
+    description       String?
+    isDefault         Boolean  @default(false)
+    effectiveDate     DateTime @default(now())
+    
+    // Audit fields
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+    createdBy         String
+    creator           User     @relation("ROCConfigCreator", fields: [createdBy], references: [id])
+    
+    // Relations
+    progressSnapshots ProgressSnapshots[]
+    
+    @@index([organizationId, projectId], name: "idx_roc_org_project")
+    @@index([organizationId, effectiveDate], name: "idx_roc_effective")
+    @@index([organizationId, componentType], name: "idx_roc_component_type")
+    // Note: Conditional unique constraints are not supported in Prisma
+    // This constraint is enforced at the database level via migration
+}
+
+model ProgressSnapshots {
+    id                      String   @id @default(cuid())
+    projectId               String
+    project                 Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Snapshot timing
+    snapshotDate            DateTime @db.Date // Date only for uniqueness
+    snapshotTime            DateTime @default(now()) // Full timestamp
+    
+    // Aggregated metrics
+    totalComponents         Int      @default(0)
+    completedComponents     Int      @default(0)
+    overallCompletionPercent Decimal @default(0.00) @db.Decimal(5,2)
+    rocWeightedPercent      Decimal  @default(0.00) @db.Decimal(5,2)
+    
+    // Breakdown data (JSON arrays)
+    areaBreakdown           Json     @default("[]") /// @zod.custom.use(z.array(z.object({ area: z.string(), completionPercent: z.number(), componentCount: z.number() })))
+    systemBreakdown         Json     @default("[]") /// @zod.custom.use(z.array(z.object({ system: z.string(), completionPercent: z.number(), componentCount: z.number() })))
+    testPackageBreakdown    Json     @default("[]") /// @zod.custom.use(z.array(z.object({ testPackage: z.string(), completionPercent: z.number(), componentCount: z.number(), isReady: z.boolean() })))
+    
+    // Velocity metrics
+    dailyVelocity           Decimal? @db.Decimal(8,2) // Components completed per day
+    weeklyVelocity          Decimal? @db.Decimal(8,2) // Components completed per week
+    milestoneVelocity       Json     @default("{}") /// @zod.custom.use(z.record(z.number()))
+    
+    // Quality metrics
+    stalledComponents7d     Int      @default(0)
+    stalledComponents14d    Int      @default(0)
+    stalledComponents21d    Int      @default(0)
+    
+    // Generation metadata
+    calculationDuration     Int?     // Milliseconds
+    generatedBy             String?
+    generator               User?    @relation("SnapshotGenerator", fields: [generatedBy], references: [id])
+    generationMethod        String   @default("SCHEDULED") // GenerationMethod enum values
+    
+    // ROC configuration used
+    rocConfigId             String?
+    rocConfig               ROCConfigurations? @relation(fields: [rocConfigId], references: [id], onDelete: SetNull)
+    
+    @@unique([projectId, snapshotDate], name: "idx_snapshot_project_date")
+    @@index([snapshotTime], name: "idx_snapshot_time")
+    @@index([projectId, snapshotTime], name: "idx_snapshot_project_time")
+}
+
+model ReportGenerations {
+    id               String    @id @default(cuid())
+    projectId        String
+    project          Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Request details
+    reportType       String    // ReportType enum values
+    requestedBy      String
+    requester        User      @relation("ReportRequester", fields: [requestedBy], references: [id])
+    requestedAt      DateTime  @default(now())
+    
+    // Request configuration
+    filters          Json      @default("{}") /// @zod.custom.use(z.record(z.any()))
+    outputFormat     String    // OutputFormat enum values
+    deliveryMethod   String    @default("DOWNLOAD") // DeliveryMethod enum values
+    
+    // Processing details
+    status           String    @default("PENDING") // ReportStatus enum values
+    startedAt        DateTime?
+    completedAt      DateTime?
+    duration         Int?      // Milliseconds
+    
+    // Results
+    resultRowCount   Int?
+    resultSize       BigInt?   // Bytes
+    downloadUrl      String?   // Supabase Storage signed URL
+    downloadExpires  DateTime?
+    
+    // Error tracking
+    errorMessage     String?
+    errorDetails     Json?     /// @zod.custom.use(z.any())
+    
+    // Performance metadata
+    cacheHit         Boolean   @default(false)
+    dbQueryTime      Int?      // Milliseconds
+    exportTime       Int?      // Milliseconds
+    memoryUsage      BigInt?   // Bytes peak usage
+    
+    @@index([requestedBy, requestedAt], name: "idx_report_gen_user")
+    @@index([projectId, requestedAt], name: "idx_report_gen_project")
+    @@index([status, requestedAt], name: "idx_report_gen_status")
+    @@index([reportType, requestedAt], name: "idx_report_gen_type")
+}
+
+// ============================================================================
+// QC MODELS - Field Weld Quality Control System
+// ============================================================================
+
+model WeldType {
+    id          String      @id @default(cuid())
+    code        String      @unique  // BW, SW, FW, etc.
+    description String                // "Butt Weld", "Socket Weld", etc.
+    active      Boolean     @default(true)
+    createdAt   DateTime    @default(now())
+    
+    fieldWelds  FieldWeld[]
+    
+    @@map("weld_type")
+}
+
+model Welder {
+    id          String      @id @default(cuid())
+    projectId   String
+    project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Identification
+    stencil     String      // Unique welder identifier/stamp
+    name        String      // Full welder name
+    active      Boolean     @default(true)
+    
+    // Audit fields
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    
+    // Relations
+    fieldWelds  FieldWeld[]
+    
+    @@unique([projectId, stencil], name: "idx_welder_project_stencil")
+    @@index([projectId, active], name: "idx_welder_project_active")
+    @@map("welder")
+}
+
+model FieldWeld {
+    id          String      @id @default(cuid())
+    projectId   String
+    project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    
+    // Core identification
+    weldIdNumber    String      // QC-assigned, unique per project
+    welderId        String?
+    welder          Welder?     @relation(fields: [welderId], references: [id])
+    dateWelded      DateTime
+    
+    // Drawing inheritance
+    drawingId       String
+    drawing         Drawing     @relation(fields: [drawingId], references: [id])
+    packageNumber   String      // Auto-inherited from drawing
+    testPressure    Json        @default("{}") // Auto-inherited {value, unit}
+    specCode        String      // Auto-inherited from drawing
+    
+    // Optional tie-in reference
+    tieInNumber     String?     // Tie-in identifier if applicable
+    
+    // Weld specifications
+    xrayPercent     Int?        // X-RAY % (0-100 or null)
+    weldSize        String      // Nominal size: "6", "12x4", "DN150"
+    schedule        String      // Pipe wall schedule: "40", "80", "STD", "XS"
+    weldTypeCode    String      // FK to WeldType
+    weldType        WeldType    @relation(fields: [weldTypeCode], references: [code])
+    baseMetal       String?     // Material(s) joined: "A106 Gr B", "304L"
+    
+    // Post-weld heat treatment
+    pwhtRequired    Boolean     @default(false)
+    datePwht        DateTime?   // Date PWHT completed
+    
+    // NDE tracking
+    ndeTypes        String[]    @default([]) // ["RT", "UT", "PT", "MT", "VT"]
+    ndeResult       String?     // "Accept", "Reject", "Repair", "Pending"
+    ndeDate         DateTime?   // Date of NDE
+    
+    // Turnover
+    turnoverDate    DateTime?   // Date turned over to client
+    comments        String?     @db.Text // Free text notes, max 1000 chars
+    
+    // Link to component via weldId for milestone tracking  
+    component       Component?  @relation(fields: [weldIdNumber], references: [weldId])
+    
+    // Audit fields
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    
+    @@unique([projectId, weldIdNumber], name: "idx_field_weld_project_id")
+    @@index([weldIdNumber], name: "idx_field_weld_id") // For component relationship
+    @@index([projectId, packageNumber], name: "idx_field_weld_package")
+    @@index([projectId, welderId], name: "idx_field_weld_welder")
+    @@index([projectId, drawingId], name: "idx_field_weld_drawing")
+    @@index([projectId, ndeResult], name: "idx_field_weld_nde")
+    @@index([projectId, pwhtRequired], name: "idx_field_weld_pwht")
+    @@map("field_weld")
 }

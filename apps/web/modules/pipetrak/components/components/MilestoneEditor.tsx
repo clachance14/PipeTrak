@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useMemo, useEffect } from "react";
 import { Button } from "@ui/components/button";
 import { Checkbox } from "@ui/components/checkbox";
 import { Input } from "@ui/components/input";
@@ -14,12 +14,36 @@ import { toast } from "sonner";
 interface MilestoneEditorProps {
   component: Component;
   milestones: ComponentMilestone[];
+  onUpdate?: (componentId: string, updates: any) => void;
+  onProgressChange?: (progress: number) => void;
 }
 
-export function MilestoneEditor({ component, milestones }: MilestoneEditorProps) {
+export function MilestoneEditor({ component, milestones, onUpdate, onProgressChange }: MilestoneEditorProps) {
   const [editedMilestones, setEditedMilestones] = useState<Record<string, any>>({});
   const [isPending, startTransition] = useTransition();
   const [isSaving, setIsSaving] = useState(false);
+
+  // Calculate current progress including unsaved edits
+  const currentProgress = useMemo(() => {
+    const updatedMilestones = milestones.map(m => {
+      const changes = editedMilestones[m.id];
+      return changes ? { ...m, ...changes } : m;
+    });
+    
+    const completedCount = updatedMilestones.filter(m => m.isCompleted).length;
+    const progress = updatedMilestones.length > 0 
+      ? Math.round((completedCount / updatedMilestones.length) * 100)
+      : 0;
+    
+    return progress;
+  }, [milestones, editedMilestones]);
+
+  // Notify parent of progress changes
+  useEffect(() => {
+    if (onProgressChange) {
+      onProgressChange(currentProgress);
+    }
+  }, [currentProgress, onProgressChange]);
 
   const handleMilestoneChange = (milestoneId: string, field: string, value: any) => {
     setEditedMilestones(prev => ({
@@ -40,7 +64,7 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
     setIsSaving(true);
     
     try {
-      // Save all edited milestones
+      // Direct API calls to update milestones
       const updates = Object.entries(editedMilestones).map(([milestoneId, changes]) => {
         const milestone = milestones.find(m => m.id === milestoneId);
         if (!milestone) return null;
@@ -57,8 +81,27 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
       toast.success("Milestones updated successfully");
       setEditedMilestones({});
       
-      // Refresh the page to show updated data
-      window.location.reload();
+      // Trigger parent update callback if provided
+      if (onUpdate) {
+        // Calculate new progress based on updated milestones
+        const updatedMilestones = milestones.map(m => {
+          const changes = editedMilestones[m.id];
+          return changes ? { ...m, ...changes } : m;
+        });
+        
+        const completedCount = updatedMilestones.filter(m => m.isCompleted).length;
+        const progress = updatedMilestones.length > 0 
+          ? Math.round((completedCount / updatedMilestones.length) * 100)
+          : 0;
+        
+        onUpdate(component.id, {
+          milestones: updatedMilestones,
+          completionPercent: progress,
+          status: progress === 100 ? 'COMPLETED' : progress > 0 ? 'IN_PROGRESS' : 'NOT_STARTED'
+        });
+      }
+      
+      // No need to reload - real-time updates handle it
     } catch (error) {
       console.error("Error saving milestones:", error);
       toast.error("Failed to save milestones");
@@ -74,15 +117,28 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
       case 'MILESTONE_DISCRETE':
         const isCompleted = edited.isCompleted !== undefined ? edited.isCompleted : milestone.isCompleted;
         return (
-          <div className="flex items-center gap-3">
+          <div 
+            className="flex items-center gap-3 cursor-pointer select-none py-3 px-3 -mx-1 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[48px]"
+            onClick={() => !isSaving && handleMilestoneChange(milestone.id, 'isCompleted', !isCompleted)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                !isSaving && handleMilestoneChange(milestone.id, 'isCompleted', !isCompleted);
+              }
+            }}
+          >
             <Checkbox
               checked={isCompleted}
               onCheckedChange={(checked) => 
                 handleMilestoneChange(milestone.id, 'isCompleted', checked)
               }
               disabled={isSaving}
+              className="h-5 w-5 pointer-events-none"
+              aria-hidden="true"
             />
-            <span className={isCompleted ? 'line-through text-muted-foreground' : ''}>
+            <span className={`text-base flex-1 ${isCompleted ? 'line-through text-muted-foreground' : ''}`}>
               {milestone.milestoneName}
             </span>
             {isCompleted && (
@@ -96,10 +152,10 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
           ? edited.percentageComplete 
           : (milestone.percentageComplete || 0);
         return (
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <span>{milestone.milestoneName}</span>
-              <span className="text-sm font-medium">{percentage}%</span>
+              <span className="text-sm">{milestone.milestoneName}</span>
+              <span className="text-xs font-medium">{percentage}%</span>
             </div>
             <Slider
               value={[percentage]}
@@ -112,7 +168,7 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
               disabled={isSaving}
               className="w-full"
             />
-            <Progress value={percentage} className="h-2" />
+            <Progress value={percentage} className="h-1.5" />
           </div>
         );
 
@@ -124,10 +180,10 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
         const quantityPercent = quantityTotal > 0 ? (quantityComplete / quantityTotal) * 100 : 0;
         
         return (
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <span>{milestone.milestoneName}</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm">{milestone.milestoneName}</span>
+              <span className="text-xs text-muted-foreground">
                 {quantityComplete} / {quantityTotal}
               </span>
             </div>
@@ -141,10 +197,10 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
                 min={0}
                 max={quantityTotal}
                 disabled={isSaving}
-                className="w-24"
+                className="w-20 h-7 text-xs"
               />
-              <Progress value={quantityPercent} className="flex-1 h-2" />
-              <span className="text-sm font-medium min-w-[3rem]">
+              <Progress value={quantityPercent} className="flex-1 h-1.5" />
+              <span className="text-xs font-medium min-w-[2.5rem]">
                 {Math.round(quantityPercent)}%
               </span>
             </div>
@@ -160,21 +216,22 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
 
   return (
     <div className="rounded-lg border">
-      <div className="p-4 border-b">
+      <div className="p-3 border-b">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold">Milestones</h3>
+          <h3 className="font-semibold text-sm">Milestones</h3>
           {hasChanges && (
             <Button 
               size="sm" 
               onClick={handleSave}
               disabled={isSaving}
+              className="h-7 px-2 text-xs"
             >
               {isSaving ? (
                 <>Saving...</>
               ) : (
                 <>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Changes
+                  <Save className="mr-1 h-3 w-3" />
+                  Save
                 </>
               )}
             </Button>
@@ -182,23 +239,23 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
         </div>
       </div>
       
-      <div className="p-4 space-y-4">
+      <div className="p-3 space-y-2">
         {milestones.length === 0 ? (
-          <p className="text-muted-foreground text-center py-8">
+          <p className="text-muted-foreground text-center py-4 text-sm">
             No milestones configured for this component
           </p>
         ) : (
           milestones.map((milestone) => (
             <div 
               key={milestone.id} 
-              className={`p-3 rounded-lg ${
-                editedMilestones[milestone.id] ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50'
+              className={`rounded transition-all ${
+                editedMilestones[milestone.id] ? 'bg-blue-50 border border-blue-200' : ''
               }`}
             >
               {renderMilestoneControl(milestone)}
               {milestone.completedAt && (
-                <p className="text-xs text-muted-foreground mt-2">
-                  Completed on {new Date(milestone.completedAt).toLocaleDateString()}
+                <p className="text-xs text-muted-foreground mt-1 px-7">
+                  Completed: {new Date(milestone.completedAt).toLocaleDateString()}
                 </p>
               )}
             </div>
@@ -206,13 +263,13 @@ export function MilestoneEditor({ component, milestones }: MilestoneEditorProps)
         )}
       </div>
 
-      {/* Progress Summary */}
-      <div className="p-4 border-t bg-gray-50">
+      {/* Compact Progress Summary */}
+      <div className="p-2 border-t bg-gray-50">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Overall Progress</span>
-          <div className="flex items-center gap-3">
-            <Progress value={component.completionPercent} className="w-32 h-2" />
-            <span className="font-semibold">{Math.round(component.completionPercent)}%</span>
+          <span className="text-xs text-muted-foreground">Overall Progress</span>
+          <div className="flex items-center gap-2">
+            <Progress value={currentProgress} className="w-24 h-1.5" />
+            <span className="font-semibold text-sm">{currentProgress}%</span>
           </div>
         </div>
       </div>

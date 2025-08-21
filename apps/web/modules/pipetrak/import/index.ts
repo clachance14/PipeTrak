@@ -1,6 +1,8 @@
 // Excel import wizard components
-export * from './ImportWizard';
+export { ImportWizardV2 as ImportWizard } from './ImportWizardV2';
+export * from './ImportWizardV2';
 export * from './FileUpload';
-export * from './ImportPreview';
-export * from './ValidationResults';
-export * from './ImportProgress';
+export * from './ColumnMapper';
+export * from './ValidationPreview';
+export * from './ImportStatus';
+export * from './TemplateDownload';

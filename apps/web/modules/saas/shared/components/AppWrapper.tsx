@@ -1,5 +1,6 @@
 import { config } from "@repo/config";
 import { NavBar } from "@saas/shared/components/NavBar";
+import { MobileNavBar } from "@saas/shared/components/MobileNavBar";
 import { cn } from "@ui/lib";
 import type { PropsWithChildren } from "react";
 
@@ -7,25 +8,32 @@ export function AppWrapper({ children }: PropsWithChildren) {
 	return (
 		<div
 			className={cn(
-				"bg-[radial-gradient(farthest-corner_at_0%_0%,color-mix(in_oklch,var(--color-primary),transparent_95%)_0%,var(--color-background)_50%)] dark:bg-[radial-gradient(farthest-corner_at_0%_0%,color-mix(in_oklch,var(--color-primary),transparent_90%)_0%,var(--color-background)_50%)]",
+				"bg-transparent",
 				[config.ui.saas.useSidebarLayout ? "" : ""],
 			)}
 		>
-			<NavBar />
+			{/* Mobile navigation (hidden on lg and up) */}
+			<MobileNavBar />
+			
+			{/* Desktop navigation (hidden on mobile) */}
+			<div className="hidden lg:block">
+				<NavBar />
+			</div>
+			
 			<div
-				className={cn(" md:pr-4 py-4 flex", [
+				className={cn("flex", [
 					config.ui.saas.useSidebarLayout
-						? "min-h-[calc(100vh)] md:ml-[280px]"
+						? "min-h-screen md:ml-[280px]" // Match sidebar breakpoint
 						: "",
 				])}
 			>
 				<main
 					className={cn(
-						"py-6 border rounded-2xl bg-card px-4 md:p-8 min-h-full w-full",
+						"min-h-full w-full bg-white",
 						[config.ui.saas.useSidebarLayout ? "" : ""],
 					)}
 				>
-					<div className="container px-0">{children}</div>
+					{children}
 				</main>
 			</div>
 		</div>

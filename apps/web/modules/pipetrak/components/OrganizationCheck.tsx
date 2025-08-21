@@ -18,7 +18,7 @@ export function OrganizationCheck() {
   }
 
   const { session, user } = useSession();
-  const { activeOrganization, membership, loaded } = useActiveOrganization();
+  const { activeOrganization, activeOrganizationUserRole, loaded } = useActiveOrganization();
 
   if (!loaded) {
     return (
@@ -31,7 +31,7 @@ export function OrganizationCheck() {
   }
 
   const hasOrganization = !!activeOrganization;
-  const hasMembership = !!membership;
+  const hasMembership = !!activeOrganizationUserRole;
 
   return (
     <Card className={`border-dashed ${!hasOrganization ? "border-red-500" : "border-green-500"}`}>
@@ -47,7 +47,7 @@ export function OrganizationCheck() {
           <span className="text-muted-foreground">User: </span>
           <span className="font-medium">{user?.email || "Not logged in"}</span>
           {user?.role && (
-            <Badge variant="outline" className="ml-2 text-xs">
+            <Badge status="info" className="ml-2 text-xs">
               {user.role}
             </Badge>
           )}
@@ -71,11 +71,11 @@ export function OrganizationCheck() {
                   {activeOrganization.slug}
                 </code>
               </div>
-              {membership && (
+              {activeOrganizationUserRole && (
                 <div className="text-sm">
                   <span className="text-muted-foreground">Your Role: </span>
-                  <Badge variant="default" className="text-xs">
-                    {membership.role}
+                  <Badge status="info" className="text-xs">
+                    {activeOrganizationUserRole}
                   </Badge>
                 </div>
               )}

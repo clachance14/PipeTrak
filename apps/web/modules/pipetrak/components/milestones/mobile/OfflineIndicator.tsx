@@ -1,0 +1,85 @@
+"use client";
+
+import { Button } from "@ui/components/button";
+import { Badge } from "@ui/components/badge";
+import { 
+  Wifi,
+  WifiOff,
+  RefreshCw,
+  CloudOff,
+  Upload,
+  AlertTriangle
+} from "lucide-react";
+import { cn } from "@ui/lib";
+
+interface OfflineIndicatorProps {
+  isOnline: boolean;
+  queueCount: number;
+  onSync?: () => Promise<void>;
+  className?: string;
+}
+
+export function OfflineIndicator({
+  isOnline,
+  queueCount,
+  onSync,
+  className
+}: OfflineIndicatorProps) {
+  
+  if (isOnline && queueCount === 0) {
+    return (
+      <div className={cn("flex items-center gap-1", className)}>
+        <Wifi className="h-4 w-4 text-green-600" />
+        <span className="text-xs text-green-600 font-medium">Online</span>
+      </div>
+    );
+  }
+
+  if (!isOnline) {
+    return (
+      <div className={cn("flex items-center gap-2", className)}>
+        <div className="flex items-center gap-1">
+          <WifiOff className="h-4 w-4 text-amber-600" />
+          <span className="text-xs text-amber-600 font-medium">Offline</span>
+        </div>
+        
+        {queueCount > 0 && (
+          <Badge variant="outline" className="text-xs bg-amber-50 border-amber-200">
+            <CloudOff className="h-3 w-3 mr-1" />
+            {queueCount} queued
+          </Badge>
+        )}
+      </div>
+    );
+  }
+
+  if (isOnline && queueCount > 0) {
+    return (
+      <div className={cn("flex items-center gap-2", className)}>
+        <div className="flex items-center gap-1">
+          <AlertTriangle className="h-4 w-4 text-blue-600" />
+          <span className="text-xs text-blue-600 font-medium">Syncing</span>
+        </div>
+        
+        <Badge variant="outline" className="text-xs bg-blue-50 border-blue-200">
+          <Upload className="h-3 w-3 mr-1" />
+          {queueCount} pending
+        </Badge>
+
+        {onSync && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onSync}
+            className="h-6 px-2 text-xs"
+          >
+            <RefreshCw className="h-3 w-3 mr-1" />
+            Sync Now
+          </Button>
+        )}
+      </div>
+    );
+  }
+
+  return null;
+}

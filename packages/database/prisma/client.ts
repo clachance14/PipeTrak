@@ -1,7 +1,20 @@
 import { PrismaClient } from "./generated/client";
 
 const prismaClientSingleton = () => {
-	return new PrismaClient();
+	// Build connection URL with pool configuration
+	const baseUrl = process.env.DATABASE_URL || "";
+	const urlWithPool = baseUrl.includes("?") 
+		? `${baseUrl}&connection_limit=50&pool_timeout=60`
+		: `${baseUrl}?connection_limit=50&pool_timeout=60`;
+
+	return new PrismaClient({
+		log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+		datasources: {
+			db: {
+				url: urlWithPool,
+			},
+		},
+	});
 };
 
 declare global {

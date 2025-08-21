@@ -1,7 +1,7 @@
 import type { Config } from "./types";
 
 export const config = {
-	appName: "supastarter for Next.js Demo",
+	appName: "PipeTrak",
 	// Internationalization
 	i18n: {
 		// Whether internationalization should be enabled (if disabled, you still need to define the locale you want to use below and set it as the default locale)
@@ -36,7 +36,7 @@ export const config = {
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
-		requireOrganization: false,
+		requireOrganization: true,
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
 		forbiddenOrganizationSlugs: [
 			"new-organization",
@@ -44,6 +44,7 @@ export const config = {
 			"settings",
 			"ai-demo",
 			"organization-invitation",
+			"pipetrak",
 		],
 	},
 	// Users
@@ -77,7 +78,9 @@ export const config = {
 	// Mails
 	mails: {
 		// the from address for mails
-		from: "noreply@supastarter.dev",
+		// IMPORTANT: This email domain must be verified in your Resend dashboard
+		// Using Resend's onboarding email for development (no domain verification needed)
+		from: "onboarding@resend.dev",
 	},
 	// Frontend
 	ui: {

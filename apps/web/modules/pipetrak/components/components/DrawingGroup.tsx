@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -46,6 +46,7 @@ interface DrawingGroupProps {
   rowSelection: RowSelectionState;
   onRowSelectionChange: (componentIds: string[], selected: boolean) => void;
   onComponentUpdate: (componentId: string, field: string, value: any) => void;
+  onColumnSizingChange: (sizing: ColumnSizingState) => void;
   draggedColumn: string | null;
   targetColumn: string | null;
   onDragStart: (columnId: string) => void;
@@ -65,6 +66,7 @@ export function DrawingGroup({
   rowSelection,
   onRowSelectionChange,
   onComponentUpdate,
+  onColumnSizingChange,
   draggedColumn,
   targetColumn,
   onDragStart,
@@ -100,23 +102,80 @@ export function DrawingGroup({
     };
   }, [components, rowSelection]);
 
+  // Filter out the drawingNumber column since it's redundant in the group
+  const filteredColumns = useMemo(() => {
+    return columns.filter(col => col.id !== 'drawingNumber');
+  }, [columns]);
+  
+  // Map global selection (by component ID) to local selection state
+  const localRowSelection = useMemo(() => {
+    const localSelection: RowSelectionState = {};
+    components.forEach((component) => {
+      if (rowSelection[component.id]) {
+        localSelection[component.id] = true;
+      }
+    });
+    return localSelection;
+  }, [rowSelection, components]);
+
+  // Handle individual row selection changes
+  const handleLocalRowSelectionChange = (updaterOrState: RowSelectionState | ((old: RowSelectionState) => RowSelectionState)) => {
+    // Handle both function and object forms of state updates
+    const newSelection = typeof updaterOrState === 'function' 
+      ? updaterOrState(localRowSelection) 
+      : updaterOrState;
+    
+    const changedComponents: { id: string; selected: boolean }[] = [];
+    
+    // Find all components where selection state changed by component ID
+    components.forEach((component) => {
+      const componentId = component.id;
+      const isCurrentlySelected = !!localRowSelection[componentId];
+      const willBeSelected = !!newSelection[componentId];
+      
+      // If the selection state changed for this component
+      if (isCurrentlySelected !== willBeSelected) {
+        changedComponents.push({
+          id: componentId,
+          selected: willBeSelected
+        });
+      }
+    });
+    
+    // Batch the changes by selection state
+    const selectedIds = changedComponents.filter(c => c.selected).map(c => c.id);
+    const deselectedIds = changedComponents.filter(c => !c.selected).map(c => c.id);
+    
+    // Make the calls to update selection
+    if (selectedIds.length > 0) {
+      onRowSelectionChange(selectedIds, true);
+    }
+    if (deselectedIds.length > 0) {
+      onRowSelectionChange(deselectedIds, false);
+    }
+  };
+
   // Create table instance for this drawing group
   const table = useReactTable({
     data: components,
-    columns,
+    columns: filteredColumns,
     state: {
       sorting,
       columnVisibility,
-      rowSelection,
+      rowSelection: localRowSelection,
       columnSizing,
-      columnOrder,
+      columnOrder: columnOrder.filter(id => id !== 'drawingNumber'),
     },
     onSortingChange: setSorting,
+    onRowSelectionChange: handleLocalRowSelectionChange,
+    onColumnSizingChange: onColumnSizingChange,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    enableRowSelection: true,
     enableColumnResizing: true,
     columnResizeMode: 'onChange',
+    getRowId: (row) => row.id, // Use component ID as row identifier
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) => {
         const component = components[rowIndex];
@@ -165,7 +224,7 @@ export function DrawingGroup({
 
   return (
     <Card className={cn(
-      "transition-all duration-200",
+      "transition-all duration-200 w-full min-w-0 bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 shadow-sm",
       getStatusColor(),
       stats.selectedInGroup > 0 && "ring-2 ring-primary"
     )}>
@@ -266,9 +325,9 @@ export function DrawingGroup({
               <div 
                 ref={tableContainerRef}
                 className="relative w-full overflow-auto"
-                style={{ maxHeight: '600px' }}
+                style={{ maxHeight: '600px', overflowX: 'auto' }}
               >
-                <table className="w-full">
+                <table className="w-full" style={{ tableLayout: 'fixed' }}>
                   {/* Table Header */}
                   <thead className="sticky top-0 z-10 bg-gray-50 border-b">
                     {table.getHeaderGroups().map(headerGroup => (
@@ -281,9 +340,8 @@ export function DrawingGroup({
                             <th
                               key={header.id}
                               className={cn(
-                                "relative px-2 py-3 text-left text-sm font-semibold text-gray-900",
-                                isDropTarget && "bg-blue-100",
-                                header.column.getCanResize() && "resize-handle"
+                                "relative px-2 py-2 text-left text-sm font-semibold text-gray-900 border-r last:border-r-0",
+                                isDropTarget && "bg-blue-100"
                               )}
                               style={{
                                 width: header.getSize(),
@@ -317,10 +375,13 @@ export function DrawingGroup({
                                   onMouseDown={header.getResizeHandler()}
                                   onTouchStart={header.getResizeHandler()}
                                   className={cn(
-                                    "absolute right-0 top-0 h-full w-1 cursor-col-resize select-none touch-none",
-                                    "hover:bg-blue-500 hover:w-2 transition-all",
-                                    header.column.getIsResizing() && "bg-blue-500 w-2"
+                                    "absolute right-0 top-0 h-full w-2 cursor-col-resize select-none touch-none z-10",
+                                    "bg-blue-200 hover:bg-blue-500 transition-all opacity-50 hover:opacity-100",
+                                    header.column.getIsResizing() && "bg-blue-500 opacity-100"
                                   )}
+                                  style={{
+                                    right: '-1px' // Extend slightly outside the column
+                                  }}
                                 />
                               )}
                             </th>
@@ -331,7 +392,10 @@ export function DrawingGroup({
                   </thead>
                   
                   {/* Table Body */}
-                  <tbody className="relative">
+                  <tbody>
+                    {/* Spacer for virtual scrolling */}
+                    <tr style={{ height: virtualizer.getVirtualItems()[0]?.start || 0 }} />
+                    
                     {virtualRows.map(virtualRow => {
                       const row = rows[virtualRow.index];
                       return (
@@ -342,32 +406,19 @@ export function DrawingGroup({
                             row.getIsSelected() && "bg-blue-50"
                           )}
                           style={{
-                            height: '52px',
-                            transform: `translateY(${virtualRow.start}px)`,
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
+                            height: '52px'
                           }}
                         >
                           {row.getVisibleCells().map(cell => (
                             <td
                               key={cell.id}
-                              className="border-r last:border-r-0"
+                              className="px-2 py-1 border-r last:border-r-0"
                               style={{
                                 width: cell.column.getSize(),
-                                maxWidth: cell.column.getSize(),
-                                height: '52px'
+                                maxWidth: cell.column.getSize()
                               }}
                             >
-                              <div
-                                style={{
-                                  width: cell.column.getSize(),
-                                  maxWidth: cell.column.getSize(),
-                                  overflow: 'hidden',
-                                  height: '52px'
-                                }}
-                              >
+                              <div className="flex items-center h-full">
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext()
@@ -378,11 +429,11 @@ export function DrawingGroup({
                         </tr>
                       );
                     })}
+                    
+                    {/* Spacer for remaining virtual items */}
+                    <tr style={{ height: virtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1]?.end || 0) }} />
                   </tbody>
                 </table>
-                
-                {/* Virtual spacer for scrolling */}
-                <div style={{ height: virtualizer.getTotalSize() }} />
               </div>
             )}
           </div>

@@ -106,7 +106,10 @@ export const drawingsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
       }
 
       const drawings = await prisma.drawing.findMany({
@@ -123,7 +126,12 @@ export const drawingsRouter = new Hono()
 
       return c.json(drawings);
     } catch (error) {
-      return c.json({ error: "Failed to fetch drawings" }, 500);
+      console.error("Drawings fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch drawings",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -136,7 +144,10 @@ export const drawingsRouter = new Hono()
       // Verify access
       const hasAccess = await verifyProjectAccess(userId, projectId);
       if (!hasAccess) {
-        return c.json({ error: "Project not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
       }
 
       // Get all drawings with component counts
@@ -208,8 +219,12 @@ export const drawingsRouter = new Hono()
         }
       });
     } catch (error) {
-      console.error("Failed to fetch drawing hierarchy:", error);
-      return c.json({ error: "Failed to fetch drawing hierarchy" }, 500);
+      console.error("Drawing hierarchy fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch drawing hierarchy",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -248,7 +263,10 @@ export const drawingsRouter = new Hono()
       });
 
       if (!drawing) {
-        return c.json({ error: "Drawing not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Drawing not found or access denied"
+        }, 403);
       }
 
       // Build component filters
@@ -302,8 +320,12 @@ export const drawingsRouter = new Hono()
         }
       });
     } catch (error) {
-      console.error("Failed to fetch drawing details:", error);
-      return c.json({ error: "Failed to fetch drawing details" }, 500);
+      console.error("Drawing details fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch drawing details",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -316,13 +338,19 @@ export const drawingsRouter = new Hono()
       const userId = c.get("user")?.id;
 
       if (!query || query.length < 2) {
-        return c.json({ error: "Search query must be at least 2 characters" }, 400);
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Search query must be at least 2 characters"
+        }, 400);
       }
 
       // Verify access
       const hasAccess = await verifyProjectAccess(userId, projectId);
       if (!hasAccess) {
-        return c.json({ error: "Project not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
       }
 
       // Search drawings by number, title, or component content
@@ -386,8 +414,186 @@ export const drawingsRouter = new Hono()
 
       return c.json({ results: resultsWithPaths });
     } catch (error) {
-      console.error("Search failed:", error);
-      return c.json({ error: "Search failed" }, 500);
+      console.error("Drawing search error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Drawing search failed",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Get single drawing with components
+  .get("/:id", async (c) => {
+    try {
+      const id = c.req.param("id");
+      const userId = c.get("user")?.id;
+      
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      const drawing = await prisma.drawing.findFirst({
+        where: {
+          id,
+          project: {
+            organization: {
+              members: {
+                some: { userId },
+              },
+            },
+          },
+        },
+        include: {
+          project: {
+            select: { id: true, jobName: true, jobNumber: true },
+          },
+          parent: {
+            select: { id: true, number: true, title: true },
+          },
+          children: {
+            select: { 
+              id: true, 
+              number: true, 
+              title: true,
+              _count: { select: { components: true } }
+            },
+          },
+          _count: {
+            select: { components: true },
+          },
+        },
+      });
+
+      if (!drawing) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Drawing not found or access denied"
+        }, 403);
+      }
+
+      return c.json(drawing);
+    } catch (error) {
+      console.error("Drawing fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch drawing",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Get components for a specific drawing
+  .get("/:id/components", async (c) => {
+    try {
+      const drawingId = c.req.param("id");
+      const userId = c.get("user")?.id;
+      
+      // Parse query parameters
+      const filters = ComponentFiltersSchema.parse(c.req.query());
+      
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      // Verify drawing access
+      const drawing = await prisma.drawing.findFirst({
+        where: {
+          id: drawingId,
+          project: {
+            organization: {
+              members: { some: { userId } }
+            }
+          }
+        }
+      });
+
+      if (!drawing) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Drawing not found or access denied"
+        }, 403);
+      }
+
+      // Build component filters
+      const whereClause = buildComponentFilters({
+        drawingId,
+        status: filters.status?.split(','),
+        type: filters.type?.split(','),
+        area: filters.area?.split(','),
+        system: filters.system?.split(','),
+        search: filters.search
+      });
+
+      const page = parseInt(filters.page);
+      const limit = parseInt(filters.limit);
+
+      // Get paginated components
+      const [components, totalCount] = await Promise.all([
+        prisma.component.findMany({
+          where: whereClause,
+          include: {
+            milestones: {
+              select: {
+                id: true,
+                milestoneName: true,
+                isCompleted: true,
+                weight: true,
+                completedAt: true,
+                completer: {
+                  select: { id: true, name: true, email: true }
+                }
+              },
+              orderBy: { milestoneOrder: 'asc' }
+            },
+            milestoneTemplate: {
+              select: { id: true, name: true }
+            },
+            installer: {
+              select: { id: true, name: true, email: true }
+            }
+          },
+          orderBy: [
+            { componentId: 'asc' },
+            { instanceNumber: 'asc' }
+          ],
+          skip: (page - 1) * limit,
+          take: limit
+        }),
+        prisma.component.count({ where: whereClause })
+      ]);
+
+      return c.json({
+        data: components,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / limit),
+          hasMore: page * limit < totalCount,
+        },
+        filters: filters,
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid query parameters",
+          details: error.errors
+        }, 400);
+      }
+      console.error("Drawing components fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch drawing components",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -397,6 +603,13 @@ export const drawingsRouter = new Hono()
       const body = await c.req.json();
       const data = DrawingCreateSchema.parse(body);
       const userId = c.get("user")?.id;
+
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
 
       // Verify user has admin access
       const project = await prisma.project.findFirst({
@@ -414,13 +627,59 @@ export const drawingsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or insufficient permissions" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or insufficient permissions"
+        }, 403);
+      }
+
+      // Check for duplicate drawing number within project
+      const existingDrawing = await prisma.drawing.findFirst({
+        where: {
+          projectId: data.projectId,
+          number: data.number,
+        },
+      });
+
+      if (existingDrawing) {
+        return c.json({
+          code: "DUPLICATE_DRAWING_NUMBER",
+          message: "Drawing number already exists",
+          details: `Drawing number ${data.number} is already in use within this project`
+        }, 409);
+      }
+
+      // If parentId is provided, verify it exists and belongs to same project
+      if (data.parentId) {
+        const parent = await prisma.drawing.findFirst({
+          where: {
+            id: data.parentId,
+            projectId: data.projectId,
+          },
+        });
+
+        if (!parent) {
+          return c.json({
+            code: "INVALID_PARENT",
+            message: "Parent drawing not found or belongs to different project"
+          }, 400);
+        }
       }
 
       const drawing = await prisma.drawing.create({
         data,
         include: {
-          parent: true,
+          parent: {
+            select: { id: true, number: true, title: true },
+          },
+          children: {
+            select: { 
+              id: true, 
+              number: true, 
+              title: true,
+              _count: { select: { components: true } }
+            },
+          },
           _count: {
             select: { components: true },
           },
@@ -430,8 +689,431 @@ export const drawingsRouter = new Hono()
       return c.json(drawing, 201);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid input",
+          details: error.errors
+        }, 400);
       }
-      return c.json({ error: "Failed to create drawing" }, 500);
+      console.error("Drawing creation error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to create drawing",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Update drawing
+  .patch("/:id", async (c) => {
+    try {
+      const id = c.req.param("id");
+      const body = await c.req.json();
+      const updates = DrawingUpdateSchema.parse(body);
+      const userId = c.get("user")?.id;
+
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      // Verify user has admin access and get existing drawing
+      const drawing = await prisma.drawing.findFirst({
+        where: {
+          id,
+          project: {
+            organization: {
+              members: {
+                some: {
+                  userId,
+                  role: { in: ["owner", "admin"] },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!drawing) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Drawing not found or insufficient permissions"
+        }, 403);
+      }
+
+      // If updating parentId, verify it's valid
+      if (updates.parentId !== undefined) {
+        if (updates.parentId === id) {
+          return c.json({
+            code: "INVALID_PARENT",
+            message: "Drawing cannot be its own parent"
+          }, 400);
+        }
+
+        if (updates.parentId) {
+          const parent = await prisma.drawing.findFirst({
+            where: {
+              id: updates.parentId,
+              projectId: drawing.projectId,
+            },
+          });
+
+          if (!parent) {
+            return c.json({
+              code: "INVALID_PARENT",
+              message: "Parent drawing not found or belongs to different project"
+            }, 400);
+          }
+
+          // Check for circular reference
+          const wouldCreateLoop = await checkCircularReference(id, updates.parentId);
+          if (wouldCreateLoop) {
+            return c.json({
+              code: "CIRCULAR_REFERENCE",
+              message: "Update would create a circular reference in drawing hierarchy"
+            }, 400);
+          }
+        }
+      }
+
+      const updatedDrawing = await prisma.drawing.update({
+        where: { id },
+        data: updates,
+        include: {
+          parent: {
+            select: { id: true, number: true, title: true },
+          },
+          children: {
+            select: { 
+              id: true, 
+              number: true, 
+              title: true,
+              _count: { select: { components: true } }
+            },
+          },
+          _count: {
+            select: { components: true },
+          },
+        },
+      });
+
+      return c.json(updatedDrawing);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid input",
+          details: error.errors
+        }, 400);
+      }
+      console.error("Drawing update error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to update drawing",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Delete drawing
+  .delete("/:id", async (c) => {
+    try {
+      const id = c.req.param("id");
+      const userId = c.get("user")?.id;
+      const cascade = c.req.query("cascade") === "true";
+
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      // Verify user has admin access
+      const drawing = await prisma.drawing.findFirst({
+        where: {
+          id,
+          project: {
+            organization: {
+              members: {
+                some: {
+                  userId,
+                  role: { in: ["owner", "admin"] },
+                },
+              },
+            },
+          },
+        },
+        include: {
+          children: {
+            select: { id: true, number: true, title: true },
+          },
+          _count: {
+            select: { components: true },
+          },
+        },
+      });
+
+      if (!drawing) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Drawing not found or insufficient permissions"
+        }, 403);
+      }
+
+      // Check if drawing has child drawings
+      if (drawing.children.length > 0 && !cascade) {
+        return c.json({
+          code: "HAS_CHILDREN",
+          message: "Cannot delete drawing with child drawings",
+          details: {
+            childCount: drawing.children.length,
+            children: drawing.children,
+            suggestion: "Use cascade=true to delete children, or move them to a different parent first"
+          }
+        }, 400);
+      }
+
+      // Check if drawing has components
+      if (drawing._count.components > 0) {
+        return c.json({
+          code: "HAS_COMPONENTS",
+          message: "Cannot delete drawing with components",
+          details: {
+            componentCount: drawing._count.components,
+            suggestion: "Delete or move components to a different drawing first"
+          }
+        }, 400);
+      }
+
+      // Delete drawing (and children if cascade is true)
+      if (cascade && drawing.children.length > 0) {
+        // Delete children first (recursive cascade is handled by the database)
+        await prisma.drawing.deleteMany({
+          where: {
+            parentId: id,
+          },
+        });
+      }
+
+      const deletedDrawing = await prisma.drawing.delete({
+        where: { id },
+      });
+
+      return c.json({
+        success: true,
+        deleted: deletedDrawing,
+        cascaded: cascade && drawing.children.length > 0,
+        deletedChildren: cascade ? drawing.children.length : 0,
+      });
+    } catch (error) {
+      console.error("Drawing deletion error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to delete drawing",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Bulk import drawings
+  .post("/bulk-import", async (c) => {
+    try {
+      const body = await c.req.json();
+      const data = z.object({
+        projectId: z.string(),
+        drawings: z.array(DrawingCreateSchema.omit({ projectId: true })),
+        options: z.object({
+          validateOnly: z.boolean().optional().default(false),
+          skipDuplicates: z.boolean().optional().default(false),
+          createHierarchy: z.boolean().optional().default(true),
+        }).optional().default({}),
+      }).parse(body);
+
+      const userId = c.get("user")?.id;
+
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      // Verify user has admin access
+      const project = await prisma.project.findFirst({
+        where: {
+          id: data.projectId,
+          organization: {
+            members: {
+              some: {
+                userId,
+                role: { in: ["owner", "admin"] },
+              },
+            },
+          },
+        },
+      });
+
+      if (!project) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or insufficient permissions"
+        }, 403);
+      }
+
+      // Get existing drawing numbers
+      const existingDrawings = await prisma.drawing.findMany({
+        where: { projectId: data.projectId },
+        select: { number: true },
+      });
+      const existingNumbers = new Set(existingDrawings.map(d => d.number));
+
+      // Validate drawings
+      const validationResults = {
+        valid: [] as any[],
+        invalid: [] as any[],
+        duplicates: [] as any[],
+      };
+
+      data.drawings.forEach((drawing, index) => {
+        const issues = [];
+
+        // Check for duplicates with existing drawings
+        if (existingNumbers.has(drawing.number)) {
+          if (!data.options.skipDuplicates) {
+            issues.push(`Drawing number ${drawing.number} already exists in project`);
+          } else {
+            validationResults.duplicates.push({
+              index,
+              number: drawing.number,
+              action: "skipped"
+            });
+            return;
+          }
+        }
+
+        // Check for duplicates within import batch
+        const duplicatesInBatch = data.drawings
+          .slice(0, index)
+          .filter(d => d.number === drawing.number);
+        if (duplicatesInBatch.length > 0) {
+          issues.push(`Duplicate number ${drawing.number} found within import batch`);
+        }
+
+        if (issues.length > 0) {
+          validationResults.invalid.push({
+            index,
+            drawing,
+            issues,
+          });
+        } else {
+          validationResults.valid.push({
+            index,
+            drawing: {
+              ...drawing,
+              projectId: data.projectId,
+            },
+          });
+        }
+      });
+
+      // If validation only, return results
+      if (data.options.validateOnly) {
+        return c.json({
+          validation: validationResults,
+          summary: {
+            total: data.drawings.length,
+            valid: validationResults.valid.length,
+            invalid: validationResults.invalid.length,
+            duplicates: validationResults.duplicates.length,
+          },
+        });
+      }
+
+      // Return error if any invalid drawings found
+      if (validationResults.invalid.length > 0) {
+        return c.json({
+          code: "VALIDATION_FAILED",
+          message: "Some drawings failed validation",
+          details: validationResults,
+        }, 400);
+      }
+
+      // Create valid drawings
+      const createdDrawings = [];
+      for (const item of validationResults.valid) {
+        try {
+          const drawing = await prisma.drawing.create({
+            data: item.drawing,
+            include: {
+              parent: {
+                select: { id: true, number: true, title: true },
+              },
+              _count: {
+                select: { components: true },
+              },
+            },
+          });
+          createdDrawings.push(drawing);
+        } catch (error) {
+          console.error(`Failed to create drawing ${item.drawing.number}:`, error);
+          validationResults.invalid.push({
+            index: item.index,
+            drawing: item.drawing,
+            issues: [`Database error: ${error instanceof Error ? error.message : 'Unknown error'}`],
+          });
+        }
+      }
+
+      return c.json({
+        success: true,
+        created: createdDrawings,
+        summary: {
+          total: data.drawings.length,
+          created: createdDrawings.length,
+          skipped: validationResults.duplicates.length,
+          failed: validationResults.invalid.length,
+        },
+        validation: validationResults.invalid.length > 0 ? validationResults : undefined,
+      }, 201);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid input for bulk import",
+          details: error.errors
+        }, 400);
+      }
+      console.error("Bulk drawing import error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to import drawings",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   });
+
+// Helper function to check for circular references
+async function checkCircularReference(drawingId: string, proposedParentId: string): Promise<boolean> {
+  let currentId = proposedParentId;
+  const visited = new Set<string>();
+  
+  while (currentId) {
+    if (visited.has(currentId) || currentId === drawingId) {
+      return true; // Circular reference detected
+    }
+    
+    visited.add(currentId);
+    
+    const parent = await prisma.drawing.findUnique({
+      where: { id: currentId },
+      select: { parentId: true },
+    });
+    
+    currentId = parent?.parentId || null;
+  }
+  
+  return false;
+}

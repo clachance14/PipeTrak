@@ -1,9 +1,5 @@
-import { config } from "@repo/config";
-import { getOrganizationList, getSession } from "@saas/auth/lib/server";
-import { PageHeader } from "@saas/shared/components/PageHeader";
-import UserStart from "@saas/start/UserStart";
+import { getSession, getOrganizationList } from "@saas/auth/lib/server";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 
 export default async function AppStartPage() {
 	const session = await getSession();
@@ -12,34 +8,19 @@ export default async function AppStartPage() {
 		redirect("/auth/login");
 	}
 
+	// Get user's organizations to determine correct redirect path
 	const organizations = await getOrganizationList();
+	
+	// Find active organization or use the first one
+	const activeOrganization = organizations.find(
+		(org) => org.id === session.session.activeOrganizationId
+	) || organizations[0];
 
-	if (
-		config.organizations.enable &&
-		config.organizations.requireOrganization
-	) {
-		const organization =
-			organizations.find(
-				(org) => org.id === session?.session.activeOrganizationId,
-			) || organizations[0];
-
-		if (!organization) {
-			redirect("/new-organization");
-		}
-
-		redirect(`/app/${organization.slug}`);
+	if (!activeOrganization) {
+		// If no organization, redirect to create one
+		redirect("/new-organization");
 	}
 
-	const t = await getTranslations();
-
-	return (
-		<div className="">
-			<PageHeader
-				title={t("start.welcome", { name: session?.user.name })}
-				subtitle={t("start.subtitle")}
-			/>
-
-			<UserStart />
-		</div>
-	);
+	// Redirect to organization home page
+	redirect(`/app/${activeOrganization.slug}`);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
@@ -18,7 +18,9 @@ import {
   Edit2,
   CheckSquare,
   Copy,
-  Trash2
+  Trash2,
+  Target,
+  ChevronUp
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -39,6 +41,7 @@ interface MobileComponentCardProps {
   onEdit?: () => void;
   onDuplicate?: () => void;
   onDelete?: () => void;
+  onOpenMilestones?: () => void;
 }
 
 export function MobileComponentCard({ 
@@ -49,12 +52,34 @@ export function MobileComponentCard({
   onQuickUpdate,
   onEdit,
   onDuplicate,
-  onDelete
+  onDelete,
+  onOpenMilestones
 }: MobileComponentCardProps) {
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Calculate milestone statistics
+  const milestoneStats = useMemo(() => {
+    if (!component.milestones || component.milestones.length === 0) {
+      return { total: 0, completed: 0, current: null, nextPending: null };
+    }
+    
+    const total = component.milestones.length;
+    const completed = component.milestones.filter(m => m.isCompleted).length;
+    
+    // Find current milestone (first incomplete)
+    const current = component.milestones.find(m => !m.isCompleted);
+    
+    // Find next pending milestone
+    const currentIndex = current ? component.milestones.indexOf(current) : -1;
+    const nextPending = currentIndex >= 0 && currentIndex < total - 1 
+      ? component.milestones[currentIndex + 1] 
+      : null;
+    
+    return { total, completed, current, nextPending };
+  }, [component.milestones]);
 
   const getStatusIcon = () => {
     switch (component.status) {
@@ -80,6 +105,30 @@ export function MobileComponentCard({
 
   const formatStatus = (status: string) => {
     return status.replace(/_/g, " ");
+  };
+  
+  const getMilestoneVariant = (milestone: any) => {
+    if (!milestone) return "outline";
+    if (milestone.isCompleted) return "default";
+    const percent = milestone.percentageComplete || milestone.quantityCompleted || 0;
+    if (percent > 0) return "secondary";
+    return "outline";
+  };
+  
+  const getMilestoneProgress = () => {
+    if (!milestoneStats.current) return 100; // All complete
+    
+    // For current milestone, check workflow type
+    if (component.workflowType === "MILESTONE_PERCENTAGE") {
+      return milestoneStats.current.percentageComplete || 0;
+    } else if (component.workflowType === "MILESTONE_QUANTITY") {
+      const total = milestoneStats.current.quantityRequired || 1;
+      const completed = milestoneStats.current.quantityCompleted || 0;
+      return Math.round((completed / total) * 100);
+    } else {
+      // Discrete: either 0 or 100
+      return milestoneStats.current.isCompleted ? 100 : 0;
+    }
   };
 
   // Touch handlers for swipe gestures
@@ -158,58 +207,40 @@ export function MobileComponentCard({
         </>
       )}
 
-      <CardContent className="p-4 space-y-3">
-        {/* Header with Component ID, Status and Actions */}
-        <div className="flex items-start justify-between">
-          <div className="flex-1 space-y-1">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={(e) => {
-                  e.stopPropagation();
-                  onSelect(e.target.checked);
-                }}
-                className="h-5 w-5 rounded border-gray-300"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <h3 className="font-bold text-base">
-                {component.componentId}
-              </h3>
+      <CardContent className="p-3 space-y-2">
+        {/* Compact Header Row */}
+        <div className="flex items-center justify-between gap-2">
+          {/* Left side: Checkbox, ID, Drawing, Type/Size */}
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={(e) => {
+                e.stopPropagation();
+                onSelect(e.target.checked);
+              }}
+              className="h-5 w-5 rounded border-gray-300 flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <div className="flex items-center gap-2 min-w-0">
+              <MapPin className="h-3 w-3 text-blue-600 flex-shrink-0" />
+              <span className="text-xs text-blue-600">{component.drawingNumber}</span>
             </div>
-            {component.drawingNumber && (
-              <div className="flex items-center gap-1 text-sm text-blue-600">
-                <MapPin className="h-3 w-3" />
-                <span>{component.drawingNumber}</span>
-              </div>
-            )}
+            <h3 className="font-semibold text-sm truncate">
+              {component.componentId}
+            </h3>
           </div>
-          <div className="flex items-center gap-2">
+          
+          {/* Right side: Status icon and menu */}
+          <div className="flex items-center gap-1 flex-shrink-0">
             {getStatusIcon()}
             <DropdownMenu>
               <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Button variant="ghost" size="icon" className="h-7 w-7">
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={(e) => {
-                  e.stopPropagation();
-                  onClick();
-                }}>
-                  <ChevronRight className="mr-2 h-4 w-4" />
-                  View Details
-                </DropdownMenuItem>
-                {onEdit && (
-                  <DropdownMenuItem onClick={(e) => {
-                    e.stopPropagation();
-                    onEdit();
-                  }}>
-                    <Edit2 className="mr-2 h-4 w-4" />
-                    Edit
-                  </DropdownMenuItem>
-                )}
-                <DropdownMenuSeparator />
                 {onQuickUpdate && component.status === "NOT_STARTED" && (
                   <DropdownMenuItem onClick={(e) => {
                     e.stopPropagation();
@@ -228,125 +259,100 @@ export function MobileComponentCard({
                     Mark Complete
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuSeparator />
-                {onDuplicate && (
-                  <DropdownMenuItem onClick={(e) => {
-                    e.stopPropagation();
-                    onDuplicate();
-                  }}>
-                    <Copy className="mr-2 h-4 w-4" />
-                    Duplicate
-                  </DropdownMenuItem>
-                )}
-                {onDelete && (
-                  <DropdownMenuItem 
-                    className="text-red-600"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete();
-                    }}
-                  >
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
-                  </DropdownMenuItem>
-                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
 
-        {/* Component Type and Size */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {component.type && (
-            <Badge variant="outline" className="text-xs">
-              {component.type}
-            </Badge>
-          )}
-          {component.size && (
-            <Badge variant="outline" className="text-xs">
-              {component.size}
-            </Badge>
-          )}
-          {component.spec && (
-            <Badge variant="outline" className="text-xs">
-              {component.spec}
-            </Badge>
-          )}
+        {/* Component details in a single line */}
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          {component.type && <span className="font-medium">{component.type}</span>}
+          {component.size && <span>• {component.size}</span>}
+          {component.spec && <span>• {component.spec}</span>}
         </div>
 
-        {/* Description */}
+        {/* Description - only if exists */}
         {component.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-xs text-muted-foreground line-clamp-1">
             {component.description}
           </p>
         )}
 
-        {/* Meta Information Grid - Larger touch targets */}
-        <div className="grid grid-cols-2 gap-3 py-2">
-          {component.area && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="h-8 w-8 rounded bg-gray-100 flex items-center justify-center">
-                <MapPin className="h-4 w-4 text-gray-600" />
+        {/* Compact Milestone Section */}
+        {milestoneStats.total > 0 && (
+          <div className="milestone-section space-y-2 pt-2 border-t">
+            {/* Single line milestone status */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 flex-1">
+                <Target className="h-4 w-4 text-blue-600" />
+                <span className="text-xs font-medium truncate">
+                  {milestoneStats.current?.milestoneName || "Complete"}
+                </span>
+                <Badge variant="outline" className="text-xs">
+                  {milestoneStats.completed}/{milestoneStats.total}
+                </Badge>
               </div>
-              <span className="truncate">{component.area}</span>
+              <span className="text-xs font-bold">{component.completionPercent || 0}%</span>
+            </div>
+            
+            {/* Progress bar */}
+            <Progress value={component.completionPercent || 0} className="h-2" />
+            
+            {/* Update button - compact */}
+            {onOpenMilestones && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full h-10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenMilestones();
+                }}
+              >
+                <Target className="mr-2 h-4 w-4" />
+                Update Milestones
+              </Button>
+            )}
+          </div>
+        )}
+
+        {/* Compact Meta Information - Single line */}
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          {component.area && (
+            <div className="flex items-center gap-1">
+              <MapPin className="h-3 w-3" />
+              <span>{component.area}</span>
             </div>
           )}
           {component.system && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="h-8 w-8 rounded bg-gray-100 flex items-center justify-center">
-                <Package className="h-4 w-4 text-gray-600" />
-              </div>
-              <span className="truncate">{component.system}</span>
+            <div className="flex items-center gap-1">
+              <Package className="h-3 w-3" />
+              <span>{component.system}</span>
             </div>
           )}
           {component.testPackage && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="h-8 w-8 rounded bg-gray-100 flex items-center justify-center">
-                <Wrench className="h-4 w-4 text-gray-600" />
-              </div>
-              <span className="truncate">{component.testPackage}</span>
-            </div>
-          )}
-          {component.material && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="h-8 w-8 rounded bg-gray-100 flex items-center justify-center">
-                <FileText className="h-4 w-4 text-gray-600" />
-              </div>
-              <span className="truncate">{component.material}</span>
+            <div className="flex items-center gap-1">
+              <Wrench className="h-3 w-3" />
+              <span>{component.testPackage}</span>
             </div>
           )}
         </div>
 
-        {/* Progress Bar - Larger touch area */}
-        <div className="space-y-2 py-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Progress</span>
-            <span className="text-sm font-bold">
-              {component.completionPercent || 0}%
-            </span>
-          </div>
-          <Progress 
-            value={component.completionPercent || 0} 
-            className="h-3"
-          />
-        </div>
-
-        {/* Status Badge and Quick Actions - Larger buttons */}
+        {/* Status and Quick Actions */}
         <div className="flex items-center justify-between pt-2 border-t">
           <Badge 
             variant="outline" 
-            className={cn("text-sm py-1 px-3", getStatusColor())}
+            className={cn("text-xs py-0.5 px-2", getStatusColor())}
           >
             {formatStatus(component.status)}
           </Badge>
           
           {onQuickUpdate && (
-            <div className="flex gap-2">
+            <div>
               {component.status === "NOT_STARTED" && (
                 <Button
-                  size="default"
+                  size="sm"
                   variant="outline"
-                  className="h-10 px-4"
                   onClick={(e) => {
                     e.stopPropagation();
                     onQuickUpdate("IN_PROGRESS");
@@ -357,9 +363,8 @@ export function MobileComponentCard({
               )}
               {component.status === "IN_PROGRESS" && (
                 <Button
-                  size="default"
+                  size="sm"
                   variant="outline"
-                  className="h-10 px-4"
                   onClick={(e) => {
                     e.stopPropagation();
                     onQuickUpdate("COMPLETED");
@@ -371,13 +376,6 @@ export function MobileComponentCard({
             </div>
           )}
         </div>
-
-        {/* Swipe hint (shown only for first few cards) */}
-        {component.status === "NOT_STARTED" && (
-          <div className="text-xs text-center text-muted-foreground pt-2">
-            Swipe right to select • Swipe left to start work
-          </div>
-        )}
       </CardContent>
     </Card>
   );

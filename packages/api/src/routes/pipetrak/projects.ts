@@ -93,7 +93,12 @@ export const projectsRouter = new Hono()
 
       return c.json(projectsWithStats);
     } catch (error) {
-      return c.json({ error: "Failed to fetch projects" }, 500);
+      console.error("Projects fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch projects",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -131,7 +136,10 @@ export const projectsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
       }
 
       // Get progress statistics
@@ -175,7 +183,12 @@ export const projectsRouter = new Hono()
         },
       });
     } catch (error) {
-      return c.json({ error: "Failed to fetch project" }, 500);
+      console.error("Project fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch project",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -196,7 +209,10 @@ export const projectsRouter = new Hono()
       });
 
       if (!membership) {
-        return c.json({ error: "Insufficient permissions to create project" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED", 
+          message: "Insufficient permissions to create project"
+        }, 403);
       }
 
       // Check for duplicate job number within organization
@@ -208,9 +224,9 @@ export const projectsRouter = new Hono()
       });
 
       if (existingProject) {
-        return c.json(
-          { 
-            error: "Job number already exists", 
+        return c.json({
+            code: "DUPLICATE_JOB_NUMBER",
+            message: "Job number already exists", 
             details: `Job number ${data.jobNumber} is already in use within this organization` 
           }, 
           409
@@ -278,9 +294,18 @@ export const projectsRouter = new Hono()
       return c.json(project, 201);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid input",
+          details: error.errors
+        }, 400);
       }
-      return c.json({ error: "Failed to create project" }, 500);
+      console.error("Project creation error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to create project",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -308,7 +333,10 @@ export const projectsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or insufficient permissions" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or insufficient permissions"
+        }, 403);
       }
 
       // If updating jobNumber, check for uniqueness
@@ -322,9 +350,9 @@ export const projectsRouter = new Hono()
         });
 
         if (existingProject) {
-          return c.json(
-            { 
-              error: "Job number already exists", 
+          return c.json({
+              code: "DUPLICATE_JOB_NUMBER",
+              message: "Job number already exists", 
               details: `Job number ${updates.jobNumber} is already in use within this organization` 
             }, 
             409
@@ -366,9 +394,18 @@ export const projectsRouter = new Hono()
       return c.json(updatedProject);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: "Invalid input", details: error.errors }, 400);
+        return c.json({
+          code: "INVALID_INPUT",
+          message: "Invalid input",
+          details: error.errors
+        }, 400);
       }
-      return c.json({ error: "Failed to update project" }, 500);
+      console.error("Project update error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to update project",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
@@ -394,7 +431,10 @@ export const projectsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or insufficient permissions" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or insufficient permissions"
+        }, 403);
       }
 
       // Archive instead of hard delete
@@ -420,19 +460,29 @@ export const projectsRouter = new Hono()
         },
       });
 
-      return c.json({ success: true });
+      return c.json({ success: true, project: archivedProject });
     } catch (error) {
-      return c.json({ error: "Failed to archive project" }, 500);
+      console.error("Project archive error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to archive project",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   })
 
-  // Get project activity/audit log
-  .get("/:id/activity", async (c) => {
+  // Get project statistics
+  .get("/:id/stats", async (c) => {
     try {
       const id = c.req.param("id");
       const userId = c.get("user")?.id;
-      const limit = parseInt(c.req.query("limit") || "50");
-      const offset = parseInt(c.req.query("offset") || "0");
+      
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
 
       // Verify user has access to the project
       const project = await prisma.project.findFirst({
@@ -447,7 +497,191 @@ export const projectsRouter = new Hono()
       });
 
       if (!project) {
-        return c.json({ error: "Project not found or access denied" }, 403);
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
+      }
+
+      // Get comprehensive project statistics
+      const [
+        componentStats,
+        drawingStats,
+        milestoneTemplateStats,
+        recentActivity,
+        areaBreakdown,
+        systemBreakdown,
+        progressByWorkflowType,
+        dailyProgress
+      ] = await Promise.all([
+        // Component statistics
+        prisma.component.aggregate({
+          where: { projectId: id, status: { not: "DELETED" } },
+          _count: true,
+          _avg: { completionPercent: true },
+        }),
+
+        // Drawing statistics
+        prisma.drawing.aggregate({
+          where: { projectId: id },
+          _count: true,
+        }),
+
+        // Milestone template statistics
+        prisma.milestoneTemplate.aggregate({
+          where: { projectId: id },
+          _count: true,
+        }),
+
+        // Recent activity count
+        prisma.auditLog.count({
+          where: {
+            projectId: id,
+            timestamp: {
+              gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Last 7 days
+            },
+          },
+        }),
+
+        // Area breakdown with progress
+        prisma.component.groupBy({
+          by: ["area"],
+          where: { projectId: id, area: { not: null }, status: { not: "DELETED" } },
+          _count: true,
+          _avg: { completionPercent: true },
+          orderBy: { _count: { area: "desc" } },
+        }),
+
+        // System breakdown with progress
+        prisma.component.groupBy({
+          by: ["system"],
+          where: { projectId: id, system: { not: null }, status: { not: "DELETED" } },
+          _count: true,
+          _avg: { completionPercent: true },
+          orderBy: { _count: { system: "desc" } },
+        }),
+
+        // Progress by workflow type
+        prisma.component.groupBy({
+          by: ["workflowType"],
+          where: { projectId: id, status: { not: "DELETED" } },
+          _count: true,
+          _avg: { completionPercent: true },
+        }),
+
+        // Daily progress over last 30 days
+        prisma.auditLog.groupBy({
+          by: ["timestamp"],
+          where: {
+            projectId: id,
+            action: "UPDATE",
+            timestamp: {
+              gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+            },
+          },
+          _count: true,
+        }),
+      ]);
+
+      // Status breakdown
+      const statusBreakdown = await prisma.component.groupBy({
+        by: ["status"],
+        where: { projectId: id, status: { not: "DELETED" } },
+        _count: true,
+      });
+
+      // Type breakdown
+      const typeBreakdown = await prisma.component.groupBy({
+        by: ["type"],
+        where: { projectId: id, status: { not: "DELETED" } },
+        _count: true,
+        _avg: { completionPercent: true },
+        orderBy: { _count: { type: "desc" } },
+      });
+
+      return c.json({
+        overview: {
+          totalComponents: componentStats._count,
+          totalDrawings: drawingStats._count,
+          totalMilestoneTemplates: milestoneTemplateStats._count,
+          averageCompletion: componentStats._avg.completionPercent || 0,
+          recentActivityCount: recentActivity,
+        },
+        breakdown: {
+          byStatus: statusBreakdown.reduce((acc, curr) => {
+            acc[curr.status] = curr._count;
+            return acc;
+          }, {} as Record<string, number>),
+          byType: typeBreakdown.map(item => ({
+            type: item.type,
+            count: item._count,
+            averageCompletion: item._avg.completionPercent || 0,
+          })),
+          byArea: areaBreakdown.map(item => ({
+            area: item.area,
+            count: item._count,
+            averageCompletion: item._avg.completionPercent || 0,
+          })),
+          bySystem: systemBreakdown.map(item => ({
+            system: item.system,
+            count: item._count,
+            averageCompletion: item._avg.completionPercent || 0,
+          })),
+          byWorkflowType: progressByWorkflowType.map(item => ({
+            workflowType: item.workflowType,
+            count: item._count,
+            averageCompletion: item._avg.completionPercent || 0,
+          })),
+        },
+        trends: {
+          dailyActivity: dailyProgress.map(item => ({
+            date: item.timestamp,
+            activityCount: item._count,
+          })),
+        },
+      });
+    } catch (error) {
+      console.error("Project statistics error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch project statistics",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
+    }
+  })
+
+  // Get project activity/audit log
+  .get("/:id/activity", async (c) => {
+    try {
+      const id = c.req.param("id");
+      const userId = c.get("user")?.id;
+      const limit = parseInt(c.req.query("limit") || "50");
+      const offset = parseInt(c.req.query("offset") || "0");
+
+      if (!userId) {
+        return c.json({
+          code: "UNAUTHENTICATED",
+          message: "User not authenticated"
+        }, 401);
+      }
+
+      // Verify user has access to the project
+      const project = await prisma.project.findFirst({
+        where: {
+          id,
+          organization: {
+            members: {
+              some: { userId },
+            },
+          },
+        },
+      });
+
+      if (!project) {
+        return c.json({
+          code: "ACCESS_DENIED",
+          message: "Project not found or access denied"
+        }, 403);
       }
 
       const [activity, total] = await Promise.all([
@@ -459,6 +693,9 @@ export const projectsRouter = new Hono()
           include: {
             user: {
               select: { id: true, name: true, email: true },
+            },
+            component: {
+              select: { id: true, componentId: true, displayId: true },
             },
           },
         }),
@@ -475,6 +712,11 @@ export const projectsRouter = new Hono()
         },
       });
     } catch (error) {
-      return c.json({ error: "Failed to fetch activity" }, 500);
+      console.error("Project activity fetch error:", error);
+      return c.json({
+        code: "INTERNAL_ERROR",
+        message: "Failed to fetch project activity",
+        details: error instanceof Error ? error.message : "Unknown error"
+      }, 500);
     }
   });

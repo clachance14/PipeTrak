@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@saas/shared/lib/api-client";
+import { apiClient } from "@shared/lib/api-client";
 import type { DrawingTreeNode } from "../../types";
 
 interface DrawingHierarchyResponse {

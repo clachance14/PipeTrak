@@ -1,0 +1,41 @@
+npm warn Unknown project config "public-hoist-pattern". This will stop working in the next major version of npm.
+
+> dev
+> dotenv -c -- turbo dev --concurrency 15
+
+turbo 2.5.4
+
+• Packages in scope: @repo/ai, @repo/api, @repo/auth, @repo/config, @repo/database, @repo/i18n, @repo/logs, @repo/mail, @repo/payments, @repo/scripts, @repo/storage, @repo/tailwind-config, @repo/tsconfig, @repo/utils, @repo/web
+• Running dev in 15 packages
+• Remote caching disabled
+@repo/database:generate: cache bypass, force executing a190c814492aeb0d
+@repo/database:generate: 
+@repo/database:generate: > @repo/database@0.0.0 generate /home/clachance14/projects/PipeTrak/packages/database
+@repo/database:generate: > prisma generate --no-hints --schema=./prisma/schema.prisma
+@repo/database:generate: 
+@repo/database:generate: Prisma schema loaded from prisma/schema.prisma
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Prisma Client (v6.11.1) to ./prisma/generated/client in 496ms
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Zod Prisma Types to ./prisma/zod in 4.26s
+@repo/database:generate: 
+@repo/database:generate: ✔ Generated Prisma Json Types Generator (3.5.1) to ./prisma in 8.36s
+@repo/database:generate: 
+@repo/web:dev: cache bypass, force executing 547321eb37778554
+@repo/web:dev: 
+@repo/web:dev: > @repo/web@0.0.0 dev /home/clachance14/projects/PipeTrak/apps/web
+@repo/web:dev: > next dev --turbo
+@repo/web:dev: 
+@repo/web:dev: Starting content-collections content-collections.ts
+@repo/web:dev: build started ...
+@repo/web:dev: ... finished build of 4 collections and 14 documents in 200ms
+@repo/web:dev: start watching ...
+@repo/web:dev:  ⚠ Port 3000 is in use, using available port 3004 instead.
+@repo/web:dev:    ▲ Next.js 15.3.5 (Turbopack)
+@repo/web:dev:    - Local:        http://localhost:3004
+@repo/web:dev:    - Network:      http://10.255.255.254:3004
+@repo/web:dev: 
+@repo/web:dev:  ✓ Starting...
+@repo/web:dev:  ○ Compiling middleware ...
+@repo/web:dev:  ✓ Compiled middleware in 2.3s
+@repo/web:dev:  ✓ Ready in 5.5s

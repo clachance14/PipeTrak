@@ -1,8 +1,5 @@
 import { getActiveOrganization } from "@saas/auth/lib/server";
-import OrganizationStart from "@saas/organizations/components/OrganizationStart";
-import { PageHeader } from "@saas/shared/components/PageHeader";
-import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { notFound, redirect } from "next/navigation";
 
 export async function generateMetadata({
 	params,
@@ -26,7 +23,6 @@ export default async function OrganizationPage({
 	params: Promise<{ organizationSlug: string }>;
 }) {
 	const { organizationSlug } = await params;
-	const t = await getTranslations();
 
 	const activeOrganization = await getActiveOrganization(
 		organizationSlug as string,
@@ -36,14 +32,6 @@ export default async function OrganizationPage({
 		return notFound();
 	}
 
-	return (
-		<div>
-			<PageHeader
-				title={activeOrganization.name}
-				subtitle={t("organizations.start.subtitle")}
-			/>
-
-			<OrganizationStart />
-		</div>
-	);
+	// Redirect to PipeTrak projects page since it's the main application
+	redirect(`/app/${organizationSlug}/pipetrak`);
 }

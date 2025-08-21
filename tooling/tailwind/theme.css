@@ -22,11 +22,18 @@
 	--color-ring: var(--ring);
 	--color-highlight: var(--highlight);
 	--color-highlight-foreground: var(--highlight-foreground);
+	--color-field-warning: var(--field-warning);
+	--color-field-critical: var(--field-critical);
+	--color-field-complete: var(--field-complete);
+	--color-field-pending: var(--field-pending);
+	--color-field-blocked: var(--field-blocked);
 	--radius-lg: var(--radius);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-sm: calc(var(--radius) - 4px);
  
 	--font-sans: var(--font-geist-sans);
+
+	--container-7xl: 100%;
 
 	--animation-accordion-down: accordion-down 0.2s ease-out;
 	--animation-accordion-up: accordion-up 0.2s ease-out;
@@ -76,6 +83,13 @@
 		--highlight-foreground: #ffffff;
 		--radius: 0.75rem;
 
+		/* PipeTrak construction-specific colors */
+		--field-warning: #f59e0b;
+		--field-critical: #ef4444;
+		--field-complete: #10b981;
+		--field-pending: #6b7280;
+		--field-blocked: #f97316;
+
 		/* fumadocs */
 		--fd-banner-height: 4.5rem;
 	}
@@ -104,6 +118,13 @@
 		--card-foreground: #e9eef3;
 		--highlight: #e5a158;
 		--highlight-foreground: #ffffff;
+
+		/* PipeTrak construction-specific colors (dark mode) */
+		--field-warning: #d97706;
+		--field-critical: #dc2626;
+		--field-complete: #059669;
+		--field-pending: #4b5563;
+		--field-blocked: #ea580c;
 	}
 
 	*,

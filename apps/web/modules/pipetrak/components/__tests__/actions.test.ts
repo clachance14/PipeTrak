@@ -79,7 +79,7 @@ describe("API Actions", () => {
       const result = await getComponents("proj-1");
 
       expect(apiClient.pipetrak.components.$get).toHaveBeenCalledWith({
-        query: { projectId: "proj-1", limit: "1000" },
+        query: { projectId: "proj-1", limit: "10000" },
       });
 
       expect(result).toHaveLength(2);

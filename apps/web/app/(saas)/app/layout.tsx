@@ -9,9 +9,16 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function Layout({ children }: PropsWithChildren) {
+	// IMPORTANT: This validates the actual session (not just cookie existence)
+	// getSession() checks with the auth backend to ensure the session is valid
+	// This is different from middleware which only checks if a cookie exists
 	const session = await getSession();
 
+	// If no valid session, redirect to login
+	// This works with middleware which allows access to /auth/login
+	// preventing redirect loops even with invalid cookies
 	if (!session) {
+		console.log('[SaaS Layout] No session, redirecting to login');
 		redirect("/auth/login");
 	}
 
