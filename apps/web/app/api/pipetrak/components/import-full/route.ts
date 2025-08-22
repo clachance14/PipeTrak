@@ -1,11 +1,10 @@
 import { db as prisma } from "@repo/database";
 import { getSession } from "@saas/auth/lib/server";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { 
   CSVProcessor, 
   ExcelProcessor, 
-  ColumnMapper,
-  ComponentImportData,
+  type ComponentImportData,
   DataValidator,
   InstanceTracker
 } from "@repo/api/src/lib/file-processing";
@@ -46,7 +45,7 @@ async function createComponentMilestones(
   // Group components by their milestone template
   const componentsByTemplate = new Map<string, typeof createdComponents>();
   
-  createdComponents.forEach(component => {
+  createdComponents.forEach((component: typeof createdComponents[0]) => {
     const templateId = component.milestoneTemplateId;
     if (!componentsByTemplate.has(templateId)) {
       componentsByTemplate.set(templateId, []);
@@ -97,7 +96,7 @@ async function createComponentMilestones(
     
     console.log(`Import-full: ✅ Successfully created ${milestonesToCreate.length} milestones`);
   } else {
-    console.warn(`Import-full: No milestones to create`);
+    console.warn("Import-full: No milestones to create");
   }
 }
 
@@ -580,10 +579,10 @@ export async function POST(request: NextRequest) {
             console.log(`Import-full: ✅ Created milestones for ${componentsToCreate.length} components in ${milestoneTime}ms`);
           }
         } catch (error: any) {
-          console.error(`Import-full: ❌ Failed to create components:`, error.message);
+          console.error("Import-full: ❌ Failed to create components:", error.message);
           
           // Log details about the first few components that would be created
-          console.error(`Import-full: First 5 components in batch:`, 
+          console.error("Import-full: First 5 components in batch:", 
             componentsToCreate.slice(0, 5).map(comp => ({
               drawingId: comp.drawingId,
               componentId: comp.componentId,
