@@ -28,10 +28,6 @@ export default async function TrendReportPage({
       <PageHeader
         title="Trend Analysis Report"
         subtitle="Historical progress trends and velocity forecasting"
-        breadcrumbs={[
-          { label: "Reports", href: `/app/pipetrak/${projectId}/reports` },
-          { label: "Trends" },
-        ]}
       />
 
       <Suspense fallback={<LoadingState variant="chart" />}>

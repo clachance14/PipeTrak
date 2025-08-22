@@ -32,10 +32,6 @@ export default async function ComponentReportPage({
       <PageHeader
         title="Detailed Component Report"
         subtitle="Component-level progress analysis with advanced filtering"
-        breadcrumbs={[
-          { label: "Reports", href: `/app/pipetrak/${projectId}/reports` },
-          { label: "Component Details" },
-        ]}
       />
 
       <Suspense fallback={<LoadingState variant="table" />}>

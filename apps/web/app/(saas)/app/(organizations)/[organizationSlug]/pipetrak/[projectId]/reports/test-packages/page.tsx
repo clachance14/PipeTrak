@@ -30,10 +30,6 @@ export default async function TestPackageReportPage({
       <PageHeader
         title="Test Package Readiness Report"
         subtitle="Test package completion status and readiness forecasting"
-        breadcrumbs={[
-          { label: "Reports", href: `/app/pipetrak/${projectId}/reports` },
-          { label: "Test Packages" },
-        ]}
       />
 
       <Suspense fallback={<LoadingState variant="card" />}>

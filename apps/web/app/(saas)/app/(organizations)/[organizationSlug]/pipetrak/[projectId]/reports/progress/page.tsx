@@ -19,10 +19,6 @@ export default async function ProgressSummaryReportPage({
       <PageHeader
         title="Progress Summary Report"
         subtitle="Weekly progress report for P6 schedule updates with Tuesday 9 AM cutoff"
-        breadcrumbs={[
-          { label: "Reports", href: `/app/pipetrak/${projectId}/reports` },
-          { label: "Progress Summary" },
-        ]}
       />
 
       <Suspense fallback={<LoadingState variant="card" />}>
