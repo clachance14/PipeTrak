@@ -6,8 +6,8 @@
 		"@repo/logs": "workspace:*",
 		"@repo/utils": "workspace:*",
 		"@types/pg": "^8.15.5",
-		"csv-parse": "^5.5.3",
-		"dotenv": "^17.1.0",
+		"csv-parse": "^6.1.0",
+		"dotenv": "^17.2.1",
 		"pg": "^8.16.3",
 		"xlsx": "^0.18.5"
 	},
