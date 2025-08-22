@@ -30,10 +30,6 @@ export default async function AuditReportPage({
       <PageHeader
         title="Audit Trail Report"
         subtitle="Complete audit log of system changes and user actions"
-        breadcrumbs={[
-          { label: "Reports", href: `/app/pipetrak/${projectId}/reports` },
-          { label: "Audit Trail" },
-        ]}
       />
 
       <Suspense fallback={<LoadingState variant="table" />}>
