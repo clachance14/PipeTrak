@@ -30,7 +30,7 @@ export default async function TrendReportPage({
         subtitle="Historical progress trends and velocity forecasting"
       />
 
-      <Suspense fallback={<LoadingState variant="chart" />}>
+      <Suspense fallback={<LoadingState variant="card" />}>
         <TrendReportContent
           projectId={projectId}
           initialFilters={filters}
