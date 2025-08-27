@@ -10,14 +10,14 @@
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.0",
+		"@biomejs/biome": "2.2.2",
 		"@repo/tsconfig": "workspace:*",
 		"@types/decimal.js": "^7.4.3",
-		"@types/node": "24.0.10",
-		"dotenv-cli": "^8.0.0",
+		"@types/node": "24.3.0",
+		"dotenv-cli": "^10.0.0",
 		"drizzle-kit": "^0.31.1",
-		"prisma": "6.11.1",
-		"prisma-json-types-generator": "3.5.1",
+		"prisma": "6.14.0",
+		"prisma-json-types-generator": "3.6.0",
 		"zod-prisma-types": "^3.2.4"
 	},
 	"main": "./index.ts",
