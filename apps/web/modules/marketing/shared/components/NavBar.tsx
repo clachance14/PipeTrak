@@ -192,7 +192,7 @@ export function NavBar() {
 									key="dashboard"
 									className="hidden lg:flex"
 									asChild
-									variant="secondary"
+									variant="default"
 								>
 									<NextLink href="/app">
 										{t("common.menu.dashboard")}
@@ -203,7 +203,7 @@ export function NavBar() {
 									key="login"
 									className="hidden lg:flex"
 									asChild
-									variant="secondary"
+									status="success"
 								>
 									<NextLink href="/auth/login" prefetch>
 										{t("common.menu.login")}

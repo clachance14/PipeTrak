@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { PageHeader } from "@saas/shared/components/PageHeader";
 import { LoadingState } from "@pipetrak/shared/components";
 import { ComponentTable } from "@pipetrak/components";
 import { 
@@ -79,7 +78,7 @@ function DrawingDetailContent({
   }
 
   if (isLoadingDetails) {
-    return <LoadingState variant="default" />;
+    return <LoadingState />;
   }
 
   const drawing = detailsData?.drawing;

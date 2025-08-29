@@ -1,17 +1,18 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
-// Extract project reference from DATABASE_URL
-// Format: postgres://postgres.PROJECT_REF:PASSWORD@REGION.pooler.supabase.com
+// Get Supabase configuration from environment variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+// Fallback: Extract project reference from DATABASE_URL if direct config not available
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const projectRef = DATABASE_URL.match(/postgres\.([^:]+):/)?.[1] || '';
+const fallbackUrl = projectRef ? `https://${projectRef}.supabase.co` : '';
+const fallbackKey = DATABASE_URL.match(/:([^@]+)@/)?.[1] || '';
 
-// Construct Supabase URL and anon key
-const supabaseUrl = projectRef ? `https://${projectRef}.supabase.co` : '';
-// For development, we'll use the service role key from the connection string password
-// In production, this should be the anon key from Supabase dashboard
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
-  // Temporary: extract password from DATABASE_URL as service key for RPC access
-  DATABASE_URL.match(/:([^@]+)@/)?.[1] || '';
+// Use direct config first, then fallback
+const finalUrl = supabaseUrl || fallbackUrl;
+const finalKey = supabaseAnonKey || fallbackKey;
 
 /**
  * Create a Supabase client for server-side operations
@@ -20,40 +21,23 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
 export async function createClient() {
   console.log('[createClient] Creating Supabase client...');
   console.log('[createClient] Project ref:', projectRef);
-  console.log('[createClient] Supabase URL:', supabaseUrl);
-  console.log('[createClient] Has anon key:', !!supabaseAnonKey);
-  console.log('[createClient] Anon key length:', supabaseAnonKey?.length);
+  console.log('[createClient] Final URL:', finalUrl);
+  console.log('[createClient] Has final key:', !!finalKey);
+  console.log('[createClient] Key length:', finalKey?.length);
   
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!finalUrl || !finalKey) {
     console.error('[createClient] Supabase configuration missing!');
-    console.error('[createClient] URL:', supabaseUrl);
-    console.error('[createClient] Key exists:', !!supabaseAnonKey);
-    // Return a mock client that returns empty data to prevent crashes
-    return {
-      from: (table: string) => {
-        console.log(`[MockClient] Attempting to query table: ${table}`);
-        return {
-          select: () => ({ 
-            eq: () => ({ 
-              single: async () => {
-                console.log(`[MockClient] Returning null for ${table} query`);
-                return { data: null, error: new Error('Supabase not configured') };
-              }
-            }),
-            data: null,
-            error: new Error('Supabase not configured')
-          })
-        };
-      },
-      rpc: async (name: string) => {
-        console.log(`[MockClient] Attempting to call RPC: ${name}`);
-        return { data: null, error: new Error('Supabase RPC not configured') };
-      }
-    } as any;
+    console.error('[createClient] Final URL:', finalUrl);
+    console.error('[createClient] Final key exists:', !!finalKey);
+    console.error('[createClient] DATABASE_URL available:', !!DATABASE_URL);
+    console.error('[createClient] NEXT_PUBLIC_SUPABASE_URL available:', !!process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.error('[createClient] NEXT_PUBLIC_SUPABASE_ANON_KEY available:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+    
+    throw new Error('Supabase configuration missing: Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables');
   }
 
   console.log('[createClient] Creating real Supabase client');
-  return createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+  return createSupabaseClient(finalUrl, finalKey, {
     auth: {
       persistSession: false
     }
