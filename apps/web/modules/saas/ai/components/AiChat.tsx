@@ -11,7 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
-import { type Message, useChat } from "ai/react";
+import { type Message, useChat } from "@ai-sdk/react";
 import { EllipsisIcon, PlusIcon, SendIcon } from "lucide-react";
 import { useFormatter } from "next-intl";
 import { useQueryState } from "nuqs";
@@ -186,7 +186,7 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 					<Button
 						type="submit"
 						size="icon"
-						variant="secondary"
+						status="success"
 						className="absolute right-3 bottom-3"
 						disabled={!hasChat}
 					>

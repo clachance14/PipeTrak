@@ -2,15 +2,16 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { MobileQCView } from "./MobileQCView";
 import {
   useReactTable,
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
   flexRender,
-  ColumnDef,
-  SortingState,
-  ColumnFiltersState,
+  type ColumnDef,
+  type SortingState,
+  type ColumnFiltersState,
 } from "@tanstack/react-table";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
@@ -31,14 +32,15 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/components/table";
-import { Search, Filter, Download, Plus, RefreshCw } from "lucide-react";
+import { Search, Download, Plus, RefreshCw, CheckCircle2 } from "lucide-react";
 import { AddWeldModal } from "./AddWeldModal";
+import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
 
 // Types based on our API response
 interface FieldWeldData {
   id: string;
   weldIdNumber: string;
-  dateWelded: string;
+  dateWelded?: string;
   weldSize: string;
   schedule: string;
   ndeResult?: string;
@@ -85,6 +87,43 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedWeld, setSelectedWeld] = useState<FieldWeldData | null>(null);
+  const [showMarkCompleteModal, setShowMarkCompleteModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Natural sorting function for weld IDs
+  const naturalSort = (a: any, b: any): number => {
+    const aVal = a.getValue();
+    const bVal = b.getValue();
+    
+    // Extract numeric parts for comparison
+    const aNum = aVal.match(/\d+/g)?.map(Number) || [0];
+    const bNum = bVal.match(/\d+/g)?.map(Number) || [0];
+    
+    // Compare each numeric part
+    for (let i = 0; i < Math.max(aNum.length, bNum.length); i++) {
+      const aDigit = aNum[i] || 0;
+      const bDigit = bNum[i] || 0;
+      
+      if (aDigit !== bDigit) {
+        return aDigit - bDigit;
+      }
+    }
+    
+    // If all numeric parts are equal, fall back to string comparison
+    return aVal.localeCompare(bVal);
+  };
 
   // Column definitions
   const columns = useMemo<ColumnDef<FieldWeldData>[]>(
@@ -95,43 +134,52 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
         cell: ({ row }) => (
           <div className="font-medium">{row.original.weldIdNumber}</div>
         ),
+        sortingFn: naturalSort,
       },
       {
         accessorKey: "packageNumber",
         header: "Package",
-        cell: ({ row }) => (
-          <Badge variant="outline">{row.original.packageNumber}</Badge>
-        ),
+        cell: ({ row }) => {
+          const packageNumber = row.original.packageNumber;
+          if (!packageNumber || packageNumber === "TBD" || packageNumber.trim() === "") {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          return <Badge status="info">{packageNumber}</Badge>;
+        },
       },
       {
         accessorKey: "drawing.number",
         header: "Drawing",
-        cell: ({ row }) => (
-          <div className="text-sm">
-            <div className="font-medium">{row.original.drawing.number}</div>
-            <div className="text-muted-foreground truncate max-w-[120px]">
-              {row.original.drawing.title}
+        cell: ({ row }) => {
+          const drawing = row.original.drawing;
+          return (
+            <div className="text-sm font-medium">
+              {drawing.number || "-"}
             </div>
-          </div>
-        ),
+          );
+        },
       },
       {
         accessorKey: "component.area",
         header: "Area",
-        cell: ({ row }) => (
-          <Badge variant="secondary">
-            {row.original.component?.area || "N/A"}
-          </Badge>
-        ),
+        cell: ({ row }) => {
+          const area = row.original.component?.area;
+          if (!area || area.trim() === "") {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          return <Badge status="success">{area}</Badge>;
+        },
       },
       {
         accessorKey: "component.system",
         header: "System",
-        cell: ({ row }) => (
-          <Badge variant="secondary">
-            {row.original.component?.system || "N/A"}
-          </Badge>
-        ),
+        cell: ({ row }) => {
+          const system = row.original.component?.system;
+          if (!system || system.trim() === "") {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          return <Badge status="success">{system}</Badge>;
+        },
       },
       {
         accessorKey: "welder.stencil",
@@ -144,7 +192,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 <div className="text-muted-foreground">{row.original.welder.name}</div>
               </>
             ) : (
-              <span className="text-muted-foreground">Not assigned</span>
+              <span className="text-muted-foreground">-</span>
             )}
           </div>
         ),
@@ -152,28 +200,45 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
       {
         accessorKey: "dateWelded",
         header: "Date Welded",
-        cell: ({ row }) => (
-          <div className="text-sm">
-            {new Date(row.original.dateWelded).toLocaleDateString()}
-          </div>
-        ),
+        cell: ({ row }) => {
+          const dateWelded = row.original.dateWelded;
+          if (!dateWelded) {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          return (
+            <div className="text-sm">
+              {new Date(dateWelded).toLocaleDateString()}
+            </div>
+          );
+        },
       },
       {
         accessorKey: "weldSize",
         header: "Size",
-        cell: ({ row }) => (
-          <div className="text-sm">
-            <div>{row.original.weldSize}</div>
-            <div className="text-muted-foreground">Sch {row.original.schedule}</div>
-          </div>
-        ),
+        cell: ({ row }) => {
+          const weldSize = row.original.weldSize;
+          const schedule = row.original.schedule;
+          
+          if (!weldSize && !schedule) {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          
+          return (
+            <div className="text-sm">
+              <div>{weldSize || "-"}</div>
+              <div className="text-muted-foreground">
+                {schedule ? `Sch ${schedule}` : "-"}
+              </div>
+            </div>
+          );
+        },
       },
       {
         accessorKey: "ndeResult",
         header: "NDE Result",
         cell: ({ row }) => {
           const result = row.original.ndeResult;
-          if (!result) return <Badge variant="outline">Pending</Badge>;
+          if (!result) return <Badge status="info">Pending</Badge>;
           
           const variant = 
             result === "Accept" ? "default" :
@@ -190,7 +255,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           const required = row.original.pwhtRequired;
           const completed = row.original.datePwht;
           
-          if (!required) return <Badge variant="outline">N/A</Badge>;
+          if (!required) {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
           
           return (
             <Badge variant={completed ? "default" : "secondary"}>
@@ -200,13 +267,44 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
         },
       },
       {
-        accessorKey: "component.status",
-        header: "Install Status",
+        accessorKey: "dateWelded",
+        header: "Weld Status",
         cell: ({ row }) => {
-          const status = row.original.component?.status;
-          if (!status) return <Badge variant="outline">N/A</Badge>;
+          const isWelded = !!row.original.dateWelded;
           
-          return <Badge variant="outline">{status.replace(/_/g, " ")}</Badge>;
+          if (isWelded) {
+            return <Badge variant="default" className="bg-green-100 text-green-800 border-green-200">Complete</Badge>;
+          }
+          
+          return <Badge variant="secondary" className="bg-gray-100 text-gray-600 border-gray-200">Pending</Badge>;
+        },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const weld = row.original;
+          const isComplete = !!weld.dateWelded;
+          
+          if (isComplete) {
+            return <div className="text-sm text-muted-foreground">-</div>;
+          }
+          
+          return (
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-8 text-green-700 border-green-200 hover:bg-green-50 hover:border-green-300"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedWeld(weld);
+                setShowMarkCompleteModal(true);
+              }}
+            >
+              <CheckCircle2 className="h-4 w-4 mr-2" />
+              Mark Complete
+            </Button>
+          );
         },
       },
     ],
@@ -274,10 +372,20 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
     fetchFieldWelds(); // Refresh data
   };
 
+  const handleMarkCompleteSuccess = () => {
+    fetchFieldWelds(); // Refresh data
+    setSelectedWeld(null);
+  };
+
   const handleImportWelds = () => {
     // Will implement import functionality
     console.log("Import welds clicked");
   };
+
+  // Use mobile view on small screens
+  if (isMobile) {
+    return <MobileQCView projectId={projectId} organizationSlug={organizationSlug} />;
+  }
 
   return (
     <div className="space-y-4">
@@ -396,6 +504,20 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
         projectId={projectId}
         onSuccess={handleAddWeldSuccess}
       />
+
+      {/* Mark Weld Complete Modal */}
+      {selectedWeld && (
+        <MarkWeldCompleteModal
+          open={showMarkCompleteModal}
+          onOpenChange={setShowMarkCompleteModal}
+          fieldWeld={{
+            id: selectedWeld.id,
+            weldIdNumber: selectedWeld.weldIdNumber,
+            projectId,
+          }}
+          onSuccess={handleMarkCompleteSuccess}
+        />
+      )}
     </div>
   );
 }

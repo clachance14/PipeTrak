@@ -63,7 +63,7 @@ export function ComponentCard({ component, onClick, onQuickUpdate }: ComponentCa
               {component.componentId}
             </h3>
             {component.type && (
-              <Badge variant="outline" className="text-xs">
+              <Badge status="info" className="text-xs">
                 {component.type}
               </Badge>
             )}
@@ -126,7 +126,7 @@ export function ComponentCard({ component, onClick, onQuickUpdate }: ComponentCa
         {/* Status Badge and Quick Actions */}
         <div className="flex items-center justify-between pt-2">
           <Badge 
-            variant="outline" 
+            status="info" 
             className={cn("text-xs", getStatusColor())}
           >
             {formatStatus(component.status)}

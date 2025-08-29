@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "@ui/components/select";
 import { Alert, AlertDescription } from "@ui/components/alert";
-import { Separator } from "@ui/components/separator";
 import {
   Accordion,
   AccordionContent,
@@ -32,24 +31,19 @@ import {
   AccordionTrigger,
 } from "@ui/components/accordion";
 import { 
-  Users,
   Clock,
   CheckCircle,
   AlertCircle,
   Settings,
   Package,
   Zap,
-  ChevronDown
 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
 import { FailureDetailsModal } from "./FailureDetailsModal";
 import { 
   groupComponentsByTemplate, 
   validateBulkUpdate,
-  generateUpdateSummary,
-  type ComponentGroup,
   type BulkUpdateSelections,
   type BulkUpdateResult
 } from "../lib/bulk-update-utils";
@@ -198,16 +192,31 @@ export function BulkMilestoneModal({
       setProgress({ current: selectedComponents.length, total: selectedComponents.length });
       setResult(result);
 
-      if (result.failed.length === 0) {
-        toast.success(`Successfully updated ${result.successful.length} components`);
+      // Validate the result structure
+      if (!result || typeof result !== 'object') {
+        throw new Error("Invalid response from bulk update");
+      }
+
+      const { successful = [], failed = [], total = selectedComponents.length } = result;
+
+      if (failed.length === 0) {
+        toast.success(`Successfully updated ${successful.length} component${successful.length !== 1 ? 's' : ''}`);
+        // Only auto-close on complete success
         setTimeout(() => handleClose(), 2000);
+      } else if (successful.length === 0) {
+        toast.error(`Failed to update all ${total} components`);
+        // Don't auto-close on complete failure - let user see the error details
       } else {
-        toast.warning(`Updated ${result.successful.length} of ${selectedComponents.length} components`);
+        toast.warning(`Updated ${successful.length} of ${total} components. ${failed.length} failed.`);
+        // Don't auto-close on partial failure - let user review failures
       }
       
     } catch (error) {
-      toast.error("Failed to update components");
+      // Clear the interval if it exists (will be undefined in the catch block context)
+      const errorMessage = error instanceof Error ? error.message : "Failed to update components";
+      toast.error(errorMessage);
       console.error("Bulk update error:", error);
+      setResult(null); // Clear any partial results on error
     } finally {
       setIsUpdating(false);
     }
@@ -262,7 +271,7 @@ export function BulkMilestoneModal({
                         <strong className="text-orange-600">Warnings:</strong> {result.failed.length} components could not be updated
                       </div>
                       <Button
-                        variant="outline"
+                        status="info"
                         size="sm"
                         onClick={() => setShowFailureDetails(true)}
                         className="ml-4"
@@ -308,7 +317,7 @@ export function BulkMilestoneModal({
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {groups.map(group => (
-                    <Badge key={group.templateId} variant="secondary">
+                    <Badge key={group.templateId} status="info">
                       {group.components.length} {group.type}
                     </Badge>
                   ))}
@@ -415,7 +424,7 @@ export function BulkMilestoneModal({
                                 </p>
                               </div>
                               {groupSelections[group.templateId]?.size > 0 && (
-                                <Badge variant="secondary">
+                                <Badge status="success">
                                   {groupSelections[group.templateId]?.size} selected
                                 </Badge>
                               )}
@@ -437,7 +446,7 @@ export function BulkMilestoneModal({
                                     <Label className="flex-1 cursor-pointer">
                                       Mark as "{milestone}"
                                     </Label>
-                                    <Badge variant="outline" className="text-xs">
+                                    <Badge status="info" className="text-xs">
                                       {group.components.length} components
                                     </Badge>
                                   </div>
@@ -453,15 +462,17 @@ export function BulkMilestoneModal({
               )}
 
               {/* Update Preview */}
-              {(updateMode === "quick" && quickMilestone) || 
-               (updateMode === "advanced" && Object.values(groupSelections).some(set => set.size > 0)) && (
+              {((updateMode === "quick" && quickMilestone) || 
+                (updateMode === "advanced" && Object.values(groupSelections).some(set => set.size > 0))) && (
                 <Alert>
                   <Settings className="h-4 w-4" />
                   <AlertDescription>
                     <strong>Update Preview:</strong><br />
-                    {updateMode === "quick" 
+                    {updateMode === "quick" && quickMilestone
                       ? `Will mark "${quickMilestone}" as complete for all ${selectedComponents.length} components`
-                      : `Will update ${Object.values(groupSelections).reduce((sum, set) => sum + set.size, 0)} milestone(s) across ${Object.keys(groupSelections).filter(k => groupSelections[k].size > 0).length} component type(s)`
+                      : updateMode === "advanced"
+                      ? `Will update ${Object.values(groupSelections).reduce((sum, set) => sum + set.size, 0)} milestone(s) across ${Object.keys(groupSelections).filter(k => groupSelections[k].size > 0).length} component type(s)`
+                      : ""
                     }
                   </AlertDescription>
                 </Alert>

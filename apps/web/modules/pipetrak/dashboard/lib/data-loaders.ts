@@ -364,6 +364,9 @@ export async function fetchDashboardComponents(
   limit = 100,
   offset = 0
 ): Promise<{ components: ComponentWithMilestones[]; total: number }> {
+  console.log('[fetchDashboardComponents] Starting for project:', projectId);
+  console.log('[fetchDashboardComponents] Filters:', filters);
+  
   try {
     // Build where clause
     const where: any = {
@@ -375,15 +378,38 @@ export async function fetchDashboardComponents(
       where.area = { in: filters.area };
     }
     
+    if (filters.system && filters.system.length > 0) {
+      where.system = { in: filters.system };
+    }
+
+    if (filters.status && filters.status.length > 0) {
+      where.status = { in: filters.status };
+    }
+
+    if (filters.testPackage && filters.testPackage.length > 0) {
+      where.testPackage = { in: filters.testPackage };
+    }
+
+    if (filters.drawing && filters.drawing.length > 0) {
+      where.drawingId = { in: filters.drawing };
+    }
+    
     if (filters.drawingId) {
       where.drawingId = filters.drawingId;
     }
 
     if (filters.search) {
-      where.componentId = { contains: filters.search, mode: 'insensitive' };
+      where.OR = [
+        { componentId: { contains: filters.search, mode: 'insensitive' } },
+        { description: { contains: filters.search, mode: 'insensitive' } },
+        { spec: { contains: filters.search, mode: 'insensitive' } }
+      ];
     }
 
+    console.log('[fetchDashboardComponents] Built where clause:', JSON.stringify(where, null, 2));
+
     // Fetch components with relations
+    console.log('[fetchDashboardComponents] Executing Prisma query...');
     const components = await db.component.findMany({
       where,
       include: {
@@ -403,8 +429,11 @@ export async function fetchDashboardComponents(
       skip: offset
     });
 
+    console.log('[fetchDashboardComponents] Found components:', components.length);
+
     // Get total count
     const total = await db.component.count({ where });
+    console.log('[fetchDashboardComponents] Total count:', total);
 
     // Transform the data to include computed fields
     const transformedComponents = components.map(component => ({
@@ -414,13 +443,16 @@ export async function fetchDashboardComponents(
       milestones: component.milestones || []
     }));
 
+    console.log('[fetchDashboardComponents] Successfully transformed components');
     return {
       components: transformedComponents as ComponentWithMilestones[],
       total
     };
 
   } catch (error) {
-    console.error('Error calling fetchDashboardComponents:', error);
+    console.error('[fetchDashboardComponents] Error:', error);
+    console.error('[fetchDashboardComponents] Error details:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('[fetchDashboardComponents] Error stack:', error instanceof Error ? error.stack : 'No stack');
     return { components: [], total: 0 };
   }
 }

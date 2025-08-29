@@ -25,7 +25,6 @@ import { Badge } from "@ui/components/badge";
 import { Checkbox } from "@ui/components/checkbox";
 import { 
   AlertCircle, 
-  CheckCircle, 
   Package,
   MapPin,
   Wrench,
@@ -81,7 +80,7 @@ export function BulkUpdateModal({
   const handleFieldToggle = (field: string) => {
     setFieldsToUpdate(prev => ({
       ...prev,
-      [field]: !prev[field]
+      [field]: !prev[field as keyof typeof prev]
     }));
   };
 
@@ -196,12 +195,12 @@ export function BulkUpdateModal({
               <h4 className="font-medium mb-2">Selected Components</h4>
               <div className="flex flex-wrap gap-2">
                 {selectedComponents.slice(0, 5).map(comp => (
-                  <Badge key={comp.id} variant="secondary">
+                  <Badge key={comp.id} status="info">
                     {comp.componentId}
                   </Badge>
                 ))}
                 {selectedComponents.length > 5 && (
-                  <Badge variant="outline">
+                  <Badge status="info">
                     +{selectedComponents.length - 5} more
                   </Badge>
                 )}
