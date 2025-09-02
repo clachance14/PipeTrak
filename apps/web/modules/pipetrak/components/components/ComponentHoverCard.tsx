@@ -66,10 +66,8 @@ export function ComponentHoverCard({
 								)}
 						</div>
 						<Badge
-							variant={
-								component.status === "COMPLETED"
-									? "success"
-									: "secondary"
+							status={
+								component.status === "COMPLETED" ? "success" : "info"
 							}
 						>
 							{component.status}
@@ -285,7 +283,7 @@ export function ComponentHoverCard({
 							{onEdit && (
 								<Button
 									size="sm"
-									status="info"
+									variant="outline"
 									onClick={onEdit}
 									className="flex-1"
 								>
@@ -297,7 +295,7 @@ export function ComponentHoverCard({
 							{onViewHistory && (
 								<Button
 									size="sm"
-									status="info"
+									variant="outline"
 									onClick={onViewHistory}
 									className="flex-1"
 								>
@@ -309,7 +307,7 @@ export function ComponentHoverCard({
 							{onAddNote && (
 								<Button
 									size="sm"
-									status="info"
+									variant="outline"
 									onClick={onAddNote}
 									className="flex-1"
 								>
