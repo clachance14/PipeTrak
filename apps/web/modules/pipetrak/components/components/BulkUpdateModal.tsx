@@ -71,45 +71,51 @@ export function BulkUpdateModal({
 					const components = data.data || [];
 
 					// Extract unique values for each field
-					const areas = Array.from(
+					const areas: string[] = Array.from(
 						new Set(
-							components
-								.map((c: any) => c.area)
-								.filter(
-									(value: any) =>
-										value && typeof value === "string",
-								)
-								.filter(
-									(value: string) => value.trim().length > 0,
-								),
+							(
+								components
+									.map((c: any) => c.area)
+									.filter(
+										(value: any) =>
+											value && typeof value === "string",
+										)
+									.filter(
+										(value: string) => value.trim().length > 0,
+									)
+							) as string[],
 						),
 					).sort();
 
-					const systems = Array.from(
+					const systems: string[] = Array.from(
 						new Set(
-							components
-								.map((c: any) => c.system)
-								.filter(
-									(value: any) =>
-										value && typeof value === "string",
-								)
-								.filter(
-									(value: string) => value.trim().length > 0,
-								),
+							(
+								components
+									.map((c: any) => c.system)
+									.filter(
+										(value: any) =>
+											value && typeof value === "string",
+										)
+									.filter(
+										(value: string) => value.trim().length > 0,
+									)
+							) as string[],
 						),
 					).sort();
 
-					const testPackages = Array.from(
+					const testPackages: string[] = Array.from(
 						new Set(
-							components
-								.map((c: any) => c.testPackage)
-								.filter(
-									(value: any) =>
-										value && typeof value === "string",
-								)
-								.filter(
-									(value: string) => value.trim().length > 0,
-								),
+							(
+								components
+									.map((c: any) => c.testPackage)
+									.filter(
+										(value: any) =>
+											value && typeof value === "string",
+										)
+									.filter(
+										(value: string) => value.trim().length > 0,
+									)
+							) as string[],
 						),
 					).sort();
 
