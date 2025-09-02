@@ -211,7 +211,7 @@ export function debounce<T extends (...args: any[]) => void>(
  * Get unique areas from matrix data
  */
 export function getUniqueAreas(matrixData: Array<{ area: string }>): string[] {
-	return [...new Set(matrixData.map((item) => item.area))].sort();
+return Array.from(new Set(matrixData.map((item) => item.area))).sort();
 }
 
 /**
@@ -220,5 +220,5 @@ export function getUniqueAreas(matrixData: Array<{ area: string }>): string[] {
 export function getUniqueSystems(
 	matrixData: Array<{ system: string }>,
 ): string[] {
-	return [...new Set(matrixData.map((item) => item.system))].sort();
+return Array.from(new Set(matrixData.map((item) => item.system))).sort();
 }

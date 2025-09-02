@@ -139,9 +139,9 @@ export function FieldWeldValidationPreview({
 
   // Get unique values for filter options
   const filterOptions = useMemo(() => {
-    const categories = [...new Set(allIssues.map(issue => issue.category))].sort();
-    const fields = [...new Set(allIssues.map(issue => issue.field))].sort();
-    const codes = [...new Set(allIssues.map(issue => issue.code))].sort();
+    const categories = Array.from(new Set(allIssues.map(issue => issue.category))).sort();
+    const fields = Array.from(new Set(allIssues.map(issue => issue.field))).sort();
+    const codes = Array.from(new Set(allIssues.map(issue => issue.code))).sort();
     
     return { categories, fields, codes };
   }, [allIssues]);
