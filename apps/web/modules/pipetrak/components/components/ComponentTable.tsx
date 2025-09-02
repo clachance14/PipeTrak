@@ -93,6 +93,14 @@ import type { ComponentWithMilestones } from "../../types";
 import { apiClient } from "@shared/lib/api-client";
 import { getBaseUrl } from "@repo/utils";
 
+// Augment TanStack Table meta to include our updateData helper used by editable cells
+declare module "@tanstack/react-table" {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface TableMeta<TData extends RowData> {
+		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+	}
+}
+
 interface ComponentTableProps {
 	components: ComponentWithMilestones[];
 	projectId: string;
