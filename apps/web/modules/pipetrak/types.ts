@@ -22,7 +22,8 @@ export interface Component {
 	drawingId?: string | null;
 	milestoneTemplateId?: string | null;
 	installerUserId?: string | null;
-	installedAt?: Date | null;
+	installedAt?: Date | null; // legacy field name in some fixtures
+	installationDate?: Date | null; // aligns with DB schema and UI usage
 	createdAt: Date;
 	updatedAt: Date;
 	milestones?: ComponentMilestone[];
