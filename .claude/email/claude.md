@@ -10,7 +10,7 @@ Supastarter uses React Email for template creation with Resend as the email serv
 ### API Key
 Already configured in `.env.local`:
 ```bash
-RESEND_API_KEY="re_WBFBYVuA_6VvhAFJmcb6nZhGEypDRhYcH"
+RESEND_API_KEY="re_8zt9f8pL_XqBYP1NJetVmvmBnXJ8TMEjL"
 ```
 
 ### Provider Activation
@@ -24,7 +24,7 @@ Configure sender email in `config/index.ts`:
 ```typescript
 mails: {
   // IMPORTANT: This email domain must be verified in your Resend dashboard
-  from: "noreply@pipetrak.co",
+  from: "noreply@notifications.pipetrak.co",
 }
 ```
 
@@ -176,7 +176,7 @@ Configure contact form in `config/index.ts`:
 contactForm: {
   enabled: true,
   to: "hello@pipetrak.co", // Where to send contact form emails
-  subject: "PipeTrak Contact Form Submission",
+  subject: "PipeTrak Contact Form Message",
 }
 ```
 
@@ -195,11 +195,11 @@ contactForm: {
 ## Production Setup
 
 ### Email (Resend)
-- [x] Verify domain (pipetrak.co) in [Resend Dashboard](https://resend.com/domains)
-- [x] Update sender email from `noreply@pipetrak.co` if needed
+- [x] Verify domain (notifications.pipetrak.co) in [Resend Dashboard](https://resend.com/domains)
+- [x] Update sender email to `noreply@notifications.pipetrak.co`
 - [x] Configure production email provider (Resend)
 - [x] Update email templates with production URLs
-- [x] Test email delivery (signup, password reset, etc.)
+- [x] Test email delivery (signup, password reset, etc.) - ✅ Test successful 2025-09-02
 - [x] Set up webhook for bounces and complaints
 - [x] Update contact form recipient email in config
 

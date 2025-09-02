@@ -311,7 +311,7 @@ export function BulkMilestoneModal({
 												components could not be updated
 											</div>
 											<Button
-												status="info"
+												variant="outline"
 												size="sm"
 												onClick={() =>
 													setShowFailureDetails(true)
