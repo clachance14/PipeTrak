@@ -102,7 +102,7 @@ async function testErrorHandling() {
           console.log(`✅ Row ${idx + 1}: Missing required fields detected (drawing: "${drawing}", componentId: "${componentId}")`);
         } else if (!type) {
           console.log(`⚠️  Row ${idx + 1}: Missing type will be mapped to MISC`);
-        } else if (!qty || isNaN(parseInt(qty))) {
+        } else if (!qty || isNaN(Number.parseInt(qty))) {
           console.log(`⚠️  Row ${idx + 1}: Missing/invalid quantity will default to 1`);
         }
       });
@@ -132,7 +132,7 @@ async function testErrorHandling() {
       console.log(`✅ Handled invalid quantities: ${result.rows.length} rows, ${totalInstances} total instances`);
       
       result.rows.forEach((row, idx) => {
-        const qty = parseInt(row['QTY']) || 1;
+        const qty = Number.parseInt(row['QTY']) || 1;
         console.log(`  Row ${idx + 1}: "${row['QTY']}" → ${qty} (parsed)`);
       });
       
@@ -238,7 +238,7 @@ async function testErrorHandling() {
       
       Array.from(groupedData.entries()).forEach(([key, rows]) => {
         if (rows.length > 1) {
-          const totalQty = rows.reduce((sum, row) => sum + (parseInt(row['QTY']) || 1), 0);
+          const totalQty = rows.reduce((sum, row) => sum + (Number.parseInt(row['QTY']) || 1), 0);
           console.log(`  Duplicate: ${key} appears ${rows.length} times, total qty: ${totalQty}`);
         }
       });

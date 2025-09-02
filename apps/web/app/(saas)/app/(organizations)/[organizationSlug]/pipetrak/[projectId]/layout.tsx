@@ -17,7 +17,7 @@ export default async function PipeTrakProjectLayout({
 	const { projectId } = await params;
 	console.log("[PipeTrak Layout] Project ID:", projectId);
 
-	// Core tabs for mobile - Dashboard, Components, Drawings, QC
+	// Core tabs for mobile - Dashboard, Components, QC
 	const mobileItems = [
 		{
 			label: "Dashboard",
@@ -28,11 +28,6 @@ export default async function PipeTrakProjectLayout({
 			label: "Components",
 			href: `/app/pipetrak/${projectId}/components`,
 			segment: "components",
-		},
-		{
-			label: "Drawings",
-			href: `/app/pipetrak/${projectId}/drawings`,
-			segment: "drawings",
 		},
 		{
 			label: "QC",

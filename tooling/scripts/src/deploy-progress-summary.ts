@@ -1,26 +1,25 @@
 #!/usr/bin/env tsx
-import { createClient } from '@supabase/supabase-js';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
-import * as fs from 'fs';
+import { createClient } from "@supabase/supabase-js";
+import * as dotenv from "dotenv";
+import * as path from "path";
 
 // Load environment variables
-dotenv.config({ path: path.resolve(__dirname, '../../../.env.local') });
+dotenv.config({ path: path.resolve(__dirname, "../../../.env.local") });
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Missing required environment variables');
-  process.exit(1);
+	console.error("Missing required environment variables");
+	process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function deployProgressSummaryFunctions() {
-  console.log('🚀 Deploying Progress Summary Report SQL functions...\n');
+	console.log("🚀 Deploying Progress Summary Report SQL functions...\n");
 
-  const sqlFunctions = `
+	const sqlFunctions = `
 -- Function to calculate progress summary by area
 CREATE OR REPLACE FUNCTION get_progress_summary_by_area(
   p_project_id UUID,
@@ -327,104 +326,120 @@ CREATE INDEX IF NOT EXISTS idx_progress_snapshot_lookup
 ON "ProgressSnapshot"("projectId", "weekEnding", "status");
 `;
 
-  try {
-    // Execute the SQL functions
-    const { error } = await supabase.rpc('exec_sql', { sql: sqlFunctions });
-    
-    if (error) {
-      // Try executing directly as it might be a custom function issue
-      const { data, error: directError } = await supabase.from('_prisma_migrations').select('id').limit(1);
-      
-      if (!directError) {
-        console.log('✅ Database connection verified');
-        console.log('⚠️  Note: SQL functions need to be deployed via Supabase Dashboard SQL Editor');
-        console.log('\n📋 Copy the SQL from:');
-        console.log('   packages/database/supabase/migrations/20250812T1600_progress_summary_functions.sql');
-        console.log('\n📌 Paste and run in:');
-        console.log('   https://supabase.com/dashboard/project/ogmahtkaqziaoxldxnts/sql/new');
-      } else {
-        throw directError;
-      }
-    } else {
-      console.log('✅ Progress Summary SQL functions deployed successfully!');
-    }
+	try {
+		// Execute the SQL functions
+		const { error } = await supabase.rpc("exec_sql", { sql: sqlFunctions });
 
-    // Verify the effectiveDate column exists
-    const { data: columns } = await supabase.rpc('exec_sql', {
-      sql: `
+		if (error) {
+			// Try executing directly as it might be a custom function issue
+			const { data, error: directError } = await supabase
+				.from("_prisma_migrations")
+				.select("id")
+				.limit(1);
+
+			if (!directError) {
+				console.log("✅ Database connection verified");
+				console.log(
+					"⚠️  Note: SQL functions need to be deployed via Supabase Dashboard SQL Editor",
+				);
+				console.log("\n📋 Copy the SQL from:");
+				console.log(
+					"   packages/database/supabase/migrations/20250812T1600_progress_summary_functions.sql",
+				);
+				console.log("\n📌 Paste and run in:");
+				console.log(
+					"   https://supabase.com/dashboard/project/ogmahtkaqziaoxldxnts/sql/new",
+				);
+			} else {
+				throw directError;
+			}
+		} else {
+			console.log(
+				"✅ Progress Summary SQL functions deployed successfully!",
+			);
+		}
+
+		// Verify the effectiveDate column exists
+		const { data: columns } = await supabase.rpc("exec_sql", {
+			sql: `
         SELECT column_name 
         FROM information_schema.columns 
         WHERE table_name = 'ComponentMilestone' 
         AND column_name = 'effectiveDate';
-      `
-    });
+      `,
+		});
 
-    if (columns && columns.length > 0) {
-      console.log('✅ effectiveDate column verified in ComponentMilestone table');
-    } else {
-      console.log('⚠️  effectiveDate column not found - Prisma migration may need to be applied');
-    }
+		if (columns && columns.length > 0) {
+			console.log(
+				"✅ effectiveDate column verified in ComponentMilestone table",
+			);
+		} else {
+			console.log(
+				"⚠️  effectiveDate column not found - Prisma migration may need to be applied",
+			);
+		}
 
-    // Create initial test data for verification
-    console.log('\n🧪 Creating test snapshot for verification...');
-    
-    const testSnapshot = {
-      groupBy: 'area',
-      data: [
-        {
-          area: 'TEST-AREA',
-          componentCount: 10,
-          milestones: {
-            received: 100,
-            installed: 85,
-            punched: 70,
-            tested: 50,
-            restored: 25
-          },
-          overallPercent: 66,
-          deltas: {
-            received: 5,
-            installed: 10,
-            punched: 8,
-            tested: 3,
-            restored: 2,
-            overall: 5.6
-          }
-        }
-      ],
-      totals: {
-        componentCount: 10,
-        milestones: {
-          received: 100,
-          installed: 85,
-          punched: 70,
-          tested: 50,
-          restored: 25
-        },
-        overallPercent: 66
-      }
-    };
+		// Create initial test data for verification
+		console.log("\n🧪 Creating test snapshot for verification...");
 
-    console.log('✅ Test data structure validated');
-    console.log('\n🎉 Progress Summary Report deployment complete!');
-    console.log('\n📝 Next steps:');
-    console.log('1. Run SQL functions in Supabase Dashboard if needed');
-    console.log('2. Test the report at: /app/pipetrak/[projectId]/reports/progress');
-    console.log('3. Verify export functionality (PDF, Excel, CSV)');
-    
-  } catch (err) {
-    console.error('❌ Deployment error:', err);
-    process.exit(1);
-  }
+		const testSnapshot = {
+			groupBy: "area",
+			data: [
+				{
+					area: "TEST-AREA",
+					componentCount: 10,
+					milestones: {
+						received: 100,
+						installed: 85,
+						punched: 70,
+						tested: 50,
+						restored: 25,
+					},
+					overallPercent: 66,
+					deltas: {
+						received: 5,
+						installed: 10,
+						punched: 8,
+						tested: 3,
+						restored: 2,
+						overall: 5.6,
+					},
+				},
+			],
+			totals: {
+				componentCount: 10,
+				milestones: {
+					received: 100,
+					installed: 85,
+					punched: 70,
+					tested: 50,
+					restored: 25,
+				},
+				overallPercent: 66,
+			},
+		};
+
+		console.log("✅ Test data structure validated");
+		console.log("\n🎉 Progress Summary Report deployment complete!");
+		console.log("\n📝 Next steps:");
+		console.log("1. Run SQL functions in Supabase Dashboard if needed");
+		console.log(
+			"2. Test the report at: /app/pipetrak/[projectId]/reports/progress",
+		);
+		console.log("3. Verify export functionality (PDF, Excel, CSV)");
+	} catch (err) {
+		console.error("❌ Deployment error:", err);
+		process.exit(1);
+	}
 }
 
 // Run the deployment
 deployProgressSummaryFunctions()
-  .then(() => {
-    console.log('\n✨ Deployment script completed successfully');
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error('Fatal error:', err);
-    process.exit(1);
-  });
+	.then(() => {
+		console.log("\n✨ Deployment script completed successfully");
+		process.exit(0);
+	})
+	.catch((err) => {
+		console.error("Fatal error:", err);
+		process.exit(1);
+	});

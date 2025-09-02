@@ -33,6 +33,14 @@ export type Config = {
 	mails: {
 		from: string;
 	};
+	earlyAccess: {
+		notificationEmail: string;
+		enableNotifications: boolean;
+		enableLeadScoring: boolean;
+		enableWelcomeEmail: boolean;
+		enableSlackWebhook: boolean;
+		slackWebhookUrl: string;
+	};
 	storage: {
 		bucketNames: {
 			avatars: string;

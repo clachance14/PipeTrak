@@ -39,7 +39,7 @@ async function testWithDifferentTemplate() {
         }
       });
       
-      console.log(`  Sample components with milestones:`);
+      console.log("  Sample components with milestones:");
       sampleComponents.forEach(c => {
         console.log(`    ${c.displayId || c.componentId}: ${c.milestones.length} milestones`);
         if (c.milestones.length > 0) {

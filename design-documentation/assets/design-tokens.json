@@ -1,625 +1,625 @@
 {
-  "name": "PipeTrak Design Tokens",
-  "version": "1.0.0",
-  "description": "Field-optimized design tokens for PipeTrak milestone system built on shadcn/ui",
-  "colors": {
-    "base": {
-      "background": {
-        "value": "#fafafe",
-        "type": "color",
-        "description": "Main application background"
-      },
-      "foreground": {
-        "value": "#292b35", 
-        "type": "color",
-        "description": "Primary text color"
-      },
-      "card": {
-        "value": "#ffffff",
-        "type": "color", 
-        "description": "Card and surface backgrounds"
-      },
-      "card-foreground": {
-        "value": "#292b35",
-        "type": "color",
-        "description": "Text on card surfaces"
-      },
-      "muted": {
-        "value": "#f8fafc",
-        "type": "color",
-        "description": "Muted background areas"
-      },
-      "muted-foreground": {
-        "value": "#64748b",
-        "type": "color",
-        "description": "Muted text (5.8:1 contrast)"
-      }
-    },
-    "interactive": {
-      "primary": {
-        "value": "#4e6df5",
-        "type": "color",
-        "description": "Primary action color"
-      },
-      "primary-foreground": {
-        "value": "#f6f7f9",
-        "type": "color",
-        "description": "Text on primary background"
-      },
-      "secondary": {
-        "value": "#292b35", 
-        "type": "color",
-        "description": "Secondary action color"
-      },
-      "secondary-foreground": {
-        "value": "#ffffff",
-        "type": "color",
-        "description": "Text on secondary background"
-      }
-    },
-    "semantic": {
-      "success": {
-        "value": "#39a561",
-        "type": "color",
-        "description": "Success state (7.2:1 contrast)",
-        "contrast": "7.2:1"
-      },
-      "destructive": {
-        "value": "#ef4444",
-        "type": "color", 
-        "description": "Error/destructive state (6.1:1 contrast)",
-        "contrast": "6.1:1"
-      },
-      "warning": {
-        "value": "#f59e0b",
-        "type": "color",
-        "description": "Warning state (6.8:1 contrast)",
-        "contrast": "6.8:1"
-      }
-    },
-    "field": {
-      "complete": {
-        "value": "#10b981",
-        "type": "color",
-        "description": "Field complete status (7.1:1 contrast)",
-        "usage": "milestone completion, progress bars"
-      },
-      "pending": {
-        "value": "#6b7280", 
-        "type": "color",
-        "description": "Field pending status (5.9:1 contrast)",
-        "usage": "not started milestones"
-      },
-      "warning": {
-        "value": "#f59e0b",
-        "type": "color",
-        "description": "Field warning status (6.8:1 contrast)",
-        "usage": "in progress milestones"
-      },
-      "critical": {
-        "value": "#ef4444",
-        "type": "color",
-        "description": "Field critical status (6.1:1 contrast)",
-        "usage": "failed or blocked milestones"
-      },
-      "blocked": {
-        "value": "#f97316",
-        "type": "color",
-        "description": "Field blocked status (5.9:1 contrast)",
-        "usage": "on hold milestones"
-      }
-    },
-    "borders": {
-      "border": {
-        "value": "#e3ebf6",
-        "type": "color",
-        "description": "Default border color"
-      },
-      "input": {
-        "value": "#c7ced8", 
-        "type": "color",
-        "description": "Input field borders"
-      },
-      "ring": {
-        "value": "#4e6df5",
-        "type": "color",
-        "description": "Focus ring color"
-      }
-    },
-    "dark": {
-      "background": {
-        "value": "#070d12",
-        "type": "color",
-        "description": "Dark mode background"
-      },
-      "foreground": {
-        "value": "#e9eef3",
-        "type": "color", 
-        "description": "Dark mode text"
-      },
-      "card": {
-        "value": "#0d1116",
-        "type": "color",
-        "description": "Dark mode card background"
-      }
-    }
-  },
-  "typography": {
-    "font-family": {
-      "sans": {
-        "value": "var(--font-geist-sans), 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
-        "type": "fontFamily",
-        "description": "Primary font stack optimized for field readability"
-      },
-      "mono": {
-        "value": "'JetBrains Mono', 'Fira Code', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
-        "type": "fontFamily", 
-        "description": "Monospace font for component IDs and technical data"
-      }
-    },
-    "font-size": {
-      "xs": {
-        "value": "0.75rem",
-        "type": "fontSize",
-        "description": "12px - Small labels, captions"
-      },
-      "sm": {
-        "value": "0.875rem",
-        "type": "fontSize",
-        "description": "14px - Secondary text"
-      },
-      "base": {
-        "value": "1rem", 
-        "type": "fontSize",
-        "description": "16px - Body text baseline"
-      },
-      "lg": {
-        "value": "1.125rem",
-        "type": "fontSize", 
-        "description": "18px - Large body text"
-      },
-      "xl": {
-        "value": "1.25rem",
-        "type": "fontSize",
-        "description": "20px - Small headings"
-      },
-      "2xl": {
-        "value": "1.5rem",
-        "type": "fontSize",
-        "description": "24px - Card titles, milestone names"
-      },
-      "3xl": {
-        "value": "1.875rem",
-        "type": "fontSize",
-        "description": "30px - Section headings"
-      },
-      "4xl": {
-        "value": "2.25rem",
-        "type": "fontSize",
-        "description": "36px - Page titles"
-      }
-    },
-    "font-weight": {
-      "light": {
-        "value": "300",
-        "type": "fontWeight",
-        "description": "Light weight for secondary text"
-      },
-      "normal": {
-        "value": "400", 
-        "type": "fontWeight",
-        "description": "Normal weight for body text"
-      },
-      "medium": {
-        "value": "500",
-        "type": "fontWeight",
-        "description": "Medium weight for emphasized text and field readability"
-      },
-      "semibold": {
-        "value": "600",
-        "type": "fontWeight", 
-        "description": "Semibold for subheadings and milestone names"
-      },
-      "bold": {
-        "value": "700",
-        "type": "fontWeight",
-        "description": "Bold for headings and status text"
-      }
-    },
-    "line-height": {
-      "tight": {
-        "value": "1.25",
-        "type": "lineHeight",
-        "description": "Tight leading for headlines"
-      },
-      "snug": {
-        "value": "1.375",
-        "type": "lineHeight",
-        "description": "Snug leading for subheadings"
-      },
-      "normal": {
-        "value": "1.5",
-        "type": "lineHeight",
-        "description": "Normal leading for body text"
-      },
-      "relaxed": {
-        "value": "1.625",
-        "type": "lineHeight",
-        "description": "Relaxed leading for large text blocks"
-      }
-    },
-    "letter-spacing": {
-      "tight": {
-        "value": "-0.025em",
-        "type": "letterSpacing",
-        "description": "Tight tracking for large headings"
-      },
-      "normal": {
-        "value": "0em",
-        "type": "letterSpacing",
-        "description": "Normal tracking for body text"
-      },
-      "wide": {
-        "value": "0.025em", 
-        "type": "letterSpacing",
-        "description": "Wide tracking for labels and small text"
-      },
-      "wider": {
-        "value": "0.05em",
-        "type": "letterSpacing",
-        "description": "Wider tracking for emphasis"
-      },
-      "widest": {
-        "value": "0.1em",
-        "type": "letterSpacing",
-        "description": "Widest tracking for all caps headings"
-      }
-    }
-  },
-  "spacing": {
-    "0": {
-      "value": "0rem",
-      "type": "spacing"
-    },
-    "1": {
-      "value": "0.25rem",
-      "type": "spacing",
-      "description": "4px"
-    },
-    "2": {
-      "value": "0.5rem", 
-      "type": "spacing",
-      "description": "8px - Base unit"
-    },
-    "3": {
-      "value": "0.75rem",
-      "type": "spacing", 
-      "description": "12px"
-    },
-    "4": {
-      "value": "1rem",
-      "type": "spacing",
-      "description": "16px - Standard spacing unit"
-    },
-    "5": {
-      "value": "1.25rem",
-      "type": "spacing",
-      "description": "20px"
-    },
-    "6": {
-      "value": "1.5rem",
-      "type": "spacing",
-      "description": "24px"
-    },
-    "8": {
-      "value": "2rem",
-      "type": "spacing",
-      "description": "32px - Large spacing"
-    },
-    "10": {
-      "value": "2.5rem",
-      "type": "spacing",
-      "description": "40px"
-    },
-    "12": {
-      "value": "3rem",
-      "type": "spacing",
-      "description": "48px"
-    },
-    "16": {
-      "value": "4rem",
-      "type": "spacing",
-      "description": "64px - Extra large spacing"
-    }
-  },
-  "size": {
-    "touch-target-min": {
-      "value": "44px",
-      "type": "size",
-      "description": "WCAG AA minimum touch target"
-    },
-    "touch-target-field": {
-      "value": "52px", 
-      "type": "size",
-      "description": "PipeTrak field optimized touch target for gloved hands"
-    },
-    "touch-target-large": {
-      "value": "60px",
-      "type": "size", 
-      "description": "Extra large touch target for critical actions"
-    },
-    "icon-sm": {
-      "value": "16px",
-      "type": "size",
-      "description": "Small icons"
-    },
-    "icon-md": {
-      "value": "20px",
-      "type": "size",
-      "description": "Medium icons"
-    },
-    "icon-lg": {
-      "value": "24px", 
-      "type": "size",
-      "description": "Large icons"
-    },
-    "icon-xl": {
-      "value": "32px",
-      "type": "size",
-      "description": "Extra large icons for mobile"
-    }
-  },
-  "border-radius": {
-    "none": {
-      "value": "0px",
-      "type": "borderRadius"
-    },
-    "sm": {
-      "value": "0.25rem",
-      "type": "borderRadius",
-      "description": "4px - Small radius"
-    },
-    "md": {
-      "value": "0.5rem", 
-      "type": "borderRadius",
-      "description": "8px - Medium radius"
-    },
-    "lg": {
-      "value": "0.75rem",
-      "type": "borderRadius",
-      "description": "12px - Large radius (default)"
-    },
-    "xl": {
-      "value": "1rem",
-      "type": "borderRadius",
-      "description": "16px - Extra large radius"
-    },
-    "full": {
-      "value": "9999px",
-      "type": "borderRadius", 
-      "description": "Full radius for pills/circles"
-    }
-  },
-  "shadow": {
-    "sm": {
-      "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-      "type": "boxShadow",
-      "description": "Small shadow for subtle elevation"
-    },
-    "md": {
-      "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-      "type": "boxShadow",
-      "description": "Medium shadow for cards"
-    },
-    "lg": {
-      "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-      "type": "boxShadow",
-      "description": "Large shadow for modals" 
-    },
-    "field": {
-      "value": "0 4px 12px rgba(0, 0, 0, 0.15)",
-      "type": "boxShadow",
-      "description": "Enhanced shadow for field visibility on bright backgrounds"
-    }
-  },
-  "animation": {
-    "duration": {
-      "fast": {
-        "value": "150ms",
-        "type": "duration",
-        "description": "Fast animations for immediate feedback"
-      },
-      "normal": {
-        "value": "200ms",
-        "type": "duration",
-        "description": "Standard animation duration"
-      },
-      "slow": {
-        "value": "300ms", 
-        "type": "duration",
-        "description": "Slower animations for complex transitions"
-      }
-    },
-    "easing": {
-      "ease-out": {
-        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
-        "type": "cubicBezier",
-        "description": "Ease out for natural feeling animations"
-      },
-      "ease-in-out": {
-        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
-        "type": "cubicBezier", 
-        "description": "Ease in-out for balanced animations"
-      },
-      "bounce": {
-        "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-        "type": "cubicBezier",
-        "description": "Bounce easing for playful feedback"
-      }
-    }
-  },
-  "breakpoints": {
-    "mobile": {
-      "value": "640px",
-      "type": "breakpoint",
-      "description": "Mobile devices and small tablets"
-    },
-    "tablet": {
-      "value": "768px",
-      "type": "breakpoint",
-      "description": "Tablets in portrait mode"
-    },
-    "desktop": {
-      "value": "1024px",
-      "type": "breakpoint", 
-      "description": "Desktop and laptop screens"
-    },
-    "wide": {
-      "value": "1280px",
-      "type": "breakpoint",
-      "description": "Wide desktop screens"
-    }
-  },
-  "component-tokens": {
-    "milestone-card": {
-      "padding": {
-        "value": "1rem",
-        "type": "spacing",
-        "description": "Standard milestone card padding"
-      },
-      "border-radius": {
-        "value": "0.75rem", 
-        "type": "borderRadius",
-        "description": "Milestone card border radius"
-      },
-      "min-height": {
-        "compact": {
-          "value": "80px",
-          "type": "size"
-        },
-        "default": {
-          "value": "120px", 
-          "type": "size"
-        },
-        "large": {
-          "value": "160px",
-          "type": "size"
-        }
-      }
-    },
-    "slider": {
-      "thumb-size": {
-        "value": "24px",
-        "type": "size",
-        "description": "Slider thumb visual size"
-      },
-      "touch-area": {
-        "value": "52px",
-        "type": "size",
-        "description": "Slider thumb touch area"
-      },
-      "track-height": {
-        "value": "8px",
-        "type": "size",
-        "description": "Slider track height"
-      }
-    },
-    "checkbox": {
-      "size": {
-        "value": "24px",
-        "type": "size",
-        "description": "Checkbox visual size"
-      },
-      "touch-area": {
-        "value": "52px",
-        "type": "size", 
-        "description": "Checkbox touch area"
-      }
-    },
-    "stepper": {
-      "button-size": {
-        "value": "48px",
-        "type": "size",
-        "description": "Stepper button size for optimal touch"
-      }
-    },
-    "progress-bar": {
-      "height": {
-        "thin": {
-          "value": "2px",
-          "type": "size"
-        },
-        "default": {
-          "value": "8px",
-          "type": "size"
-        },
-        "thick": {
-          "value": "12px",
-          "type": "size"
-        }
-      }
-    }
-  },
-  "accessibility": {
-    "contrast-ratios": {
-      "aa-minimum": {
-        "value": "4.5:1",
-        "description": "WCAG AA standard"
-      },
-      "aa-large": {
-        "value": "3.0:1", 
-        "description": "WCAG AA for large text (18px+)"
-      },
-      "aaa-normal": {
-        "value": "7.0:1",
-        "description": "WCAG AAA standard"
-      },
-      "pipetrak-target": {
-        "value": "6.0:1",
-        "description": "PipeTrak field visibility target"
-      },
-      "outdoor-enhanced": {
-        "value": "8.0:1",
-        "description": "Extreme outdoor conditions"
-      }
-    },
-    "focus": {
-      "ring-width": {
-        "value": "2px",
-        "type": "borderWidth",
-        "description": "Standard focus ring width"
-      },
-      "ring-offset": {
-        "value": "2px", 
-        "type": "spacing",
-        "description": "Focus ring offset from element"
-      },
-      "enhanced-ring-width": {
-        "value": "3px",
-        "type": "borderWidth",
-        "description": "Enhanced focus ring for high contrast"
-      }
-    }
-  },
-  "field-optimization": {
-    "dust-resistance": {
-      "min-contrast": "6.0:1",
-      "description": "Minimum contrast for dusty screen visibility"
-    },
-    "glove-friendly": {
-      "min-touch-target": "52px", 
-      "spacing-between-targets": "8px",
-      "description": "Touch targets optimized for work gloves"
-    },
-    "bright-sunlight": {
-      "enhanced-contrast": "8.0:1",
-      "bold-text-weights": true,
-      "description": "Settings for outdoor bright sunlight visibility"
-    },
-    "wet-conditions": {
-      "enlarged-touch-areas": true,
-      "reduced-gesture-sensitivity": true,
-      "description": "Adaptations for wet screen conditions"
-    }
-  }
+	"name": "PipeTrak Design Tokens",
+	"version": "1.0.0",
+	"description": "Field-optimized design tokens for PipeTrak milestone system built on shadcn/ui",
+	"colors": {
+		"base": {
+			"background": {
+				"value": "#fafafe",
+				"type": "color",
+				"description": "Main application background"
+			},
+			"foreground": {
+				"value": "#292b35",
+				"type": "color",
+				"description": "Primary text color"
+			},
+			"card": {
+				"value": "#ffffff",
+				"type": "color",
+				"description": "Card and surface backgrounds"
+			},
+			"card-foreground": {
+				"value": "#292b35",
+				"type": "color",
+				"description": "Text on card surfaces"
+			},
+			"muted": {
+				"value": "#f8fafc",
+				"type": "color",
+				"description": "Muted background areas"
+			},
+			"muted-foreground": {
+				"value": "#64748b",
+				"type": "color",
+				"description": "Muted text (5.8:1 contrast)"
+			}
+		},
+		"interactive": {
+			"primary": {
+				"value": "#4e6df5",
+				"type": "color",
+				"description": "Primary action color"
+			},
+			"primary-foreground": {
+				"value": "#f6f7f9",
+				"type": "color",
+				"description": "Text on primary background"
+			},
+			"secondary": {
+				"value": "#292b35",
+				"type": "color",
+				"description": "Secondary action color"
+			},
+			"secondary-foreground": {
+				"value": "#ffffff",
+				"type": "color",
+				"description": "Text on secondary background"
+			}
+		},
+		"semantic": {
+			"success": {
+				"value": "#39a561",
+				"type": "color",
+				"description": "Success state (7.2:1 contrast)",
+				"contrast": "7.2:1"
+			},
+			"destructive": {
+				"value": "#ef4444",
+				"type": "color",
+				"description": "Error/destructive state (6.1:1 contrast)",
+				"contrast": "6.1:1"
+			},
+			"warning": {
+				"value": "#f59e0b",
+				"type": "color",
+				"description": "Warning state (6.8:1 contrast)",
+				"contrast": "6.8:1"
+			}
+		},
+		"field": {
+			"complete": {
+				"value": "#10b981",
+				"type": "color",
+				"description": "Field complete status (7.1:1 contrast)",
+				"usage": "milestone completion, progress bars"
+			},
+			"pending": {
+				"value": "#6b7280",
+				"type": "color",
+				"description": "Field pending status (5.9:1 contrast)",
+				"usage": "not started milestones"
+			},
+			"warning": {
+				"value": "#f59e0b",
+				"type": "color",
+				"description": "Field warning status (6.8:1 contrast)",
+				"usage": "in progress milestones"
+			},
+			"critical": {
+				"value": "#ef4444",
+				"type": "color",
+				"description": "Field critical status (6.1:1 contrast)",
+				"usage": "failed or blocked milestones"
+			},
+			"blocked": {
+				"value": "#f97316",
+				"type": "color",
+				"description": "Field blocked status (5.9:1 contrast)",
+				"usage": "on hold milestones"
+			}
+		},
+		"borders": {
+			"border": {
+				"value": "#e3ebf6",
+				"type": "color",
+				"description": "Default border color"
+			},
+			"input": {
+				"value": "#c7ced8",
+				"type": "color",
+				"description": "Input field borders"
+			},
+			"ring": {
+				"value": "#4e6df5",
+				"type": "color",
+				"description": "Focus ring color"
+			}
+		},
+		"dark": {
+			"background": {
+				"value": "#070d12",
+				"type": "color",
+				"description": "Dark mode background"
+			},
+			"foreground": {
+				"value": "#e9eef3",
+				"type": "color",
+				"description": "Dark mode text"
+			},
+			"card": {
+				"value": "#0d1116",
+				"type": "color",
+				"description": "Dark mode card background"
+			}
+		}
+	},
+	"typography": {
+		"font-family": {
+			"sans": {
+				"value": "var(--font-geist-sans), 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
+				"type": "fontFamily",
+				"description": "Primary font stack optimized for field readability"
+			},
+			"mono": {
+				"value": "'JetBrains Mono', 'Fira Code', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+				"type": "fontFamily",
+				"description": "Monospace font for component IDs and technical data"
+			}
+		},
+		"font-size": {
+			"xs": {
+				"value": "0.75rem",
+				"type": "fontSize",
+				"description": "12px - Small labels, captions"
+			},
+			"sm": {
+				"value": "0.875rem",
+				"type": "fontSize",
+				"description": "14px - Secondary text"
+			},
+			"base": {
+				"value": "1rem",
+				"type": "fontSize",
+				"description": "16px - Body text baseline"
+			},
+			"lg": {
+				"value": "1.125rem",
+				"type": "fontSize",
+				"description": "18px - Large body text"
+			},
+			"xl": {
+				"value": "1.25rem",
+				"type": "fontSize",
+				"description": "20px - Small headings"
+			},
+			"2xl": {
+				"value": "1.5rem",
+				"type": "fontSize",
+				"description": "24px - Card titles, milestone names"
+			},
+			"3xl": {
+				"value": "1.875rem",
+				"type": "fontSize",
+				"description": "30px - Section headings"
+			},
+			"4xl": {
+				"value": "2.25rem",
+				"type": "fontSize",
+				"description": "36px - Page titles"
+			}
+		},
+		"font-weight": {
+			"light": {
+				"value": "300",
+				"type": "fontWeight",
+				"description": "Light weight for secondary text"
+			},
+			"normal": {
+				"value": "400",
+				"type": "fontWeight",
+				"description": "Normal weight for body text"
+			},
+			"medium": {
+				"value": "500",
+				"type": "fontWeight",
+				"description": "Medium weight for emphasized text and field readability"
+			},
+			"semibold": {
+				"value": "600",
+				"type": "fontWeight",
+				"description": "Semibold for subheadings and milestone names"
+			},
+			"bold": {
+				"value": "700",
+				"type": "fontWeight",
+				"description": "Bold for headings and status text"
+			}
+		},
+		"line-height": {
+			"tight": {
+				"value": "1.25",
+				"type": "lineHeight",
+				"description": "Tight leading for headlines"
+			},
+			"snug": {
+				"value": "1.375",
+				"type": "lineHeight",
+				"description": "Snug leading for subheadings"
+			},
+			"normal": {
+				"value": "1.5",
+				"type": "lineHeight",
+				"description": "Normal leading for body text"
+			},
+			"relaxed": {
+				"value": "1.625",
+				"type": "lineHeight",
+				"description": "Relaxed leading for large text blocks"
+			}
+		},
+		"letter-spacing": {
+			"tight": {
+				"value": "-0.025em",
+				"type": "letterSpacing",
+				"description": "Tight tracking for large headings"
+			},
+			"normal": {
+				"value": "0em",
+				"type": "letterSpacing",
+				"description": "Normal tracking for body text"
+			},
+			"wide": {
+				"value": "0.025em",
+				"type": "letterSpacing",
+				"description": "Wide tracking for labels and small text"
+			},
+			"wider": {
+				"value": "0.05em",
+				"type": "letterSpacing",
+				"description": "Wider tracking for emphasis"
+			},
+			"widest": {
+				"value": "0.1em",
+				"type": "letterSpacing",
+				"description": "Widest tracking for all caps headings"
+			}
+		}
+	},
+	"spacing": {
+		"0": {
+			"value": "0rem",
+			"type": "spacing"
+		},
+		"1": {
+			"value": "0.25rem",
+			"type": "spacing",
+			"description": "4px"
+		},
+		"2": {
+			"value": "0.5rem",
+			"type": "spacing",
+			"description": "8px - Base unit"
+		},
+		"3": {
+			"value": "0.75rem",
+			"type": "spacing",
+			"description": "12px"
+		},
+		"4": {
+			"value": "1rem",
+			"type": "spacing",
+			"description": "16px - Standard spacing unit"
+		},
+		"5": {
+			"value": "1.25rem",
+			"type": "spacing",
+			"description": "20px"
+		},
+		"6": {
+			"value": "1.5rem",
+			"type": "spacing",
+			"description": "24px"
+		},
+		"8": {
+			"value": "2rem",
+			"type": "spacing",
+			"description": "32px - Large spacing"
+		},
+		"10": {
+			"value": "2.5rem",
+			"type": "spacing",
+			"description": "40px"
+		},
+		"12": {
+			"value": "3rem",
+			"type": "spacing",
+			"description": "48px"
+		},
+		"16": {
+			"value": "4rem",
+			"type": "spacing",
+			"description": "64px - Extra large spacing"
+		}
+	},
+	"size": {
+		"touch-target-min": {
+			"value": "44px",
+			"type": "size",
+			"description": "WCAG AA minimum touch target"
+		},
+		"touch-target-field": {
+			"value": "52px",
+			"type": "size",
+			"description": "PipeTrak field optimized touch target for gloved hands"
+		},
+		"touch-target-large": {
+			"value": "60px",
+			"type": "size",
+			"description": "Extra large touch target for critical actions"
+		},
+		"icon-sm": {
+			"value": "16px",
+			"type": "size",
+			"description": "Small icons"
+		},
+		"icon-md": {
+			"value": "20px",
+			"type": "size",
+			"description": "Medium icons"
+		},
+		"icon-lg": {
+			"value": "24px",
+			"type": "size",
+			"description": "Large icons"
+		},
+		"icon-xl": {
+			"value": "32px",
+			"type": "size",
+			"description": "Extra large icons for mobile"
+		}
+	},
+	"border-radius": {
+		"none": {
+			"value": "0px",
+			"type": "borderRadius"
+		},
+		"sm": {
+			"value": "0.25rem",
+			"type": "borderRadius",
+			"description": "4px - Small radius"
+		},
+		"md": {
+			"value": "0.5rem",
+			"type": "borderRadius",
+			"description": "8px - Medium radius"
+		},
+		"lg": {
+			"value": "0.75rem",
+			"type": "borderRadius",
+			"description": "12px - Large radius (default)"
+		},
+		"xl": {
+			"value": "1rem",
+			"type": "borderRadius",
+			"description": "16px - Extra large radius"
+		},
+		"full": {
+			"value": "9999px",
+			"type": "borderRadius",
+			"description": "Full radius for pills/circles"
+		}
+	},
+	"shadow": {
+		"sm": {
+			"value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+			"type": "boxShadow",
+			"description": "Small shadow for subtle elevation"
+		},
+		"md": {
+			"value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+			"type": "boxShadow",
+			"description": "Medium shadow for cards"
+		},
+		"lg": {
+			"value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+			"type": "boxShadow",
+			"description": "Large shadow for modals"
+		},
+		"field": {
+			"value": "0 4px 12px rgba(0, 0, 0, 0.15)",
+			"type": "boxShadow",
+			"description": "Enhanced shadow for field visibility on bright backgrounds"
+		}
+	},
+	"animation": {
+		"duration": {
+			"fast": {
+				"value": "150ms",
+				"type": "duration",
+				"description": "Fast animations for immediate feedback"
+			},
+			"normal": {
+				"value": "200ms",
+				"type": "duration",
+				"description": "Standard animation duration"
+			},
+			"slow": {
+				"value": "300ms",
+				"type": "duration",
+				"description": "Slower animations for complex transitions"
+			}
+		},
+		"easing": {
+			"ease-out": {
+				"value": "cubic-bezier(0.4, 0, 0.2, 1)",
+				"type": "cubicBezier",
+				"description": "Ease out for natural feeling animations"
+			},
+			"ease-in-out": {
+				"value": "cubic-bezier(0.4, 0, 0.2, 1)",
+				"type": "cubicBezier",
+				"description": "Ease in-out for balanced animations"
+			},
+			"bounce": {
+				"value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+				"type": "cubicBezier",
+				"description": "Bounce easing for playful feedback"
+			}
+		}
+	},
+	"breakpoints": {
+		"mobile": {
+			"value": "640px",
+			"type": "breakpoint",
+			"description": "Mobile devices and small tablets"
+		},
+		"tablet": {
+			"value": "768px",
+			"type": "breakpoint",
+			"description": "Tablets in portrait mode"
+		},
+		"desktop": {
+			"value": "1024px",
+			"type": "breakpoint",
+			"description": "Desktop and laptop screens"
+		},
+		"wide": {
+			"value": "1280px",
+			"type": "breakpoint",
+			"description": "Wide desktop screens"
+		}
+	},
+	"component-tokens": {
+		"milestone-card": {
+			"padding": {
+				"value": "1rem",
+				"type": "spacing",
+				"description": "Standard milestone card padding"
+			},
+			"border-radius": {
+				"value": "0.75rem",
+				"type": "borderRadius",
+				"description": "Milestone card border radius"
+			},
+			"min-height": {
+				"compact": {
+					"value": "80px",
+					"type": "size"
+				},
+				"default": {
+					"value": "120px",
+					"type": "size"
+				},
+				"large": {
+					"value": "160px",
+					"type": "size"
+				}
+			}
+		},
+		"slider": {
+			"thumb-size": {
+				"value": "24px",
+				"type": "size",
+				"description": "Slider thumb visual size"
+			},
+			"touch-area": {
+				"value": "52px",
+				"type": "size",
+				"description": "Slider thumb touch area"
+			},
+			"track-height": {
+				"value": "8px",
+				"type": "size",
+				"description": "Slider track height"
+			}
+		},
+		"checkbox": {
+			"size": {
+				"value": "24px",
+				"type": "size",
+				"description": "Checkbox visual size"
+			},
+			"touch-area": {
+				"value": "52px",
+				"type": "size",
+				"description": "Checkbox touch area"
+			}
+		},
+		"stepper": {
+			"button-size": {
+				"value": "48px",
+				"type": "size",
+				"description": "Stepper button size for optimal touch"
+			}
+		},
+		"progress-bar": {
+			"height": {
+				"thin": {
+					"value": "2px",
+					"type": "size"
+				},
+				"default": {
+					"value": "8px",
+					"type": "size"
+				},
+				"thick": {
+					"value": "12px",
+					"type": "size"
+				}
+			}
+		}
+	},
+	"accessibility": {
+		"contrast-ratios": {
+			"aa-minimum": {
+				"value": "4.5:1",
+				"description": "WCAG AA standard"
+			},
+			"aa-large": {
+				"value": "3.0:1",
+				"description": "WCAG AA for large text (18px+)"
+			},
+			"aaa-normal": {
+				"value": "7.0:1",
+				"description": "WCAG AAA standard"
+			},
+			"pipetrak-target": {
+				"value": "6.0:1",
+				"description": "PipeTrak field visibility target"
+			},
+			"outdoor-enhanced": {
+				"value": "8.0:1",
+				"description": "Extreme outdoor conditions"
+			}
+		},
+		"focus": {
+			"ring-width": {
+				"value": "2px",
+				"type": "borderWidth",
+				"description": "Standard focus ring width"
+			},
+			"ring-offset": {
+				"value": "2px",
+				"type": "spacing",
+				"description": "Focus ring offset from element"
+			},
+			"enhanced-ring-width": {
+				"value": "3px",
+				"type": "borderWidth",
+				"description": "Enhanced focus ring for high contrast"
+			}
+		}
+	},
+	"field-optimization": {
+		"dust-resistance": {
+			"min-contrast": "6.0:1",
+			"description": "Minimum contrast for dusty screen visibility"
+		},
+		"glove-friendly": {
+			"min-touch-target": "52px",
+			"spacing-between-targets": "8px",
+			"description": "Touch targets optimized for work gloves"
+		},
+		"bright-sunlight": {
+			"enhanced-contrast": "8.0:1",
+			"bold-text-weights": true,
+			"description": "Settings for outdoor bright sunlight visibility"
+		},
+		"wet-conditions": {
+			"enlarged-touch-areas": true,
+			"reduced-gesture-sensitivity": true,
+			"description": "Adaptations for wet screen conditions"
+		}
+	}
 }

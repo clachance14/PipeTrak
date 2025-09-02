@@ -135,14 +135,14 @@ async function testTypeMapping() {
     }
   }
   
-  console.log(`\n=== Type Mapping Results ===`);
+  console.log("\n=== Type Mapping Results ===");
   console.log(`✅ Passed: ${passed}`);
   console.log(`❌ Failed: ${failed}`);
   console.log(`📊 Total: ${testCases.length}`);
   console.log(`📈 Success Rate: ${((passed / testCases.length) * 100).toFixed(2)}%`);
   
   if (failures.length > 0) {
-    console.log(`\n=== Failure Details ===`);
+    console.log("\n=== Failure Details ===");
     failures.forEach(failure => {
       console.log(`  Input: "${failure.input}"`);
       console.log(`  Expected: ${failure.expected}`);
@@ -151,7 +151,7 @@ async function testTypeMapping() {
   }
   
   // Test batch processing with statistics
-  console.log(`\n=== Testing Batch Processing ===`);
+  console.log("\n=== Testing Batch Processing ===");
   const sampleTypes = [
     "Gate Valve", "Support", "Gasket", "Flange", "Elbow",
     "Gauge", "Pipe", "Spool", "Field Weld", "Unknown Item",
@@ -167,7 +167,7 @@ async function testTypeMapping() {
     }
   });
   
-  console.log(`\n✅ Type mapping test completed!`);
+  console.log("\n✅ Type mapping test completed!");
   return failed === 0;
 }
 

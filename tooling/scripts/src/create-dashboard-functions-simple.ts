@@ -1,41 +1,41 @@
 #!/usr/bin/env tsx
-import { Client } from 'pg';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
+import { Client } from "pg";
+import * as dotenv from "dotenv";
+import * as path from "path";
 
 // Load environment variables
-dotenv.config({ path: path.join(process.cwd(), '.env.local') });
+dotenv.config({ path: path.join(process.cwd(), ".env.local") });
 
 async function createDashboardFunctions() {
-  const connectionString = process.env.DIRECT_URL;
-  
-  if (!connectionString) {
-    console.error('DIRECT_URL not found in environment variables');
-    process.exit(1);
-  }
+	const connectionString = process.env.DIRECT_URL;
 
-  const url = new URL(connectionString);
-  
-  const client = new Client({
-    host: url.hostname,
-    port: parseInt(url.port),
-    database: url.pathname.substring(1),
-    user: url.username,
-    password: url.password,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
+	if (!connectionString) {
+		console.error("DIRECT_URL not found in environment variables");
+		process.exit(1);
+	}
 
-  try {
-    await client.connect();
-    console.log('Connected successfully');
+	const url = new URL(connectionString);
 
-    // Create dashboard functions directly with embedded SQL
-    
-    // 1. Dashboard Metrics Function
-    console.log('Creating get_dashboard_metrics function...');
-    await client.query(`
+	const client = new Client({
+		host: url.hostname,
+		port: Number.parseInt(url.port),
+		database: url.pathname.substring(1),
+		user: url.username,
+		password: url.password,
+		ssl: {
+			rejectUnauthorized: false,
+		},
+	});
+
+	try {
+		await client.connect();
+		console.log("Connected successfully");
+
+		// Create dashboard functions directly with embedded SQL
+
+		// 1. Dashboard Metrics Function
+		console.log("Creating get_dashboard_metrics function...");
+		await client.query(`
       CREATE OR REPLACE FUNCTION get_dashboard_metrics(p_project_id TEXT)
       RETURNS JSONB
       LANGUAGE plpgsql
@@ -100,11 +100,11 @@ async function createDashboardFunctions() {
       END;
       $$;
     `);
-    console.log('✓ Created get_dashboard_metrics');
+		console.log("✓ Created get_dashboard_metrics");
 
-    // 2. Area System Matrix Function
-    console.log('Creating get_area_system_matrix function...');
-    await client.query(`
+		// 2. Area System Matrix Function
+		console.log("Creating get_area_system_matrix function...");
+		await client.query(`
       CREATE OR REPLACE FUNCTION get_area_system_matrix(p_project_id TEXT)
       RETURNS JSONB
       LANGUAGE plpgsql
@@ -158,11 +158,11 @@ async function createDashboardFunctions() {
       END;
       $$;
     `);
-    console.log('✓ Created get_area_system_matrix');
+		console.log("✓ Created get_area_system_matrix");
 
-    // 3. Drawing Rollups Function
-    console.log('Creating get_drawing_rollups function...');
-    await client.query(`
+		// 3. Drawing Rollups Function
+		console.log("Creating get_drawing_rollups function...");
+		await client.query(`
       CREATE OR REPLACE FUNCTION get_drawing_rollups(p_project_id TEXT)
       RETURNS JSONB
       LANGUAGE plpgsql
@@ -218,11 +218,11 @@ async function createDashboardFunctions() {
       END;
       $$;
     `);
-    console.log('✓ Created get_drawing_rollups');
+		console.log("✓ Created get_drawing_rollups");
 
-    // 4. Test Package Readiness Function
-    console.log('Creating get_test_package_readiness function...');
-    await client.query(`
+		// 4. Test Package Readiness Function
+		console.log("Creating get_test_package_readiness function...");
+		await client.query(`
       CREATE OR REPLACE FUNCTION get_test_package_readiness(p_project_id TEXT)
       RETURNS JSONB
       LANGUAGE plpgsql
@@ -274,11 +274,11 @@ async function createDashboardFunctions() {
       END;
       $$;
     `);
-    console.log('✓ Created get_test_package_readiness');
+		console.log("✓ Created get_test_package_readiness");
 
-    // 5. Recent Activity Function
-    console.log('Creating get_recent_activity function...');
-    await client.query(`
+		// 5. Recent Activity Function
+		console.log("Creating get_recent_activity function...");
+		await client.query(`
       CREATE OR REPLACE FUNCTION get_recent_activity(p_project_id TEXT, p_limit INTEGER DEFAULT 50)
       RETURNS JSONB
       LANGUAGE plpgsql
@@ -344,56 +344,62 @@ async function createDashboardFunctions() {
       END;
       $$;
     `);
-    console.log('✓ Created get_recent_activity');
+		console.log("✓ Created get_recent_activity");
 
-    // Grant permissions
-    console.log('Granting permissions...');
-    const functions = [
-      'get_dashboard_metrics',
-      'get_area_system_matrix',
-      'get_drawing_rollups',
-      'get_test_package_readiness',
-      'get_recent_activity'
-    ];
+		// Grant permissions
+		console.log("Granting permissions...");
+		const functions = [
+			"get_dashboard_metrics",
+			"get_area_system_matrix",
+			"get_drawing_rollups",
+			"get_test_package_readiness",
+			"get_recent_activity",
+		];
 
-    for (const func of functions) {
-      if (func === 'get_recent_activity') {
-        await client.query(`GRANT EXECUTE ON FUNCTION ${func}(TEXT, INTEGER) TO authenticated`);
-      } else {
-        await client.query(`GRANT EXECUTE ON FUNCTION ${func}(TEXT) TO authenticated`);
-      }
-    }
-    console.log('✓ Granted permissions to authenticated users');
+		for (const func of functions) {
+			if (func === "get_recent_activity") {
+				await client.query(
+					`GRANT EXECUTE ON FUNCTION ${func}(TEXT, INTEGER) TO authenticated`,
+				);
+			} else {
+				await client.query(
+					`GRANT EXECUTE ON FUNCTION ${func}(TEXT) TO authenticated`,
+				);
+			}
+		}
+		console.log("✓ Granted permissions to authenticated users");
 
-    // Test that functions were created successfully
-    console.log('\nTesting function availability...');
-    
-    for (const func of functions) {
-      try {
-        const result = await client.query(`
+		// Test that functions were created successfully
+		console.log("\nTesting function availability...");
+
+		for (const func of functions) {
+			try {
+				const result = await client.query(
+					`
           SELECT 1 FROM pg_proc p 
           JOIN pg_namespace n ON p.pronamespace = n.oid 
           WHERE p.proname = $1 AND n.nspname = 'public'
-        `, [func]);
-        
-        if (result.rowCount && result.rowCount > 0) {
-          console.log(`✓ Function exists: ${func}`);
-        } else {
-          console.log(`✗ Function missing: ${func}`);
-        }
-      } catch (error: any) {
-        console.log(`✗ Error checking ${func}:`, error.message);
-      }
-    }
-    
-    console.log('\n✅ Dashboard functions created successfully!');
-    
-  } catch (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  } finally {
-    await client.end();
-  }
+        `,
+					[func],
+				);
+
+				if (result.rowCount && result.rowCount > 0) {
+					console.log(`✓ Function exists: ${func}`);
+				} else {
+					console.log(`✗ Function missing: ${func}`);
+				}
+			} catch (error: any) {
+				console.log(`✗ Error checking ${func}:`, error.message);
+			}
+		}
+
+		console.log("\n✅ Dashboard functions created successfully!");
+	} catch (error) {
+		console.error("Error:", error);
+		process.exit(1);
+	} finally {
+		await client.end();
+	}
 }
 
 createDashboardFunctions();

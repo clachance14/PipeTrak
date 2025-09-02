@@ -273,6 +273,9 @@
 			"headline": "Join the organization {organizationName}",
 			"join": "Join the organization",
 			"subject": "You have been invited to join an organization"
+		},
+		"earlyAccessNotification": {
+			"subject": "New Early Access Lead: {company}"
 		}
 	},
 	"newsletter": {

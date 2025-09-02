@@ -141,6 +141,8 @@ For detailed information on specific systems, refer to these specialized guides:
   - Production checklist, security requirements, deployment steps
 - **🛠️ PipeTrak Business Logic**: `.claude/pipetrak/claude.md`
   - Current status, routing architecture, business rules
+- **📋 Linear Issue Tracking**: `.claude/linear/claude.md`
+  - MCP commands, workflow patterns, project structure, labeling system
 
 ## Development Standards
 
@@ -163,6 +165,30 @@ For detailed information on specific systems, refer to these specialized guides:
 - Use existing libraries and utilities rather than introducing new ones
 - Follow security best practices - never expose or log secrets/keys
 
+## Issue Tracking with Linear
+
+This project uses Linear for bug tracking, feature requests, and documentation via MCP (Model Context Protocol) integration.
+
+### Linear Setup
+- **Team**: PipeTrak (ID: `173da0c8-0e1e-4a5d-94b3-84d02bfbe593`)
+- **Projects**: 6 organized epics covering all major system areas
+- **Labels**: Comprehensive labeling system for priority, type, and workflow tracking
+
+### Common Operations
+- Create issues with proper project assignment and labels
+- Update issue status and track progress
+- Add comments for session handoffs and progress updates
+- Search and filter issues by project, label, or assignee
+- Document session state and knowledge base items
+
+### Key Labels for Development
+- **Session Management**: `Session-Handoff`, `Next-Session`, `Context-Restoration`
+- **Workflow States**: `Action-Required`, `Needs-Review`, `Needs-QA`, `Blocked`
+- **Knowledge Sharing**: `Knowledge-Base`, `Investigation`, `Documentation`
+- **Priority Levels**: `Priority: Critical`, `Priority: High`, `Priority: Medium`, `Priority: Low`
+
+For detailed Linear MCP commands and workflows, see `.claude/linear/claude.md`.
+
 ### Quick Reference Links
 
 For specialized topics, see the corresponding `.claude/` directories:
@@ -174,6 +200,7 @@ For specialized topics, see the corresponding `.claude/` directories:
 - **💾 Database & Migrations**: `.claude/database/claude.md`
 - **🚀 Deployment & Production**: `.claude/deployment/claude.md`
 - **🛠️ PipeTrak Business Logic**: `.claude/pipetrak/claude.md`
+- **📋 Linear Issue Tracking**: `.claude/linear/claude.md`
 
 ---
 

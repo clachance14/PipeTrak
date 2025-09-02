@@ -28,6 +28,7 @@ import {
 	FileText,
 	Sheet,
 	FileImage,
+	Printer,
 } from "lucide-react";
 import { format, addDays, startOfWeek } from "date-fns";
 import { cn } from "@ui/lib";
@@ -148,6 +149,20 @@ export function ProgressSummaryReportContent({
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	// Print function
+	const handlePrint = () => {
+		// Build URL with current configuration
+		const printUrl = new URL(window.location.origin + window.location.pathname + '/print');
+		printUrl.searchParams.set('weekEnding', format(weekEnding, 'yyyy-MM-dd'));
+		printUrl.searchParams.set('groupBy', groupBy);
+		printUrl.searchParams.set('showDeltas', showDeltas.toString());
+		printUrl.searchParams.set('includeZeroProgress', includeZeroProgress.toString());
+		printUrl.searchParams.set('includeGrandTotal', includeGrandTotal.toString());
+
+		// Open in new window for printing
+		window.open(printUrl.toString(), '_blank');
 	};
 
 	// Export functions
@@ -446,6 +461,15 @@ export function ProgressSummaryReportContent({
 									</p>
 								</div>
 								<div className="flex gap-2">
+									<Button
+										status="info"
+										size="sm"
+										onClick={handlePrint}
+										disabled={isExporting !== null}
+									>
+										<Printer className="mr-2 h-4 w-4" />
+										Print/PDF
+									</Button>
 									<Button
 										status="info"
 										size="sm"

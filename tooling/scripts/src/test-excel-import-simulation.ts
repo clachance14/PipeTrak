@@ -134,7 +134,7 @@ async function testExcelImportSimulation() {
           success: true
         });
       } else {
-        console.log(`❌ No template assigned`);
+        console.log("❌ No template assigned");
         assignmentResults.push({
           componentId: comp.componentId,
           type: comp.type,

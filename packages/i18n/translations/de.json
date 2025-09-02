@@ -270,6 +270,9 @@
 			"headline": "Einladung zur Organisation {organizationName}",
 			"join": "Tritt der Organisation bei",
 			"subject": "Du wurdest eingeladen, einer Organisation beizutreten"
+		},
+		"earlyAccessNotification": {
+			"subject": "Neue Early Access Anmeldung: {company}"
 		}
 	},
 	"newsletter": {

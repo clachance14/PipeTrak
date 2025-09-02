@@ -17,12 +17,12 @@ async function runTest(testName: string, testFn: () => Promise<TestResult>): Pro
     if (result.passed) {
       console.log(`✅ PASS: ${result.message}`);
       if (result.details) {
-        console.log(`   Details:`, result.details);
+        console.log("   Details:", result.details);
       }
     } else {
       console.log(`❌ FAIL: ${result.message}`);
       if (result.details) {
-        console.log(`   Details:`, result.details);
+        console.log("   Details:", result.details);
       }
     }
   } catch (error) {

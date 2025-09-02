@@ -1,0 +1,87 @@
+# User Story Template
+
+## Story Information
+**ID**: [AUTO-GENERATED or specify]
+**Title**: [Concise story title]
+**Priority**: [Critical/High/Medium/Low]
+**Status**: [Draft/Ready/In Progress/Ready for Review/Done]
+**Estimated Effort**: [XS/S/M/L/XL or story points]
+**Created**: [DATE]
+**Updated**: [DATE]
+
+## Story
+**As a** [user role/persona]
+**I want** [specific goal/functionality]  
+**So that** [business value/benefit]
+
+### Context
+[Background information and context for this story]
+
+## Acceptance Criteria
+[Use Given/When/Then format or clear bullet points]
+
+### Scenario 1: [Main happy path]
+- **Given** [initial context/state]
+- **When** [action taken by user]
+- **Then** [expected outcome]
+
+### Scenario 2: [Edge case or alternative flow]
+- **Given** [initial context/state]  
+- **When** [action taken by user]
+- **Then** [expected outcome]
+
+[Add more scenarios as needed]
+
+## Technical Considerations
+- **Dependencies**: [List any technical dependencies]
+- **API Changes**: [Any API modifications needed]
+- **Database Changes**: [Any schema changes required]
+- **Performance Impact**: [Expected performance considerations]
+- **Security Considerations**: [Any security implications]
+
+## Implementation Tasks
+- [ ] [Specific development task 1]
+- [ ] [Specific development task 2]
+- [ ] [Testing task]
+- [ ] [Documentation task]
+
+## Testing Strategy
+- **Unit Tests**: [What needs unit testing]
+- **Integration Tests**: [Integration testing requirements]
+- **Manual Testing**: [Manual testing scenarios]
+- **Accessibility**: [Accessibility testing needs]
+
+## Definition of Done
+- [ ] All acceptance criteria met
+- [ ] Code reviewed and approved
+- [ ] Tests written and passing
+- [ ] Documentation updated
+- [ ] Accessibility validated
+- [ ] Performance acceptable
+- [ ] Deployed to staging
+- [ ] Product owner approval
+
+## Dev Agent Record
+### Agent Model Used
+[Model version used for development]
+
+### Tasks Completed
+[Track task completion during development]
+
+### Debug Log References
+[References to debugging sessions or issues]
+
+### Completion Notes
+[Notes from development completion]
+
+### File List
+[List of files created, modified, or deleted during implementation]
+
+### Change Log
+[Detailed changes made during implementation]
+
+## Notes
+[Any additional notes, assumptions, or clarifications]
+
+## Attachments
+[Links to mockups, designs, related documents, etc.]

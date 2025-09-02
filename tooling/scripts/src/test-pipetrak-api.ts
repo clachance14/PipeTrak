@@ -49,7 +49,7 @@ async function testPipeTrakAPI() {
       }
     });
 
-    console.log(`\n📊 Component Status Breakdown:`);
+    console.log("\n📊 Component Status Breakdown:");
     console.log(`   - Not Started: ${notStarted}`);
     console.log(`   - In Progress: ${inProgress}`);
     console.log(`   - Completed: ${completed}`);
@@ -66,7 +66,7 @@ async function testPipeTrakAPI() {
       }
     });
 
-    console.log(`\n📝 Sample Components:`);
+    console.log("\n📝 Sample Components:");
     sampleComponents.forEach(comp => {
       console.log(`   - ${comp.componentId}: ${comp.type} ${comp.spec || ""} ${comp.size || ""}`);
       console.log(`     Drawing: ${comp.drawing?.number || "N/A"}`);
@@ -75,7 +75,7 @@ async function testPipeTrakAPI() {
     });
 
     // Test API endpoints via direct HTTP
-    console.log(`\n🌐 Testing API Endpoints:`);
+    console.log("\n🌐 Testing API Endpoints:");
     console.log(`   Project ID: ${project.id}`);
     console.log(`   Use this to test: http://localhost:3000/api/pipetrak/components?projectId=${project.id}`);
 
@@ -96,8 +96,8 @@ async function testPipeTrakAPI() {
     console.log(`🎯 Total milestones: ${milestoneCount}`);
 
     console.log("\n✅ PipeTrak API test completed successfully!");
-    console.log(`\n💡 Next steps:`);
-    console.log(`   1. Start the dev server: pnpm dev`);
+    console.log("\n💡 Next steps:");
+    console.log("   1. Start the dev server: pnpm dev");
     console.log(`   2. Navigate to: http://localhost:3000/app/pipetrak/${project.id}/components`);
     console.log(`   3. The enhanced DataTable should display the ${componentCount} components`);
 

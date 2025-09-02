@@ -4,7 +4,6 @@
  * Ensures no redirect loops occur and authentication works correctly
  */
 
-import { config } from "@repo/config";
 
 console.log("=== Authentication Flow Test ===");
 console.log("This script verifies the authentication flow is working correctly");
