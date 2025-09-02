@@ -10,9 +10,17 @@ import { cache } from "react";
 export const getServerQueryClient = cache(createQueryClient);
 
 export const getServerApiClient = async () => {
-	const headerObject = Object.fromEntries((await headers()).entries());
+	const headersList = await headers();
+	const headerObject = Object.fromEntries(headersList.entries());
 
-	return hc<AppRouter>(getBaseUrl(), {
+	// Extract the actual host from the request headers for dynamic port detection
+	const host = headersList.get("host");
+	const protocol = headersList.get("x-forwarded-proto") || "http";
+
+	// Use the actual host if available, otherwise fall back to getBaseUrl()
+	const baseUrl = host ? `${protocol}://${host}` : getBaseUrl();
+
+	return hc<AppRouter>(baseUrl, {
 		init: {
 			credentials: "include",
 			headers: headerObject,

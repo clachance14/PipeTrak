@@ -10,20 +10,20 @@ const intlMiddleware = createMiddleware(routing);
 export default async function middleware(req: NextRequest) {
 	const { pathname, origin } = req.nextUrl;
 
-	console.log('[Middleware] Request path:', pathname);
+	console.log("[Middleware] Request path:", pathname);
 	const sessionCookie = getSessionCookie(req);
-	console.log('[Middleware] Session cookie exists:', !!sessionCookie);
+	console.log("[Middleware] Session cookie exists:", !!sessionCookie);
 
 	if (pathname.startsWith("/app")) {
 		const response = NextResponse.next();
 
 		if (!appConfig.ui.saas.enabled) {
-			console.log('[Middleware] SaaS not enabled, redirecting to /');
+			console.log("[Middleware] SaaS not enabled, redirecting to /");
 			return NextResponse.redirect(new URL("/", origin));
 		}
 
 		if (!sessionCookie) {
-			console.log('[Middleware] No session cookie, redirecting to login');
+			console.log("[Middleware] No session cookie, redirecting to login");
 			return NextResponse.redirect(
 				new URL(
 					withQuery("/auth/login", {
@@ -34,7 +34,7 @@ export default async function middleware(req: NextRequest) {
 			);
 		}
 
-		console.log('[Middleware] Session cookie found, proceeding to app');
+		console.log("[Middleware] Session cookie found, proceeding to app");
 		return response;
 	}
 
@@ -45,7 +45,7 @@ export default async function middleware(req: NextRequest) {
 
 		// CRITICAL: Allow access to login page even with invalid/expired session cookie
 		// This prevents redirect loops when a user has an invalid cookie but needs to re-authenticate
-		// 
+		//
 		// Why this is important:
 		// - getSessionCookie() only checks if a cookie EXISTS, not if it's VALID
 		// - An expired or invalid cookie would block login access if we redirected all auth routes

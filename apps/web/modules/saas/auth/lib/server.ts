@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { cache } from "react";
 
 export const getSession = cache(async () => {
-	console.log('[getSession] Fetching session...');
+	console.log("[getSession] Fetching session...");
 	try {
 		const session = await auth.api.getSession({
 			headers: await headers(),
@@ -13,12 +13,15 @@ export const getSession = cache(async () => {
 				disableCookieCache: true,
 			},
 		});
-		console.log('[getSession] Session result:', session ? 'exists' : 'null');
-		console.log('[getSession] User ID:', session?.user?.id);
-		console.log('[getSession] User email:', session?.user?.email);
+		console.log(
+			"[getSession] Session result:",
+			session ? "exists" : "null",
+		);
+		console.log("[getSession] User ID:", session?.user?.id);
+		console.log("[getSession] User email:", session?.user?.email);
 		return session;
 	} catch (error) {
-		console.error('[getSession] Error:', error);
+		console.error("[getSession] Error:", error);
 		return null;
 	}
 });

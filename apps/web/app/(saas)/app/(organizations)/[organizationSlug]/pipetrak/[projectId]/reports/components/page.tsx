@@ -4,42 +4,42 @@ import { LoadingState } from "@pipetrak/shared/components";
 import { ComponentReportContent } from "@pipetrak/reports/components/ComponentReportContent";
 
 interface ComponentReportPageProps {
-  params: Promise<{
-    projectId: string;
-  }>;
-  searchParams: Promise<{
-    areas?: string;
-    systems?: string;
-    testPackages?: string;
-    statuses?: string;
-    search?: string;
-    page?: string;
-    limit?: string;
-    sortBy?: string;
-    sortDir?: string;
-  }>;
+	params: Promise<{
+		projectId: string;
+	}>;
+	searchParams: Promise<{
+		areas?: string;
+		systems?: string;
+		testPackages?: string;
+		statuses?: string;
+		search?: string;
+		page?: string;
+		limit?: string;
+		sortBy?: string;
+		sortDir?: string;
+	}>;
 }
 
 export default async function ComponentReportPage({
-  params,
-  searchParams,
+	params,
+	searchParams,
 }: ComponentReportPageProps) {
-  const { projectId } = await params;
-  const filters = await searchParams;
+	const { projectId } = await params;
+	const filters = await searchParams;
 
-  return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Detailed Component Report"
-        subtitle="Component-level progress analysis with advanced filtering"
-      />
+	return (
+		<div className="space-y-6">
+			<PageHeader
+				title="Detailed Component Report"
+				subtitle="Component-level progress analysis with advanced filtering"
+			/>
 
-      <Suspense fallback={<LoadingState variant="table" />}>
-        <ComponentReportContent
-          projectId={projectId}
-          initialFilters={filters}
-        />
-      </Suspense>
-    </div>
-  );
+			<Suspense fallback={<LoadingState variant="table" />}>
+				<ComponentReportContent
+					projectId={projectId}
+					initialFilters={filters}
+				/>
+			</Suspense>
+		</div>
+	);
 }

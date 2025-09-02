@@ -18,7 +18,6 @@ import {
   mockOrphanedDrawings,
   mockComponentCounts,
 } from "../../__fixtures__/drawings";
-import type { DrawingTreeNode } from "../../../types";
 
 describe("drawing-tree-utils", () => {
   describe("buildDrawingTree", () => {

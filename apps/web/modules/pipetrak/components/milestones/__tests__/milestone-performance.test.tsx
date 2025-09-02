@@ -7,7 +7,6 @@ import { http, HttpResponse } from 'msw';
 import { 
   generateMockMilestones, 
   generateMockBulkUpdates,
-  performanceTestData 
 } from '../__fixtures__/milestones';
 import { MilestoneUpdateEngine } from '../core/MilestoneUpdateEngine';
 import { OptimisticUpdateManager } from '../core/OptimisticUpdateManager';
@@ -383,7 +382,7 @@ describe('Milestone Performance Tests', () => {
       let manager: OptimisticUpdateManager | null = new OptimisticUpdateManager(mockApiClient);
       
       // Track memory usage (simplified)
-      let initialMemory = 0;
+      const initialMemory = 0;
       let peakMemory = 0;
 
       // Simulate large dataset operations

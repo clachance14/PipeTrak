@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import { render as rtlRender, type RenderOptions } from '@testing-library/react';
 import { vi } from 'vitest';
 
 // Mock Next.js router
@@ -69,10 +69,10 @@ export const getTouchTargetSize = (element: HTMLElement) => {
   const rect = element.getBoundingClientRect();
   
   // Consider padding in touch target
-  const paddingTop = parseFloat(styles.paddingTop) || 0;
-  const paddingBottom = parseFloat(styles.paddingBottom) || 0;
-  const paddingLeft = parseFloat(styles.paddingLeft) || 0;
-  const paddingRight = parseFloat(styles.paddingRight) || 0;
+  const paddingTop = Number.parseFloat(styles.paddingTop) || 0;
+  const paddingBottom = Number.parseFloat(styles.paddingBottom) || 0;
+  const paddingLeft = Number.parseFloat(styles.paddingLeft) || 0;
+  const paddingRight = Number.parseFloat(styles.paddingRight) || 0;
   
   return {
     width: rect.width || (paddingLeft + paddingRight),
@@ -115,7 +115,7 @@ export const checkAccessibility = (container: HTMLElement) => {
   const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
   let lastLevel = 0;
   headings.forEach(heading => {
-    const level = parseInt(heading.tagName[1]);
+    const level = Number.parseInt(heading.tagName[1]);
     expect(level - lastLevel).toBeLessThanOrEqual(1);
     lastLevel = level;
   });

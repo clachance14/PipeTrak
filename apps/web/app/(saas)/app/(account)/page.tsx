@@ -10,11 +10,12 @@ export default async function AppStartPage() {
 
 	// Get user's organizations to determine correct redirect path
 	const organizations = await getOrganizationList();
-	
+
 	// Find active organization or use the first one
-	const activeOrganization = organizations.find(
-		(org) => org.id === session.session.activeOrganizationId
-	) || organizations[0];
+	const activeOrganization =
+		organizations.find(
+			(org) => org.id === session.session.activeOrganizationId,
+		) || organizations[0];
 
 	if (!activeOrganization) {
 		// If no organization, redirect to create one

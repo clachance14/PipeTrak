@@ -6,91 +6,101 @@
 import "server-only";
 import { getServerApiClient } from "@shared/lib/server";
 import type {
-  ProgressReportRequest,
-  ProgressReportResponse,
-  ComponentDetailsRequest,
-  ComponentDetailsResponse,
-  TestPackageReadinessRequest,
-  TestPackageReadinessResponse,
-  FilterOptionsResponse,
+	ProgressReportRequest,
+	ProgressReportResponse,
+	ComponentDetailsRequest,
+	ComponentDetailsResponse,
+	TestPackageReadinessRequest,
+	TestPackageReadinessResponse,
+	FilterOptionsResponse,
 } from "../types";
 
 /**
  * Server-side progress report generation
  */
 export async function generateProgressReportServer(
-  request: ProgressReportRequest
+	request: ProgressReportRequest,
 ): Promise<ProgressReportResponse> {
-  const apiClient = await getServerApiClient();
-  
-  const response = await apiClient.pipetrak.reports.generate.progress.$post({
-    json: request,
-  });
+	const apiClient = await getServerApiClient();
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to generate progress report');
-  }
+	const response = await apiClient.pipetrak.reports.generate.progress.$post({
+		json: request,
+	});
 
-  return response.json();
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error || "Failed to generate progress report");
+	}
+
+	return response.json();
 }
 
 /**
  * Server-side component details report
  */
 export async function getComponentDetailsReportServer(
-  request: ComponentDetailsRequest
+	request: ComponentDetailsRequest,
 ): Promise<ComponentDetailsResponse> {
-  const apiClient = await getServerApiClient();
-  
-  const response = await apiClient.pipetrak.reports.generate.components.$post({
-    json: request,
-  });
+	const apiClient = await getServerApiClient();
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to generate component details report');
-  }
+	const response = await apiClient.pipetrak.reports.generate.components.$post(
+		{
+			json: request,
+		},
+	);
 
-  return response.json();
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(
+			error.error || "Failed to generate component details report",
+		);
+	}
+
+	return response.json();
 }
 
 /**
  * Server-side test package readiness
  */
 export async function generateTestPackageReadinessServer(
-  request: TestPackageReadinessRequest
+	request: TestPackageReadinessRequest,
 ): Promise<TestPackageReadinessResponse> {
-  const apiClient = await getServerApiClient();
-  
-  const response = await apiClient.pipetrak.reports.generate["test-packages"].$post({
-    json: request,
-  });
+	const apiClient = await getServerApiClient();
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to generate test package readiness report');
-  }
+	const response = await apiClient.pipetrak.reports.generate[
+		"test-packages"
+	].$post({
+		json: request,
+	});
 
-  return response.json();
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(
+			error.error || "Failed to generate test package readiness report",
+		);
+	}
+
+	return response.json();
 }
 
 /**
  * Server-side filter options
  */
 export async function getReportFilterOptionsServer(
-  projectId: string
+	projectId: string,
 ): Promise<FilterOptionsResponse> {
-  const apiClient = await getServerApiClient();
-  
-  const response = await apiClient.pipetrak.reports.filters[":projectId"].$get({
-    param: { projectId },
-  });
+	const apiClient = await getServerApiClient();
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to get filter options');
-  }
+	const response = await apiClient.pipetrak.reports.filters[
+		":projectId"
+	].$get({
+		param: { projectId },
+	});
 
-  return response.json();
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error || "Failed to get filter options");
+	}
+
+	return response.json();
 }

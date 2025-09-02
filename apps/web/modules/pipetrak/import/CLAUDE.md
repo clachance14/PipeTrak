@@ -96,6 +96,25 @@ const templateId = assigner.getTemplateForType('VALVE'); // Returns reduced temp
 - `calculateTotalInstances(rows)`: Sums QTY column for total instance count  
 - `detectColumnMapping(headers)`: Auto-detects column names with variations
 
+**Column Detection Patterns**:
+```typescript
+// Standard Fields
+'DRAWING', 'DRAWINGS', 'DWG', 'ISO' → drawing
+'CMDTY CODE', 'COMMODITY CODE', 'COMPONENT ID', 'TAG' → componentId  
+'TYPE', 'COMPONENT TYPE', 'CATEGORY' → type
+'SPEC', 'SPECIFICATION' → spec
+'SIZE', 'NOMINAL SIZE', 'NPS', 'DIA' → size
+'DESCRIPTION', 'DESC', 'NAME' → description
+'QTY', 'QUANTITY', 'COUNT' → quantity
+'MATERIAL', 'MAT', 'GRADE' → material
+'COMMENT', 'COMMENTS', 'NOTE', 'NOTES' → comments
+
+// Organizational Fields (NEW)
+'AREA', 'PLANT AREA', 'UNIT AREA' → area
+'SYSTEM', 'PIPELINE SYSTEM', 'PIPING SYSTEM' → system  
+'TEST PACKAGE', 'TEST PKG', 'PACKAGE' → testPackage
+```
+
 **Quantity Expansion Logic**:
 ```typescript
 // Input: 1 row with componentId="ABC123", QTY=3
@@ -115,6 +134,46 @@ const templateId = assigner.getTemplateForType('VALVE'); // Returns reduced temp
 
 **Authentication**: Requires organization owner/admin role
 **Transaction Safety**: All database operations wrapped in transactions
+
+## TypeScript Interfaces
+
+### ComponentImportData Interface
+```typescript
+interface ComponentImportData {
+  projectId: string;
+  drawingId: string;
+  componentId: string;
+  type: string;
+  
+  // Physical attributes
+  spec?: string;
+  size?: string;
+  description?: string;
+  material?: string;
+  notes?: string;
+  
+  // Organizational attributes (Added August 2025)
+  area?: string;        // Plant area (e.g., "B-68")
+  system?: string;      // Pipeline system
+  testPackage?: string; // Test package assignment
+  
+  // Import metadata
+  quantity: number;
+}
+```
+
+### ComponentInstanceData Interface
+```typescript
+interface ComponentInstanceData extends Omit<ComponentImportData, 'quantity'> {
+  instanceNumber: number;
+  totalInstancesOnDrawing: number;
+  displayId: string;
+  milestoneTemplateId: string;
+  workflowType: 'MILESTONE_DISCRETE';
+  status: 'NOT_STARTED';
+  completionPercent: 0;
+}
+```
 
 ## Data Flow
 
@@ -157,8 +216,13 @@ model Component {
   spec         String?
   size         String?
   description  String?
-  material     String?  
+  material     String?
   notes        String?  // Comments column
+  
+  // Organizational attributes from Excel  
+  area         String?  // Plant area (e.g., "B-68")
+  system       String?  // Pipeline system 
+  testPackage  String?  // Test package assignment
   
   // Status tracking
   status            ComponentStatus @default(NOT_STARTED)
@@ -204,7 +268,45 @@ model Component {
 
 ## Implementation Guide
 
-### Step 1: Set Up Type Mapping
+### Step 1: Set Up Column Detection
+```typescript
+// In excel-parser.ts - detectColumnMapping function
+export function detectColumnMapping(headers: string[]): Record<string, string | null> {
+  const mapping: Record<string, string | null> = {
+    // Standard fields
+    drawing: null, componentId: null, type: null,
+    spec: null, size: null, description: null,
+    quantity: null, material: null, comments: null,
+    
+    // Organizational fields (NEW)
+    area: null, system: null, testPackage: null
+  };
+  
+  for (const header of headers) {
+    const normalized = header.toUpperCase().trim();
+    
+    // Area detection
+    if (/^(AREA|PLANT\s*AREA|UNIT\s*AREA)$/i.test(normalized)) {
+      mapping.area = header;
+    }
+    
+    // System detection  
+    if (/^(SYSTEM|PIPELINE\s*SYSTEM|PIPING\s*SYSTEM)$/i.test(normalized)) {
+      mapping.system = header;
+    }
+    
+    // Test Package detection
+    if (/^(TEST\s*PACKAGE|TEST\s*PKG|PACKAGE)$/i.test(normalized)) {
+      mapping.testPackage = header;
+    }
+    // ... other field detections
+  }
+  
+  return mapping;
+}
+```
+
+### Step 2: Set Up Type Mapping
 ```typescript
 // Create ComponentTypeMapper class
 export class ComponentTypeMapper {
@@ -218,7 +320,7 @@ export class ComponentTypeMapper {
 }
 ```
 
-### Step 2: Create Template Assigner  
+### Step 3: Create Template Assigner  
 ```typescript
 // Initialize milestone templates
 export class MilestoneTemplateAssigner {
@@ -232,19 +334,42 @@ export class MilestoneTemplateAssigner {
 }
 ```
 
-### Step 3: Build Import API
+### Step 4: Build Import API
 ```typescript
 // Handle preview and import requests
 export async function POST(request: NextRequest) {
   // 1. Authenticate user
   // 2. Parse Excel file  
-  // 3. Map types and assign templates
-  // 4. Preview mode: return statistics
-  // 5. Import mode: create database records
+  const parseResult = await parseExcel(buffer);
+  const columnMapping = detectColumnMapping(parseResult.headers);
+  
+  // 3. Extract component data including new fields
+  const componentData: ComponentImportData = {
+    projectId,
+    drawingId: String(drawingId).trim(),
+    componentId: String(componentId).trim(),
+    type: typeMapper.mapType(type),
+    spec: row[columnMapping.spec || 'SPEC'],
+    size: row[columnMapping.size || 'SIZE'],
+    description: row[columnMapping.description || 'DESCRIPTION'],
+    material: row[columnMapping.material || 'MATERIAL'],
+    
+    // NEW: Extract organizational fields
+    area: row[columnMapping.area || 'Area'],
+    system: row[columnMapping.system || 'System'],
+    testPackage: row[columnMapping.testPackage || 'Test Package'],
+    
+    notes: row[columnMapping.comments || 'Comments'],
+    quantity: Number.parseInt(String(row[columnMapping.quantity || 'QTY'])) || 1
+  };
+  
+  // 4. Map types and assign templates
+  // 5. Preview mode: return statistics
+  // 6. Import mode: create database records
 }
 ```
 
-### Step 4: Create UI Components
+### Step 5: Create UI Components
 ```tsx
 // 4-step wizard component
 export function ImportWizardV2({ projectId }: Props) {
@@ -264,6 +389,27 @@ Process: Grouped to ~200 unique components
 Output: 1,353 component instances + 6,765 milestones (5 per component)
 Types:  All mapped to database enums (valve, support, gasket, etc.)
 Result: ✅ SUCCESS - No constraint violations, proper instance numbering
+```
+
+### Example: Area Field Extraction (Book12.xlsx)
+```
+Excel Input:
+| DRAWINGS      | Area | SPEC  | System | Test Package | TYPE     | CMDTY CODE          |
+|---------------|------|-------|--------|--------------|----------|---------------------|
+| P-26B07 01of01| B-68 | HC-05 |        |              | Fitting  | OPLRAB2TMACG0530   |
+| P-26B07 01of01| B-68 | HC-05 |        |              | Gasket   | GKPAE2IZZASG1000   |
+
+Database Output:
+Component {
+  drawingId: "uuid-p26b07-01of01",
+  componentId: "OPLRAB2TMACG0530",
+  type: "FITTING",
+  area: "B-68",        // ✅ Extracted from Excel
+  system: null,        // ✅ Empty in Excel, null in DB
+  testPackage: null,   // ✅ Empty in Excel, null in DB
+  spec: "HC-05",
+  ...
+}
 ```
 
 ### Test Results (August 2025)
@@ -370,12 +516,24 @@ http://localhost:3000/app/{org}/pipetrak/{project}/import/v2
 
 ## Quick Start Rebuild Guide
 
-1. **Create Type Mapper**: Handle 50+ Excel type variations → database enums
-2. **Build Template Assigner**: Assign milestone templates based on component type  
-3. **Implement Excel Parser**: Process files and expand quantities to instances
-4. **Create Import API**: Handle preview/import with authentication and validation
-5. **Build UI Wizard**: 4-step process with file upload and progress indicators
-6. **Add Page Route**: Organization-scoped URL with access controls
-7. **Test Integration**: Validate with real Excel files and database operations
+1. **Set Up Column Detection**: Auto-detect standard + organizational fields (area, system, testPackage)
+2. **Create Type Mapper**: Handle 50+ Excel type variations → database enums
+3. **Build Template Assigner**: Assign milestone templates based on component type  
+4. **Implement Excel Parser**: Process files and expand quantities to instances
+5. **Create Import API**: Handle preview/import with authentication and field extraction
+6. **Build UI Wizard**: 4-step process with file upload and progress indicators
+7. **Add Page Route**: Organization-scoped URL with access controls
+8. **Test Integration**: Validate with real Excel files and database operations
+
+### Key Implementation Points for New Developers:
+
+**Column Detection**: The system automatically detects these Excel column patterns:
+- Area: `'AREA'`, `'PLANT AREA'`, `'UNIT AREA'`
+- System: `'SYSTEM'`, `'PIPELINE SYSTEM'`, `'PIPING SYSTEM'`  
+- Test Package: `'TEST PACKAGE'`, `'TEST PKG'`, `'PACKAGE'`
+
+**Data Flow**: Excel columns → Column mapping → ComponentImportData → ComponentInstanceData → Database
+
+**Testing**: Use `Book12.xlsx` to verify area field extraction (should show `area: "B-68"`)
 
 The system is designed for maintainability and extensibility. Each component has a single responsibility and clear interfaces, making it easy to modify or extend functionality.

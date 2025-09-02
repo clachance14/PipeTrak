@@ -33,7 +33,10 @@ interface FieldWeldData {
   dateWelded?: string;
   weldSize: string;
   schedule: string;
-  ndeResult?: string;
+  ndeType?: 'Visual' | 'RT' | 'UT' | 'MT' | 'PT' | 'None';
+  ndeResult?: 'Accept' | 'Reject';
+  ndeDate?: string;
+  ndeInspector?: string;
   pwhtRequired: boolean;
   datePwht?: string;
   comments?: string;
@@ -42,15 +45,6 @@ interface FieldWeldData {
     id: string;
     stencil: string;
     name: string;
-  };
-  drawing: {
-    id: string;
-    number: string;
-    title: string;
-  };
-  weldType: {
-    code: string;
-    description: string;
   };
   component?: {
     id: string;
@@ -61,6 +55,22 @@ interface FieldWeldData {
     testPackage: string;
     status: string;
     completionPercent: number;
+    milestones: Array<{
+      id: string;
+      milestoneName: string;
+      isCompleted: boolean;
+      completedAt?: string;
+      completedBy?: string;
+    }>;
+  };
+  drawing: {
+    id: string;
+    number: string;
+    title: string;
+  };
+  weldType: {
+    code: string;
+    description: string;
   };
 }
 
@@ -238,7 +248,12 @@ export function FieldWeldCard({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {!fieldWeld.dateWelded && onMarkComplete && (
+                {(() => {
+                  const dateWelded = fieldWeld.dateWelded;
+                  const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+                  const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+                  return !isComplete && onMarkComplete;
+                })() && (
                   <DropdownMenuItem onClick={(e) => {
                     e.stopPropagation();
                     onMarkComplete();
@@ -286,18 +301,29 @@ export function FieldWeldCard({
             status="info" 
             className={cn(
               "text-sm py-1 px-3 font-semibold",
-              fieldWeld.dateWelded 
-                ? "bg-green-100 text-green-800 border-green-200" 
-                : "bg-gray-100 text-gray-600 border-gray-200"
+              (() => {
+                const dateWelded = fieldWeld.dateWelded;
+                const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+                const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+                return isComplete 
+                  ? "bg-green-100 text-green-800 border-green-200" 
+                  : "bg-gray-100 text-gray-600 border-gray-200";
+              })()
             )}
           >
-            {fieldWeld.dateWelded ? (
-              <CheckCircle2 className="h-3 w-3" />
-            ) : (
-              <Clock className="h-3 w-3" />
-            )}
+            {(() => {
+              const dateWelded = fieldWeld.dateWelded;
+              const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+              const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+              return isComplete ? <CheckCircle2 className="h-3 w-3" /> : <Clock className="h-3 w-3" />;
+            })()}
             <span className="ml-2">
-              Weld: {fieldWeld.dateWelded ? "Complete" : "Pending"}
+              Weld: {(() => {
+                const dateWelded = fieldWeld.dateWelded;
+                const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+                const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+                return isComplete ? "Complete" : "Pending";
+              })()}
             </span>
           </Badge>
 
@@ -336,10 +362,19 @@ export function FieldWeldCard({
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-muted-foreground" />
               <span>
-                {fieldWeld.dateWelded 
-                  ? new Date(fieldWeld.dateWelded).toLocaleDateString()
-                  : "Not completed"
-                }
+                {(() => {
+                  const dateWelded = fieldWeld.dateWelded;
+                  const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+                  
+                  if (dateWelded) {
+                    return new Date(dateWelded).toLocaleDateString();
+                  }if (wmMilestone?.isCompleted && wmMilestone.completedAt) {
+                    return `${new Date(wmMilestone.completedAt).toLocaleDateString()} (Milestone)`;
+                  }if (wmMilestone?.isCompleted) {
+                    return "Complete (Milestone)";
+                  }
+                    return "Not completed";
+                })()}
               </span>
             </div>
           </div>
@@ -376,9 +411,19 @@ export function FieldWeldCard({
         )}
 
         {/* Action Buttons */}
-        {(!fieldWeld.dateWelded && onMarkComplete) || (!fieldWeld.ndeResult && (onApprove || onReject)) ? (
+        {(() => {
+          const dateWelded = fieldWeld.dateWelded;
+          const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+          const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+          return (!isComplete && onMarkComplete) || (!fieldWeld.ndeResult && (onApprove || onReject));
+        })() ? (
           <div className="flex gap-3 pt-3 border-t">
-            {!fieldWeld.dateWelded && onMarkComplete && (
+            {(() => {
+              const dateWelded = fieldWeld.dateWelded;
+              const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
+              const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
+              return !isComplete && onMarkComplete;
+            })() && (
               <Button
                 size="sm"
                 className="flex-1 h-12 bg-green-600 hover:bg-green-700 text-white"
