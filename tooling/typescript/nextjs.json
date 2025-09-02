@@ -10,7 +10,8 @@
 				"name": "next"
 			}
 		],
-		"target": "es5"
+		"target": "es5",
+		"downlevelIteration": true
 	},
 	"display": "Next.js",
 	"exclude": ["node_modules"],
