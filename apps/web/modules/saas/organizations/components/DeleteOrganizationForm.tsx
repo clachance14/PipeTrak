@@ -30,9 +30,14 @@ export function DeleteOrganizationForm() {
 			),
 			destructive: true,
 			onConfirm: async () => {
-				const { error } = await authClient.organization.delete({
-					organizationId: activeOrganization.id,
+				const response = await authClient.$fetch("/organization/delete", {
+					method: "POST",
+					body: {
+						organizationId: activeOrganization.id,
+					},
 				});
+				
+				const error = !response || response.error;
 
 				if (error) {
 					toast.error(
