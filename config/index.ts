@@ -79,8 +79,8 @@ export const config = {
 	mails: {
 		// the from address for mails
 		// IMPORTANT: This email domain must be verified in your Resend dashboard
-		// Using Resend's onboarding email for development (no domain verification needed)
-		from: "onboarding@resend.dev",
+		// Using verified domain notifications.pipetrak.co
+		from: "noreply@notifications.pipetrak.co",
 	},
 	// Early Access Configuration
 	earlyAccess: {
@@ -125,9 +125,9 @@ export const config = {
 		// whether the contact form should be enabled
 		enabled: true,
 		// the email to which the contact form messages should be sent
-		to: "hello@your-domain.com",
+		to: "hello@pipetrak.co",
 		// the subject of the email
-		subject: "Contact form message",
+		subject: "PipeTrak Contact Form Message",
 	},
 	// Payments
 	payments: {
