@@ -5,6 +5,7 @@ import { useActiveOrganization } from "@saas/organizations/hooks/use-active-orga
 import {
 	organizationListQueryKey,
 	useCreateOrganizationMutation,
+	useOrganizationListQuery,
 } from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,6 +19,8 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -38,6 +41,7 @@ export function CreateOrganizationForm({
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { setActiveOrganization } = useActiveOrganization();
+	const { data: existingOrganizations, isLoading } = useOrganizationListQuery();
 	const createOrganizationMutation = useCreateOrganizationMutation();
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
@@ -68,6 +72,43 @@ export function CreateOrganizationForm({
 			toast.error(t("organizations.createForm.notifications.error"));
 		}
 	});
+
+	// Check if user already has organizations
+	const hasExistingOrganizations = existingOrganizations && existingOrganizations.length > 0;
+
+	if (isLoading) {
+		return (
+			<div className="mx-auto w-full max-w-md">
+				<p>Loading...</p>
+			</div>
+		);
+	}
+
+	if (hasExistingOrganizations) {
+		return (
+			<div className="mx-auto w-full max-w-md">
+				<h1 className="font-bold text-xl md:text-2xl">
+					{t("organizations.createForm.title")}
+				</h1>
+				
+				<Alert className="mt-6">
+					<AlertTriangle className="h-4 w-4" />
+					<AlertTitle>Organization Limit Reached</AlertTitle>
+					<AlertDescription>
+						You are already a member of an organization. In PipeTrak, users can only belong to one organization at a time. 
+						If you need to join a different organization, please contact your administrator.
+					</AlertDescription>
+				</Alert>
+
+				{existingOrganizations && existingOrganizations.length > 0 && (
+					<div className="mt-4 p-4 border rounded-lg">
+						<h3 className="font-semibold mb-2">Your Current Organization:</h3>
+						<p className="text-sm text-foreground/70">{existingOrganizations[0].name}</p>
+					</div>
+				)}
+			</div>
+		);
+	}
 
 	return (
 		<div className="mx-auto w-full max-w-md">
