@@ -109,7 +109,7 @@ export function extractUniqueBaseDrawings(
 	conversions: DrawingPatternConversion[],
 ): string[] {
 	const baseDrawings = conversions.map((c) => c.baseDrawing);
-	return [...new Set(baseDrawings)];
+return Array.from(new Set(baseDrawings));
 }
 
 /**

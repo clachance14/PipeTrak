@@ -71,8 +71,8 @@ export function BulkUpdateModal({
 					const components = data.data || [];
 
 					// Extract unique values for each field
-					const areas = [
-						...new Set(
+					const areas = Array.from(
+						new Set(
 							components
 								.map((c: any) => c.area)
 								.filter(
@@ -83,10 +83,10 @@ export function BulkUpdateModal({
 									(value: string) => value.trim().length > 0,
 								),
 						),
-					].sort();
+					).sort();
 
-					const systems = [
-						...new Set(
+					const systems = Array.from(
+						new Set(
 							components
 								.map((c: any) => c.system)
 								.filter(
@@ -97,10 +97,10 @@ export function BulkUpdateModal({
 									(value: string) => value.trim().length > 0,
 								),
 						),
-					].sort();
+					).sort();
 
-					const testPackages = [
-						...new Set(
+					const testPackages = Array.from(
+						new Set(
 							components
 								.map((c: any) => c.testPackage)
 								.filter(
@@ -111,7 +111,7 @@ export function BulkUpdateModal({
 									(value: string) => value.trim().length > 0,
 								),
 						),
-					].sort();
+					).sort();
 
 					setAllFieldValues({
 						areas,
