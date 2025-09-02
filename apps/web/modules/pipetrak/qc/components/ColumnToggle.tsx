@@ -76,11 +76,11 @@ export function ColumnToggle({
         <Button variant="outline" size="sm" className={className}>
           <Columns className="h-4 w-4 mr-2" />
           Columns
-          <Badge variant="secondary" className="ml-2 text-xs">
+          <Badge status="info" className="ml-2 text-xs">
             {visibleCount}/{totalCount}
           </Badge>
           {pinnedCount > 0 && (
-            <Badge variant="outline" className="ml-1 text-xs">
+            <Badge status="info" className="ml-1 text-xs">
               📌 {pinnedCount}
             </Badge>
           )}
