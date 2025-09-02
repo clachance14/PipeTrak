@@ -7,19 +7,18 @@ import type { PropsWithChildren } from "react";
 export function AppWrapper({ children }: PropsWithChildren) {
 	return (
 		<div
-			className={cn(
-				"bg-transparent",
-				[config.ui.saas.useSidebarLayout ? "" : ""],
-			)}
+			className={cn("bg-transparent", [
+				config.ui.saas.useSidebarLayout ? "" : "",
+			])}
 		>
 			{/* Mobile navigation (hidden on lg and up) */}
 			<MobileNavBar />
-			
+
 			{/* Desktop navigation (hidden on mobile) */}
 			<div className="hidden lg:block">
 				<NavBar />
 			</div>
-			
+
 			<div
 				className={cn("flex", [
 					config.ui.saas.useSidebarLayout
@@ -28,10 +27,9 @@ export function AppWrapper({ children }: PropsWithChildren) {
 				])}
 			>
 				<main
-					className={cn(
-						"min-h-full w-full bg-white",
-						[config.ui.saas.useSidebarLayout ? "" : ""],
-					)}
+					className={cn("min-h-full w-full bg-white", [
+						config.ui.saas.useSidebarLayout ? "" : "",
+					])}
 				>
 					{children}
 				</main>

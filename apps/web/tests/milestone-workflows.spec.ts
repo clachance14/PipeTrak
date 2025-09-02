@@ -1,4 +1,4 @@
-import { test, expect, Page, BrowserContext } from '@playwright/test';
+import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 import { setupTestProject, cleanupTestProject, createTestUser } from './helpers/test-setup';
 
 // Test data setup
@@ -222,7 +222,7 @@ test.describe('Milestone Workflow E2E Tests', () => {
       
       // Get total quantity
       const totalText = await totalDisplay.textContent();
-      const totalQuantity = parseInt(totalText?.match(/\d+/)?.[0] || '10');
+      const totalQuantity = Number.parseInt(totalText?.match(/\d+/)?.[0] || '10');
 
       // Set quantity to half of total
       const halfQuantity = Math.floor(totalQuantity / 2);
@@ -245,7 +245,7 @@ test.describe('Milestone Workflow E2E Tests', () => {
       const totalDisplay = page.locator('[data-testid="milestone-quantity-total"]');
       
       const totalText = await totalDisplay.textContent();
-      const totalQuantity = parseInt(totalText?.match(/\d+/)?.[0] || '10');
+      const totalQuantity = Number.parseInt(totalText?.match(/\d+/)?.[0] || '10');
 
       // Set quantity to total
       await quantityInput.clear();

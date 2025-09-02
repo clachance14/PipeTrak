@@ -1,12 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, } from 'vitest';
 import { server } from '../../../../test-setup';
 import { 
-  milestoneHandlers, 
   milestoneErrorHandlers, 
   resetMilestoneState 
 } from '../__mocks__/milestone-handlers';
 import { 
-  mockMilestones, 
   generateMockBulkUpdates,
   performanceTestData 
 } from '../__fixtures__/milestones';

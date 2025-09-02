@@ -1,7 +1,7 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 // Helper to login and navigate to a project
-async function navigateToProject(page: Page, projectId: string = "test-project") {
+async function navigateToProject(page: Page, projectId = "test-project") {
   // Login first (assuming auth is required)
   await page.goto("/auth/login");
   await page.fill('input[name="email"]', "test@example.com");

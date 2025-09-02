@@ -18,7 +18,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 	// This works with middleware which allows access to /auth/login
 	// preventing redirect loops even with invalid cookies
 	if (!session) {
-		console.log('[SaaS Layout] No session, redirecting to login');
+		console.log("[SaaS Layout] No session, redirecting to login");
 		redirect("/auth/login");
 	}
 

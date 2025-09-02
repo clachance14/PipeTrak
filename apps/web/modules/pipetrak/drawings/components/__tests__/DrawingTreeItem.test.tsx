@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { DrawingTreeItem } from "../DrawingTreeItem";
-import { mockSimpleTree, mockComponentCounts } from "../../__fixtures__/drawings";
+import { mockSimpleTree, } from "../../__fixtures__/drawings";
 
 describe("DrawingTreeItem", () => {
   const mockOnToggleExpand = vi.fn();

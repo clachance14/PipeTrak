@@ -9,56 +9,56 @@ import Link from "next/link";
 import { Button } from "@ui/components/button";
 
 interface ComponentsPageProps {
-  params: Promise<{
-    projectId: string;
-  }>;
+	params: Promise<{
+		projectId: string;
+	}>;
 }
 
 export default async function ComponentsPage({ params }: ComponentsPageProps) {
-  const { projectId } = await params;
-  
-  return (
-    <div className="space-y-4">
-      <PageHeader
-        title="Components"
-        subtitle="Track field updates, milestones, and progress for all components"
-      />
+	const { projectId } = await params;
 
-      <Suspense fallback={<LoadingState variant="table" />}>
-        <ComponentsContent projectId={projectId} />
-      </Suspense>
-    </div>
-  );
+	return (
+		<div className="space-y-4 md:space-y-6 lg:space-y-8 px-4 md:px-6 lg:px-8">
+			<PageHeader
+				title="Components"
+				subtitle="Track field updates, milestones, and progress for all components"
+			/>
+
+			<Suspense fallback={<LoadingState variant="table" />}>
+				<ComponentsContent projectId={projectId} />
+			</Suspense>
+		</div>
+	);
 }
 
 // Server component for data fetching
 async function ComponentsContent({ projectId }: { projectId: string }) {
-  // Check authentication
-  const session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
+	// Check authentication
+	const session = await getSession();
+	if (!session) {
+		redirect("/login");
+	}
 
-  // Fetch components data from database
-  const components = await getComponents(projectId);
+	// Fetch components data from database
+	const components = await getComponents(projectId);
 
-  if (components.length === 0) {
-    return (
-      <div className="space-y-4">
-        <EmptyState
-          title="No components yet"
-          description="Import components from Excel or add them manually to get started."
-        />
-        <div className="flex justify-center">
-          <Button asChild>
-            <Link href={`/app/pipetrak/${projectId}/import`}>
-              Import Components
-            </Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
+	if (components.length === 0) {
+		return (
+			<div className="space-y-4">
+				<EmptyState
+					title="No components yet"
+					description="Import components from Excel or add them manually to get started."
+				/>
+				<div className="flex justify-center">
+					<Button asChild>
+						<Link href={`/app/pipetrak/${projectId}/import`}>
+							Import Components
+						</Link>
+					</Button>
+				</div>
+			</div>
+		);
+	}
 
-  return <ComponentTable components={components} projectId={projectId} />;
+	return <ComponentTable components={components} projectId={projectId} />;
 }

@@ -293,7 +293,7 @@ describe('KPIHeroBar', () => {
     it('handles undefined or invalid metric values gracefully', () => {
       const invalidMetrics = {
         ...smallDashboardMetrics,
-        overallCompletionPercent: NaN,
+        overallCompletionPercent: Number.NaN,
         totalComponents: undefined as any,
         completedComponents: null as any,
       };

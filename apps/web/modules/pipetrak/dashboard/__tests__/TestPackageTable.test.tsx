@@ -3,7 +3,7 @@
  * Tests table rendering, sorting, filtering, and ready badge display
  */
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import { TestPackageTable } from '../components/TestPackageTable';
@@ -404,7 +404,7 @@ describe('TestPackageTable', () => {
             packageName: undefined as any,
             totalComponents: null as any,
             completedComponents: undefined as any,
-            completionPercent: NaN,
+            completionPercent: Number.NaN,
             isReady: undefined as any,
             stalledCount: -1,
           },

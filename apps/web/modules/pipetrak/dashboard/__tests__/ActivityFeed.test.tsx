@@ -3,7 +3,7 @@
  * Tests activity rendering, filtering, sparklines, and user interactions
  */
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import { ActivityFeed } from '../components/ActivityFeed';
@@ -400,7 +400,7 @@ describe('ActivityFeed', () => {
         activities: [
           {
             activityType: 'milestone_completed',
-            timestamp: NaN,
+            timestamp: Number.NaN,
             userId: 'user-1',
             userName: 'Test User',
             componentId: 'COMP-001',

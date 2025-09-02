@@ -3,17 +3,14 @@
  * Tests load times, rendering performance, memory usage, and scalability
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { setupServer } from 'msw/node';
 import { 
   dashboardHandlers, 
-  dashboardSlowHandlers,
   dashboardMockControls 
 } from '../modules/pipetrak/dashboard/__mocks__/dashboard-handlers';
 import { 
   generateDashboardMetrics, 
-  generateAreaSystemMatrix, 
-  generateRecentActivity 
 } from '../modules/pipetrak/dashboard/__fixtures__/dashboard-data';
 
 // Setup MSW server for controlled performance testing
@@ -477,7 +474,7 @@ test.describe('Dashboard Performance Tests', () => {
 
   test.describe('Bundle Size and Loading Performance', () => {
     test('JavaScript bundle loads efficiently', async ({ page }) => {
-      let totalBundleSize = 0;
+      const totalBundleSize = 0;
       let jsRequestCount = 0;
       
       // Track JavaScript loading

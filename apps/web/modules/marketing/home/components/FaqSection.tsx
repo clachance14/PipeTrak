@@ -6,20 +6,20 @@ export function FaqSection({ className }: { className?: string }) {
 
 	const items = [
 		{
-			question: "What is the refund policy?",
-			answer: "We offer a 30-day money-back guarantee if you're not happy with our product.",
+			question: "Does PipeTrak work offline?",
+			answer: "Yes. Crews can log installs and inspections without connectivity. Changes sync automatically when back online.",
 		},
 		{
-			question: "How do I cancel my subscription?",
-			answer: "You can cancel your subscription by visiting the billing page.",
+			question: "Can I import my existing Excel files?",
+			answer: "Absolutely. Drag-and-drop your spreadsheets, map columns, validate issues, and import in minutes.",
 		},
 		{
-			question: "Can I change my plan?",
-			answer: "Yes, you can change your plan at any time by visiting the billing page.",
+			question: "What does early access include?",
+			answer: "Early access includes a 30‑day free trial at launch and the chance to shape features with direct feedback.",
 		},
 		{
-			question: "Do you offer a free trial?",
-			answer: "Yes, we offer a 14-day free trial.",
+			question: "When is PipeTrak launching?",
+			answer: "We're aiming for early 2025. Join the early access list to get updates.",
 		},
 	];
 

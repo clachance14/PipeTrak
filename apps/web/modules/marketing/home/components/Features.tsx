@@ -3,10 +3,11 @@
 import { MobileIcon } from "@radix-ui/react-icons";
 import { cn } from "@ui/lib";
 import {
+	BarChart3,
 	CloudIcon,
-	ComputerIcon,
-	PaperclipIcon,
-	StarIcon,
+	FileUp,
+	Layers,
+	WifiOff,
 	WandIcon,
 } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
@@ -35,94 +36,91 @@ export const featureTabs: Array<{
 	}[];
 }> = [
 	{
-		id: "feature1",
-		title: "Feature 1",
-		icon: StarIcon,
-		subtitle: "Do more with our amazing SaaS.",
+		id: "isometric-tracking",
+		title: "Isometric-Driven Tracking",
+		icon: Layers,
+		subtitle: "Single source of truth for industrial piping",
 		description:
-			"This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
+			"Track spools, welds, lines, and systems directly from isometrics — progress and QC stay aligned.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
+				title: "Spool and weld status",
+				description: "Fit-up, weld, NDE, and acceptance in one view.",
+				icon: BarChart3,
 			},
 			{
-				title: "Benefit 2",
+				title: "System and subsystem roll-ups",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
+					"See completion by system, subsystem, and test pack.",
+				icon: Layers,
 			},
 			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
+				title: "Tie-ins and test boundaries",
+				description: "Build test packs with clear isolation context.",
+				icon: Layers,
 			},
 		],
 	},
 	{
-		id: "feature2",
-		title: "Feature 2",
-		icon: CloudIcon,
-		subtitle: "Your SaaS can also do this.",
-		description: "Another dummy text for another feature.",
+		id: "offline-first",
+		title: "Offline-First for the Field",
+		icon: WifiOff,
+		subtitle: "Reliable when the jobsite isn't",
+		description:
+			"Works great on tablets. Keep working offline — changes sync automatically when you're back online.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
+				title: "No signal, no problem",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
+					"Record installs and inspections without connectivity.",
+				icon: WifiOff,
 			},
 			{
-				title: "Benefit 2",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
-			},
-			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+				title: "Optimized for tablets",
+				description: "Clean UI designed for foremen and inspectors.",
 				icon: MobileIcon,
+			},
+			{
+				title: "Automatic sync",
+				description: "Data merges safely when you're back online.",
+				icon: CloudIcon,
 			},
 		],
 	},
 	{
-		id: "feature3",
-		title: "Feature 3",
-		icon: PaperclipIcon,
-		subtitle: "We even got a third one.",
+		id: "import-and-reporting",
+		title: "Excel Import + Reporting",
+		icon: FileUp,
+		subtitle: "Start fast with the data you already have",
 		description:
-			"Of course your SaaS will have more features than this, but this is just a dummy text.",
+			"Drag-and-drop weld logs, spools, and line lists; map columns, validate issues, and generate reports in minutes.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
+				title: "Map weld logs, spools, line lists",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
+					"Flexible mapping handles different templates and naming.",
+				icon: FileUp,
+			},
+			{
+				title: "Pre-import validation",
+				description:
+					"Catch missing weld numbers and duplicates with clear feedback.",
 				icon: WandIcon,
 			},
 			{
-				title: "Benefit 2",
+				title: "Built-in reports",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
-			},
-			{
-				title: "Benefit 3",
-				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
+					"Export weld logs, NDE summaries, and hydro test packs.",
+				icon: BarChart3,
 			},
 		],
 	},
@@ -135,12 +133,11 @@ export function Features() {
 			<div className="container max-w-5xl">
 				<div className="mx-auto mb-6 lg:mb-0 lg:max-w-5xl lg:text-center">
 					<h2 className="font-bold text-4xl lg:text-5xl">
-						Features your clients will love
+						Built for industrial piping teams
 					</h2>
 					<p className="mt-6 text-balance text-lg opacity-50">
-						In this section you can showcase all the features of
-						your SaaS provides and how they can benefit your
-						clients.
+						Replace spreadsheets with a simple system your field and
+						QC teams actually use.
 					</p>
 				</div>
 

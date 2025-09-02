@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor, within } from './utils/render';
+import { render, screen, waitFor, within } from './utils/render';
 import userEvent from '@testing-library/user-event';
 import { EnhancedDataTable } from '../components/EnhancedDataTable';
 import { mockComponents, generateMockComponents } from '../__fixtures__/components';
@@ -92,7 +92,7 @@ describe('EnhancedDataTable', () => {
           const rect = parent.getBoundingClientRect();
           // Note: In JSDOM, getBoundingClientRect returns 0s, so we check the style
           const minHeight = parent.style.minHeight || '52px';
-          expect(parseInt(minHeight)).toBeGreaterThanOrEqual(52);
+          expect(Number.parseInt(minHeight)).toBeGreaterThanOrEqual(52);
         }
       });
     });

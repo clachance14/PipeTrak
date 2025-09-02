@@ -3,7 +3,7 @@
  * Tests complete user journeys and real browser interactions
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 // Test data setup helpers
 async function setupTestProject(page: Page) {

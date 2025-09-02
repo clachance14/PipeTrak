@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+
 import { randomUUID } from 'crypto';
 
 // Database connection helper
@@ -193,7 +193,7 @@ export async function setupTestProject(project: TestProject, user: TestUser): Pr
 }
 
 // Create large dataset for performance testing
-export async function setupLargeDataset(projectId: string, componentCount: number = 1000): Promise<void> {
+export async function setupLargeDataset(projectId: string, componentCount = 1000): Promise<void> {
   const milestoneTemplateId = randomUUID();
   
   // Create milestone template
@@ -419,7 +419,7 @@ export async function checkDatabaseHealth(): Promise<boolean> {
 // Export all utilities
 export {
   executeSQL,
-  TestUser,
-  TestProject,
-  TestComponent
+  type TestUser,
+  type TestProject,
+  type TestComponent
 };
