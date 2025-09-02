@@ -574,7 +574,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           };
           
           if (!canEdit) {
-            return <Badge variant="outline" className="text-muted-foreground">-</Badge>;
+            return <Badge status="info" className="text-muted-foreground">-</Badge>;
           }
           
           if (!value) {
@@ -640,7 +640,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           }
           
           return (
-            <Badge variant={completed ? "default" : "secondary"}>
+            <Badge status={completed ? "success" : "info"}>
               {completed ? "Complete" : "Required"}
             </Badge>
           );
@@ -656,13 +656,13 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           
           // Determine status based on milestone completion
           if (weldMilestone?.isCompleted) {
-            return <Badge variant="default" className="bg-green-100 text-green-800 border-green-200">Complete</Badge>;
-          }if (fitUpMilestone?.isCompleted) {
-            return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
+            return <Badge status="success" className="bg-green-100 text-green-800 border-green-200">Complete</Badge>;
+          } if (fitUpMilestone?.isCompleted) {
+            return <Badge status="warning" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
           }
           
           // Shouldn't reach here if API filters correctly, but fallback
-          return <Badge variant="outline" className="bg-gray-50 text-gray-500 border-gray-200">Unknown</Badge>;
+          return <Badge status="info" className="bg-gray-50 text-gray-500 border-gray-200">Unknown</Badge>;
         },
       },
       {
@@ -837,13 +837,13 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           
           {filterStats && (
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <Badge variant="outline" className="text-xs">
+              <Badge status="info" className="text-xs">
                 Complete: {filterStats.complete}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+              <Badge status="info" className="text-xs">
                 Pending: {filterStats.pending}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+              <Badge status="info" className="text-xs">
                 NDE Pending: {filterStats.ndePending}
               </Badge>
             </div>

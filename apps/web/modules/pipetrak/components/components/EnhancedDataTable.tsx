@@ -269,14 +269,14 @@ export function EnhancedDataTable({
 
 		switch (column.type) {
 			case "status": {
-				const statusVariant =
-					value === "COMPLETED"
-						? "default"
-						: value === "IN_PROGRESS"
-							? "secondary"
-							: "outline";
+					const statusVariant =
+						value === "COMPLETED"
+							? "success"
+							: value === "IN_PROGRESS"
+								? "info"
+								: "warning";
 				return (
-					<Badge variant={statusVariant as any} className="text-xs">
+					<Badge status={statusVariant as any} className="text-xs">
 						{value as string}
 					</Badge>
 				);

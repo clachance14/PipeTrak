@@ -320,7 +320,7 @@ export function WeldFilterBar({
               <RotateCcw className="h-4 w-4 mr-2" />
               Clear All
               {activeFilterCount > 0 && (
-                <Badge variant="secondary" className="ml-2 text-xs">
+                <Badge status="info" className="ml-2 text-xs">
                   {activeFilterCount}
                 </Badge>
               )}
@@ -549,7 +549,7 @@ export function WeldFilterBar({
             Showing <strong>{filteredCount}</strong> of <strong>{totalCount}</strong> field welds
           </span>
           {hasActiveFilters && (
-            <Badge variant="secondary" className="text-xs">
+            <Badge status="info" className="text-xs">
               {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} active
             </Badge>
           )}
@@ -559,7 +559,7 @@ export function WeldFilterBar({
         {hasActiveFilters && (
           <div className="flex flex-wrap gap-1 max-w-md">
             {filters.search && (
-              <Badge variant="outline" className="text-xs">
+              <Badge status="info" className="text-xs">
                 Search: {filters.search}
                 <Button
                   variant="ghost"
@@ -575,7 +575,7 @@ export function WeldFilterBar({
               if (key === 'search' || value === 'all' || value === '') return null;
               const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
               return (
-                <Badge key={key} variant="outline" className="text-xs">
+                <Badge key={key} status="info" className="text-xs">
                   {label}: {value}
                   <Button
                     variant="ghost"

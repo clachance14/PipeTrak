@@ -391,7 +391,7 @@ export function FieldWeldValidationPreview({
             <CardTitle className="text-lg flex items-center gap-2">
               <Filter className="h-5 w-5" />
               Validation Details
-              <Badge variant="secondary" className="ml-2">
+              <Badge status="info" className="ml-2">
                 {filteredAndSortedIssues.length} of {allIssues.length}
               </Badge>
             </CardTitle>
