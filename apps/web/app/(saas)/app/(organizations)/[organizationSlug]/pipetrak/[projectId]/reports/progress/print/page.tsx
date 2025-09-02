@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoadingState } from "@pipetrak/shared/components";
-import { PrintableProgressReport } from "@pipetrak/reports/components/PrintableProgressReport";
+import { CompactProgressReport } from "@pipetrak/reports/components/CompactProgressReport";
 
 interface ProgressPrintPageProps {
 	params: Promise<{
@@ -29,8 +29,8 @@ export default async function ProgressPrintPage({
 	} = await searchParams;
 
 	return (
-		<Suspense fallback={<LoadingState variant="page" />}>
-			<PrintableProgressReport
+		<Suspense fallback={<LoadingState />}>
+			<CompactProgressReport
 				projectId={projectId}
 				weekEnding={weekEnding}
 				groupBy={groupBy}
