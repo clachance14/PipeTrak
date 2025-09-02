@@ -82,6 +82,19 @@ export const config = {
 		// Using Resend's onboarding email for development (no domain verification needed)
 		from: "onboarding@resend.dev",
 	},
+	// Early Access Configuration
+	earlyAccess: {
+		// Email address to receive lead notifications
+		notificationEmail: "clachance14@hotmail.com", // Updated to verified Resend email
+		// Enable/disable notifications
+		enableNotifications: true,
+		// Enable lead scoring in email notifications
+		enableLeadScoring: true,
+		// Future features (Phase 2)
+		enableWelcomeEmail: false,
+		enableSlackWebhook: false,
+		slackWebhookUrl: "",
+	},
 	// Frontend
 	ui: {
 		// the themes that should be available in the app

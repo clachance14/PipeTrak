@@ -1,135 +1,184 @@
-# Session Handoff Generator
+# Linear Session Handoff Generator
 
-Generate a comprehensive handoff document for the current PipeTrak development session.
+Generate a comprehensive Linear-based handoff for the current PipeTrak development session, replacing markdown files with trackable Linear issues.
 
 ## Instructions for Claude
 
 When this command is invoked, please:
 
-0. **First, Ask for Date and Time**
+0. **First, Ask for Session Context**
    - Ask the user: "Please provide the current date and time (format: MM-DD-YY H:MM am/pm, example: 8-7-25 9:45pm)"
-   - Wait for their response
-   - Parse the input to create:
-     - Filename format: `handoff-YYYY-MM-DD-HHMM.md` (e.g., "8-7-25 9:45pm" → "handoff-2025-08-07-2145.md")
-     - Display format: "Month Day, Year at H:MM AM/PM" (e.g., "August 7, 2025 at 9:45 PM")
-   - Use this timestamp throughout the handoff document
+   - Ask: "What were you working on this session? (e.g., 'debugging CSV import', 'implementing user auth', 'fixing dashboard performance')"
+   - Ask: "How long have you been working on this? (e.g., '2 hours', '30 minutes', 'all day')"
+   - Wait for their responses and use throughout the handoff
 
-1. **Analyze Current State**
+1. **Analyze Current Development State**
    - Check git status for uncommitted changes
-   - Review the todo list to see what was completed
-   - Identify which development phase we're in
-   - Check recent file modifications
-   - Compare with previous handoff to identify what changed
+   - Review recent file modifications and their context
+   - Identify current development phase from build-plan.md
+   - Check for any error logs, console outputs, or failing tests
+   - Compare with recent Linear issues to understand the current work thread
 
-2. **Generate Session Summary** including:
-   - Date and time of handoff
-   - Phase completed or in progress
-   - Major accomplishments from todo list
-   - Key technical decisions made
-   - Problems solved
-   - Files created or modified
+2. **Create Main Session Handoff Issue** in Linear:
+   - **Title**: `Session Handoff: [Work Description] - [Date]`
+   - **Description**: Comprehensive session summary including:
+     - Date, time, and session duration
+     - What was being worked on
+     - Current state of the code/feature
+     - Git branch and commit status
+     - Development environment details
+   - **Labels**: `Documentation`, `Session-Handoff`, `[Current-Phase]`
+   - **Priority**: Medium (always accessible but not urgent)
 
-3. **Document Project State**:
-   - Current phase from build-plan.md
-   - Development environment status
-   - Database connection status
-   - Known issues or limitations
-   - Any blocked tasks
+3. **Document What We Tried (Critical Section)**:
+   - **Create "Attempted Solutions" issue** with:
+     - **Title**: `Attempted Solutions: [Work Description] - [Date]`
+     - **Description**: Detailed list of:
+       - Each approach we tried
+       - Why each approach failed
+       - Error messages or symptoms encountered
+       - Time spent on each attempt
+       - Code changes that were reverted
+       - External resources consulted
+   - **Labels**: `Failed-Attempts`, `Knowledge-Base`, `[Component-Area]`
+   - **Link to main handoff issue**
 
-4. **Smart Documentation Updates** (ONLY if changes detected):
-   - Check if `build-plan.md` needs phase status updates
-   - Update/create `phase[N]-verification.md` if phase completed
-   - Add to `changelog.md` if significant features added
-   - Update `dev-runbook.md` if new patterns or issues discovered
-   - Only update files that have actual changes from the session
+4. **Create Resumption Strategy Issues**:
+   - **"Next Steps" issue** with:
+     - **Title**: `Resume: [Work Description] - Next Actions`
+     - **Description**: 
+       - Immediate next steps to try
+       - Alternative approaches to investigate
+       - Specific files to examine
+       - Commands to run for context restoration
+     - **Labels**: `Next-Session`, `Action-Required`
+     - **Priority**: High (first thing to work on)
+   
+   - **"Investigation Tasks" issues** (one per approach):
+     - **Title**: `Investigate: [Specific Approach]`
+     - **Description**: Detailed research task with success criteria
+     - **Labels**: `Research`, `Alternative-Approach`
 
-5. **List Critical Files for Next Session** (in priority order):
-   - `CLAUDE.md` - Project guidelines
-   - `project-documentation/prd.md` - Requirements
-   - `project-documentation/build-plan.md` - Phase roadmap
-   - `project-documentation/handoffs/[latest-handoff].md` - Previous session
-   - `project-documentation/phase[N]-verification.md` (current phase)
-   - `project-documentation/architecture-output.md` - Database schema
-   - `packages/database/prisma/schema.prisma` - Data models
-   - Any recently modified files from this session
+5. **Create Technical Context Issues**:
+   - **"Environment State" issue**:
+     - Current dependencies and versions
+     - Database schema state
+     - Environment variables and configurations
+     - Known working/broken features
+   
+   - **"Code State" issue**:
+     - Branch status and uncommitted changes
+     - Recently modified files with explanations
+     - Any temporary debugging code or console.logs
+     - Database migrations that need attention
 
-6. **Provide Quick Start Commands**:
+6. **Link Issues in Logical Chain**:
+   - Main handoff → links to all other issues
+   - Attempted solutions → links to next steps
+   - Next steps → links to specific investigation tasks
+   - Use Linear's "blocks/blocked by" relationships appropriately
+
+7. **Update Project Documentation in Linear**:
+   - Create/update "Build Plan Progress" issue if phase status changed
+   - Create "Documentation Needed" issues for:
+     - Any new patterns discovered
+     - Solutions that worked (for future reference)
+     - Failed approaches (to avoid repeating)
+
+8. **Generate Quick Resume Commands**:
+   - Add to "Next Steps" issue:
    ```bash
-   # Environment verification
-   node --version  # Should be >= 20
-   pnpm --version  # Should be 9.3.0
-   
-   # Project setup
+   # Context restoration commands
    cd /home/clachance14/projects/PipeTrak
-   pnpm install
+   git status  # Check for uncommitted changes
+   git log --oneline -5  # Recent commits
    
-   # Start development
-   pnpm dev
+   # Environment verification
+   node --version && pnpm --version
+   pnpm install  # Ensure dependencies current
    
-   # Database utilities
-   pnpm db:generate  # Generate Prisma client
-   pnpm db:push     # Push schema to Supabase
-   pnpm db:studio   # Open Prisma Studio
+   # Development startup
+   pnpm dev  # Start development server
+   pnpm db:studio  # Open database admin (if needed)
+   
+   # Check current work
+   [Specific commands based on what was being worked on]
    ```
 
-7. **Identify Next Steps** from build-plan.md:
-   - Immediate tasks to begin
-   - Current phase tasks remaining
-   - Any blockers or dependencies
-   - Suggested agents to use with example prompts
-
-8. **Generate Context Restoration Prompt** for the next session:
+9. **Create Context Restoration Issue**:
+   - **Title**: `Context: Resume [Work Description] - [Date]`
+   - **Description**: Ready-to-paste prompt for new Claude Code session:
    ```
-   I'm resuming work on PipeTrak, an industrial pipe tracking system built with Next.js, Supabase, and Supastarter.
+   I'm resuming work on PipeTrak where I left off [duration] ago.
    
-   [Include current phase status]
-   [Include last completed tasks]
-   [Include immediate next steps]
+   LAST SESSION CONTEXT:
+   - Working on: [work description]
+   - Duration: [session length]
+   - Current state: [brief state]
    
-   Please read:
-   1. CLAUDE.md for project guidelines
-   2. project-documentation/handoffs/[latest-handoff].md for session context
-   3. project-documentation/[latest-verification].md for current status
-   4. project-documentation/build-plan.md for next phase tasks
+   FAILED ATTEMPTS TO REVIEW:
+   - Check Linear issue: "Attempted Solutions: [work] - [date]"
+   
+   IMMEDIATE NEXT STEPS:
+   - Check Linear issue: "Resume: [work] - Next Actions"
+   
+   Please:
+   1. Review the linked Linear issues for full context
+   2. Check git status for any uncommitted changes  
+   3. Suggest which of the "Next Actions" to tackle first
+   4. Help me avoid repeating the failed attempts
+   
+   Current working directory: /home/clachance14/projects/PipeTrak
    ```
+   - **Labels**: `Context-Restoration`, `New-Session`
 
-9. **Save and Display**:
-   - Create `project-documentation/handoffs/` folder if it doesn't exist
-   - Save the handoff to: `project-documentation/handoffs/handoff-[YYYY-MM-DD-HHMM].md`
-   - Display the full handoff content to the user
-   - Provide the restoration prompt separately for easy copying
-   - List which project documentation files were updated (if any)
+10. **Set Up Epic/Project Organization**:
+    - If this is part of a larger feature, link to appropriate Epic
+    - If starting new work, create Epic for the feature area
+    - Ensure all handoff issues are properly categorized
+
+11. **Final Summary Display**:
+    - List all Linear issues created with their URLs
+    - Show the context restoration prompt for easy copying
+    - Provide Linear board view link to see all related issues
+    - Highlight the priority order for next session
 
 ## Output Format
 
-The handoff should be formatted as a markdown document with clear sections:
+After creating all Linear issues, provide a summary:
 
 ```markdown
-# PipeTrak Development Session Handoff
-**Generated**: [Date Time]
-**Session Duration**: [If calculable]
-**Developer**: Claude Code
+# Linear Session Handoff Complete
 
-## Session Summary
-[What was accomplished]
+## Issues Created:
+1. **Main Handoff**: [Linear URL] - Session overview
+2. **Attempted Solutions**: [Linear URL] - What didn't work
+3. **Next Steps**: [Linear URL] - Immediate actions
+4. **Context Restoration**: [Linear URL] - Resume prompt
+5. **Investigation Tasks**: [Linear URLs] - Specific approaches to try
 
-## Current State
-[Project status]
+## Priority for Next Session:
+1. Start with "Context Restoration" issue
+2. Review "Attempted Solutions" to avoid repeating failures
+3. Begin "Next Steps" issue tasks
+4. If blocked, pick an "Investigation Task"
 
-## Critical Files Reference
-[Ordered list with descriptions]
+## Quick Links:
+- Board View: [Linear board URL with filter]
+- Epic: [Epic URL if applicable]
 
-## Quick Start Guide
-[Commands and setup]
-
-## Next Steps
-[From build plan]
-
-## Restoration Prompt
-[Ready to paste]
-
-## Notes
-[Any important observations]
+## Copy-Paste Resume Prompt:
+[The context restoration content ready to paste]
 ```
 
-Generate this handoff now by analyzing the current project state.
+## Benefits of This Approach:
+
+- **Searchable History**: Find previous debugging sessions across the project
+- **Linked Context**: See relationships between problems and solutions
+- **Failed Attempts Archive**: Never repeat the same failed approach
+- **Actionable Handoffs**: Each handoff creates concrete next steps
+- **Collaborative Ready**: Easy to share context with other developers
+- **Progress Tracking**: See development velocity and common blockers
+- **Knowledge Base**: Build institutional knowledge of what works/doesn't work
+
+Generate this Linear-based handoff now by analyzing the current project state and creating the appropriate issues.

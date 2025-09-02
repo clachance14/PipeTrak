@@ -1,0 +1,255 @@
+# BMad Core Configuration - PipeTrak Project
+
+# Project Information
+project:
+  name: "PipeTrak"
+  description: "Industrial construction pipe tracking system"
+  version: "1.0.0"
+  repository: "https://github.com/user/PipeTrak"
+
+# Development Environment Configuration
+devLoadAlwaysFiles:
+  - "CLAUDE.md"                                    # Main development guidelines
+  - ".claude/pipetrak/claude.md"                   # PipeTrak-specific business logic
+  - ".bmad-core/data/pipetrak-context.md"         # Domain context and patterns
+
+# Technology Stack
+techStack:
+  frontend:
+    - "Next.js App Router"
+    - "React 18"
+    - "TypeScript"
+    - "Tailwind CSS"
+    - "Shadcn UI"
+    - "Radix UI"
+  backend:
+    - "Supabase"
+    - "better-auth"
+    - "Supastarter template"
+    - "PostgreSQL"
+  deployment:
+    - "Vercel (frontend)"
+    - "Supabase (backend)"
+
+# Development Standards
+codingStandards:
+  typescript:
+    - "Use TypeScript for all code"
+    - "Prefer interfaces over types"
+    - "Use proper type safety throughout"
+    - "Avoid enums, use maps instead"
+  
+  react:
+    - "Favor React Server Components (RSC) by default"
+    - "Minimize 'use client', useEffect, and setState"
+    - "Use functional components with TypeScript interfaces"
+    - "Wrap client components in Suspense with fallback"
+  
+  codeStyle:
+    - "Use functional and declarative programming patterns"
+    - "Prefer iteration and modularization over code duplication"
+    - "Use descriptive variable names with auxiliary verbs"
+    - "Structure files: exported component, subcomponents, helpers, static content, types"
+    - "Use PascalCase for component names, camelCase for variables"
+    - "Favor named exports for components"
+  
+  performance:
+    - "Use WebP format when possible for images"
+    - "Implement lazy loading for images below the fold"
+    - "Dynamic loading for non-critical components"
+    - "Mobile-first responsive design"
+
+# File Structure Patterns
+fileStructure:
+  apps:
+    web:
+      app: "Next.js App Router (frontend-only code)"
+      modules: "PipeTrak-specific React components and logic"
+  packages:
+    api: "All API routes"
+    database: "Database schema and auto-generated types"
+    auth: "better-auth config and helper functions"
+    utils: "Utility functions"
+
+# Quality Assurance
+qualityStandards:
+  testing:
+    - "Check README or search codebase for testing approach"
+    - "Follow existing test patterns"
+    - "Test locations: apps/web/modules/pipetrak/*/__tests__/"
+  
+  codeQuality:
+    - "Run lint and typecheck commands after changes: pnpm lint, pnpm typecheck"
+    - "All code must pass linting and type checking"
+    - "Ensure proper loading states and error boundaries"
+  
+  security:
+    - "Never expose or log secrets and keys"
+    - "Never commit secrets or keys to repository"
+    - "Follow security best practices"
+  
+  accessibility:
+    - "Implement proper loading states"
+    - "Use semantic HTML"
+    - "Ensure keyboard navigation"
+    - "Meet WCAG compliance standards"
+
+# PipeTrak-Specific Standards
+pipetrakStandards:
+  uiux:
+    - "Mobile-first design for field use"
+    - "Industrial/construction-friendly interfaces"
+    - "High contrast for field visibility"
+    - "Touch-friendly interactions"
+  
+  performance:
+    - "Fast loading on mobile networks"
+    - "Optimistic UI updates"
+    - "Efficient data pagination"
+    - "Minimal JavaScript bundles"
+  
+  dataPatterns:
+    - "Organization-based data scoping"
+    - "Row Level Security (RLS) for multi-tenancy"
+    - "Real-time subscriptions for live updates"
+    - "Audit trails for change tracking"
+
+# Agent System Configuration
+agentSystems:
+  bmadCore:
+    description: "BMad Methodology core agents via slash commands"
+    location: ".claude/commands/"
+    invocation: "Slash commands (/po, /dev, /bmad-orchestrator)"
+    agents:
+      po:
+        command: "/po"
+        name: "Sarah"
+        capabilities: ["backlog management", "story refinement", "acceptance criteria", "sprint planning"]
+      dev:
+        command: "/dev"
+        name: "James"
+        capabilities: ["code implementation", "debugging", "refactoring", "testing"]
+      orchestrator:
+        command: "/bmad-orchestrator"
+        name: "BMad Orchestrator"
+        capabilities: ["workflow coordination", "agent management", "process guidance"]
+  
+  pipetrakSpecialized:
+    description: "PipeTrak-specific specialized agents via Task tool"
+    location: ".claude/agents/"
+    invocation: "Task tool with subagent_type parameter"
+    agents:
+      architect: 
+        file: ".claude/agents/pipetrak-architect.md"
+        capabilities: ["system architecture", "technical blueprints", "Supabase patterns"]
+      backendEngineer:
+        file: ".claude/agents/pipetrak-backend-engineer.md" 
+        capabilities: ["Supabase implementation", "database migrations", "RPC functions"]
+      frontendEngineer:
+        file: ".claude/agents/pipetrak-frontend-engineer.md"
+        capabilities: ["React components", "UI implementation", "real-time features"]
+      uxLead:
+        file: ".claude/agents/pipetrak-ux-lead.md"
+        capabilities: ["design specifications", "component specs", "accessibility"]
+      pmSpecWriter:
+        file: ".claude/agents/pipetrak-pm-spec-writer.md"
+        capabilities: ["requirements specification", "field testing", "documentation"]
+      qaAutomation:
+        file: ".claude/agents/pipetrak-qa-automation.md"
+        capabilities: ["test plans", "automation", "quality assurance"]
+      debugSpecialist:
+        file: ".claude/agents/pipetrak-debug-specialist.md"
+        capabilities: ["error diagnosis", "debugging", "troubleshooting"]
+      deploymentOrchestrator:
+        file: ".claude/agents/pipetrak-deployment-orchestrator.md"
+        capabilities: ["build orchestration", "deployment planning", "phased rollouts"]
+      uxJudge:
+        file: ".claude/agents/pipetrak-ux-judge.md"
+        capabilities: ["UI quality evaluation", "field usability", "accessibility validation"]
+      devopsEngineer:
+        file: ".claude/agents/devops-deployment-engineer.md"
+        capabilities: ["infrastructure", "CI/CD", "containerization"]
+      securityAnalyst:
+        file: ".claude/agents/security-analyst.md"
+        capabilities: ["security analysis", "vulnerability assessment", "compliance"]
+
+# Workflow Configuration
+workflows:
+  storyDevelopment:
+    phases:
+      - "Requirements Gathering (PO)"
+      - "Story Creation (PO)"
+      - "Technical Planning (Dev + PO)"
+      - "Implementation (Dev)"
+      - "Testing & Validation (Dev + PO)"
+      - "Review & Approval (PO)"
+      - "Deployment (Dev)"
+
+# Templates and Resources
+templates:
+  story: ".bmad-core/templates/story-tmpl.yaml"
+  prd: ".bmad-core/templates/prd-tmpl.md"
+
+checklists:
+  storyDod: ".bmad-core/checklists/story-dod-checklist.md"
+  poMaster: ".bmad-core/checklists/po-master-checklist.md"
+
+tasks:
+  createStory: ".bmad-core/tasks/create-story.md"
+  developStory: ".bmad-core/tasks/develop-story.md"
+  executeChecklist: ".bmad-core/tasks/execute-checklist.md"
+  validateStory: ".bmad-core/tasks/validate-next-story.md"
+
+# Integration Points
+integrations:
+  supabase:
+    - "Authentication (better-auth)"
+    - "Database (PostgreSQL)"
+    - "Real-time subscriptions"
+    - "Row Level Security"
+    - "Edge Functions"
+    - "Storage for file uploads"
+  
+  linear:
+    - "Issue tracking via MCP"
+    - "Team: PipeTrak (ID: 173da0c8-0e1e-4a5d-94b3-84d02bfbe593)"
+    - "Comprehensive labeling system"
+    - "Session handoff documentation"
+
+# Commands Configuration
+commands:
+  lint: "pnpm lint"
+  typecheck: "pnpm typecheck"
+  test: "pnpm test"
+  dev: "pnpm dev"
+  build: "pnpm build"
+
+# Environment Variables
+environmentConfig:
+  required:
+    - "SUPABASE_URL"
+    - "SUPABASE_ANON_KEY"
+    - "DATABASE_URL"
+    - "BETTER_AUTH_SECRET"
+  
+  development:
+    - "NEXT_PUBLIC_APP_URL"
+    - "NODE_ENV=development"
+
+# Documentation Standards
+documentation:
+  codeDocumentation:
+    - "Public APIs and complex functions are documented"
+    - "README files for complex modules"
+    - "Inline comments for complex logic"
+  
+  processDocumentation:
+    - "All decisions documented in stories"
+    - "Architecture decisions recorded"
+    - "Deployment procedures documented"
+
+---
+# Notes
+# This configuration file should be loaded by development agents to ensure
+# consistency with project standards and conventions. It serves as the 
+# single source of truth for development practices on the PipeTrak project.

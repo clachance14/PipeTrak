@@ -1,14 +1,14 @@
 #!/usr/bin/env tsx
 
-import { config } from 'dotenv';
-import { resolve } from 'path';
+import { config } from "dotenv";
+import { resolve } from "path";
 
 // Load environment variables from .env.local
-config({ path: resolve(process.cwd(), '../../.env.local') });
+config({ path: resolve(process.cwd(), "../../.env.local") });
 
 /**
  * Script to help get the correct Supabase keys from your project
- * 
+ *
  * To get the correct keys:
  * 1. Go to https://supabase.com/dashboard/project/ogmahtkaqziaoxldxnts/settings/api
  * 2. Copy the "anon public" key (under Project API keys)
@@ -62,31 +62,31 @@ Need help?
 
 // Test the current key
 async function testKey() {
-  console.log('\nTesting current API key...');
-  const testUrl = 'https://ogmahtkaqziaoxldxnts.supabase.co/rest/v1/';
-  const currentKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+	console.log("\nTesting current API key...");
+	const testUrl = "https://ogmahtkaqziaoxldxnts.supabase.co/rest/v1/";
+	const currentKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (currentKey) {
-    try {
-      const response = await fetch(testUrl, {
-        headers: {
-          'apikey': currentKey,
-          'Authorization': `Bearer ${currentKey}`
-        }
-      });
-      
-      if (response.ok) {
-        console.log('✅ API key is valid!');
-      } else {
-        const error = await response.text();
-        console.log('❌ API key is invalid:', error);
-      }
-    } catch (error) {
-      console.log('❌ Failed to test API key:', error);
-    }
-  } else {
-    console.log('❌ No API key found in environment variables');
-  }
+	if (currentKey) {
+		try {
+			const response = await fetch(testUrl, {
+				headers: {
+					apikey: currentKey,
+					Authorization: `Bearer ${currentKey}`,
+				},
+			});
+
+			if (response.ok) {
+				console.log("✅ API key is valid!");
+			} else {
+				const error = await response.text();
+				console.log("❌ API key is invalid:", error);
+			}
+		} catch (error) {
+			console.log("❌ Failed to test API key:", error);
+		}
+	} else {
+		console.log("❌ No API key found in environment variables");
+	}
 }
 
 testKey().then(() => process.exit(0));

@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-// Test Import Workflow API with preview and full import modes
-import { readFileSync } from 'fs';
 import * as xlsx from 'xlsx';
 
 async function testImportWorkflow() {
@@ -83,19 +81,19 @@ async function testImportWorkflow() {
     };
     
     // Calculate total instances (sum of quantities)
-    const estimatedInstances = dataRows.reduce((sum, row) => sum + (parseInt(row[3]) || 1), 0);
+    const estimatedInstances = dataRows.reduce((sum, row) => sum + (Number.parseInt(row[3]) || 1), 0);
     
     console.log("\nExpected preview results:");
     console.log(`  Total rows: ${totalRows}`);
-    console.log(`  Type mappings:`, typeMappings);
+    console.log("  Type mappings:", typeMappings);
     console.log(`  Estimated instances: ${estimatedInstances}`);
-    console.log(`  Unknown types: []`);
+    console.log("  Unknown types: []");
 
     // Validate expected results
     if (totalRows === 9 && estimatedInstances === 32) {
       console.log("✅ Preview calculations are correct");
     } else {
-      console.log(`❌ Preview calculations incorrect - expected 9 rows and 32 instances`);
+      console.log("❌ Preview calculations incorrect - expected 9 rows and 32 instances");
     }
 
     console.log("\n=== Test 2: Type Distribution Analysis ===");
@@ -159,7 +157,7 @@ async function testImportWorkflow() {
       { field: 'DRAWING', required: true, hasValue: dataRows.every(row => row[0]) },
       { field: 'CMDTY CODE', required: true, hasValue: dataRows.every(row => row[1]) },
       { field: 'TYPE', required: true, hasValue: dataRows.every(row => row[2]) },
-      { field: 'QTY', required: false, hasValue: dataRows.every(row => !isNaN(parseInt(row[3]))) }
+      { field: 'QTY', required: false, hasValue: dataRows.every(row => !isNaN(Number.parseInt(row[3]))) }
     ];
     
     validationTests.forEach(test => {
@@ -196,7 +194,7 @@ async function testImportWorkflow() {
     errorTests.forEach(test => {
       console.log(`Test error scenario: ${test.name}`);
       console.log(`  Expected error: ${test.expectedError}`);
-      console.log(`  ✅ Error scenario documented`);
+      console.log("  ✅ Error scenario documented");
     });
 
     console.log("\n=== Test Summary ===");

@@ -31,7 +31,7 @@ function applyColumnMappings(rows, mappings) {
     
     for (const mapping of mappings) {
       const sourceValue = row[mapping.sourceColumn];
-      let targetValue = sourceValue;
+      const targetValue = sourceValue;
       
       // Clean up empty values for optional fields
       if (targetValue === '' || targetValue === null || targetValue === undefined) {

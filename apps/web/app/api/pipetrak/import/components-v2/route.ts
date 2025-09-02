@@ -13,7 +13,7 @@ import type {
 	ComponentInstanceData,
 	ImportPreviewResult,
 	ImportResult,
-} from "@repo/api/src/lib/import/types";
+} from "@repo/api";
 
 type ComponentType =
 	| "PIPE"

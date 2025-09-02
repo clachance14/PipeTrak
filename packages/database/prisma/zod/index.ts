@@ -128,6 +128,8 @@ export const WelderScalarFieldEnumSchema = z.enum(['id','projectId','stencil','n
 
 export const FieldWeldScalarFieldEnumSchema = z.enum(['id','projectId','weldIdNumber','welderId','dateWelded','drawingId','packageNumber','testPressure','specCode','tieInNumber','xrayPercent','weldSize','schedule','weldTypeCode','baseMetal','pwhtRequired','datePwht','ndeTypes','ndeResult','ndeDate','turnoverDate','comments','createdAt','updatedAt']);
 
+export const EarlyAccessLeadScalarFieldEnumSchema = z.enum(['id','name','email','company','projectSize','currentMethod','role','phone','message','source','utmSource','utmMedium','utmCampaign','createdAt','updatedAt']);
+
 export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const JsonNullValueInputSchema = z.enum(['JsonNull',]).transform((value) => (value === 'JsonNull' ? Prisma.JsonNull : value));
@@ -707,7 +709,7 @@ export const FieldWeldSchema = z.object({
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: JsonValueSchema,
@@ -730,6 +732,30 @@ export const FieldWeldSchema = z.object({
 })
 
 export type FieldWeld = z.infer<typeof FieldWeldSchema>
+
+/////////////////////////////////////////
+// EARLY ACCESS LEAD SCHEMA
+/////////////////////////////////////////
+
+export const EarlyAccessLeadSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  email: z.string(),
+  company: z.string(),
+  projectSize: z.string(),
+  currentMethod: z.string(),
+  role: z.string(),
+  phone: z.string().nullable(),
+  message: z.string().nullable(),
+  source: z.string(),
+  utmSource: z.string().nullable(),
+  utmMedium: z.string().nullable(),
+  utmCampaign: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+})
+
+export type EarlyAccessLead = z.infer<typeof EarlyAccessLeadSchema>
 
 /////////////////////////////////////////
 // SELECT & INCLUDE
@@ -1678,6 +1704,27 @@ export const FieldWeldSelectSchema: z.ZodType<Prisma.FieldWeldSelect> = z.object
   drawing: z.union([z.boolean(),z.lazy(() => DrawingArgsSchema)]).optional(),
   weldType: z.union([z.boolean(),z.lazy(() => WeldTypeArgsSchema)]).optional(),
   component: z.union([z.boolean(),z.lazy(() => ComponentArgsSchema)]).optional(),
+}).strict()
+
+// EARLY ACCESS LEAD
+//------------------------------------------------------
+
+export const EarlyAccessLeadSelectSchema: z.ZodType<Prisma.EarlyAccessLeadSelect> = z.object({
+  id: z.boolean().optional(),
+  name: z.boolean().optional(),
+  email: z.boolean().optional(),
+  company: z.boolean().optional(),
+  projectSize: z.boolean().optional(),
+  currentMethod: z.boolean().optional(),
+  role: z.boolean().optional(),
+  phone: z.boolean().optional(),
+  message: z.boolean().optional(),
+  source: z.boolean().optional(),
+  utmSource: z.boolean().optional(),
+  utmMedium: z.boolean().optional(),
+  utmCampaign: z.boolean().optional(),
+  createdAt: z.boolean().optional(),
+  updatedAt: z.boolean().optional(),
 }).strict()
 
 
@@ -4235,7 +4282,7 @@ export const FieldWeldWhereInputSchema: z.ZodType<Prisma.FieldWeldWhereInput> = 
   projectId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weldIdNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   welderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  dateWelded: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  dateWelded: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   drawingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   packageNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   testPressure: z.lazy(() => JsonFilterSchema).optional(),
@@ -4267,7 +4314,7 @@ export const FieldWeldOrderByWithRelationInputSchema: z.ZodType<Prisma.FieldWeld
   projectId: z.lazy(() => SortOrderSchema).optional(),
   weldIdNumber: z.lazy(() => SortOrderSchema).optional(),
   welderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  dateWelded: z.lazy(() => SortOrderSchema).optional(),
+  dateWelded: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   drawingId: z.lazy(() => SortOrderSchema).optional(),
   packageNumber: z.lazy(() => SortOrderSchema).optional(),
   testPressure: z.lazy(() => SortOrderSchema).optional(),
@@ -4315,7 +4362,7 @@ export const FieldWeldWhereUniqueInputSchema: z.ZodType<Prisma.FieldWeldWhereUni
   projectId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weldIdNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   welderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  dateWelded: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  dateWelded: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   drawingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   packageNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   testPressure: z.lazy(() => JsonFilterSchema).optional(),
@@ -4347,7 +4394,7 @@ export const FieldWeldOrderByWithAggregationInputSchema: z.ZodType<Prisma.FieldW
   projectId: z.lazy(() => SortOrderSchema).optional(),
   weldIdNumber: z.lazy(() => SortOrderSchema).optional(),
   welderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  dateWelded: z.lazy(() => SortOrderSchema).optional(),
+  dateWelded: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   drawingId: z.lazy(() => SortOrderSchema).optional(),
   packageNumber: z.lazy(() => SortOrderSchema).optional(),
   testPressure: z.lazy(() => SortOrderSchema).optional(),
@@ -4382,7 +4429,7 @@ export const FieldWeldScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Fie
   projectId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   weldIdNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   welderId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  dateWelded: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+  dateWelded: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   drawingId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   packageNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   testPressure: z.lazy(() => JsonWithAggregatesFilterSchema).optional(),
@@ -4400,6 +4447,120 @@ export const FieldWeldScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Fie
   ndeDate: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   turnoverDate: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   comments: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadWhereInputSchema: z.ZodType<Prisma.EarlyAccessLeadWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => EarlyAccessLeadWhereInputSchema),z.lazy(() => EarlyAccessLeadWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => EarlyAccessLeadWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => EarlyAccessLeadWhereInputSchema),z.lazy(() => EarlyAccessLeadWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  company: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  projectSize: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  currentMethod: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  role: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  phone: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  message: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  source: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  utmSource: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  utmMedium: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  utmCampaign: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadOrderByWithRelationInputSchema: z.ZodType<Prisma.EarlyAccessLeadOrderByWithRelationInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
+  email: z.lazy(() => SortOrderSchema).optional(),
+  company: z.lazy(() => SortOrderSchema).optional(),
+  projectSize: z.lazy(() => SortOrderSchema).optional(),
+  currentMethod: z.lazy(() => SortOrderSchema).optional(),
+  role: z.lazy(() => SortOrderSchema).optional(),
+  phone: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  message: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  source: z.lazy(() => SortOrderSchema).optional(),
+  utmSource: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  utmMedium: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  utmCampaign: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const EarlyAccessLeadWhereUniqueInputSchema: z.ZodType<Prisma.EarlyAccessLeadWhereUniqueInput> = z.union([
+  z.object({
+    id: z.string().uuid(),
+    email: z.string()
+  }),
+  z.object({
+    id: z.string().uuid(),
+  }),
+  z.object({
+    email: z.string(),
+  }),
+])
+.and(z.object({
+  id: z.string().uuid().optional(),
+  email: z.string().optional(),
+  AND: z.union([ z.lazy(() => EarlyAccessLeadWhereInputSchema),z.lazy(() => EarlyAccessLeadWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => EarlyAccessLeadWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => EarlyAccessLeadWhereInputSchema),z.lazy(() => EarlyAccessLeadWhereInputSchema).array() ]).optional(),
+  name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  company: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  projectSize: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  currentMethod: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  role: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  phone: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  message: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  source: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  utmSource: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  utmMedium: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  utmCampaign: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+}).strict());
+
+export const EarlyAccessLeadOrderByWithAggregationInputSchema: z.ZodType<Prisma.EarlyAccessLeadOrderByWithAggregationInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
+  email: z.lazy(() => SortOrderSchema).optional(),
+  company: z.lazy(() => SortOrderSchema).optional(),
+  projectSize: z.lazy(() => SortOrderSchema).optional(),
+  currentMethod: z.lazy(() => SortOrderSchema).optional(),
+  role: z.lazy(() => SortOrderSchema).optional(),
+  phone: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  message: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  source: z.lazy(() => SortOrderSchema).optional(),
+  utmSource: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  utmMedium: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  utmCampaign: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  _count: z.lazy(() => EarlyAccessLeadCountOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => EarlyAccessLeadMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => EarlyAccessLeadMinOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const EarlyAccessLeadScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.EarlyAccessLeadScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => EarlyAccessLeadScalarWhereWithAggregatesInputSchema),z.lazy(() => EarlyAccessLeadScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => EarlyAccessLeadScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => EarlyAccessLeadScalarWhereWithAggregatesInputSchema),z.lazy(() => EarlyAccessLeadScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  email: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  company: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  projectSize: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  currentMethod: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  role: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  phone: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  message: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  source: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  utmSource: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  utmMedium: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  utmCampaign: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -6993,7 +7154,7 @@ export const WelderUncheckedUpdateManyInputSchema: z.ZodType<Prisma.WelderUnchec
 
 export const FieldWeldCreateInputSchema: z.ZodType<Prisma.FieldWeldCreateInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -7023,7 +7184,7 @@ export const FieldWeldUncheckedCreateInputSchema: z.ZodType<Prisma.FieldWeldUnch
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -7047,7 +7208,7 @@ export const FieldWeldUncheckedCreateInputSchema: z.ZodType<Prisma.FieldWeldUnch
 
 export const FieldWeldUpdateInputSchema: z.ZodType<Prisma.FieldWeldUpdateInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7077,7 +7238,7 @@ export const FieldWeldUncheckedUpdateInputSchema: z.ZodType<Prisma.FieldWeldUnch
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -7104,7 +7265,7 @@ export const FieldWeldCreateManyInputSchema: z.ZodType<Prisma.FieldWeldCreateMan
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -7128,7 +7289,7 @@ export const FieldWeldCreateManyInputSchema: z.ZodType<Prisma.FieldWeldCreateMan
 
 export const FieldWeldUpdateManyMutationInputSchema: z.ZodType<Prisma.FieldWeldUpdateManyMutationInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7153,7 +7314,7 @@ export const FieldWeldUncheckedUpdateManyInputSchema: z.ZodType<Prisma.FieldWeld
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -7171,6 +7332,132 @@ export const FieldWeldUncheckedUpdateManyInputSchema: z.ZodType<Prisma.FieldWeld
   ndeDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   turnoverDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   comments: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadCreateInputSchema: z.ZodType<Prisma.EarlyAccessLeadCreateInput> = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string(),
+  email: z.string(),
+  company: z.string(),
+  projectSize: z.string(),
+  currentMethod: z.string(),
+  role: z.string(),
+  phone: z.string().optional().nullable(),
+  message: z.string().optional().nullable(),
+  source: z.string().optional(),
+  utmSource: z.string().optional().nullable(),
+  utmMedium: z.string().optional().nullable(),
+  utmCampaign: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+
+export const EarlyAccessLeadUncheckedCreateInputSchema: z.ZodType<Prisma.EarlyAccessLeadUncheckedCreateInput> = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string(),
+  email: z.string(),
+  company: z.string(),
+  projectSize: z.string(),
+  currentMethod: z.string(),
+  role: z.string(),
+  phone: z.string().optional().nullable(),
+  message: z.string().optional().nullable(),
+  source: z.string().optional(),
+  utmSource: z.string().optional().nullable(),
+  utmMedium: z.string().optional().nullable(),
+  utmCampaign: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+
+export const EarlyAccessLeadUpdateInputSchema: z.ZodType<Prisma.EarlyAccessLeadUpdateInput> = z.object({
+  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  company: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  projectSize: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  currentMethod: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  role: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  phone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  message: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  source: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  utmSource: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmMedium: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmCampaign: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadUncheckedUpdateInputSchema: z.ZodType<Prisma.EarlyAccessLeadUncheckedUpdateInput> = z.object({
+  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  company: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  projectSize: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  currentMethod: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  role: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  phone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  message: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  source: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  utmSource: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmMedium: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmCampaign: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadCreateManyInputSchema: z.ZodType<Prisma.EarlyAccessLeadCreateManyInput> = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string(),
+  email: z.string(),
+  company: z.string(),
+  projectSize: z.string(),
+  currentMethod: z.string(),
+  role: z.string(),
+  phone: z.string().optional().nullable(),
+  message: z.string().optional().nullable(),
+  source: z.string().optional(),
+  utmSource: z.string().optional().nullable(),
+  utmMedium: z.string().optional().nullable(),
+  utmCampaign: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+
+export const EarlyAccessLeadUpdateManyMutationInputSchema: z.ZodType<Prisma.EarlyAccessLeadUpdateManyMutationInput> = z.object({
+  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  company: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  projectSize: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  currentMethod: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  role: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  phone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  message: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  source: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  utmSource: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmMedium: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmCampaign: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const EarlyAccessLeadUncheckedUpdateManyInputSchema: z.ZodType<Prisma.EarlyAccessLeadUncheckedUpdateManyInput> = z.object({
+  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  company: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  projectSize: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  currentMethod: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  role: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  phone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  message: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  source: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  utmSource: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmMedium: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  utmCampaign: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -9267,6 +9554,60 @@ export const FieldWeldMinOrderByAggregateInputSchema: z.ZodType<Prisma.FieldWeld
 
 export const FieldWeldSumOrderByAggregateInputSchema: z.ZodType<Prisma.FieldWeldSumOrderByAggregateInput> = z.object({
   xrayPercent: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const EarlyAccessLeadCountOrderByAggregateInputSchema: z.ZodType<Prisma.EarlyAccessLeadCountOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
+  email: z.lazy(() => SortOrderSchema).optional(),
+  company: z.lazy(() => SortOrderSchema).optional(),
+  projectSize: z.lazy(() => SortOrderSchema).optional(),
+  currentMethod: z.lazy(() => SortOrderSchema).optional(),
+  role: z.lazy(() => SortOrderSchema).optional(),
+  phone: z.lazy(() => SortOrderSchema).optional(),
+  message: z.lazy(() => SortOrderSchema).optional(),
+  source: z.lazy(() => SortOrderSchema).optional(),
+  utmSource: z.lazy(() => SortOrderSchema).optional(),
+  utmMedium: z.lazy(() => SortOrderSchema).optional(),
+  utmCampaign: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const EarlyAccessLeadMaxOrderByAggregateInputSchema: z.ZodType<Prisma.EarlyAccessLeadMaxOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
+  email: z.lazy(() => SortOrderSchema).optional(),
+  company: z.lazy(() => SortOrderSchema).optional(),
+  projectSize: z.lazy(() => SortOrderSchema).optional(),
+  currentMethod: z.lazy(() => SortOrderSchema).optional(),
+  role: z.lazy(() => SortOrderSchema).optional(),
+  phone: z.lazy(() => SortOrderSchema).optional(),
+  message: z.lazy(() => SortOrderSchema).optional(),
+  source: z.lazy(() => SortOrderSchema).optional(),
+  utmSource: z.lazy(() => SortOrderSchema).optional(),
+  utmMedium: z.lazy(() => SortOrderSchema).optional(),
+  utmCampaign: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const EarlyAccessLeadMinOrderByAggregateInputSchema: z.ZodType<Prisma.EarlyAccessLeadMinOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
+  email: z.lazy(() => SortOrderSchema).optional(),
+  company: z.lazy(() => SortOrderSchema).optional(),
+  projectSize: z.lazy(() => SortOrderSchema).optional(),
+  currentMethod: z.lazy(() => SortOrderSchema).optional(),
+  role: z.lazy(() => SortOrderSchema).optional(),
+  phone: z.lazy(() => SortOrderSchema).optional(),
+  message: z.lazy(() => SortOrderSchema).optional(),
+  source: z.lazy(() => SortOrderSchema).optional(),
+  utmSource: z.lazy(() => SortOrderSchema).optional(),
+  utmMedium: z.lazy(() => SortOrderSchema).optional(),
+  utmCampaign: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const SessionCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.SessionCreateNestedManyWithoutUserInput> = z.object({
@@ -16086,7 +16427,7 @@ export const WelderCreateManyProjectInputEnvelopeSchema: z.ZodType<Prisma.Welder
 
 export const FieldWeldCreateWithoutProjectInputSchema: z.ZodType<Prisma.FieldWeldCreateWithoutProjectInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -16114,7 +16455,7 @@ export const FieldWeldUncheckedCreateWithoutProjectInputSchema: z.ZodType<Prisma
   id: z.string().cuid().optional(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -16496,7 +16837,7 @@ export const FieldWeldScalarWhereInputSchema: z.ZodType<Prisma.FieldWeldScalarWh
   projectId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   weldIdNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   welderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  dateWelded: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  dateWelded: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   drawingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   packageNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   testPressure: z.lazy(() => JsonFilterSchema).optional(),
@@ -16736,7 +17077,7 @@ export const ComponentCreateManyDrawingInputEnvelopeSchema: z.ZodType<Prisma.Com
 
 export const FieldWeldCreateWithoutDrawingInputSchema: z.ZodType<Prisma.FieldWeldCreateWithoutDrawingInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -16765,7 +17106,7 @@ export const FieldWeldUncheckedCreateWithoutDrawingInputSchema: z.ZodType<Prisma
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -17446,7 +17787,7 @@ export const AuditLogCreateManyComponentInputEnvelopeSchema: z.ZodType<Prisma.Au
 
 export const FieldWeldCreateWithoutComponentInputSchema: z.ZodType<Prisma.FieldWeldCreateWithoutComponentInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -17474,7 +17815,7 @@ export const FieldWeldUncheckedCreateWithoutComponentInputSchema: z.ZodType<Pris
   id: z.string().cuid().optional(),
   projectId: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -20136,7 +20477,7 @@ export const UserUncheckedUpdateWithoutReportGenerationsRequestedInputSchema: z.
 
 export const FieldWeldCreateWithoutWeldTypeInputSchema: z.ZodType<Prisma.FieldWeldCreateWithoutWeldTypeInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -20165,7 +20506,7 @@ export const FieldWeldUncheckedCreateWithoutWeldTypeInputSchema: z.ZodType<Prism
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -20271,7 +20612,7 @@ export const ProjectCreateOrConnectWithoutWeldersInputSchema: z.ZodType<Prisma.P
 
 export const FieldWeldCreateWithoutWelderInputSchema: z.ZodType<Prisma.FieldWeldCreateWithoutWelderInput> = z.object({
   id: z.string().cuid().optional(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -20299,7 +20640,7 @@ export const FieldWeldUncheckedCreateWithoutWelderInputSchema: z.ZodType<Prisma.
   id: z.string().cuid().optional(),
   projectId: z.string(),
   weldIdNumber: z.string(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -22370,7 +22711,7 @@ export const FieldWeldCreateManyProjectInputSchema: z.ZodType<Prisma.FieldWeldCr
   id: z.string().cuid().optional(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -22922,7 +23263,7 @@ export const WelderUncheckedUpdateManyWithoutProjectInputSchema: z.ZodType<Prism
 
 export const FieldWeldUpdateWithoutProjectInputSchema: z.ZodType<Prisma.FieldWeldUpdateWithoutProjectInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -22950,7 +23291,7 @@ export const FieldWeldUncheckedUpdateWithoutProjectInputSchema: z.ZodType<Prisma
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -22976,7 +23317,7 @@ export const FieldWeldUncheckedUpdateManyWithoutProjectInputSchema: z.ZodType<Pr
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23049,7 +23390,7 @@ export const FieldWeldCreateManyDrawingInputSchema: z.ZodType<Prisma.FieldWeldCr
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.string(),
@@ -23222,7 +23563,7 @@ export const ComponentUncheckedUpdateManyWithoutDrawingInputSchema: z.ZodType<Pr
 
 export const FieldWeldUpdateWithoutDrawingInputSchema: z.ZodType<Prisma.FieldWeldUpdateWithoutDrawingInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23251,7 +23592,7 @@ export const FieldWeldUncheckedUpdateWithoutDrawingInputSchema: z.ZodType<Prisma
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23277,7 +23618,7 @@ export const FieldWeldUncheckedUpdateManyWithoutDrawingInputSchema: z.ZodType<Pr
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23474,7 +23815,7 @@ export const FieldWeldCreateManyComponentInputSchema: z.ZodType<Prisma.FieldWeld
   id: z.string().cuid().optional(),
   projectId: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23588,7 +23929,7 @@ export const AuditLogUncheckedUpdateManyWithoutComponentInputSchema: z.ZodType<P
 
 export const FieldWeldUpdateWithoutComponentInputSchema: z.ZodType<Prisma.FieldWeldUpdateWithoutComponentInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23616,7 +23957,7 @@ export const FieldWeldUncheckedUpdateWithoutComponentInputSchema: z.ZodType<Pris
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23642,7 +23983,7 @@ export const FieldWeldUncheckedUpdateManyWithoutComponentInputSchema: z.ZodType<
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23761,7 +24102,7 @@ export const FieldWeldCreateManyWeldTypeInputSchema: z.ZodType<Prisma.FieldWeldC
   projectId: z.string(),
   weldIdNumber: z.string(),
   welderId: z.string().optional().nullable(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23784,7 +24125,7 @@ export const FieldWeldCreateManyWeldTypeInputSchema: z.ZodType<Prisma.FieldWeldC
 
 export const FieldWeldUpdateWithoutWeldTypeInputSchema: z.ZodType<Prisma.FieldWeldUpdateWithoutWeldTypeInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23813,7 +24154,7 @@ export const FieldWeldUncheckedUpdateWithoutWeldTypeInputSchema: z.ZodType<Prism
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23839,7 +24180,7 @@ export const FieldWeldUncheckedUpdateManyWithoutWeldTypeInputSchema: z.ZodType<P
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   welderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23864,7 +24205,7 @@ export const FieldWeldCreateManyWelderInputSchema: z.ZodType<Prisma.FieldWeldCre
   id: z.string().cuid().optional(),
   projectId: z.string(),
   weldIdNumber: z.string(),
-  dateWelded: z.coerce.date(),
+  dateWelded: z.coerce.date().optional().nullable(),
   drawingId: z.string(),
   packageNumber: z.string(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23888,7 +24229,7 @@ export const FieldWeldCreateManyWelderInputSchema: z.ZodType<Prisma.FieldWeldCre
 
 export const FieldWeldUpdateWithoutWelderInputSchema: z.ZodType<Prisma.FieldWeldUpdateWithoutWelderInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   specCode: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -23916,7 +24257,7 @@ export const FieldWeldUncheckedUpdateWithoutWelderInputSchema: z.ZodType<Prisma.
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -23942,7 +24283,7 @@ export const FieldWeldUncheckedUpdateManyWithoutWelderInputSchema: z.ZodType<Pri
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   projectId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   weldIdNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  dateWelded: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  dateWelded: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   drawingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   packageNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   testPressure: z.union([ z.lazy(() => JsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
@@ -25268,6 +25609,58 @@ export const FieldWeldFindUniqueOrThrowArgsSchema: z.ZodType<Omit<Prisma.FieldWe
   where: FieldWeldWhereUniqueInputSchema,
 }).strict() ;
 
+export const EarlyAccessLeadFindFirstArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadFindFirstArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  orderBy: z.union([ EarlyAccessLeadOrderByWithRelationInputSchema.array(),EarlyAccessLeadOrderByWithRelationInputSchema ]).optional(),
+  cursor: EarlyAccessLeadWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ EarlyAccessLeadScalarFieldEnumSchema,EarlyAccessLeadScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const EarlyAccessLeadFindFirstOrThrowArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadFindFirstOrThrowArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  orderBy: z.union([ EarlyAccessLeadOrderByWithRelationInputSchema.array(),EarlyAccessLeadOrderByWithRelationInputSchema ]).optional(),
+  cursor: EarlyAccessLeadWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ EarlyAccessLeadScalarFieldEnumSchema,EarlyAccessLeadScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const EarlyAccessLeadFindManyArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadFindManyArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  orderBy: z.union([ EarlyAccessLeadOrderByWithRelationInputSchema.array(),EarlyAccessLeadOrderByWithRelationInputSchema ]).optional(),
+  cursor: EarlyAccessLeadWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ EarlyAccessLeadScalarFieldEnumSchema,EarlyAccessLeadScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const EarlyAccessLeadAggregateArgsSchema: z.ZodType<Prisma.EarlyAccessLeadAggregateArgs> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  orderBy: z.union([ EarlyAccessLeadOrderByWithRelationInputSchema.array(),EarlyAccessLeadOrderByWithRelationInputSchema ]).optional(),
+  cursor: EarlyAccessLeadWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadGroupByArgsSchema: z.ZodType<Prisma.EarlyAccessLeadGroupByArgs> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  orderBy: z.union([ EarlyAccessLeadOrderByWithAggregationInputSchema.array(),EarlyAccessLeadOrderByWithAggregationInputSchema ]).optional(),
+  by: EarlyAccessLeadScalarFieldEnumSchema.array(),
+  having: EarlyAccessLeadScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadFindUniqueArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadFindUniqueArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereUniqueInputSchema,
+}).strict() ;
+
+export const EarlyAccessLeadFindUniqueOrThrowArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadFindUniqueOrThrowArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereUniqueInputSchema,
+}).strict() ;
+
 export const UserCreateArgsSchema: z.ZodType<Omit<Prisma.UserCreateArgs, "select" | "include">> = z.object({
   data: z.union([ UserCreateInputSchema,UserUncheckedCreateInputSchema ]),
 }).strict() ;
@@ -26415,5 +26808,51 @@ export const FieldWeldUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.FieldWeldU
 
 export const FieldWeldDeleteManyArgsSchema: z.ZodType<Prisma.FieldWeldDeleteManyArgs> = z.object({
   where: FieldWeldWhereInputSchema.optional(),
+  limit: z.number().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadCreateArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadCreateArgs, "select">> = z.object({
+  data: z.union([ EarlyAccessLeadCreateInputSchema,EarlyAccessLeadUncheckedCreateInputSchema ]),
+}).strict() ;
+
+export const EarlyAccessLeadUpsertArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadUpsertArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereUniqueInputSchema,
+  create: z.union([ EarlyAccessLeadCreateInputSchema,EarlyAccessLeadUncheckedCreateInputSchema ]),
+  update: z.union([ EarlyAccessLeadUpdateInputSchema,EarlyAccessLeadUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const EarlyAccessLeadCreateManyArgsSchema: z.ZodType<Prisma.EarlyAccessLeadCreateManyArgs> = z.object({
+  data: z.union([ EarlyAccessLeadCreateManyInputSchema,EarlyAccessLeadCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadCreateManyAndReturnArgsSchema: z.ZodType<Prisma.EarlyAccessLeadCreateManyAndReturnArgs> = z.object({
+  data: z.union([ EarlyAccessLeadCreateManyInputSchema,EarlyAccessLeadCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadDeleteArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadDeleteArgs, "select">> = z.object({
+  where: EarlyAccessLeadWhereUniqueInputSchema,
+}).strict() ;
+
+export const EarlyAccessLeadUpdateArgsSchema: z.ZodType<Omit<Prisma.EarlyAccessLeadUpdateArgs, "select">> = z.object({
+  data: z.union([ EarlyAccessLeadUpdateInputSchema,EarlyAccessLeadUncheckedUpdateInputSchema ]),
+  where: EarlyAccessLeadWhereUniqueInputSchema,
+}).strict() ;
+
+export const EarlyAccessLeadUpdateManyArgsSchema: z.ZodType<Prisma.EarlyAccessLeadUpdateManyArgs> = z.object({
+  data: z.union([ EarlyAccessLeadUpdateManyMutationInputSchema,EarlyAccessLeadUncheckedUpdateManyInputSchema ]),
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  limit: z.number().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.EarlyAccessLeadUpdateManyAndReturnArgs> = z.object({
+  data: z.union([ EarlyAccessLeadUpdateManyMutationInputSchema,EarlyAccessLeadUncheckedUpdateManyInputSchema ]),
+  where: EarlyAccessLeadWhereInputSchema.optional(),
+  limit: z.number().optional(),
+}).strict() ;
+
+export const EarlyAccessLeadDeleteManyArgsSchema: z.ZodType<Prisma.EarlyAccessLeadDeleteManyArgs> = z.object({
+  where: EarlyAccessLeadWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;

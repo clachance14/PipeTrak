@@ -1,35 +1,43 @@
 #!/usr/bin/env tsx
-import { Client } from 'pg';
+import { Client } from "pg";
 
 async function fixInitializeFunction() {
-  const databaseUrl = process.env.DATABASE_URL || process.env.DIRECT_URL;
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL or DIRECT_URL must be set');
-  }
-  
-  const url = new URL(databaseUrl);
-  const client = new Client({
-    host: url.hostname,
-    port: parseInt(url.port),
-    database: url.pathname.substring(1),
-    user: url.username,
-    password: url.password,
-    ssl: { rejectUnauthorized: false }
-  });
+	const databaseUrl = process.env.DATABASE_URL || process.env.DIRECT_URL;
+	if (!databaseUrl) {
+		throw new Error("DATABASE_URL or DIRECT_URL must be set");
+	}
 
-  try {
-    await client.connect();
-    console.log('Connected to database');
-    
-    // Drop the existing function and trigger
-    await client.query('DROP TRIGGER IF EXISTS component_after_insert ON "Component"');
-    await client.query('DROP FUNCTION IF EXISTS component_after_insert_trigger()');
-    await client.query('DROP FUNCTION IF EXISTS initialize_component_milestones(uuid)');
-    await client.query('DROP FUNCTION IF EXISTS initialize_component_milestones(text)');
-    console.log('Dropped existing functions and triggers');
-    
-    // Create the initialize_component_milestones function with text parameter
-    const functionSQL = `
+	const url = new URL(databaseUrl);
+	const client = new Client({
+		host: url.hostname,
+		port: Number.parseInt(url.port),
+		database: url.pathname.substring(1),
+		user: url.username,
+		password: url.password,
+		ssl: { rejectUnauthorized: false },
+	});
+
+	try {
+		await client.connect();
+		console.log("Connected to database");
+
+		// Drop the existing function and trigger
+		await client.query(
+			'DROP TRIGGER IF EXISTS component_after_insert ON "Component"',
+		);
+		await client.query(
+			"DROP FUNCTION IF EXISTS component_after_insert_trigger()",
+		);
+		await client.query(
+			"DROP FUNCTION IF EXISTS initialize_component_milestones(uuid)",
+		);
+		await client.query(
+			"DROP FUNCTION IF EXISTS initialize_component_milestones(text)",
+		);
+		console.log("Dropped existing functions and triggers");
+
+		// Create the initialize_component_milestones function with text parameter
+		const functionSQL = `
 CREATE OR REPLACE FUNCTION initialize_component_milestones(p_component_id text)
 RETURNS void
 LANGUAGE plpgsql
@@ -84,12 +92,14 @@ BEGIN
 END;
 $$;
     `;
-    
-    await client.query(functionSQL);
-    console.log('Created initialize_component_milestones function with text parameter');
-    
-    // Create the trigger
-    const triggerSQL = `
+
+		await client.query(functionSQL);
+		console.log(
+			"Created initialize_component_milestones function with text parameter",
+		);
+
+		// Create the trigger
+		const triggerSQL = `
 CREATE OR REPLACE FUNCTION component_after_insert_trigger()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -105,20 +115,22 @@ CREATE TRIGGER component_after_insert
   FOR EACH ROW
   EXECUTE FUNCTION component_after_insert_trigger();
     `;
-    
-    await client.query(triggerSQL);
-    console.log('Created component_after_insert trigger');
-    
-    console.log('✅ Successfully fixed initialize_component_milestones function');
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  } finally {
-    await client.end();
-  }
+
+		await client.query(triggerSQL);
+		console.log("Created component_after_insert trigger");
+
+		console.log(
+			"✅ Successfully fixed initialize_component_milestones function",
+		);
+	} catch (error) {
+		console.error("Error:", error);
+		throw error;
+	} finally {
+		await client.end();
+	}
 }
 
 fixInitializeFunction().catch((error) => {
-  console.error('Fatal error:', error);
-  process.exit(1);
+	console.error("Fatal error:", error);
+	process.exit(1);
 });

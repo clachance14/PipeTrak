@@ -164,7 +164,7 @@ function analyzeMobileResponsiveness() {
       
       responsiveClassMatches.forEach(className => {
         const prefix = className.split(':')[0];
-        if (breakpoints.hasOwnProperty(prefix)) {
+        if (Object.hasOwn(breakpoints, prefix)) {
           breakpoints[prefix]++;
         }
       });

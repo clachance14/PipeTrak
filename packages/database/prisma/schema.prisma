@@ -805,7 +805,7 @@ model FieldWeld {
     weldIdNumber    String      // QC-assigned, unique per project
     welderId        String?
     welder          Welder?     @relation(fields: [welderId], references: [id])
-    dateWelded      DateTime
+    dateWelded      DateTime?
     
     // Drawing inheritance
     drawingId       String
@@ -853,4 +853,29 @@ model FieldWeld {
     @@index([projectId, ndeResult], name: "idx_field_weld_nde")
     @@index([projectId, pwhtRequired], name: "idx_field_weld_pwht")
     @@map("field_weld")
+}
+
+// Early access leads for marketing/landing page
+model EarlyAccessLead {
+    id            String   @id @default(uuid())
+    name          String
+    email         String   @unique
+    company       String
+    projectSize   String   // "small", "medium", "large", "enterprise" 
+    currentMethod String   // "excel", "paper", "other_software", "none"
+    role          String
+    phone         String?
+    message       String?  @db.Text
+    source        String   @default("landing_page")
+    utmSource     String?
+    utmMedium     String?
+    utmCampaign   String?
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    @@index([email])
+    @@index([createdAt])
+    @@index([company])
+    @@index([projectSize])
+    @@map("EarlyAccessLead")
 }

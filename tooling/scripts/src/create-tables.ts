@@ -4,11 +4,11 @@ import { PrismaClient } from "@repo/database/client";
 const prisma = new PrismaClient();
 
 async function createTables() {
-  console.log("Creating PipeTrak tables...");
-  
-  try {
-    // Try to create tables using raw SQL
-    await prisma.$executeRawUnsafe(`
+	console.log("Creating PipeTrak tables...");
+
+	try {
+		// Try to create tables using raw SQL
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "Drawing" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "projectId" TEXT NOT NULL REFERENCES "project"(id) ON DELETE CASCADE,
@@ -21,9 +21,9 @@ async function createTables() {
         "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✓ Created Drawing table");
+		console.log("✓ Created Drawing table");
 
-    await prisma.$executeRawUnsafe(`
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "MilestoneTemplate" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "projectId" TEXT NOT NULL REFERENCES "project"(id) ON DELETE CASCADE,
@@ -35,9 +35,9 @@ async function createTables() {
         "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✓ Created MilestoneTemplate table");
+		console.log("✓ Created MilestoneTemplate table");
 
-    await prisma.$executeRawUnsafe(`
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "Component" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "projectId" TEXT NOT NULL REFERENCES "project"(id) ON DELETE CASCADE,
@@ -61,9 +61,9 @@ async function createTables() {
         "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✓ Created Component table");
+		console.log("✓ Created Component table");
 
-    await prisma.$executeRawUnsafe(`
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "ComponentMilestone" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "componentId" TEXT NOT NULL,
@@ -81,9 +81,9 @@ async function createTables() {
         UNIQUE ("componentId", "milestoneName")
       )
     `);
-    console.log("✓ Created ComponentMilestone table");
+		console.log("✓ Created ComponentMilestone table");
 
-    await prisma.$executeRawUnsafe(`
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "ImportJob" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "projectId" TEXT NOT NULL REFERENCES "project"(id) ON DELETE CASCADE,
@@ -100,9 +100,9 @@ async function createTables() {
         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✓ Created ImportJob table");
+		console.log("✓ Created ImportJob table");
 
-    await prisma.$executeRawUnsafe(`
+		await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "AuditLog" (
         id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
         "projectId" TEXT NOT NULL REFERENCES "project"(id) ON DELETE CASCADE,
@@ -115,52 +115,63 @@ async function createTables() {
         "performedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✓ Created AuditLog table");
+		console.log("✓ Created AuditLog table");
 
-    // Add foreign key constraints after all tables are created
-    await prisma.$executeRawUnsafe(`
+		// Add foreign key constraints after all tables are created
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "Drawing" 
       ADD CONSTRAINT IF NOT EXISTS fk_drawing_parent 
       FOREIGN KEY ("parentDrawingId") REFERENCES "Drawing"(id) ON DELETE SET NULL
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    await prisma.$executeRawUnsafe(`
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "Component" 
       ADD CONSTRAINT IF NOT EXISTS fk_component_drawing 
       FOREIGN KEY ("drawingId") REFERENCES "Drawing"(id) ON DELETE SET NULL
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    await prisma.$executeRawUnsafe(`
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "Component" 
       ADD CONSTRAINT IF NOT EXISTS fk_component_milestone_template 
       FOREIGN KEY ("milestoneTemplateId") REFERENCES "MilestoneTemplate"(id)
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    await prisma.$executeRawUnsafe(`
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "Component" 
       ADD CONSTRAINT IF NOT EXISTS fk_component_parent 
       FOREIGN KEY ("parentComponentId") REFERENCES "Component"(id) ON DELETE SET NULL
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    await prisma.$executeRawUnsafe(`
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "ComponentMilestone" 
       ADD CONSTRAINT IF NOT EXISTS fk_milestone_component 
       FOREIGN KEY ("componentId") REFERENCES "Component"(id) ON DELETE CASCADE
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    await prisma.$executeRawUnsafe(`
+		await prisma
+			.$executeRawUnsafe(`
       ALTER TABLE "ComponentMilestone" 
       ADD CONSTRAINT IF NOT EXISTS fk_milestone_completer 
       FOREIGN KEY ("completedBy") REFERENCES "user"(id) ON DELETE SET NULL
-    `).catch(() => {});
+    `)
+			.catch(() => {});
 
-    console.log("\n✅ All PipeTrak tables created successfully!");
-    
-  } catch (error) {
-    console.error("Error creating tables:", error);
-  } finally {
-    await prisma.$disconnect();
-  }
+		console.log("\n✅ All PipeTrak tables created successfully!");
+	} catch (error) {
+		console.error("Error creating tables:", error);
+	} finally {
+		await prisma.$disconnect();
+	}
 }
 
 createTables();

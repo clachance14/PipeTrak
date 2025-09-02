@@ -107,7 +107,7 @@ async function testMilestoneTemplateAssignment() {
       takeoffStats.gasket + takeoffStats.flange + takeoffStats.fitting + 
       takeoffStats.instrument + takeoffStats.fieldWeld + takeoffStats.misc;
     
-    console.log(`TAKEOFF file analysis:`);
+    console.log("TAKEOFF file analysis:");
     console.log(`  Components requiring Full Template: ${totalFullComponents}`);
     console.log(`  Components requiring Reduced Template: ${totalReducedComponents}`);
     console.log(`  Total components: ${totalFullComponents + totalReducedComponents}`);

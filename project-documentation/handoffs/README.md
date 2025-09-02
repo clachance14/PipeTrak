@@ -96,13 +96,27 @@ This ensures:
 
 ## Integration with Project Documentation
 
+> **📋 Current Project Status**: See [MASTER-STATUS.md](../MASTER-STATUS.md) for the single source of truth on project status, feature completion, and implementation details.
+
 Handoffs complement but don't duplicate other docs:
+- **MASTER-STATUS.md**: Single source of truth for project status (replaces multiple status docs)
 - **build-plan.md**: Master roadmap (updated when phases complete)
 - **phase[N]-verification.md**: Detailed phase completion records
 - **changelog.md**: User-facing feature history
 - **dev-runbook.md**: Technical patterns and solutions
 
 The handoff command intelligently determines which docs need updates based on actual session changes.
+
+## Archive Policy
+
+To maintain clean documentation:
+- **Active Handoffs**: Only the most recent handoff is kept in this folder
+- **Archived Handoffs**: Older handoffs are moved to `../archive/handoffs-YYYY/`
+- **Archive Schedule**: Documents older than 30 days or when more than 2-3 handoffs accumulate
+
+### Archived Locations
+- `../archive/old-handoffs/` - Pre-2025 handoffs  
+- `../archive/handoffs-2025/` - 2025 handoffs
 
 ## Quick Reference
 

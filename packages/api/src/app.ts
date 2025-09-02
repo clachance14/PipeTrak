@@ -25,7 +25,7 @@ app.use(loggerMiddleware);
 app.use(corsMiddleware);
 
 const appRouter = app
-	.route("/auth", authRouter)  // Mount authRouter at /auth prefix
+	.route("/auth", authRouter) // Mount authRouter at /auth prefix
 	.route("/", webhooksRouter)
 	.route("/", aiRouter)
 	.route("/", uploadsRouter)

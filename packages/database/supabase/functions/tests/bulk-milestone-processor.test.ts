@@ -1,5 +1,4 @@
-import { assertEquals, assertExists, assertRejects } from 'https://deno.land/std@0.168.0/testing/asserts.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
+import { assertEquals, assertExists, } from 'https://deno.land/std@0.168.0/testing/asserts.ts'
 
 // Mock environment variables for testing
 Deno.env.set('SUPABASE_URL', 'https://test.supabase.co')

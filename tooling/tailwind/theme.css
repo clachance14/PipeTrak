@@ -62,7 +62,7 @@
 		--input: #c7ced8;
 		--ring: #4e6df5;
 		--background: #fafafe;
-		--foreground: #292b35;
+		--foreground: #1a1a1a;
 		--primary: #4e6df5;
 		--primary-foreground: #f6f7f9;
 		--secondary: #292b35;
@@ -72,22 +72,22 @@
 		--success: #39a561;
 		--success-foreground: #ffffff;
 		--muted: #f8fafc;
-		--muted-foreground: #64748b;
+		--muted-foreground: #3d3d3d;
 		--accent: #ddddea;
-		--accent-foreground: #292b35;
+		--accent-foreground: #1a1a1a;
 		--popover: #ffffff;
-		--popover-foreground: #292b35;
+		--popover-foreground: #1a1a1a;
 		--card: #ffffff;
-		--card-foreground: #292b35;
+		--card-foreground: #1a1a1a;
 		--highlight: #e5a158;
 		--highlight-foreground: #ffffff;
 		--radius: 0.75rem;
 
 		/* PipeTrak construction-specific colors */
-		--field-warning: #f59e0b;
+		--field-warning: #b87100;
 		--field-critical: #ef4444;
 		--field-complete: #10b981;
-		--field-pending: #6b7280;
+		--field-pending: #4a4a4a;
 		--field-blocked: #f97316;
 
 		/* fumadocs */

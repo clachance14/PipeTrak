@@ -49,6 +49,11 @@ export function PrintLayout({
           * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+          
+          html {
+            font-size: 12px;
           }
           
           body {
@@ -56,8 +61,39 @@ export function PrintLayout({
             padding: 0;
             background: white !important;
             color: black !important;
-            font-size: 12px;
+            font-family: 'Times New Roman', serif !important;
+            font-size: 11px;
             line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+          }
+          
+          /* Typography hierarchy for print */
+          h1 {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 18px !important;
+            font-weight: bold !important;
+            margin: 0 0 12px 0 !important;
+            color: #000 !important;
+          }
+          
+          h2 {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: bold !important;
+            margin: 16px 0 8px 0 !important;
+            color: #000 !important;
+          }
+          
+          h3 {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 12px !important;
+            font-weight: bold !important;
+            margin: 12px 0 6px 0 !important;
+            color: #000 !important;
+          }
+          
+          p {
+            margin: 4px 0 !important;
           }
           
           .no-print {
@@ -70,10 +106,12 @@ export function PrintLayout({
           
           .print-break-before {
             page-break-before: always;
+            break-before: always;
           }
           
           .print-break-after {
             page-break-after: always;
+            break-after: always;
           }
           
           .print-break-inside-avoid {
@@ -86,15 +124,17 @@ export function PrintLayout({
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            padding: 10px 20px;
-            background: white;
-            border-bottom: 2px solid #e5e7eb;
+            height: 65px;
+            padding: 12px 20px;
+            background: white !important;
+            border-bottom: 2px solid #000 !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-family: 'Arial', sans-serif !important;
+            font-size: 12px;
             font-weight: 600;
+            z-index: 1000;
           }
           
           .print-footer {
@@ -103,52 +143,128 @@ export function PrintLayout({
             left: 0;
             right: 0;
             height: 40px;
-            padding: 10px 20px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
+            padding: 8px 20px;
+            background: white !important;
+            border-top: 1px solid #666 !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 10px;
-            color: #6b7280;
+            font-family: 'Arial', sans-serif !important;
+            font-size: 9px;
+            color: #666 !important;
+            z-index: 1000;
           }
           
           .print-content {
-            margin-top: ${includeHeader ? "70px" : "0"};
+            margin-top: ${includeHeader ? "75px" : "0"};
             margin-bottom: ${includeFooter ? "50px" : "0"};
-            padding: 20px;
+            padding: 15px;
+            font-family: 'Times New Roman', serif !important;
           }
           
           @page {
             size: ${paperSize} ${orientation};
-            margin: 0.5in;
+            margin: 0.6in 0.5in;
           }
           
-          /* Chart and table optimizations for print */
-          .recharts-wrapper {
-            background: white !important;
-          }
-          
-          .recharts-cartesian-grid line {
-            stroke: #e5e7eb !important;
-          }
-          
+          /* Enhanced table styling for reports */
           table {
-            border-collapse: collapse;
-            width: 100%;
+            border-collapse: collapse !important;
+            width: 100% !important;
             background: white !important;
-          }
-          
-          th, td {
-            border: 1px solid #d1d5db !important;
-            padding: 8px !important;
-            background: white !important;
-            color: black !important;
+            font-family: 'Arial', sans-serif !important;
+            margin: 8px 0 16px 0 !important;
           }
           
           th {
-            background: #f3f4f6 !important;
-            font-weight: 600 !important;
+            border: 2px solid #000 !important;
+            padding: 6px 4px !important;
+            background: #f0f0f0 !important;
+            color: #000 !important;
+            font-weight: bold !important;
+            font-size: 10px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+          }
+          
+          td {
+            border: 1px solid #666 !important;
+            padding: 4px !important;
+            background: white !important;
+            color: #000 !important;
+            font-size: 10px !important;
+            vertical-align: middle !important;
+          }
+          
+          /* Alternating row colors for better readability */
+          tbody tr:nth-child(even) td {
+            background: #fafafa !important;
+          }
+          
+          /* Badge and status indicators */
+          .badge {
+            border: 1px solid #000 !important;
+            padding: 2px 6px !important;
+            background: white !important;
+            color: #000 !important;
+            font-weight: bold !important;
+            font-size: 9px !important;
+          }
+          
+          /* Progress indicators and colors */
+          .text-green-600, .text-green-700, .text-green-800 {
+            color: #000 !important;
+            font-weight: bold !important;
+          }
+          
+          .text-red-600, .text-red-700, .text-red-800 {
+            color: #000 !important;
+            font-weight: bold !important;
+          }
+          
+          .text-blue-600, .text-purple-600 {
+            color: #000 !important;
+            font-weight: bold !important;
+          }
+          
+          .text-yellow-600, .text-yellow-700, .text-yellow-800 {
+            color: #000 !important;
+            font-weight: bold !important;
+          }
+          
+          .text-gray-600, .text-gray-700, .text-gray-800 {
+            color: #666 !important;
+          }
+          
+          /* Background colors for print */
+          .bg-gray-50, .bg-gray-100 {
+            background: #fafafa !important;
+            border: 1px solid #e0e0e0 !important;
+          }
+          
+          .bg-gray-200 {
+            background: #f0f0f0 !important;
+          }
+          
+          .bg-green-50 {
+            background: #f8f8f8 !important;
+            border: 1px solid #ccc !important;
+          }
+          
+          .bg-yellow-50 {
+            background: #f8f8f8 !important;
+            border: 1px solid #ccc !important;
+          }
+          
+          /* Charts and visualizations */
+          .recharts-wrapper {
+            background: white !important;
+            border: 1px solid #ccc !important;
+          }
+          
+          .recharts-cartesian-grid line {
+            stroke: #ccc !important;
+            stroke-width: 0.5px !important;
           }
           
           /* Hide interactive elements */
@@ -156,16 +272,71 @@ export function PrintLayout({
           .dropdown-menu,
           .tooltip,
           [role="tooltip"],
-          .popover {
+          .popover,
+          .animate-spin,
+          [data-state="open"],
+          .cursor-pointer {
             display: none !important;
           }
           
-          /* Ensure cards and components print well */
+          /* Card containers */
           .card {
-            border: 1px solid #e5e7eb !important;
+            border: 1px solid #ccc !important;
             box-shadow: none !important;
             background: white !important;
             break-inside: avoid;
+            margin: 8px 0 !important;
+          }
+          
+          /* Executive summary boxes */
+          .grid {
+            display: grid !important;
+            gap: 12px !important;
+          }
+          
+          /* Rounded corners removal for clean print */
+          .rounded, .rounded-lg, .rounded-md {
+            border-radius: 0 !important;
+          }
+          
+          /* Professional spacing */
+          .space-y-6 > * + * {
+            margin-top: 16px !important;
+          }
+          
+          .space-y-4 > * + * {
+            margin-top: 12px !important;
+          }
+          
+          .space-y-2 > * + * {
+            margin-top: 6px !important;
+          }
+          
+          /* Icons - convert to text or hide */
+          svg {
+            display: none !important;
+          }
+          
+          /* Print-friendly borders and dividers */
+          .border-t {
+            border-top: 1px solid #999 !important;
+          }
+          
+          .border-b {
+            border-bottom: 1px solid #999 !important;
+          }
+          
+          .border {
+            border: 1px solid #999 !important;
+          }
+          
+          /* Ensure proper page margins */
+          .print-content > *:first-child {
+            margin-top: 0 !important;
+          }
+          
+          .print-content > *:last-child {
+            margin-bottom: 0 !important;
           }
         }
         
