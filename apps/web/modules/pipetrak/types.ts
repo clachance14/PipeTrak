@@ -16,6 +16,9 @@ export interface Component {
 	status: ComponentStatus;
 	completionPercent: number;
 	totalQuantity?: number | null;
+	quantityUnit?: string | null;
+	totalLength?: number | null;
+	lengthUnit?: string | null;
 	drawingId?: string | null;
 	milestoneTemplateId?: string | null;
 	installerUserId?: string | null;

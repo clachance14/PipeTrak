@@ -5,6 +5,7 @@ import {
 	getPurchasesByOrganizationId,
 	getPurchasesByUserId,
 	getUserByEmail,
+	hasExistingMembership,
 } from "@repo/database";
 import type { Locale } from "@repo/i18n";
 import { logger } from "@repo/logs";
@@ -220,6 +221,12 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
+			allowUserToCreateOrganization: async (user) => {
+				// Only allow organization creation if user doesn't already belong to one
+				const hasExisting = await hasExistingMembership(user.id);
+				return !hasExisting;
+			},
+			organizationLimit: 1,
 			sendInvitationEmail: async (
 				{ email, id, organization },
 				request,

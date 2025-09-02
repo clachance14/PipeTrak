@@ -126,3 +126,19 @@ export async function updateOrganization(
 		data: organization,
 	});
 }
+
+export async function getUserMemberships(userId: string) {
+	return db.member.findMany({
+		where: { userId },
+		include: {
+			organization: true,
+		},
+	});
+}
+
+export async function hasExistingMembership(userId: string): Promise<boolean> {
+	const membership = await db.member.findFirst({
+		where: { userId },
+	});
+	return !!membership;
+}
