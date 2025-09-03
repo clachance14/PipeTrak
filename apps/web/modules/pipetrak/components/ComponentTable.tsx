@@ -116,7 +116,7 @@ export function ComponentTable({
 }
 
 function ComponentActions({
-	_component,
+	component: _component,
 	onEdit,
 	onMilestoneClick,
 }: {
