@@ -177,7 +177,7 @@ export function MilestoneUpdateEngine({
 				);
 			},
 
-			onConflict: (update, conflict) => {
+			onConflict: (update) => {
 				// Show conflict resolution UI
 				toast.warning(
 					`Conflict detected for ${update.milestoneName}. Please resolve manually.`,
@@ -219,54 +219,6 @@ export function MilestoneUpdateEngine({
 			updateManager.updateServerState(allMilestones);
 		}
 	}, [components, updateManager]);
-
-	// Single milestone update mutation
-	const updateMilestoneMutation = useMutation({
-		mutationFn: async ({
-			milestoneId,
-			data,
-		}: {
-			milestoneId: string;
-			data: any;
-		}) => {
-			const response = await apiClient.patch(
-				`/milestones/${milestoneId}`,
-				data,
-			);
-			return response.data;
-		},
-		onSuccess: (milestone, { milestoneId }) => {
-			// Update query cache
-			queryClient.setQueryData(["milestone", milestoneId], milestone);
-
-			// Invalidate related queries
-			queryClient.invalidateQueries({
-				queryKey: ["project-milestones", projectId],
-			});
-			queryClient.invalidateQueries({
-				queryKey: ["component-milestones"],
-			});
-		},
-	});
-
-	// Bulk update mutation
-	const bulkUpdateMutation = useMutation({
-		mutationFn: async (updates: any[]) => {
-			const response = await apiClient.post("/milestones/bulk-update", {
-				updates,
-			});
-			return response.data;
-		},
-		onSuccess: () => {
-			// Invalidate all milestone-related queries
-			queryClient.invalidateQueries({
-				queryKey: ["project-milestones", projectId],
-			});
-			queryClient.invalidateQueries({
-				queryKey: ["component-milestones"],
-			});
-		},
-	});
 
 	// Offline sync mutation
 	const syncOfflineQueueMutation = useMutation({
@@ -407,14 +359,15 @@ export function MilestoneUpdateEngine({
 	useEffect(() => {
 		if (projectId) {
 			subscribeToProject(projectId);
-			return () => {
-				// Clean up subscription on unmount or projectId change
-				if (realtimeSubscriptionRef.current) {
-					realtimeSubscriptionRef.current.unsubscribe();
-					realtimeSubscriptionRef.current = null;
-				}
-			};
 		}
+		
+		return () => {
+			// Clean up subscription on unmount or projectId change
+			if (realtimeSubscriptionRef.current) {
+				realtimeSubscriptionRef.current.unsubscribe();
+				realtimeSubscriptionRef.current = null;
+			}
+		};
 	}, [projectId, subscribeToProject]);
 
 	// Auto-sync when coming back online

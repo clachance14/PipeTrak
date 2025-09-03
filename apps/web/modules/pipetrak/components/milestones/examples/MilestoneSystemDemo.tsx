@@ -5,11 +5,11 @@ import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
-import { ComponentTable } from "../ComponentTable";
-import { EnhancedBulkUpdateModal } from "../milestones/bulk/EnhancedBulkUpdateModal";
-import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
-import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
-import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
+import { ComponentTable } from "../../ComponentTable";
+import { EnhancedBulkUpdateModal } from "../bulk/EnhancedBulkUpdateModal";
+import { MobileMilestoneSheet } from "../mobile/MobileMilestoneSheet";
+import { MilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { RealtimeManager } from "../realtime/RealtimeManager";
 import {
 	Package,
 	Target,
@@ -19,7 +19,7 @@ import {
 	Zap,
 	CheckCircle,
 } from "lucide-react";
-import type { ComponentWithMilestones } from "../../types";
+import type { ComponentWithMilestones } from "../../../types";
 
 interface MilestoneSystemDemoProps {
 	projectId: string;
@@ -116,7 +116,7 @@ export function MilestoneSystemDemo({
 		),
 		completedMilestones: components.reduce(
 			(sum, c) =>
-				sum + (c.milestones?.filter((m) => m.isCompleted).length || 0),
+				sum + (c.milestones?.filter((m: any) => m.isCompleted).length || 0),
 			0,
 		),
 	};
@@ -300,7 +300,7 @@ export function MilestoneSystemDemo({
 													"No description"}
 											</p>
 											<Button
-												status="info"
+												variant="outline"
 												size="sm"
 												onClick={() =>
 													handleMilestoneClick(

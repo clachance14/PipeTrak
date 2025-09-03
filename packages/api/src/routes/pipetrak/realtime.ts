@@ -38,6 +38,7 @@ const BroadcastSchema = z.object({
 		"component_edit",
 		"milestone_celebration",
 		"import_progress",
+		"report_generation",
 		"custom",
 	]),
 	payload: z.any(),
@@ -137,6 +138,13 @@ export const realtimeRouter = new Hono()
 				user.id,
 			);
 
+			if (!channel) {
+				return c.json(
+					{ error: "Unable to establish realtime connection" },
+					503,
+				);
+			}
+
 			const presenceUpdate: Omit<UserPresence, "lastSeen"> = {
 				userId: user.id,
 				userName: user.name,
@@ -220,6 +228,13 @@ export const realtimeRouter = new Hono()
 				data.projectId,
 				user.id,
 			);
+
+			if (!channel) {
+				return c.json(
+					{ error: "Unable to establish realtime connection" },
+					503,
+				);
+			}
 
 			channel.subscribe(async (status) => {
 				if (status === "SUBSCRIBED") {
@@ -517,6 +532,10 @@ export async function broadcastImportProgress(
 			return;
 		}
 		const channel = createProjectChannel(supabase, projectId, userId);
+		if (!channel) {
+			console.log("Cannot create realtime channel - skipping broadcast");
+			return;
+		}
 
 		const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
 			type: "import_progress",
@@ -559,7 +578,17 @@ export async function broadcastReportGeneration(
 ) {
 	try {
 		const supabase = createRealtimeClient();
+		if (!supabase) {
+			console.log(
+				"Realtime disabled - skipping report generation broadcast",
+			);
+			return;
+		}
 		const channel = createProjectChannel(supabase, projectId, userId);
+		if (!channel) {
+			console.log("Cannot create realtime channel - skipping broadcast");
+			return;
+		}
 
 		const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
 			type: "report_generation",

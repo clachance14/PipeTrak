@@ -101,6 +101,7 @@ const ErrorDisplay = memo(function ErrorDisplay({
 			</p>
 			{onRetry && (
 				<button
+					type="button"
 					onClick={onRetry}
 					className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
 				>
@@ -185,30 +186,20 @@ const MilestoneItem = memo(function MilestoneItem({
 	};
 
 	return (
-		<div
+		<button
+			type="button"
 			className={cn(
-				"milestone-item min-h-[56px] p-3 border rounded-lg transition-all duration-200 cursor-pointer",
+				"milestone-item min-h-[56px] p-3 border rounded-lg transition-all duration-200 cursor-pointer text-left w-full",
 				"hover:shadow-sm active:scale-[0.98]",
 				getStatusColor(),
 				isLocked && "cursor-not-allowed opacity-60",
 			)}
 			onClick={!isLocked ? onClick : undefined}
-			role="button"
-			tabIndex={isLocked ? -1 : 0}
+			disabled={isLocked}
 			aria-label={`${milestone.milestoneName} - ${formattedValue}${isLocked ? " (locked)" : ""}`}
 			aria-describedby={
 				status === "error" ? `error-${milestone.id}` : undefined
 			}
-			onKeyDown={(e) => {
-				if (
-					(e.key === "Enter" || e.key === " ") &&
-					!isLocked &&
-					onClick
-				) {
-					e.preventDefault();
-					onClick();
-				}
-			}}
 		>
 			<div className="flex items-center gap-3">
 				{/* Status icon */}
@@ -274,7 +265,7 @@ const MilestoneItem = memo(function MilestoneItem({
 					)}
 				</div>
 			</div>
-		</div>
+		</button>
 	);
 });
 
@@ -291,8 +282,7 @@ export const QuickMilestoneSelector = memo(function QuickMilestoneSelector({
 	const { updateMilestone, getOperationStatus, hasPendingUpdates } =
 		useMilestoneUpdateEngine();
 	const backdropRef = useRef<HTMLDivElement>(null);
-	const panelRef = useRef<HTMLDivElement>(null);
-	const timeoutRef = useRef<NodeJS.Timeout>();
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	// Haptic feedback for mobile devices
 	const triggerHapticFeedback = useCallback(
@@ -459,12 +449,16 @@ export const QuickMilestoneSelector = memo(function QuickMilestoneSelector({
 			ref={backdropRef}
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
 			onClick={handleBackdropClick}
+			onKeyDown={(e) => {
+				if (e.key === "Escape") {
+					onClose();
+				}
+			}}
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="quick-milestone-title"
 		>
 			<Card
-				ref={panelRef}
 				className={cn(
 					"w-full max-w-md min-w-80 max-h-[80vh] overflow-hidden",
 					"transform transition-all duration-300 ease-out",
@@ -501,6 +495,7 @@ export const QuickMilestoneSelector = memo(function QuickMilestoneSelector({
 								</p>
 							</div>
 							<button
+								type="button"
 								onClick={onClose}
 								className="flex-shrink-0 p-2 hover:bg-muted rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
 								aria-label="Close quick milestone selector"
