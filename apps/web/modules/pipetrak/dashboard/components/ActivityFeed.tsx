@@ -49,12 +49,6 @@ function ActivityItemComponent({ activity }: ActivityItemComponentProps) {
 			<Activity className="w-3 h-3" />
 		);
 
-	const description = formatActivityDescription(
-		activity.userName,
-		activity.activityType,
-		activity.componentId,
-		activity.milestoneName,
-	);
 
 	return (
 		<div className="flex items-start gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
@@ -140,6 +134,7 @@ function ActivitySparkline({ activities }: { activities: ActivityItem[] }) {
 				Activity trend:
 			</span>
 			<svg width="100" height="20" className="text-blue-500">
+				<title>Activity trend sparkline chart</title>
 				<path
 					d={sparklinePath}
 					stroke="currentColor"
@@ -175,14 +170,12 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 	const [systemFilter, setSystemFilter] = useState<string>("all");
 	const [userFilter, setUserFilter] = useState<string>("all");
 
-	const { filteredActivities, uniqueUsers, uniqueAreas, uniqueSystems } =
+	const { filteredActivities, uniqueUsers } =
 		useMemo(() => {
 			if (!data?.activities?.length) {
 				return {
 					filteredActivities: [],
 					uniqueUsers: [],
-					uniqueAreas: [],
-					uniqueSystems: [],
 				};
 			}
 
@@ -192,8 +185,6 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 			const uniqueUsers = [
 				...new Set(data.activities.map((a) => a.userName)),
 			].sort();
-			const uniqueAreas: string[] = []; // TODO: Would need to join with component data
-			const uniqueSystems: string[] = []; // TODO: Would need to join with component data
 
 			// Apply filters
 			if (userFilter !== "all") {
@@ -208,10 +199,8 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 			return {
 				filteredActivities: filtered,
 				uniqueUsers,
-				uniqueAreas,
-				uniqueSystems,
 			};
-		}, [data, areaFilter, systemFilter, userFilter]);
+		}, [data, userFilter]);
 
 	const stats = useMemo(() => {
 		if (!data?.activities?.length) {
