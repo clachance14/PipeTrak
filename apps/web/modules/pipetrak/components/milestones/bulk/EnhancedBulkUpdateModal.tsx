@@ -334,7 +334,7 @@ export function EnhancedBulkUpdateModal({
 											</Label>
 											<div className="flex items-center gap-2 mt-1">
 												<Badge
-													status="info"
+													variant="outline"
 													className="text-xs"
 												>
 													{milestone.workflowType.replace(
@@ -665,7 +665,7 @@ export function EnhancedBulkUpdateModal({
 						{currentStep !== "configure" &&
 							currentStep !== "complete" && (
 								<Button
-									status="info"
+									variant="outline"
 									onClick={() => setCurrentStep("configure")}
 									disabled={isLoading}
 								>
@@ -712,7 +712,7 @@ export function EnhancedBulkUpdateModal({
 						{currentStep === "complete" &&
 							result?.transactionId && (
 								<Button
-									status="info"
+									variant="outline"
 									onClick={() => {
 										// TODO: Implement undo functionality
 										toast.info(
