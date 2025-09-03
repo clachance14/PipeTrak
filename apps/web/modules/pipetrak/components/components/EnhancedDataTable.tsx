@@ -73,7 +73,7 @@ export function EnhancedDataTable({
 	touchTargetSize = 52, // 52px for gloved hands
 }: EnhancedDataTableProps) {
 	// State management
-	const [columns, setColumns] = useState(initialColumns);
+	const [columns] = useState(initialColumns);
 	const [pinnedColumns, setPinnedColumns] = useState<Set<string>>(
 		new Set(["componentId"]),
 	);
@@ -98,7 +98,7 @@ export function EnhancedDataTable({
 	});
 
 	const virtualItems = virtualizer.getVirtualItems();
-	const totalHeight = virtualizer.getTotalSize();
+	const _totalHeight = virtualizer.getTotalSize();
 
 	// Calculate displayed data
 	const displayedData = useMemo(() => {
@@ -344,7 +344,6 @@ export function EnhancedDataTable({
 					<div className="flex gap-2">
 						<Button
 							size="sm"
-							status="info"
 							onClick={() => {
 								if (onBulkUpdate) {
 									onBulkUpdate(Array.from(selectedRows), {
@@ -357,7 +356,6 @@ export function EnhancedDataTable({
 						</Button>
 						<Button
 							size="sm"
-							status="info"
 							onClick={() => {
 								if (onBulkUpdate) {
 									onBulkUpdate(Array.from(selectedRows), {
@@ -632,7 +630,6 @@ export function EnhancedDataTable({
 
 					<div className="flex items-center gap-2">
 						<Button
-							status="info"
 							size="sm"
 							onClick={() => setPage(1)}
 							disabled={page === 1}
@@ -640,7 +637,6 @@ export function EnhancedDataTable({
 							<ChevronsLeft className="h-4 w-4" />
 						</Button>
 						<Button
-							status="info"
 							size="sm"
 							onClick={() => setPage(page - 1)}
 							disabled={page === 1}
@@ -649,7 +645,6 @@ export function EnhancedDataTable({
 							<ChevronLeft className="h-4 w-4" />
 						</Button>
 						<Button
-							status="info"
 							size="sm"
 							onClick={() => setPage(page + 1)}
 							disabled={page >= totalPages}
@@ -658,7 +653,6 @@ export function EnhancedDataTable({
 							<ChevronRight className="h-4 w-4" />
 						</Button>
 						<Button
-							status="info"
 							size="sm"
 							onClick={() => setPage(totalPages)}
 							disabled={page >= totalPages}

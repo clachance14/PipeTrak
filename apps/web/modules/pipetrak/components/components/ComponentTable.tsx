@@ -652,7 +652,7 @@ export function ComponentTable({
 					const component = row.original;
 
 					// Get organization slug from URL for field weld quick view
-					const router = useRouter();
+					const _router = useRouter();
 					const organizationSlug =
 						typeof window !== "undefined"
 							? window.location.pathname.split("/")[2]
@@ -1023,7 +1023,7 @@ export function ComponentTable({
 
 					// Update local state
 					setData((old) =>
-						old.map((row, index) => {
+						old.map((row) => {
 							if (row.id === component.id) {
 								return {
 									...row,
