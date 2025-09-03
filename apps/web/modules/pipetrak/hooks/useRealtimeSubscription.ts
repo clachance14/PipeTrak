@@ -15,6 +15,33 @@ export interface ComponentUpdate {
 	completion_percent: number;
 }
 
+// Supabase realtime payload types
+interface ComponentPayloadData {
+	id: string;
+	drawingId: string;
+	status: string;
+	completionPercent: number;
+	componentId?: string;
+}
+
+interface MilestonePayloadData {
+	id: string;
+	componentId: string;
+	milestoneName: string;
+	isCompleted: boolean;
+	completedBy?: string;
+	completedAt?: string;
+}
+
+interface ImportJobPayloadData {
+	id: string;
+	status: string;
+	filename: string;
+	processedRows?: number;
+	totalRows?: number;
+	errorRows?: number;
+}
+
 export interface MilestoneUpdate {
 	type: "milestone";
 	action: "INSERT" | "UPDATE" | "DELETE";
@@ -96,17 +123,16 @@ export function useComponentUpdates(
 					filter: `projectId=eq.${projectId}`,
 				},
 				(payload) => {
+					const newData = payload.new as ComponentPayloadData | null;
+					const oldData = payload.old as ComponentPayloadData | null;
+					
 					const update: ComponentUpdate = {
 						type: "component",
-						action: payload.eventType as any,
-						component_id: payload.new?.id || payload.old?.id,
-						drawing_id:
-							payload.new?.drawingId || payload.old?.drawingId,
-						status: payload.new?.status || payload.old?.status,
-						completion_percent:
-							payload.new?.completionPercent ||
-							payload.old?.completionPercent ||
-							0,
+						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
+						component_id: newData?.id || oldData?.id || "",
+						drawing_id: newData?.drawingId || oldData?.drawingId || "",
+						status: newData?.status || oldData?.status || "",
+						completion_percent: newData?.completionPercent || oldData?.completionPercent || 0,
 					};
 
 					setUpdates((prev) => [...prev.slice(-19), update]); // Keep last 20 updates
@@ -162,18 +188,17 @@ export function useMilestoneUpdates(
 					table: "ComponentMilestone",
 				},
 				(payload) => {
+					const newData = payload.new as MilestonePayloadData | null;
+					const oldData = payload.old as MilestonePayloadData | null;
+					
 					const update: MilestoneUpdate = {
 						type: "milestone",
-						action: payload.eventType as any,
-						component_id:
-							payload.new?.componentId ||
-							payload.old?.componentId,
-						milestone_name:
-							payload.new?.milestoneName ||
-							payload.old?.milestoneName,
-						is_completed: payload.new?.isCompleted || false,
-						completed_by: payload.new?.completedBy,
-						completed_at: payload.new?.completedAt,
+						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
+						component_id: newData?.componentId || oldData?.componentId || "",
+						milestone_name: newData?.milestoneName || oldData?.milestoneName || "",
+						is_completed: newData?.isCompleted || false,
+						completed_by: newData?.completedBy,
+						completed_at: newData?.completedAt,
 					};
 
 					setUpdates((prev) => [...prev.slice(-19), update]);
@@ -250,9 +275,9 @@ export function usePresence(
 			if (!channelRef.current || !session) return;
 
 			const newPresence: Omit<UserPresence, "lastSeen"> = {
-				userId: session.user.id,
-				userName: session.user.name || "",
-				userEmail: session.user.email || "",
+				userId: session.userId,
+				userName: "", // TODO: Get from user table
+				userEmail: "", // TODO: Get from user table
 				projectId,
 				viewingDrawingId: options.viewingDrawingId,
 				editingComponentId: options.editingComponentId,
@@ -279,7 +304,7 @@ export function usePresence(
 			.channel(`project:${projectId}:presence`, {
 				config: {
 					presence: {
-						key: session.user.id,
+						key: session.userId,
 					},
 				},
 			})
@@ -513,16 +538,18 @@ export function useImportJobUpdates(
 					filter: `projectId=eq.${projectId}`,
 				},
 				(payload) => {
+					const newData = payload.new as ImportJobPayloadData | null;
+					const oldData = payload.old as ImportJobPayloadData | null;
+					
 					const update: ImportJobUpdate = {
 						type: "import_job",
-						action: payload.eventType as any,
-						job_id: payload.new?.id || payload.old?.id,
-						status: payload.new?.status || payload.old?.status,
-						filename:
-							payload.new?.filename || payload.old?.filename,
-						processed_rows: payload.new?.processedRows,
-						total_rows: payload.new?.totalRows,
-						error_rows: payload.new?.errorRows,
+						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
+						job_id: newData?.id || oldData?.id || "",
+						status: newData?.status || oldData?.status || "",
+						filename: newData?.filename || oldData?.filename || "",
+						processed_rows: newData?.processedRows,
+						total_rows: newData?.totalRows,
+						error_rows: newData?.errorRows,
 					};
 
 					setUpdates((prev) => [...prev.slice(-19), update]);

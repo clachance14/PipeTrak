@@ -36,7 +36,7 @@ export async function generateProgressReport(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(error.error || "Failed to generate progress report");
 	}
 
@@ -56,7 +56,7 @@ export async function getComponentDetailsReport(
 	);
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate component details report",
 		);
@@ -78,7 +78,7 @@ export async function generateTestPackageReadiness(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate test package readiness report",
 		);
@@ -98,7 +98,7 @@ export async function generateTrendAnalysis(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate trend analysis report",
 		);
@@ -118,7 +118,7 @@ export async function getAuditTrailReport(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(error.error || "Failed to generate audit trail report");
 	}
 
@@ -132,17 +132,14 @@ export async function getReportStatus(
 	projectId: string,
 	limit?: number,
 ): Promise<ReportStatusResponse> {
-	const params = limit ? { limit: limit.toString() } : {};
-
 	const response = await apiClient.pipetrak.reports.status[":projectId"].$get(
 		{
 			param: { projectId },
-			query: params,
 		},
 	);
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(error.error || "Failed to get report status");
 	}
 
@@ -159,17 +156,14 @@ export async function clearReportCache(
 	success: boolean;
 	data: { deletedEntries: number; reportType: string };
 }> {
-	const params = reportType ? { reportType } : {};
-
 	const response = await apiClient.pipetrak.reports.cache[
 		":projectId"
 	].$delete({
 		param: { projectId },
-		query: params,
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(error.error || "Failed to clear report cache");
 	}
 
