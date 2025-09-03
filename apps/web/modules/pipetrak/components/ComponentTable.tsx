@@ -39,7 +39,7 @@ export function ComponentTable({
 	projectId,
 	userId,
 	onEdit,
-	onBulkEdit,
+	_onBulkEdit,
 	onRowClick,
 	onMilestoneClick,
 	pagination,
@@ -116,7 +116,7 @@ export function ComponentTable({
 }
 
 function ComponentActions({
-	component,
+	_component,
 	onEdit,
 	onMilestoneClick,
 }: {
@@ -147,7 +147,7 @@ function ComponentActions({
 	);
 }
 
-function calculateProgress(component: ComponentWithMilestones): number {
+function _calculateProgress(component: ComponentWithMilestones): number {
 	if (!component.milestones || component.milestones.length === 0) {
 		return 0;
 	}

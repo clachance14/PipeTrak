@@ -17,7 +17,7 @@ export function OrganizationCheck() {
 		return null;
 	}
 
-	const { session, user } = useSession();
+	const { session: _session, user } = useSession();
 	const { activeOrganization, activeOrganizationUserRole, loaded } =
 		useActiveOrganization();
 
