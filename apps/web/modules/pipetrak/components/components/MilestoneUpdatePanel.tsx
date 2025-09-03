@@ -219,7 +219,13 @@ export function MilestoneUpdatePanel({
 				}
 
 				const data = await response.json();
-				setMilestones(data.milestones);
+				const milestonesWithDateConversion = data.milestones.map((milestone: any) => ({
+					...milestone,
+					completedAt: milestone.completedAt ? new Date(milestone.completedAt) : null,
+					createdAt: new Date(milestone.createdAt),
+					updatedAt: new Date(milestone.updatedAt),
+				}));
+				setMilestones(milestonesWithDateConversion);
 				setPendingUpdates(new Map());
 				toast.success("Milestones refreshed");
 			} catch (error) {
@@ -299,7 +305,7 @@ export function MilestoneUpdatePanel({
 							Save All ({pendingUpdates.size})
 						</Button>
 						<Button
-							status="info"
+							variant="outline"
 							onClick={handleRefresh}
 							disabled={isPending}
 							className="h-11 px-3"
@@ -382,7 +388,7 @@ export function MilestoneUpdatePanel({
 					Save All ({pendingUpdates.size})
 				</Button>
 				<Button
-					status="info"
+					variant="outline"
 					onClick={handleRefresh}
 					disabled={isPending}
 					style={{ minHeight: `${touchTargetSize}px` }}

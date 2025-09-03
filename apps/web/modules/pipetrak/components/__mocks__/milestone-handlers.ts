@@ -456,8 +456,7 @@ export const milestoneHandlers = [
 	// Update presence
 	http.post(
 		`${API_BASE}/milestones/presence/:projectId`,
-		async ({ request }) => {
-			const body = (await request.json()) as any;
+		async () => {
 
 			return HttpResponse.json({
 				success: true,
@@ -581,7 +580,7 @@ export const milestoneHandlers = [
 	),
 
 	// Get milestone statistics
-	http.get(`${API_BASE}/milestones/stats/:projectId`, async ({ params }) => {
+	http.get(`${API_BASE}/milestones/stats/:projectId`, async () => {
 		await delay(400);
 
 		return HttpResponse.json(mockMilestoneStats);

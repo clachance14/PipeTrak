@@ -239,7 +239,7 @@ export function MobileDrawingGroup({
 								<div className="flex items-center gap-2">
 									{stats.selectedInGroup > 0 && (
 										<Badge
-											status="info"
+											status="warning"
 											className="text-sm px-3 py-1 min-h-[32px] flex items-center"
 										>
 											{stats.selectedInGroup}
@@ -278,8 +278,8 @@ export function MobileDrawingGroup({
 						{!isExpanded && stats.selectedInGroup > 0 && (
 							<div className="flex gap-3 pt-4 border-t">
 								<Button
-									size="default"
-									status="info"
+									size="lg"
+									variant="secondary"
 									className="flex-1 min-h-[44px] text-base font-medium"
 									onClick={(e) => {
 										e.stopPropagation();
@@ -301,8 +301,8 @@ export function MobileDrawingGroup({
 									Start Selected
 								</Button>
 								<Button
-									size="default"
-									status="info"
+									size="lg"
+									variant="secondary"
 									className="flex-1 min-h-[44px] text-base font-medium"
 									onClick={(e) => {
 										e.stopPropagation();

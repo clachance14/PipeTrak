@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@ui/components/button";
 import { Checkbox } from "@ui/components/checkbox";
 import { Input } from "@ui/components/input";
@@ -28,7 +28,6 @@ export function MilestoneEditor({
 	const [editedMilestones, setEditedMilestones] = useState<
 		Record<string, any>
 	>({});
-	const [isPending, startTransition] = useTransition();
 	const [isSaving, setIsSaving] = useState(false);
 	const [showWeldModal, setShowWeldModal] = useState(false);
 	const [selectedWeldMilestone, setSelectedWeldMilestone] =

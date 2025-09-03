@@ -118,7 +118,7 @@ export class BulkUpdateService {
 						},
 						{
 							signal: controller.signal,
-						},
+						} as any,
 					);
 
 					clearTimeout(timeoutId);
@@ -126,7 +126,7 @@ export class BulkUpdateService {
 					if (!response.ok) {
 						let errorMessage = "API request failed";
 						try {
-							const errorData = await response.json();
+							const errorData: any = await response.json();
 							errorMessage =
 								errorData.message ||
 								errorData.error ||

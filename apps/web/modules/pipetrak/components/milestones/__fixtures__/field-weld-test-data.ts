@@ -694,10 +694,4 @@ export const mobileTestConfig = {
 	},
 };
 
-// Export all test utilities
-export type {
-	FieldWeldTestComponent,
-	FieldWeldMilestone,
-	WelderTestData,
-	FieldWeldRecord,
-};
+// All interfaces and utilities are exported above

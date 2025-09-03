@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
@@ -44,9 +44,6 @@ export function MobileComponentCard({
 	onSelect,
 	onClick,
 	onQuickUpdate,
-	onEdit,
-	onDuplicate,
-	onDelete,
 	onOpenMilestones,
 	onOpenQuickSelector,
 }: MobileComponentCardProps) {
@@ -54,7 +51,6 @@ export function MobileComponentCard({
 	const [currentX, setCurrentX] = useState(0);
 	const [isDragging, setIsDragging] = useState(false);
 	const [isButtonClick, setIsButtonClick] = useState(false);
-	const cardRef = useRef<HTMLDivElement>(null);
 
 	// Calculate milestone statistics
 	const milestoneStats = useMemo(() => {
@@ -108,32 +104,8 @@ export function MobileComponentCard({
 		return status.replace(/_/g, " ");
 	};
 
-	const getMilestoneVariant = (milestone: any) => {
-		if (!milestone) return "outline";
-		if (milestone.isCompleted) return "default";
-		const percent =
-			milestone.percentageComplete || milestone.quantityCompleted || 0;
-		if (percent > 0) return "secondary";
-		return "outline";
-	};
-
-	const getMilestoneProgress = () => {
-		if (!milestoneStats.current) return 100; // All complete
-
-		// For current milestone, check workflow type
-		if (component.workflowType === "MILESTONE_PERCENTAGE") {
-			return milestoneStats.current.percentageComplete || 0;
-		}
-		if (component.workflowType === "MILESTONE_QUANTITY") {
-			const total = milestoneStats.current.quantityRequired || 1;
-			const completed = milestoneStats.current.quantityComplete || 0;
-			return Math.round((completed / total) * 100);
-		}
-		// Discrete: either 0 or 100
-		return milestoneStats.current.isCompleted ? 100 : 0;
-
-		// Touch handlers for swipe gestures
-		const handleTouchStart = (e: React.TouchEvent) => {
+	// Touch handlers for swipe gestures
+	const handleTouchStart = (e: React.TouchEvent) => {
 			setStartX(e.touches[0].clientX);
 			setCurrentX(e.touches[0].clientX);
 		};
@@ -184,7 +156,6 @@ export function MobileComponentCard({
 
 		return (
 			<Card
-				ref={cardRef}
 				className={cn(
 					"relative transition-all duration-200 will-change-transform w-full",
 					isSelected && "ring-2 ring-primary shadow-lg",
@@ -399,7 +370,7 @@ export function MobileComponentCard({
 								{!onOpenQuickSelector && onOpenMilestones && (
 									<Button
 										size="sm"
-										status="info"
+										variant="secondary"
 										className="flex-1 h-12"
 										onClick={(e) => {
 											e.stopPropagation();
@@ -464,7 +435,7 @@ export function MobileComponentCard({
 								{component.status === "NOT_STARTED" && (
 									<Button
 										size="sm"
-										status="info"
+										variant="secondary"
 										className="h-12 px-4"
 										onClick={(e) => {
 											e.stopPropagation();
@@ -478,7 +449,7 @@ export function MobileComponentCard({
 								{component.status === "IN_PROGRESS" && (
 									<Button
 										size="sm"
-										status="info"
+										variant="secondary"
 										className="h-12 px-4"
 										onClick={(e) => {
 											e.stopPropagation();
@@ -495,5 +466,4 @@ export function MobileComponentCard({
 				</CardContent>
 			</Card>
 		);
-	};
 }

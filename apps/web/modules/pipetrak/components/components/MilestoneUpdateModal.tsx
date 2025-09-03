@@ -115,7 +115,7 @@ const MilestoneUpdateModalComponent = memo(function MilestoneUpdateModal({
 					{components.length > 1 && (
 						<div className="flex items-center justify-between mt-3 pt-3 border-t">
 							<Button
-								status="info"
+								variant="outline"
 								size="sm"
 								onClick={handlePrevious}
 								disabled={currentIndex === 0}
@@ -135,7 +135,7 @@ const MilestoneUpdateModalComponent = memo(function MilestoneUpdateModal({
 							</div>
 
 							<Button
-								status="info"
+								variant="outline"
 								size="sm"
 								onClick={handleNext}
 								disabled={
