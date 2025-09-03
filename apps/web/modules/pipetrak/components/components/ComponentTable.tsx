@@ -1040,9 +1040,6 @@ export function ComponentTable({
 		},
 	});
 
-	// Get rows for table operations
-	const { rows } = table.getRowModel();
-
 	// Handle export
 	const handleExport = async () => {
 		try {
