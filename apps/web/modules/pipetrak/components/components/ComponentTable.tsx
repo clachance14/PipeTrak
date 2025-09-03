@@ -1248,10 +1248,6 @@ export function ComponentTable({
 		setTargetColumn(null);
 	};
 
-	const handleDragLeave = () => {
-		// Clear target when leaving a column
-		setTargetColumn(null);
-	};
 
 	const handleDrop = (e: React.DragEvent, columnId: string) => {
 		e.preventDefault();
