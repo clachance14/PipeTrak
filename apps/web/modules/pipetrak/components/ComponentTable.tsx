@@ -146,15 +146,3 @@ function ComponentActions({
 		</DropdownMenu>
 	);
 }
-
-function _calculateProgress(component: ComponentWithMilestones): number {
-	if (!component.milestones || component.milestones.length === 0) {
-		return 0;
-	}
-
-	const completedCount = component.milestones.filter(
-		(m) => m.isCompleted,
-	).length;
-
-	return Math.round((completedCount / component.milestones.length) * 100);
-}
