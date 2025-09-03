@@ -212,7 +212,7 @@ export function ComponentReportContent({
 					<div className="lg:w-auto">
 						<div className="flex flex-col gap-2">
 							<Button
-								status="info"
+								variant="outline"
 								onClick={handleRefresh}
 								disabled={isGenerating}
 								className="w-full lg:w-auto"
@@ -488,7 +488,7 @@ export function ComponentReportContent({
 									</div>
 									<div className="flex items-center gap-2">
 										<Button
-											status="info"
+											variant="outline"
 											size="sm"
 											onClick={() =>
 												setCurrentPage((prev) =>
@@ -565,7 +565,7 @@ export function ComponentReportContent({
 											)}
 										</div>
 										<Button
-											status="info"
+											variant="outline"
 											size="sm"
 											onClick={() =>
 												setCurrentPage((prev) =>
@@ -598,7 +598,7 @@ export function ComponentReportContent({
 									filters
 								</p>
 								<Button
-									status="info"
+									variant="outline"
 									onClick={clearFilters}
 									className="mt-4"
 								>

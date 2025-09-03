@@ -186,7 +186,7 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 					<Button
 						type="submit"
 						size="icon"
-						status="success"
+						variant="primary"
 						className="absolute right-3 bottom-3"
 						disabled={!hasChat}
 					>
