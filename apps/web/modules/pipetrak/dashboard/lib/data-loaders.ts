@@ -519,7 +519,7 @@ export async function fetchDashboardComponents(
 			"[fetchDashboardComponents] Successfully transformed components",
 		);
 		return {
-			components: transformedComponents as ComponentWithMilestones[],
+			components: transformedComponents as unknown as ComponentWithMilestones[],
 			total,
 		};
 	} catch (error) {

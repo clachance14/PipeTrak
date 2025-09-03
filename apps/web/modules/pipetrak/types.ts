@@ -286,6 +286,10 @@ export interface ComponentFilters {
 	discipline?: string[];
 	area?: string[];
 	drawingId?: string;
+	system?: string[];
+	status?: ComponentStatus[];
+	testPackage?: string[];
+	drawing?: string[];
 	milestoneStatus?: MilestoneStatus[];
 	search?: string;
 }

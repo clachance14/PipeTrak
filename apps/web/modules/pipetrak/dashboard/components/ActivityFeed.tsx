@@ -21,7 +21,6 @@ import { Badge } from "@ui/components/badge";
 import { Avatar, AvatarFallback } from "@ui/components/avatar";
 import {
 	formatRelativeTime,
-	formatActivityDescription,
 	generateSparklinePath,
 } from "../lib/utils";
 import type { RecentActivity, ActivityItem } from "../types";
@@ -166,8 +165,6 @@ function ActivitySparkline({ activities }: { activities: ActivityItem[] }) {
 }
 
 export function ActivityFeed({ data }: ActivityFeedProps) {
-	const [areaFilter, setAreaFilter] = useState<string>("all");
-	const [systemFilter, setSystemFilter] = useState<string>("all");
 	const [userFilter, setUserFilter] = useState<string>("all");
 
 	const { filteredActivities, uniqueUsers } =
