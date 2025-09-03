@@ -706,7 +706,7 @@ export async function POST(request: NextRequest) {
 				const createStartTime = Date.now();
 
 				try {
-					const createResult = await tx.component.createMany({
+					await tx.component.createMany({
 						data: componentsToCreate,
 					});
 					const createTime = Date.now() - createStartTime;
