@@ -652,7 +652,6 @@ export function ComponentTable({
 					const component = row.original;
 
 					// Get organization slug from URL for field weld quick view
-					const _router = useRouter();
 					const organizationSlug =
 						typeof window !== "undefined"
 							? window.location.pathname.split("/")[2]
