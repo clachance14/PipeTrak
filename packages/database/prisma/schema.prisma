@@ -623,7 +623,7 @@ model ReportingCache {
     reportType           String   // ReportType enum values
     cacheKey             String   // Hash of filter parameters
     filters              Json     @default("{}") /// @zod.custom.use(z.record(z.any()))
-    result               Json     /// @zod.custom.use(z.any())
+    result               Json     @default("{}") /// @zod.custom.use(z.any())
     
     // Cache metadata
     calculatedAt         DateTime @default(now())

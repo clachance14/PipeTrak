@@ -1,6 +1,7 @@
 {
 	"extends": "@repo/tsconfig/nextjs.json",
 	"compilerOptions": {
+		"jsx": "preserve",
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"@analytics": ["./modules/analytics"],

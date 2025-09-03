@@ -1,9 +1,10 @@
 {
 	"extends": "@repo/tsconfig/base.json",
 	"compilerOptions": {
+		"jsx": "react-jsx",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false
 	},
-	"include": ["**/*.ts"],
+	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["dist", "build", "node_modules"]
 }

@@ -81,7 +81,7 @@ interface MobileQCViewProps {
   organizationSlug: string;
 }
 
-export function MobileQCView({ projectId, organizationSlug }: MobileQCViewProps) {
+export function MobileQCView({ projectId, organizationSlug: _organizationSlug }: MobileQCViewProps) {
   const router = useRouter();
   const [data, setData] = useState<FieldWeldData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -271,7 +271,7 @@ export function MobileQCView({ projectId, organizationSlug }: MobileQCViewProps)
             </div>
             <Button
               size="icon"
-              status="info"
+              variant="secondary"
               onClick={() => setShowFilters(!showFilters)}
               className={cn(showFilters && "bg-accent")}
             >
@@ -279,7 +279,7 @@ export function MobileQCView({ projectId, organizationSlug }: MobileQCViewProps)
             </Button>
             <Button
               size="icon"
-              status="info"
+              variant="secondary"
               onClick={fetchFieldWelds}
               disabled={loading}
             >
@@ -333,7 +333,7 @@ export function MobileQCView({ projectId, organizationSlug }: MobileQCViewProps)
                 </Button>
                 <Button
                   size="sm"
-                  status="info"
+                  variant="secondary"
                   onClick={() => toast.info("Bulk actions coming soon")}
                 >
                   Bulk Actions

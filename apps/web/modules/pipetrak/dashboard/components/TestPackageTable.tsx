@@ -191,7 +191,7 @@ export function TestPackageTable({ data }: TestPackageTableProps) {
 					</div>
 					<div className="flex items-center gap-2">
 						<Button
-							status="info"
+							variant="secondary"
 							size="sm"
 							onClick={handleExport}
 							className="flex items-center gap-1"
@@ -223,6 +223,7 @@ export function TestPackageTable({ data }: TestPackageTableProps) {
 							<TableRow>
 								<TableHead>
 									<button
+										type="button"
 										onClick={() => handleSort("name")}
 										className="flex items-center gap-1 hover:text-foreground"
 									>
@@ -239,6 +240,7 @@ export function TestPackageTable({ data }: TestPackageTableProps) {
 								<TableHead>Description</TableHead>
 								<TableHead>
 									<button
+										type="button"
 										onClick={() => handleSort("completion")}
 										className="flex items-center gap-1 hover:text-foreground"
 									>

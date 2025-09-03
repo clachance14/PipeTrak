@@ -221,7 +221,7 @@ function DataTablePagination({
 
 			<div className="flex items-center gap-2">
 				<Button
-					status="info"
+					variant="secondary"
 					size="sm"
 					onClick={() => onPageChange(1)}
 					disabled={page === 1}
@@ -229,7 +229,7 @@ function DataTablePagination({
 					<ChevronsLeft className="h-4 w-4" />
 				</Button>
 				<Button
-					status="info"
+					variant="secondary"
 					size="sm"
 					onClick={() => onPageChange(page - 1)}
 					disabled={page === 1}
@@ -237,7 +237,7 @@ function DataTablePagination({
 					<ChevronLeft className="h-4 w-4" />
 				</Button>
 				<Button
-					status="info"
+					variant="secondary"
 					size="sm"
 					onClick={() => onPageChange(page + 1)}
 					disabled={page >= totalPages}
@@ -245,7 +245,7 @@ function DataTablePagination({
 					<ChevronRight className="h-4 w-4" />
 				</Button>
 				<Button
-					status="info"
+					variant="secondary"
 					size="sm"
 					onClick={() => onPageChange(totalPages)}
 					disabled={page >= totalPages}

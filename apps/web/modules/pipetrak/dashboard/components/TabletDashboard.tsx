@@ -199,7 +199,7 @@ export function TabletDashboard({
 						</div>
 
 						<Button
-							status="info"
+							variant="secondary"
 							size="sm"
 							onClick={handleRefresh}
 							disabled={refreshing}
@@ -229,7 +229,7 @@ export function TabletDashboard({
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-2">
 								<Button
-									status="info"
+									variant="secondary"
 									size="sm"
 									onClick={() => setShowFilters(!showFilters)}
 									className="gap-2"
@@ -238,7 +238,7 @@ export function TabletDashboard({
 									Area
 									{selectedArea && (
 										<Badge
-											status="info"
+											variant="secondary"
 											className="ml-1"
 										>
 											{selectedArea}
@@ -247,7 +247,7 @@ export function TabletDashboard({
 								</Button>
 
 								{selectedComponents.length > 0 && (
-									<Badge status="info" className="ml-2">
+									<Badge variant="secondary" className="ml-2">
 										{selectedComponents.length} selected
 									</Badge>
 								)}
@@ -344,7 +344,7 @@ export function TabletDashboard({
 						</Button>
 
 						<Button
-							status="info"
+							variant="secondary"
 							onClick={handleBulkMarkComplete}
 							disabled={selectedComponents.length === 0}
 							className="gap-2"
