@@ -1242,18 +1242,6 @@ export function ComponentTable({
 		return newColumnOrder;
 	};
 
-	const handleDragStart = (e: React.DragEvent, columnId: string) => {
-		// Don't allow dragging of select column or frozen columns
-		if (columnId === "select" || columnId === "componentId") {
-			e.preventDefault();
-			return;
-		}
-
-		setDraggedColumn(columnId);
-		e.dataTransfer.effectAllowed = "move";
-		// Add a dummy data to make drag work in all browsers
-		e.dataTransfer.setData("text/plain", columnId);
-	};
 
 	const handleDragEnd = () => {
 		setDraggedColumn(null);
