@@ -1248,14 +1248,6 @@ export function ComponentTable({
 		setTargetColumn(null);
 	};
 
-	const handleDragEnter = (columnId: string) => {
-		// Don't allow dropping on select column or frozen columns
-		if (columnId === "select" || columnId === "componentId") {
-			return;
-		}
-		setTargetColumn(columnId);
-	};
-
 	const handleDragLeave = () => {
 		// Clear target when leaving a column
 		setTargetColumn(null);
