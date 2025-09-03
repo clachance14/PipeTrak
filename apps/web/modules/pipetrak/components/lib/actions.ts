@@ -40,7 +40,7 @@ export async function getComponents(
 }
 
 export async function updateComponentMilestone(
-	componentId: string,
+	_componentId: string,
 	milestoneId: string,
 	updates: {
 		isCompleted?: boolean;
@@ -114,14 +114,20 @@ export async function getComponentDetails(
 		const data = await response.json();
 
 		// Transform the data to include drawingNumber for display
-		return {
+		return ({
 			...data,
 			drawingNumber: data.drawing?.number || data.drawingId || "-",
 			description:
 				data.description ||
 				`${data.type || ""} ${data.spec || ""} ${data.size || ""}`.trim() ||
 				"-",
-		};
+			milestones: data.milestones?.map((milestone: any) => ({
+				...milestone,
+				completedAt: milestone.completedAt ? new Date(milestone.completedAt) : null,
+				createdAt: new Date(milestone.createdAt),
+				updatedAt: new Date(milestone.updatedAt),
+			})) || [],
+		} as any);
 	} catch (error) {
 		console.error("Error fetching component details:", error);
 		return null;
@@ -137,7 +143,7 @@ export async function bulkUpdateComponents(
 ): Promise<void> {
 	try {
 		const apiClient = await getServerApiClient();
-		const response = await apiClient.pipetrak.components.bulk.$patch({
+		const response = await (apiClient as any).pipetrak.components.bulk.$patch({
 			json: { componentIds, updates },
 		});
 
@@ -156,7 +162,7 @@ export async function exportComponents(
 ): Promise<Blob> {
 	try {
 		const apiClient = await getServerApiClient();
-		const response = await apiClient.pipetrak.components.export.$get({
+		const response = await (apiClient as any).pipetrak.components.export.$get({
 			query: { projectId, format },
 		});
 

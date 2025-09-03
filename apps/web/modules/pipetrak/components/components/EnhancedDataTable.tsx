@@ -98,7 +98,6 @@ export function EnhancedDataTable({
 	});
 
 	const virtualItems = virtualizer.getVirtualItems();
-	const _totalHeight = virtualizer.getTotalSize();
 
 	// Calculate displayed data
 	const displayedData = useMemo(() => {

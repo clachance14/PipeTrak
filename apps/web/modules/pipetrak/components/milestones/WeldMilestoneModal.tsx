@@ -164,7 +164,7 @@ export function WeldMilestoneModal({
 				</DialogHeader>
 
 				{errors.length > 0 && (
-					<Alert variant="destructive">
+					<Alert variant="error">
 						<AlertTriangle className="h-4 w-4" />
 						<AlertDescription>
 							<ul className="list-disc list-inside space-y-1">
@@ -255,7 +255,7 @@ export function WeldMilestoneModal({
 							</SelectContent>
 						</Select>
 						{welders.length === 0 && !weldersLoading && (
-							<Alert variant="destructive" className="mt-2">
+							<Alert variant="error" className="mt-2">
 								<AlertTriangle className="h-4 w-4" />
 								<AlertDescription className="text-sm">
 									No active welders available. Add welders in

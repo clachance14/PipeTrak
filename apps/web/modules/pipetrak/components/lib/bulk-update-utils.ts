@@ -81,11 +81,11 @@ export function groupComponentsByTemplate(
 
 		// Update each group's commonWithOthers
 		groups.forEach((group) => {
-			group.commonWithOthers = commonMilestones;
+			group.commonWithOthers = commonMilestones as any;
 		});
 	} else if (groups.length === 1) {
 		// Single group - all milestones are "common"
-		groups[0].commonWithOthers = groups[0].availableMilestones;
+		groups[0].commonWithOthers = groups[0].availableMilestones as any;
 	}
 
 	// Sort groups by type name for consistent display
