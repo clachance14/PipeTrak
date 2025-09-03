@@ -1224,23 +1224,6 @@ export function ComponentTable({
 		};
 	}, [filteredData]);
 
-	// Column reordering helper functions
-	const reorderColumn = (
-		draggedColumnId: string,
-		targetColumnId: string,
-		columnOrder: string[],
-	): ColumnOrderState => {
-		const newColumnOrder = [...columnOrder];
-		const fromIndex = newColumnOrder.indexOf(draggedColumnId);
-		const toIndex = newColumnOrder.indexOf(targetColumnId);
-
-		if (fromIndex !== -1 && toIndex !== -1) {
-			newColumnOrder.splice(fromIndex, 1);
-			newColumnOrder.splice(toIndex, 0, draggedColumnId);
-		}
-
-		return newColumnOrder;
-	};
 
 
 	const handleDragEnd = () => {
@@ -1248,35 +1231,6 @@ export function ComponentTable({
 		setTargetColumn(null);
 	};
 
-
-	const handleDrop = (e: React.DragEvent, columnId: string) => {
-		e.preventDefault();
-
-		// Don't allow dropping on select column or frozen columns
-		if (columnId === "select" || columnId === "componentId") {
-			setDraggedColumn(null);
-			setTargetColumn(null);
-			return;
-		}
-
-		if (draggedColumn && draggedColumn !== columnId) {
-			// Get current column order or use default
-			const currentOrder =
-				columnOrder.length > 1 ? columnOrder : defaultColumnIds;
-
-			const newOrder = reorderColumn(
-				draggedColumn,
-				columnId,
-				currentOrder,
-			);
-
-			setColumnOrder(newOrder);
-			toast.success("Column order updated");
-		}
-
-		setDraggedColumn(null);
-		setTargetColumn(null);
-	};
 
 	// Select All Filtered handler
 	const selectAllFiltered = useCallback(() => {
