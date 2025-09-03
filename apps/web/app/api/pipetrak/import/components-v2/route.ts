@@ -237,7 +237,7 @@ export async function POST(request: NextRequest) {
 
 		const duplicateComponents = Array.from(
 			excelDuplicateMap.entries(),
-		).filter(([key, totalQty]) => {
+		).filter(([key, _]) => {
 			return (
 				componentDataList.filter(
 					(comp) => `${comp.drawingId}:${comp.componentId}` === key,
