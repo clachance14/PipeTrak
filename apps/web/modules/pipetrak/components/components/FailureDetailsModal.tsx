@@ -437,7 +437,7 @@ export function FailureDetailsModal({
 																	</TableCell>
 																	<TableCell>
 																		{failure.milestoneName ? (
-																			<Badge status="success">
+																			<Badge status="info">
 																				{
 																					failure.milestoneName
 																				}

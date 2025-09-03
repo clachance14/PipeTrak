@@ -186,7 +186,7 @@ export function DrawingGroup({
 		},
 		onSortingChange: setSorting,
 		onRowSelectionChange: handleLocalRowSelectionChange,
-		onColumnSizingChange: onColumnSizingChange,
+		onColumnSizingChange: (sizing) => onColumnSizingChange(sizing),
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),

@@ -231,6 +231,8 @@ export interface ComponentWithMilestones extends Component {
 	instanceNumber?: number; // Instance number on drawing
 	totalInstancesOnDrawing?: number; // Total instances on drawing
 	displayId?: string | null; // Generated display ID
+	// Optional QC relation for FIELD_WELD components used by UI quick views
+	fieldWelds?: any[];
 }
 
 // Table column type for DataTable

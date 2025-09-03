@@ -162,7 +162,7 @@ export function ReportFilters({
 						<Filter className="h-5 w-5" />
 						Filters
 						{activeFilterCount > 0 && (
-							<Badge status="success">{activeFilterCount}</Badge>
+							<Badge status="info">{activeFilterCount}</Badge>
 						)}
 					</CardTitle>
 					<div className="flex items-center gap-2">
@@ -254,7 +254,7 @@ export function ReportFilters({
 								{filters.areas.map((area) => (
 									<Badge
 										key={area}
-										status="success"
+										status="info"
 										className="text-xs"
 									>
 										{area}
@@ -325,7 +325,7 @@ export function ReportFilters({
 								{filters.systems.map((system) => (
 									<Badge
 										key={system}
-										status="success"
+										status="info"
 										className="text-xs"
 									>
 										{system}

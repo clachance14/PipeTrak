@@ -109,7 +109,7 @@ export function ErrorState({
 }) {
 	return (
 		<EmptyState
-			variant="error"
+			status="error"
 			title={title}
 			description={description}
 			actionLabel="Try Again"

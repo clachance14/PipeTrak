@@ -489,7 +489,7 @@ export function MilestoneUpdateCard({
 						</Badge>
 						{milestone.creditWeight && (
 							<Badge
-								status="success"
+								status="info"
 								className="text-xs h-4 px-1"
 							>
 								{milestone.creditWeight}c
@@ -543,7 +543,7 @@ export function MilestoneUpdateCard({
 								1}
 						</Badge>
 						{milestone.creditWeight && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								{milestone.creditWeight} credits
 							</Badge>
 						)}

@@ -188,7 +188,7 @@ export function QuickMilestoneSelectorExample() {
 						</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div className="space-y-2">
-								<Badge status="success">Typography</Badge>
+								<Badge status="info">Typography</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>
 										• 14px minimum font size for field
@@ -200,7 +200,7 @@ export function QuickMilestoneSelectorExample() {
 							</div>
 
 							<div className="space-y-2">
-								<Badge status="success">Loading States</Badge>
+								<Badge status="info">Loading States</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>
 										• Skeleton placeholders prevent layout
@@ -212,7 +212,7 @@ export function QuickMilestoneSelectorExample() {
 							</div>
 
 							<div className="space-y-2">
-								<Badge status="success">Error Handling</Badge>
+								<Badge status="info">Error Handling</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>• Descriptive error messages</li>
 									<li>• Clear recovery actions</li>
@@ -221,7 +221,7 @@ export function QuickMilestoneSelectorExample() {
 							</div>
 
 							<div className="space-y-2">
-								<Badge status="success">Accessibility</Badge>
+								<Badge status="info">Accessibility</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>• High contrast mode support</li>
 									<li>• Enhanced focus indicators</li>
@@ -230,7 +230,7 @@ export function QuickMilestoneSelectorExample() {
 							</div>
 
 							<div className="space-y-2">
-								<Badge status="success">Performance</Badge>
+								<Badge status="info">Performance</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>• Memoized expensive calculations</li>
 									<li>• Optimized re-render patterns</li>
@@ -239,7 +239,7 @@ export function QuickMilestoneSelectorExample() {
 							</div>
 
 							<div className="space-y-2">
-								<Badge status="success">Field UX</Badge>
+								<Badge status="info">Field UX</Badge>
 								<ul className="text-sm space-y-1 text-muted-foreground">
 									<li>• Haptic feedback for interactions</li>
 									<li>• Better touch targets</li>

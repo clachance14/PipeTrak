@@ -286,7 +286,7 @@ export function EnhancedBulkUpdateModal({
 					{selectedComponents.slice(0, 8).map((comp) => (
 						<Badge
 							key={comp.id}
-							status="success"
+							status="info"
 							className="text-xs"
 						>
 							{comp.componentId}

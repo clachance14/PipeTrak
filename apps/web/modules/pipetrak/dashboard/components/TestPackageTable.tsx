@@ -65,7 +65,7 @@ function TestPackageRow({ testPackage }: { testPackage: TestPackage }) {
 							Ready ✓
 						</Badge>
 					) : (
-						<Badge status="success">
+						<Badge status="info">
 							{testPackage.completedComponents}/
 							{testPackage.totalComponents}
 						</Badge>

@@ -329,7 +329,7 @@ export function ComponentHoverCard({
 									Instance {component.instanceNumber} of{" "}
 									{component.totalInstancesOnDrawing}
 								</span>
-								<Badge status="success" className="text-xs">
+								<Badge status="info" className="text-xs">
 									Drawing Instance
 								</Badge>
 							</div>

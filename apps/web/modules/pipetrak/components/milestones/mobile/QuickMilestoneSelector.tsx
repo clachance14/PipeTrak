@@ -230,7 +230,7 @@ const MilestoneItem = memo(function MilestoneItem({
 									</Badge>
 								)}
 								{milestone.creditWeight && (
-									<Badge status="success" className="text-sm">
+									<Badge status="info" className="text-sm">
 										{milestone.creditWeight} credits
 									</Badge>
 								)}

@@ -22,13 +22,13 @@ export function QuickStatsChips({
 		return (
 			<div className="flex gap-2 overflow-hidden">
 				<div className="animate-pulse">
-					<Badge status="success" className="h-8 w-20" />
+					<Badge status="info" className="h-8 w-20" />
 				</div>
 				<div className="animate-pulse">
-					<Badge status="success" className="h-8 w-24" />
+					<Badge status="info" className="h-8 w-24" />
 				</div>
 				<div className="animate-pulse">
-					<Badge status="success" className="h-8 w-16" />
+					<Badge status="info" className="h-8 w-16" />
 				</div>
 			</div>
 		);

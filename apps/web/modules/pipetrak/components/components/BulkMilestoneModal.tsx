@@ -555,7 +555,7 @@ export function BulkMilestoneModal({
 															{groupSelections[
 																group.templateId
 															]?.size > 0 && (
-																<Badge status="success">
+																<Badge status="info">
 																	{
 																		groupSelections[
 																			group

@@ -119,7 +119,7 @@ export function ROCDisplay({
 						{getTrendIcon()}
 					</CardTitle>
 					<Badge
-						status="success"
+						status="info"
 						className={cn(
 							"text-xs font-medium",
 							rocStatus.color,

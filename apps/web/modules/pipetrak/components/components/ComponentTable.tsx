@@ -90,6 +90,7 @@ import { toast } from "sonner";
 import { cn } from "@ui/lib";
 import { useRouter } from "next/navigation";
 import type { ComponentWithMilestones } from "../../types";
+import { ComponentStatus } from "../../types";
 import { apiClient } from "@shared/lib/api-client";
 import { getBaseUrl } from "@repo/utils";
 
@@ -621,7 +622,7 @@ export function ComponentTable({
 					return (
 						<div className="px-2">
 							<Badge
-								status="success"
+								status="info"
 								className="bg-blue-50 text-blue-700 border-blue-200 font-medium"
 							>
 								{instanceNumber} of {totalInstances}
@@ -748,7 +749,7 @@ export function ComponentTable({
 									badges.push(
 										<Badge
 											key="nde"
-											status="success"
+											status="info"
 											className="h-4 text-xs bg-orange-100 text-orange-800"
 										>
 											<AlertTriangle className="h-2 w-2 mr-1" />
@@ -787,7 +788,7 @@ export function ComponentTable({
 								badges.push(
 									<Badge
 										key="pwht"
-										status="success"
+										status="info"
 										className="h-4 text-xs bg-yellow-100 text-yellow-800"
 									>
 										<FlameKindling className="h-2 w-2 mr-1" />
@@ -809,10 +810,9 @@ export function ComponentTable({
 						>
 							<div className="flex items-center gap-2">
 								{isFieldWeld && (
-									<Zap
-										className="h-4 w-4 text-orange-500 flex-shrink-0"
-										title="Field Weld"
-									/>
+									<div title="Field Weld">
+										<Zap className="h-4 w-4 text-orange-500 flex-shrink-0" />
+									</div>
 								)}
 								<span className="text-sm font-medium">
 									{isFieldWeld ? "Field Weld" : displayValue}
@@ -1013,7 +1013,8 @@ export function ComponentTable({
 						":id"
 					].$patch({
 						param: { id: component.id },
-						json: { [columnId]: value },
+					}, {
+						[columnId]: value,
 					});
 
 					if (!response.ok) {
@@ -1447,7 +1448,7 @@ export function ComponentTable({
 				const errorData = await response.json();
 				console.error("Bulk update API error:", errorData);
 				throw new Error(
-					errorData.message || "Failed to update components",
+					('message' in errorData ? errorData.message : undefined) || "Failed to update components",
 				);
 			}
 
@@ -1481,7 +1482,8 @@ export function ComponentTable({
 			}
 
 			// Show success message
-			const { successful = 0, failed = 0 } = result;
+			const successful = ('successful' in result ? result.successful : undefined) || 0;
+			const failed = ('failed' in result ? result.failed : undefined) || 0;
 			if (failed === 0) {
 				toast.success(
 					`Successfully updated ${successful} component${successful !== 1 ? "s" : ""}`,
@@ -1609,7 +1611,7 @@ export function ComponentTable({
 										</div>
 										<Button
 											size="icon"
-											status="info"
+											variant="secondary"
 											onClick={toggleAllDrawings}
 											title={
 												expandedDrawings.size ===
@@ -1658,7 +1660,7 @@ export function ComponentTable({
 												</Button>
 												<Button
 													size="sm"
-													status="info"
+													variant="secondary"
 													onClick={() =>
 														setShowMilestoneModal(
 															true,
@@ -1701,7 +1703,7 @@ export function ComponentTable({
 											Complete
 										</p>
 										<p className="text-lg font-bold">
-											{stats.complete}
+											{stats.completed}
 										</p>
 									</CardContent>
 								</Card>
@@ -1770,7 +1772,7 @@ export function ComponentTable({
 												setData((prev) =>
 													prev.map((c) =>
 														c.id === componentId
-															? { ...c, status }
+															? { ...c, status: status as ComponentStatus }
 															: c,
 													),
 												);
@@ -1890,7 +1892,7 @@ export function ComponentTable({
 					)}
 
 					<Button
-						status="info"
+						variant="secondary"
 						size="icon"
 						onClick={handleRefresh}
 						disabled={isPending}
@@ -1916,7 +1918,7 @@ export function ComponentTable({
 								{selectedComponents.length || selectionCount})
 							</Button>
 							<Button
-								status="info"
+								variant="secondary"
 								size="sm"
 								onClick={() => setShowBulkMilestoneModal(true)}
 							>
@@ -2063,7 +2065,7 @@ export function ComponentTable({
 						Export
 					</Button>
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() =>
 							router.push(`/app/pipetrak/${projectId}/import`)
@@ -2076,7 +2078,7 @@ export function ComponentTable({
 					{/* QC Module Link - Show when field welds exist */}
 					{data.some((c) => c.type === "FIELD_WELD") && (
 						<Button
-							status="info"
+							variant="secondary"
 							size="sm"
 							onClick={() => {
 								const organizationSlug =
@@ -2096,7 +2098,7 @@ export function ComponentTable({
 
 					{/* Full-screen toggle */}
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => setIsFullScreen(!isFullScreen)}
 						title={
@@ -2185,7 +2187,7 @@ export function ComponentTable({
 					</h3>
 					<Button
 						size="sm"
-						status="info"
+						variant="secondary"
 						onClick={() => {
 							if (
 								expandedDrawings.size ===
@@ -2300,7 +2302,7 @@ export function ComponentTable({
 						Component Table - Full Screen
 					</h2>
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => setIsFullScreen(false)}
 						className="gap-2"

@@ -130,7 +130,7 @@ export function MobileBottomSheet({
 									</Badge>
 								)}
 								{component.drawingNumber && (
-									<Badge status="success" className="gap-1">
+									<Badge status="info" className="gap-1">
 										<FileText className="h-3 w-3" />
 										{component.drawingNumber}
 									</Badge>

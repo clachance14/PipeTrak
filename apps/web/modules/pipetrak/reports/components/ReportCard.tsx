@@ -98,7 +98,7 @@ export function ReportCard({
 							</Badge>
 						)}
 						{isPopular && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								<Zap className="h-3 w-3 mr-1" />
 								Popular
 							</Badge>
