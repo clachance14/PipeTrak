@@ -110,7 +110,6 @@ export function MilestoneUpdateCard({
 									Save
 								</Button>
 								<Button
-									status="info"
 									onClick={() => setTempValue(null)}
 									className="h-8 text-xs px-2"
 								>
@@ -155,8 +154,7 @@ export function MilestoneUpdateCard({
 							Save
 						</Button>
 						<Button
-							status="info"
-							onClick={() => setTempValue(null)}
+								onClick={() => setTempValue(null)}
 							style={{ minHeight: `${touchTargetSize}px` }}
 						>
 							Cancel
@@ -220,7 +218,6 @@ export function MilestoneUpdateCard({
 									Save {tempValue}%
 								</Button>
 								<Button
-									status="info"
 									onClick={() => setTempValue(null)}
 									className="h-8 text-xs px-2"
 								>
@@ -305,8 +302,7 @@ export function MilestoneUpdateCard({
 								Save {tempValue}%
 							</Button>
 							<Button
-								status="info"
-								onClick={() => setTempValue(null)}
+										onClick={() => setTempValue(null)}
 								style={{ minHeight: `${touchTargetSize}px` }}
 							>
 								Cancel
@@ -380,7 +376,6 @@ export function MilestoneUpdateCard({
 									Save {tempValue} {milestone.unit}
 								</Button>
 								<Button
-									status="info"
 									onClick={() => setTempValue(null)}
 									className="h-8 text-xs px-2"
 								>
@@ -462,8 +457,7 @@ export function MilestoneUpdateCard({
 								Save {tempValue} {milestone.unit}
 							</Button>
 							<Button
-								status="info"
-								onClick={() => setTempValue(null)}
+										onClick={() => setTempValue(null)}
 								style={{ minHeight: `${touchTargetSize}px` }}
 							>
 								Cancel
@@ -489,8 +483,7 @@ export function MilestoneUpdateCard({
 						</Badge>
 						{milestone.creditWeight && (
 							<Badge
-								status="info"
-								className="text-xs h-4 px-1"
+										className="text-xs h-4 px-1"
 							>
 								{milestone.creditWeight}c
 							</Badge>
@@ -498,8 +491,7 @@ export function MilestoneUpdateCard({
 					</div>
 					{isLocked && (
 						<Badge
-							status="info"
-							className="text-xs text-muted-foreground h-4 px-1"
+								className="text-xs text-muted-foreground h-4 px-1"
 						>
 							<Lock className="h-3 w-3 mr-1" />
 							Locked
@@ -550,8 +542,7 @@ export function MilestoneUpdateCard({
 					</CardTitle>
 					{isLocked && (
 						<Badge
-							status="info"
-							className="text-xs text-muted-foreground"
+								className="text-xs text-muted-foreground"
 						>
 							<Lock className="h-3 w-3 mr-1" />
 							Locked

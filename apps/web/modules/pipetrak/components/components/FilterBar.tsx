@@ -161,7 +161,6 @@ export function FilterBar({
 					{/* Clear Filters Button */}
 					{hasActiveFilters && (
 						<Button
-							status="info"
 							size="sm"
 							onClick={clearAllFilters}
 							className="shrink-0"
@@ -170,8 +169,7 @@ export function FilterBar({
 							Clear All
 							{activeFilterCount > 0 && (
 								<Badge
-									status="info"
-									className="ml-2 text-xs"
+											className="ml-2 text-xs"
 								>
 									{activeFilterCount}
 								</Badge>
