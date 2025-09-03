@@ -49,7 +49,7 @@ async function ComponentDetailContent({
 	}
 
 	// Get user ID for realtime
-	const _userId = session.user?.id || "anonymous";
+	// const _userId = session.user?.id || "anonymous";
 
 	// Render the client component with all the UI and real-time updates
 	return (

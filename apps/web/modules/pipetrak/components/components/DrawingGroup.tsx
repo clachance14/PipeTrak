@@ -65,7 +65,7 @@ export function DrawingGroup({
 	onRowSelectionChange,
 	onComponentUpdate,
 	onColumnSizingChange,
-	draggedColumn,
+	draggedColumn: _draggedColumn,
 	targetColumn,
 	onDragStart,
 	onDragOver,
@@ -186,7 +186,10 @@ export function DrawingGroup({
 		},
 		onSortingChange: setSorting,
 		onRowSelectionChange: handleLocalRowSelectionChange,
-		onColumnSizingChange: (sizing) => onColumnSizingChange(sizing),
+		onColumnSizingChange: (updater) => {
+			const newSizing = typeof updater === 'function' ? updater(columnSizing) : updater;
+			onColumnSizingChange(newSizing);
+		},
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
@@ -258,7 +261,8 @@ export function DrawingGroup({
 				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-center gap-3 min-w-0 flex-1">
 						{/* Selection Checkbox - Larger touch target for tablets */}
-						<div
+						<button
+							type="button"
 							onClick={(e) => {
 								e.stopPropagation();
 								handleSelectAll();
@@ -278,7 +282,7 @@ export function DrawingGroup({
 									className="h-7 w-7 md:h-8 md:w-8" // Larger for better touch interaction
 								/>
 							)}
-						</div>
+						</button>
 
 						{/* Drawing Info - Better responsive layout */}
 						<div className="flex items-center gap-2 min-w-0">
@@ -480,6 +484,7 @@ export function DrawingGroup({
 
 																	{/* Column resize handle */}
 																	{header.column.getCanResize() && (
+																		// biome-ignore lint/a11y/noStaticElementInteractions: Column resize handle needs mouse/touch events
 																		<div
 																			onMouseDown={header.getResizeHandler()}
 																			onTouchStart={header.getResizeHandler()}

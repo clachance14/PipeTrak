@@ -42,7 +42,7 @@ function DrawingDetailContent({
 	drawingId: string;
 }) {
 	const router = useRouter();
-	const [componentFilters, setComponentFilters] = useState({
+	const [componentFilters] = useState({
 		page: 1,
 		limit: 50,
 	});
@@ -87,7 +87,7 @@ function DrawingDetailContent({
 		...comp,
 		milestones: comp.milestones || [],
 	}));
-	const pagination = detailsData?.pagination;
+	const _pagination = detailsData?.pagination;
 	const drawings = hierarchyData?.data || [];
 
 	if (!drawing) {
@@ -256,6 +256,7 @@ function DrawingDetailContent({
 								<div className="grid gap-3">
 									{drawing.children.map((child) => (
 										<button
+											type="button"
 											key={child.id}
 											onClick={() =>
 												handleNavigateToDrawing(
@@ -324,10 +325,10 @@ function DrawingDetailContent({
 												</dt>
 												<dd>
 													<button
+														type="button"
 														onClick={() =>
 															handleNavigateToDrawing(
-																drawing.parent!
-																	.id,
+																drawing.parent?.id || '',
 															)
 														}
 														className="font-medium text-primary hover:underline"

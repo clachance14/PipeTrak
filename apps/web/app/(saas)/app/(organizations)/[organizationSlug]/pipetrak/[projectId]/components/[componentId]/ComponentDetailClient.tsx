@@ -39,9 +39,9 @@ export function ComponentDetailClient({
 	};
 
 	// Handle live progress updates as user edits milestones
-	const _handleProgressChange = (progress: number) => {
-		setLiveProgress(progress);
-	};
+	// const _handleProgressChange = (progress: number) => {
+	// 	setLiveProgress(progress);
+	// };
 
 	// Use live progress if available, otherwise use component progress
 	const displayProgress =
