@@ -316,7 +316,6 @@ export function ComponentTable({
 	const [selectionCount, setSelectionCount] = useState(0);
 
 	// Refs
-	const tableContainerRef = useRef<HTMLDivElement>(null);
 	const fullScreenContainerRef = useRef<HTMLDivElement>(null);
 	const hasLoadedSizesRef = useRef(false);
 
