@@ -21,7 +21,6 @@ import {
 	type ColumnSizingState,
 	type ColumnOrderState,
 } from "@tanstack/react-table";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import { MobileDrawingGroup } from "./MobileDrawingGroup";
 import { DrawingGroup } from "./DrawingGroup";
 import { BulkUpdateModal } from "./BulkUpdateModal";
@@ -1042,15 +1041,8 @@ export function ComponentTable({
 		},
 	});
 
-	// Virtualization setup
+	// Get rows for table operations
 	const { rows } = table.getRowModel();
-	const rowVirtualizer = useVirtualizer({
-		count: rows.length,
-		getScrollElement: () => tableContainerRef.current,
-		estimateSize: () => 65, // Fixed height for all rows
-		overscan: 5,
-		measureElement: undefined, // Use fixed sizing
-	});
 
 	// Handle export
 	const handleExport = async () => {
