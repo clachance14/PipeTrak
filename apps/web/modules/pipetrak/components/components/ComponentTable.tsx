@@ -1052,7 +1052,6 @@ export function ComponentTable({
 		measureElement: undefined, // Use fixed sizing
 	});
 
-	const virtualRows = rowVirtualizer.getVirtualItems();
 	const totalSize = rowVirtualizer.getTotalSize();
 
 	// Handle export
