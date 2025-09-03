@@ -145,7 +145,7 @@ export function MilestoneDiscreteRenderer({
 					checked={currentValue}
 					disabled={isLocked || isUpdating}
 					className="h-6 w-6"
-					onChange={(checked) => handleToggle(checked)}
+					onCheckedChange={(checked) => handleToggle(!!checked)}
 					onClick={(e) => e.stopPropagation()}
 					aria-label={`Mark ${milestone.milestoneName} as ${currentValue ? "incomplete" : "complete"}`}
 				/>
