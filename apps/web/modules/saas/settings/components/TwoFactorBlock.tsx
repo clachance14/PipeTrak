@@ -222,7 +222,7 @@ export function TwoFactorBlock() {
 							<div className="mt-4">
 								<Button
 									type="submit"
-									status="success"
+									variant="primary"
 									className="w-full"
 									loading={
 										enableTwoFactorMutation.isPending ||
@@ -273,7 +273,7 @@ export function TwoFactorBlock() {
 							<div className="mt-4">
 								<Button
 									type="submit"
-									status="success"
+									variant="primary"
 									className="w-full"
 									loading={verifyTwoFactorMutation.isPending}
 								>

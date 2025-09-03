@@ -1,6 +1,5 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { useConfirmationAlert } from "@saas/shared/components/ConfirmationAlertProvider";

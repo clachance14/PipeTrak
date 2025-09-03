@@ -238,7 +238,7 @@ export function TabletDashboard({
 									Area
 									{selectedArea && (
 										<Badge
-											variant="secondary"
+											status="info"
 											className="ml-1"
 										>
 											{selectedArea}
@@ -247,7 +247,7 @@ export function TabletDashboard({
 								</Button>
 
 								{selectedComponents.length > 0 && (
-									<Badge variant="secondary" className="ml-2">
+									<Badge status="info" className="ml-2">
 										{selectedComponents.length} selected
 									</Badge>
 								)}

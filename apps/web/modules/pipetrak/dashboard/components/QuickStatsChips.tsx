@@ -43,7 +43,7 @@ export function QuickStatsChips({
 			icon: TrendingUp,
 			label: "Overall",
 			value: `${Math.round(metrics.overallCompletionPercent)}%`,
-			variant: "default" as const,
+			status: "info" as const,
 			primary: true,
 		},
 		{
@@ -51,7 +51,7 @@ export function QuickStatsChips({
 			icon: Package,
 			label: "Components",
 			value: `${metrics.completedComponents.toLocaleString()}/${metrics.totalComponents.toLocaleString()}`,
-			variant: "default" as const,
+			status: "info" as const,
 			primary: true,
 		},
 		{
@@ -59,7 +59,7 @@ export function QuickStatsChips({
 			icon: Package,
 			label: "Ready",
 			value: `${readyPackages} pkgs`,
-			variant: "secondary" as const,
+			status: "info" as const,
 			primary: true,
 		},
 		{
@@ -67,7 +67,7 @@ export function QuickStatsChips({
 			icon: AlertTriangle,
 			label: "Stalled",
 			value: `${metrics.stalledComponents.stalled7Days}`,
-			variant: "outline" as const,
+			status: "info" as const,
 			primary: false, // Secondary metric
 			muted: true,
 		},
@@ -81,7 +81,7 @@ export function QuickStatsChips({
 					return (
 						<Badge
 							key={chip.id}
-							variant={chip.variant}
+							status={chip.status}
 							className={`
                 flex items-center gap-1.5 px-3 py-2 text-sm font-medium
                 ${chip.primary ? "h-9" : "h-8 text-xs"}

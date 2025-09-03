@@ -18,6 +18,7 @@ import { Badge } from "@ui/components/badge";
 import { QuickMilestoneSelector } from "./QuickMilestoneSelector";
 import { useQuickMilestoneSelector } from "./useQuickMilestoneSelector";
 import type { ComponentWithMilestones, WorkflowType } from "../../../types";
+import { ComponentStatus } from "../../../types";
 
 // Mock component data for demonstration
 const mockComponent: ComponentWithMilestones = {
@@ -25,7 +26,7 @@ const mockComponent: ComponentWithMilestones = {
 	componentId: "P001-EL-001",
 	projectId: "proj-001",
 	description: '6" CS Pipe Elbow',
-	status: "IN_PROGRESS",
+	status: ComponentStatus.IN_PROGRESS,
 	completionPercent: 33,
 	workflowType: "MILESTONE_DISCRETE" as WorkflowType,
 	createdAt: new Date(),

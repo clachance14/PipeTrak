@@ -137,7 +137,7 @@ export function FileUpload({
 							</div>
 						</div>
 						<Button
-							status="info"
+							variant="outline"
 							size="sm"
 							onClick={handleFileRemove}
 							disabled={loading}
