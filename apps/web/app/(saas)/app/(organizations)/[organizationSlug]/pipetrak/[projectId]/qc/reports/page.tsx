@@ -13,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function QCReportsPage({ params }: QCReportsPageProps) {
-	const { organizationSlug, projectId } = await params;
+	// Note: params available for future implementation
+	await params;
 
 	return (
 		<div className="space-y-6">
@@ -27,7 +28,7 @@ export default async function QCReportsPage({ params }: QCReportsPageProps) {
 						analytics
 					</p>
 				</div>
-				<button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+				<button type="button" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
 					Generate Report
 				</button>
 			</div>
@@ -40,7 +41,9 @@ export default async function QCReportsPage({ params }: QCReportsPageProps) {
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
+							aria-label="Reports icon"
 						>
+							<title>QC Reports</title>
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
