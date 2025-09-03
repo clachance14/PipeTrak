@@ -71,7 +71,7 @@ function MilestonePill({
 
 	const getButtonVariant = () => {
 		if (isLocked) return "secondary";
-		if (milestone.isCompleted) return "default";
+		if (milestone.isCompleted) return "primary";
 		return "outline";
 	};
 
@@ -149,54 +149,22 @@ export function InlineDiscreteMilestones({
 	className,
 	onMilestoneUpdate,
 }: InlineDiscreteMilestonesProps) {
-	const { updateMilestone, hasPendingUpdates, getOperationStatus } =
+	const { updateMilestone, hasPendingUpdates } =
 		useMilestoneUpdateEngine();
 	const [showWeldModal, setShowWeldModal] = useState(false);
 	const [selectedWeldMilestone, setSelectedWeldMilestone] =
 		useState<ComponentMilestone | null>(null);
 
-	// Only show this component for discrete milestone workflows
-	if (component.workflowType !== "MILESTONE_DISCRETE") {
-		return (
-			<div
-				className={cn(
-					"flex items-center text-muted-foreground",
-					className,
-				)}
-			>
-				<AlertTriangle className="h-4 w-4 mr-2" />
-				<span className="text-sm">
-					Inline view only supports discrete milestones
-				</span>
-			</div>
-		);
-	}
-
-	if (!component.milestones || component.milestones.length === 0) {
-		return (
-			<div
-				className={cn(
-					"flex items-center text-muted-foreground",
-					className,
-				)}
-			>
-				<AlertTriangle className="h-4 w-4 mr-2" />
-				<span className="text-sm">No milestones configured</span>
-			</div>
-		);
-	}
-
+	// All hooks must be before any early returns
 	// Sort milestones by order
 	const sortedMilestones = useMemo(() => {
-		return [...component.milestones!].sort(
+		if (!component.milestones || component.milestones.length === 0) {
+			return [];
+		}
+		return [...component.milestones].sort(
 			(a, b) => a.milestoneOrder - b.milestoneOrder,
 		);
 	}, [component.milestones]);
-
-	// Calculate progress
-	const completedCount = sortedMilestones.filter((m) => m.isCompleted).length;
-	const totalCount = sortedMilestones.length;
-	const overallProgress = Math.round((completedCount / totalCount) * 100);
 
 	// Calculate weighted progress using ROC weights from database
 	const weightedProgress = useMemo(() => {
@@ -239,6 +207,43 @@ export function InlineDiscreteMilestones({
 		// Return percentage (completedWeight is already in percentage form)
 		return Math.round(completedWeight);
 	}, [sortedMilestones, component.componentId, component.type]);
+
+	// Early returns after all hooks
+	// Only show this component for discrete milestone workflows
+	if (component.workflowType !== "MILESTONE_DISCRETE") {
+		return (
+			<div
+				className={cn(
+					"flex items-center text-muted-foreground",
+					className,
+				)}
+			>
+				<AlertTriangle className="h-4 w-4 mr-2" />
+				<span className="text-sm">
+					Inline view only supports discrete milestones
+				</span>
+			</div>
+		);
+	}
+
+	// Early return for no milestones
+	if (!component.milestones || component.milestones.length === 0) {
+		return (
+			<div
+				className={cn(
+					"flex items-center text-muted-foreground",
+					className,
+				)}
+			>
+				<AlertTriangle className="h-4 w-4 mr-2" />
+				<span className="text-sm">No milestones configured</span>
+			</div>
+		);
+	}
+
+	// Calculate progress
+	const completedCount = sortedMilestones.filter((m) => m.isCompleted).length;
+	const totalCount = sortedMilestones.length;
 
 	const hasAnyPending = sortedMilestones.some((m) => hasPendingUpdates(m.id));
 

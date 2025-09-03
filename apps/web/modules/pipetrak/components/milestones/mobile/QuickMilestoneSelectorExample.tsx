@@ -17,50 +17,67 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { QuickMilestoneSelector } from "./QuickMilestoneSelector";
 import { useQuickMilestoneSelector } from "./useQuickMilestoneSelector";
-import type { ComponentWithMilestones } from "../../../types";
+import type { ComponentWithMilestones, WorkflowType } from "../../../types";
 
 // Mock component data for demonstration
 const mockComponent: ComponentWithMilestones = {
 	id: "comp-001",
 	componentId: "P001-EL-001",
+	projectId: "proj-001",
 	description: '6" CS Pipe Elbow',
-	workflowType: "MILESTONE_DISCRETE",
+	status: "IN_PROGRESS",
+	completionPercent: 33,
+	workflowType: "MILESTONE_DISCRETE" as WorkflowType,
+	createdAt: new Date(),
+	updatedAt: new Date(),
 	milestones: [
 		{
 			id: "ms-1",
+			componentId: "comp-001",
 			milestoneName: "Material Received",
 			isCompleted: true,
 			milestoneOrder: 1,
 			sequenceNumber: 1,
 			creditWeight: 10,
+			weight: 10,
 			percentageComplete: 0,
 			quantityComplete: 0,
 			quantityTotal: 0,
 			unit: null,
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 		{
 			id: "ms-2",
+			componentId: "comp-001",
 			milestoneName: "Fit Up Complete",
 			isCompleted: false,
 			milestoneOrder: 2,
 			sequenceNumber: 2,
 			creditWeight: 15,
+			weight: 15,
 			percentageComplete: 0,
 			quantityComplete: 0,
 			quantityTotal: 0,
 			unit: null,
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 		{
 			id: "ms-3",
+			componentId: "comp-001",
 			milestoneName: "Welding Complete",
 			isCompleted: false,
 			milestoneOrder: 3,
 			sequenceNumber: 3,
 			creditWeight: 25,
+			weight: 25,
 			percentageComplete: 0,
 			quantityComplete: 0,
 			quantityTotal: 0,
 			unit: null,
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 	],
 };
@@ -77,7 +94,6 @@ export function QuickMilestoneSelectorExample() {
 		setLoading,
 		setError,
 		setOffline,
-		retry,
 	} = useQuickMilestoneSelector();
 
 	const [demoState, setDemoState] = useState<
@@ -161,21 +177,21 @@ export function QuickMilestoneSelectorExample() {
 						</Button>
 						<Button
 							onClick={() => handleOpenSelector("loading")}
-							status="info"
+							variant="outline"
 							className="w-full"
 						>
 							Loading State
 						</Button>
 						<Button
 							onClick={() => handleOpenSelector("error")}
-							status="info"
+							variant="outline"
 							className="w-full"
 						>
 							Error State
 						</Button>
 						<Button
 							onClick={() => handleOpenSelector("offline")}
-							status="info"
+							variant="outline"
 							className="w-full"
 						>
 							Offline State
