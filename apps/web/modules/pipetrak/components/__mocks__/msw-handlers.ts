@@ -82,7 +82,7 @@ export const handlers = [
 		}
 
 		// Simulate update
-		const updated = { ...component, ...updates, updatedAt: new Date() };
+		const updated = { ...component, ...(updates && typeof updates === 'object' ? updates : {}), updatedAt: new Date() };
 
 		return HttpResponse.json(updated);
 	}),
@@ -93,7 +93,7 @@ export const handlers = [
 
 		const updatedComponents = mockComponents
 			.filter((c) => componentIds.includes(c.id))
-			.map((c) => ({ ...c, ...updates, updatedAt: new Date() }));
+			.map((c) => ({ ...c, ...(updates && typeof updates === 'object' ? updates : {}), updatedAt: new Date() }));
 
 		return HttpResponse.json({
 			updated: updatedComponents.length,
@@ -108,7 +108,7 @@ export const handlers = [
 		// Simulate milestone update
 		return HttpResponse.json({
 			id: params.id,
-			...updates,
+			...(updates && typeof updates === 'object' ? updates : {}),
 			updatedAt: new Date(),
 		});
 	}),

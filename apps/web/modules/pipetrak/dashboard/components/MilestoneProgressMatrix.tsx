@@ -473,7 +473,7 @@ export function MilestoneProgressMatrix({
 							</p>
 						</div>
 						<div className="flex gap-3">
-							<Button variant="primary" size="sm">
+							<Button variant="secondary" size="sm">
 								Import Components
 							</Button>
 							<Button variant="outline" size="sm">

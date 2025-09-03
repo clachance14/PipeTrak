@@ -700,7 +700,7 @@ export function ColumnMapper({
 					</div>
 				</div>
 				{autoMapped.size > 0 && (
-					<Badge status="success" className="gap-1">
+					<Badge status="info" className="gap-1">
 						<Sparkles className="h-3 w-3" />
 						{autoMapped.size} auto-mapped
 					</Badge>

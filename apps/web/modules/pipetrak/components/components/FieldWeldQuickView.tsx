@@ -102,7 +102,7 @@ export function FieldWeldQuickView({
 			case "repair":
 				return (
 					<Badge
-						status="success"
+						status="info"
 						className="gap-1 bg-orange-100 text-orange-800"
 					>
 						<AlertTriangle className="h-3 w-3" />
@@ -142,7 +142,7 @@ export function FieldWeldQuickView({
 
 		return (
 			<Badge
-				status="success"
+				status="info"
 				className="gap-1 bg-yellow-100 text-yellow-800"
 			>
 				<FlameKindling className="h-3 w-3" />

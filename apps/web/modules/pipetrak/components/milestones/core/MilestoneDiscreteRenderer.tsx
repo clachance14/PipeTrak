@@ -176,7 +176,7 @@ export function MilestoneDiscreteRenderer({
 							</Badge>
 							{milestone.creditWeight && (
 								<Badge
-									status="success"
+									status="info"
 									className="text-xs"
 									role="img"
 									aria-label={`Worth ${milestone.creditWeight} credits`}

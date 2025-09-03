@@ -238,7 +238,7 @@ export function TabletDashboard({
 									Area
 									{selectedArea && (
 										<Badge
-											status="success"
+											status="info"
 											className="ml-1"
 										>
 											{selectedArea}

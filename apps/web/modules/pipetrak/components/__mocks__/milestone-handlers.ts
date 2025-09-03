@@ -261,8 +261,8 @@ export const milestoneHandlers = [
 			}
 		}
 
-		const successful = results.filter((r) => r.success).length;
-		const failed = results.filter((r) => !r.success).length;
+		const successful = results.filter((r: any) => r.success).length;
+		const failed = results.filter((r: any) => !r.success).length;
 
 		// Store transaction for undo testing
 		transactionHistory.set(transactionId, {
@@ -380,8 +380,8 @@ export const milestoneHandlers = [
 			};
 		});
 
-		const successful = results.filter((r) => r.success).length;
-		const failed = results.filter((r) => !r.success).length;
+		const successful = results.filter((r: any) => r.success).length;
+		const failed = results.filter((r: any) => !r.success).length;
 
 		return HttpResponse.json({
 			syncTimestamp: new Date().toISOString(),
@@ -563,8 +563,8 @@ export const milestoneHandlers = [
 				};
 			});
 
-			const successful = undoResults.filter((r) => r.success).length;
-			const failed = undoResults.filter((r) => !r.success).length;
+			const successful = undoResults.filter((r: any) => r.success).length;
+			const failed = undoResults.filter((r: any) => !r.success).length;
 
 			// Remove transaction from history
 			transactionHistory.delete(transactionId);

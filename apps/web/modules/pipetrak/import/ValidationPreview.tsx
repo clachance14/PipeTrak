@@ -286,7 +286,7 @@ export function ValidationPreview({
 					<TabsTrigger value="summary">Summary</TabsTrigger>
 					<TabsTrigger value="preview">
 						Preview
-						<Badge status="success" className="ml-2">
+						<Badge status="info" className="ml-2">
 							{Math.min(10, validation.preview.length)}
 						</Badge>
 					</TabsTrigger>
@@ -624,7 +624,7 @@ export function ValidationPreview({
 														) : row.warnings
 																.length > 0 ? (
 															<Badge
-																status="success"
+																status="info"
 																className="gap-1"
 															>
 																<AlertTriangle className="h-3 w-3" />
@@ -789,7 +789,7 @@ export function ValidationPreview({
 				</Button>
 				<div className="flex gap-2">
 					{importOptions.dryRun && (
-						<Badge status="success" className="self-center">
+						<Badge status="info" className="self-center">
 							Dry Run Mode
 						</Badge>
 					)}

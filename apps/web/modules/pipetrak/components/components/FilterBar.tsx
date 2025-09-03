@@ -170,7 +170,7 @@ export function FilterBar({
 							Clear All
 							{activeFilterCount > 0 && (
 								<Badge
-									status="success"
+									status="info"
 									className="ml-2 text-xs"
 								>
 									{activeFilterCount}
@@ -311,7 +311,7 @@ export function FilterBar({
 				{hasActiveFilters && (
 					<div className="flex flex-wrap gap-1">
 						{filters.search && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								Search: {filters.search}
 								<Button
 									variant="ghost"
@@ -326,7 +326,7 @@ export function FilterBar({
 							</Badge>
 						)}
 						{filters.area !== "all" && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								Area: {filters.area}
 								<Button
 									variant="ghost"
@@ -341,7 +341,7 @@ export function FilterBar({
 							</Badge>
 						)}
 						{filters.testPackage !== "all" && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								Test: {filters.testPackage}
 								<Button
 									variant="ghost"
@@ -356,7 +356,7 @@ export function FilterBar({
 							</Badge>
 						)}
 						{filters.system !== "all" && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								System: {filters.system}
 								<Button
 									variant="ghost"
@@ -371,7 +371,7 @@ export function FilterBar({
 							</Badge>
 						)}
 						{filters.type !== "all" && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								Type: {filters.type}
 								<Button
 									variant="ghost"
@@ -386,7 +386,7 @@ export function FilterBar({
 							</Badge>
 						)}
 						{filters.status !== "all" && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								Status:{" "}
 								{
 									STATUS_OPTIONS.find(

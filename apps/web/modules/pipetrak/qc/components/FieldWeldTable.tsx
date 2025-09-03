@@ -305,7 +305,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           if (!area || area.trim() === "") {
             return <div className="text-sm text-muted-foreground">-</div>;
           }
-          return <Badge status="success">{area}</Badge>;
+          return <Badge status="info">{area}</Badge>;
         },
       },
       {
@@ -316,7 +316,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           if (!system || system.trim() === "") {
             return <div className="text-sm text-muted-foreground">-</div>;
           }
-          return <Badge status="success">{system}</Badge>;
+          return <Badge status="info">{system}</Badge>;
         },
       },
       {
@@ -656,9 +656,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           
           // Determine status based on milestone completion
           if (weldMilestone?.isCompleted) {
-            return <Badge status="success" className="bg-green-100 text-green-800 border-green-200">Complete</Badge>;
+            return <Badge status="info" className="bg-green-100 text-green-800 border-green-200">Complete</Badge>;
           } if (fitUpMilestone?.isCompleted) {
-            return <Badge status="warning" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
+            return <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-200">Pending</Badge>;
           }
           
           // Shouldn't reach here if API filters correctly, but fallback

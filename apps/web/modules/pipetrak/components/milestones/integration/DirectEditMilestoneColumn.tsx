@@ -159,7 +159,7 @@ export function DirectEditMilestoneColumn({
 
 					<div className="flex items-center gap-2">
 						{hasAnyPending && (
-							<Badge status="success" className="text-xs">
+							<Badge status="info" className="text-xs">
 								<Loader2 className="h-3 w-3 mr-1 animate-spin" />
 								Updating
 							</Badge>

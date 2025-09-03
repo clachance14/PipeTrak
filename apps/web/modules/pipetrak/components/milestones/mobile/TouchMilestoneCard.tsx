@@ -139,7 +139,7 @@ export function TouchMilestoneCard({
 									)}
 									{milestone.creditWeight && (
 										<Badge
-											status="success"
+											status="info"
 											className="text-xs"
 										>
 											{milestone.creditWeight} credits

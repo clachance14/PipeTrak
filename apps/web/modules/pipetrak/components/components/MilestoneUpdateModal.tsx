@@ -126,7 +126,7 @@ const MilestoneUpdateModalComponent = memo(function MilestoneUpdateModal({
 							</Button>
 
 							<div className="flex items-center gap-2">
-								<Badge status="success" className="text-xs">
+								<Badge status="info" className="text-xs">
 									{currentIndex + 1} of {components.length}
 								</Badge>
 								<span className="text-xs text-muted-foreground">

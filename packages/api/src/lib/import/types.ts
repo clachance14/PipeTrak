@@ -33,6 +33,7 @@ export interface FieldWeldImportData {
 	pmiRequired?: boolean;
 	pwhtRequired?: boolean;
 	pmiCompleteDate?: Date;
+	dateWelded?: Date | string;
 	comments?: string;
 	// Additional optional fields from WELD LOG
 	weldSize?: string;

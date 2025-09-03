@@ -63,7 +63,7 @@ export function ReportHeader({
 							</p>
 						)}
 					</div>
-					<Badge status="success" className="ml-4">
+					<Badge status="info" className="ml-4">
 						{reportType}
 					</Badge>
 				</div>
