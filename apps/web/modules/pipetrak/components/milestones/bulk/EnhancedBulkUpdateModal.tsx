@@ -334,7 +334,7 @@ export function EnhancedBulkUpdateModal({
 											</Label>
 											<div className="flex items-center gap-2 mt-1">
 												<Badge
-													variant="outline"
+													status="info"
 													className="text-xs"
 												>
 													{milestone.workflowType.replace(
