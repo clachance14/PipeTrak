@@ -119,18 +119,18 @@ export function MobileBottomSheet({
 							{/* Component metadata */}
 							<div className="flex flex-wrap gap-2 mt-2">
 								{component.area && (
-									<Badge status="info" className="gap-1">
+									<Badge variant="secondary" className="gap-1">
 										<MapPin className="h-3 w-3" />
 										{component.area}
 									</Badge>
 								)}
 								{component.system && (
-									<Badge status="info">
+									<Badge variant="secondary">
 										{component.system}
 									</Badge>
 								)}
 								{component.drawingNumber && (
-									<Badge status="info" className="gap-1">
+									<Badge variant="secondary" className="gap-1">
 										<FileText className="h-3 w-3" />
 										{component.drawingNumber}
 									</Badge>
@@ -141,7 +141,7 @@ export function MobileBottomSheet({
 						{/* Action buttons */}
 						<div className="flex gap-2 shrink-0 ml-4">
 							<Button
-								status="info"
+								variant="secondary"
 								size="sm"
 								onClick={() => onEdit?.(component)}
 								className="gap-2"
@@ -241,7 +241,7 @@ export function MobileBottomSheet({
 				<div className="border-t pt-4">
 					<div className="flex gap-3">
 						<Button
-							status="info"
+							variant="secondary"
 							className="flex-1 gap-2 h-12"
 							onClick={() => onViewHistory?.(component)}
 						>

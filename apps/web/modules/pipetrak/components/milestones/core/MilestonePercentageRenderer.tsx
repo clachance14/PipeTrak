@@ -244,7 +244,7 @@ export function MilestonePercentageRenderer({
 				{/* Input controls */}
 				<div className="flex items-center gap-2">
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => handleStepChange(-5)}
 						disabled={isLocked || isUpdating || currentValue <= 0}
@@ -275,7 +275,7 @@ export function MilestonePercentageRenderer({
 					</div>
 
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => handleStepChange(5)}
 						disabled={isLocked || isUpdating || currentValue >= 100}
@@ -309,7 +309,7 @@ export function MilestonePercentageRenderer({
 						)}
 					</Button>
 					<Button
-						status="info"
+						variant="secondary"
 						onClick={handleCancel}
 						disabled={isUpdating}
 						style={{

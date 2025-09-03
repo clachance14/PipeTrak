@@ -1,4 +1,3 @@
-import React from "react";
 import { config } from "@repo/config";
 
 export function Logo({ withLabel = false }: { withLabel?: boolean }) {

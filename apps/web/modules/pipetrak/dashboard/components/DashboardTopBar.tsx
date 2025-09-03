@@ -5,13 +5,13 @@ import { RefreshCw, Search, Filter, HelpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-type DashboardTopBarProps = {};
+type DashboardTopBarProps = Record<string, never>;
 
 /**
  * Dashboard Top Bar - Client Component
  * Handles user interactions: search, filters, and manual refresh
  */
-export function DashboardTopBar({}: DashboardTopBarProps) {
+export function DashboardTopBar(_props: DashboardTopBarProps) {
 	const router = useRouter();
 	const [isPending, startTransition] = useTransition();
 	const [isRefreshing, setIsRefreshing] = useState(false);
@@ -29,7 +29,7 @@ export function DashboardTopBar({}: DashboardTopBarProps) {
 		<div className="flex items-center justify-end gap-2 py-4">
 			{/* Search - Hidden on mobile, show on tablet+ */}
 			<Button
-				status="info"
+				variant="secondary"
 				size="sm"
 				disabled
 				className="gap-2 hidden md:flex"
@@ -40,7 +40,7 @@ export function DashboardTopBar({}: DashboardTopBarProps) {
 
 			{/* Filters - Hidden on mobile, show on tablet+ */}
 			<Button
-				status="info"
+				variant="secondary"
 				size="sm"
 				disabled
 				className="gap-2 hidden md:flex"
@@ -51,7 +51,7 @@ export function DashboardTopBar({}: DashboardTopBarProps) {
 
 			{/* Manual Refresh - Always visible but compact on mobile */}
 			<Button
-				status="info"
+				variant="secondary"
 				size="sm"
 				onClick={handleManualRefresh}
 				disabled={isPending || isRefreshing}

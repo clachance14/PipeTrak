@@ -49,7 +49,7 @@ export function DrawingMobileSheet({
 		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
 				<Button
-					status="info"
+					variant="secondary"
 					size="sm"
 					className={cn(
 						"fixed bottom-4 left-4 z-40 shadow-lg",
@@ -130,7 +130,7 @@ function findDrawingById(
 
 // Alternative floating action button style trigger
 export function DrawingMobileFAB({
-	projectId,
+	projectId: _projectId,
 	drawings,
 	selectedDrawingId,
 	onDrawingSelect,
@@ -146,6 +146,7 @@ export function DrawingMobileFAB({
 	return (
 		<>
 			<button
+				type="button"
 				onClick={() => setOpen(true)}
 				className={cn(
 					"fixed bottom-20 right-4 z-40",

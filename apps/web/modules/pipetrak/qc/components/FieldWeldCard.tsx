@@ -452,7 +452,7 @@ export function FieldWeldCard({
             {!fieldWeld.ndeResult && onReject && (
               <Button
                 size="sm"
-                status="error"
+                variant="error"
                 className="flex-1 h-12"
                 onClick={(e) => {
                   e.stopPropagation();

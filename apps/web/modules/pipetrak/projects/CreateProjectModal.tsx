@@ -240,7 +240,7 @@ export function CreateProjectModal({
 						<DialogFooter>
 							<Button
 								type="button"
-								status="info"
+								variant="secondary"
 								onClick={() => onOpenChange(false)}
 								disabled={isCreating}
 							>

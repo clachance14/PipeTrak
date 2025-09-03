@@ -1,5 +1,4 @@
 import { Link, Text } from "@react-email/components";
-import React from "react";
 import { createTranslator } from "use-intl/core";
 import PrimaryButton from "../src/components/PrimaryButton";
 import Wrapper from "../src/components/Wrapper";
