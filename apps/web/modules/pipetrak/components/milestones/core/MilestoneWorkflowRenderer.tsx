@@ -69,7 +69,7 @@ export function MilestoneWorkflowRenderer({
 
 	if (!isValidMilestone) {
 		return (
-			<Alert status="error" className={className}>
+			<Alert variant="error" className={className}>
 				<AlertTriangle className="h-4 w-4" />
 				<AlertDescription>
 					Milestone data is incompatible with workflow type "
@@ -124,7 +124,7 @@ export function MilestoneWorkflowRenderer({
 
 		default:
 			return (
-				<Alert status="error" className={className}>
+				<Alert variant="error" className={className}>
 					<AlertTriangle className="h-4 w-4" />
 					<AlertDescription>
 						Unknown workflow type: "{workflowType}". Supported types

@@ -280,7 +280,7 @@ export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 
 			{/* Error Alert */}
 			{hasErrors && (
-				<Alert status="error">
+				<Alert variant="error">
 					<AlertTriangle className="h-4 w-4" />
 					<AlertDescription>
 						Some components could not be imported. Please review the
