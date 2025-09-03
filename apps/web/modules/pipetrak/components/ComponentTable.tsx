@@ -39,7 +39,7 @@ export function ComponentTable({
 	projectId,
 	userId,
 	onEdit,
-	_onBulkEdit,
+	onBulkEdit,
 	onRowClick,
 	onMilestoneClick,
 	pagination,
