@@ -1248,11 +1248,6 @@ export function ComponentTable({
 		setTargetColumn(null);
 	};
 
-	const handleDragOver = (e: React.DragEvent) => {
-		e.preventDefault();
-		e.dataTransfer.dropEffect = "move";
-	};
-
 	const handleDragEnter = (columnId: string) => {
 		// Don't allow dropping on select column or frozen columns
 		if (columnId === "select" || columnId === "componentId") {
