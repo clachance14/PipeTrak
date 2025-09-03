@@ -17,6 +17,20 @@ jobs:
         uses: biomejs/setup-biome@v2
       - name: Run Biome
         run: biome ci .
+  
+  typecheck:
+    name: Type check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install && pnpm --filter database generate
+      - name: Run TypeScript type checking
+        run: pnpm typecheck
   e2e:
     name: Run e2e tests
     timeout-minutes: 60

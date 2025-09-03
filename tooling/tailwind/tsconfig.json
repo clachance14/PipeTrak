@@ -1,0 +1,16 @@
+{
+	"extends": "@repo/tsconfig/base.json",
+	"compilerOptions": {
+		"noEmit": true
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx"
+	],
+	"exclude": [
+		"node_modules",
+		"**/__tests__/**",
+		"**/*.test.ts",
+		"**/*.spec.ts"
+	]
+}

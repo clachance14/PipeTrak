@@ -158,6 +158,21 @@ For detailed information on specific systems, refer to these specialized guides:
   pnpm typecheck
   ```
 - Ensure all code passes linting and type checking before considering task complete
+- Use validation commands for comprehensive checking:
+  ```bash
+  pnpm check:all    # Runs lint, typecheck, and tests
+  pnpm validate     # Alias for check:all
+  ```
+
+### Type Safety Guidelines
+- **Strict Mode Enabled**: All TypeScript code uses strict compiler options
+- **Pre-commit Validation**: Husky hooks automatically run type checking before commits
+- **CI/CD Integration**: GitHub Actions validate TypeScript on all PRs
+- **Component Props**: Follow documented prop interfaces (see `/docs/COMPONENT_USAGE.md`)
+  - Button components use `variant` prop
+  - Badge components use `status` prop
+- **Migration Tracking**: Breaking changes documented in `/docs/MIGRATIONS.md`
+- **Development Scripts**: Use `pnpm dev:typecheck` for watch mode type checking
 
 ### Code Conventions
 - Always understand existing file conventions before making changes

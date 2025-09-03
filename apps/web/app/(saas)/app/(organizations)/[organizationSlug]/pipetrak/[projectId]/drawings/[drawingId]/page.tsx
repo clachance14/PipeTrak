@@ -87,7 +87,6 @@ function DrawingDetailContent({
 		...comp,
 		milestones: comp.milestones || [],
 	}));
-	const _pagination = detailsData?.pagination;
 	const drawings = hierarchyData?.data || [];
 
 	if (!drawing) {
