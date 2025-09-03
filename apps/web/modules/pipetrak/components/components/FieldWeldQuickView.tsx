@@ -276,7 +276,6 @@ export function FieldWeldQuickView({
 							{/* Actions */}
 							<div className="pt-2 border-t">
 								<Button
-									status="info"
 									size="sm"
 									className="w-full"
 									onClick={() => {

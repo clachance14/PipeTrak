@@ -268,7 +268,6 @@ export function FailureDetailsModal({
 
 						<div className="flex gap-2">
 							<Button
-								status="info"
 								size="sm"
 								onClick={copyFailuresToClipboard}
 								disabled={failures.length === 0}
@@ -278,7 +277,6 @@ export function FailureDetailsModal({
 							</Button>
 
 							<Button
-								status="info"
 								size="sm"
 								onClick={exportFailuresAsCSV}
 								disabled={failures.length === 0}
@@ -354,16 +352,6 @@ export function FailureDetailsModal({
 																	(f) =>
 																		f.selected,
 																)}
-																indeterminate={
-																	groupFailures.some(
-																		(f) =>
-																			f.selected,
-																	) &&
-																	!groupFailures.every(
-																		(f) =>
-																			f.selected,
-																	)
-																}
 																onCheckedChange={(
 																	checked,
 																) => {
