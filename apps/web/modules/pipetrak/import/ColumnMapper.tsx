@@ -680,7 +680,7 @@ export function ColumnMapper({
 
 	if (parseError) {
 		return (
-			<Alert status="error">
+			<Alert variant="error">
 				<AlertCircle className="h-4 w-4" />
 				<AlertDescription>{parseError}</AlertDescription>
 			</Alert>

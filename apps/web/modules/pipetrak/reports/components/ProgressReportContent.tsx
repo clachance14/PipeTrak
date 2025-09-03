@@ -129,7 +129,7 @@ export function ProgressReportContent({
 
 				{/* Error Display */}
 				{error && (
-					<Alert status="error">
+					<Alert variant="error">
 						<AlertCircle className="h-4 w-4" />
 						<AlertDescription>
 							Failed to generate progress report: {error.message}

@@ -218,7 +218,7 @@ export function MilestoneQuantityRenderer({
 			<div className="space-y-3">
 				<div className="flex items-center gap-2">
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => handleStepChange(-stepSize)}
 						disabled={isLocked || isUpdating || currentValue <= 0}
@@ -259,7 +259,7 @@ export function MilestoneQuantityRenderer({
 					</div>
 
 					<Button
-						status="info"
+						variant="secondary"
 						size="sm"
 						onClick={() => handleStepChange(stepSize)}
 						disabled={
@@ -304,7 +304,7 @@ export function MilestoneQuantityRenderer({
 						{[1, 5, 10].map((increment) => (
 							<Button
 								key={increment}
-								status="info"
+								variant="secondary"
 								size="sm"
 								onClick={() => handleStepChange(increment)}
 								disabled={
@@ -346,7 +346,7 @@ export function MilestoneQuantityRenderer({
 						)}
 					</Button>
 					<Button
-						status="info"
+						variant="secondary"
 						onClick={handleCancel}
 						disabled={isUpdating}
 						style={{

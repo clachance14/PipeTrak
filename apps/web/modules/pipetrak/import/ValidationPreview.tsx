@@ -267,7 +267,7 @@ export function ValidationPreview({
 					</AlertDescription>
 				</Alert>
 			) : (
-				<Alert status="error">
+				<Alert variant="error">
 					<XCircle className="h-4 w-4" />
 					<AlertTitle>Validation Failed</AlertTitle>
 					<AlertDescription>

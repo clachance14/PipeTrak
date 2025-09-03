@@ -1,4 +1,11 @@
 // Core component types matching Prisma schema
+
+// User interface for completer relation
+export interface User {
+	id: string;
+	name?: string | null;
+	email: string;
+}
 export interface Component {
 	id: string;
 	projectId: string;
@@ -46,6 +53,7 @@ export interface ComponentMilestone {
 	createdAt: Date;
 	updatedAt: Date;
 	component?: Component;
+	completer?: User | null;
 	// Additional fields for UI rendering
 	weight: number; // ROC weight (0-100) from database
 	creditWeight?: number; // Credit weight for progress calculations

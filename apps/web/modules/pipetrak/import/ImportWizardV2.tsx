@@ -538,7 +538,7 @@ export function ImportWizardV2({ projectId }: ImportWizardV2Props) {
 
 			{/* Error Display */}
 			{error && (
-				<Alert status="error">
+				<Alert variant="error">
 					<AlertTriangle className="h-4 w-4" />
 					<AlertDescription>{error}</AlertDescription>
 				</Alert>

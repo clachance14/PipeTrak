@@ -475,7 +475,7 @@ export function FieldWeldColumnMapper({
 
       {/* Validation Results */}
       {validationResults && !validationResults.isValid && (
-        <Alert status="error">
+        <Alert variant="error">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
             <div className="space-y-2">
