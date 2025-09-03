@@ -252,12 +252,10 @@ export function MilestoneDiscreteRenderer({
 				<div className="px-3 text-xs text-muted-foreground">
 					Completed{" "}
 					{new Date(milestone.completedAt).toLocaleDateString()}
-					{milestone.completer && (
+					{milestone.completedBy && (
 						<>
 							{" "}
-							by{" "}
-							{milestone.completer.name ||
-								milestone.completer.email}
+							by {milestone.completedBy}
 						</>
 					)}
 				</div>
