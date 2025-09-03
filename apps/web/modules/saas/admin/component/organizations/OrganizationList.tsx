@@ -88,16 +88,33 @@ export function OrganizationList() {
 	const deleteOrganization = async (id: string) => {
 		toast.promise(
 			async () => {
-				const response = await authClient.$fetch("/organization/delete", {
+				const response = await fetch("/api/organization/delete", {
 					method: "POST",
-					body: {
-						organizationId: id,
+					headers: {
+						"Content-Type": "application/json",
 					},
+					credentials: "include",
+					body: JSON.stringify({
+						organizationId: id,
+					}),
 				});
-
-				const error = !response || response.error;
-				if (error) {
+				
+				if (!response.ok) {
 					throw new Error("Failed to delete organization");
+				}
+				
+				const text = await response.text();
+				let data = null;
+				if (text) {
+					try {
+						data = JSON.parse(text);
+					} catch (e) {
+						// Response is not JSON, treat as success
+					}
+				}
+				
+				if (data && data.error) {
+					throw new Error(data.error.message || "Failed to delete organization");
 				}
 			},
 			{

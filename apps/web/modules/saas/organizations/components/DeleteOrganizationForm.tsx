@@ -30,16 +30,48 @@ export function DeleteOrganizationForm() {
 			),
 			destructive: true,
 			onConfirm: async () => {
-				const response = await authClient.$fetch("/organization/delete", {
-					method: "POST",
-					body: {
-						organizationId: activeOrganization.id,
-					},
-				});
-				
-				const error = !response || response.error;
-
-				if (error) {
+				try {
+					const response = await fetch("/api/organization/delete", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						credentials: "include",
+						body: JSON.stringify({
+							organizationId: activeOrganization.id,
+						}),
+					});
+					
+					if (!response.ok) {
+						toast.error(
+							t(
+								"organizations.settings.notifications.organizationNotDeleted",
+							),
+						);
+						return;
+					}
+					
+					const text = await response.text();
+					let data = null;
+					if (text) {
+						try {
+							data = JSON.parse(text);
+						} catch (e) {
+							// Response is not JSON, treat as success
+						}
+					}
+					
+					// Check if there's an error in the response data
+					if (data && data.error) {
+						toast.error(
+							t(
+								"organizations.settings.notifications.organizationNotDeleted",
+							),
+						);
+						return;
+					}
+					
+				} catch (err) {
 					toast.error(
 						t(
 							"organizations.settings.notifications.organizationNotDeleted",
