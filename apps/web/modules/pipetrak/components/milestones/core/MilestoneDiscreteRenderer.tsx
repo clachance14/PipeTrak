@@ -233,7 +233,7 @@ export function MilestoneDiscreteRenderer({
 						)}
 					</Button>
 					<Button
-						status="info"
+						variant="outline"
 						onClick={handleCancel}
 						disabled={isUpdating}
 						size="sm"
