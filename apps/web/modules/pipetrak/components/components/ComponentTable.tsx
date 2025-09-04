@@ -12,10 +12,10 @@ import {
 	useReactTable,
 	getCoreRowModel,
 	getSortedRowModel,
-	getFilteredRowModel,
+	getFileFilteredRowModel,
 	type ColumnDef,
 	type SortingState,
-	type ColumnFiltersState,
+	type ColumnFileFiltersState,
 	type VisibilityState,
 	type RowSelectionState,
 	type ColumnSizingState,
@@ -29,12 +29,12 @@ import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
 import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
 import { ComponentHoverCard } from "./ComponentHoverCard";
 import { FieldWeldQuickView } from "./FieldWeldQuickView";
-import { FilterBar, type FilterState } from "./FilterBar";
+import { FileFilterBar, type FileFilterState } from "./FileFilterBar";
 import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditMilestoneColumn";
 import { InlineDiscreteMilestones } from "../milestones/integration/InlineDiscreteMilestones";
 import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
 import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
-import { applyComponentFilters } from "../lib/bulk-update-utils";
+import { applyComponentFileFilters } from "../lib/bulk-update-utils";
 import { createBulkUpdateService } from "../lib/bulk-update-service";
 import {
 	VIEW_PRESETS,
@@ -63,7 +63,7 @@ import {
 } from "@ui/components/dropdown-menu";
 import {
 	Search,
-	Filter,
+	FileFilter,
 	Download,
 	Upload,
 	RefreshCw,
@@ -73,13 +73,13 @@ import {
 	Columns,
 	Maximize2,
 	Minimize2,
-	Settings2,
+	Settings,
 	HardHat,
 	Wrench,
 	BarChart3,
 	Table2,
 	Zap,
-	CheckCircle2,
+	CheckCircle22,
 	AlertTriangle,
 	XCircle,
 	Clock,
@@ -253,14 +253,14 @@ export function ComponentTable({
 	const [sorting, setSorting] = useState<SortingState>([
 		{ id: "componentId", desc: false },
 	]);
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [columnFileFilters, setColumnFileFilters] = useState<ColumnFileFiltersState>([]);
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
 		{},
 	);
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 	// Initialize with empty state to avoid hydration mismatch
 	const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({});
-	const [globalFilter, setGlobalFilter] = useState("");
+	const [globalFileFilter, setGlobalFileFilter] = useState("");
 	const [isMobile, setIsMobile] = useState(false);
 	const [isFullScreen, setIsFullScreen] = useState(false);
 	const [showBulkUpdateModal, setShowBulkUpdateModal] = useState(false);
@@ -302,7 +302,7 @@ export function ComponentTable({
 	const [targetColumn, setTargetColumn] = useState<string | null>(null);
 
 	// New filter states
-	const [filters, setFilters] = useState<FilterState>({
+	const [filters, setFileFilters] = useState<FileFilterState>({
 		area: "all",
 		testPackage: "all",
 		system: "all",
@@ -725,7 +725,7 @@ export function ComponentTable({
 											status="info"
 											className="h-4 text-xs bg-green-100 text-green-800"
 										>
-											<CheckCircle2 className="h-2 w-2 mr-1" />
+											<CheckCircle22 className="h-2 w-2 mr-1" />
 											NDE OK
 										</Badge>,
 									);
@@ -967,7 +967,7 @@ export function ComponentTable({
 
 	// Apply new filters to data
 	const filteredData = useMemo(() => {
-		return applyComponentFilters(data, filters);
+		return applyComponentFileFilters(data, filters);
 	}, [data, filters]);
 
 	// Create table instance
@@ -976,21 +976,21 @@ export function ComponentTable({
 		columns,
 		state: {
 			sorting,
-			columnFilters,
+			columnFileFilters,
 			columnVisibility,
 			rowSelection,
 			columnSizing,
 			columnOrder,
 		},
 		onSortingChange: setSorting,
-		onColumnFiltersChange: setColumnFilters,
+		onColumnFileFiltersChange: setColumnFileFilters,
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: setRowSelection,
 		onColumnSizingChange: setColumnSizing,
 		onColumnOrderChange: setColumnOrder,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
+		getFileFilteredRowModel: getFileFilteredRowModel(),
 		columnResizeMode: "onChange",
 		enableColumnResizing: true,
 		enableRowSelection: true,
@@ -1232,8 +1232,8 @@ export function ComponentTable({
 	};
 
 
-	// Select All Filtered handler
-	const selectAllFiltered = useCallback(() => {
+	// Select All FileFiltered handler
+	const selectAllFileFiltered = useCallback(() => {
 		const newSelection: RowSelectionState = {};
 		filteredData.forEach((component) => {
 			newSelection[component.id] = true;
@@ -1264,7 +1264,7 @@ export function ComponentTable({
 		}
 		// More robust desktop selection calculation
 		try {
-			const selectedRows = table.getFilteredSelectedRowModel().rows;
+			const selectedRows = table.getFileFilteredSelectedRowModel().rows;
 			const selected = selectedRows.map((r) => r.original);
 
 			// Fallback: If table selection seems inconsistent, use rowSelection state directly
@@ -1509,9 +1509,9 @@ export function ComponentTable({
 											<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 											<Input
 												placeholder="Search components..."
-												value={globalFilter}
+												value={globalFileFilter}
 												onChange={(e) =>
-													setGlobalFilter(
+													setGlobalFileFilter(
 														e.target.value,
 													)
 												}
@@ -1714,10 +1714,10 @@ export function ComponentTable({
 								size="icon"
 								onClick={() => {
 									// TODO: Show filter modal
-									toast.info("Filter modal coming soon");
+									toast.info("FileFilter modal coming soon");
 								}}
 							>
-								<Filter className="h-6 w-6" />
+								<FileFilter className="h-6 w-6" />
 							</Button>
 						</div>
 
@@ -1767,10 +1767,10 @@ export function ComponentTable({
 				isFullScreen && "h-full flex flex-col",
 			)}
 		>
-			{/* New FilterBar Component */}
-			<FilterBar
+			{/* New FileFilterBar Component */}
+			<FileFilterBar
 				components={data}
-				onFilterChange={setFilters}
+				onFileFilterChange={setFileFilters}
 				filteredCount={filteredData.length}
 				totalCount={data.length}
 			/>
@@ -1783,7 +1783,7 @@ export function ComponentTable({
 							<Button
 								variant="outline"
 								size="sm"
-								onClick={selectAllFiltered}
+								onClick={selectAllFileFiltered}
 							>
 								Select All {filteredData.length}
 							</Button>
@@ -1841,7 +1841,7 @@ export function ComponentTable({
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline" size="sm">
-								<Settings2 className="mr-2 h-4 w-4" />
+								<Settings className="mr-2 h-4 w-4" />
 								{activePreset.name}
 							</Button>
 						</DropdownMenuTrigger>

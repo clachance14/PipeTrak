@@ -5,7 +5,7 @@ import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { 
-  CheckCircle2, 
+  CheckCircle22, 
   XCircle, 
   AlertTriangle, 
   Clock, 
@@ -103,7 +103,7 @@ export function FieldWeldCard({
   const getNdeStatusIcon = () => {
     switch (fieldWeld.ndeResult?.toLowerCase()) {
       case 'accept':
-        return <CheckCircle2 className="h-5 w-5 text-green-600" />;
+        return <CheckCircle22 className="h-5 w-5 text-green-600" />;
       case 'reject':
         return <XCircle className="h-5 w-5 text-red-600" />;
       case 'repair':
@@ -205,7 +205,7 @@ export function FieldWeldCard({
         <>
           {currentX - startX > 50 && (
             <div className="absolute left-0 top-0 bottom-0 w-20 bg-green-500/20 flex items-center justify-center">
-              <CheckCircle2 className="h-8 w-8 text-green-600" />
+              <CheckCircle22 className="h-8 w-8 text-green-600" />
             </div>
           )}
           {currentX - startX < -50 && (
@@ -258,7 +258,7 @@ export function FieldWeldCard({
                     e.stopPropagation();
                     onMarkComplete();
                   }}>
-                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
+                    <CheckCircle22 className="mr-2 h-4 w-4 text-green-600" />
                     Mark Complete
                   </DropdownMenuItem>
                 )}
@@ -267,7 +267,7 @@ export function FieldWeldCard({
                     e.stopPropagation();
                     onApprove();
                   }}>
-                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
+                    <CheckCircle22 className="mr-2 h-4 w-4 text-green-600" />
                     Approve NDE
                   </DropdownMenuItem>
                 )}
@@ -315,7 +315,7 @@ export function FieldWeldCard({
               const dateWelded = fieldWeld.dateWelded;
               const wmMilestone = fieldWeld.component?.milestones?.find(m => m.milestoneName === "Weld");
               const isComplete = !!dateWelded || (wmMilestone?.isCompleted === true);
-              return isComplete ? <CheckCircle2 className="h-3 w-3" /> : <Clock className="h-3 w-3" />;
+              return isComplete ? <CheckCircle22 className="h-3 w-3" /> : <Clock className="h-3 w-3" />;
             })()}
             <span className="ml-2">
               Weld: {(() => {
@@ -432,7 +432,7 @@ export function FieldWeldCard({
                   onMarkComplete();
                 }}
               >
-                <CheckCircle2 className="mr-2 h-4 w-4" />
+                <CheckCircle22 className="mr-2 h-4 w-4" />
                 Mark Complete
               </Button>
             )}
@@ -445,7 +445,7 @@ export function FieldWeldCard({
                   onApprove();
                 }}
               >
-                <CheckCircle2 className="mr-2 h-4 w-4" />
+                <CheckCircle22 className="mr-2 h-4 w-4" />
                 Approve NDE
               </Button>
             )}

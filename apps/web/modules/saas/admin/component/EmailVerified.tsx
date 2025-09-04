@@ -5,7 +5,7 @@ import {
 	TooltipTrigger,
 } from "@ui/components/tooltip";
 import { cn } from "@ui/lib";
-import { CheckIcon, ClockIcon } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function EmailVerified({
@@ -26,9 +26,9 @@ export function EmailVerified({
 				</TooltipContent>
 				<TooltipTrigger className={cn(className)}>
 					{verified ? (
-						<CheckIcon className="size-3 text-primary" />
+						<Check className="size-3 text-primary" />
 					) : (
-						<ClockIcon className="size-3" />
+						<Clock className="size-3" />
 					)}
 				</TooltipTrigger>
 			</Tooltip>

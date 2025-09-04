@@ -18,9 +18,9 @@ import {
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
 import { Textarea } from "@ui/components/textarea";
-import { CheckIcon, MailIcon } from "lucide-react";
+import { Check, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useForm, type ControllerRenderProps } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export function ContactForm() {
 	const t = useTranslations();
@@ -49,7 +49,7 @@ export function ContactForm() {
 		<div>
 			{form.formState.isSubmitSuccessful ? (
 				<Alert variant="success">
-					<CheckIcon />
+					<Check />
 					<AlertTitle>
 						{t("contact.form.notifications.success")}
 					</AlertTitle>
@@ -62,7 +62,7 @@ export function ContactForm() {
 					>
 						{form.formState.errors.root?.message && (
 							<Alert variant="error">
-								<MailIcon />
+								<Mail />
 								<AlertTitle>
 									{form.formState.errors.root.message}
 								</AlertTitle>
@@ -72,7 +72,7 @@ export function ContactForm() {
 						<FormField
 							control={form.control}
 							name="name"
-							render={({ field }) => (
+							render={({ field }: { field: any }) => (
 								<FormItem>
 									<FormLabel>
 										{t("contact.form.name")}
@@ -88,7 +88,7 @@ export function ContactForm() {
 						<FormField
 							control={form.control}
 							name="email"
-							render={({ field }) => (
+							render={({ field }: { field: any }) => (
 								<FormItem>
 									<FormLabel>
 										{t("contact.form.email")}
@@ -104,7 +104,7 @@ export function ContactForm() {
 						<FormField
 							control={form.control}
 							name="message"
-							render={({ field }) => (
+							render={({ field }: { field: any }) => (
 								<FormItem>
 									<FormLabel>
 										{t("contact.form.message")}

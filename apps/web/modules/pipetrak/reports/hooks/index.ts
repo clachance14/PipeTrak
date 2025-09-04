@@ -10,9 +10,9 @@ export {
 } from "./useReportGeneration";
 
 export {
-	useReportFilters,
-	type ReportFilters,
-} from "./useReportFilters";
+	useReportFileFilters,
+	type ReportFileFilters,
+} from "./useReportFileFilters";
 
 export {
 	useReportExport,
@@ -30,7 +30,7 @@ export {
 	useReportStatus,
 	useClearReportCache,
 	useBulkReportGeneration,
-	useReportFilterOptions,
+	useReportFileFilterOptions,
 	useReportsDashboard,
 	useReportsRealtime,
 } from "./useReportsData";

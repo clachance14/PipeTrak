@@ -1,12 +1,12 @@
 /**
- * Unit tests for AreaSystemGrid component
+ * Unit tests for AreaSystemGrid3x3 component
  * Tests heatmap rendering, tooltips, drill-down interaction, and color mapping
  */
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
-import { AreaSystemGrid } from '../components/AreaSystemGrid';
+import { AreaSystemGrid3x3 } from '../components/AreaSystemGrid3x3';
 import {
   smallAreaSystemMatrix,
   largeAreaSystemMatrix,
@@ -24,10 +24,10 @@ vi.mock('../components/DrillDownSheet', () => ({
     ) : null
 }));
 
-describe('AreaSystemGrid', () => {
+describe('AreaSystemGrid3x3', () => {
   describe('Empty State', () => {
     it('renders empty state when data is null', () => {
-      render(<AreaSystemGrid data={null} />);
+      render(<AreaSystemGrid3x3 data={null} />);
       
       expect(screen.getByText('Area × System Progress Matrix')).toBeInTheDocument();
       expect(screen.getByText('No area/system data available')).toBeInTheDocument();
@@ -39,15 +39,15 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      render(<AreaSystemGrid data={emptyData} />);
+      render(<AreaSystemGrid3x3 data={emptyData} />);
       
       expect(screen.getByText('No area/system data available')).toBeInTheDocument();
     });
   });
 
-  describe('Grid Rendering', () => {
+  describe('Grid3x3 Rendering', () => {
     it('renders SVG grid with proper dimensions', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       const svg = document.querySelector('svg');
       expect(svg).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('renders area labels correctly', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Check for area labels from fixture data
       expect(screen.getByText('Area-01')).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('renders system labels correctly', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Check for system labels from fixture data
       expect(screen.getByText('System-01')).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('renders completion percentages in cells', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Check for completion percentages from fixture data
       expect(screen.getByText('60%')).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('renders component counts in cells', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Check for component counts from fixture data
       expect(screen.getByText('(3/5)')).toBeInTheDocument();
@@ -92,7 +92,7 @@ describe('AreaSystemGrid', () => {
 
   describe('Color Mapping', () => {
     it('applies correct fill colors based on completion percentage', () => {
-      const { container } = render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      const { container } = render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // All cells should have some fill color
       const rects = container.querySelectorAll('rect[fill]:not([fill="rgb(243, 244, 246)"])');
@@ -116,7 +116,7 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      const { container } = render(<AreaSystemGrid data={sparseData} />);
+      const { container } = render(<AreaSystemGrid3x3 data={sparseData} />);
       
       // Should have gray cells for empty combinations
       const grayCells = container.querySelectorAll('rect[fill="rgb(243, 244, 246)"]');
@@ -126,7 +126,7 @@ describe('AreaSystemGrid', () => {
 
   describe('Stalled Component Indicators', () => {
     it('renders red triangle for stalled components', () => {
-      const { container } = render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      const { container } = render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Should have red triangle indicators for cells with stalled components
       const triangles = container.querySelectorAll('polygon[fill="rgb(239, 68, 68)"]');
@@ -148,7 +148,7 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      const { container } = render(<AreaSystemGrid data={dataWithoutStalled} />);
+      const { container } = render(<AreaSystemGrid3x3 data={dataWithoutStalled} />);
       
       const triangles = container.querySelectorAll('polygon[fill="rgb(239, 68, 68)"]');
       expect(triangles).toHaveLength(0);
@@ -158,7 +158,7 @@ describe('AreaSystemGrid', () => {
   describe('Tooltips', () => {
     it('shows tooltip content on hover', async () => {
       const user = userEvent.setup();
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Find a cell rect and hover over it
       const cells = document.querySelectorAll('rect[class*="cursor-pointer"]');
@@ -174,7 +174,7 @@ describe('AreaSystemGrid', () => {
 
     it('shows stalled component details in tooltip when present', async () => {
       const user = userEvent.setup();
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Find a cell with stalled components and hover
       const cells = document.querySelectorAll('rect[class*="cursor-pointer"]');
@@ -190,7 +190,7 @@ describe('AreaSystemGrid', () => {
   describe('Cell Click Interaction', () => {
     it('opens drill-down sheet when cell is clicked', async () => {
       const user = userEvent.setup();
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Find and click a cell
       const cells = document.querySelectorAll('rect[class*="cursor-pointer"]');
@@ -203,7 +203,7 @@ describe('AreaSystemGrid', () => {
 
     it('passes correct cell data to drill-down sheet', async () => {
       const user = userEvent.setup();
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       const cells = document.querySelectorAll('rect[class*="cursor-pointer"]');
       await user.click(cells[0]);
@@ -214,7 +214,7 @@ describe('AreaSystemGrid', () => {
 
     it('closes drill-down sheet when close is called', async () => {
       const user = userEvent.setup();
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Open sheet
       const cells = document.querySelectorAll('rect[class*="cursor-pointer"]');
@@ -231,7 +231,7 @@ describe('AreaSystemGrid', () => {
 
   describe('Legend', () => {
     it('renders color legend correctly', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       expect(screen.getByText('0-30%')).toBeInTheDocument();
       expect(screen.getByText('31-70%')).toBeInTheDocument();
@@ -240,7 +240,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('displays correct matrix dimensions', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Should show dimensions based on fixture data
       expect(screen.getByText(/2 areas × 2 systems = 3 combinations/)).toBeInTheDocument();
@@ -249,14 +249,14 @@ describe('AreaSystemGrid', () => {
 
   describe('Responsive Layout', () => {
     it('handles overflow with scrollable container', () => {
-      const { container } = render(<AreaSystemGrid data={largeAreaSystemMatrix} />);
+      const { container } = render(<AreaSystemGrid3x3 data={largeAreaSystemMatrix} />);
       
       const scrollContainer = container.querySelector('.overflow-auto');
       expect(scrollContainer).toBeInTheDocument();
     });
 
     it('sets minimum width on SVG for large grids', () => {
-      render(<AreaSystemGrid data={largeAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={largeAreaSystemMatrix} />);
       
       const svg = document.querySelector('svg');
       expect(svg).toHaveClass('min-w-full');
@@ -267,7 +267,7 @@ describe('AreaSystemGrid', () => {
     it('efficiently handles large datasets', () => {
       // Test with large dataset
       const startTime = performance.now();
-      render(<AreaSystemGrid data={largeAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={largeAreaSystemMatrix} />);
       const endTime = performance.now();
       
       // Rendering should complete quickly (within reasonable time)
@@ -275,10 +275,10 @@ describe('AreaSystemGrid', () => {
     });
 
     it('uses memoization for grid calculations', () => {
-      const { rerender } = render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      const { rerender } = render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Re-render with same data - should not recalculate
-      rerender(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      rerender(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Component should still render correctly
       expect(screen.getByText('Area × System Progress Matrix')).toBeInTheDocument();
@@ -287,7 +287,7 @@ describe('AreaSystemGrid', () => {
 
   describe('Accessibility', () => {
     it('provides proper ARIA labels for interactive elements', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // SVG should have accessible structure
       const svg = document.querySelector('svg');
@@ -295,7 +295,7 @@ describe('AreaSystemGrid', () => {
     });
 
     it('supports keyboard navigation through cells', () => {
-      render(<AreaSystemGrid data={smallAreaSystemMatrix} />);
+      render(<AreaSystemGrid3x3 data={smallAreaSystemMatrix} />);
       
       // Interactive cells should be focusable
       const interactiveCells = document.querySelectorAll('rect[class*="cursor-pointer"]');
@@ -319,7 +319,7 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      render(<AreaSystemGrid data={zeroData} />);
+      render(<AreaSystemGrid3x3 data={zeroData} />);
       
       expect(screen.getByText('0%')).toBeInTheDocument();
       expect(screen.getByText('(0/5)')).toBeInTheDocument();
@@ -340,7 +340,7 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      render(<AreaSystemGrid data={completeData} />);
+      render(<AreaSystemGrid3x3 data={completeData} />);
       
       expect(screen.getByText('100%')).toBeInTheDocument();
       expect(screen.getByText('(5/5)')).toBeInTheDocument();
@@ -361,7 +361,7 @@ describe('AreaSystemGrid', () => {
         generatedAt: Date.now(),
       };
 
-      render(<AreaSystemGrid data={fractionalData} />);
+      render(<AreaSystemGrid3x3 data={fractionalData} />);
       
       expect(screen.getByText('33.33%')).toBeInTheDocument();
     });

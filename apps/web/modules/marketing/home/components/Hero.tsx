@@ -2,10 +2,10 @@
 
 import { Button } from "@ui/components/button";
 import {
-	ArrowRightIcon,
+	ArrowRight,
 	HardHat,
 	WifiOff,
-	FileUp,
+	File,
 	Clock,
 	ChevronDown,
 } from "lucide-react";
@@ -70,7 +70,7 @@ export function Hero() {
 							className="bg-gray-400 text-white font-semibold px-8 py-4 text-lg h-auto cursor-not-allowed"
 						>
 							Coming Early 2025
-							<ArrowRightIcon className="ml-2 h-5 w-5" />
+							<ArrowRight className="ml-2 h-5 w-5" />
 						</Button>
 						<Button
 							onClick={scrollToFeatures}
@@ -90,7 +90,7 @@ export function Hero() {
 							text="Works offline in the field"
 						/>
 						<ProofPoint
-							icon={FileUp}
+							icon={File}
 							text="Import your Excel files instantly"
 						/>
 						<ProofPoint icon={Clock} text="Set up in 5 minutes" />

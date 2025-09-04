@@ -17,7 +17,7 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { PasswordInput } from "@ui/components/password-input";
-import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
+import { AlertTriangleIcon, ArrowLeft, MailboxIcon } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -129,7 +129,7 @@ export function ResetPasswordForm() {
 
 			<div className="mt-6 text-center text-sm">
 				<Link href="/auth/login">
-					<ArrowLeftIcon className="mr-1 inline size-4 align-middle" />
+					<ArrowLeft className="mr-1 inline size-4 align-middle" />
 					{t("auth.resetPassword.backToSignin")}
 				</Link>
 			</div>

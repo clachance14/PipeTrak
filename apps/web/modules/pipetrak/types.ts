@@ -281,8 +281,8 @@ export interface PaginatedResponse<T> {
 	};
 }
 
-// Filter and search types
-export interface ComponentFilters {
+// FileFilter and search types
+export interface ComponentFileFilters {
 	discipline?: string[];
 	area?: string[];
 	drawingId?: string;

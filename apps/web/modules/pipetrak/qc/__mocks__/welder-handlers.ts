@@ -32,13 +32,13 @@ export const welderHandlers = [
 
     let welders = welderDatabase.filter(w => w.projectId === projectId);
 
-    // Filter by active status
+    // FileFilter by active status
     if (active !== null) {
       const isActive = active === 'true';
       welders = welders.filter(w => w.active === isActive);
     }
 
-    // Filter by search term (stencil or name)
+    // FileFilter by search term (stencil or name)
     if (search) {
       const searchLower = search.toLowerCase();
       welders = welders.filter(w => 

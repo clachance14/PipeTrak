@@ -17,7 +17,7 @@ import {
 	Smartphone,
 	Monitor,
 	Zap,
-	CheckCircle,
+	CheckCircle2,
 } from "lucide-react";
 import type { ComponentWithMilestones } from "../../../types";
 
@@ -355,16 +355,16 @@ export function MilestoneSystemDemo({
 									<CardContent className="text-sm">
 										<ul className="space-y-2">
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Preview changes before applying
 											</li>
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Validate permissions and data
 												integrity
 											</li>
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Batch processing with progress
 												indicators
 											</li>
@@ -381,16 +381,16 @@ export function MilestoneSystemDemo({
 									<CardContent className="text-sm">
 										<ul className="space-y-2">
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Partial failure recovery
 											</li>
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Transaction rollback for
 												critical errors
 											</li>
 											<li className="flex items-center gap-2">
-												<CheckCircle className="h-4 w-4 text-green-600" />
+												<CheckCircle2 className="h-4 w-4 text-green-600" />
 												Detailed success/failure
 												reporting
 											</li>

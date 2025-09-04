@@ -13,9 +13,9 @@ interface MilestoneWorkflowRendererProps {
 	isLocked?: boolean;
 	isLoading?: boolean;
 	touchTargetSize?: number;
-	showUndoOption?: boolean;
+	showUndo2Option?: boolean;
 	onUpdate: (value: boolean | number) => Promise<void>;
-	onUndo?: () => void;
+	onUndo2?: () => void;
 	className?: string;
 }
 
@@ -25,9 +25,9 @@ export function MilestoneWorkflowRenderer({
 	isLocked = false,
 	isLoading = false,
 	touchTargetSize = 52,
-	showUndoOption = false,
+	showUndo2Option = false,
 	onUpdate,
-	onUndo,
+	onUndo2,
 	className,
 }: MilestoneWorkflowRendererProps) {
 	// Handle discrete milestone updates
@@ -87,9 +87,9 @@ export function MilestoneWorkflowRenderer({
 					isLocked={isLocked}
 					isLoading={isLoading}
 					touchTargetSize={touchTargetSize}
-					showUndoOption={showUndoOption}
+					showUndo2Option={showUndo2Option}
 					onUpdate={handleDiscreteUpdate}
-					onUndo={onUndo}
+					onUndo2={onUndo2}
 					className={className}
 				/>
 			);
@@ -101,9 +101,9 @@ export function MilestoneWorkflowRenderer({
 					isLocked={isLocked}
 					isLoading={isLoading}
 					touchTargetSize={touchTargetSize}
-					showUndoOption={showUndoOption}
+					showUndo2Option={showUndo2Option}
 					onUpdate={handlePercentageUpdate}
-					onUndo={onUndo}
+					onUndo2={onUndo2}
 					className={className}
 				/>
 			);
@@ -115,9 +115,9 @@ export function MilestoneWorkflowRenderer({
 					isLocked={isLocked}
 					isLoading={isLoading}
 					touchTargetSize={touchTargetSize}
-					showUndoOption={showUndoOption}
+					showUndo2Option={showUndo2Option}
 					onUpdate={handleQuantityUpdate}
-					onUndo={onUndo}
+					onUndo2={onUndo2}
 					className={className}
 				/>
 			);

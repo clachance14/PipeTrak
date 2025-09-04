@@ -27,7 +27,7 @@ import {
 } from "@ui/components/dropdown-menu";
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { EditIcon, MoreVerticalIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { Edit, MoreVertical, PlusIcon, Trash } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
@@ -173,7 +173,7 @@ export function OrganizationList() {
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<Button size="icon" variant="ghost">
-										<MoreVerticalIcon className="size-4" />
+										<MoreVertical className="size-4" />
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
@@ -182,7 +182,7 @@ export function OrganizationList() {
 											href={getOrganizationEditPath(id)}
 											className="flex items-center"
 										>
-											<EditIcon className="mr-2 size-4" />
+											<Edit className="mr-2 size-4" />
 											{t("admin.organizations.edit")}
 										</Link>
 									</DropdownMenuItem>
@@ -205,7 +205,7 @@ export function OrganizationList() {
 										}
 									>
 										<span className="flex items-center text-destructive hover:text-destructive">
-											<TrashIcon className="mr-2 size-4" />
+											<Trash className="mr-2 size-4" />
 											{t("admin.organizations.delete")}
 										</span>
 									</DropdownMenuItem>

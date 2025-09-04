@@ -23,7 +23,7 @@ export type {
 	AuditTrailResponse,
 	BulkReportResponse,
 	ReportStatusResponse,
-	FilterOptionsResponse,
+	FileFilterOptionsResponse,
 	// Data Types
 	ROCWeightedProgress,
 	ProgressReportData,
@@ -36,16 +36,16 @@ export type {
 	ProgressChartData,
 	ROCChartData,
 	ChartDataPoint,
-	// Filter and Configuration Types
-	ReportFilters,
-	ComponentDetailsFilters,
+	// FileFilter and Configuration Types
+	ReportFileFilters,
+	ComponentDetailsFileFilters,
 	ReportPagination,
 	ReportSorting,
 	ProgressReportOptions,
 	TestPackageOptions,
 	TrendTimeframe,
 	TrendOptions,
-	AuditFilters,
+	AuditFileFilters,
 	BulkReportOptions,
 	// Export Configuration
 	ExportFormat,
@@ -98,7 +98,7 @@ export {
 	getReportStatus,
 	clearReportCache,
 	generateBulkReports,
-	getReportFilterOptions,
+	getReportFileFilterOptions,
 	// Query builders
 	buildProgressReportQuery,
 	buildComponentDetailsQuery,
@@ -130,8 +130,8 @@ export {
 	useClearReportCache,
 	// Bulk operations
 	useBulkReportGeneration,
-	// Filter options
-	useReportFilterOptions,
+	// FileFilter options
+	useReportFileFilterOptions,
 	// Combined dashboard hooks
 	useReportsDashboard,
 	useReportsRealtime,

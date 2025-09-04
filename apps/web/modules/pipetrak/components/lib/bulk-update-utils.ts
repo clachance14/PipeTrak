@@ -232,7 +232,7 @@ export function generateUpdateSummary(
 /**
  * Helper to apply filters to components
  */
-export function applyComponentFilters(
+export function applyComponentFileFilters(
 	components: ComponentWithMilestones[],
 	filters: {
 		area?: string;

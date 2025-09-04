@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from "@ui/components/alert";
 import { ScrollArea } from "@ui/components/scroll-area";
 import {
 	Loader2,
-	CheckCircle2,
+	CheckCircle22,
 	XCircle,
 	AlertTriangle,
 	FileSpreadsheet,
@@ -69,7 +69,7 @@ export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 					<Loader2 className="h-8 w-8 animate-spin text-primary" />
 				);
 			case "completed":
-				return <CheckCircle2 className="h-8 w-8 text-green-600" />;
+				return <CheckCircle22 className="h-8 w-8 text-green-600" />;
 			case "failed":
 				return <XCircle className="h-8 w-8 text-red-600" />;
 			case "partial":
@@ -177,7 +177,7 @@ export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 				<Card>
 					<CardContent className="p-4">
 						<div className="flex items-center gap-3">
-							<CheckCircle2 className="h-5 w-5 text-green-600" />
+							<CheckCircle22 className="h-5 w-5 text-green-600" />
 							<div>
 								<p className="text-sm text-muted-foreground">
 									Success
@@ -249,7 +249,7 @@ export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 												<AlertTriangle className="h-3 w-3 text-orange-600 inline mr-1" />
 											)}
 											{log.type === "success" && (
-												<CheckCircle2 className="h-3 w-3 text-green-600 inline mr-1" />
+												<CheckCircle22 className="h-3 w-3 text-green-600 inline mr-1" />
 											)}
 											<span
 												className={

@@ -3,16 +3,16 @@
 import { useState, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { getReportFilterOptions } from "../lib/report-api";
+import { getReportFileFilterOptions } from "../lib/report-api";
 import type {
-	ReportFilters,
-	ComponentDetailsFilters,
-	AuditFilters,
+	ReportFileFilters,
+	ComponentDetailsFileFilters,
+	AuditFileFilters,
 } from "../types";
 
-interface UseReportFiltersOptions {
+interface UseReportFileFiltersOptions {
 	projectId: string;
-	initialFilters?: Partial<ReportFilters>;
+	initialFileFilters?: Partial<ReportFileFilters>;
 	persistToURL?: boolean;
 	debounceMs?: number;
 }
@@ -20,57 +20,57 @@ interface UseReportFiltersOptions {
 /**
  * Hook for managing report filter state with URL persistence
  */
-export function useReportFilters({
+export function useReportFileFilters({
 	projectId,
-	initialFilters = {},
+	initialFileFilters = {},
 	persistToURL = true,
 	debounceMs = 300,
-}: UseReportFiltersOptions) {
+}: UseReportFileFiltersOptions) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
 	// Initialize filters from URL params or defaults
-	const initializeFiltersFromURL = useCallback((): ReportFilters => {
-		if (!persistToURL) return initialFilters as ReportFilters;
+	const initializeFileFiltersFromURL = useCallback((): ReportFileFilters => {
+		if (!persistToURL) return initialFileFilters as ReportFileFilters;
 
-		const urlFilters: ReportFilters = {};
+		const urlFileFilters: ReportFileFilters = {};
 
 		// Parse areas from URL
 		const areas = searchParams.get("areas");
 		if (areas) {
-			urlFilters.areas = areas.split(",");
+			urlFileFilters.areas = areas.split(",");
 		}
 
 		// Parse systems from URL
 		const systems = searchParams.get("systems");
 		if (systems) {
-			urlFilters.systems = systems.split(",");
+			urlFileFilters.systems = systems.split(",");
 		}
 
 		// Parse test packages from URL
 		const testPackages = searchParams.get("testPackages");
 		if (testPackages) {
-			urlFilters.testPackages = testPackages.split(",");
+			urlFileFilters.testPackages = testPackages.split(",");
 		}
 
 		// Parse component types from URL
 		const componentTypes = searchParams.get("componentTypes");
 		if (componentTypes) {
-			urlFilters.componentTypes = componentTypes.split(",");
+			urlFileFilters.componentTypes = componentTypes.split(",");
 		}
 
 		// Parse statuses from URL
 		const statuses = searchParams.get("statuses");
 		if (statuses) {
-			urlFilters.statuses = statuses.split(",");
+			urlFileFilters.statuses = statuses.split(",");
 		}
 
 		// Parse date range from URL
 		const dateStart = searchParams.get("dateStart");
 		const dateEnd = searchParams.get("dateEnd");
 		if (dateStart && dateEnd) {
-			urlFilters.dateRange = {
+			urlFileFilters.dateRange = {
 				start: dateStart,
 				end: dateEnd,
 			};
@@ -80,17 +80,17 @@ export function useReportFilters({
 		const completionMin = searchParams.get("completionMin");
 		const completionMax = searchParams.get("completionMax");
 		if (completionMin || completionMax) {
-			urlFilters.completionRange = {
+			urlFileFilters.completionRange = {
 				min: completionMin ? Number.parseInt(completionMin, 10) : 0,
 				max: completionMax ? Number.parseInt(completionMax, 10) : 100,
 			};
 		}
 
-		return { ...initialFilters, ...urlFilters };
-	}, [searchParams, persistToURL, initialFilters]);
+		return { ...initialFileFilters, ...urlFileFilters };
+	}, [searchParams, persistToURL, initialFileFilters]);
 
-	const [filters, setFilters] = useState<ReportFilters>(
-		initializeFiltersFromURL,
+	const [filters, setFileFilters] = useState<ReportFileFilters>(
+		initializeFileFiltersFromURL,
 	);
 	const [searchQuery, setSearchQuery] = useState(
 		searchParams.get("search") || "",
@@ -103,54 +103,54 @@ export function useReportFilters({
 		error: optionsError,
 	} = useQuery({
 		queryKey: ["report-filter-options", projectId],
-		queryFn: () => getReportFilterOptions(projectId),
+		queryFn: () => getReportFileFilterOptions(projectId),
 		staleTime: 5 * 60 * 1000, // Cache for 5 minutes
 		enabled: !!projectId,
 	});
 
 	// Update URL when filters change
 	const updateURL = useCallback(
-		(newFilters: ReportFilters, newSearchQuery?: string) => {
+		(newFileFilters: ReportFileFilters, newSearchQuery?: string) => {
 			if (!persistToURL) return;
 
 			const params = new URLSearchParams();
 
 			// Add filter params
-			if (newFilters.areas?.length) {
-				params.set("areas", newFilters.areas.join(","));
+			if (newFileFilters.areas?.length) {
+				params.set("areas", newFileFilters.areas.join(","));
 			}
-			if (newFilters.systems?.length) {
-				params.set("systems", newFilters.systems.join(","));
+			if (newFileFilters.systems?.length) {
+				params.set("systems", newFileFilters.systems.join(","));
 			}
-			if (newFilters.testPackages?.length) {
-				params.set("testPackages", newFilters.testPackages.join(","));
+			if (newFileFilters.testPackages?.length) {
+				params.set("testPackages", newFileFilters.testPackages.join(","));
 			}
-			if (newFilters.componentTypes?.length) {
+			if (newFileFilters.componentTypes?.length) {
 				params.set(
 					"componentTypes",
-					newFilters.componentTypes.join(","),
+					newFileFilters.componentTypes.join(","),
 				);
 			}
-			if (newFilters.statuses?.length) {
-				params.set("statuses", newFilters.statuses.join(","));
+			if (newFileFilters.statuses?.length) {
+				params.set("statuses", newFileFilters.statuses.join(","));
 			}
-			if (newFilters.dateRange) {
-				if (newFilters.dateRange.start)
-					params.set("dateStart", newFilters.dateRange.start);
-				if (newFilters.dateRange.end)
-					params.set("dateEnd", newFilters.dateRange.end);
+			if (newFileFilters.dateRange) {
+				if (newFileFilters.dateRange.start)
+					params.set("dateStart", newFileFilters.dateRange.start);
+				if (newFileFilters.dateRange.end)
+					params.set("dateEnd", newFileFilters.dateRange.end);
 			}
-			if (newFilters.completionRange) {
-				if (newFilters.completionRange.min !== undefined) {
+			if (newFileFilters.completionRange) {
+				if (newFileFilters.completionRange.min !== undefined) {
 					params.set(
 						"completionMin",
-						newFilters.completionRange.min.toString(),
+						newFileFilters.completionRange.min.toString(),
 					);
 				}
-				if (newFilters.completionRange.max !== undefined) {
+				if (newFileFilters.completionRange.max !== undefined) {
 					params.set(
 						"completionMax",
-						newFilters.completionRange.max.toString(),
+						newFileFilters.completionRange.max.toString(),
 					);
 				}
 			}
@@ -171,14 +171,14 @@ export function useReportFilters({
 	);
 
 	// Update filters with debouncing
-	const updateFilters = useCallback(
-		(newFilters: Partial<ReportFilters>) => {
-			const updatedFilters = { ...filters, ...newFilters };
-			setFilters(updatedFilters);
+	const updateFileFilters = useCallback(
+		(newFileFilters: Partial<ReportFileFilters>) => {
+			const updatedFileFilters = { ...filters, ...newFileFilters };
+			setFileFilters(updatedFileFilters);
 
 			// Debounce URL updates
 			const timeoutId = setTimeout(() => {
-				updateURL(updatedFilters);
+				updateURL(updatedFileFilters);
 			}, debounceMs);
 
 			return () => clearTimeout(timeoutId);
@@ -198,15 +198,15 @@ export function useReportFilters({
 	);
 
 	// Clear all filters
-	const clearFilters = useCallback(() => {
-		const clearedFilters: ReportFilters = {};
-		setFilters(clearedFilters);
+	const clearFileFilters = useCallback(() => {
+		const clearedFileFilters: ReportFileFilters = {};
+		setFileFilters(clearedFileFilters);
 		setSearchQuery("");
-		updateURL(clearedFilters, "");
+		updateURL(clearedFileFilters, "");
 	}, [updateURL]);
 
 	// Get active filter count
-	const activeFilterCount = useMemo(() => {
+	const activeFileFilterCount = useMemo(() => {
 		let count = 0;
 		if (filters.areas?.length) count++;
 		if (filters.systems?.length) count++;
@@ -220,8 +220,8 @@ export function useReportFilters({
 	}, [filters, searchQuery]);
 
 	// Convert to component details filters format
-	const toComponentDetailsFilters =
-		useCallback((): ComponentDetailsFilters => {
+	const toComponentDetailsFileFilters =
+		useCallback((): ComponentDetailsFileFilters => {
 			return {
 				areas: filters.areas,
 				systems: filters.systems,
@@ -235,7 +235,7 @@ export function useReportFilters({
 		}, [filters, searchQuery]);
 
 	// Convert to audit filters format
-	const toAuditFilters = useCallback((): AuditFilters => {
+	const toAuditFileFilters = useCallback((): AuditFileFilters => {
 		return {
 			startDate: filters.dateRange?.start,
 			endDate: filters.dateRange?.end,
@@ -248,30 +248,30 @@ export function useReportFilters({
 		(presetName: string) => {
 			switch (presetName) {
 				case "completed":
-					updateFilters({
+					updateFileFilters({
 						completionRange: { min: 100, max: 100 },
 					});
 					break;
 				case "in-progress":
-					updateFilters({
+					updateFileFilters({
 						completionRange: { min: 1, max: 99 },
 					});
 					break;
 				case "not-started":
-					updateFilters({
+					updateFileFilters({
 						completionRange: { min: 0, max: 0 },
 					});
 					break;
 				case "stalled":
 					// Would need additional stalled filter logic
-					updateFilters({
+					updateFileFilters({
 						completionRange: { min: 1, max: 99 },
 					});
 					break;
 				case "last-week": {
 					const weekAgo = new Date();
 					weekAgo.setDate(weekAgo.getDate() - 7);
-					updateFilters({
+					updateFileFilters({
 						dateRange: {
 							start: weekAgo.toISOString().split("T")[0],
 							end: new Date().toISOString().split("T")[0],
@@ -282,7 +282,7 @@ export function useReportFilters({
 				case "last-month": {
 					const monthAgo = new Date();
 					monthAgo.setMonth(monthAgo.getMonth() - 1);
-					updateFilters({
+					updateFileFilters({
 						dateRange: {
 							start: monthAgo.toISOString().split("T")[0],
 							end: new Date().toISOString().split("T")[0],
@@ -294,11 +294,11 @@ export function useReportFilters({
 					console.warn(`Unknown preset: ${presetName}`);
 			}
 		},
-		[updateFilters],
+		[updateFileFilters],
 	);
 
 	// Validation
-	const validateFilters = useCallback((): string[] => {
+	const validateFileFilters = useCallback((): string[] => {
 		const errors: string[] = [];
 
 		if (filters.completionRange) {
@@ -329,28 +329,28 @@ export function useReportFilters({
 	return {
 		filters,
 		searchQuery,
-		updateFilters,
+		updateFileFilters,
 		updateSearchQuery,
-		clearFilters,
-		activeFilterCount,
+		clearFileFilters,
+		activeFileFilterCount,
 		filterOptions: filterOptions?.data,
 		isLoadingOptions,
 		optionsError,
-		toComponentDetailsFilters,
-		toAuditFilters,
+		toComponentDetailsFileFilters,
+		toAuditFileFilters,
 		applyPreset,
-		validateFilters,
-		hasFilters: activeFilterCount > 0,
+		validateFileFilters,
+		hasFileFilters: activeFileFilterCount > 0,
 	};
 }
 
 /**
  * Simplified hook for basic filter management without URL persistence
  */
-export function useSimpleReportFilters(initialFilters: ReportFilters = {}) {
-	return useReportFilters({
+export function useSimpleReportFileFilters(initialFileFilters: ReportFileFilters = {}) {
+	return useReportFileFilters({
 		projectId: "",
-		initialFilters,
+		initialFileFilters,
 		persistToURL: false,
 	});
 }

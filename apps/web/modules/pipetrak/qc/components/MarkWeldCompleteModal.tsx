@@ -26,7 +26,7 @@ import {
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
 import { format } from "date-fns";
-import { AlertTriangle, CalendarIcon, CheckCircle } from "lucide-react";
+import { AlertTriangle, Calendar, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useWelders } from "../hooks/useWelders";
@@ -178,7 +178,7 @@ export function MarkWeldCompleteModal({
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<CheckCircle className="h-5 w-5 text-green-600" />
+						<CheckCircle2 className="h-5 w-5 text-green-600" />
 						Mark Weld Complete
 					</DialogTitle>
 					<DialogDescription>
@@ -217,7 +217,7 @@ export function MarkWeldCompleteModal({
 											"text-muted-foreground",
 									)}
 								>
-									<CalendarIcon className="mr-2 h-4 w-4" />
+									<Calendar className="mr-2 h-4 w-4" />
 									{formData.dateWelded ? (
 										format(formData.dateWelded, "PPP")
 									) : (
@@ -328,7 +328,7 @@ export function MarkWeldCompleteModal({
 							disabled={loading || welders.length === 0}
 							className="min-h-[44px] bg-green-600 hover:bg-green-700 text-white"
 						>
-							<CheckCircle className="mr-2 h-4 w-4" />
+							<CheckCircle2 className="mr-2 h-4 w-4" />
 							{loading ? "Saving..." : "Mark Complete"}
 						</Button>
 					</div>

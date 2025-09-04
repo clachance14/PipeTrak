@@ -817,7 +817,7 @@ describe('Milestone Accessibility Tests', () => {
             Skip to milestone content
           </a>
           <nav aria-label="Milestone navigation">
-            <button>Filter</button>
+            <button>FileFilter</button>
             <button>Sort</button>
             <button>Bulk Actions</button>
           </nav>

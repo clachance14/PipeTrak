@@ -14,7 +14,7 @@ import {
 } from "@ui/components/select";
 import { Calendar } from "@ui/components/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@ui/components/popover";
-import { CalendarIcon, Wrench, AlertTriangle } from "lucide-react";
+import { Calendar, Wrench, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@ui/lib";
 import { Alert, AlertDescription } from "@ui/components/alert";
@@ -241,7 +241,7 @@ export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWe
                       !formData.dateWelded && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <Calendar className="mr-2 h-4 w-4" />
                     {formData.dateWelded ? (
                       format(formData.dateWelded, "PPP")
                     ) : (

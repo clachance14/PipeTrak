@@ -10,7 +10,7 @@ import {
 	Package,
 	Wrench,
 	FileText,
-	CheckCircle,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 } from "lucide-react";
@@ -31,7 +31,7 @@ export function ComponentCard({
 	const getStatusIcon = () => {
 		switch (component.status) {
 			case "COMPLETED":
-				return <CheckCircle className="h-5 w-5 text-fieldComplete" />;
+				return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
 			case "IN_PROGRESS":
 				return <Clock className="h-5 w-5 text-blue-600" />;
 			default:
@@ -85,7 +85,7 @@ export function ComponentCard({
 					</p>
 				)}
 
-				{/* Meta Information Grid */}
+				{/* Meta Information Grid3x3 */}
 				<div className="grid grid-cols-2 gap-2 text-xs">
 					{component.area && (
 						<div className="flex items-center gap-1 text-muted-foreground">
@@ -147,7 +147,7 @@ export function ComponentCard({
 									size="sm"
 									variant="ghost"
 									className="h-[52px] px-3 text-xs"
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent) => {
 										e.stopPropagation();
 										onQuickUpdate("IN_PROGRESS");
 									}}
@@ -160,7 +160,7 @@ export function ComponentCard({
 									size="sm"
 									variant="ghost"
 									className="h-[52px] px-3 text-xs"
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent) => {
 										e.stopPropagation();
 										onQuickUpdate("COMPLETED");
 									}}

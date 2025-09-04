@@ -12,13 +12,13 @@ import {
 import { Alert, AlertDescription } from "@ui/components/alert";
 import {
 	PlusIcon,
-	FolderIcon,
-	MapPinIcon,
-	CalendarIcon,
-	BarChart3Icon,
+	Folder,
+	MapPin,
+	Calendar,
+	BarChart3,
 	AlertCircle,
-	Building2Icon,
-	Loader2Icon,
+	Building2,
+	Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -84,7 +84,7 @@ export default function PipeTrakPage() {
 	if (!orgLoaded || loading) {
 		return (
 			<div className="flex items-center justify-center min-h-[400px]">
-				<Loader2Icon className="h-8 w-8 animate-spin text-muted-foreground" />
+				<Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
 			</div>
 		);
 	}
@@ -173,7 +173,7 @@ export default function PipeTrakPage() {
 							>
 								<CardHeader>
 									<CardTitle className="flex items-center gap-2">
-										<FolderIcon className="h-5 w-5" />
+										<Folder className="h-5 w-5" />
 										{project.jobName}
 									</CardTitle>
 									<CardDescription>
@@ -184,19 +184,19 @@ export default function PipeTrakPage() {
 									<div className="space-y-2 text-sm">
 										{project.client && (
 											<div className="flex items-center gap-2 text-muted-foreground">
-												<Building2Icon className="h-4 w-4" />
+												<Building2 className="h-4 w-4" />
 												<span>{project.client}</span>
 											</div>
 										)}
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<MapPinIcon className="h-4 w-4" />
+											<MapPin className="h-4 w-4" />
 											<span>
 												{project.location ||
 													"No location"}
 											</span>
 										</div>
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<CalendarIcon className="h-4 w-4" />
+											<Calendar className="h-4 w-4" />
 											<span>
 												{project.targetDate
 													? new Date(
@@ -206,7 +206,7 @@ export default function PipeTrakPage() {
 											</span>
 										</div>
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<BarChart3Icon className="h-4 w-4" />
+											<BarChart3 className="h-4 w-4" />
 											<span>
 												{project._count.components}{" "}
 												components,{" "}

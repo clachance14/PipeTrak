@@ -10,9 +10,9 @@ import { Button } from "@ui/components/button";
 import { Tabs, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { cn } from "@ui/lib";
 import {
-	ArrowRightIcon,
+	ArrowRight,
 	BadgePercentIcon,
-	CheckIcon,
+	Check,
 	PhoneIcon,
 	StarIcon,
 } from "lucide-react";
@@ -189,7 +189,7 @@ export function PricingTable({
 															key={key}
 															className="flex items-center justify-start"
 														>
-															<CheckIcon className="mr-2 size-4 text-primary" />
+															<Check className="mr-2 size-4 text-primary" />
 															<span>
 																{feature}
 															</span>
@@ -286,7 +286,7 @@ export function PricingTable({
 												{userId || organizationId
 													? t("pricing.choosePlan")
 													: t("pricing.getStarted")}
-												<ArrowRightIcon className="ml-2 size-4" />
+												<ArrowRight className="ml-2 size-4" />
 											</Button>
 										)}
 									</div>

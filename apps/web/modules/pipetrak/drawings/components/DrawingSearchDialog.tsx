@@ -127,7 +127,7 @@ export function DrawingSearchDialog({
 						navigate to them
 					</DialogDescription>
 				</DialogHeader>
-				<Command shouldFilter={false}>
+				<Command shouldFileFilter={false}>
 					<CommandInput
 						placeholder="Search by drawing number, title, or component..."
 						value={searchQuery}

@@ -25,11 +25,11 @@ import {
 } from "../lib/utils";
 import type { AreaSystemMatrix, AreaSystemMatrixItem } from "../types";
 
-interface AreaSystemGridProps {
+interface AreaSystemGrid3x3Props {
 	data: AreaSystemMatrix | null;
 }
 
-export function AreaSystemGrid({ data }: AreaSystemGridProps) {
+export function AreaSystemGrid3x3({ data }: AreaSystemGrid3x3Props) {
 	const [selectedCell, setSelectedCell] =
 		useState<AreaSystemMatrixItem | null>(null);
 	const [sheetOpen, setSheetOpen] = useState(false);
@@ -157,7 +157,7 @@ export function AreaSystemGrid({ data }: AreaSystemGridProps) {
 								</text>
 							))}
 
-							{/* Grid Cells */}
+							{/* Grid3x3 Cells */}
 							{areas.map((area, rowIndex) =>
 								systems.map((system, colIndex) => {
 									const key = `${area}|${system}`;

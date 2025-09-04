@@ -6,7 +6,7 @@ import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
-import { CheckIcon, XIcon } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -97,7 +97,7 @@ export function OrganizationInvitationModal({
 					disabled={!!submitting}
 					loading={submitting === "reject"}
 				>
-					<XIcon className="mr-1.5 size-4" />
+					<X className="mr-1.5 size-4" />
 					{t("organizations.invitationModal.decline")}
 				</Button>
 				<Button
@@ -106,7 +106,7 @@ export function OrganizationInvitationModal({
 					disabled={!!submitting}
 					loading={submitting === "accept"}
 				>
-					<CheckIcon className="mr-1.5 size-4" />
+					<Check className="mr-1.5 size-4" />
 					{t("organizations.invitationModal.accept")}
 				</Button>
 			</div>

@@ -13,7 +13,7 @@ import {
 	BotMessageSquareIcon,
 	HomeIcon,
 	Menu,
-	SettingsIcon,
+	Settings,
 	UserCog2Icon,
 	UserCogIcon,
 	X,
@@ -66,7 +66,7 @@ export function MobileNavBar() {
 					{
 						label: t("app.menu.organizationSettings"),
 						href: `${basePath}/settings`,
-						icon: SettingsIcon,
+						icon: Settings,
 						isActive: pathname.startsWith(`${basePath}/settings/`),
 					},
 				]

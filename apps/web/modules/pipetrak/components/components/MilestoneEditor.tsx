@@ -6,7 +6,7 @@ import { Checkbox } from "@ui/components/checkbox";
 import { Input } from "@ui/components/input";
 import { Progress } from "@ui/components/progress";
 import { Slider } from "@ui/components/slider";
-import { Save, CheckCircle2 } from "lucide-react";
+import { Save, CheckCircle22 } from "lucide-react";
 import { updateComponentMilestone } from "../lib/actions";
 import { MarkWeldCompleteModal } from "../../qc/components/MarkWeldCompleteModal";
 import type { Component, ComponentMilestone } from "../../types";
@@ -226,7 +226,7 @@ export function MilestoneEditor({
 							{milestone.milestoneName}
 						</span>
 						{isCompleted && (
-							<CheckCircle2 className="h-4 w-4 text-green-600" />
+							<CheckCircle22 className="h-4 w-4 text-green-600" />
 						)}
 					</div>
 				);

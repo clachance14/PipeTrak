@@ -6,19 +6,19 @@ import { Button } from "@ui/components/button";
 import { Separator } from "@ui/components/separator";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { ReportHeader } from "./ReportHeader";
-import { ReportFilters } from "./ReportFilters";
+import { ReportFileFilters } from "./ReportFileFilters";
 import { ProgressChart } from "./ProgressChart";
 import { ROCDisplay } from "./ROCDisplay";
 import { ExportButtons } from "./ExportButtons";
 import { PrintLayout } from "./PrintLayout";
-import { useProgressReportGeneration, useReportFilters } from "../hooks";
+import { useProgressReportGeneration, useReportFileFilters } from "../hooks";
 import { transformers } from "../lib/report-utils";
 import { RefreshCw, AlertCircle } from "lucide-react";
 import type { ProgressReportResponse } from "../types";
 
 interface ProgressReportContentProps {
 	projectId: string;
-	initialFilters?: Record<string, string>;
+	initialFileFilters?: Record<string, string>;
 }
 
 /**
@@ -27,7 +27,7 @@ interface ProgressReportContentProps {
  */
 export function ProgressReportContent({
 	projectId,
-	initialFilters = {},
+	initialFileFilters = {},
 }: ProgressReportContentProps) {
 	const [reportData, setReportData] = useState<ProgressReportResponse | null>(
 		null,
@@ -42,14 +42,14 @@ export function ProgressReportContent({
 	} = useProgressReportGeneration();
 	const {
 		filters,
-		updateFilters,
-		clearFilters,
-		activeFilterCount,
+		updateFileFilters,
+		clearFileFilters,
+		activeFileFilterCount,
 		filterOptions,
 		isLoadingOptions,
-	} = useReportFilters({
+	} = useReportFileFilters({
 		projectId,
-		initialFilters,
+		initialFileFilters,
 		persistToURL: true,
 	});
 
@@ -137,12 +137,12 @@ export function ProgressReportContent({
 					</Alert>
 				)}
 
-				{/* Filters and Controls */}
+				{/* FileFilters and Controls */}
 				<div className="flex flex-col lg:flex-row gap-4 no-print">
 					<div className="flex-1">
-						<ReportFilters
+						<ReportFileFilters
 							filters={filters}
-							onFiltersChange={updateFilters}
+							onFileFiltersChange={updateFileFilters}
 							filterOptions={filterOptions}
 							isLoading={isLoadingOptions}
 							showAdvanced={true}

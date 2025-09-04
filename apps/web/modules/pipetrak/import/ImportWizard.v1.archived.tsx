@@ -7,7 +7,7 @@ import { Progress } from "@ui/components/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import {
 	FileSpreadsheet,
-	CheckCircle2,
+	CheckCircle22,
 	AlertCircle,
 	ArrowLeft,
 	ArrowRight,
@@ -19,7 +19,7 @@ import {
 	AlertTriangle,
 	Zap,
 } from "lucide-react";
-import { FileUpload } from "./FileUpload";
+import { Fileload } from "./Fileload";
 import { ColumnMapper } from "./ColumnMapper";
 import { ValidationPreview } from "./ValidationPreview";
 import { ImportStatus } from "./ImportStatus";
@@ -414,7 +414,7 @@ export function ImportWizard({ projectId }: ImportWizardProps) {
 									</Card>
 
 									{/* File Upload Component */}
-									<FileUpload
+									<Fileload
 										onFileSelect={handleFileSelect}
 										onFileRemove={() =>
 											setSelectedFile(null)
@@ -468,7 +468,7 @@ export function ImportWizard({ projectId }: ImportWizardProps) {
 											}`}
 										>
 											{importStatus === "completed" ? (
-												<CheckCircle2 className="h-8 w-8 text-green-600" />
+												<CheckCircle22 className="h-8 w-8 text-green-600" />
 											) : importStatus === "failed" ? (
 												<XCircle className="h-8 w-8 text-red-600" />
 											) : (

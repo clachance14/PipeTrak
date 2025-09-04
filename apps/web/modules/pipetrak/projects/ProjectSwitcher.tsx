@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Plus, FolderOpen } from "lucide-react";
+import { Plus, Folder } from "lucide-react";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { CreateProjectModal } from "./CreateProjectModal";
 
@@ -90,7 +90,7 @@ export function ProjectSwitcher() {
 	return (
 		<>
 			<div className="flex items-center gap-2">
-				<FolderOpen className="h-4 w-4 text-muted-foreground" />
+				<Folder className="h-4 w-4 text-muted-foreground" />
 				<Select value={projectId} onValueChange={handleProjectChange}>
 					<SelectTrigger className="w-full max-w-md min-w-0">
 						<SelectValue className="block overflow-hidden">

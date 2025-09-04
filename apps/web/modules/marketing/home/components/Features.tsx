@@ -4,11 +4,11 @@ import { MobileIcon } from "@radix-ui/react-icons";
 import { cn } from "@ui/lib";
 import {
 	BarChart3,
-	CloudIcon,
-	FileUp,
+	Cloud,
+	File,
 	Layers,
 	WifiOff,
-	WandIcon,
+	Wand2,
 } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 import { type JSXElementConstructor, type ReactNode, useState } from "react";
@@ -89,14 +89,14 @@ export const featureTabs: Array<{
 			{
 				title: "Automatic sync",
 				description: "Data merges safely when you're back online.",
-				icon: CloudIcon,
+				icon: Cloud,
 			},
 		],
 	},
 	{
 		id: "import-and-reporting",
 		title: "Excel Import + Reporting",
-		icon: FileUp,
+		icon: File,
 		subtitle: "Start fast with the data you already have",
 		description:
 			"Drag-and-drop weld logs, spools, and line lists; map columns, validate issues, and generate reports in minutes.",
@@ -108,13 +108,13 @@ export const featureTabs: Array<{
 				title: "Map weld logs, spools, line lists",
 				description:
 					"Flexible mapping handles different templates and naming.",
-				icon: FileUp,
+				icon: File,
 			},
 			{
 				title: "Pre-import validation",
 				description:
 					"Catch missing weld numbers and duplicates with clear feedback.",
-				icon: WandIcon,
+				icon: Wand2,
 			},
 			{
 				title: "Built-in reports",

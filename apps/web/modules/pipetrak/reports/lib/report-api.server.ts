@@ -12,7 +12,7 @@ import type {
 	ComponentDetailsResponse,
 	TestPackageReadinessRequest,
 	TestPackageReadinessResponse,
-	FilterOptionsResponse,
+	FileFilterOptionsResponse,
 } from "../types";
 
 /**
@@ -86,9 +86,9 @@ export async function generateTestPackageReadinessServer(
 /**
  * Server-side filter options
  */
-export async function getReportFilterOptionsServer(
+export async function getReportFileFilterOptionsServer(
 	projectId: string,
-): Promise<FilterOptionsResponse> {
+): Promise<FileFilterOptionsResponse> {
 	const apiClient = await getServerApiClient();
 
 	const response = await apiClient.pipetrak.reports.filters[

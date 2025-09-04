@@ -14,7 +14,7 @@ import { Switch } from "@ui/components/switch";
 import { Progress } from "@ui/components/progress";
 import { ScrollArea } from "@ui/components/scroll-area";
 import {
-	CheckCircle2,
+	CheckCircle22,
 	Circle,
 	MapPin,
 	FileText,
@@ -193,7 +193,7 @@ export function MobileBottomSheet({
 				<div className="flex-1 overflow-hidden">
 					<div className="py-4">
 						<h3 className="font-medium text-sm mb-3 flex items-center gap-2">
-							<CheckCircle2 className="h-4 w-4" />
+							<CheckCircle22 className="h-4 w-4" />
 							Milestones ({totalMilestones})
 						</h3>
 
@@ -253,7 +253,7 @@ export function MobileBottomSheet({
 							className="flex-1 gap-2 h-12"
 							disabled={progressPercent === 100}
 						>
-							<CheckCircle2 className="h-4 w-4" />
+							<CheckCircle22 className="h-4 w-4" />
 							{progressPercent === 100
 								? "Completed"
 								: "Mark Complete"}
@@ -330,7 +330,7 @@ function MilestoneItem({
 						{/* Completion info */}
 						{milestone.isCompleted && milestone.completedAt && (
 							<div className="flex items-center gap-1 mt-1 text-xs text-green-600">
-								<CheckCircle2 className="h-3 w-3" />
+								<CheckCircle22 className="h-3 w-3" />
 								<span>
 									Completed{" "}
 									{new Date(
@@ -352,7 +352,7 @@ function MilestoneItem({
 					{/* Status icon */}
 					<div className="shrink-0 ml-2">
 						{milestone.isCompleted ? (
-							<CheckCircle2 className="h-5 w-5 text-green-600" />
+							<CheckCircle22 className="h-5 w-5 text-green-600" />
 						) : (
 							<Circle className="h-5 w-5 text-muted-foreground" />
 						)}

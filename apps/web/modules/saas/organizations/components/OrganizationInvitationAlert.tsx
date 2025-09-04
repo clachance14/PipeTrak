@@ -1,5 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
-import { MailCheckIcon } from "lucide-react";
+import { MailCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function OrganizationInvitationAlert({
@@ -10,7 +10,7 @@ export function OrganizationInvitationAlert({
 	const t = useTranslations();
 	return (
 		<Alert variant="primary" className={className}>
-			<MailCheckIcon />
+			<MailCheck />
 			<AlertTitle>{t("organizations.invitationAlert.title")}</AlertTitle>
 			<AlertDescription>
 				{t("organizations.invitationAlert.description")}

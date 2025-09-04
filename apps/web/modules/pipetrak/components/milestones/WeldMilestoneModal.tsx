@@ -26,7 +26,7 @@ import {
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
 import { format } from "date-fns";
-import { AlertTriangle, CalendarIcon, Wrench } from "lucide-react";
+import { AlertTriangle, Calendar, Wrench } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useWelders } from "../../qc/hooks/useWelders";
@@ -190,7 +190,7 @@ export function WeldMilestoneModal({
 											"text-muted-foreground",
 									)}
 								>
-									<CalendarIcon className="mr-2 h-4 w-4" />
+									<Calendar className="mr-2 h-4 w-4" />
 									{formData.dateWelded ? (
 										format(formData.dateWelded, "PPP")
 									) : (

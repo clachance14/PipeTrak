@@ -16,7 +16,7 @@ import {
 	getReportStatus,
 	clearReportCache,
 	generateBulkReports,
-	getReportFilterOptions,
+	getReportFileFilterOptions,
 	buildProgressReportQuery,
 	buildComponentDetailsQuery,
 	buildTrendAnalysisQuery,
@@ -27,8 +27,8 @@ import type {
 	TestPackageReadinessRequest,
 	AuditTrailRequest,
 	BulkReportRequest,
-	ReportFilters,
-	ComponentDetailsFilters,
+	ReportFileFilters,
+	ComponentDetailsFileFilters,
 	ReportPagination,
 	ReportSorting,
 } from "../types";
@@ -41,11 +41,11 @@ const reportsKeys = {
 	all: ["reports"] as const,
 	project: (projectId: string) =>
 		[...reportsKeys.all, "project", projectId] as const,
-	progress: (projectId: string, filters?: ReportFilters) =>
+	progress: (projectId: string, filters?: ReportFileFilters) =>
 		[...reportsKeys.project(projectId), "progress", filters] as const,
 	components: (
 		projectId: string,
-		filters?: ComponentDetailsFilters,
+		filters?: ComponentDetailsFileFilters,
 		pagination?: ReportPagination,
 		sorting?: ReportSorting,
 	) =>
@@ -91,7 +91,7 @@ const reportsKeys = {
  */
 export function useProgressReport(
 	projectId: string,
-	filters?: ReportFilters,
+	filters?: ReportFileFilters,
 	options?: {
 		includeTrends?: boolean;
 		includeVelocity?: boolean;
@@ -130,7 +130,7 @@ export function useRefreshProgressReport() {
 			filters,
 		}: {
 			projectId: string;
-			filters?: ReportFilters;
+			filters?: ReportFileFilters;
 		}) => {
 			// Invalidate and refetch progress report
 			await queryClient.invalidateQueries({
@@ -157,7 +157,7 @@ export function useRefreshProgressReport() {
  */
 export function useComponentDetailsReport(
 	projectId: string,
-	filters?: ComponentDetailsFilters,
+	filters?: ComponentDetailsFileFilters,
 	pagination?: ReportPagination,
 	sorting?: ReportSorting,
 	options?: {
@@ -194,7 +194,7 @@ export function useComponentDetailsReport(
  */
 export function useComponentDetailsPagination(
 	projectId: string,
-	initialFilters?: ComponentDetailsFilters,
+	initialFileFilters?: ComponentDetailsFileFilters,
 ) {
 	const queryClient = useQueryClient();
 
@@ -204,7 +204,7 @@ export function useComponentDetailsPagination(
 			pagination,
 			sorting,
 		}: {
-			filters?: ComponentDetailsFilters;
+			filters?: ComponentDetailsFileFilters;
 			pagination?: ReportPagination;
 			sorting?: ReportSorting;
 		}) => {
@@ -446,16 +446,16 @@ export function useBulkReportGeneration() {
 }
 
 // ============================================================================
-// Filter Options Hook
+// FileFilter Options Hook
 // ============================================================================
 
 /**
  * Hook for report filter options
  */
-export function useReportFilterOptions(projectId: string) {
+export function useReportFileFilterOptions(projectId: string) {
 	return useQuery({
 		queryKey: reportsKeys.filters(projectId),
-		queryFn: () => getReportFilterOptions(projectId),
+		queryFn: () => getReportFileFilterOptions(projectId),
 		enabled: !!projectId,
 		staleTime: 10 * 60 * 1000, // 10 minutes - filter options change infrequently
 		gcTime: 30 * 60 * 1000, // 30 minutes

@@ -4,4 +4,4 @@ export {
 	TableRowSkeletonShimmer,
 	TableSkeleton,
 } from "./TableRowSkeleton";
-export { CardSkeleton, CardGridSkeleton } from "./CardSkeleton";
+export { CardSkeleton, CardGrid3x3Skeleton } from "./CardSkeleton";

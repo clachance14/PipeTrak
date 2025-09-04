@@ -517,13 +517,13 @@ export const milestoneHandlers = [
 		},
 	),
 
-	// Undo bulk operation
+	// Undo2 bulk operation
 	http.post(
 		`${API_BASE}/milestones/undo/:transactionId`,
 		async ({ params }) => {
 			const transactionId = params.transactionId as string;
 
-			await delay(500); // Undo takes time
+			await delay(500); // Undo2 takes time
 
 			const transaction = transactionHistory.get(transactionId);
 			if (!transaction) {
