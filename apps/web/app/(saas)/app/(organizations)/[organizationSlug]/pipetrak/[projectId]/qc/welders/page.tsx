@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@ui/components/button";
-import { Plus } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { AddWelderModal } from "@pipetrak/qc/components/AddWelderModal";
 import { WelderTable } from "@pipetrak/qc/components/WelderTable";
 import { useParams } from "next/navigation";
@@ -29,7 +29,7 @@ export default function WeldersPage() {
 					size="lg"
 					className="min-h-[44px]"
 				>
-					<Plus className="mr-2 h-5 w-5" />
+					<PlusIcon className="mr-2 h-5 w-5" />
 					Add Welder
 				</Button>
 			</div>

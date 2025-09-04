@@ -18,9 +18,9 @@ import {
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
 import { Textarea } from "@ui/components/textarea";
-import { MailCheckIcon, MailIcon } from "lucide-react";
+import { CheckIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useForm, type ControllerRenderProps } from "react-hook-form";
 
 export function ContactForm() {
 	const t = useTranslations();
@@ -49,7 +49,7 @@ export function ContactForm() {
 		<div>
 			{form.formState.isSubmitSuccessful ? (
 				<Alert variant="success">
-					<MailCheckIcon />
+					<CheckIcon />
 					<AlertTitle>
 						{t("contact.form.notifications.success")}
 					</AlertTitle>

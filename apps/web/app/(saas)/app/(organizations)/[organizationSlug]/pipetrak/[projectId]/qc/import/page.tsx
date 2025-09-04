@@ -13,7 +13,7 @@ import {
 	CardTitle,
 } from "@ui/components/card";
 import { Button } from "@ui/components/button";
-import { Upload, FileSpreadsheet, AlertTriangle } from "lucide-react";
+import { Upload, FileSpreadsheetIcon, AlertTriangle } from "lucide-react";
 import { FieldWeldUploadWrapper } from "../../../../../../../../../modules/pipetrak/qc/import/FieldWeldUploadWrapper";
 
 interface QCImportPageProps {
@@ -91,7 +91,7 @@ async function QCImportContent({
 						value="field-welds"
 						className="flex items-center gap-2"
 					>
-						<FileSpreadsheet className="h-4 w-4" />
+						<FileSpreadsheetIcon className="h-4 w-4" />
 						Field Welds
 					</TabsTrigger>
 					<TabsTrigger
@@ -208,7 +208,7 @@ async function QCImportContent({
 									{/* Template Download */}
 									<div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
 										<div className="flex items-center gap-3">
-											<FileSpreadsheet className="h-5 w-5 text-muted-foreground" />
+											<FileSpreadsheetIcon className="h-5 w-5 text-muted-foreground" />
 											<div>
 												<div className="font-medium">
 													Field Weld Import Template

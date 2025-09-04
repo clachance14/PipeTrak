@@ -11,14 +11,14 @@ import {
 } from "@ui/components/card";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import {
-	Plus,
-	FolderOpen,
-	MapPin,
-	Calendar,
-	BarChart3,
+	PlusIcon,
+	FolderIcon,
+	MapPinIcon,
+	CalendarIcon,
+	BarChart3Icon,
 	AlertCircle,
-	Building2,
-	Loader2,
+	Building2Icon,
+	Loader2Icon,
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -84,7 +84,7 @@ export default function PipeTrakPage() {
 	if (!orgLoaded || loading) {
 		return (
 			<div className="flex items-center justify-center min-h-[400px]">
-				<Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+				<Loader2Icon className="h-8 w-8 animate-spin text-muted-foreground" />
 			</div>
 		);
 	}
@@ -138,7 +138,7 @@ export default function PipeTrakPage() {
 								className="w-full sm:w-auto"
 								onClick={() => setShowCreateModal(true)}
 							>
-								<Plus className="h-4 w-4 mr-2" />
+								<PlusIcon className="h-4 w-4 mr-2" />
 								Create New Project
 							</Button>
 							<div className="text-sm text-muted-foreground">
@@ -160,7 +160,7 @@ export default function PipeTrakPage() {
 							Active Projects
 						</h2>
 						<Button onClick={() => setShowCreateModal(true)}>
-							<Plus className="h-4 w-4 mr-2" />
+							<PlusIcon className="h-4 w-4 mr-2" />
 							New Project
 						</Button>
 					</div>
@@ -173,7 +173,7 @@ export default function PipeTrakPage() {
 							>
 								<CardHeader>
 									<CardTitle className="flex items-center gap-2">
-										<FolderOpen className="h-5 w-5" />
+										<FolderIcon className="h-5 w-5" />
 										{project.jobName}
 									</CardTitle>
 									<CardDescription>
@@ -184,19 +184,19 @@ export default function PipeTrakPage() {
 									<div className="space-y-2 text-sm">
 										{project.client && (
 											<div className="flex items-center gap-2 text-muted-foreground">
-												<Building2 className="h-4 w-4" />
+												<Building2Icon className="h-4 w-4" />
 												<span>{project.client}</span>
 											</div>
 										)}
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<MapPin className="h-4 w-4" />
+											<MapPinIcon className="h-4 w-4" />
 											<span>
 												{project.location ||
 													"No location"}
 											</span>
 										</div>
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<Calendar className="h-4 w-4" />
+											<CalendarIcon className="h-4 w-4" />
 											<span>
 												{project.targetDate
 													? new Date(
@@ -206,7 +206,7 @@ export default function PipeTrakPage() {
 											</span>
 										</div>
 										<div className="flex items-center gap-2 text-muted-foreground">
-											<BarChart3 className="h-4 w-4" />
+											<BarChart3Icon className="h-4 w-4" />
 											<span>
 												{project._count.components}{" "}
 												components,{" "}
