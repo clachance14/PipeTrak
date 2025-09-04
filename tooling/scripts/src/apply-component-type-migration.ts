@@ -69,8 +69,9 @@ async function applyComponentTypeMigration() {
 					await client.query(statement);
 					console.log(`✅ Statement ${i + 1} completed`);
 				} catch (error) {
-					console.log(`❌ Statement ${i + 1} failed:`, error.message);
-					if (error.message.includes("already exists")) {
+					const errorMessage = error instanceof Error ? error.message : String(error);
+					console.log(`❌ Statement ${i + 1} failed:`, errorMessage);
+					if (errorMessage.includes("already exists")) {
 						console.log(
 							"⚠️  Resource already exists, continuing...",
 						);

@@ -1,5 +1,5 @@
-import { db as prisma } from '@repo/database';
-import { MilestoneTemplateMapper } from '@repo/api/src/lib/milestone-template-mapper';
+import { db as prisma } from '../../../packages/database';
+import { MilestoneTemplateMapper } from '../../../packages/api/src/lib/milestone-template-mapper';
 
 async function testMilestoneAssignmentFix() {
   try {

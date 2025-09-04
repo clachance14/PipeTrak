@@ -34,9 +34,9 @@ import {
 import { Download, Plus, RefreshCw, CheckCircle22, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
 import { AddWeldModal } from "./AddWeldModal";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
-import { WeldFileFilterBar, type WeldFileFilterState } from "./WeldFileFilterBar";
+// import { WeldFileFilterBar, type WeldFileFilterState } from "./WeldFileFilterBar"; // Commented out - component not found
 import { ColumnToggle, createDefaultColumns, loadColumnConfig, saveColumnConfig, type ColumnConfig } from "./ColumnToggle";
-import { useWeldFileFilters } from "../hooks/useWeldFileFilters";
+// import { useWeldFileFilters } from "../hooks/useWeldFileFilters"; // Hook not found
 import { cn } from "@ui/lib";
 
 // Types based on our API response
@@ -204,10 +204,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   };
 
   // Apply filters using the custom hook
-  const { filteredWelds, filterStats } = useWeldFileFilters({
-    fieldWelds: data,
-    filters: weldFileFilters,
-  });
+  // Temporarily use basic filtering until useWeldFileFilters is implemented
+  const filteredWelds = data; // TODO: implement proper filtering
+  const filterStats = null; // TODO: implement filter stats
 
   // Column definitions with sort indicators
   const columns = useMemo<ColumnDef<FieldWeldData>[]>(
@@ -817,13 +816,13 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
 
   return (
     <div className="space-y-4">
-      {/* Enhanced FileFilter Bar */}
-      <WeldFileFilterBar
+      {/* Enhanced FileFilter Bar - temporarily commented out */}
+      {/* <WeldFileFilterBar
         fieldWelds={data}
         onFileFilterChange={setWeldFileFilters}
         filteredCount={filteredWelds.length}
         totalCount={data.length}
-      />
+      /> */}
       
       {/* Toolbar */}
       <div className="flex items-center justify-between">

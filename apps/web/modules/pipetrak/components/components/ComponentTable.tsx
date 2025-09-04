@@ -29,7 +29,7 @@ import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
 import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
 import { ComponentHoverCard } from "./ComponentHoverCard";
 import { FieldWeldQuickView } from "./FieldWeldQuickView";
-import { FileFilterBar, type FileFilterState } from "./FileFilterBar";
+// import { FileFilterBar, type FileFilterState } from "./FileFilterBar"; // Commented out - component not found
 import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditMilestoneColumn";
 import { InlineDiscreteMilestones } from "../milestones/integration/InlineDiscreteMilestones";
 import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
@@ -301,8 +301,8 @@ export function ComponentTable({
 	const [draggedColumn, setDraggedColumn] = useState<string | null>(null);
 	const [targetColumn, setTargetColumn] = useState<string | null>(null);
 
-	// New filter states
-	const [filters, setFileFilters] = useState<FileFilterState>({
+	// New filter states - temporarily using any type
+	const [filters, setFileFilters] = useState<any>({
 		area: "all",
 		testPackage: "all",
 		system: "all",
@@ -1767,13 +1767,13 @@ export function ComponentTable({
 				isFullScreen && "h-full flex flex-col",
 			)}
 		>
-			{/* New FileFilterBar Component */}
-			<FileFilterBar
+			{/* FileFilterBar Component - temporarily commented out */}
+			{/* <FileFilterBar
 				components={data}
 				onFileFilterChange={setFileFilters}
 				filteredCount={filteredData.length}
 				totalCount={data.length}
-			/>
+			/> */}
 
 			{/* Selection Tools and Actions */}
 			<div className="flex items-center justify-between">

@@ -10,6 +10,7 @@ import {
 	type FieldWeldValidationReport,
 } from "./field-weld-validator.js";
 import type { ImportContext } from "./base-processor.js";
+import { ValidationStage } from "./base-processor.js";
 import type { ValidationResult } from "../file-processing.js";
 
 /**

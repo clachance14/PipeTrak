@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../packages/database/prisma/generated/client';
+import { PrismaClient } from "@repo/database";
 import dotenv from 'dotenv';
 import path from 'path';
 

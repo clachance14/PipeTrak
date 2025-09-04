@@ -122,7 +122,7 @@ async function addUserToOrganization() {
 							name: "Default Organization",
 							slug: "default-org",
 							createdAt: new Date(),
-							metadata: {},
+							metadata: JSON.stringify({}),
 						},
 					});
 

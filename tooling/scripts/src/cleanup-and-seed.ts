@@ -88,7 +88,7 @@ async function cleanupAndSeed() {
 				where: { id: project.id },
 			});
 
-			console.log(`✅ Deleted project: ${project.name} (${project.id})`);
+			console.log(`✅ Deleted project: ${project.jobName} (${project.id})`);
 		}
 
 		console.log("\n🌱 Starting fresh SDO Tank Job seed...");
@@ -173,7 +173,7 @@ async function cleanupAndSeed() {
 			},
 		});
 
-		console.log(`✅ Created project: ${project.name} (${project.id})`);
+		console.log(`✅ Created project: ${project.jobName} (${project.id})`);
 
 		// Create milestone template
 		console.log("Creating milestone template...");
@@ -255,7 +255,7 @@ async function cleanupAndSeed() {
 					id: createId(),
 					projectId: project.id,
 					componentId: componentData.componentId,
-					type: componentData.type || "PIPE",
+					type: (componentData.type as any) || "SPOOL",
 					spec: componentData.spec || "",
 					size: componentData.size || "",
 					material: componentData.material || "",
@@ -282,6 +282,7 @@ async function cleanupAndSeed() {
 						componentId: component.id,
 						milestoneOrder: i,
 						milestoneName: milestone.name,
+						weight: 20.0, // Equal weight for all milestones (100/5 = 20)
 						isCompleted: milestone.completed,
 						completedAt: milestone.completed
 							? new Date(

@@ -4,7 +4,7 @@
  * Flexible import system for Excel, CSV, and JSON data
  */
 
-import { PrismaClient } from "@repo/database/client";
+import { db, PrismaClient } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import { logger } from "@repo/logs";
 
@@ -123,12 +123,12 @@ export interface ImportData {
 export class PipeTrakImporter {
 	private static readonly DEFAULT_BATCH_SIZE = 50;
 	private static readonly DEFAULT_MAX_RETRIES = 3;
-	private prisma: PrismaClient;
+	private prisma: typeof db;
 	private validator: ImportValidator;
 	private transformer: ImportTransformer;
 
-	constructor(prisma?: PrismaClient) {
-		this.prisma = prisma || new PrismaClient();
+	constructor(prisma?: typeof db) {
+		this.prisma = prisma || db;
 		this.validator = new ImportValidator();
 		this.transformer = new ImportTransformer();
 	}
@@ -394,7 +394,7 @@ export class PipeTrakImporter {
 					const componentData = {
 						projectId,
 						componentId: component.componentId,
-						type: component.type || "PIPE",
+						type: (component.type as any) || "PIPE",
 						spec: component.spec || "",
 						size: component.size || "",
 						material: component.material || "",
@@ -402,13 +402,15 @@ export class PipeTrakImporter {
 						system: component.system || "",
 						testPackage: component.testPackage || "",
 						workflowType:
-							component.workflowType || "MILESTONE_DISCRETE",
+							(component.workflowType as any) || "MILESTONE_DISCRETE",
 						status: this.calculateStatus(
 							component.milestones || [],
 						),
 						completionPercent: this.calculateCompletionPercent(
 							component.milestones || [],
 						),
+						drawingId: (component as any).drawingId || null,
+						milestoneTemplateId: (component as any).milestoneTemplateId || null,
 						createdAt: new Date(),
 						updatedAt: new Date(),
 					};
@@ -852,17 +854,17 @@ export class ImportTransformer {
 		milestone: MilestoneImportData,
 	): MilestoneImportData {
 		return {
-			name: milestone.name || milestone["Milestone"] || "",
+			name: milestone.name || (milestone as any)["Milestone"] || "",
 			// Handle both field name variations
 			completed: milestone.completed ?? milestone.isCompleted ?? false,
 			isCompleted: milestone.completed ?? milestone.isCompleted ?? false,
 			completedDate:
-				milestone.completedDate || milestone["Completed Date"],
-			weight: milestone.weight || milestone["Weight"],
+				milestone.completedDate || (milestone as any)["Completed Date"],
+			weight: milestone.weight || (milestone as any)["Weight"],
 			percentageValue:
-				milestone.percentageValue || milestone["Percentage"],
-			quantityValue: milestone.quantityValue || milestone["Quantity"],
-			quantityUnit: milestone.quantityUnit || milestone["Unit"],
+				milestone.percentageValue || (milestone as any)["Percentage"],
+			quantityValue: milestone.quantityValue || (milestone as any)["Quantity"],
+			quantityUnit: milestone.quantityUnit || (milestone as any)["Unit"],
 		};
 	}
 
@@ -885,10 +887,10 @@ export class ImportTransformer {
 	 */
 	private transformDrawing(drawing: DrawingImportData): DrawingImportData {
 		return {
-			number: drawing.number || drawing["Drawing Number"] || "",
+			number: drawing.number || (drawing as any)["Drawing Number"] || "",
 			title:
-				drawing.title || drawing.description || drawing["Title"] || "",
-			revision: drawing.revision || drawing["Revision"] || "",
+				drawing.title || drawing.description || (drawing as any)["Title"] || "",
+			revision: drawing.revision || (drawing as any)["Revision"] || "",
 		};
 	}
 

@@ -36,5 +36,5 @@ export const send: SendEmailHandler = async ({ to, subject, html }) => {
 	}
 
 	logger.info("Resend API response:", responseData);
-	return responseData;
+	// Return void as expected by SendEmailHandler type
 };

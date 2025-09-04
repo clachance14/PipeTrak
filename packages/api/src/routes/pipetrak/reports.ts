@@ -549,14 +549,6 @@ export const reportsRouter = new Hono()
 							systemBreakdown: [],
 							testPackageBreakdown: [],
 							generatedBy: userId || "system",
-							metadata: {
-								reportType: "PROGRESS_SUMMARY",
-								groupBy,
-								options,
-								weekEnding: weekEndingDate
-									.toISOString()
-									.split("T")[0],
-							},
 						},
 					});
 				} catch (err) {

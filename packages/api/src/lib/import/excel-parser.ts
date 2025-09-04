@@ -12,7 +12,7 @@ export interface ParsedExcelData {
 
 export async function parseExcel(buffer: Buffer): Promise<ParsedExcelData> {
 	const workbook = new ExcelJS.Workbook();
-	await workbook.xlsx.load(buffer);
+	await workbook.xlsx.load(buffer as any);
 
 	// Use first worksheet
 	const worksheet = workbook.worksheets[0];

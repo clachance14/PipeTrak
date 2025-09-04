@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Checkbox } from "@ui/components/checkbox";
-import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Checkbox } from "@ui/components/checkbox";
 import { Label } from "@ui/components/label";
-import { CheckCircle22, Circle, Lock, Loader2, Undo22 } from "lucide-react";
 import { cn } from "@ui/lib";
+import { CheckCircle22, Circle, Loader2, Lock, Undo22 } from "lucide-react";
+import { useState } from "react";
 // Removed keyboard navigation import - made optional
 import type { ComponentMilestone } from "../../../types";
 
@@ -45,7 +45,9 @@ export function MilestoneDiscreteRenderer({
 	// Can be re-added when KeyboardNavigationProvider is properly integrated
 
 	const handleToggle = async (checked: boolean) => {
-		if (isLocked || isUpdating) return;
+		if (isLocked || isUpdating) {
+			return;
+		}
 
 		// Apply optimistic update
 		setOptimisticValue(checked);
@@ -211,7 +213,7 @@ export function MilestoneDiscreteRenderer({
 			{hasChanges && (
 				<div className="flex gap-2 px-3">
 					<Button
-						onClick={() => handleToggle(optimisticValue!)}
+						onClick={() => handleToggle(optimisticValue ?? false)}
 						disabled={isUpdating}
 						size="sm"
 						className="flex-1"
@@ -252,12 +254,7 @@ export function MilestoneDiscreteRenderer({
 				<div className="px-3 text-xs text-muted-foreground">
 					Completed{" "}
 					{new Date(milestone.completedAt).toLocaleDateString()}
-					{milestone.completedBy && (
-						<>
-							{" "}
-							by {milestone.completedBy}
-						</>
-					)}
+					{milestone.completedBy && <> by {milestone.completedBy}</>}
 				</div>
 			)}
 		</div>

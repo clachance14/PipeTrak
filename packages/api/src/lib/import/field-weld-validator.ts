@@ -522,7 +522,7 @@ export class FieldWeldValidator {
 	private async validateWeldIdFormat(
 		weldId: string,
 		rowNumber: number,
-		errors: FieldWeldValidationError[],
+		_errors: FieldWeldValidationError[],
 		warnings: FieldWeldValidationError[],
 	): Promise<void> {
 		const trimmedId = weldId.trim();
@@ -563,7 +563,7 @@ export class FieldWeldValidator {
 	private async validateDrawingNumberFormat(
 		drawingNumber: string,
 		rowNumber: number,
-		errors: FieldWeldValidationError[],
+		_errors: FieldWeldValidationError[],
 		warnings: FieldWeldValidationError[],
 	): Promise<void> {
 		const trimmed = drawingNumber.trim();

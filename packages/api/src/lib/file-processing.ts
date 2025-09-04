@@ -202,7 +202,7 @@ export class ExcelProcessor {
 		sheetName?: string,
 	): Promise<{ headers: string[]; rows: any[]; metadata: FileMetadata }> {
 		const workbook = new ExcelJS.Workbook();
-		await workbook.xlsx.load(buffer);
+		await workbook.xlsx.load(buffer as any);
 
 		const worksheet = sheetName
 			? workbook.getWorksheet(sheetName)
@@ -304,7 +304,7 @@ export class ExcelProcessor {
 			column.width = 15;
 		});
 
-		return workbook.xlsx.writeBuffer() as Promise<Buffer>;
+		return workbook.xlsx.writeBuffer();
 	}
 }
 

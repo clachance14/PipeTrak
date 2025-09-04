@@ -52,7 +52,7 @@ async function exampleUsage() {
     `);
 
 		console.log(`   📊 PipeTrak tables found: ${result.rows.length}`);
-		result.rows.forEach((row) => {
+		result.rows.forEach((row: any) => {
 			console.log(`      ✓ ${row.table_name}`);
 		});
 

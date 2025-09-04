@@ -20,7 +20,7 @@ import { Badge } from "@ui/components/badge";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { Checkbox } from "@ui/components/checkbox";
 import {
-	Calendar,
+	Calendar as CalendarIcon,
 	RefreshCw,
 	AlertCircle,
 	CheckCircle22,
@@ -325,7 +325,7 @@ export function ProgressSummaryReportContent({
 										status="info"
 										className="w-full justify-start text-left font-normal"
 									>
-										<Calendar className="mr-2 h-4 w-4" />
+										<CalendarIcon className="mr-2 h-4 w-4" />
 										{format(weekEnding, "PPP")}
 									</Button>
 								</PopoverTrigger>

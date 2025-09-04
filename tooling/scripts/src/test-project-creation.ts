@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../packages/database/prisma/generated/client';
+import { PrismaClient } from "@repo/database";
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -59,7 +59,7 @@ async function testProjectCreation() {
       WHERE table_name = 'Project'
       AND constraint_name = 'unique_org_job_number'
     `);
-    console.log('   Unique constraint on (organizationId, jobNumber):', constraintCheck.length > 0 ? '✓ Present' : '✗ Missing');
+    console.log('   Unique constraint on (organizationId, jobNumber):', Array.isArray(constraintCheck) && constraintCheck.length > 0 ? '✓ Present' : '✗ Missing');
     
     console.log('\n=================================');
     console.log('Project Creation System Test Complete!');

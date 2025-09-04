@@ -7,7 +7,7 @@ import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import { AlertTriangle, LayoutGrid3x3, BarChart3 } from "lucide-react";
 import { DashboardTopBar } from "./DashboardTopBar";
 import { KPIHeroBar } from "./KPIHeroBar";
-import { AreaSystemGrid3x3 } from "./AreaSystemGrid3x3";
+import { AreaSystemGrid } from "./AreaSystemGrid";
 import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { DrawingHierarchy } from "./DrawingHierarchy";
 import { TestPackageTable } from "./TestPackageTable";
@@ -224,7 +224,7 @@ export function ResponsiveDashboard({
 						loading={loadingComponents}
 					/>
 				) : (
-					<AreaSystemGrid3x3 data={areaSystemMatrix} />
+					<AreaSystemGrid data={areaSystemMatrix} />
 				)}
 
 				{/* Two-column layout for Drawing Hierarchy and Test Package Readiness */}

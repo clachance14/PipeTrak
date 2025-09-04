@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
-import { Badge } from "@ui/components/badge";
+import { cn } from "@ui/lib";
 import {
+	AlertCircle,
 	CheckCircle22,
 	Clock,
-	AlertCircle,
-	Lock,
 	Loader2,
-	Undo22,
+	Lock,
 	Minus,
 	Plus,
+	Undo22,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import { useCallback, useState } from "react";
 import type { ComponentMilestone } from "../../../types";
 
 interface MilestoneQuantityRendererProps {
@@ -60,7 +60,9 @@ export function MilestoneQuantityRenderer({
 
 	// Determine step size based on unit type
 	const getStepSize = () => {
-		if (unit === "ft" || unit === "m" || unit === "inches") return 0.1;
+		if (unit === "ft" || unit === "m" || unit === "inches") {
+			return 0.1;
+		}
 		return 1;
 	};
 
@@ -104,7 +106,9 @@ export function MilestoneQuantityRenderer({
 	);
 
 	const handleSave = async () => {
-		if (optimisticValue === null || isUpdating) return;
+		if (optimisticValue === null || isUpdating) {
+			return;
+		}
 
 		setIsUpdating(true);
 		try {
@@ -332,7 +336,7 @@ export function MilestoneQuantityRenderer({
 						style={{
 							minHeight: `${Math.min(touchTargetSize, 44)}px`,
 						}}
-						aria-label={`Save ${formatValue(optimisticValue!)} ${unit}`}
+						aria-label={`Save ${formatValue(optimisticValue ?? 0)} ${unit}`}
 					>
 						{isUpdating ? (
 							<>
@@ -341,7 +345,7 @@ export function MilestoneQuantityRenderer({
 							</>
 						) : (
 							<>
-								Save {formatValue(optimisticValue!)} {unit}
+								Save {formatValue(optimisticValue ?? 0)} {unit}
 							</>
 						)}
 					</Button>

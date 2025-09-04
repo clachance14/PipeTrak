@@ -15,10 +15,10 @@ import {
 	TableRow,
 } from "@ui/components/table";
 import { ReportHeader } from "./ReportHeader";
-import { ReportFileFilters } from "./ReportFileFilters";
+// import { ReportFileFilters } from "./ReportFileFilters"; // Component not found
 import { ExportButtons } from "./ExportButtons";
 import { PrintLayout } from "./PrintLayout";
-import { useComponentReportGeneration, useReportFileFilters } from "../hooks";
+import { useComponentReportGeneration } from "../hooks"; // useReportFileFilters removed - hook not found
 import { transformers } from "../lib/report-utils";
 import {
 	RefreshCw,
@@ -59,21 +59,16 @@ export function ComponentReportContent({
 		isPending: isGenerating,
 		error,
 	} = useComponentReportGeneration();
-	const {
-		filters,
-		updateFileFilters,
-		clearFileFilters,
-		searchQuery,
-		updateSearchQuery,
-		activeFileFilterCount,
-		filterOptions,
-		isLoadingOptions,
-		toComponentDetailsFileFilters,
-	} = useReportFileFilters({
-		projectId,
-		initialFileFilters,
-		persistToURL: true,
-	});
+	// Temporarily replace useReportFileFilters hook with basic state until hook is implemented
+	const filters = initialFileFilters;
+	const updateFileFilters = () => {}; // TODO: implement filtering
+	const clearFileFilters = () => {}; // TODO: implement clearing
+	const searchQuery = "";
+	const updateSearchQuery = () => {}; // TODO: implement search
+	const activeFileFilterCount = 0;
+	const filterOptions = null;
+	const isLoadingOptions = false;
+	const toComponentDetailsFileFilters = () => ({ projectId });
 
 	// Generate report on changes
 	useEffect(() => {
@@ -199,7 +194,7 @@ export function ComponentReportContent({
 				{/* Search and FileFilters */}
 				<div className="flex flex-col lg:flex-row gap-4 no-print">
 					<div className="flex-1">
-						<ReportFileFilters
+						{/* <ReportFileFilters
 							filters={filters}
 							onFileFiltersChange={updateFileFilters}
 							searchQuery={searchQuery}
@@ -207,7 +202,10 @@ export function ComponentReportContent({
 							filterOptions={filterOptions}
 							isLoading={isLoadingOptions}
 							showAdvanced={true}
-						/>
+						/> */}
+						<div className="text-sm text-muted-foreground">
+							Report filters temporarily disabled - component implementation needed
+						</div>
 					</div>
 					<div className="lg:w-auto">
 						<div className="flex flex-col gap-2">
