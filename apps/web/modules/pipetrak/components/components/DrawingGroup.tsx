@@ -19,15 +19,12 @@ import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
 import { Checkbox } from "@ui/components/checkbox";
 import {
-	ChevronDown,
-	ChevronRight,
 	MapPin,
-	Package2,
+	Package,
 	Check,
 	AlertCircle,
 	Clock,
 	Minus,
-	GripVertical,
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
@@ -292,9 +289,9 @@ export function DrawingGroup({
 							</h3>
 							<div className="flex items-center gap-1 ml-auto md:ml-0">
 								{isExpanded ? (
-									<ChevronDown className="h-6 w-6 text-gray-500 touch-manipulation" />
+									<span className="h-6 w-6 text-gray-500 text-center">↓</span>
 								) : (
-									<ChevronRight className="h-6 w-6 text-gray-500 touch-manipulation" />
+									<span className="h-6 w-6 text-gray-500 text-center">→</span>
 								)}
 							</div>
 						</div>
@@ -305,7 +302,7 @@ export function DrawingGroup({
 								status="info"
 								className="text-sm whitespace-nowrap"
 							>
-								<Package2 className="h-4 w-4 mr-1" />
+								<Package className="h-4 w-4 mr-1" />
 								{stats.total} component
 								{stats.total !== 1 ? "s" : ""}
 							</Badge>
@@ -469,7 +466,7 @@ export function DrawingGroup({
 																>
 																	<div className="flex items-center gap-1 group">
 																		{isDraggable && (
-																			<GripVertical className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-move" />
+																			<span className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-move text-center">⋮⋮</span>
 																		)}
 																		{header.isPlaceholder
 																			? null

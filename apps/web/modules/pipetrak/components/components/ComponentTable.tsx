@@ -62,26 +62,14 @@ import {
 	DropdownMenuCheckboxItem,
 } from "@ui/components/dropdown-menu";
 import {
-	Filter,
 	Download,
 	Upload,
 	RefreshCw,
-	ChevronUp,
-	ChevronDown,
 	Check,
-	Columns,
-	Maximize2,
-	Minimize2,
 	Settings,
-	HardHat,
 	Wrench,
-	BarChart3,
-	Table2,
-	Zap,
 	AlertTriangle,
-	XCircle,
 	Clock,
-	FlameKindling,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@ui/lib";
@@ -300,7 +288,7 @@ export function ComponentTable({
 	const [targetColumn, setTargetColumn] = useState<string | null>(null);
 
 	// New filter states - temporarily using any type
-	const [filters, setFilters] = useState<any>({
+	const [filters, _setFilters] = useState<any>({
 		area: "all",
 		testPackage: "all",
 		system: "all",
@@ -735,7 +723,7 @@ export function ComponentTable({
 											status="error"
 											className="h-4 text-xs"
 										>
-											<XCircle className="h-2 w-2 mr-1" />
+											<AlertTriangle className="h-2 w-2 mr-1" />
 											NDE Reject
 										</Badge>,
 									);
@@ -775,7 +763,7 @@ export function ComponentTable({
 										status="info"
 										className="h-4 text-xs bg-blue-100 text-blue-800"
 									>
-										<FlameKindling className="h-2 w-2 mr-1" />
+										<Wrench className="h-2 w-2 mr-1" />
 										PWHT OK
 									</Badge>,
 								);
@@ -786,7 +774,7 @@ export function ComponentTable({
 										status="info"
 										className="h-4 text-xs bg-yellow-100 text-yellow-800"
 									>
-										<FlameKindling className="h-2 w-2 mr-1" />
+										<Wrench className="h-2 w-2 mr-1" />
 										PWHT Req
 									</Badge>,
 								);
@@ -806,7 +794,7 @@ export function ComponentTable({
 							<div className="flex items-center gap-2">
 								{isFieldWeld && (
 									<div title="Field Weld">
-										<Zap className="h-4 w-4 text-orange-500 flex-shrink-0" />
+										<Wrench className="h-4 w-4 text-orange-500 flex-shrink-0" />
 									</div>
 								)}
 								<span className="text-sm font-medium">
@@ -1504,7 +1492,7 @@ export function ComponentTable({
 								<div className="space-y-3">
 									<div className="flex gap-2">
 										<div className="relative flex-1">
-											<Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+											<Settings className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 											<Input
 												placeholder="Search components..."
 												value={globalFilter}
@@ -1529,9 +1517,9 @@ export function ComponentTable({
 										>
 											{expandedDrawings.size ===
 											componentsByDrawing.size ? (
-												<ChevronUp className="h-4 w-4" />
+												<span className="h-4 w-4 text-center">↑</span>
 											) : (
-												<ChevronDown className="h-4 w-4" />
+												<span className="h-4 w-4 text-center">↓</span>
 											)}
 										</Button>
 									</div>
@@ -1715,7 +1703,7 @@ export function ComponentTable({
 									toast.info("Filter modal coming soon");
 								}}
 							>
-								<Filter className="h-6 w-6" />
+								<Settings className="h-6 w-6" />
 							</Button>
 						</div>
 
@@ -1768,7 +1756,7 @@ export function ComponentTable({
 			{/* FilterBar Component - temporarily commented out */}
 			{/* <FilterBar
 				components={data}
-				onFilterChange={setFilters}
+				onFilterChange={_setFilters}
 				filteredCount={filteredData.length}
 				totalCount={data.length}
 			/> */}
@@ -1850,12 +1838,12 @@ export function ComponentTable({
 							{VIEW_PRESETS.map((preset) => {
 								const Icon =
 									preset.id === "field"
-										? HardHat
+										? Wrench
 										: preset.id === "technical"
 											? Wrench
 											: preset.id === "manager"
-												? BarChart3
-												: Table2;
+												? Settings
+												: Settings;
 								return (
 									<DropdownMenuItem
 										key={preset.id}
@@ -1899,7 +1887,7 @@ export function ComponentTable({
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline" size="sm">
-								<Columns className="mr-2 h-4 w-4" />
+								<Settings className="mr-2 h-4 w-4" />
 								Columns
 							</Button>
 						</DropdownMenuTrigger>
@@ -1998,7 +1986,7 @@ export function ComponentTable({
 							}}
 							className="border-orange-200 text-orange-700 hover:bg-orange-50"
 						>
-							<Zap className="mr-2 h-4 w-4 text-orange-500" />
+							<Wrench className="mr-2 h-4 w-4 text-orange-500" />
 							QC Module
 						</Button>
 					)}
@@ -2015,9 +2003,9 @@ export function ComponentTable({
 						}
 					>
 						{isFullScreen ? (
-							<Minimize2 className="h-4 w-4" />
+							<span className="h-4 w-4 text-center">⊟</span>
 						) : (
-							<Maximize2 className="h-4 w-4" />
+							<span className="h-4 w-4 text-center">⊠</span>
 						)}
 					</Button>
 				</div>
@@ -2110,12 +2098,12 @@ export function ComponentTable({
 					>
 						{expandedDrawings.size === componentsByDrawing.size ? (
 							<>
-								<ChevronUp className="h-4 w-4 mr-2" />
+								<span className="h-4 w-4 mr-2 text-center">↑</span>
 								Collapse All
 							</>
 						) : (
 							<>
-								<ChevronDown className="h-4 w-4 mr-2" />
+								<span className="h-4 w-4 mr-2 text-center">↓</span>
 								Expand All
 							</>
 						)}
@@ -2214,7 +2202,7 @@ export function ComponentTable({
 						onClick={() => setIsFullScreen(false)}
 						className="gap-2"
 					>
-						<Minimize2 className="h-4 w-4" />
+						<span className="h-4 w-4 text-center">⊟</span>
 						Exit Full Screen (Esc)
 					</Button>
 				</div>
