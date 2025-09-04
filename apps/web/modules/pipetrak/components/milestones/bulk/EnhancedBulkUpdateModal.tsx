@@ -30,7 +30,7 @@ import {
 	CheckCircle2,
 	Eye,
 	Play,
-	Undo22,
+	Undo2,
 	Package,
 	Target,
 } from "lucide-react";
@@ -720,7 +720,7 @@ export function EnhancedBulkUpdateModal({
 										);
 									}}
 								>
-									<Undo22 className="h-4 w-4 mr-2" />
+									<Undo2 className="h-4 w-4 mr-2" />
 									Undo2
 								</Button>
 							)}

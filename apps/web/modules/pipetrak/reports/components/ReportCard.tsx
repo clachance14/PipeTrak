@@ -7,7 +7,7 @@ import {
 	Clock,
 	FileText,
 	BarChart3,
-	CheckCircle22,
+	CheckCircle2,
 	TrendingUp,
 	Shield,
 	Zap,
@@ -30,7 +30,7 @@ interface ReportCardProps {
 const iconMap = {
 	progress: BarChart3,
 	components: FileText,
-	"test-packages": CheckCircle22,
+	"test-packages": CheckCircle2,
 	trends: TrendingUp,
 	audit: Shield,
 };

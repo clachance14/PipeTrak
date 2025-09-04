@@ -13,7 +13,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import {
 	flexRender,
 	getCoreRowModel,
-	getFileFilteredRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
@@ -193,7 +193,7 @@ export function OrganizationInvitationsList({
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFileFilteredRowModel: getFileFilteredRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
 	});
 
 	return (

@@ -10,7 +10,7 @@ import {
 	TooltipProvider,
 } from "@ui/components/tooltip";
 import {
-	CheckCircle22,
+	CheckCircle2,
 	Circle,
 	Lock,
 	Loader2,
@@ -93,7 +93,7 @@ function MilestonePill({
 			return <Lock className="h-3 w-3" />;
 		}
 		if (milestone.isCompleted) {
-			return <CheckCircle22 className="h-3 w-3" />;
+			return <CheckCircle2 className="h-3 w-3" />;
 		}
 		return <Circle className="h-3 w-3" />;
 	};
@@ -168,7 +168,7 @@ export function InlineDiscreteMilestones({
 
 	// Calculate weighted progress using ROC weights from database
 	const weightedProgress = useMemo(() => {
-		// FileFilter milestones with valid weights
+		// Filter milestones with valid weights
 		const milestonesWithWeights = sortedMilestones.filter(
 			(m) => m.weight && m.weight > 0,
 		);

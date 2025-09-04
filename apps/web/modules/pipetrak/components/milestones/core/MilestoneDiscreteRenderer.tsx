@@ -5,7 +5,7 @@ import { Button } from "@ui/components/button";
 import { Checkbox } from "@ui/components/checkbox";
 import { Label } from "@ui/components/label";
 import { cn } from "@ui/lib";
-import { CheckCircle22, Circle, Loader2, Lock, Undo22 } from "lucide-react";
+import { CheckCircle2, Circle, Loader2, Lock, Undo2 } from "lucide-react";
 import { useState } from "react";
 // Removed keyboard navigation import - made optional
 import type { ComponentMilestone } from "../../../types";
@@ -102,7 +102,7 @@ export function MilestoneDiscreteRenderer({
 		}
 
 		return currentValue ? (
-			<CheckCircle22
+			<CheckCircle2
 				className="h-5 w-5 text-fieldComplete"
 				aria-label="Completed"
 			/>
@@ -203,7 +203,7 @@ export function MilestoneDiscreteRenderer({
 							className="h-8 w-8 p-0"
 							aria-label="Undo2 completion"
 						>
-							<Undo22 className="h-4 w-4" />
+							<Undo2 className="h-4 w-4" />
 						</Button>
 					)}
 				</div>

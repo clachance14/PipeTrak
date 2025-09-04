@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@ui/components/button";
-import { RefreshCw, Search, FileFilter, HelpCircle } from "lucide-react";
+import { RefreshCw, Search, Filter, HelpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -38,15 +38,15 @@ export function DashboardTopBar(_props: DashboardTopBarProps) {
 				<span className="hidden lg:inline">Search</span>
 			</Button>
 
-			{/* FileFilters - Hidden on mobile, show on tablet+ */}
+			{/* Filters - Hidden on mobile, show on tablet+ */}
 			<Button
 				variant="secondary"
 				size="sm"
 				disabled
 				className="gap-2 hidden md:flex"
 			>
-				<FileFilter className="h-4 w-4" />
-				<span className="hidden lg:inline">FileFilters</span>
+				<Filter className="h-4 w-4" />
+				<span className="hidden lg:inline">Filters</span>
 			</Button>
 
 			{/* Manual Refresh - Always visible but compact on mobile */}

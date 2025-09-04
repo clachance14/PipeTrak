@@ -12,7 +12,7 @@ import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
 import { Input } from "@ui/components/input";
 import { 
-  FileFilter, 
+  Filter, 
   X, 
   Search,
   RotateCcw,
@@ -66,7 +66,7 @@ interface FieldWeldData {
   };
 }
 
-export interface WeldFileFilterState {
+export interface WeldFilterState {
   packageNumber: string;
   drawing: string;
   area: string;
@@ -85,15 +85,15 @@ export interface WeldFileFilterState {
   search: string;
 }
 
-interface WeldFileFilterBarProps {
+interface WeldFilterBarProps {
   fieldWelds: FieldWeldData[];
-  onFileFilterChange: (filters: WeldFileFilterState) => void;
+  onFilterChange: (filters: WeldFilterState) => void;
   filteredCount: number;
   totalCount: number;
   className?: string;
 }
 
-const DEFAULT_FILTERS: WeldFileFilterState = {
+const DEFAULT_FILTERS: WeldFilterState = {
   packageNumber: 'all',
   drawing: 'all',
   area: 'all',
@@ -158,14 +158,14 @@ const QC_PRESETS = [
   },
 ] as const;
 
-export function WeldFileFilterBar({ 
+export function WeldFilterBar({ 
   fieldWelds, 
-  onFileFilterChange, 
+  onFilterChange, 
   filteredCount,
   totalCount,
   className 
-}: WeldFileFilterBarProps) {
-  const [filters, setFileFilters] = useState<WeldFileFilterState>(DEFAULT_FILTERS);
+}: WeldFilterBarProps) {
+  const [filters, setFilters] = useState<WeldFilterState>(DEFAULT_FILTERS);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Load saved filters from localStorage on mount
@@ -173,14 +173,14 @@ export function WeldFileFilterBar({
     try {
       const saved = localStorage.getItem('pipetrak-weld-filters');
       if (saved) {
-        const savedFileFilters = JSON.parse(saved);
-        setFileFilters(savedFileFilters);
-        onFileFilterChange(savedFileFilters);
+        const savedFilters = JSON.parse(saved);
+        setFilters(savedFilters);
+        onFilterChange(savedFilters);
       }
     } catch (error) {
       console.error('Failed to load saved filters:', error);
     }
-  }, [onFileFilterChange]);
+  }, [onFilterChange]);
 
   // Extract unique values from field welds for filter options
   const filterOptions = useMemo(() => {
@@ -217,53 +217,53 @@ export function WeldFileFilterBar({
   }, [fieldWelds]);
 
   // Save to localStorage and notify parent when filters change
-  const handleFileFilterChange = (key: keyof WeldFileFilterState, value: string) => {
-    const newFileFilters = { ...filters, [key]: value };
-    setFileFilters(newFileFilters);
+  const handleFilterChange = (key: keyof WeldFilterState, value: string) => {
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
     
     // Save to localStorage
     try {
-      localStorage.setItem('pipetrak-weld-filters', JSON.stringify(newFileFilters));
+      localStorage.setItem('pipetrak-weld-filters', JSON.stringify(newFilters));
     } catch (error) {
       console.error('Failed to save filters:', error);
     }
     
-    onFileFilterChange(newFileFilters);
+    onFilterChange(newFilters);
   };
 
   // Apply preset filters
-  const applyPreset = (presetFileFilters: Partial<WeldFileFilterState>) => {
-    const newFileFilters = { ...DEFAULT_FILTERS, ...presetFileFilters };
-    setFileFilters(newFileFilters);
+  const applyPreset = (presetFilters: Partial<WeldFilterState>) => {
+    const newFilters = { ...DEFAULT_FILTERS, ...presetFilters };
+    setFilters(newFilters);
     
     try {
-      localStorage.setItem('pipetrak-weld-filters', JSON.stringify(newFileFilters));
+      localStorage.setItem('pipetrak-weld-filters', JSON.stringify(newFilters));
     } catch (error) {
       console.error('Failed to save filters:', error);
     }
     
-    onFileFilterChange(newFileFilters);
+    onFilterChange(newFilters);
   };
 
   // Clear all filters
-  const clearAllFileFilters = () => {
-    setFileFilters(DEFAULT_FILTERS);
+  const clearAllFilters = () => {
+    setFilters(DEFAULT_FILTERS);
     try {
       localStorage.removeItem('pipetrak-weld-filters');
     } catch (error) {
       console.error('Failed to clear saved filters:', error);
     }
-    onFileFilterChange(DEFAULT_FILTERS);
+    onFilterChange(DEFAULT_FILTERS);
   };
 
   // Check if any filters are active
-  const hasActiveFileFilters = Object.entries(filters).some(([key, value]) => {
+  const hasActiveFilters = Object.entries(filters).some(([key, value]) => {
     if (key === 'search' || key.includes('From') || key.includes('To')) return value !== '';
     return value !== 'all';
   });
 
   // Count active filters for badge
-  const activeFileFilterCount = Object.entries(filters).filter(([key, value]) => {
+  const activeFilterCount = Object.entries(filters).filter(([key, value]) => {
     if (key === 'search' || key.includes('From') || key.includes('To')) return value !== '';
     return value !== 'all';
   }).length;
@@ -272,7 +272,7 @@ export function WeldFileFilterBar({
     <div className={cn("space-y-4 p-4 bg-gray-50 rounded-lg border", className)}>
       {/* QC Presets Row */}
       <div className="flex flex-wrap gap-2">
-        <span className="text-sm text-muted-foreground self-center font-medium">Quick FileFilters:</span>
+        <span className="text-sm text-muted-foreground self-center font-medium">Quick Filters:</span>
         {QC_PRESETS.map((preset) => (
           <Button
             key={preset.id}
@@ -290,13 +290,13 @@ export function WeldFileFilterBar({
           onClick={() => setShowAdvanced(!showAdvanced)}
           className="h-8 text-xs ml-auto"
         >
-          {showAdvanced ? 'Basic' : 'Advanced'} FileFilters
+          {showAdvanced ? 'Basic' : 'Advanced'} Filters
         </Button>
       </div>
 
-      {/* FileFilter Controls */}
+      {/* Filter Controls */}
       <div className="flex flex-col gap-4">
-        {/* Top Row - Search and Primary FileFilters */}
+        {/* Top Row - Search and Primary Filters */}
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           {/* Search */}
           <div className="relative flex-1 sm:max-w-xs">
@@ -304,36 +304,36 @@ export function WeldFileFilterBar({
             <Input
               placeholder="Search welds..."
               value={filters.search}
-              onChange={(e) => handleFileFilterChange('search', e.target.value)}
+              onChange={(e) => handleFilterChange('search', e.target.value)}
               className="pl-10"
             />
           </div>
 
-          {/* Clear FileFilters Button */}
-          {hasActiveFileFilters && (
+          {/* Clear Filters Button */}
+          {hasActiveFilters && (
             <Button 
               variant="outline" 
               size="sm" 
-              onClick={clearAllFileFilters}
+              onClick={clearAllFilters}
               className="shrink-0"
             >
               <RotateCcw className="h-4 w-4 mr-2" />
               Clear All
-              {activeFileFilterCount > 0 && (
+              {activeFilterCount > 0 && (
                 <Badge status="info" className="ml-2 text-xs">
-                  {activeFileFilterCount}
+                  {activeFilterCount}
                 </Badge>
               )}
             </Button>
           )}
         </div>
 
-        {/* Primary FileFilters Row */}
+        {/* Primary Filters Row */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          {/* Package FileFilter */}
+          {/* Package Filter */}
           <Select
             value={filters.packageNumber}
-            onValueChange={(value) => handleFileFilterChange('packageNumber', value)}
+            onValueChange={(value) => handleFilterChange('packageNumber', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Package" />
@@ -348,10 +348,10 @@ export function WeldFileFilterBar({
             </SelectContent>
           </Select>
 
-          {/* Area FileFilter */}
+          {/* Area Filter */}
           <Select
             value={filters.area}
-            onValueChange={(value) => handleFileFilterChange('area', value)}
+            onValueChange={(value) => handleFilterChange('area', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Area" />
@@ -366,10 +366,10 @@ export function WeldFileFilterBar({
             </SelectContent>
           </Select>
 
-          {/* System FileFilter */}
+          {/* System Filter */}
           <Select
             value={filters.system}
-            onValueChange={(value) => handleFileFilterChange('system', value)}
+            onValueChange={(value) => handleFilterChange('system', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="System" />
@@ -384,10 +384,10 @@ export function WeldFileFilterBar({
             </SelectContent>
           </Select>
 
-          {/* Weld Status FileFilter */}
+          {/* Weld Status Filter */}
           <Select
             value={filters.weldStatus}
-            onValueChange={(value) => handleFileFilterChange('weldStatus', value)}
+            onValueChange={(value) => handleFilterChange('weldStatus', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Weld Status" />
@@ -401,10 +401,10 @@ export function WeldFileFilterBar({
             </SelectContent>
           </Select>
 
-          {/* NDE Result FileFilter */}
+          {/* NDE Result Filter */}
           <Select
             value={filters.ndeResult}
-            onValueChange={(value) => handleFileFilterChange('ndeResult', value)}
+            onValueChange={(value) => handleFilterChange('ndeResult', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="NDE Result" />
@@ -418,10 +418,10 @@ export function WeldFileFilterBar({
             </SelectContent>
           </Select>
 
-          {/* PWHT Status FileFilter */}
+          {/* PWHT Status Filter */}
           <Select
             value={filters.pwhtStatus}
-            onValueChange={(value) => handleFileFilterChange('pwhtStatus', value)}
+            onValueChange={(value) => handleFilterChange('pwhtStatus', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="PWHT" />
@@ -436,13 +436,13 @@ export function WeldFileFilterBar({
           </Select>
         </div>
 
-        {/* Advanced FileFilters Row */}
+        {/* Advanced Filters Row */}
         {showAdvanced && (
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 pt-2 border-t">
-            {/* Drawing FileFilter */}
+            {/* Drawing Filter */}
             <Select
               value={filters.drawing}
-              onValueChange={(value) => handleFileFilterChange('drawing', value)}
+              onValueChange={(value) => handleFilterChange('drawing', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Drawing" />
@@ -457,10 +457,10 @@ export function WeldFileFilterBar({
               </SelectContent>
             </Select>
 
-            {/* Welder FileFilter */}
+            {/* Welder Filter */}
             <Select
               value={filters.welder}
-              onValueChange={(value) => handleFileFilterChange('welder', value)}
+              onValueChange={(value) => handleFilterChange('welder', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Welder" />
@@ -475,10 +475,10 @@ export function WeldFileFilterBar({
               </SelectContent>
             </Select>
 
-            {/* Weld Type FileFilter */}
+            {/* Weld Type Filter */}
             <Select
               value={filters.weldType}
-              onValueChange={(value) => handleFileFilterChange('weldType', value)}
+              onValueChange={(value) => handleFilterChange('weldType', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Type" />
@@ -493,10 +493,10 @@ export function WeldFileFilterBar({
               </SelectContent>
             </Select>
 
-            {/* Weld Size FileFilter */}
+            {/* Weld Size Filter */}
             <Select
               value={filters.weldSize}
-              onValueChange={(value) => handleFileFilterChange('weldSize', value)}
+              onValueChange={(value) => handleFilterChange('weldSize', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Size" />
@@ -511,10 +511,10 @@ export function WeldFileFilterBar({
               </SelectContent>
             </Select>
 
-            {/* Schedule FileFilter */}
+            {/* Schedule Filter */}
             <Select
               value={filters.schedule}
-              onValueChange={(value) => handleFileFilterChange('schedule', value)}
+              onValueChange={(value) => handleFilterChange('schedule', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Schedule" />
@@ -534,7 +534,7 @@ export function WeldFileFilterBar({
               type="date"
               placeholder="Welded From"
               value={filters.dateWeldedFrom}
-              onChange={(e) => handleFileFilterChange('dateWeldedFrom', e.target.value)}
+              onChange={(e) => handleFilterChange('dateWeldedFrom', e.target.value)}
               className="text-sm"
             />
           </div>
@@ -544,19 +544,19 @@ export function WeldFileFilterBar({
       {/* Results Summary */}
       <div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-3">
         <div className="flex items-center gap-2">
-          <FileFilter className="h-4 w-4" />
+          <Filter className="h-4 w-4" />
           <span>
             Showing <strong>{filteredCount}</strong> of <strong>{totalCount}</strong> field welds
           </span>
-          {hasActiveFileFilters && (
+          {hasActiveFilters && (
             <Badge status="info" className="text-xs">
-              {activeFileFilterCount} filter{activeFileFilterCount !== 1 ? 's' : ''} active
+              {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} active
             </Badge>
           )}
         </div>
 
-        {/* Active FileFilter Tags */}
-        {hasActiveFileFilters && (
+        {/* Active Filter Tags */}
+        {hasActiveFilters && (
           <div className="flex flex-wrap gap-1 max-w-md">
             {filters.search && (
               <Badge status="info" className="text-xs">
@@ -565,7 +565,7 @@ export function WeldFileFilterBar({
                   variant="ghost"
                   size="sm"
                   className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
-                  onClick={() => handleFileFilterChange('search', '')}
+                  onClick={() => handleFilterChange('search', '')}
                 >
                   <X className="h-3 w-3" />
                 </Button>
@@ -581,7 +581,7 @@ export function WeldFileFilterBar({
                     variant="ghost"
                     size="sm"
                     className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
-                    onClick={() => handleFileFilterChange(key as keyof WeldFileFilterState, key.includes('From') || key.includes('To') ? '' : 'all')}
+                    onClick={() => handleFilterChange(key as keyof WeldFilterState, key.includes('From') || key.includes('To') ? '' : 'all')}
                   >
                     <X className="h-3 w-3" />
                   </Button>

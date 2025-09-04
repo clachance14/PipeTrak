@@ -8,12 +8,12 @@ import { Slider } from "@ui/components/slider";
 import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
 import {
-	CheckCircle22,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 	Lock,
 	Loader2,
-	Undo22,
+	Undo2,
 	Minus,
 	Plus,
 } from "lucide-react";
@@ -143,7 +143,7 @@ export function MilestonePercentageRenderer({
 
 		if (currentValue === 100) {
 			return (
-				<CheckCircle22
+				<CheckCircle2
 					className="h-5 w-5 text-fieldComplete"
 					aria-label="100% Complete"
 				/>
@@ -199,7 +199,7 @@ export function MilestonePercentageRenderer({
 							className="h-8 w-8 p-0"
 							aria-label="Undo2 completion"
 						>
-							<Undo22 className="h-4 w-4" />
+							<Undo2 className="h-4 w-4" />
 						</Button>
 					)}
 				</div>

@@ -477,7 +477,7 @@ export function MilestoneProgressMatrix({
 								Import Components
 							</Button>
 							<Button variant="outline" size="sm">
-								Select FileFilters
+								Select Filters
 							</Button>
 						</div>
 					</div>

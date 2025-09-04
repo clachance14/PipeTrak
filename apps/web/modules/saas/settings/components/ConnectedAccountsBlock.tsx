@@ -8,7 +8,7 @@ import { useUserAccountsQuery } from "@saas/auth/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
-import { CheckCircle22Icon, LinkIcon } from "lucide-react";
+import { CheckCircle2Icon, LinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function ConnectedAccountsBlock() {
@@ -54,7 +54,7 @@ export function ConnectedAccountsBlock() {
 								{isPending ? (
 									<Skeleton className="h-10 w-28" />
 								) : isLinked ? (
-									<CheckCircle22Icon className="size-6 text-success" />
+									<CheckCircle2Icon className="size-6 text-success" />
 								) : (
 									<Button
 										variant={isLinked ? "outline" : "light"}

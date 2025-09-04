@@ -5,7 +5,7 @@ import { Input } from "@ui/components/input";
 import { Badge } from "@ui/components/badge";
 import { Switch } from "@ui/components/switch";
 import { ScrollArea } from "@ui/components/scroll-area";
-import { Search, Triangle, CheckCircle22, Circle, Clock } from "lucide-react";
+import { Search, Triangle, CheckCircle2, Circle, Clock } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
 
@@ -34,7 +34,7 @@ export function ComponentList({
 }: ComponentListProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 
-	// FileFilter components based on search
+	// Filter components based on search
 	const filteredComponents = useMemo(() => {
 		if (!searchQuery.trim()) return components;
 
@@ -221,7 +221,7 @@ function ComponentListItem({
 							{progressPercent}%
 						</span>
 						{progressPercent === 100 && (
-							<CheckCircle22 className="h-4 w-4 text-green-600" />
+							<CheckCircle2 className="h-4 w-4 text-green-600" />
 						)}
 					</div>
 					<div className="text-xs text-muted-foreground">
@@ -255,7 +255,7 @@ function ComponentListItem({
 									{milestone.milestoneName}
 								</span>
 								{milestone.isCompleted ? (
-									<CheckCircle22 className="h-3 w-3 text-green-600 shrink-0" />
+									<CheckCircle2 className="h-3 w-3 text-green-600 shrink-0" />
 								) : (
 									<Circle className="h-3 w-3 text-muted-foreground shrink-0" />
 								)}

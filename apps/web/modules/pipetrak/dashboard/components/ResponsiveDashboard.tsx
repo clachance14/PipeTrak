@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
-import { AlertTriangle, LayoutGrid3x3, BarChart3 } from "lucide-react";
+import { AlertTriangle, LayoutGrid, BarChart3 } from "lucide-react";
 import { DashboardTopBar } from "./DashboardTopBar";
 import { KPIHeroBar } from "./KPIHeroBar";
 import { AreaSystemGrid } from "./AreaSystemGrid";
@@ -200,7 +200,7 @@ export function ResponsiveDashboard({
 						value="area"
 						aria-label="Area × System View"
 					>
-						<LayoutGrid3x3 className="h-4 w-4 mr-2" />
+						<LayoutGrid className="h-4 w-4 mr-2" />
 						Area × System
 					</ToggleGroupItem>
 					<ToggleGroupItem

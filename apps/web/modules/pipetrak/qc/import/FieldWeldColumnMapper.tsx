@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@ui/components/alert";
 import { 
   FileSpreadsheet, 
   AlertCircle, 
-  CheckCircle22,
+  CheckCircle2,
   AlertTriangle,
   Sparkles,
   ArrowRight,
@@ -391,7 +391,7 @@ export function FieldWeldColumnMapper({
                         <div className="flex items-center gap-2">
                           {validationStatus.status === 'valid' && currentMapping && (
                             <div className="flex items-center gap-1">
-                              <CheckCircle22 className="h-4 w-4 text-green-600" />
+                              <CheckCircle2 className="h-4 w-4 text-green-600" />
                               {isAutoMapped && (
                                 <Badge status="info" className="text-xs gap-1">
                                   <Sparkles className="h-2 w-2" />
@@ -495,7 +495,7 @@ export function FieldWeldColumnMapper({
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             {overallValidation.isValid ? (
-              <CheckCircle22 className="h-5 w-5 text-green-600" />
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
             ) : (
               <AlertCircle className="h-5 w-5 text-destructive" />
             )}

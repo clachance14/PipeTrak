@@ -378,3 +378,6 @@ export function AreaSystemGrid3x3({ data }: AreaSystemGrid3x3Props) {
 		</TooltipProvider>
 	);
 }
+
+// Export alias for consistency with import name
+export { AreaSystemGrid3x3 as AreaSystemGrid };

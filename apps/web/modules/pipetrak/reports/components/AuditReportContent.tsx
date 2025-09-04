@@ -5,7 +5,7 @@ import { ReportHeader } from "./ReportHeader";
 
 interface AuditReportContentProps {
 	projectId: string;
-	initialFileFilters?: Record<string, string>;
+	initialFilters?: Record<string, string>;
 }
 
 /**
@@ -14,7 +14,7 @@ interface AuditReportContentProps {
  */
 export function AuditReportContent({
 	projectId,
-	initialFileFilters = {},
+	initialFilters = {},
 }: AuditReportContentProps) {
 	return (
 		<div className="space-y-6">

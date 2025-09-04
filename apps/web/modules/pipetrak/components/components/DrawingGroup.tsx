@@ -5,7 +5,7 @@ import {
 	useReactTable,
 	getCoreRowModel,
 	getSortedRowModel,
-	getFileFilteredRowModel,
+	getFilteredRowModel,
 	flexRender,
 	type ColumnDef,
 	type SortingState,
@@ -111,7 +111,7 @@ export function DrawingGroup({
 		};
 	}, [components, rowSelection]);
 
-	// FileFilter out the drawingNumber column since it's redundant in the group
+	// Filter out the drawingNumber column since it's redundant in the group
 	const filteredColumns = useMemo(() => {
 		return columns.filter((col) => col.id !== "drawingNumber");
 	}, [columns]);
@@ -192,7 +192,7 @@ export function DrawingGroup({
 		},
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFileFilteredRowModel: getFileFilteredRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
 		enableRowSelection: true,
 		enableColumnResizing: true,
 		columnResizeMode: "onChange",

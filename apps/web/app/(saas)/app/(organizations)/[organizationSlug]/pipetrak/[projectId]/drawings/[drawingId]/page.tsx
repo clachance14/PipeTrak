@@ -42,7 +42,7 @@ function DrawingDetailContent({
 	drawingId: string;
 }) {
 	const router = useRouter();
-	const [componentFileFilters] = useState({
+	const [componentFilters] = useState({
 		page: 1,
 		limit: 50,
 	});
@@ -51,7 +51,7 @@ function DrawingDetailContent({
 		data: detailsData,
 		isLoading: isLoadingDetails,
 		error: detailsError,
-	} = useDrawingDetails(drawingId, componentFileFilters);
+	} = useDrawingDetails(drawingId, componentFilters);
 
 	const { data: hierarchyData, isLoading: isLoadingHierarchy } =
 		useDrawingHierarchy(projectId);
