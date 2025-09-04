@@ -10,7 +10,7 @@ import {
 	Package,
 	Wrench,
 	FileText,
-	CheckCircle2,
+	Check,
 	Clock,
 	AlertCircle,
 } from "lucide-react";
@@ -31,7 +31,7 @@ export function ComponentCard({
 	const getStatusIcon = () => {
 		switch (component.status) {
 			case "COMPLETED":
-				return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
+				return <Check className="h-5 w-5 text-fieldComplete" />;
 			case "IN_PROGRESS":
 				return <Clock className="h-5 w-5 text-blue-600" />;
 			default:

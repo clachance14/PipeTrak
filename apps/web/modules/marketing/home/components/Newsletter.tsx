@@ -5,7 +5,7 @@ import { useNewsletterSignupMutation } from "@marketing/home/lib/api";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { CheckCircle2, Key } from "lucide-react";
+import { Check, Key } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -50,7 +50,7 @@ export function Newsletter() {
 				<div className="mx-auto max-w-lg">
 					{form.formState.isSubmitSuccessful ? (
 						<Alert variant="success">
-							<CheckCircle2 />
+							<Check />
 							<AlertTitle>
 								{t("newsletter.hints.success.title")}
 							</AlertTitle>

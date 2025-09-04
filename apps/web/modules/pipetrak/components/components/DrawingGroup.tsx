@@ -23,7 +23,7 @@ import {
 	ChevronRight,
 	MapPin,
 	Package2,
-	CheckCircle2,
+	Check,
 	AlertCircle,
 	Clock,
 	Minus,
@@ -232,7 +232,7 @@ export function DrawingGroup({
 	// Get status icon
 	const getStatusIcon = () => {
 		if (stats.completed === stats.total && stats.total > 0) {
-			return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
+			return <Check className="h-5 w-5 text-fieldComplete" />;
 		}
 		if (stats.inProgress > 0) {
 			return <Clock className="h-5 w-5 text-blue-600" />;
@@ -327,7 +327,7 @@ export function DrawingGroup({
 						<div className="hidden lg:flex items-center gap-2 text-sm">
 							{stats.completed > 0 && (
 								<span className="flex items-center gap-1 text-fieldComplete whitespace-nowrap">
-									<CheckCircle2 className="h-4 w-4" />
+									<Check className="h-4 w-4" />
 									{stats.completed}
 								</span>
 							)}

@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from "@ui/components/alert";
 import {
 	FileSpreadsheet,
 	Download,
-	CheckCircle2,
+	Check,
 	Info,
 	FileText,
 	Table,
@@ -189,7 +189,7 @@ export function TemplateDownload({ projectId }: TemplateDownloadProps) {
 								</h4>
 								<div className="space-y-2">
 									<div className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-										<CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />
+										<Check className="h-4 w-4 text-green-600 mt-0.5" />
 										<div className="flex-1">
 											<p className="font-medium">
 												Component ID
@@ -202,7 +202,7 @@ export function TemplateDownload({ projectId }: TemplateDownloadProps) {
 										</div>
 									</div>
 									<div className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-										<CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />
+										<Check className="h-4 w-4 text-green-600 mt-0.5" />
 										<div className="flex-1">
 											<p className="font-medium">
 												Drawing ID
@@ -421,7 +421,7 @@ export function TemplateDownload({ projectId }: TemplateDownloadProps) {
 
 								<div className="flex items-start gap-3">
 									<div className="p-1 bg-primary/10 rounded">
-										<CheckCircle2 className="h-4 w-4 text-primary" />
+										<Check className="h-4 w-4 text-primary" />
 									</div>
 									<div>
 										<p className="font-medium">
@@ -456,7 +456,7 @@ export function TemplateDownload({ projectId }: TemplateDownloadProps) {
 							<div className="space-y-3">
 								<Card className="p-4 bg-green-50 border-green-200">
 									<h4 className="font-medium mb-2 flex items-center gap-2">
-										<CheckCircle2 className="h-4 w-4 text-green-600" />
+										<Check className="h-4 w-4 text-green-600" />
 										Do's
 									</h4>
 									<ul className="space-y-1 text-sm">

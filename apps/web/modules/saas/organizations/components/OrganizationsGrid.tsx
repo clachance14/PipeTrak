@@ -5,7 +5,7 @@ import { OrganizationLogo } from "@saas/organizations/components/OrganizationLog
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { useOrganizationListQuery } from "@saas/organizations/lib/api";
 import { Card } from "@ui/components/card";
-import { ChevronRightIcon, PlusCircleIcon } from "lucide-react";
+import { ChevronRight, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 

@@ -1,5 +1,5 @@
 import { Button } from "@ui/components/button";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRight } from "lucide-react";
 
 export type PaginatioProps = {
 	className?: string;

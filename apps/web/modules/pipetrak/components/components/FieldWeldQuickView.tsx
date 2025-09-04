@@ -13,7 +13,7 @@ import { TooltipProvider } from "@ui/components/tooltip";
 import {
 	Zap,
 	FlameKindling,
-	CheckCircle2,
+	Check,
 	XCircle,
 	Clock,
 	AlertTriangle,
@@ -88,7 +88,7 @@ export function FieldWeldQuickView({
 						status="info"
 						className="gap-1 bg-green-100 text-green-800 hover:bg-green-200"
 					>
-						<CheckCircle2 className="h-3 w-3" />
+						<Check className="h-3 w-3" />
 						Accept
 					</Badge>
 				);

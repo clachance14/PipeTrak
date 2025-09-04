@@ -8,7 +8,7 @@ import { Slider } from "@ui/components/slider";
 import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
 import {
-	CheckCircle2,
+	Check,
 	Clock,
 	AlertCircle,
 	Lock,
@@ -143,7 +143,7 @@ export function MilestonePercentageRenderer({
 
 		if (currentValue === 100) {
 			return (
-				<CheckCircle2
+				<Check
 					className="h-5 w-5 text-fieldComplete"
 					aria-label="100% Complete"
 				/>

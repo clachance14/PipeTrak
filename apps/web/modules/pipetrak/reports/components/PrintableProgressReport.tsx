@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { format, addDays, startOfWeek } from "date-fns";
 import { PrintLayout } from "./PrintLayout";
 import { Badge } from "@ui/components/badge";
-import { CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { Check, Clock, AlertTriangle } from "lucide-react";
 import { cn } from "@ui/lib";
 
 interface PrintableProgressReportProps {
@@ -230,7 +230,7 @@ export function PrintableProgressReport({
 						>
 							{isFinal ? (
 								<>
-									<CheckCircle2 className="w-4 h-4 mr-2" />
+									<Check className="w-4 h-4 mr-2" />
 									FINAL
 								</>
 							) : (

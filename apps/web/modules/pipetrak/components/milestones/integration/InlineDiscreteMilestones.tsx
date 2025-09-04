@@ -10,7 +10,7 @@ import {
 	TooltipProvider,
 } from "@ui/components/tooltip";
 import {
-	CheckCircle2,
+	Check,
 	Circle,
 	Lock,
 	Loader2,
@@ -93,7 +93,7 @@ function MilestonePill({
 			return <Lock className="h-3 w-3" />;
 		}
 		if (milestone.isCompleted) {
-			return <CheckCircle2 className="h-3 w-3" />;
+			return <Check className="h-3 w-3" />;
 		}
 		return <Circle className="h-3 w-3" />;
 	};

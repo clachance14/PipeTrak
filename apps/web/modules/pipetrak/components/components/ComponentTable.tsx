@@ -34,7 +34,7 @@ import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditM
 import { InlineDiscreteMilestones } from "../milestones/integration/InlineDiscreteMilestones";
 import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
 import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
-import { applyComponentFilters } from "../lib/bulk-update-utils";
+import { applyComponentFileFilters } from "../lib/bulk-update-utils";
 import { createBulkUpdateService } from "../lib/bulk-update-service";
 import {
 	VIEW_PRESETS,
@@ -79,7 +79,6 @@ import {
 	BarChart3,
 	Table2,
 	Zap,
-	CheckCircle2,
 	AlertTriangle,
 	XCircle,
 	Clock,
@@ -725,7 +724,7 @@ export function ComponentTable({
 											status="info"
 											className="h-4 text-xs bg-green-100 text-green-800"
 										>
-											<CheckCircle2 className="h-2 w-2 mr-1" />
+											<Check className="h-2 w-2 mr-1" />
 											NDE OK
 										</Badge>,
 									);
@@ -967,7 +966,7 @@ export function ComponentTable({
 
 	// Apply new filters to data
 	const filteredData = useMemo(() => {
-		return applyComponentFilters(data, filters);
+		return applyComponentFileFilters(data, filters);
 	}, [data, filters]);
 
 	// Create table instance

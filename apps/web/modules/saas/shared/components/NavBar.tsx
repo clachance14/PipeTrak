@@ -7,7 +7,7 @@ import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
 import {
 	BotMessageSquareIcon,
-	ChevronRightIcon,
+	ChevronRight,
 	HomeIcon,
 	Settings,
 	UserCog2Icon,

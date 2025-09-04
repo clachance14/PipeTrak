@@ -12,7 +12,7 @@ import {
 import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
 import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
 import {
-	CheckCircle2,
+	Check,
 	Clock,
 	AlertCircle,
 	ChevronRight,
@@ -66,7 +66,7 @@ function MilestoneQuickEdit({
 		}
 
 		if (milestone.isCompleted) {
-			return <CheckCircle2 className="h-3 w-3 text-fieldComplete" />;
+			return <Check className="h-3 w-3 text-fieldComplete" />;
 		}
 
 		const completionPercent = getCompletionPercent(

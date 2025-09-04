@@ -8,7 +8,7 @@ import { Progress } from "@ui/components/progress";
 import { cn } from "@ui/lib";
 import {
 	AlertCircle,
-	CheckCircle2,
+	Check,
 	Clock,
 	Loader2,
 	Lock,
@@ -152,7 +152,7 @@ export function MilestoneQuantityRenderer({
 
 		if (percent === 100) {
 			return (
-				<CheckCircle2
+				<Check
 					className="h-5 w-5 text-fieldComplete"
 					aria-label="Completed"
 				/>

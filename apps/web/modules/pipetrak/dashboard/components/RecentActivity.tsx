@@ -7,7 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { CheckCircle2, Clock } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface RecentActivityProps {
@@ -56,7 +56,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
 							key={activity.id}
 							className="flex items-start gap-3"
 						>
-							<CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5" />
+							<Check className="h-5 w-5 text-green-600 mt-0.5" />
 							<div className="flex-1 space-y-1">
 								<p className="text-sm">
 									<span className="font-medium">

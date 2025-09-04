@@ -24,7 +24,7 @@ import {
 } from "@ui/components/table";
 import { ScrollArea } from "@ui/components/scroll-area";
 import {
-	CheckCircle2,
+	Check,
 	XCircle,
 	FileSpreadsheet,
 	AlertTriangle,
@@ -201,7 +201,7 @@ export function ValidationPreview({
 									{successRate}%
 								</p>
 							</div>
-							<CheckCircle2 className="h-8 w-8 text-green-600" />
+							<Check className="h-8 w-8 text-green-600" />
 						</div>
 					</CardContent>
 				</Card>
@@ -245,7 +245,7 @@ export function ValidationPreview({
 			{/* Validation Status Alert */}
 			{validation.isValid ? (
 				<Alert className="border-green-200 bg-green-50">
-					<CheckCircle2 className="h-4 w-4 text-green-600" />
+					<Check className="h-4 w-4 text-green-600" />
 					<AlertTitle className="text-green-900">
 						Validation Successful
 					</AlertTitle>
@@ -635,7 +635,7 @@ export function ValidationPreview({
 																status="info"
 																className="gap-1"
 															>
-																<CheckCircle2 className="h-3 w-3" />
+																<Check className="h-3 w-3" />
 																Valid
 															</Badge>
 														)}
@@ -758,7 +758,7 @@ export function ValidationPreview({
 							{validation.errors.length === 0 &&
 								validation.warnings.length === 0 && (
 									<div className="text-center py-8">
-										<CheckCircle2 className="h-12 w-12 text-green-600 mx-auto mb-4" />
+										<Check className="h-12 w-12 text-green-600 mx-auto mb-4" />
 										<p className="text-muted-foreground">
 											No validation issues found
 										</p>

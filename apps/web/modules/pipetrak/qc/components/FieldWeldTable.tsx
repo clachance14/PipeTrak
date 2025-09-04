@@ -31,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/components/table";
-import { Download, Plus, RefreshCw, CheckCircle2, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
+import { Download, Plus, RefreshCw, Check, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
 import { AddWeldModal } from "./AddWeldModal";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
 // import { WeldFilterBar, type WeldFilterState } from "./WeldFilterBar"; // Commented out - component not found
@@ -585,7 +585,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 <SelectContent>
                   <SelectItem value="Accept">
                     <span className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <Check className="h-4 w-4 text-green-600" />
                       Accept
                     </span>
                   </SelectItem>
@@ -616,7 +616,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 }} // Click to refresh and see current state
               >
                 {value === "Accept" ? (
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  <Check className="h-3 w-3 mr-1" />
                 ) : (
                   <XCircle className="h-3 w-3 mr-1" />
                 )}
@@ -686,7 +686,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                   setShowMarkCompleteModal(true);
                 }}
               >
-                <CheckCircle2 className="h-4 w-4 mr-2" />
+                <Check className="h-4 w-4 mr-2" />
                 Mark Complete
               </Button>
             );
