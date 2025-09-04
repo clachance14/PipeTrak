@@ -1,7 +1,6 @@
-import { createClient } from "@repo/database/server";
+import { db } from "@repo/database";
 
 export async function getProjectDashboard(projectId: string) {
-	const db = await createClient();
 
 	// Get project details
 	const project = await db.project.findUnique({
@@ -35,24 +34,24 @@ export async function getProjectDashboard(projectId: string) {
 	// Calculate overall statistics
 	const totalComponents = components.length;
 	const completedComponents = components.filter(
-		(c) => c.status === "COMPLETED",
+		(c: any) => c.status === "COMPLETED",
 	).length;
 	const inProgressComponents = components.filter(
-		(c) => c.status === "IN_PROGRESS",
+		(c: any) => c.status === "IN_PROGRESS",
 	).length;
 	const notStartedComponents = components.filter(
-		(c) => c.status === "NOT_STARTED",
+		(c: any) => c.status === "NOT_STARTED",
 	).length;
 
 	const overallProgress =
 		totalComponents > 0
-			? components.reduce((sum, c) => sum + c.completionPercent, 0) /
+			? components.reduce((sum: any, c: any) => sum + c.completionPercent, 0) /
 				totalComponents
 			: 0;
 
 	// Get progress by area
 	const areaProgress = new Map<string, { count: number; progress: number }>();
-	components.forEach((c) => {
+	components.forEach((c: any) => {
 		if (c.area) {
 			const current = areaProgress.get(c.area) || {
 				count: 0,
@@ -78,7 +77,7 @@ export async function getProjectDashboard(projectId: string) {
 		string,
 		{ count: number; progress: number }
 	>();
-	components.forEach((c) => {
+	components.forEach((c: any) => {
 		if (c.system) {
 			const current = systemProgress.get(c.system) || {
 				count: 0,
@@ -156,7 +155,6 @@ export async function getProjectDashboard(projectId: string) {
 }
 
 export async function getProjectSummary(projectId: string) {
-	const db = await createClient();
 
 	const summary = await db.component.aggregate({
 		where: { projectId },

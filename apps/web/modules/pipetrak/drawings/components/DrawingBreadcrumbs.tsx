@@ -2,7 +2,7 @@
 
 import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -29,7 +29,7 @@ export function DrawingBreadcrumbs({
 	breadcrumbPath = [],
 	className,
 }: DrawingBreadcrumbsProps) {
-	const pathname = usePathname();
+	// const pathname = usePathname();
 	const baseUrl = `/app/pipetrak/${projectId}`;
 
 	return (
@@ -108,7 +108,7 @@ export function DrawingBreadcrumbs({
 
 // Mobile-optimized breadcrumbs that show only current level
 export function DrawingBreadcrumbsMobile({
-	projectId,
+	projectId: _projectId,
 	drawing,
 	onBack,
 	className,
@@ -118,12 +118,13 @@ export function DrawingBreadcrumbsMobile({
 	onBack?: () => void;
 	className?: string;
 }) {
-	const baseUrl = `/app/pipetrak/${projectId}`;
+	// const _baseUrl = `/app/pipetrak/${projectId}`;
 
 	return (
 		<div className={cn("flex items-center gap-2 py-2", className)}>
 			{onBack && (
 				<button
+					type="button"
 					onClick={onBack}
 					className="p-1 rounded-md hover:bg-accent"
 					aria-label="Go back"

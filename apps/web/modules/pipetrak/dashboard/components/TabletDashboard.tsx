@@ -273,8 +273,8 @@ export function TabletDashboard({
 											All Areas
 										</SelectItem>
 										{uniqueAreas.map((area) => (
-											<SelectItem key={area} value={area}>
-												{area}
+											<SelectItem key={area || 'unknown'} value={area || ''}>
+												{area || 'Unknown'}
 											</SelectItem>
 										))}
 									</SelectContent>

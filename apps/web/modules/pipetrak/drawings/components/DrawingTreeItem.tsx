@@ -27,7 +27,6 @@ export function DrawingTreeItem({
 }: DrawingTreeItemProps) {
 	const hasChildren = drawing.children && drawing.children.length > 0;
 	const indentSize = isMobile ? 12 : 16; // Smaller indent on mobile
-	const itemHeight = isMobile ? 52 : 44; // Larger touch target on mobile
 
 	return (
 		<div
@@ -41,7 +40,13 @@ export function DrawingTreeItem({
 				paddingLeft: `${level * indentSize + 8}px`,
 			}}
 			onClick={() => onSelect(drawing.id)}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					onSelect(drawing.id);
+				}
+			}}
 			role="treeitem"
+			tabIndex={0}
 			aria-expanded={hasChildren ? isExpanded : undefined}
 			aria-level={level + 1}
 			aria-selected={isSelected}

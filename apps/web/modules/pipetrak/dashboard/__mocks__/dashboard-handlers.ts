@@ -92,7 +92,7 @@ export const dashboardHandlers = [
 		}
 
 		const scenario = getProjectScenario(projectId);
-		let metrics;
+		let metrics: any;
 
 		switch (scenario) {
 			case "empty":
@@ -148,7 +148,7 @@ export const dashboardHandlers = [
 		}
 
 		const scenario = getProjectScenario(projectId);
-		let matrix;
+		let matrix: any;
 
 		switch (scenario) {
 			case "empty":
@@ -192,7 +192,7 @@ export const dashboardHandlers = [
 		}
 
 		const scenario = getProjectScenario(projectId);
-		let drawings;
+		let drawings: any;
 
 		switch (scenario) {
 			case "empty":
@@ -233,7 +233,7 @@ export const dashboardHandlers = [
 		}
 
 		const scenario = getProjectScenario(projectId);
-		let packages;
+		let packages: any;
 
 		switch (scenario) {
 			case "empty":
@@ -278,7 +278,7 @@ export const dashboardHandlers = [
 		}
 
 		const scenario = getProjectScenario(projectId);
-		let activity;
+		let activity: any;
 
 		switch (scenario) {
 			case "empty":
@@ -302,7 +302,7 @@ export const dashboardHandlers = [
 	// Project details (for context)
 	http.get(`${SUPABASE_URL}/rest/v1/Project`, ({ request }) => {
 		const url = new URL(request.url);
-		const select = url.searchParams.get("select");
+		// const _select = url.searchParams.get("select");
 		const projectId = url.searchParams.get("id");
 
 		if (!projectId) {
@@ -346,7 +346,7 @@ export const dashboardHandlers = [
 export const dashboardErrorHandlers = [
 	...dashboardHandlers.map((handler) => {
 		// Override all handlers to return errors
-		if (handler.info?.path?.includes("/rpc/")) {
+		if (typeof handler.info?.path === 'string' && handler.info.path.includes("/rpc/")) {
 			return http.post(handler.info.path, () => {
 				return HttpResponse.json(
 					createErrorResponse("Database connection failed"),
@@ -361,7 +361,7 @@ export const dashboardErrorHandlers = [
 export const dashboardSlowHandlers = [
 	...dashboardHandlers.map((handler) => {
 		// Override all handlers to simulate slow responses
-		if (handler.info?.path?.includes("/rpc/")) {
+		if (typeof handler.info?.path === 'string' && handler.info.path.includes("/rpc/")) {
 			return http.post(handler.info.path, async ({ request }) => {
 				await simulateApiDelay(3000, 5000); // 3-5 second delay
 

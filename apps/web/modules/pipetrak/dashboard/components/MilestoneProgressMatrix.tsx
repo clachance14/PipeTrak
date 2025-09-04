@@ -618,7 +618,7 @@ export function MilestoneProgressMatrix({
 								</tr>
 							</thead>
 							<tbody>
-								{tableData.map((row, index) => (
+								{tableData.map((row) => (
 									<tr
 										key={row.rowKey}
 										className="border-b hover:bg-gray-50/50"
@@ -634,7 +634,8 @@ export function MilestoneProgressMatrix({
 													key={milestone}
 													className="p-1"
 												>
-													<div
+													<button
+														type="button"
 														className={`
                               cursor-pointer text-center p-2 rounded transition-all hover:scale-105 hover:shadow-md
                               ${getProgressCellClass(stats)}
@@ -647,6 +648,11 @@ export function MilestoneProgressMatrix({
 																stats,
 															)
 														}
+														onKeyDown={(e) => {
+															if ((e.key === 'Enter' || e.key === ' ') && stats) {
+																handleCellClick(row.rowKey, milestone, stats);
+															}
+														}}
 													>
 														{stats ? (
 															<div>
@@ -676,7 +682,7 @@ export function MilestoneProgressMatrix({
 																</div>
 															</div>
 														)}
-													</div>
+													</button>
 												</td>
 											);
 										})}

@@ -20,7 +20,8 @@
 		"**/*.tsx",
 		"**/*.cjs",
 		"**/*.mjs",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"types/global.d.ts"
 	],
 	"exclude": ["node_modules"]
 }
