@@ -12,7 +12,7 @@ import { Button } from "@ui/components/button";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { Progress } from "@ui/components/progress";
 import {
-	CheckCircle2,
+	Check,
 	AlertTriangle,
 	Upload,
 	FileSpreadsheet,
@@ -234,7 +234,7 @@ export function ImportWizardV2({ projectId }: ImportWizardV2Props) {
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
-							<CheckCircle2 className="h-5 w-5 text-green-600" />
+							<Check className="h-5 w-5 text-green-600" />
 							Import Preview
 						</CardTitle>
 						<CardDescription>
@@ -424,7 +424,7 @@ export function ImportWizardV2({ projectId }: ImportWizardV2Props) {
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
-							<CheckCircle2 className="h-5 w-5 text-green-600" />
+							<Check className="h-5 w-5 text-green-600" />
 							Import Complete!
 						</CardTitle>
 						<CardDescription>

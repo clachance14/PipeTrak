@@ -8,7 +8,7 @@ import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
 import { toast } from "sonner";
 import {
-	CheckCircle2,
+	Check,
 	AlertCircle,
 	RefreshCw,
 	Save,
@@ -352,7 +352,7 @@ export function MilestoneUpdatePanel({
 							)}
 						>
 							{overallProgress === 100 ? (
-								<CheckCircle2 className="h-4 w-4 mr-1" />
+								<Check className="h-4 w-4 mr-1" />
 							) : (
 								<AlertCircle className="h-4 w-4 mr-1" />
 							)}

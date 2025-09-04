@@ -9,7 +9,7 @@ import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
 import { Slider } from "@ui/components/slider";
 import { Badge } from "@ui/components/badge";
-import { CheckCircle2, Circle, Clock, AlertCircle, Lock } from "lucide-react";
+import { Check, Circle, Clock, AlertCircle, Lock } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentMilestone, WorkflowType } from "../../types";
 
@@ -40,7 +40,7 @@ export function MilestoneUpdateCard({
 
 		if (workflowType === "MILESTONE_DISCRETE") {
 			return milestone.isCompleted ? (
-				<CheckCircle2 className="h-5 w-5 text-fieldComplete" />
+				<Check className="h-5 w-5 text-fieldComplete" />
 			) : (
 				<Circle className="h-5 w-5 text-muted-foreground" />
 			);
@@ -48,7 +48,7 @@ export function MilestoneUpdateCard({
 
 		const percent = milestone.percentageComplete || 0;
 		if (percent === 100) {
-			return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
+			return <Check className="h-5 w-5 text-fieldComplete" />;
 		}
 		if (percent > 0) {
 			return <Clock className="h-5 w-5 text-blue-600" />;

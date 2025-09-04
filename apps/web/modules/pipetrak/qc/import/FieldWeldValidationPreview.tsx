@@ -26,7 +26,7 @@ import {
   AlertTitle,
 } from "@ui/components/alert";
 import { 
-  CheckCircle2, 
+  Check, 
   XCircle, 
   AlertTriangle, 
   Info, 
@@ -294,7 +294,7 @@ export function FieldWeldValidationPreview({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="h-5 w-5 text-green-500" />
+              <Check className="h-5 w-5 text-green-500" />
               <span className="text-sm font-medium">Valid Rows</span>
             </div>
             <div className="text-2xl font-bold text-green-600">{validationReport.summary.validRows}</div>
@@ -639,7 +639,7 @@ export function FieldWeldValidationPreview({
           ) : (
             onProceedToImport && (
               <Button onClick={onProceedToImport} className="flex-1 sm:flex-none">
-                <CheckCircle2 className="h-4 w-4 mr-2" />
+                <Check className="h-4 w-4 mr-2" />
                 Proceed to Import ({validationReport.summary.validRows} rows)
               </Button>
             )

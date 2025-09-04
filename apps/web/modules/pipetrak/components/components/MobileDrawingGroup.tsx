@@ -10,7 +10,7 @@ import {
 	ChevronDown,
 	ChevronRight,
 	MapPin,
-	CheckCircle2,
+	Check,
 	AlertCircle,
 	Clock,
 	Minus,
@@ -155,7 +155,7 @@ export function MobileDrawingGroup({
 	// Get status icon
 	const getStatusIcon = () => {
 		if (stats.completed === stats.total && stats.total > 0) {
-			return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
+			return <Check className="h-5 w-5 text-fieldComplete" />;
 		}
 		if (stats.inProgress > 0) {
 			return <Clock className="h-5 w-5 text-blue-600" />;

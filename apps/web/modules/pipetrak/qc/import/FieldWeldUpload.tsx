@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/components/card";
 import { Button } from "@ui/components/button";
 import { Progress } from "@ui/components/progress";
-import { Upload, FileSpreadsheet, X, AlertCircle, Download, CheckCircle2 } from "lucide-react";
+import { Upload, FileSpreadsheet, X, AlertCircle, Download, Check } from "lucide-react";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { cn } from "@ui/lib";
 // Using basic file validation instead of Excel parsing
@@ -200,7 +200,7 @@ export function FieldWeldUpload({
       <Card className={className}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <Check className="h-5 w-5 text-green-600" />
             WELD LOG File Ready
           </CardTitle>
         </CardHeader>
@@ -236,7 +236,7 @@ export function FieldWeldUpload({
               <ul className="text-sm text-green-700 space-y-1">
                 {validationResult.metadata.requiredColumnsFound.map((column, index) => (
                   <li key={index} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-3 w-3" />
+                    <Check className="h-3 w-3" />
                     {column}
                   </li>
                 ))}
@@ -260,7 +260,7 @@ export function FieldWeldUpload({
             }`}>
               <div className="flex items-center gap-2 mb-2">
                 {importResult.success ? (
-                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                  <Check className="h-5 w-5 text-green-600" />
                 ) : (
                   <AlertCircle className="h-5 w-5 text-yellow-600" />
                 )}

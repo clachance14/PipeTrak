@@ -9,7 +9,7 @@ import {
 	MapPin,
 	Package,
 	Wrench,
-	CheckCircle2,
+	Check,
 	Clock,
 	AlertCircle,
 	MoreVertical,
@@ -81,7 +81,7 @@ export function MobileComponentCard({
 	const getStatusIcon = () => {
 		switch (component.status) {
 			case "COMPLETED":
-				return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
+				return <Check className="h-5 w-5 text-fieldComplete" />;
 			case "IN_PROGRESS":
 				return <Clock className="h-5 w-5 text-blue-600" />;
 			default:
@@ -197,7 +197,7 @@ export function MobileComponentCard({
 								{component.status === "NOT_STARTED" ? (
 									<Clock className="h-6 w-6 text-blue-600" />
 								) : (
-									<CheckCircle2 className="h-6 w-6 text-fieldComplete" />
+									<Check className="h-6 w-6 text-fieldComplete" />
 								)}
 							</div>
 						)}
@@ -278,7 +278,7 @@ export function MobileComponentCard({
 													onQuickUpdate("COMPLETED");
 												}}
 											>
-												<CheckCircle2 className="mr-2 h-4 w-4" />
+												<Check className="mr-2 h-4 w-4" />
 												Mark Complete
 											</DropdownMenuItem>
 										)}

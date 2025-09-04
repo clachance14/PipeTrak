@@ -18,7 +18,7 @@ import {
 	Search,
 	RefreshCw,
 	Triangle,
-	CheckCircle2,
+	Check,
 	Circle,
 	Clock,
 	MapPin,
@@ -425,7 +425,7 @@ function MobileComponentCard({ component, onTap }: MobileComponentCardProps) {
 						{progressPercent}%
 					</div>
 					{progressPercent === 100 && (
-						<CheckCircle2 className="h-4 w-4 text-green-600 ml-auto" />
+						<Check className="h-4 w-4 text-green-600 ml-auto" />
 					)}
 				</div>
 			</div>
@@ -451,7 +451,7 @@ function MobileComponentCard({ component, onTap }: MobileComponentCardProps) {
 							onClick={(e) => e.stopPropagation()}
 						>
 							{milestone.isCompleted ? (
-								<CheckCircle2 className="h-4 w-4 text-green-600" />
+								<Check className="h-4 w-4 text-green-600" />
 							) : (
 								<Circle className="h-4 w-4 text-muted-foreground" />
 							)}

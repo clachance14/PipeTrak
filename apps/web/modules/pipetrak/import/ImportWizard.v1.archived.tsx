@@ -7,7 +7,7 @@ import { Progress } from "@ui/components/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import {
 	FileSpreadsheet,
-	CheckCircle2,
+	Check,
 	AlertCircle,
 	ArrowLeft,
 	ArrowRight,
@@ -468,7 +468,7 @@ export function ImportWizard({ projectId }: ImportWizardProps) {
 											}`}
 										>
 											{importStatus === "completed" ? (
-												<CheckCircle2 className="h-8 w-8 text-green-600" />
+												<Check className="h-8 w-8 text-green-600" />
 											) : importStatus === "failed" ? (
 												<XCircle className="h-8 w-8 text-red-600" />
 											) : (

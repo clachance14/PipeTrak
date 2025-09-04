@@ -27,7 +27,7 @@ import { Slider } from "@ui/components/slider";
 import {
 	Users,
 	Clock,
-	CheckCircle2,
+	Check,
 	Eye,
 	Play,
 	Undo2,
@@ -567,7 +567,7 @@ export function EnhancedBulkUpdateModal({
 	const renderCompleteStep = () => (
 		<div className="space-y-4 py-4">
 			<div className="text-center">
-				<CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-4" />
+				<Check className="h-12 w-12 mx-auto text-green-600 mb-4" />
 				<h4 className="text-lg font-medium">Update Complete</h4>
 			</div>
 

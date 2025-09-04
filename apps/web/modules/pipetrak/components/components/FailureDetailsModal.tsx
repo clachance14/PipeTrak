@@ -28,7 +28,7 @@ import {
 	RefreshCw,
 	Download,
 	Copy,
-	CheckCircle2,
+	Check,
 	XCircle,
 	Clock,
 } from "lucide-react";
@@ -455,7 +455,7 @@ export function FailureDetailsModal({
 																		)}
 																		{failure.retryStatus ===
 																			"success" && (
-																			<CheckCircle2 className="h-4 w-4 text-green-600" />
+																			<Check className="h-4 w-4 text-green-600" />
 																		)}
 																		{failure.retryStatus ===
 																			"failed" && (

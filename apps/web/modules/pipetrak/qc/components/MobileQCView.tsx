@@ -17,7 +17,7 @@ import {
   Filter, 
   Plus, 
   RefreshCw,
-  CheckCircle2,
+  Check,
   XCircle,
   Clock,
   FlameKindling
@@ -361,7 +361,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
         <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardContent className="p-3">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <Check className="h-4 w-4 text-green-600" />
               <div>
                 <p className="text-xs text-green-700 font-medium">Accepted</p>
                 <p className="text-lg font-bold text-green-900">{stats.accepted}</p>

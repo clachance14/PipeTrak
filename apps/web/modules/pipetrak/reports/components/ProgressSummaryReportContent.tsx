@@ -23,7 +23,7 @@ import {
 	Calendar as CalendarIcon,
 	RefreshCw,
 	AlertCircle,
-	CheckCircle2,
+	Check,
 	Clock,
 	FileText,
 	Sheet,
@@ -261,7 +261,7 @@ export function ProgressSummaryReportContent({
 							>
 								{isFinal ? (
 									<>
-										<CheckCircle2 className="w-3 h-3 mr-1" />
+										<Check className="w-3 h-3 mr-1" />
 										FINAL
 									</>
 								) : (

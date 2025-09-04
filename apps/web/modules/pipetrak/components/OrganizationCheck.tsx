@@ -5,7 +5,7 @@ import { useActiveOrganization } from "@saas/organizations/hooks/use-active-orga
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Badge } from "@ui/components/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { AlertCircle, CheckCircle2, Users } from "lucide-react";
+import { AlertCircle, Check, Users } from "lucide-react";
 
 /**
  * Development-only component to display organization membership status
@@ -64,7 +64,7 @@ export function OrganizationCheck() {
 				{hasOrganization ? (
 					<div className="space-y-2">
 						<div className="flex items-center gap-2">
-							<CheckCircle2 className="h-4 w-4 text-green-500" />
+							<Check className="h-4 w-4 text-green-500" />
 							<span className="text-sm font-medium">
 								Active Organization
 							</span>

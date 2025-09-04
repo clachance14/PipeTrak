@@ -32,7 +32,7 @@ import {
 } from "@ui/components/accordion";
 import {
 	Clock,
-	CheckCircle2,
+	Check,
 	AlertCircle,
 	Settings,
 	Package,
@@ -295,7 +295,7 @@ export function BulkMilestoneModal({
 						// Results View
 						<div className="space-y-4">
 							<Alert>
-								<CheckCircle2 className="h-4 w-4" />
+								<Check className="h-4 w-4" />
 								<AlertDescription>
 									<strong>Update Complete:</strong>{" "}
 									{result.successful.length} of{" "}
@@ -494,7 +494,7 @@ export function BulkMilestoneModal({
 
 												{quickMilestone && (
 													<Alert>
-														<CheckCircle2 className="h-4 w-4" />
+														<Check className="h-4 w-4" />
 														<AlertDescription>
 															This will mark "
 															{quickMilestone}" as
