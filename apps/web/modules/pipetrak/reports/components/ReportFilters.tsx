@@ -21,7 +21,7 @@ import { Separator } from "@ui/components/separator";
 import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
 import {
-	FileFilter,
+	Filter,
 	X,
 	Calendar as Calendar,
 	ChevronDown,
@@ -31,12 +31,12 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@ui/lib";
-import type { ReportFileFilters, FileFilterOptionsResponse } from "../types";
+import type { ReportFilters, FilterOptionsResponse } from "../types";
 
-interface ReportFileFiltersProps {
-	filters: ReportFileFilters;
-	onFileFiltersChange: (filters: ReportFileFilters) => void;
-	filterOptions?: FileFilterOptionsResponse["data"];
+interface ReportFiltersProps {
+	filters: ReportFilters;
+	onFiltersChange: (filters: ReportFilters) => void;
+	filterOptions?: FilterOptionsResponse["data"];
 	isLoading?: boolean;
 	showAdvanced?: boolean;
 	searchQuery?: string;
@@ -47,15 +47,15 @@ interface ReportFileFiltersProps {
  * Advanced filter component for reports
  * Supports date ranges, multi-select dropdowns, search, and filter management
  */
-export function ReportFileFilters({
+export function ReportFilters({
 	filters,
-	onFileFiltersChange,
+	onFiltersChange,
 	filterOptions,
 	isLoading = false,
 	showAdvanced = false,
 	searchQuery = "",
 	onSearchChange,
-}: ReportFileFiltersProps) {
+}: ReportFiltersProps) {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [dateRange, setDateRange] = useState<{
 		from?: Date;
@@ -70,7 +70,7 @@ export function ReportFileFilters({
 	});
 
 	const handleMultiSelectChange = (
-		key: keyof ReportFileFilters,
+		key: keyof ReportFilters,
 		value: string,
 		isSelected: boolean,
 	) => {
@@ -79,7 +79,7 @@ export function ReportFileFilters({
 			? [...currentValues, value]
 			: currentValues.filter((v) => v !== value);
 
-		onFileFiltersChange({
+		onFiltersChange({
 			...filters,
 			[key]: newValues.length > 0 ? newValues : undefined,
 		});
@@ -89,7 +89,7 @@ export function ReportFileFilters({
 		setDateRange({ from, to });
 
 		if (from || to) {
-			onFileFiltersChange({
+			onFiltersChange({
 				...filters,
 				dateRange: {
 					start: from ? format(from, "yyyy-MM-dd") : "",
@@ -98,13 +98,13 @@ export function ReportFileFilters({
 			});
 		} else {
 			const { dateRange, ...filtersWithoutDate } = filters;
-			onFileFiltersChange(filtersWithoutDate);
+			onFiltersChange(filtersWithoutDate);
 		}
 	};
 
 	const handleCompletionRangeChange = (min?: number, max?: number) => {
 		if (min !== undefined || max !== undefined) {
-			onFileFiltersChange({
+			onFiltersChange({
 				...filters,
 				completionRange: {
 					min: min ?? 0,
@@ -113,16 +113,16 @@ export function ReportFileFilters({
 			});
 		} else {
 			const { completionRange, ...filtersWithoutCompletion } = filters;
-			onFileFiltersChange(filtersWithoutCompletion);
+			onFiltersChange(filtersWithoutCompletion);
 		}
 	};
 
-	const clearAllFileFilters = () => {
-		onFileFiltersChange({});
+	const clearAllFilters = () => {
+		onFiltersChange({});
 		setDateRange({ from: undefined, to: undefined });
 	};
 
-	const getActiveFileFilterCount = () => {
+	const getActiveFilterCount = () => {
 		let count = 0;
 		if (filters.areas?.length) count++;
 		if (filters.systems?.length) count++;
@@ -134,7 +134,7 @@ export function ReportFileFilters({
 		return count;
 	};
 
-	const activeFileFilterCount = getActiveFileFilterCount();
+	const activeFilterCount = getActiveFilterCount();
 
 	if (isLoading) {
 		return (
@@ -159,18 +159,18 @@ export function ReportFileFilters({
 			<CardHeader className="pb-4">
 				<div className="flex items-center justify-between">
 					<CardTitle className="text-lg font-semibold flex items-center gap-2">
-						<FileFilter className="h-5 w-5" />
-						FileFilters
-						{activeFileFilterCount > 0 && (
-							<Badge status="info">{activeFileFilterCount}</Badge>
+						<Filter className="h-5 w-5" />
+						Filters
+						{activeFilterCount > 0 && (
+							<Badge status="info">{activeFilterCount}</Badge>
 						)}
 					</CardTitle>
 					<div className="flex items-center gap-2">
-						{activeFileFilterCount > 0 && (
+						{activeFilterCount > 0 && (
 							<Button
 								variant="ghost"
 								size="sm"
-								onClick={clearAllFileFilters}
+								onClick={clearAllFilters}
 								className="text-muted-foreground hover:text-destructive"
 							>
 								<RotateCcw className="h-4 w-4 mr-1" />
@@ -206,9 +206,9 @@ export function ReportFileFilters({
 					</div>
 				)}
 
-				{/* Primary FileFilters - Always Visible */}
+				{/* Primary Filters - Always Visible */}
 				<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-					{/* Areas FileFilter */}
+					{/* Areas Filter */}
 					<div className="space-y-2">
 						<Label className="text-sm font-medium">Areas</Label>
 						<Select>
@@ -278,7 +278,7 @@ export function ReportFileFilters({
 						)}
 					</div>
 
-					{/* Systems FileFilter */}
+					{/* Systems Filter */}
 					<div className="space-y-2">
 						<Label className="text-sm font-medium">Systems</Label>
 						<Select>
@@ -349,7 +349,7 @@ export function ReportFileFilters({
 						)}
 					</div>
 
-					{/* Date Range FileFilter */}
+					{/* Date Range Filter */}
 					<div className="space-y-2">
 						<Label className="text-sm font-medium">
 							Date Range
@@ -411,12 +411,12 @@ export function ReportFileFilters({
 					</div>
 				</div>
 
-				{/* Advanced FileFilters - Collapsible */}
+				{/* Advanced Filters - Collapsible */}
 				{(isExpanded || showAdvanced) && (
 					<>
 						<Separator />
 						<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-							{/* Test Packages FileFilter */}
+							{/* Test Packages Filter */}
 							{filterOptions?.testPackages?.length && (
 								<div className="space-y-2">
 									<Label className="text-sm font-medium">
@@ -467,7 +467,7 @@ export function ReportFileFilters({
 								</div>
 							)}
 
-							{/* Component Types FileFilter */}
+							{/* Component Types Filter */}
 							{filterOptions?.componentTypes?.length && (
 								<div className="space-y-2">
 									<Label className="text-sm font-medium">
@@ -518,7 +518,7 @@ export function ReportFileFilters({
 								</div>
 							)}
 
-							{/* Statuses FileFilter */}
+							{/* Statuses Filter */}
 							{filterOptions?.statuses?.length && (
 								<div className="space-y-2">
 									<Label className="text-sm font-medium">
@@ -569,7 +569,7 @@ export function ReportFileFilters({
 								</div>
 							)}
 
-							{/* Completion Range FileFilter */}
+							{/* Completion Range Filter */}
 							<div className="space-y-2 md:col-span-2">
 								<Label className="text-sm font-medium">
 									Completion Range (%)

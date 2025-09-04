@@ -5,7 +5,7 @@ import { ReportHeader } from "./ReportHeader";
 
 interface TrendReportContentProps {
 	projectId: string;
-	initialFileFilters?: Record<string, string>;
+	initialFilters?: Record<string, string>;
 }
 
 /**
@@ -14,7 +14,7 @@ interface TrendReportContentProps {
  */
 export function TrendReportContent({
 	projectId,
-	initialFileFilters = {},
+	initialFilters = {},
 }: TrendReportContentProps) {
 	return (
 		<div className="space-y-6">

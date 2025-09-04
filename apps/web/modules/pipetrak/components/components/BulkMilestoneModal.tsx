@@ -295,7 +295,7 @@ export function BulkMilestoneModal({
 						// Results View
 						<div className="space-y-4">
 							<Alert>
-								<CheckCircle22 className="h-4 w-4" />
+								<CheckCircle2 className="h-4 w-4" />
 								<AlertDescription>
 									<strong>Update Complete:</strong>{" "}
 									{result.successful.length} of{" "}
@@ -494,7 +494,7 @@ export function BulkMilestoneModal({
 
 												{quickMilestone && (
 													<Alert>
-														<CheckCircle22 className="h-4 w-4" />
+														<CheckCircle2 className="h-4 w-4" />
 														<AlertDescription>
 															This will mark "
 															{quickMilestone}" as

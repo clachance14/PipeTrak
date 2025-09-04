@@ -5,7 +5,7 @@ import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Skeleton } from "@ui/components/skeleton";
 import {
-	CheckCircle22,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 	Lock,
@@ -166,7 +166,7 @@ const MilestoneItem = memo(function MilestoneItem({
 		}
 
 		if (completionPercent === 100) {
-			return <CheckCircle22 className="h-5 w-5 text-fieldComplete" />;
+			return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
 		}
 		if (completionPercent > 0) {
 			return <Clock className="h-5 w-5 text-blue-600" />;

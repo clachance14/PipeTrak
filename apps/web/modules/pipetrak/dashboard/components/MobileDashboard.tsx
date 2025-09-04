@@ -18,12 +18,12 @@ import {
 	Search,
 	RefreshCw,
 	Triangle,
-	CheckCircle22,
+	CheckCircle2,
 	Circle,
 	Clock,
 	MapPin,
 	List,
-	Grid3x33x3,
+	Grid3x3,
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import { QuickStatsChips } from "./QuickStatsChips";
@@ -31,7 +31,7 @@ import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { MobileBottomSheet } from "./MobileBottomSheet";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFilters } from "../../types";
 
 interface MobileDashboardProps {
 	projectId: string;
@@ -73,7 +73,7 @@ export function MobileDashboard({
 	const loadComponents = async () => {
 		setLoading(true);
 		try {
-			const filters: ComponentFileFilters = {
+			const filters: ComponentFilters = {
 				search: searchQuery || undefined,
 			};
 
@@ -249,7 +249,7 @@ export function MobileDashboard({
 							aria-label="Matrix View"
 							className="flex-1"
 						>
-							<Grid3x33x3 className="h-4 w-4 mr-1.5" />
+							<Grid3x3 className="h-4 w-4 mr-1.5" />
 							Milestones
 						</ToggleGroupItem>
 					</ToggleGroup>
@@ -425,7 +425,7 @@ function MobileComponentCard({ component, onTap }: MobileComponentCardProps) {
 						{progressPercent}%
 					</div>
 					{progressPercent === 100 && (
-						<CheckCircle22 className="h-4 w-4 text-green-600 ml-auto" />
+						<CheckCircle2 className="h-4 w-4 text-green-600 ml-auto" />
 					)}
 				</div>
 			</div>
@@ -451,7 +451,7 @@ function MobileComponentCard({ component, onTap }: MobileComponentCardProps) {
 							onClick={(e) => e.stopPropagation()}
 						>
 							{milestone.isCompleted ? (
-								<CheckCircle22 className="h-4 w-4 text-green-600" />
+								<CheckCircle2 className="h-4 w-4 text-green-600" />
 							) : (
 								<Circle className="h-4 w-4 text-muted-foreground" />
 							)}

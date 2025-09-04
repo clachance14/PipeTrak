@@ -26,13 +26,13 @@ import {
   AlertTitle,
 } from "@ui/components/alert";
 import { 
-  CheckCircle22, 
+  CheckCircle2, 
   XCircle, 
   AlertTriangle, 
   Info, 
   Download, 
   Upload,
-  FileFilter,
+  Filter,
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
@@ -88,7 +88,7 @@ export interface FieldWeldValidationReport {
   recommendations: string[];
 }
 
-interface FileFilterState {
+interface FilterState {
   category: string;
   field: string;
   code: string;
@@ -110,7 +110,7 @@ interface FieldWeldValidationPreviewProps {
   className?: string;
 }
 
-const DEFAULT_FILTERS: FileFilterState = {
+const DEFAULT_FILTERS: FilterState = {
   category: 'all',
   field: 'all',
   code: 'all',
@@ -126,7 +126,7 @@ export function FieldWeldValidationPreview({
   onExportValidationReport,
   className
 }: FieldWeldValidationPreviewProps) {
-  const [filters, setFileFilters] = useState<FileFilterState>(DEFAULT_FILTERS);
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [sortState, setSortState] = useState<SortState>({ field: 'row', direction: 'asc' });
   const [expandedRecommendations, setExpandedRecommendations] = useState(false);
 
@@ -146,7 +146,7 @@ export function FieldWeldValidationPreview({
     return { categories, fields, codes };
   }, [allIssues]);
 
-  // FileFilter and sort issues
+  // Filter and sort issues
   const filteredAndSortedIssues = useMemo(() => {
     let filtered = allIssues;
 
@@ -229,12 +229,12 @@ export function FieldWeldValidationPreview({
     }));
   }, []);
 
-  const handleFileFilterChange = useCallback((key: keyof FileFilterState, value: any) => {
-    setFileFilters(prev => ({ ...prev, [key]: value }));
+  const handleFilterChange = useCallback((key: keyof FilterState, value: any) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
   }, []);
 
-  const clearFileFilters = useCallback(() => {
-    setFileFilters(DEFAULT_FILTERS);
+  const clearFilters = useCallback(() => {
+    setFilters(DEFAULT_FILTERS);
   }, []);
 
   const getCategoryIcon = (category: ValidationCategory) => {
@@ -270,7 +270,7 @@ export function FieldWeldValidationPreview({
       <ArrowDown className="h-3 w-3" />;
   };
 
-  const hasActiveFileFilters = filters.category !== 'all' || 
+  const hasActiveFilters = filters.category !== 'all' || 
                           filters.field !== 'all' || 
                           filters.code !== 'all' || 
                           filters.search !== '' ||
@@ -294,7 +294,7 @@ export function FieldWeldValidationPreview({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle22 className="h-5 w-5 text-green-500" />
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
               <span className="text-sm font-medium">Valid Rows</span>
             </div>
             <div className="text-2xl font-bold text-green-600">{validationReport.summary.validRows}</div>
@@ -384,12 +384,12 @@ export function FieldWeldValidationPreview({
         </Card>
       )}
 
-      {/* FileFilter Bar */}
+      {/* Filter Bar */}
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg flex items-center gap-2">
-              <FileFilter className="h-5 w-5" />
+              <Filter className="h-5 w-5" />
               Validation Details
               <Badge status="info" className="ml-2">
                 {filteredAndSortedIssues.length} of {allIssues.length}
@@ -409,14 +409,14 @@ export function FieldWeldValidationPreview({
                 </Button>
               )}
               
-              {hasActiveFileFilters && (
+              {hasActiveFilters && (
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={clearFileFilters}
+                  onClick={clearFilters}
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
-                  Clear FileFilters
+                  Clear Filters
                 </Button>
               )}
             </div>
@@ -424,13 +424,13 @@ export function FieldWeldValidationPreview({
         </CardHeader>
         
         <CardContent className="space-y-4">
-          {/* FileFilter Controls */}
+          {/* Filter Controls */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="space-y-1">
               <label className="text-sm font-medium">Category</label>
               <Select
                 value={filters.category}
-                onValueChange={(value) => handleFileFilterChange('category', value)}
+                onValueChange={(value) => handleFilterChange('category', value)}
               >
                 <SelectTrigger className="h-9">
                   <SelectValue />
@@ -453,7 +453,7 @@ export function FieldWeldValidationPreview({
               <label className="text-sm font-medium">Field</label>
               <Select
                 value={filters.field}
-                onValueChange={(value) => handleFileFilterChange('field', value)}
+                onValueChange={(value) => handleFilterChange('field', value)}
               >
                 <SelectTrigger className="h-9">
                   <SelectValue />
@@ -473,7 +473,7 @@ export function FieldWeldValidationPreview({
               <label className="text-sm font-medium">Error Code</label>
               <Select
                 value={filters.code}
-                onValueChange={(value) => handleFileFilterChange('code', value)}
+                onValueChange={(value) => handleFilterChange('code', value)}
               >
                 <SelectTrigger className="h-9">
                   <SelectValue />
@@ -495,7 +495,7 @@ export function FieldWeldValidationPreview({
                 <Input
                   placeholder="Search errors..."
                   value={filters.search}
-                  onChange={(e) => handleFileFilterChange('search', e.target.value)}
+                  onChange={(e) => handleFilterChange('search', e.target.value)}
                   className="h-9 pr-8"
                 />
                 {filters.search && (
@@ -503,7 +503,7 @@ export function FieldWeldValidationPreview({
                     variant="ghost"
                     size="sm"
                     className="absolute right-1 top-1 h-7 w-7 p-0"
-                    onClick={() => handleFileFilterChange('search', '')}
+                    onClick={() => handleFilterChange('search', '')}
                   >
                     <X className="h-3 w-3" />
                   </Button>
@@ -512,12 +512,12 @@ export function FieldWeldValidationPreview({
             </div>
           </div>
 
-          {/* Quick FileFilters */}
+          {/* Quick Filters */}
           <div className="flex items-center gap-2 flex-wrap">
             <Button
               variant={filters.showOnlyErrors ? "default" : "outline"}
               size="sm"
-              onClick={() => handleFileFilterChange('showOnlyErrors', !filters.showOnlyErrors)}
+              onClick={() => handleFilterChange('showOnlyErrors', !filters.showOnlyErrors)}
               className="h-8"
             >
               <XCircle className="h-3 w-3 mr-2" />
@@ -566,7 +566,7 @@ export function FieldWeldValidationPreview({
                 {filteredAndSortedIssues.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                      {hasActiveFileFilters ? "No validation issues match your filters" : "No validation issues found"}
+                      {hasActiveFilters ? "No validation issues match your filters" : "No validation issues found"}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -639,7 +639,7 @@ export function FieldWeldValidationPreview({
           ) : (
             onProceedToImport && (
               <Button onClick={onProceedToImport} className="flex-1 sm:flex-none">
-                <CheckCircle22 className="h-4 w-4 mr-2" />
+                <CheckCircle2 className="h-4 w-4 mr-2" />
                 Proceed to Import ({validationReport.summary.validRows} rows)
               </Button>
             )

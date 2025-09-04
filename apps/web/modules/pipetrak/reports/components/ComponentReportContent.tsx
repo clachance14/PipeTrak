@@ -15,10 +15,10 @@ import {
 	TableRow,
 } from "@ui/components/table";
 import { ReportHeader } from "./ReportHeader";
-// import { ReportFileFilters } from "./ReportFileFilters"; // Component not found
+// import { ReportFilters } from "./ReportFilters"; // Component not found
 import { ExportButtons } from "./ExportButtons";
 import { PrintLayout } from "./PrintLayout";
-import { useComponentReportGeneration } from "../hooks"; // useReportFileFilters removed - hook not found
+import { useComponentReportGeneration } from "../hooks"; // useReportFilters removed - hook not found
 import { transformers } from "../lib/report-utils";
 import {
 	RefreshCw,
@@ -26,13 +26,13 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	ArrowUpDown,
-	FileFilter,
+	Filter,
 } from "lucide-react";
 import type { ComponentDetailsResponse, ReportSorting } from "../types";
 
 interface ComponentReportContentProps {
 	projectId: string;
-	initialFileFilters?: Record<string, string>;
+	initialFilters?: Record<string, string>;
 }
 
 /**
@@ -41,7 +41,7 @@ interface ComponentReportContentProps {
  */
 export function ComponentReportContent({
 	projectId,
-	initialFileFilters = {},
+	initialFilters = {},
 }: ComponentReportContentProps) {
 	const [reportData, setReportData] =
 		useState<ComponentDetailsResponse | null>(null);
@@ -59,16 +59,16 @@ export function ComponentReportContent({
 		isPending: isGenerating,
 		error,
 	} = useComponentReportGeneration();
-	// Temporarily replace useReportFileFilters hook with basic state until hook is implemented
-	const filters = initialFileFilters;
-	const updateFileFilters = () => {}; // TODO: implement filtering
-	const clearFileFilters = () => {}; // TODO: implement clearing
+	// Temporarily replace useReportFilters hook with basic state until hook is implemented
+	const filters = initialFilters;
+	const updateFilters = () => {}; // TODO: implement filtering
+	const clearFilters = () => {}; // TODO: implement clearing
 	const searchQuery = "";
 	const updateSearchQuery = () => {}; // TODO: implement search
-	const activeFileFilterCount = 0;
+	const activeFilterCount = 0;
 	const filterOptions = null;
 	const isLoadingOptions = false;
-	const toComponentDetailsFileFilters = () => ({ projectId });
+	const toComponentDetailsFilters = () => ({ projectId });
 
 	// Generate report on changes
 	useEffect(() => {
@@ -76,7 +76,7 @@ export function ComponentReportContent({
 			generateReport(
 				{
 					projectId,
-					filters: toComponentDetailsFileFilters(),
+					filters: toComponentDetailsFilters(),
 					pagination: {
 						limit: pageSize,
 						offset: (currentPage - 1) * pageSize,
@@ -101,7 +101,7 @@ export function ComponentReportContent({
 		pageSize,
 		sorting,
 		generateReport,
-		toComponentDetailsFileFilters,
+		toComponentDetailsFilters,
 	]);
 
 	// Transform data for display
@@ -131,7 +131,7 @@ export function ComponentReportContent({
 		generateReport(
 			{
 				projectId,
-				filters: toComponentDetailsFileFilters(),
+				filters: toComponentDetailsFilters(),
 				pagination: {
 					limit: pageSize,
 					offset: (currentPage - 1) * pageSize,
@@ -191,12 +191,12 @@ export function ComponentReportContent({
 					</Alert>
 				)}
 
-				{/* Search and FileFilters */}
+				{/* Search and Filters */}
 				<div className="flex flex-col lg:flex-row gap-4 no-print">
 					<div className="flex-1">
-						{/* <ReportFileFilters
+						{/* <ReportFilters
 							filters={filters}
-							onFileFiltersChange={updateFileFilters}
+							onFiltersChange={updateFilters}
 							searchQuery={searchQuery}
 							onSearchChange={updateSearchQuery}
 							filterOptions={filterOptions}
@@ -302,11 +302,11 @@ export function ComponentReportContent({
 							<div className="flex items-center justify-between">
 								<CardTitle>Component Details</CardTitle>
 								<div className="flex items-center gap-2 text-sm text-muted-foreground">
-									<FileFilter className="h-4 w-4" />
+									<Filter className="h-4 w-4" />
 									{reportData.data.pagination.totalCount.toLocaleString()}{" "}
 									components
-									{activeFileFilterCount > 0 &&
-										` (${activeFileFilterCount} filters applied)`}
+									{activeFilterCount > 0 &&
+										` (${activeFilterCount} filters applied)`}
 								</div>
 							</div>
 						</CardHeader>
@@ -597,10 +597,10 @@ export function ComponentReportContent({
 								</p>
 								<Button
 									variant="outline"
-									onClick={clearFileFilters}
+									onClick={clearFilters}
 									className="mt-4"
 								>
-									Clear FileFilters
+									Clear Filters
 								</Button>
 							</div>
 						</CardContent>

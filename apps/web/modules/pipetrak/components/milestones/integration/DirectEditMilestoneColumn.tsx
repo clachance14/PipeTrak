@@ -7,7 +7,7 @@ import { Button } from "@ui/components/button";
 import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
 import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
 import {
-	CheckCircle22,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 	Loader2,
@@ -122,7 +122,7 @@ export function DirectEditMilestoneColumn({
 		}
 
 		if (milestone.isCompleted) {
-			return <CheckCircle22 className="h-4 w-4 text-fieldComplete" />;
+			return <CheckCircle2 className="h-4 w-4 text-fieldComplete" />;
 		}
 
 		const completionPercent = getCompletionPercent(

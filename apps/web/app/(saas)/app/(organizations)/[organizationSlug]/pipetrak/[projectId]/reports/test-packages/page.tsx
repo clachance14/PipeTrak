@@ -35,7 +35,7 @@ export default async function TestPackageReportPage({
 			<Suspense fallback={<LoadingState variant="card" />}>
 				<TestPackageReportContent
 					projectId={projectId}
-					initialFileFilters={filters}
+					initialFilters={filters}
 				/>
 			</Suspense>
 		</div>

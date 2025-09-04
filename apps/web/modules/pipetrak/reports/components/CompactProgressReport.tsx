@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { format, addDays, startOfWeek } from "date-fns";
 import { Badge } from "@ui/components/badge";
-import { CheckCircle22, Clock, AlertTriangle } from "lucide-react";
+import { CheckCircle2, Clock, AlertTriangle } from "lucide-react";
 import { cn } from "@ui/lib";
 
 interface CompactProgressReportProps {

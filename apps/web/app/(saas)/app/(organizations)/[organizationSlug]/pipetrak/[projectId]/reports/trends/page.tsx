@@ -33,7 +33,7 @@ export default async function TrendReportPage({
 			<Suspense fallback={<LoadingState variant="card" />}>
 				<TrendReportContent
 					projectId={projectId}
-					initialFileFilters={filters}
+					initialFilters={filters}
 				/>
 			</Suspense>
 		</div>

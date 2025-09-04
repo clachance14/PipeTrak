@@ -8,13 +8,13 @@ import { Progress } from "@ui/components/progress";
 import { cn } from "@ui/lib";
 import {
 	AlertCircle,
-	CheckCircle22,
+	CheckCircle2,
 	Clock,
 	Loader2,
 	Lock,
 	Minus,
 	Plus,
-	Undo22,
+	Undo2,
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import type { ComponentMilestone } from "../../../types";
@@ -152,7 +152,7 @@ export function MilestoneQuantityRenderer({
 
 		if (percent === 100) {
 			return (
-				<CheckCircle22
+				<CheckCircle2
 					className="h-5 w-5 text-fieldComplete"
 					aria-label="Completed"
 				/>
@@ -212,7 +212,7 @@ export function MilestoneQuantityRenderer({
 							className="h-8 w-8 p-0"
 							aria-label="Undo2 completion"
 						>
-							<Undo22 className="h-4 w-4" />
+							<Undo2 className="h-4 w-4" />
 						</Button>
 					)}
 				</div>

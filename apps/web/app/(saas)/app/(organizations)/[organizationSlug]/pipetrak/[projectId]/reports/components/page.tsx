@@ -37,7 +37,7 @@ export default async function ComponentReportPage({
 			<Suspense fallback={<LoadingState variant="table" />}>
 				<ComponentReportContent
 					projectId={projectId}
-					initialFileFilters={filters}
+					initialFilters={filters}
 				/>
 			</Suspense>
 		</div>

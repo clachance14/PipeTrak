@@ -3,7 +3,7 @@ import {
 	TrendingUp,
 	Package,
 	FileText,
-	CheckCircle22,
+	CheckCircle2,
 	AlertTriangle,
 } from "lucide-react";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
@@ -110,12 +110,12 @@ export function KPIHeroBar({ metrics, testPackages }: KPIHeroBarProps) {
 					<CardTitle className="text-sm font-medium">
 						Test Pkgs
 					</CardTitle>
-					<CheckCircle22 className="h-4 w-4 text-muted-foreground" />
+					<CheckCircle2 className="h-4 w-4 text-muted-foreground" />
 				</CardHeader>
 				<CardContent>
 					<div className="text-2xl font-bold flex items-center gap-1">
 						{readyPackages} ready
-						<CheckCircle22 className="h-4 w-4 text-green-600" />
+						<CheckCircle2 className="h-4 w-4 text-green-600" />
 					</div>
 					<p className="text-xs text-muted-foreground">
 						{testPackages?.testPackages.length || 0} total packages

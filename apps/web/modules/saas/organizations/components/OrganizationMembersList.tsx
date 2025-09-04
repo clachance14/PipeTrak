@@ -12,13 +12,13 @@ import { UserAvatar } from "@shared/components/UserAvatar";
 import { useQueryClient } from "@tanstack/react-query";
 import type {
 	ColumnDef,
-	ColumnFileFiltersState,
+	ColumnFiltersState,
 	SortingState,
 } from "@tanstack/react-table";
 import {
 	flexRender,
 	getCoreRowModel,
-	getFileFilteredRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
@@ -47,7 +47,7 @@ export function OrganizationMembersList({
 	const { user } = useSession();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 	const [sorting, setSorting] = useState<SortingState>([]);
-	const [columnFileFilters, setColumnFileFilters] = useState<ColumnFileFiltersState>([]);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const memberRoles = useOrganizationMemberRoles();
 
 	const userIsOrganizationAdmin = isOrganizationAdmin(organization, user);
@@ -225,14 +225,14 @@ export function OrganizationMembersList({
 		columns,
 		manualPagination: true,
 		onSortingChange: setSorting,
-		onColumnFileFiltersChange: setColumnFileFilters,
+		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFileFilteredRowModel: getFileFilteredRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
 		state: {
 			sorting,
-			columnFileFilters,
+			columnFilters,
 		},
 	});
 
