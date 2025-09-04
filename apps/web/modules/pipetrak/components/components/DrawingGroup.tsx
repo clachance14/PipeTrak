@@ -24,6 +24,7 @@ import {
 	Check,
 	AlertCircle,
 	Clock,
+	// @ts-ignore - Minus exists at runtime but TypeScript declarations are incomplete
 	Minus,
 } from "lucide-react";
 import { cn } from "@ui/lib";
