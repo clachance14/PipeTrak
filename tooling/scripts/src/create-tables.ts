@@ -1,7 +1,5 @@
 #!/usr/bin/env tsx
-import { PrismaClient } from "@repo/database/client";
-
-const prisma = new PrismaClient();
+import { db as prisma } from "@repo/database";
 
 async function createTables() {
 	console.log("Creating PipeTrak tables...");

@@ -251,6 +251,7 @@ enum ComponentStatus {
     IN_PROGRESS
     COMPLETED
     ON_HOLD
+    DELETED
 }
 
 enum ComponentType {
@@ -292,6 +293,11 @@ enum AuditAction {
     CREATE
     UPDATE  
     DELETE
+    HARD_DELETE
+    SOFT_DELETE
+    IMPORT
+    BULK_MILESTONE_UPDATE
+    CONFLICT_RESOLVED
 }
 
 model Project {

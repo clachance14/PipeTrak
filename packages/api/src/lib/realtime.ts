@@ -58,6 +58,7 @@ export interface BroadcastEvent {
 		| "component_edit"
 		| "milestone_celebration"
 		| "import_progress"
+		| "report_generation"
 		| "custom";
 	payload: any;
 	userId: string;
@@ -473,7 +474,7 @@ export const conflictResolutionStrategies = {
 // Helper to create optimistic update with rollback
 export function createOptimisticUpdate<T>(
 	originalValue: T,
-	optimisticValue: T,
+	_optimisticValue: T,
 	rollbackCallback: (original: T) => void,
 ) {
 	return {

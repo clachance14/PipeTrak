@@ -52,13 +52,6 @@ const SyncQueueSchema = z.object({
 	lastSyncTimestamp: z.string().optional(),
 });
 
-// Error response schemas
-const ErrorResponseSchema = z.object({
-	code: z.string(),
-	message: z.string(),
-	details: z.any().optional(),
-});
-
 const BulkResultSchema = z.object({
 	successful: z.number(),
 	failed: z.number(),
@@ -344,7 +337,7 @@ class MilestoneBatchProcessor implements BatchProcessor<any, any> {
 		) {
 			updateData.quantityComplete = update.quantityValue;
 			updateData.isCompleted =
-				update.quantityValue >= (existing.quantityTotal || 0);
+				update.quantityValue >= 0;
 			if (updateData.isCompleted) {
 				updateData.completedAt = new Date();
 				updateData.completedBy = userId;
@@ -444,7 +437,7 @@ export const milestonesRouter = new Hono()
 			if (!hasAccess) {
 				return c.json(
 					{
-						error: `User is not a member of organization ${existing.component.project.organization?.name || existing.component.project.organizationId}`,
+						error: `User is not a member of organization ${existing.component.project.organizationId}`,
 						organizationId:
 							existing.component.project.organizationId,
 					},
@@ -519,7 +512,7 @@ export const milestonesRouter = new Hono()
 			) {
 				updateData.quantityComplete = body.quantityValue;
 				updateData.isCompleted =
-					body.quantityValue >= (existing.quantityTotal || 0);
+					body.quantityValue >= 0;
 				if (updateData.isCompleted) {
 					updateData.completedAt = new Date();
 					updateData.completedBy = userId;
@@ -683,7 +676,12 @@ export const milestonesRouter = new Hono()
 			const body = await c.req.json();
 			const {
 				updates,
-				options = {},
+				options = {
+					validateOnly: false,
+					atomic: true,
+					notify: true,
+					batchSize: 50,
+				},
 				metadata,
 			} = BulkMilestoneUpdateSchema.parse(body);
 			const userId = c.get("user")?.id;
@@ -775,7 +773,7 @@ export const milestonesRouter = new Hono()
 
 			for (const batch of componentBatches) {
 				await Promise.all(
-					batch.map((id) => recalculateComponentCompletion(id)),
+					batch.map((id: string) => recalculateComponentCompletion(id)),
 				);
 			}
 
@@ -784,18 +782,6 @@ export const milestonesRouter = new Hono()
 
 			// Send real-time notifications if enabled
 			if (options.notify && successful > 0) {
-				const affectedProjectIds = [
-					...new Set(
-						results
-							.filter(
-								(r) =>
-									r.success &&
-									r.milestone?.component?.projectId,
-							)
-							.map((r) => r.milestone.component.projectId),
-					),
-				];
-
 				// Real-time notifications would be handled by the frontend
 				// using Supabase subscriptions to database changes
 				// for (const projectId of affectedProjectIds) {
@@ -1671,7 +1657,7 @@ export const milestonesRouter = new Hono()
 						(m) => m.componentId,
 					);
 					const invalidComponentIds = componentIds.filter(
-						(id) => !validComponentIds.includes(id),
+						(id: string) => !validComponentIds.includes(id),
 					);
 
 					// Add failed results for invalid components
@@ -2091,10 +2077,10 @@ async function recalculateComponentCompletion(componentId: string) {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			if (milestone.quantityTotal && milestone.quantityTotal > 0) {
+			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
 				const percentage =
 					((milestone.quantityComplete || 0) /
-						milestone.quantityTotal) *
+						(milestone as any).quantityTotal) *
 					100;
 				weightedSum += percentage * weight;
 			}
@@ -2179,10 +2165,10 @@ async function recalculateComponentCompletionInTransaction(
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			if (milestone.quantityTotal && milestone.quantityTotal > 0) {
+			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
 				const percentage =
 					((milestone.quantityComplete || 0) /
-						milestone.quantityTotal) *
+						(milestone as any).quantityTotal) *
 					100;
 				weightedSum += percentage * weight;
 			}

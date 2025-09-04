@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { PrismaClient } from '../../packages/database/prisma/generated/client';
+import { PrismaClient } from '@repo/database';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
@@ -32,21 +32,21 @@ async function testProgressSummary() {
 
     // 2. Check if ProgressSnapshot table exists
     console.log('\n2️⃣ Checking ProgressSnapshot table...');
-    const snapshotCount = await prisma.progressSnapshot.count();
+    const snapshotCount = await prisma.progressSnapshots.count();
     console.log(`✅ ProgressSnapshot table exists (${snapshotCount} records)`);
 
     // 3. Test creating a snapshot
     console.log('\n3️⃣ Testing snapshot creation...');
     const project = await prisma.project.findFirst({
-      select: { id: true, name: true },
+      select: { id: true, jobName: true },
     });
 
     if (project) {
-      const testSnapshot = await prisma.progressSnapshot.create({
+      const testSnapshot = await prisma.progressSnapshots.create({
         data: {
           projectId: project.id,
-          weekEnding: new Date('2024-11-24'), // Sunday
-          snapshotData: {
+          snapshotDate: new Date('2024-11-24'), // Sunday
+          data: {
             groupBy: 'area',
             data: [
               {
@@ -77,11 +77,11 @@ async function testProgressSummary() {
           status: 'FINAL',
         },
       });
-      console.log(`✅ Created test snapshot for project: ${project.name}`);
+      console.log(`✅ Created test snapshot for project: ${project.jobName}`);
       console.log(`   Snapshot ID: ${testSnapshot.id}`);
 
       // Clean up test snapshot
-      await prisma.progressSnapshot.delete({
+      await prisma.progressSnapshots.delete({
         where: { id: testSnapshot.id },
       });
       console.log('   Cleaned up test snapshot');
@@ -93,7 +93,7 @@ async function testProgressSummary() {
     console.log('\n4️⃣ Checking milestone effective dates...');
     const milestonesWithDates = await prisma.componentMilestone.count({
       where: {
-        effectiveDate: { not: null },
+        effectiveDate: { not: null as any },
       },
     });
     const totalMilestones = await prisma.componentMilestone.count();

@@ -817,6 +817,9 @@ importers:
       '@repo/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@supabase/supabase-js':
+        specifier: ^2.54.0
+        version: 2.54.0
       '@types/pg':
         specifier: ^8.15.5
         version: 8.15.5

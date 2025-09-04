@@ -7,14 +7,13 @@
  * incorrect drawing completion percentages.
  */
 
-import { PrismaClient } from "../../../packages/database/prisma/generated/client";
+import { db as prisma } from "@repo/database";
 import dotenv from "dotenv";
 import path from "path";
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, "../../../.env.local") });
 
-const prisma = new PrismaClient();
 
 async function main() {
 	const isDryRun = process.argv.includes("--dry-run");
@@ -97,7 +96,7 @@ async function main() {
 
 				const keepId = componentIds[keepIndex];
 				const removeIds = componentIds.filter(
-					(_, i) => i !== keepIndex,
+					(_id: string, i: number) => i !== keepIndex,
 				);
 
 				console.log(

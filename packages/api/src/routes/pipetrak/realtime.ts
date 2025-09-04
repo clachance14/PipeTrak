@@ -49,7 +49,7 @@ export const realtimeRouter = new Hono()
 	.use("*", authMiddleware)
 
 	// Subscribe to project realtime updates
-	.post("/subscribe", validator("json", SubscribeSchema), async (c) => {
+	.post("/subscribe", validator("json", (value) => SubscribeSchema.parse(value)), async (c) => {
 		try {
 			const { projectId, presence } = c.req.valid("json");
 			const user = c.get("user");
@@ -102,7 +102,7 @@ export const realtimeRouter = new Hono()
 	})
 
 	// Update user presence
-	.post("/presence", validator("json", PresenceUpdateSchema), async (c) => {
+	.post("/presence", validator("json", (value) => PresenceUpdateSchema.parse(value)), async (c) => {
 		try {
 			const data = c.req.valid("json");
 			const user = c.get("user");
@@ -170,7 +170,7 @@ export const realtimeRouter = new Hono()
 	})
 
 	// Broadcast custom event
-	.post("/broadcast", validator("json", BroadcastSchema), async (c) => {
+	.post("/broadcast", validator("json", (value) => BroadcastSchema.parse(value)), async (c) => {
 		try {
 			const data = c.req.valid("json");
 			const user = c.get("user");
@@ -367,6 +367,13 @@ export const realtimeRouter = new Hono()
 			// Test Supabase connection
 			const supabase = createRealtimeClient();
 
+			if (!supabase) {
+				return c.json({
+					status: "unhealthy",
+					reason: "Supabase realtime client is null"
+				}, 503);
+			}
+
 			// Simple test to verify realtime is working
 			const testChannel = supabase.channel("health-check");
 
@@ -403,7 +410,7 @@ export const realtimeRouter = new Hono()
 			return c.json(
 				{
 					status: "unhealthy",
-					error: error.message,
+					error: error instanceof Error ? error.message : String(error),
 					timestamp: new Date().toISOString(),
 					services: {
 						supabaseRealtime: false,
@@ -455,6 +462,11 @@ export async function broadcastComponentUpdate(
 		const supabase = createRealtimeClient();
 		const channel = createProjectChannel(supabase, projectId, userId);
 
+		if (!channel) {
+			console.warn("Cannot create realtime channel for project:", projectId);
+			return;
+		}
+
 		const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
 			type: "component_edit",
 			payload: {
@@ -487,6 +499,11 @@ export async function broadcastMilestoneCelebration(
 	try {
 		const supabase = createRealtimeClient();
 		const channel = createProjectChannel(supabase, projectId, completedBy);
+
+		if (!channel) {
+			console.warn("Cannot create realtime channel for project:", projectId);
+			return;
+		}
 
 		const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
 			type: "milestone_celebration",

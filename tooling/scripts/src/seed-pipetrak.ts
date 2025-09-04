@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { PrismaClient } from "@repo/database/client";
+import { PrismaClient } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import { createMilestoneTemplatesForProject } from "./create-milestone-templates";
 import { resolveTemplateForComponent } from "./lib/template-resolver";
@@ -21,7 +21,6 @@ async function seedPipeTrak() {
 					name: "Test Construction Company",
 					slug: "test-construction",
 					createdAt: new Date(),
-					updatedAt: new Date(),
 				},
 			});
 		}

@@ -12,14 +12,14 @@ import { AlertCircle, CheckCircle22, Users } from "lucide-react";
  * Helps diagnose authorization issues during development
  */
 export function OrganizationCheck() {
+	const { session: _session, user } = useSession();
+	const { activeOrganization, activeOrganizationUserRole, loaded } =
+		useActiveOrganization();
+
 	// Only show in development
 	if (process.env.NODE_ENV === "production") {
 		return null;
 	}
-
-	const { session: _session, user } = useSession();
-	const { activeOrganization, activeOrganizationUserRole, loaded } =
-		useActiveOrganization();
 
 	if (!loaded) {
 		return (

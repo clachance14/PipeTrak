@@ -84,7 +84,7 @@ async function ensureOrganizationMembership() {
 						name: "Default Organization",
 						slug: "default-org",
 						createdAt: new Date(),
-						metadata: {},
+						metadata: JSON.stringify({}),
 					},
 				});
 				console.log(

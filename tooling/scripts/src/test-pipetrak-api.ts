@@ -9,7 +9,7 @@ async function testPipeTrakAPI() {
     // Check if we have the SDO Tank project
     const project = await prisma.project.findFirst({
       where: {
-        name: { contains: "SDO Tank" }
+        jobName: { contains: "SDO Tank" }
       }
     });
 
@@ -18,7 +18,7 @@ async function testPipeTrakAPI() {
       return;
     }
 
-    console.log(`✅ Found project: ${project.name} (${project.id})`);
+    console.log(`✅ Found project: ${project.jobName} (${project.id})`);
 
     // Count components
     const componentCount = await prisma.component.count({

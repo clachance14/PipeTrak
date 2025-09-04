@@ -1,10 +1,10 @@
 #!/usr/bin/env tsx
 
-import { db as prisma } from '@repo/database';
-import { MilestoneTemplateMapper } from '@repo/api/src/lib/milestone-template-mapper';
-import { CSVProcessor, DataValidator, InstanceTracker } from '@repo/api/src/lib/file-processing';
-import fs from 'fs';
-import path from 'path';
+import { db as prisma } from '../../../packages/database';
+import { MilestoneTemplateMapper } from '../../../packages/api/src/lib/milestone-template-mapper';
+import { CSVProcessor, DataValidator, InstanceTracker } from '../../../packages/api/src/lib/file-processing';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function testImportLogicDirect() {
   try {
@@ -78,7 +78,7 @@ async function testImportLogicDirect() {
 
     if (!validation.isValid) {
       console.error('❌ Validation failed:');
-      validation.errors.forEach(error => {
+      validation.errors.forEach((error: any) => {
         console.error(`  - Row ${error.row}: ${error.error}`);
       });
       return;
@@ -108,7 +108,7 @@ async function testImportLogicDirect() {
     const validComponents = validation.validRows;
     
     // Update drawing IDs to use the created drawing
-    const componentsWithDrawingIds = validComponents.map(comp => ({
+    const componentsWithDrawingIds = validComponents.map((comp: any) => ({
       ...comp,
       drawingId: testDrawing.id
     }));
@@ -246,7 +246,7 @@ async function testImportLogicDirect() {
     console.log('📊 Final Template Assignment Results:');
     console.log('─'.repeat(80));
 
-    const expectedMappings = {
+    const expectedMappings: Record<string, string> = {
       'TEST_VALVE_001': 'Reduced Milestone Set',
       'TEST_GASKET_001': 'Reduced Milestone Set', 
       'TEST_SPOOL_001': 'Full Milestone Set',
@@ -260,7 +260,7 @@ async function testImportLogicDirect() {
     let correctAssignments = 0;
     let totalComponents = 0;
 
-    finalComponents.forEach(comp => {
+    finalComponents.forEach((comp: any) => {
       const expected = expectedMappings[comp.componentId];
       const actual = comp.milestoneTemplate?.name;
       const isCorrect = expected === actual;

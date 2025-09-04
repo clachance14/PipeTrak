@@ -10,7 +10,7 @@
  *   pnpm --filter scripts import data.csv --skip-duplicates
  */
 
-import { PrismaClient } from "@repo/database/client";
+import { db as prisma } from "@repo/database";
 import { logger } from "@repo/logs";
 import { promises as fs } from "fs";
 import * as path from "path";
@@ -345,7 +345,6 @@ async function importFile(
 		}
 
 		// Use the importer
-		const prisma = new PrismaClient();
 		const importer = new PipeTrakImporter(prisma);
 
 		// Add progress callback

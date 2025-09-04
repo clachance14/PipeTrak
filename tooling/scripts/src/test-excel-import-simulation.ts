@@ -1,10 +1,10 @@
 #!/usr/bin/env tsx
 
-import { db as prisma } from '@repo/database';
-import { MilestoneTemplateMapper } from '@repo/api/src/lib/milestone-template-mapper';
-import { CSVProcessor, DataValidator } from '@repo/api/src/lib/file-processing';
-import fs from 'fs';
-import path from 'path';
+import { db as prisma } from '../../../packages/database';
+import { MilestoneTemplateMapper } from '../../../packages/api/src/lib/milestone-template-mapper';
+import { CSVProcessor, DataValidator } from '../../../packages/api/src/lib/file-processing';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function testExcelImportSimulation() {
   try {
@@ -77,7 +77,7 @@ async function testExcelImportSimulation() {
 
     // Show the types we're testing
     console.log('📋 Component Types from CSV:');
-    parseResult.rows.forEach((row, index) => {
+    parseResult.rows.forEach((row: any, index: number) => {
       console.log(`  ${index + 1}. ${row.componentId}: "${row.type}"`);
     });
     console.log('');

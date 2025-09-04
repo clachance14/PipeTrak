@@ -108,7 +108,7 @@ async function checkMilestoneCreation() {
 			await prisma.component.findMany({
 				where: {
 					AND: [
-						{ milestoneTemplateId: { not: null } },
+						{ milestoneTemplateId: { not: null as any } },
 						{ milestones: { none: {} } },
 					],
 				},

@@ -22,5 +22,5 @@ export const adminMiddleware = createMiddleware<{
 	c.set("session", session.session);
 	c.set("user", session.user);
 
-	await next();
+	return await next();
 });

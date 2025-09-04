@@ -586,7 +586,7 @@ function runUXEvaluation(): void {
 }
 
 // Run evaluation if script is executed directly
-if (import.meta.main) {
+if (require.main === module) {
 	runUXEvaluation();
 }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import {
 	Card,
 	CardContent,
@@ -14,16 +13,17 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@ui/components/tooltip";
-import { DrillDownSheet } from "./DrillDownSheet";
+import { useMemo, useState } from "react";
 import {
+	formatCompletionText,
 	getHeatmapFillColor,
 	getHeatmapOpacity,
-	formatCompletionText,
 	getTotalStalledCount,
 	getUniqueAreas,
 	getUniqueSystems,
 } from "../lib/utils";
 import type { AreaSystemMatrix, AreaSystemMatrixItem } from "../types";
+import { DrillDownSheet } from "./DrillDownSheet";
 
 interface AreaSystemGrid3x3Props {
 	data: AreaSystemMatrix | null;
@@ -120,7 +120,10 @@ export function AreaSystemGrid3x3({ data }: AreaSystemGrid3x3Props) {
 							viewBox={`0 0 ${gridWidth} ${gridHeight}`}
 							className="w-full max-w-[1400px]"
 							preserveAspectRatio="xMidYMid meet"
+							role="img"
+							aria-label="Area and System completion matrix"
 						>
+							<title>Area and System Completion Matrix</title>
 							{/* Column Headers (Systems) */}
 							{systems.map((system, colIndex) => (
 								<text

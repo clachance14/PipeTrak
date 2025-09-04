@@ -10,7 +10,7 @@ async function checkProjectRoute() {
 		});
 
 		if (project) {
-			console.log("✓ Found project:", project.name);
+			console.log("✓ Found project:", project.jobName);
 			console.log("  Project ID:", project.id);
 			console.log("  Organization ID:", project.organizationId);
 			console.log(
@@ -42,7 +42,7 @@ async function checkProjectRoute() {
 				if (projects.length > 0) {
 					console.log("\n📁 Projects in this organization:");
 					projects.forEach((p) => {
-						console.log(`  - ${p.name} (ID: ${p.id})`);
+						console.log(`  - ${p.jobName} (ID: ${p.id})`);
 						console.log(
 							`    URL: http://localhost:3003/app/pipetrak/${p.id}/dashboard`,
 						);
@@ -51,16 +51,25 @@ async function checkProjectRoute() {
 					console.log("\n⚠️  No projects found in this organization");
 					console.log("\nCreating a sample project...");
 
+					// Get first user for createdBy field
+					const user = await db.user.findFirst();
+					if (!user) {
+						console.log("❌ No users found. Please create a user first.");
+						return;
+					}
+
 					const newProject = await db.project.create({
 						data: {
-							name: "SDO Tank Farm Demo",
+							jobName: "SDO Tank Farm Demo",
+							jobNumber: "SDO001",
 							description: "Demo project for PipeTrak",
 							organizationId: org.id,
-							status: "Active",
+							status: "ACTIVE",
+							createdBy: user.id,
 						},
 					});
 
-					console.log("✓ Created project:", newProject.name);
+					console.log("✓ Created project:", newProject.jobName);
 					console.log("  Project ID:", newProject.id);
 					console.log(
 						"\n✅ Access dashboard at: http://localhost:3003/app/pipetrak/" +
@@ -75,7 +84,7 @@ async function checkProjectRoute() {
 				const allProjects = await db.project.findMany({
 					select: {
 						id: true,
-						name: true,
+						jobName: true,
 						organizationId: true,
 					},
 				});
@@ -83,7 +92,7 @@ async function checkProjectRoute() {
 				if (allProjects.length > 0) {
 					console.log("\n📁 Available projects:");
 					allProjects.forEach((p) => {
-						console.log(`  - ${p.name}`);
+						console.log(`  - ${p.jobName}`);
 						console.log(`    ID: ${p.id}`);
 						console.log(
 							`    URL: http://localhost:3003/app/pipetrak/${p.id}/dashboard`,

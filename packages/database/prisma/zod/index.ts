@@ -154,7 +154,7 @@ export const WorkflowTypeSchema = z.enum(['MILESTONE_DISCRETE','MILESTONE_PERCEN
 
 export type WorkflowTypeType = `${z.infer<typeof WorkflowTypeSchema>}`
 
-export const ComponentStatusSchema = z.enum(['NOT_STARTED','IN_PROGRESS','COMPLETED','ON_HOLD']);
+export const ComponentStatusSchema = z.enum(['NOT_STARTED','IN_PROGRESS','COMPLETED','ON_HOLD','DELETED']);
 
 export type ComponentStatusType = `${z.infer<typeof ComponentStatusSchema>}`
 
@@ -166,7 +166,7 @@ export const ImportStatusSchema = z.enum(['PENDING','PROCESSING','COMPLETED','FA
 
 export type ImportStatusType = `${z.infer<typeof ImportStatusSchema>}`
 
-export const AuditActionSchema = z.enum(['CREATE','UPDATE','DELETE']);
+export const AuditActionSchema = z.enum(['CREATE','UPDATE','DELETE','HARD_DELETE','SOFT_DELETE','IMPORT','BULK_MILESTONE_UPDATE','CONFLICT_RESOLVED']);
 
 export type AuditActionType = `${z.infer<typeof AuditActionSchema>}`
 

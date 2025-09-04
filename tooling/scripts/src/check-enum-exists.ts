@@ -112,7 +112,8 @@ async function checkEnumExists() {
 				console.log(`   ${index + 1}. ${row.componentId}: ${row.type}`);
 			});
 		} catch (error) {
-			console.log("❌ Could not query components:", error.message);
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			console.log("❌ Could not query components:", errorMessage);
 		}
 	} catch (error) {
 		console.error("❌ Error:", error);

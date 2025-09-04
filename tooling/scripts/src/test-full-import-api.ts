@@ -111,7 +111,7 @@ async function testFullImportAPI() {
 
       console.log(`Found ${importedComponents.length} imported test components:\n`);
 
-      const expectedMappings = {
+      const expectedMappings: Record<string, string> = {
         'TEST_VALVE_001': 'Reduced Milestone Set',
         'TEST_GASKET_001': 'Reduced Milestone Set', 
         'TEST_SPOOL_001': 'Full Milestone Set',

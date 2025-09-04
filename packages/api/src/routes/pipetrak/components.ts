@@ -11,7 +11,7 @@ import { broadcastComponentUpdate } from "./realtime";
 // Component validation schemas
 const ComponentCreateSchema = z.object({
 	projectId: z.string(),
-	drawingId: z.string().optional(),
+	drawingId: z.string(),
 	milestoneTemplateId: z.string(),
 	componentId: z.string().min(1),
 	type: z.string().min(1),
@@ -70,7 +70,7 @@ const BulkUpdateSchema = z.object({
 			atomic: z.boolean().optional().default(true),
 		})
 		.optional()
-		.default({}),
+		.default({ validateOnly: false, atomic: true }),
 });
 
 export const componentsRouter = new Hono()
@@ -471,11 +471,15 @@ export const componentsRouter = new Hono()
 				);
 			}
 
-			// Update component
+			// Update component - filter out undefined values
+			const updateData = Object.fromEntries(
+				Object.entries(updates).filter(([_, value]) => value !== undefined)
+			);
+			
 			const component = await prisma.component.update({
 				where: { id },
 				data: {
-					...updates,
+					...updateData,
 					updatedAt: new Date(),
 				},
 				include: {
@@ -605,13 +609,18 @@ export const componentsRouter = new Hono()
 				});
 			}
 
+			// Filter out undefined values from updates
+			const cleanUpdates = Object.fromEntries(
+				Object.entries(updates).filter(([_, value]) => value !== undefined)
+			);
+
 			// Update all components in transaction if atomic mode
 			let updatedComponents;
 			if (options.atomic) {
 				const updatePromises = componentIds.map((id) =>
 					prisma.component.update({
 						where: { id },
-						data: updates,
+						data: cleanUpdates,
 						include: {
 							drawing: true,
 							milestones: true,
@@ -627,7 +636,7 @@ export const componentsRouter = new Hono()
 					try {
 						const updated = await prisma.component.update({
 							where: { id },
-							data: updates,
+							data: cleanUpdates,
 							include: {
 								drawing: true,
 								milestones: true,
@@ -1078,16 +1087,23 @@ export const componentsRouter = new Hono()
 					mappings: z.record(z.string()).optional(),
 					options: z
 						.object({
-							validateOnly: z.boolean().optional(),
-							skipDuplicates: z.boolean().optional(),
-							updateExisting: z.boolean().optional(),
+							validateOnly: z.boolean().optional().default(false),
+							skipDuplicates: z.boolean().optional().default(false),
+							updateExisting: z.boolean().optional().default(false),
 							generateIds: z.boolean().optional().default(true),
 							rollbackOnError: z
 								.boolean()
 								.optional()
 								.default(false),
 						})
-						.optional(),
+						.optional()
+						.default({
+							validateOnly: false,
+							skipDuplicates: false,
+							updateExisting: false,
+							generateIds: true,
+							rollbackOnError: false,
+						}),
 				})
 				.parse(body);
 

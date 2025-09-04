@@ -9,7 +9,7 @@ async function verifyGasketFix() {
 	const gasket = await prisma.component.findFirst({
 		where: {
 			OR: [
-				{ type: { contains: "GASKET", mode: "insensitive" } },
+				{ type: "GASKET" },
 				{ componentId: { startsWith: "GK" } },
 			],
 		},
@@ -37,7 +37,7 @@ async function verifyGasketFix() {
 
 	for (const milestone of gasket.milestones) {
 		const status = milestone.isCompleted ? "✅" : "⭕";
-		const weight = milestone.creditWeight || milestone.weight || 0;
+		const weight = (milestone as any).creditWeight || milestone.weight || 0;
 
 		console.log(
 			`${status} ${milestone.milestoneName.padEnd(20)} ${weight}% credit`,
@@ -93,7 +93,7 @@ async function verifyGasketFix() {
 	const allGaskets = await prisma.component.findMany({
 		where: {
 			OR: [
-				{ type: { contains: "GASKET", mode: "insensitive" } },
+				{ type: "GASKET" },
 				{ componentId: { startsWith: "GK" } },
 				{ componentId: { startsWith: "GSW" } },
 			],

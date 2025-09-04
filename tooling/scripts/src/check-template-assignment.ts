@@ -78,7 +78,7 @@ async function checkTemplateAssignment() {
 		const fieldWelds = await prisma.component.findMany({
 			where: {
 				OR: [
-					{ type: { contains: "WELD", mode: "insensitive" } },
+					{ type: "FIELD_WELD" }, // Use exact enum match
 					{ componentId: { contains: "FW", mode: "insensitive" } },
 					{ componentId: { contains: "WELD", mode: "insensitive" } },
 				],

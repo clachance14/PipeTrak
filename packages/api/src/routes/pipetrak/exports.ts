@@ -790,7 +790,6 @@ export const exportsRouter = new Hono()
 			const CHUNK_SIZE = 5000;
 			let offset = 0;
 			let hasMore = true;
-			const tempFilePath = `/tmp/${projectId}_${Date.now()}_components.${format}`;
 
 			if (format === "excel") {
 				// Initialize streaming Excel workbook

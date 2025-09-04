@@ -1,11 +1,10 @@
-import { PrismaClient } from "../../../packages/database/prisma/generated/client";
+import { db as prisma } from "@repo/database";
 import dotenv from "dotenv";
 import path from "path";
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, "../../../.env.local") });
 
-const prisma = new PrismaClient();
 
 async function addUniqueConstraint() {
 	try {

@@ -62,7 +62,7 @@ async function fixComponentTypeMigration() {
 
 		for (const query of mappingQueries) {
 			const result = await client.query(query);
-			if (result.rowCount > 0) {
+			if (result.rowCount && result.rowCount > 0) {
 				console.log(`   Updated ${result.rowCount} components`);
 			}
 		}
@@ -91,7 +91,7 @@ async function fixComponentTypeMigration() {
 		try {
 			await client.query(createEnumQuery);
 			console.log("✅ ComponentType enum created successfully");
-		} catch (error) {
+		} catch (error: any) {
 			if (error.message.includes("already exists")) {
 				console.log(
 					"⚠️  ComponentType enum already exists, skipping...",

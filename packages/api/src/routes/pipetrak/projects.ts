@@ -682,7 +682,7 @@ export const projectsRouter = new Hono()
 					totalDrawings: drawingStats._count,
 					totalMilestoneTemplates: milestoneTemplateStats._count,
 					averageCompletion:
-						componentStats._avg.completionPercent || 0,
+						componentStats._avg?.completionPercent || 0,
 					recentActivityCount: recentActivity,
 				},
 				breakdown: {
@@ -696,22 +696,22 @@ export const projectsRouter = new Hono()
 					byType: typeBreakdown.map((item) => ({
 						type: item.type,
 						count: item._count,
-						averageCompletion: item._avg.completionPercent || 0,
+						averageCompletion: item._avg?.completionPercent || 0,
 					})),
 					byArea: areaBreakdown.map((item) => ({
 						area: item.area,
 						count: item._count,
-						averageCompletion: item._avg.completionPercent || 0,
+						averageCompletion: item._avg?.completionPercent || 0,
 					})),
 					bySystem: systemBreakdown.map((item) => ({
 						system: item.system,
 						count: item._count,
-						averageCompletion: item._avg.completionPercent || 0,
+						averageCompletion: item._avg?.completionPercent || 0,
 					})),
 					byWorkflowType: progressByWorkflowType.map((item) => ({
 						workflowType: item.workflowType,
 						count: item._count,
-						averageCompletion: item._avg.completionPercent || 0,
+						averageCompletion: item._avg?.completionPercent || 0,
 					})),
 				},
 				trends: {

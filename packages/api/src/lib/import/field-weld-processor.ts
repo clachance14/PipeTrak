@@ -889,7 +889,7 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 	/**
 	 * Create validation summary for parsed field weld data
 	 */
-	private createValidationSummary(validatedData: ValidationResult): {
+	private _createValidationSummary(validatedData: ValidationResult): {
 		validationSummary: string;
 		recommendedActions: string[];
 	} {

@@ -1,4 +1,6 @@
-import { PrismaClient } from "./generated/client";
+import { PrismaClient, Prisma, ComponentStatus } from "./generated/client";
+
+export { PrismaClient, Prisma, ComponentStatus };
 
 const prismaClientSingleton = () => {
 	// Build connection URL with pool configuration
