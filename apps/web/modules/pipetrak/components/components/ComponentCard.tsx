@@ -5,7 +5,6 @@ import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
 import { Button } from "@ui/components/button";
 import {
-	ChevronRight,
 	MapPin,
 	Package,
 	Wrench,
@@ -74,7 +73,7 @@ export function ComponentCard({
 					</div>
 					<div className="flex items-center gap-2">
 						{getStatusIcon()}
-						<ChevronRight className="h-4 w-4 text-muted-foreground" />
+						<span className="h-4 w-4 text-muted-foreground">→</span>
 					</div>
 				</div>
 
