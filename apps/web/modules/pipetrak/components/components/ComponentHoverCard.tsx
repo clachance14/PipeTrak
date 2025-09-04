@@ -10,14 +10,11 @@ import { Separator } from "@ui/components/separator";
 import { Button } from "@ui/components/button";
 import {
 	FileText,
-	Package2,
-	Ruler,
+	Package,
 	Layers,
-	TestTube2,
 	Calendar,
+	Clock,
 	Edit,
-	History,
-	MessageSquare,
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
@@ -92,7 +89,7 @@ export function ComponentHoverCard({
 					<div className="grid grid-cols-2 gap-3 text-sm">
 						{component.type && (
 							<div className="flex items-center gap-2">
-								<Package2 className="h-4 w-4 text-muted-foreground" />
+								<Package className="h-4 w-4 text-muted-foreground" />
 								<div>
 									<p className="text-xs text-muted-foreground">
 										Type
@@ -106,7 +103,7 @@ export function ComponentHoverCard({
 
 						{component.size && (
 							<div className="flex items-center gap-2">
-								<Ruler className="h-4 w-4 text-muted-foreground" />
+								<Package className="h-4 w-4 text-muted-foreground" />
 								<div>
 									<p className="text-xs text-muted-foreground">
 										Size
@@ -175,7 +172,7 @@ export function ComponentHoverCard({
 											Test Package:
 										</span>
 										<Badge status="info">
-											<TestTube2 className="h-3 w-3 mr-1" />
+											<Package className="h-3 w-3 mr-1" />
 											{component.testPackage}
 										</Badge>
 									</div>
@@ -299,7 +296,7 @@ export function ComponentHoverCard({
 									onClick={onViewHistory}
 									className="flex-1"
 								>
-									<History className="h-3 w-3 mr-1" />
+									<Clock className="h-3 w-3 mr-1" />
 									History
 								</Button>
 							)}
@@ -311,7 +308,7 @@ export function ComponentHoverCard({
 									onClick={onAddNote}
 									className="flex-1"
 								>
-									<MessageSquare className="h-3 w-3 mr-1" />
+									<Edit className="h-3 w-3 mr-1" />
 									Note
 								</Button>
 							)}

@@ -36,7 +36,7 @@ import {
 	AlertCircle,
 	Settings,
 	Package,
-	Zap,
+	Wrench,
 } from "lucide-react";
 import { toast } from "sonner";
 import type { ComponentWithMilestones } from "../../types";
@@ -248,7 +248,7 @@ export function BulkMilestoneModal({
 			<DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Zap className="h-5 w-5 text-blue-600" />
+						<Wrench className="h-5 w-5 text-blue-600" />
 						Bulk Update Milestones
 					</DialogTitle>
 					<DialogDescription>
