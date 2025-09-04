@@ -12,9 +12,9 @@ import {
 import { TooltipProvider } from "@ui/components/tooltip";
 import {
 	Zap,
-	FlameKindling,
+	Flame,
 	Check,
-	XCircle,
+	CircleX,
 	Clock,
 	AlertTriangle,
 	ExternalLink,
@@ -95,7 +95,7 @@ export function FieldWeldQuickView({
 			case "reject":
 				return (
 					<Badge status="error" className="gap-1">
-						<XCircle className="h-3 w-3" />
+						<CircleX className="h-3 w-3" />
 						Reject
 					</Badge>
 				);
@@ -134,7 +134,7 @@ export function FieldWeldQuickView({
 					status="info"
 					className="gap-1 bg-blue-100 text-blue-800"
 				>
-					<FlameKindling className="h-3 w-3" />
+					<Flame className="h-3 w-3" />
 					Complete
 				</Badge>
 			);
@@ -145,7 +145,7 @@ export function FieldWeldQuickView({
 				status="info"
 				className="gap-1 bg-yellow-100 text-yellow-800"
 			>
-				<FlameKindling className="h-3 w-3" />
+				<Flame className="h-3 w-3" />
 				Required
 			</Badge>
 		);

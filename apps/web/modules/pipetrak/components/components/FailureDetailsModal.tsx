@@ -29,7 +29,7 @@ import {
 	Download,
 	Copy,
 	Check,
-	XCircle,
+	CircleX,
 	Clock,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -459,7 +459,7 @@ export function FailureDetailsModal({
 																		)}
 																		{failure.retryStatus ===
 																			"failed" && (
-																			<XCircle className="h-4 w-4 text-red-600" />
+																			<CircleX className="h-4 w-4 text-red-600" />
 																		)}
 																	</TableCell>
 																</TableRow>
