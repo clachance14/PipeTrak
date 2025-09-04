@@ -5,7 +5,7 @@ import {
 	useReactTable,
 	getCoreRowModel,
 	getSortedRowModel,
-	getFilteredRowModel,
+	getFileFilteredRowModel,
 	flexRender,
 	type ColumnDef,
 	type SortingState,
@@ -23,7 +23,7 @@ import {
 	ChevronRight,
 	MapPin,
 	Package2,
-	CheckCircle,
+	CheckCircle2,
 	AlertCircle,
 	Clock,
 	Minus,
@@ -111,7 +111,7 @@ export function DrawingGroup({
 		};
 	}, [components, rowSelection]);
 
-	// Filter out the drawingNumber column since it's redundant in the group
+	// FileFilter out the drawingNumber column since it's redundant in the group
 	const filteredColumns = useMemo(() => {
 		return columns.filter((col) => col.id !== "drawingNumber");
 	}, [columns]);
@@ -192,7 +192,7 @@ export function DrawingGroup({
 		},
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
+		getFileFilteredRowModel: getFileFilteredRowModel(),
 		enableRowSelection: true,
 		enableColumnResizing: true,
 		columnResizeMode: "onChange",
@@ -232,7 +232,7 @@ export function DrawingGroup({
 	// Get status icon
 	const getStatusIcon = () => {
 		if (stats.completed === stats.total && stats.total > 0) {
-			return <CheckCircle className="h-5 w-5 text-fieldComplete" />;
+			return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
 		}
 		if (stats.inProgress > 0) {
 			return <Clock className="h-5 w-5 text-blue-600" />;
@@ -327,7 +327,7 @@ export function DrawingGroup({
 						<div className="hidden lg:flex items-center gap-2 text-sm">
 							{stats.completed > 0 && (
 								<span className="flex items-center gap-1 text-fieldComplete whitespace-nowrap">
-									<CheckCircle className="h-4 w-4" />
+									<CheckCircle2 className="h-4 w-4" />
 									{stats.completed}
 								</span>
 							)}

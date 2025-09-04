@@ -12,13 +12,13 @@ import { UserAvatar } from "@shared/components/UserAvatar";
 import { useQueryClient } from "@tanstack/react-query";
 import type {
 	ColumnDef,
-	ColumnFiltersState,
+	ColumnFileFiltersState,
 	SortingState,
 } from "@tanstack/react-table";
 import {
 	flexRender,
 	getCoreRowModel,
-	getFilteredRowModel,
+	getFileFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
@@ -31,7 +31,7 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { LogOutIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
+import { LogOutIcon, MoreVertical, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -47,7 +47,7 @@ export function OrganizationMembersList({
 	const { user } = useSession();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 	const [sorting, setSorting] = useState<SortingState>([]);
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [columnFileFilters, setColumnFileFilters] = useState<ColumnFileFiltersState>([]);
 	const memberRoles = useOrganizationMemberRoles();
 
 	const userIsOrganizationAdmin = isOrganizationAdmin(organization, user);
@@ -161,7 +161,7 @@ export function OrganizationMembersList({
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
 										<Button size="icon" variant="ghost">
-											<MoreVerticalIcon className="size-4" />
+											<MoreVertical className="size-4" />
 										</Button>
 									</DropdownMenuTrigger>
 									<DropdownMenuContent>
@@ -180,7 +180,7 @@ export function OrganizationMembersList({
 													)
 												}
 											>
-												<TrashIcon className="mr-2 size-4" />
+												<Trash className="mr-2 size-4" />
 												{t(
 													"organizations.settings.members.removeMember",
 												)}
@@ -225,14 +225,14 @@ export function OrganizationMembersList({
 		columns,
 		manualPagination: true,
 		onSortingChange: setSorting,
-		onColumnFiltersChange: setColumnFilters,
+		onColumnFileFiltersChange: setColumnFileFilters,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
+		getFileFilteredRowModel: getFileFilteredRowModel(),
 		state: {
 			sorting,
-			columnFilters,
+			columnFileFilters,
 		},
 	});
 

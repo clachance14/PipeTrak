@@ -59,7 +59,7 @@ export function DrawingTreeView({
 		setExpandedNodes(new Set());
 	}, []);
 
-	// Filter drawings based on search query
+	// FileFilter drawings based on search query
 	const filteredDrawings = useMemo(() => {
 		if (!searchQuery) return drawings;
 

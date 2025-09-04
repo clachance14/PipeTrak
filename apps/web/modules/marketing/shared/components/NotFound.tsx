@@ -2,7 +2,7 @@
 
 import { LocaleLink } from "@i18n/routing";
 import { Button } from "@ui/components/button";
-import { UndoIcon } from "lucide-react";
+import { Undo2 } from "lucide-react";
 
 export function NotFound() {
 	return (
@@ -12,7 +12,7 @@ export function NotFound() {
 
 			<Button asChild className="mt-4">
 				<LocaleLink href="/">
-					<UndoIcon className="mr-2 size-4" /> Go to homepage
+					<Undo2 className="mr-2 size-4" /> Go to homepage
 				</LocaleLink>
 			</Button>
 		</div>

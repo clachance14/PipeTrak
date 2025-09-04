@@ -7,7 +7,7 @@
 // Request Types (matching backend schemas)
 // ============================================================================
 
-export interface ReportFilters {
+export interface ReportFileFilters {
 	areas?: string[];
 	systems?: string[];
 	testPackages?: string[];
@@ -23,7 +23,7 @@ export interface ReportFilters {
 	};
 }
 
-export interface ComponentDetailsFilters {
+export interface ComponentDetailsFileFilters {
 	areas?: string[];
 	systems?: string[];
 	testPackages?: string[];
@@ -77,7 +77,7 @@ export interface TrendOptions {
 	includeMilestoneBreakdown?: boolean;
 }
 
-export interface AuditFilters {
+export interface AuditFileFilters {
 	entityTypes?: ("Component" | "Milestone" | "Project")[];
 	userIds?: string[];
 	actions?: string[];
@@ -97,13 +97,13 @@ export interface BulkReportOptions {
 
 export interface ProgressReportRequest {
 	projectId: string;
-	filters?: ReportFilters;
+	filters?: ReportFileFilters;
 	options?: ProgressReportOptions;
 }
 
 export interface ComponentDetailsRequest {
 	projectId: string;
-	filters?: ComponentDetailsFilters;
+	filters?: ComponentDetailsFileFilters;
 	pagination?: ReportPagination;
 	sorting?: ReportSorting;
 }
@@ -132,7 +132,7 @@ export interface TrendAnalysisRequest {
 
 export interface AuditTrailRequest {
 	projectId: string;
-	filters?: AuditFilters;
+	filters?: AuditFileFilters;
 	pagination?: ReportPagination;
 }
 
@@ -349,7 +349,7 @@ export interface AuditTrailResponse {
 			offset: number;
 			hasMore: boolean;
 		};
-		filters: AuditFilters;
+		filters: AuditFileFilters;
 	};
 }
 
@@ -394,7 +394,7 @@ export interface BulkReportResponse {
 	};
 }
 
-export interface FilterOptionsResponse {
+export interface FileFilterOptionsResponse {
 	success: boolean;
 	data: {
 		areas: string[];
@@ -465,7 +465,7 @@ export interface ReportsUIState {
 		| "test-packages"
 		| "trends"
 		| "audit";
-	filters: ReportFilters;
+	filters: ReportFileFilters;
 	isLoading: boolean;
 	error: string | null;
 	lastRefresh: Date | null;

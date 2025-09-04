@@ -148,7 +148,7 @@ export function WelderTable({ projectId }: WelderTableProps) {
 
   return (
     <div className="space-y-4">
-      {/* Search and Filter Controls */}
+      {/* Search and FileFilter Controls */}
       <Card>
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row gap-4">
@@ -169,7 +169,7 @@ export function WelderTable({ projectId }: WelderTableProps) {
               </div>
             </div>
 
-            {/* Show Inactive Filter */}
+            {/* Show Inactive FileFilter */}
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="showInactive"

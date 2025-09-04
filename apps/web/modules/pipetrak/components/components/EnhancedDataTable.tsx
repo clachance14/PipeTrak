@@ -20,7 +20,7 @@ import {
 	ChevronsLeft,
 	ChevronsRight,
 	Pin,
-	Edit2,
+	Edit,
 	Save,
 	X,
 } from "lucide-react";
@@ -321,7 +321,7 @@ export function EnhancedDataTable({
 					>
 						{value?.toString() || "-"}
 						{enableEditing && column.editable !== false && (
-							<Edit2 className="ml-2 h-3 w-3 opacity-0 hover:opacity-50" />
+							<Edit className="ml-2 h-3 w-3 opacity-0 hover:opacity-50" />
 						)}
 					</div>
 				);

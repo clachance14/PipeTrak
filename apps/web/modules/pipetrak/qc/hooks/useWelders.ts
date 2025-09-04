@@ -26,14 +26,14 @@ export interface UpdateWelderData {
   active?: boolean;
 }
 
-export interface WelderFilters {
+export interface WelderFileFilters {
   projectId: string;
   active?: boolean;
   search?: string;
 }
 
 // Get all welders for a project
-export function useWelders(filters: WelderFilters) {
+export function useWelders(filters: WelderFileFilters) {
   return useQuery({
     queryKey: ["welders", filters],
     queryFn: async () => {

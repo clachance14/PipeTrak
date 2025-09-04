@@ -164,7 +164,7 @@ describe("ComponentTable", () => {
     });
   });
 
-  describe("Filtering", () => {
+  describe("FileFiltering", () => {
     it("should filter components by search term", async () => {
       const user = userEvent.setup();
       render(<ComponentTable components={mockComponents} projectId="proj-1" />);
@@ -183,9 +183,9 @@ describe("ComponentTable", () => {
       render(<ComponentTable components={mockComponents} projectId="proj-1" />);
 
       // Click on area filter trigger button
-      const areaFilterTriggers = screen.getAllByRole("combobox");
-      const areaFilter = areaFilterTriggers[0]; // First select is area
-      await user.click(areaFilter);
+      const areaFileFilterTriggers = screen.getAllByRole("combobox");
+      const areaFileFilter = areaFileFilterTriggers[0]; // First select is area
+      await user.click(areaFileFilter);
 
       // Select Area 100
       const area100Option = await screen.findByText("Area Area 100");
@@ -202,9 +202,9 @@ describe("ComponentTable", () => {
       render(<ComponentTable components={mockComponents} projectId="proj-1" />);
 
       // Click on system filter trigger button
-      const systemFilterTriggers = screen.getAllByRole("combobox");
-      const systemFilter = systemFilterTriggers[1]; // Second select is system
-      await user.click(systemFilter);
+      const systemFileFilterTriggers = screen.getAllByRole("combobox");
+      const systemFileFilter = systemFileFilterTriggers[1]; // Second select is system
+      await user.click(systemFileFilter);
 
       // Select Process System (get the option in the dropdown, not the table cell)
       const processOptions = await screen.findAllByText("Process System");
@@ -223,9 +223,9 @@ describe("ComponentTable", () => {
       render(<ComponentTable components={mockComponents} projectId="proj-1" />);
 
       // Click on status filter trigger button
-      const statusFilterTriggers = screen.getAllByRole("combobox");
-      const statusFilter = statusFilterTriggers[3]; // Fourth select is status
-      await user.click(statusFilter);
+      const statusFileFilterTriggers = screen.getAllByRole("combobox");
+      const statusFileFilter = statusFileFilterTriggers[3]; // Fourth select is status
+      await user.click(statusFileFilter);
 
       // Select Completed status
       const completedOption = await screen.findByRole("option", { name: "Completed" });
@@ -242,9 +242,9 @@ describe("ComponentTable", () => {
       render(<ComponentTable components={mockComponents} projectId="proj-1" />);
 
       // Apply area filter
-      const areaFilterTriggers = screen.getAllByRole("combobox");
-      const areaFilter = areaFilterTriggers[0];
-      await user.click(areaFilter);
+      const areaFileFilterTriggers = screen.getAllByRole("combobox");
+      const areaFileFilter = areaFileFilterTriggers[0];
+      await user.click(areaFileFilter);
       const area100Option = await screen.findByText("Area Area 100");
       await user.click(area100Option);
 

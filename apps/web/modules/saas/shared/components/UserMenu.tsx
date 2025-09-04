@@ -25,8 +25,8 @@ import {
 	HomeIcon,
 	LogOutIcon,
 	MoonIcon,
-	MoreVerticalIcon,
-	SettingsIcon,
+	MoreVertical,
+	Settings,
 	SunIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -100,7 +100,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 						)}
 					</span>
 
-					{showUserName && <MoreVerticalIcon className="size-4" />}
+					{showUserName && <MoreVertical className="size-4" />}
 				</button>
 			</DropdownMenuTrigger>
 
@@ -147,7 +147,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 
 				<DropdownMenuItem asChild>
 					<Link href="/app/settings/general">
-						<SettingsIcon className="mr-2 size-4" />
+						<Settings className="mr-2 size-4" />
 						{t("app.userMenu.accountSettings")}
 					</Link>
 				</DropdownMenuItem>

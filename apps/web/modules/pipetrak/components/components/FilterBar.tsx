@@ -11,11 +11,11 @@ import {
 import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
 import { Input } from "@ui/components/input";
-import { Filter, X, Search, RotateCcw } from "lucide-react";
+import { FileFilter, X, Search, RotateCcw } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
 
-export interface FilterState {
+export interface FileFilterState {
 	area: string;
 	testPackage: string;
 	system: string;
@@ -24,15 +24,15 @@ export interface FilterState {
 	search: string;
 }
 
-interface FilterBarProps {
+interface FileFilterBarProps {
 	components: ComponentWithMilestones[];
-	onFilterChange: (filters: FilterState) => void;
+	onFileFilterChange: (filters: FileFilterState) => void;
 	filteredCount: number;
 	totalCount: number;
 	className?: string;
 }
 
-const DEFAULT_FILTERS: FilterState = {
+const DEFAULT_FILTERS: FileFilterState = {
 	area: "all",
 	testPackage: "all",
 	system: "all",
@@ -48,28 +48,28 @@ const STATUS_OPTIONS = [
 	{ value: "COMPLETED", label: "Completed" },
 ] as const;
 
-export function FilterBar({
+export function FileFilterBar({
 	components,
-	onFilterChange,
+	onFileFilterChange,
 	filteredCount,
 	totalCount,
 	className,
-}: FilterBarProps) {
-	const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+}: FileFilterBarProps) {
+	const [filters, setFileFilters] = useState<FileFilterState>(DEFAULT_FILTERS);
 
 	// Load saved filters from localStorage on mount
 	useEffect(() => {
 		try {
 			const saved = localStorage.getItem("pipetrak-component-filters");
 			if (saved) {
-				const savedFilters = JSON.parse(saved);
-				setFilters(savedFilters);
-				onFilterChange(savedFilters);
+				const savedFileFilters = JSON.parse(saved);
+				setFileFilters(savedFileFilters);
+				onFileFilterChange(savedFileFilters);
 			}
 		} catch (error) {
 			console.error("Failed to load saved filters:", error);
 		}
-	}, [onFilterChange]);
+	}, [onFileFilterChange]);
 
 	// Extract unique values from components for filter options
 	const filterOptions = useMemo(() => {
@@ -94,42 +94,42 @@ export function FilterBar({
 	}, [components]);
 
 	// Save to localStorage and notify parent when filters change
-	const handleFilterChange = (key: keyof FilterState, value: string) => {
-		const newFilters = { ...filters, [key]: value };
-		setFilters(newFilters);
+	const handleFileFilterChange = (key: keyof FileFilterState, value: string) => {
+		const newFileFilters = { ...filters, [key]: value };
+		setFileFilters(newFileFilters);
 
 		// Save to localStorage
 		try {
 			localStorage.setItem(
 				"pipetrak-component-filters",
-				JSON.stringify(newFilters),
+				JSON.stringify(newFileFilters),
 			);
 		} catch (error) {
 			console.error("Failed to save filters:", error);
 		}
 
-		onFilterChange(newFilters);
+		onFileFilterChange(newFileFilters);
 	};
 
 	// Clear all filters
-	const clearAllFilters = () => {
-		setFilters(DEFAULT_FILTERS);
+	const clearAllFileFilters = () => {
+		setFileFilters(DEFAULT_FILTERS);
 		try {
 			localStorage.removeItem("pipetrak-component-filters");
 		} catch (error) {
 			console.error("Failed to clear saved filters:", error);
 		}
-		onFilterChange(DEFAULT_FILTERS);
+		onFileFilterChange(DEFAULT_FILTERS);
 	};
 
 	// Check if any filters are active
-	const hasActiveFilters = Object.entries(filters).some(([key, value]) => {
+	const hasActiveFileFilters = Object.entries(filters).some(([key, value]) => {
 		if (key === "search") return value !== "";
 		return value !== "all";
 	});
 
 	// Count active filters for badge
-	const activeFilterCount = Object.entries(filters).filter(([key, value]) => {
+	const activeFileFilterCount = Object.entries(filters).filter(([key, value]) => {
 		if (key === "search") return value !== "";
 		return value !== "all";
 	}).length;
@@ -141,9 +141,9 @@ export function FilterBar({
 				className,
 			)}
 		>
-			{/* Filter Controls */}
+			{/* FileFilter Controls */}
 			<div className="flex flex-col gap-4">
-				{/* Top Row - Search and Primary Filters */}
+				{/* Top Row - Search and Primary FileFilters */}
 				<div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
 					{/* Search */}
 					<div className="relative flex-1 sm:max-w-xs">
@@ -152,39 +152,39 @@ export function FilterBar({
 							placeholder="Search components..."
 							value={filters.search}
 							onChange={(e) =>
-								handleFilterChange("search", e.target.value)
+								handleFileFilterChange("search", e.target.value)
 							}
 							className="pl-10"
 						/>
 					</div>
 
-					{/* Clear Filters Button */}
-					{hasActiveFilters && (
+					{/* Clear FileFilters Button */}
+					{hasActiveFileFilters && (
 						<Button
 							size="sm"
-							onClick={clearAllFilters}
+							onClick={clearAllFileFilters}
 							className="shrink-0"
 						>
 							<RotateCcw className="h-4 w-4 mr-2" />
 							Clear All
-							{activeFilterCount > 0 && (
+							{activeFileFilterCount > 0 && (
 								<Badge
 											className="ml-2 text-xs"
 								>
-									{activeFilterCount}
+									{activeFileFilterCount}
 								</Badge>
 							)}
 						</Button>
 					)}
 				</div>
 
-				{/* Bottom Row - Priority Filters */}
+				{/* Bottom Row - Priority FileFilters */}
 				<div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-					{/* Area Filter */}
+					{/* Area FileFilter */}
 					<Select
 						value={filters.area}
 						onValueChange={(value) =>
-							handleFilterChange("area", value)
+							handleFileFilterChange("area", value)
 						}
 					>
 						<SelectTrigger>
@@ -200,11 +200,11 @@ export function FilterBar({
 						</SelectContent>
 					</Select>
 
-					{/* Test Package Filter */}
+					{/* Test Package FileFilter */}
 					<Select
 						value={filters.testPackage}
 						onValueChange={(value) =>
-							handleFilterChange("testPackage", value)
+							handleFileFilterChange("testPackage", value)
 						}
 					>
 						<SelectTrigger>
@@ -225,11 +225,11 @@ export function FilterBar({
 						</SelectContent>
 					</Select>
 
-					{/* System Filter */}
+					{/* System FileFilter */}
 					<Select
 						value={filters.system}
 						onValueChange={(value) =>
-							handleFilterChange("system", value)
+							handleFileFilterChange("system", value)
 						}
 					>
 						<SelectTrigger>
@@ -245,11 +245,11 @@ export function FilterBar({
 						</SelectContent>
 					</Select>
 
-					{/* Type Filter */}
+					{/* Type FileFilter */}
 					<Select
 						value={filters.type}
 						onValueChange={(value) =>
-							handleFilterChange("type", value)
+							handleFileFilterChange("type", value)
 						}
 					>
 						<SelectTrigger>
@@ -265,11 +265,11 @@ export function FilterBar({
 						</SelectContent>
 					</Select>
 
-					{/* Status Filter */}
+					{/* Status FileFilter */}
 					<Select
 						value={filters.status}
 						onValueChange={(value) =>
-							handleFilterChange("status", value)
+							handleFileFilterChange("status", value)
 						}
 					>
 						<SelectTrigger>
@@ -292,21 +292,21 @@ export function FilterBar({
 			{/* Results Summary */}
 			<div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-3">
 				<div className="flex items-center gap-2">
-					<Filter className="h-4 w-4" />
+					<FileFilter className="h-4 w-4" />
 					<span>
 						Showing <strong>{filteredCount}</strong> of{" "}
 						<strong>{totalCount}</strong> components
 					</span>
-					{hasActiveFilters && (
+					{hasActiveFileFilters && (
 						<Badge status="info" className="text-xs">
-							{activeFilterCount} filter
-							{activeFilterCount !== 1 ? "s" : ""} active
+							{activeFileFilterCount} filter
+							{activeFileFilterCount !== 1 ? "s" : ""} active
 						</Badge>
 					)}
 				</div>
 
-				{/* Active Filter Tags */}
-				{hasActiveFilters && (
+				{/* Active FileFilter Tags */}
+				{hasActiveFileFilters && (
 					<div className="flex flex-wrap gap-1">
 						{filters.search && (
 							<Badge status="info" className="text-xs">
@@ -316,7 +316,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("search", "")
+										handleFileFilterChange("search", "")
 									}
 								>
 									<X className="h-3 w-3" />
@@ -331,7 +331,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("area", "all")
+										handleFileFilterChange("area", "all")
 									}
 								>
 									<X className="h-3 w-3" />
@@ -346,7 +346,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("testPackage", "all")
+										handleFileFilterChange("testPackage", "all")
 									}
 								>
 									<X className="h-3 w-3" />
@@ -361,7 +361,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("system", "all")
+										handleFileFilterChange("system", "all")
 									}
 								>
 									<X className="h-3 w-3" />
@@ -376,7 +376,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("type", "all")
+										handleFileFilterChange("type", "all")
 									}
 								>
 									<X className="h-3 w-3" />
@@ -396,7 +396,7 @@ export function FilterBar({
 									size="sm"
 									className="h-auto p-0 ml-1 text-muted-foreground hover:text-foreground"
 									onClick={() =>
-										handleFilterChange("status", "all")
+										handleFileFilterChange("status", "all")
 									}
 								>
 									<X className="h-3 w-3" />

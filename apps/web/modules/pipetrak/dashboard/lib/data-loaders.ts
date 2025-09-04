@@ -8,7 +8,7 @@ import type {
 	TestPackageReadiness,
 	RecentActivity,
 } from "../types";
-import type { ComponentWithMilestones, ComponentFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 /**
  * Server-side data fetching functions for PipeTrak dashboard
@@ -414,12 +414,12 @@ export async function fetchRecentActivity(
  */
 export async function fetchDashboardComponents(
 	projectId: string,
-	filters: ComponentFilters = {},
+	filters: ComponentFileFilters = {},
 	limit = 100,
 	offset = 0,
 ): Promise<{ components: ComponentWithMilestones[]; total: number }> {
 	console.log("[fetchDashboardComponents] Starting for project:", projectId);
-	console.log("[fetchDashboardComponents] Filters:", filters);
+	console.log("[fetchDashboardComponents] FileFilters:", filters);
 
 	try {
 		// Build where clause

@@ -40,10 +40,10 @@ vi.mock('../components/KPIHeroBar', () => ({
   )
 }));
 
-vi.mock('../components/AreaSystemGrid', () => ({
-  AreaSystemGrid: ({ data }: any) => (
+vi.mock('../components/AreaSystemGrid3x3', () => ({
+  AreaSystemGrid3x3: ({ data }: any) => (
     <div data-testid="area-system-grid">
-      Area System Grid - Entries: {data?.matrixData?.length || 0}
+      Area System Grid3x3 - Entries: {data?.matrixData?.length || 0}
     </div>
   )
 }));
@@ -179,7 +179,7 @@ describe('ResponsiveDashboard', () => {
       render(<ResponsiveDashboard {...defaultProps} />);
 
       expect(screen.getByText('KPI Hero Bar - Components: 10')).toBeInTheDocument();
-      expect(screen.getByText('Area System Grid - Entries: 3')).toBeInTheDocument();
+      expect(screen.getByText('Area System Grid3x3 - Entries: 3')).toBeInTheDocument();
       expect(screen.getByText('Drawing Hierarchy - Drawings: 3')).toBeInTheDocument();
       expect(screen.getByText('Test Package Table - Packages: 3')).toBeInTheDocument();
       expect(screen.getByText('Activity Feed - Activities: 3')).toBeInTheDocument();
@@ -366,7 +366,7 @@ describe('ResponsiveDashboard', () => {
       );
 
       expect(screen.getByText('KPI Hero Bar - Components: 0')).toBeInTheDocument();
-      expect(screen.getByText('Area System Grid - Entries: 0')).toBeInTheDocument();
+      expect(screen.getByText('Area System Grid3x3 - Entries: 0')).toBeInTheDocument();
     });
 
     it('handles null data props', () => {
@@ -382,7 +382,7 @@ describe('ResponsiveDashboard', () => {
       );
 
       expect(screen.getByText('KPI Hero Bar - Components: 0')).toBeInTheDocument();
-      expect(screen.getByText('Area System Grid - Entries: 0')).toBeInTheDocument();
+      expect(screen.getByText('Area System Grid3x3 - Entries: 0')).toBeInTheDocument();
     });
   });
 

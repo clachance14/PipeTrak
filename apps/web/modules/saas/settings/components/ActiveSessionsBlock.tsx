@@ -6,7 +6,7 @@ import { useRouter } from "@shared/hooks/router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
-import { ComputerIcon, XIcon } from "lucide-react";
+import { ComputerIcon, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -96,7 +96,7 @@ export function ActiveSessionsBlock() {
 								className="shrink-0"
 								onClick={() => revokeSession(session.token)}
 							>
-								<XIcon className="size-4" />
+								<X className="size-4" />
 							</Button>
 						</div>
 					))

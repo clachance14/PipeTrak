@@ -14,11 +14,11 @@ import {
 	SheetTrigger,
 } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
-import { MenuIcon } from "lucide-react";
+import { Menu } from "lucide-react";
 import NextLink from "next/link";
 import { useTranslations } from "next-intl";
 import { Suspense, useEffect, useState } from "react";
-import { useDebounceCallback } from "usehooks-ts";
+import { useDebounceValue } from "usehooks-ts";
 
 export function NavBar() {
 	const t = useTranslations();
@@ -26,16 +26,16 @@ export function NavBar() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const localePathname = useLocalePathname();
 	const [isTop, setIsTop] = useState(true);
+	const [scrollY, setScrollY] = useState(0);
+	const [debouncedScrollY] = useDebounceValue(scrollY, 150);
 
-	const debouncedScrollHandler = useDebounceCallback(
-		() => {
-			setIsTop(window.scrollY <= 10);
-		},
-		150,
-		{
-			maxWait: 150,
-		},
-	);
+	useEffect(() => {
+		setIsTop(debouncedScrollY <= 10);
+	}, [debouncedScrollY]);
+
+	const debouncedScrollHandler = () => {
+		setScrollY(window.scrollY);
+	};
 
 	useEffect(() => {
 		window.addEventListener("scroll", debouncedScrollHandler);
@@ -150,7 +150,7 @@ export function NavBar() {
 									variant="light"
 									aria-label="Menu"
 								>
-									<MenuIcon className="size-4" />
+									<Menu className="size-4" />
 								</Button>
 							</SheetTrigger>
 							<SheetContent className="w-[280px]" side="right">

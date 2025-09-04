@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentWithMilestones, ComponentFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 /**
  * Client-side API functions for dashboard
@@ -11,7 +11,7 @@ import type { ComponentWithMilestones, ComponentFilters } from "../../types";
  */
 export async function fetchDashboardComponentsClient(
 	projectId: string,
-	filters: ComponentFilters = {},
+	filters: ComponentFileFilters = {},
 	limit = 100,
 	offset = 0,
 ): Promise<{ components: ComponentWithMilestones[]; total: number }> {

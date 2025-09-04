@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Activity, Filter, Wrench } from "lucide-react";
+import { Activity, FileFilter, Wrench } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -165,7 +165,7 @@ function ActivitySparkline({ activities }: { activities: ActivityItem[] }) {
 }
 
 export function ActivityFeed({ data }: ActivityFeedProps) {
-	const [userFilter, setUserFilter] = useState<string>("all");
+	const [userFileFilter, setUserFileFilter] = useState<string>("all");
 
 	const { filteredActivities, uniqueUsers } =
 		useMemo(() => {
@@ -184,9 +184,9 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 			].sort();
 
 			// Apply filters
-			if (userFilter !== "all") {
+			if (userFileFilter !== "all") {
 				filtered = filtered.filter(
-					(activity) => activity.userName === userFilter,
+					(activity) => activity.userName === userFileFilter,
 				);
 			}
 
@@ -197,7 +197,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 				filteredActivities: filtered,
 				uniqueUsers,
 			};
-		}, [data, userFilter]);
+		}, [data, userFileFilter]);
 
 	const stats = useMemo(() => {
 		if (!data?.activities?.length) {
@@ -261,16 +261,16 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 					<ActivitySparkline activities={data.activities} />
 				</div>
 
-				{/* Filters */}
+				{/* FileFilters */}
 				<div className="flex items-center gap-4 pt-4">
 					<div className="flex items-center gap-2">
-						<Filter className="w-4 h-4 text-muted-foreground" />
+						<FileFilter className="w-4 h-4 text-muted-foreground" />
 						<span className="text-sm text-muted-foreground">
-							Filter by:
+							FileFilter by:
 						</span>
 					</div>
 
-					<Select value={userFilter} onValueChange={setUserFilter}>
+					<Select value={userFileFilter} onValueChange={setUserFileFilter}>
 						<SelectTrigger className="w-[140px] h-8">
 							<SelectValue placeholder="User" />
 						</SelectTrigger>
@@ -286,7 +286,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
 
 					{/* TODO: Enable when area/system data is available */}
 					{/*
-          <Select value={areaFilter} onValueChange={setAreaFilter} disabled>
+          <Select value={areaFileFilter} onValueChange={setAreaFileFilter} disabled>
             <SelectTrigger className="w-[120px] h-8">
               <SelectValue placeholder="Area" />
             </SelectTrigger>
@@ -295,7 +295,7 @@ export function ActivityFeed({ data }: ActivityFeedProps) {
             </SelectContent>
           </Select>
 
-          <Select value={systemFilter} onValueChange={setSystemFilter} disabled>
+          <Select value={systemFileFilter} onValueChange={setSystemFileFilter} disabled>
             <SelectTrigger className="w-[120px] h-8">
               <SelectValue placeholder="System" />
             </SelectTrigger>

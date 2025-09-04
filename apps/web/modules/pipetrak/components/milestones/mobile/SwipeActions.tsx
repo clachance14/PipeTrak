@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { CheckCircle, RotateCcw, ChevronRight } from "lucide-react";
+import { CheckCircle2, RotateCcw, ChevronRight } from "lucide-react";
 import { cn } from "@ui/lib";
 import type {
 	ComponentMilestone,
@@ -130,7 +130,7 @@ export function SwipeActions({
 			return milestone.isCompleted ? (
 				<RotateCcw className="h-5 w-5" />
 			) : (
-				<CheckCircle className="h-5 w-5" />
+				<CheckCircle2 className="h-5 w-5" />
 			);
 		}
 		if (swipeDirection === "left") {

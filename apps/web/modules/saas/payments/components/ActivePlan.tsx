@@ -3,7 +3,7 @@
 import { usePlanData } from "@saas/payments/hooks/plan-data";
 import { usePurchases } from "@saas/payments/hooks/purchases";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import { BadgeCheckIcon, CheckIcon } from "lucide-react";
+import { BadgeCheck, Check } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { CustomerPortalButton } from "../../settings/components/CustomerPortalButton";
 import { SubscriptionStatusBadge } from "../../settings/components/SubscriptionStatusBadge";
@@ -36,7 +36,7 @@ export function ActivePlan({
 			<div className="rounded-lg border p-4">
 				<div className="">
 					<div className="flex items-center gap-2">
-						<BadgeCheckIcon className="size-6 text-primary" />
+						<BadgeCheck className="size-6 text-primary" />
 						<h4 className="font-bold text-lg text-primary">
 							<span>{activePlanData.title}</span>
 						</h4>
@@ -54,7 +54,7 @@ export function ActivePlan({
 									key={key}
 									className="flex items-center justify-start"
 								>
-									<CheckIcon className="mr-2 size-4 text-primary" />
+									<Check className="mr-2 size-4 text-primary" />
 									<span>{feature}</span>
 								</li>
 							))}

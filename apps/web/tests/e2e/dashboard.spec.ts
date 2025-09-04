@@ -130,7 +130,7 @@ test.describe('Dashboard E2E Tests', () => {
     });
   });
 
-  test.describe('Area System Grid Interactions', () => {
+  test.describe('Area System Grid3x3 Interactions', () => {
     test('grid displays with correct structure', async ({ page }) => {
       await setupTestProject(page);
       

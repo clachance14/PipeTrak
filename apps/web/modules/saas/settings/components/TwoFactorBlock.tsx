@@ -17,11 +17,11 @@ import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
 import { PasswordInput } from "@ui/components/password-input";
 import {
-	ArrowRightIcon,
-	CheckIcon,
-	ShieldCheckIcon,
+	ArrowRight,
+	Check,
+	ShieldCheck,
 	TabletSmartphoneIcon,
-	XIcon,
+	X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
@@ -165,13 +165,13 @@ export function TwoFactorBlock() {
 			{user?.twoFactorEnabled ? (
 				<div className="flex items-start flex-col gap-4">
 					<div className="flex items-center gap-1.5">
-						<ShieldCheckIcon className="size-6 text-green-500" />
+						<ShieldCheck className="size-6 text-green-500" />
 						<p className="text-sm text-foreground">
 							{t("settings.account.security.twoFactor.enabled")}
 						</p>
 					</div>
 					<Button variant="light" onClick={verifyPassword}>
-						<XIcon className="mr-1.5 size-4" />
+						<X className="mr-1.5 size-4" />
 						{t("settings.account.security.twoFactor.disable")}
 					</Button>
 				</div>
@@ -230,7 +230,7 @@ export function TwoFactorBlock() {
 									}
 								>
 									{t("common.actions.continue")}
-									<ArrowRightIcon className="ml-1.5 size-4" />
+									<ArrowRight className="ml-1.5 size-4" />
 								</Button>
 							</div>
 						</form>
@@ -277,7 +277,7 @@ export function TwoFactorBlock() {
 									className="w-full"
 									loading={verifyTwoFactorMutation.isPending}
 								>
-									<CheckIcon className="mr-1.5 size-4" />
+									<Check className="mr-1.5 size-4" />
 									{t("common.actions.verify")}
 								</Button>
 							</div>

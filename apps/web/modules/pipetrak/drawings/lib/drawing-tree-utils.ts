@@ -166,7 +166,7 @@ export function getAllDrawingIds(drawings: DrawingTreeNode[]): string[] {
 }
 
 /**
- * Filters drawings based on a search query
+ * FileFilters drawings based on a search query
  */
 export function filterDrawingTree(
 	drawings: DrawingTreeNode[],

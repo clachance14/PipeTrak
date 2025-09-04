@@ -14,10 +14,10 @@ import {
 } from "@ui/components/select";
 import { 
   Search, 
-  Filter, 
+  FileFilter, 
   Plus, 
   RefreshCw,
-  CheckCircle2,
+  CheckCircle22,
   XCircle,
   Clock,
   FlameKindling
@@ -86,11 +86,11 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
   const [data, setData] = useState<FieldWeldData[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [packageFilter, setPackageFilter] = useState<string>("all");
-  const [ndeFilter, setNdeFilter] = useState<string>("all");
+  const [packageFileFilter, setPackageFileFilter] = useState<string>("all");
+  const [ndeFileFilter, setNdeFileFilter] = useState<string>("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFileFilters, setShowFileFilters] = useState(false);
   const [selectedWeld, setSelectedWeld] = useState<FieldWeldData | null>(null);
   const [showMarkCompleteModal, setShowMarkCompleteModal] = useState(false);
 
@@ -106,7 +106,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
     return { total, pending, accepted, rejected, pwhtRequired, pwhtCompleted };
   }, [data]);
 
-  // Filter data based on search and filters
+  // FileFilter data based on search and filters
   const filteredData = useMemo(() => {
     return data.filter(weld => {
       // Search filter
@@ -118,19 +118,19 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
         weld.welder?.stencil.toLowerCase().includes(searchQuery.toLowerCase());
 
       // Package filter
-      const packageMatch = packageFilter === "all" || weld.packageNumber === packageFilter;
+      const packageMatch = packageFileFilter === "all" || weld.packageNumber === packageFileFilter;
 
       // NDE filter
       let ndeMatch = true;
-      if (ndeFilter === "pending") {
+      if (ndeFileFilter === "pending") {
         ndeMatch = !weld.ndeResult;
-      } else if (ndeFilter !== "all") {
-        ndeMatch = weld.ndeResult === ndeFilter;
+      } else if (ndeFileFilter !== "all") {
+        ndeMatch = weld.ndeResult === ndeFileFilter;
       }
 
       return searchMatch && packageMatch && ndeMatch;
     });
-  }, [data, searchQuery, packageFilter, ndeFilter]);
+  }, [data, searchQuery, packageFileFilter, ndeFileFilter]);
 
   // Get unique packages for filter
   const uniquePackages = useMemo(() => {
@@ -272,10 +272,10 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
             <Button
               size="icon"
               variant="secondary"
-              onClick={() => setShowFilters(!showFilters)}
-              className={cn(showFilters && "bg-accent")}
+              onClick={() => setShowFileFilters(!showFileFilters)}
+              className={cn(showFileFilters && "bg-accent")}
             >
-              <Filter className="h-4 w-4" />
+              <FileFilter className="h-4 w-4" />
             </Button>
             <Button
               size="icon"
@@ -287,10 +287,10 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
             </Button>
           </div>
 
-          {/* Filters - collapsible */}
-          {showFilters && (
+          {/* FileFilters - collapsible */}
+          {showFileFilters && (
             <div className="grid grid-cols-2 gap-2">
-              <Select value={packageFilter} onValueChange={setPackageFilter}>
+              <Select value={packageFileFilter} onValueChange={setPackageFileFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="Package" />
                 </SelectTrigger>
@@ -302,7 +302,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
                 </SelectContent>
               </Select>
               
-              <Select value={ndeFilter} onValueChange={setNdeFilter}>
+              <Select value={ndeFileFilter} onValueChange={setNdeFileFilter}>
                 <SelectTrigger>
                   <SelectValue placeholder="NDE Result" />
                 </SelectTrigger>
@@ -344,7 +344,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
         </div>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid3x3 */}
       <div className="grid grid-cols-2 gap-3">
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <CardContent className="p-3">
@@ -361,7 +361,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
         <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardContent className="p-3">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <CheckCircle22 className="h-4 w-4 text-green-600" />
               <div>
                 <p className="text-xs text-green-700 font-medium">Accepted</p>
                 <p className="text-lg font-bold text-green-900">{stats.accepted}</p>
@@ -427,7 +427,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
           </div>
         ) : filteredData.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
-            {searchQuery || packageFilter !== "all" || ndeFilter !== "all" 
+            {searchQuery || packageFileFilter !== "all" || ndeFileFilter !== "all" 
               ? "No field welds match your filters"
               : "No field welds found"
             }

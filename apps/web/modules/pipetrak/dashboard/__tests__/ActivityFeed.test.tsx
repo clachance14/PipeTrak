@@ -77,7 +77,7 @@ describe('ActivityFeed', () => {
     });
   });
 
-  describe('User Filtering', () => {
+  describe('User FileFiltering', () => {
     it('displays user filter dropdown', () => {
       render(<ActivityFeed data={smallRecentActivity} />);
       
@@ -115,7 +115,7 @@ describe('ActivityFeed', () => {
       const user = userEvent.setup();
       render(<ActivityFeed data={smallRecentActivity} />);
       
-      // Filter by user first
+      // FileFilter by user first
       await user.click(screen.getByTestId('activity-user-filter'));
       await user.click(screen.getByText('John Smith'));
       

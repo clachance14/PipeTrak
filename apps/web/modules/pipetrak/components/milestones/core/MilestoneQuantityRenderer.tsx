@@ -7,12 +7,12 @@ import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
 import {
-	CheckCircle2,
+	CheckCircle22,
 	Clock,
 	AlertCircle,
 	Lock,
 	Loader2,
-	Undo2,
+	Undo22,
 	Minus,
 	Plus,
 } from "lucide-react";
@@ -24,9 +24,9 @@ interface MilestoneQuantityRendererProps {
 	isLocked?: boolean;
 	isLoading?: boolean;
 	touchTargetSize?: number;
-	showUndoOption?: boolean;
+	showUndo2Option?: boolean;
 	onUpdate: (value: number) => Promise<void>;
-	onUndo?: () => void;
+	onUndo2?: () => void;
 	className?: string;
 }
 
@@ -35,9 +35,9 @@ export function MilestoneQuantityRenderer({
 	isLocked = false,
 	isLoading = false,
 	touchTargetSize = 52,
-	showUndoOption = false,
+	showUndo2Option = false,
 	onUpdate,
-	onUndo,
+	onUndo2,
 	className,
 }: MilestoneQuantityRendererProps) {
 	const [optimisticValue, setOptimisticValue] = useState<number | null>(null);
@@ -148,7 +148,7 @@ export function MilestoneQuantityRenderer({
 
 		if (percent === 100) {
 			return (
-				<CheckCircle2
+				<CheckCircle22
 					className="h-5 w-5 text-fieldComplete"
 					aria-label="Completed"
 				/>
@@ -200,15 +200,15 @@ export function MilestoneQuantityRenderer({
 
 				<div className="flex items-center gap-2">
 					{getStatusIcon()}
-					{showUndoOption && onUndo && milestone.completedAt && (
+					{showUndo2Option && onUndo2 && milestone.completedAt && (
 						<Button
 							variant="ghost"
 							size="sm"
-							onClick={onUndo}
+							onClick={onUndo2}
 							className="h-8 w-8 p-0"
-							aria-label="Undo completion"
+							aria-label="Undo2 completion"
 						>
-							<Undo2 className="h-4 w-4" />
+							<Undo22 className="h-4 w-4" />
 						</Button>
 					)}
 				</div>

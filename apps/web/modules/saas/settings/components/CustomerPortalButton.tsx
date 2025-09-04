@@ -2,7 +2,7 @@
 
 import { useCreateCustomerPortalLinkMutation } from "@saas/payments/lib/api";
 import { Button } from "@ui/components/button";
-import { CreditCardIcon } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -35,7 +35,7 @@ export function CustomerPortalButton({ purchaseId }: { purchaseId: string }) {
 			onClick={() => createCustomerPortal()}
 			loading={createCustomerPortalMutation.isPending}
 		>
-			<CreditCardIcon className="mr-2 size-4" />
+			<CreditCard className="mr-2 size-4" />
 			{t("settings.billing.createCustomerPortal.label")}
 		</Button>
 	);

@@ -47,24 +47,24 @@ declare module 'next-themes' {
 // Lucide React
 declare module 'lucide-react' {
   const LucideIcon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  export const ChevronDownIcon: typeof LucideIcon;
-  export const MoreVerticalIcon: typeof LucideIcon;
-  export const EditIcon: typeof LucideIcon;
-  export const TrashIcon: typeof LucideIcon;
+  export const ChevronDown: typeof LucideIcon;
+  export const MoreVertical: typeof LucideIcon;
+  export const Edit: typeof LucideIcon;
+  export const Trash: typeof LucideIcon;
   export const PlusIcon: typeof LucideIcon;
-  export const ArrowUpIcon: typeof LucideIcon;
-  export const ArrowDownIcon: typeof LucideIcon;
-  export const FileIcon: typeof LucideIcon;
-  export const FolderIcon: typeof LucideIcon;
-  export const CheckIcon: typeof LucideIcon;
-  export const XIcon: typeof LucideIcon;
-  export const Building2Icon: typeof LucideIcon;
-  export const UsersIcon: typeof LucideIcon;
-  export const ArrowLeftIcon: typeof LucideIcon;
-  export const CreditCardIcon: typeof LucideIcon;
-  export const LockKeyholeIcon: typeof LucideIcon;
-  export const SettingsIcon: typeof LucideIcon;
-  export const TriangleAlertIcon: typeof LucideIcon;
+  export const ArrowUp: typeof LucideIcon;
+  export const ArrowDown: typeof LucideIcon;
+  export const File: typeof LucideIcon;
+  export const Folder: typeof LucideIcon;
+  export const Check: typeof LucideIcon;
+  export const X: typeof LucideIcon;
+  export const Building2: typeof LucideIcon;
+  export const Users: typeof LucideIcon;
+  export const ArrowLeft: typeof LucideIcon;
+  export const CreditCard: typeof LucideIcon;
+  export const LockKeyhole: typeof LucideIcon;
+  export const Settings: typeof LucideIcon;
+  export const TriangleAlert: typeof LucideIcon;
   export const ArrowLeft: typeof LucideIcon;
   export const RefreshCw: typeof LucideIcon;
   export const Home: typeof LucideIcon;
@@ -75,6 +75,30 @@ declare module 'lucide-react' {
   export const FileText: typeof LucideIcon;
   export const Download: typeof LucideIcon;
   export const Upload: typeof LucideIcon;
+  export const Save: typeof LucideIcon;
+  export const CheckCircle22: typeof LucideIcon;
+  export const FileSpreadsheet: typeof LucideIcon;
+  export const MapPin: typeof LucideIcon;
+  export const Calendar: typeof LucideIcon;
+  export const BarChart3: typeof LucideIcon;
+  export const Loader2: typeof LucideIcon;
+  export const Mail: typeof LucideIcon;
+  export const Cloud: typeof LucideIcon;
+  export const Layers: typeof LucideIcon;
+  export const WifiOff: typeof LucideIcon;
+  export const Wand2: typeof LucideIcon;
+  export const ArrowRight: typeof LucideIcon;
+  export const HardHat: typeof LucideIcon;
+  export const Clock: typeof LucideIcon;
+  export const Key: typeof LucideIcon;
+  export const Menu: typeof LucideIcon;
+  export const Undo2: typeof LucideIcon;
+  export const MoreHorizontal: typeof LucideIcon;
+  export const Target: typeof LucideIcon;
+  export const Plus: typeof LucideIcon;
+  export const Package: typeof LucideIcon;
+  export const Wrench: typeof LucideIcon;
+  export const Users: typeof LucideIcon;
 }
 
 // Sonner
@@ -92,6 +116,8 @@ declare module 'sonner' {
     (message: string, options?: ToastOptions): void;
     success: (message: string, options?: ToastOptions) => void;
     error: (message: string, options?: ToastOptions) => void;
+    info: (message: string, options?: ToastOptions) => void;
+    warning: (message: string, options?: ToastOptions) => void;
     promise: <T>(
       promise: Promise<T> | (() => Promise<T>),
       options: {

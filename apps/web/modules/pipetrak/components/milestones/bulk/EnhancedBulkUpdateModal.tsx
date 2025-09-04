@@ -27,10 +27,10 @@ import { Slider } from "@ui/components/slider";
 import {
 	Users,
 	Clock,
-	CheckCircle,
+	CheckCircle2,
 	Eye,
 	Play,
-	Undo2,
+	Undo22,
 	Package,
 	Target,
 } from "lucide-react";
@@ -567,7 +567,7 @@ export function EnhancedBulkUpdateModal({
 	const renderCompleteStep = () => (
 		<div className="space-y-4 py-4">
 			<div className="text-center">
-				<CheckCircle className="h-12 w-12 mx-auto text-green-600 mb-4" />
+				<CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-4" />
 				<h4 className="text-lg font-medium">Update Complete</h4>
 			</div>
 
@@ -716,12 +716,12 @@ export function EnhancedBulkUpdateModal({
 									onClick={() => {
 										// TODO: Implement undo functionality
 										toast.info(
-											"Undo functionality coming soon",
+											"Undo2 functionality coming soon",
 										);
 									}}
 								>
-									<Undo2 className="h-4 w-4 mr-2" />
-									Undo
+									<Undo22 className="h-4 w-4 mr-2" />
+									Undo2
 								</Button>
 							)}
 					</div>

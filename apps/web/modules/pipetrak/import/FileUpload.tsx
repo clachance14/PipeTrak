@@ -14,7 +14,7 @@ import { Upload, FileSpreadsheet, X, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { cn } from "@ui/lib";
 
-interface FileUploadProps {
+interface FileloadProps {
 	onFileSelect: (file: File) => void;
 	onFileRemove: () => void;
 	loading?: boolean;
@@ -25,7 +25,7 @@ interface FileUploadProps {
 	className?: string;
 }
 
-export function FileUpload({
+export function Fileload({
 	onFileSelect,
 	onFileRemove,
 	loading = false,
@@ -34,7 +34,7 @@ export function FileUpload({
 	accept = ".xlsx,.xls,.csv",
 	maxSizeInMB = 10,
 	className,
-}: FileUploadProps) {
+}: FileloadProps) {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [dragActive, setDragActive] = useState(false);
 

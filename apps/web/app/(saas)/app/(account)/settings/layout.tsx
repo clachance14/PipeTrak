@@ -5,10 +5,10 @@ import { PageHeader } from "@saas/shared/components/PageHeader";
 import { SidebarContentLayout } from "@saas/shared/components/SidebarContentLayout";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import {
-	CreditCardIcon,
-	LockKeyholeIcon,
-	SettingsIcon,
-	TriangleAlertIcon,
+	CreditCard,
+	LockKeyhole,
+	Settings,
+	TriangleAlert,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -34,12 +34,12 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 				{
 					title: t("settings.menu.account.general"),
 					href: "/app/settings/general",
-					icon: <SettingsIcon className="size-4 opacity-50" />,
+					icon: <Settings className="size-4 opacity-50" />,
 				},
 				{
 					title: t("settings.menu.account.security"),
 					href: "/app/settings/security",
-					icon: <LockKeyholeIcon className="size-4 opacity-50" />,
+					icon: <LockKeyhole className="size-4 opacity-50" />,
 				},
 				...(config.users.enableBilling
 					? [
@@ -47,7 +47,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 								title: t("settings.menu.account.billing"),
 								href: "/app/settings/billing",
 								icon: (
-									<CreditCardIcon className="size-4 opacity-50" />
+									<CreditCard className="size-4 opacity-50" />
 								),
 							},
 						]
@@ -55,7 +55,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 				{
 					title: t("settings.menu.account.dangerZone"),
 					href: "/app/settings/danger-zone",
-					icon: <TriangleAlertIcon className="size-4 opacity-50" />,
+					icon: <TriangleAlert className="size-4 opacity-50" />,
 				},
 			],
 		},

@@ -9,7 +9,7 @@ import {
 	BotMessageSquareIcon,
 	ChevronRightIcon,
 	HomeIcon,
-	SettingsIcon,
+	Settings,
 	UserCog2Icon,
 	UserCogIcon,
 } from "lucide-react";
@@ -50,7 +50,7 @@ export function NavBar() {
 					{
 						label: t("app.menu.organizationSettings"),
 						href: `${basePath}/settings`,
-						icon: SettingsIcon,
+						icon: Settings,
 						isActive: pathname.startsWith(`${basePath}/settings/`),
 					},
 				]

@@ -38,7 +38,7 @@ export function AutocompleteField({
 	const [open, setOpen] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
 
-	// Filter options based on search
+	// FileFilter options based on search
 	const filteredOptions = options.filter((option) =>
 		option.toLowerCase().includes(searchValue.toLowerCase()),
 	);
@@ -79,7 +79,7 @@ export function AutocompleteField({
 	const displayValue = value || placeholder;
 	const showAddNew =
 		searchValue.trim() && !exactMatch && filteredOptions.length === 0;
-	const showFilteredResults =
+	const showFileFilteredResults =
 		searchValue.trim() && filteredOptions.length > 0;
 
 	return (
@@ -105,7 +105,7 @@ export function AutocompleteField({
 				side="bottom"
 				align="start"
 			>
-				<Command shouldFilter={false}>
+				<Command shouldFileFilter={false}>
 					<CommandInput
 						placeholder="Search or type new value..."
 						value={searchValue}
@@ -113,7 +113,7 @@ export function AutocompleteField({
 					/>
 					<CommandList>
 						{/* Show existing options */}
-						{(searchValue === "" || showFilteredResults) && (
+						{(searchValue === "" || showFileFilteredResults) && (
 							<CommandGroup heading="Existing values">
 								{(searchValue === ""
 									? options
@@ -122,7 +122,7 @@ export function AutocompleteField({
 									<CommandItem
 										key={option}
 										value={option}
-										onSelect={(currentValue) => {
+										onSelect={(currentValue: string) => {
 											handleSelect(currentValue);
 										}}
 										className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
@@ -156,7 +156,7 @@ export function AutocompleteField({
 						)}
 
 						{/* Show empty state when no results and no add option */}
-						{!showAddNew && !showFilteredResults && searchValue && (
+						{!showAddNew && !showFileFilteredResults && searchValue && (
 							<CommandEmpty>
 								<div className="text-center py-6">
 									<p className="text-sm text-muted-foreground">

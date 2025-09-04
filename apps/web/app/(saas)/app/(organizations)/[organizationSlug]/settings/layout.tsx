@@ -6,10 +6,10 @@ import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { SidebarContentLayout } from "@saas/shared/components/SidebarContentLayout";
 import {
-	CreditCardIcon,
-	Settings2Icon,
-	TriangleAlertIcon,
-	Users2Icon,
+	CreditCard,
+	Settings,
+	TriangleAlert,
+	Users,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -50,12 +50,12 @@ export default async function SettingsLayout({
 				{
 					title: t("settings.menu.organization.general"),
 					href: `${organizationSettingsBasePath}/general`,
-					icon: <Settings2Icon className="size-4 opacity-50" />,
+					icon: <Settings className="size-4 opacity-50" />,
 				},
 				{
 					title: t("settings.menu.organization.members"),
 					href: `${organizationSettingsBasePath}/members`,
-					icon: <Users2Icon className="size-4 opacity-50" />,
+					icon: <Users className="size-4 opacity-50" />,
 				},
 				...(config.organizations.enable &&
 				config.organizations.enableBilling &&
@@ -65,7 +65,7 @@ export default async function SettingsLayout({
 								title: t("settings.menu.organization.billing"),
 								href: `${organizationSettingsBasePath}/billing`,
 								icon: (
-									<CreditCardIcon className="size-4 opacity-50" />
+									<CreditCard className="size-4 opacity-50" />
 								),
 							},
 							{
@@ -74,7 +74,7 @@ export default async function SettingsLayout({
 								),
 								href: `${organizationSettingsBasePath}/danger-zone`,
 								icon: (
-									<TriangleAlertIcon className="size-4 opacity-50" />
+									<TriangleAlert className="size-4 opacity-50" />
 								),
 							},
 						]

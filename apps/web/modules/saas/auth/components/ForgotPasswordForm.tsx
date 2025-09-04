@@ -14,7 +14,7 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
+import { AlertTriangleIcon, ArrowLeft, MailboxIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -125,7 +125,7 @@ export function ForgotPasswordForm() {
 
 			<div className="mt-6 text-center text-sm">
 				<Link href="/auth/login">
-					<ArrowLeftIcon className="mr-1 inline size-4 align-middle" />
+					<ArrowLeft className="mr-1 inline size-4 align-middle" />
 					{t("auth.forgotPassword.backToSignin")}
 				</Link>
 			</div>

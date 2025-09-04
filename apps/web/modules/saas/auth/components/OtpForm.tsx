@@ -21,7 +21,7 @@ import {
 	InputOTPSeparator,
 	InputOTPSlot,
 } from "@ui/components/input-otp";
-import { AlertTriangleIcon, ArrowLeftIcon } from "lucide-react";
+import { AlertTriangleIcon, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -159,7 +159,7 @@ export function OtpForm() {
 
 			<div className="mt-6 text-center text-sm">
 				<Link href="/auth/login">
-					<ArrowLeftIcon className="mr-1 inline size-4 align-middle" />
+					<ArrowLeft className="mr-1 inline size-4 align-middle" />
 					{t("auth.verify.backToSignin")}
 				</Link>
 			</div>

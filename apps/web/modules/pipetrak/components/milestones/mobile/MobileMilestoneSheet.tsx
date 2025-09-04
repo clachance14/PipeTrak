@@ -20,7 +20,7 @@ import { OfflineIndicator } from "./OfflineIndicator";
 import {
 	ChevronUp,
 	ChevronDown,
-	CheckCircle,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 	Package,
@@ -206,7 +206,7 @@ export function MobileMilestoneSheet({
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-4 text-sm">
 						<span className="flex items-center gap-1">
-							<CheckCircle className="h-4 w-4 text-fieldComplete" />
+							<CheckCircle2 className="h-4 w-4 text-fieldComplete" />
 							{stats.completed}
 						</span>
 						<span className="flex items-center gap-1">

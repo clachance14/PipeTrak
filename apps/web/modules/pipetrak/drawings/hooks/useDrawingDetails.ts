@@ -30,7 +30,7 @@ interface DrawingDetailsResponse {
 	};
 }
 
-interface DrawingDetailsFilters {
+interface DrawingDetailsFileFilters {
 	status?: string[];
 	type?: string[];
 	area?: string[];
@@ -42,7 +42,7 @@ interface DrawingDetailsFilters {
 
 export function useDrawingDetails(
 	drawingId: string,
-	filters: DrawingDetailsFilters = {},
+	filters: DrawingDetailsFileFilters = {},
 ) {
 	const searchParams = new URLSearchParams();
 

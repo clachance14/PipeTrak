@@ -35,7 +35,7 @@ export default async function AuditReportPage({
 			<Suspense fallback={<LoadingState variant="table" />}>
 				<AuditReportContent
 					projectId={projectId}
-					initialFilters={filters}
+					initialFileFilters={filters}
 				/>
 			</Suspense>
 		</div>

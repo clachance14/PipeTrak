@@ -20,7 +20,7 @@ import {
 import { Input } from "@ui/components/input";
 import {
 	AlertTriangleIcon,
-	ArrowRightIcon,
+	ArrowRight,
 	EyeIcon,
 	EyeOffIcon,
 	KeyIcon,
@@ -346,7 +346,7 @@ export function LoginForm() {
 								)}
 							>
 								{t("auth.login.createAnAccount")}
-								<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+								<ArrowRight className="ml-1 inline size-4 align-middle" />
 							</Link>
 						</div>
 					)}

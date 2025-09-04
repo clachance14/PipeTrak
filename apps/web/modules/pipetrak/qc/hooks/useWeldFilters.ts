@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { WeldFilterState } from "../components/WeldFilterBar";
+import type { WeldFileFilterState } from "../components/WeldFileFilterBar";
 
 // Field weld data structure
 interface FieldWeldData {
@@ -48,12 +48,12 @@ interface FieldWeldData {
   };
 }
 
-interface UseWeldFiltersProps {
+interface UseWeldFileFiltersProps {
   fieldWelds: FieldWeldData[];
-  filters: WeldFilterState;
+  filters: WeldFileFilterState;
 }
 
-export function useWeldFilters({ fieldWelds, filters }: UseWeldFiltersProps) {
+export function useWeldFileFilters({ fieldWelds, filters }: UseWeldFileFiltersProps) {
   const filteredWelds = useMemo(() => {
     return fieldWelds.filter(weld => {
       // Search filter - searches across multiple fields

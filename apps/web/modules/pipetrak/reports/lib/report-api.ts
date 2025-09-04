@@ -18,7 +18,7 @@ import type {
 	BulkReportRequest,
 	BulkReportResponse,
 	ReportStatusResponse,
-	FilterOptionsResponse,
+	FileFilterOptionsResponse,
 } from "../types";
 
 // ============================================================================
@@ -193,9 +193,9 @@ export async function generateBulkReports(
 /**
  * Get available filter options for a project
  */
-export async function getReportFilterOptions(
+export async function getReportFileFilterOptions(
 	projectId: string,
-): Promise<FilterOptionsResponse> {
+): Promise<FileFilterOptionsResponse> {
 	const response = await apiClient.pipetrak.reports.filters[
 		":projectId"
 	].$get({

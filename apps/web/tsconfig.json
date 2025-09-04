@@ -2,6 +2,8 @@
 	"extends": "@repo/tsconfig/nextjs.json",
 	"compilerOptions": {
 		"jsx": "preserve",
+		"moduleResolution": "bundler",
+		"types": ["react", "react-dom", "node"],
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"@analytics": ["./modules/analytics"],

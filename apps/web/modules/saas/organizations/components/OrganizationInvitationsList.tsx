@@ -13,7 +13,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import {
 	flexRender,
 	getCoreRowModel,
-	getFilteredRowModel,
+	getFileFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
@@ -28,11 +28,11 @@ import {
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { cn } from "@ui/lib";
 import {
-	CheckIcon,
-	ClockIcon,
-	MailXIcon,
-	MoreVerticalIcon,
-	XIcon,
+	Check,
+	Clock,
+	MailX,
+	MoreVertical,
+	X,
 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -102,10 +102,10 @@ export function OrganizationInvitationsList({
 			accessorFn: (row) => row.email,
 			cell: ({ row }) => {
 				const InvitationStatusIcon = {
-					pending: ClockIcon,
-					accepted: CheckIcon,
-					rejected: XIcon,
-					canceled: XIcon,
+					pending: Clock,
+					accepted: Check,
+					rejected: X,
+					canceled: X,
 				}[row.original.status];
 				return (
 					<div className="leading-normal">
@@ -163,7 +163,7 @@ export function OrganizationInvitationsList({
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<Button size="icon" variant="ghost">
-										<MoreVerticalIcon className="size-4" />
+										<MoreVertical className="size-4" />
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
@@ -173,7 +173,7 @@ export function OrganizationInvitationsList({
 											revokeInvitation(row.original.id)
 										}
 									>
-										<MailXIcon className="mr-2 size-4" />
+										<MailX className="mr-2 size-4" />
 										{t(
 											"organizations.settings.members.invitations.revoke",
 										)}
@@ -193,7 +193,7 @@ export function OrganizationInvitationsList({
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
+		getFileFilteredRowModel: getFileFilteredRowModel(),
 	});
 
 	return (

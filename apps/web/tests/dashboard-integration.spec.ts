@@ -311,7 +311,7 @@ test.describe('Dashboard Integration', () => {
     });
   });
 
-  test.describe('Search and Filtering', () => {
+  test.describe('Search and FileFiltering', () => {
     test('component search works across dashboard', async ({ page }) => {
       await page.goto('/app/pipetrak/large-project/dashboard');
       

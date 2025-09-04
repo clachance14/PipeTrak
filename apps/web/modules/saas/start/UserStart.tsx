@@ -1,13 +1,13 @@
 "use client";
 
 import { config } from "@repo/config";
-import { OrganizationsGrid } from "@saas/organizations/components/OrganizationsGrid";
+import { OrganizationsGrid3x3 } from "@saas/organizations/components/OrganizationsGrid3x3";
 import { Card } from "@ui/components/card";
 
 export default function UserStart() {
 	return (
 		<div>
-			{config.organizations.enable && <OrganizationsGrid />}
+			{config.organizations.enable && <OrganizationsGrid3x3 />}
 
 			<Card className="mt-6">
 				<div className="flex h-64 items-center justify-center p-8 text-foreground/60">

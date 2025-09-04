@@ -7,11 +7,11 @@ import {
   useReactTable,
   getCoreRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
+  getFileFilteredRowModel,
   flexRender,
   type ColumnDef,
   type SortingState,
-  type ColumnFiltersState,
+  type ColumnFileFiltersState,
 } from "@tanstack/react-table";
 import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
@@ -31,12 +31,12 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/components/table";
-import { Download, Plus, RefreshCw, CheckCircle2, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
+import { Download, Plus, RefreshCw, CheckCircle22, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
 import { AddWeldModal } from "./AddWeldModal";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
-import { WeldFilterBar, type WeldFilterState } from "./WeldFilterBar";
+import { WeldFileFilterBar, type WeldFileFilterState } from "./WeldFileFilterBar";
 import { ColumnToggle, createDefaultColumns, loadColumnConfig, saveColumnConfig, type ColumnConfig } from "./ColumnToggle";
-import { useWeldFilters } from "../hooks/useWeldFilters";
+import { useWeldFileFilters } from "../hooks/useWeldFileFilters";
 import { cn } from "@ui/lib";
 
 // Types based on our API response
@@ -132,8 +132,8 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
     return responseData;
   };
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [columnFileFilters, setColumnFileFilters] = useState<ColumnFileFiltersState>([]);
+  const [globalFileFilter, setGlobalFileFilter] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedWeld, setSelectedWeld] = useState<FieldWeldData | null>(null);
   const [showMarkCompleteModal, setShowMarkCompleteModal] = useState(false);
@@ -141,7 +141,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   const [showDebugPanel, setShowDebugPanel] = useState(false);
   
   // New filtering state
-  const [weldFilters, setWeldFilters] = useState<WeldFilterState>({
+  const [weldFileFilters, setWeldFileFilters] = useState<WeldFileFilterState>({
     packageNumber: 'all',
     drawing: 'all',
     area: 'all',
@@ -204,9 +204,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   };
 
   // Apply filters using the custom hook
-  const { filteredWelds, filterStats } = useWeldFilters({
+  const { filteredWelds, filterStats } = useWeldFileFilters({
     fieldWelds: data,
-    filters: weldFilters,
+    filters: weldFileFilters,
   });
 
   // Column definitions with sort indicators
@@ -586,7 +586,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 <SelectContent>
                   <SelectItem value="Accept">
                     <span className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle22 className="h-4 w-4 text-green-600" />
                       Accept
                     </span>
                   </SelectItem>
@@ -617,7 +617,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 }} // Click to refresh and see current state
               >
                 {value === "Accept" ? (
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  <CheckCircle22 className="h-3 w-3 mr-1" />
                 ) : (
                   <XCircle className="h-3 w-3 mr-1" />
                 )}
@@ -687,7 +687,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                   setShowMarkCompleteModal(true);
                 }}
               >
-                <CheckCircle2 className="h-4 w-4 mr-2" />
+                <CheckCircle22 className="h-4 w-4 mr-2" />
                 Mark Complete
               </Button>
             );
@@ -708,14 +708,14 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
     }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    getFileFilteredRowModel: getFileFilteredRowModel(),
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
+    onColumnFileFiltersChange: setColumnFileFilters,
+    onGlobalFileFilterChange: setGlobalFileFilter,
     state: {
       sorting,
-      columnFilters,
-      globalFilter,
+      columnFileFilters,
+      globalFileFilter,
     },
   });
 
@@ -817,10 +817,10 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
 
   return (
     <div className="space-y-4">
-      {/* Enhanced Filter Bar */}
-      <WeldFilterBar
+      {/* Enhanced FileFilter Bar */}
+      <WeldFileFilterBar
         fieldWelds={data}
-        onFilterChange={setWeldFilters}
+        onFileFilterChange={setWeldFileFilters}
         filteredCount={filteredWelds.length}
         totalCount={data.length}
       />
@@ -963,7 +963,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
       {/* Enhanced Summary */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <div>
-          Showing {table.getFilteredRowModel().rows.length} of {data.length} field welds
+          Showing {table.getFileFilteredRowModel().rows.length} of {data.length} field welds
         </div>
         
         {filterStats && (

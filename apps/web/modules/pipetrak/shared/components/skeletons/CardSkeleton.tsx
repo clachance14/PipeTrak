@@ -93,7 +93,7 @@ export function CardSkeleton({
 	);
 }
 
-export function CardGridSkeleton({
+export function CardGrid3x3Skeleton({
 	count = 6,
 	className,
 	showShimmer = true,

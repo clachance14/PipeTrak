@@ -16,7 +16,7 @@ import {
 	Cell,
 	XAxis,
 	YAxis,
-	CartesianGrid,
+	CartesianGrid3x3,
 	Tooltip,
 	Legend,
 	ResponsiveContainer,
@@ -97,7 +97,7 @@ export function ProgressChart({
 				return (
 					<ResponsiveContainer width="100%" height={height}>
 						<AreaChart data={chartData}>
-							<CartesianGrid
+							<CartesianGrid3x3
 								strokeDasharray="3 3"
 								className="stroke-muted"
 							/>
@@ -135,7 +135,7 @@ export function ProgressChart({
 				return (
 					<ResponsiveContainer width="100%" height={height}>
 						<BarChart data={chartData}>
-							<CartesianGrid
+							<CartesianGrid3x3
 								strokeDasharray="3 3"
 								className="stroke-muted"
 							/>
@@ -170,7 +170,7 @@ export function ProgressChart({
 				return (
 					<ResponsiveContainer width="100%" height={height}>
 						<LineChart data={chartData}>
-							<CartesianGrid
+							<CartesianGrid3x3
 								strokeDasharray="3 3"
 								className="stroke-muted"
 							/>
@@ -261,7 +261,7 @@ export function ProgressChart({
 		return (
 			<ResponsiveContainer width="100%" height={height}>
 				<BarChart data={chartData} layout="horizontal">
-					<CartesianGrid
+					<CartesianGrid3x3
 						strokeDasharray="3 3"
 						className="stroke-muted"
 					/>

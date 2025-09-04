@@ -1,7 +1,7 @@
 import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import { cn } from "@ui/lib";
-import { CheckCircle, Download, FileCheck, Upload } from "lucide-react";
+import { CheckCircle2, Download, FileCheck, Upload } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface SuccessStateProps {
@@ -36,7 +36,7 @@ export function SuccessState({
 			case "upload":
 				return Upload;
 			default:
-				return CheckCircle;
+				return CheckCircle2;
 		}
 	};
 

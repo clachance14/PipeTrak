@@ -9,7 +9,7 @@ import {
 	MapPin,
 	Package,
 	Wrench,
-	CheckCircle,
+	CheckCircle2,
 	Clock,
 	AlertCircle,
 	MoreVertical,
@@ -81,7 +81,7 @@ export function MobileComponentCard({
 	const getStatusIcon = () => {
 		switch (component.status) {
 			case "COMPLETED":
-				return <CheckCircle className="h-5 w-5 text-fieldComplete" />;
+				return <CheckCircle2 className="h-5 w-5 text-fieldComplete" />;
 			case "IN_PROGRESS":
 				return <Clock className="h-5 w-5 text-blue-600" />;
 			default:
@@ -197,7 +197,7 @@ export function MobileComponentCard({
 								{component.status === "NOT_STARTED" ? (
 									<Clock className="h-6 w-6 text-blue-600" />
 								) : (
-									<CheckCircle className="h-6 w-6 text-fieldComplete" />
+									<CheckCircle2 className="h-6 w-6 text-fieldComplete" />
 								)}
 							</div>
 						)}
@@ -240,7 +240,7 @@ export function MobileComponentCard({
 							<DropdownMenu>
 								<DropdownMenuTrigger
 									asChild
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent) => {
 										e.stopPropagation();
 										setIsButtonClick(true);
 									}}
@@ -257,7 +257,7 @@ export function MobileComponentCard({
 									{onQuickUpdate &&
 										component.status === "NOT_STARTED" && (
 											<DropdownMenuItem
-												onClick={(e) => {
+												onClick={(e: React.MouseEvent) => {
 													e.stopPropagation();
 													setIsButtonClick(true);
 													onQuickUpdate(
@@ -272,13 +272,13 @@ export function MobileComponentCard({
 									{onQuickUpdate &&
 										component.status === "IN_PROGRESS" && (
 											<DropdownMenuItem
-												onClick={(e) => {
+												onClick={(e: React.MouseEvent) => {
 													e.stopPropagation();
 													setIsButtonClick(true);
 													onQuickUpdate("COMPLETED");
 												}}
 											>
-												<CheckCircle className="mr-2 h-4 w-4" />
+												<CheckCircle2 className="mr-2 h-4 w-4" />
 												Mark Complete
 											</DropdownMenuItem>
 										)}
@@ -345,7 +345,7 @@ export function MobileComponentCard({
 									<Button
 										size="sm"
 										className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
-										onClick={(e) => {
+										onClick={(e: React.MouseEvent) => {
 											e.stopPropagation();
 											e.preventDefault();
 											setIsButtonClick(true);
@@ -353,11 +353,11 @@ export function MobileComponentCard({
 												onOpenQuickSelector();
 											});
 										}}
-										onTouchStart={(e) => {
+										onTouchStart={(e: React.TouchEvent) => {
 											e.stopPropagation();
 											setIsButtonClick(true);
 										}}
-										onTouchEnd={(e) => {
+										onTouchEnd={(e: React.TouchEvent) => {
 											e.stopPropagation();
 										}}
 									>
@@ -372,7 +372,7 @@ export function MobileComponentCard({
 										size="sm"
 										variant="secondary"
 										className="flex-1 h-12"
-										onClick={(e) => {
+										onClick={(e: React.MouseEvent) => {
 											e.stopPropagation();
 											e.preventDefault();
 											setIsButtonClick(true);
@@ -380,11 +380,11 @@ export function MobileComponentCard({
 												onOpenMilestones();
 											});
 										}}
-										onTouchStart={(e) => {
+										onTouchStart={(e: React.TouchEvent) => {
 											e.stopPropagation();
 											setIsButtonClick(true);
 										}}
-										onTouchEnd={(e) => {
+										onTouchEnd={(e: React.TouchEvent) => {
 											e.stopPropagation();
 										}}
 									>
@@ -437,7 +437,7 @@ export function MobileComponentCard({
 										size="sm"
 										variant="secondary"
 										className="h-12 px-4"
-										onClick={(e) => {
+										onClick={(e: React.MouseEvent) => {
 											e.stopPropagation();
 											setIsButtonClick(true);
 											onQuickUpdate("IN_PROGRESS");
@@ -451,7 +451,7 @@ export function MobileComponentCard({
 										size="sm"
 										variant="secondary"
 										className="h-12 px-4"
-										onClick={(e) => {
+										onClick={(e: React.MouseEvent) => {
 											e.stopPropagation();
 											setIsButtonClick(true);
 											onQuickUpdate("COMPLETED");

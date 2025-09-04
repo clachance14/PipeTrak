@@ -15,10 +15,10 @@ import {
 	TableRow,
 } from "@ui/components/table";
 import { ReportHeader } from "./ReportHeader";
-import { ReportFilters } from "./ReportFilters";
+import { ReportFileFilters } from "./ReportFileFilters";
 import { ExportButtons } from "./ExportButtons";
 import { PrintLayout } from "./PrintLayout";
-import { useComponentReportGeneration, useReportFilters } from "../hooks";
+import { useComponentReportGeneration, useReportFileFilters } from "../hooks";
 import { transformers } from "../lib/report-utils";
 import {
 	RefreshCw,
@@ -26,13 +26,13 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	ArrowUpDown,
-	Filter,
+	FileFilter,
 } from "lucide-react";
 import type { ComponentDetailsResponse, ReportSorting } from "../types";
 
 interface ComponentReportContentProps {
 	projectId: string;
-	initialFilters?: Record<string, string>;
+	initialFileFilters?: Record<string, string>;
 }
 
 /**
@@ -41,7 +41,7 @@ interface ComponentReportContentProps {
  */
 export function ComponentReportContent({
 	projectId,
-	initialFilters = {},
+	initialFileFilters = {},
 }: ComponentReportContentProps) {
 	const [reportData, setReportData] =
 		useState<ComponentDetailsResponse | null>(null);
@@ -61,17 +61,17 @@ export function ComponentReportContent({
 	} = useComponentReportGeneration();
 	const {
 		filters,
-		updateFilters,
-		clearFilters,
+		updateFileFilters,
+		clearFileFilters,
 		searchQuery,
 		updateSearchQuery,
-		activeFilterCount,
+		activeFileFilterCount,
 		filterOptions,
 		isLoadingOptions,
-		toComponentDetailsFilters,
-	} = useReportFilters({
+		toComponentDetailsFileFilters,
+	} = useReportFileFilters({
 		projectId,
-		initialFilters,
+		initialFileFilters,
 		persistToURL: true,
 	});
 
@@ -81,7 +81,7 @@ export function ComponentReportContent({
 			generateReport(
 				{
 					projectId,
-					filters: toComponentDetailsFilters(),
+					filters: toComponentDetailsFileFilters(),
 					pagination: {
 						limit: pageSize,
 						offset: (currentPage - 1) * pageSize,
@@ -106,7 +106,7 @@ export function ComponentReportContent({
 		pageSize,
 		sorting,
 		generateReport,
-		toComponentDetailsFilters,
+		toComponentDetailsFileFilters,
 	]);
 
 	// Transform data for display
@@ -136,7 +136,7 @@ export function ComponentReportContent({
 		generateReport(
 			{
 				projectId,
-				filters: toComponentDetailsFilters(),
+				filters: toComponentDetailsFileFilters(),
 				pagination: {
 					limit: pageSize,
 					offset: (currentPage - 1) * pageSize,
@@ -196,12 +196,12 @@ export function ComponentReportContent({
 					</Alert>
 				)}
 
-				{/* Search and Filters */}
+				{/* Search and FileFilters */}
 				<div className="flex flex-col lg:flex-row gap-4 no-print">
 					<div className="flex-1">
-						<ReportFilters
+						<ReportFileFilters
 							filters={filters}
-							onFiltersChange={updateFilters}
+							onFileFiltersChange={updateFileFilters}
 							searchQuery={searchQuery}
 							onSearchChange={updateSearchQuery}
 							filterOptions={filterOptions}
@@ -304,11 +304,11 @@ export function ComponentReportContent({
 							<div className="flex items-center justify-between">
 								<CardTitle>Component Details</CardTitle>
 								<div className="flex items-center gap-2 text-sm text-muted-foreground">
-									<Filter className="h-4 w-4" />
+									<FileFilter className="h-4 w-4" />
 									{reportData.data.pagination.totalCount.toLocaleString()}{" "}
 									components
-									{activeFilterCount > 0 &&
-										` (${activeFilterCount} filters applied)`}
+									{activeFileFilterCount > 0 &&
+										` (${activeFileFilterCount} filters applied)`}
 								</div>
 							</div>
 						</CardHeader>
@@ -599,10 +599,10 @@ export function ComponentReportContent({
 								</p>
 								<Button
 									variant="outline"
-									onClick={clearFilters}
+									onClick={clearFileFilters}
 									className="mt-4"
 								>
-									Clear Filters
+									Clear FileFilters
 								</Button>
 							</div>
 						</CardContent>

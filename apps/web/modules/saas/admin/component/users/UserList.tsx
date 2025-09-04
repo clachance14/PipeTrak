@@ -25,12 +25,12 @@ import {
 import { Input } from "@ui/components/input";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import {
-	MoreVerticalIcon,
+	MoreVertical,
 	Repeat1Icon,
-	ShieldCheckIcon,
-	ShieldXIcon,
+	ShieldCheck,
+	ShieldX,
 	SquareUserRoundIcon,
-	TrashIcon,
+	Trash,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
@@ -207,7 +207,7 @@ export function UserList() {
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<Button size="icon" variant="ghost">
-										<MoreVerticalIcon className="size-4" />
+										<MoreVertical className="size-4" />
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
@@ -243,7 +243,7 @@ export function UserList() {
 												assignAdminRole(row.original.id)
 											}
 										>
-											<ShieldCheckIcon className="mr-2 size-4" />
+											<ShieldCheck className="mr-2 size-4" />
 											{t("admin.users.assignAdminRole")}
 										</DropdownMenuItem>
 									) : (
@@ -252,7 +252,7 @@ export function UserList() {
 												removeAdminRole(row.original.id)
 											}
 										>
-											<ShieldXIcon className="mr-2 size-4" />
+											<ShieldX className="mr-2 size-4" />
 											{t("admin.users.removeAdminRole")}
 										</DropdownMenuItem>
 									)}
@@ -276,7 +276,7 @@ export function UserList() {
 										}
 									>
 										<span className="flex items-center text-destructive hover:text-destructive">
-											<TrashIcon className="mr-2 size-4" />
+											<Trash className="mr-2 size-4" />
 											{t("admin.users.delete")}
 										</span>
 									</DropdownMenuItem>

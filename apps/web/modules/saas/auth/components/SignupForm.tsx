@@ -18,7 +18,7 @@ import {
 import { Input } from "@ui/components/input";
 import {
 	AlertTriangleIcon,
-	ArrowRightIcon,
+	ArrowRight,
 	EyeIcon,
 	EyeOffIcon,
 	MailboxIcon,
@@ -271,7 +271,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 					)}
 				>
 					{t("auth.signup.signIn")}
-					<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+					<ArrowRight className="ml-1 inline size-4 align-middle" />
 				</Link>
 			</div>
 		</div>

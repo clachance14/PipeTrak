@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
-import { AlertTriangle, LayoutGrid, BarChart3 } from "lucide-react";
+import { AlertTriangle, LayoutGrid3x3, BarChart3 } from "lucide-react";
 import { DashboardTopBar } from "./DashboardTopBar";
 import { KPIHeroBar } from "./KPIHeroBar";
-import { AreaSystemGrid } from "./AreaSystemGrid";
+import { AreaSystemGrid3x3 } from "./AreaSystemGrid3x3";
 import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { DrawingHierarchy } from "./DrawingHierarchy";
 import { TestPackageTable } from "./TestPackageTable";
@@ -200,7 +200,7 @@ export function ResponsiveDashboard({
 						value="area"
 						aria-label="Area × System View"
 					>
-						<LayoutGrid className="h-4 w-4 mr-2" />
+						<LayoutGrid3x3 className="h-4 w-4 mr-2" />
 						Area × System
 					</ToggleGroupItem>
 					<ToggleGroupItem
@@ -215,7 +215,7 @@ export function ResponsiveDashboard({
 
 			{/* Interactive Dashboard Components */}
 			<div className="space-y-6">
-				{/* Matrix Grid - Full width */}
+				{/* Matrix Grid3x3 - Full width */}
 				{showMilestoneMatrix ? (
 					<MilestoneProgressMatrix
 						components={components}
@@ -224,7 +224,7 @@ export function ResponsiveDashboard({
 						loading={loadingComponents}
 					/>
 				) : (
-					<AreaSystemGrid data={areaSystemMatrix} />
+					<AreaSystemGrid3x3 data={areaSystemMatrix} />
 				)}
 
 				{/* Two-column layout for Drawing Hierarchy and Test Package Readiness */}

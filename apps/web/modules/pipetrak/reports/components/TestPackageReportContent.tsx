@@ -5,7 +5,7 @@ import { ReportHeader } from "./ReportHeader";
 
 interface TestPackageReportContentProps {
 	projectId: string;
-	initialFilters?: Record<string, string>;
+	initialFileFilters?: Record<string, string>;
 }
 
 /**
@@ -14,7 +14,7 @@ interface TestPackageReportContentProps {
  */
 export function TestPackageReportContent({
 	projectId,
-	initialFilters = {},
+	initialFileFilters = {},
 }: TestPackageReportContentProps) {
 	return (
 		<div className="space-y-6">

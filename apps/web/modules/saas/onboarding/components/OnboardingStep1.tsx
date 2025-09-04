@@ -14,7 +14,7 @@ import {
 	FormLabel,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
@@ -106,7 +106,7 @@ export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
 
 					<Button type="submit" loading={form.formState.isSubmitting}>
 						{t("onboarding.continue")}
-						<ArrowRightIcon className="ml-2 size-4" />
+						<ArrowRight className="ml-2 size-4" />
 					</Button>
 				</form>
 			</Form>

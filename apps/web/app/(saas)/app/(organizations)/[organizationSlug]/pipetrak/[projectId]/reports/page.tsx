@@ -178,11 +178,11 @@ async function ReportsContent({ projectId }: { projectId: string }) {
 					</div>
 					<div>
 						<h4 className="font-medium text-gray-900 mb-1">
-							Filtering and Search
+							FileFiltering and Search
 						</h4>
 						<p className="text-sm text-muted-foreground">
 							Use advanced filters to focus on specific areas,
-							systems, or date ranges. Filters persist in URLs for
+							systems, or date ranges. FileFilters persist in URLs for
 							easy sharing and bookmarking.
 						</p>
 					</div>

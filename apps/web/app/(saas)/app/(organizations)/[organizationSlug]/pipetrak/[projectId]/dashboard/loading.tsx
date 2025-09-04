@@ -102,7 +102,7 @@ export default function DashboardLoading() {
 
 			{/* Phase 3 Placeholder Sections */}
 			<div className="space-y-6">
-				{/* Area × System Grid Placeholder */}
+				{/* Area × System Grid3x3 Placeholder */}
 				<Card className="border-dashed border-2 border-gray-300">
 					<CardHeader>
 						<div className="flex items-center gap-2">

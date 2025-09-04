@@ -18,16 +18,16 @@ import {
 	Plus,
 	Check,
 	MoreVertical,
-	Filter,
+	FileFilter,
 	List,
-	Grid3x3,
+	Grid3x33x3,
 } from "lucide-react";
 import { QuickStatsChips } from "./QuickStatsChips";
 import { ComponentList } from "./ComponentList";
 import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 interface TabletDashboardProps {
 	projectId: string;
@@ -57,7 +57,7 @@ export function TabletDashboard({
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedArea, setSelectedArea] = useState<string>("");
 	const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
-	const [showFilters, setShowFilters] = useState(false);
+	const [showFileFilters, setShowFileFilters] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 	const [viewMode, setViewMode] = useState<"list" | "matrix">("list");
 
@@ -69,7 +69,7 @@ export function TabletDashboard({
 	const loadComponents = async () => {
 		setLoading(true);
 		try {
-			const filters: ComponentFilters = {
+			const filters: ComponentFileFilters = {
 				search: searchQuery || undefined,
 				area: selectedArea ? [selectedArea] : undefined,
 			};
@@ -224,17 +224,17 @@ export function TabletDashboard({
 			{/* Main Content */}
 			<div className="flex-1 overflow-hidden">
 				<div className="h-full flex flex-col">
-					{/* Filter Bar */}
+					{/* FileFilter Bar */}
 					<div className="bg-white border-b px-4 py-2">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-2">
 								<Button
 									variant="secondary"
 									size="sm"
-									onClick={() => setShowFilters(!showFilters)}
+									onClick={() => setShowFileFilters(!showFileFilters)}
 									className="gap-2"
 								>
-									<Filter className="h-4 w-4" />
+									<FileFilter className="h-4 w-4" />
 									Area
 									{selectedArea && (
 										<Badge
@@ -258,8 +258,8 @@ export function TabletDashboard({
 							</div>
 						</div>
 
-						{/* Area Filter */}
-						{showFilters && (
+						{/* Area FileFilter */}
+						{showFileFilters && (
 							<div className="mt-2 pt-2 border-t">
 								<Select
 									value={selectedArea}
@@ -330,7 +330,7 @@ export function TabletDashboard({
 								aria-label="Matrix View"
 								className="px-2 h-7"
 							>
-								<Grid3x3 className="h-3.5 w-3.5 mr-1" />
+								<Grid3x33x3 className="h-3.5 w-3.5 mr-1" />
 								Matrix
 							</ToggleGroupItem>
 						</ToggleGroup>

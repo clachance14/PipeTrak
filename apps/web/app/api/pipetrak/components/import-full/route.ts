@@ -561,7 +561,7 @@ export async function POST(request: NextRequest) {
 					);
 				}
 
-				// Filter component data to only include valid fields
+				// FileFilter component data to only include valid fields
 				const filteredCompData: Record<string, any> = {};
 				for (const field of allowedFields) {
 					if ((comp as any)[field] !== undefined) {
