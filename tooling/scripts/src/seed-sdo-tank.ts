@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { db as prisma } from "@repo/database";
+import { db as prisma, ComponentTypeType } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import * as fs from "fs";
 import * as path from "path";
@@ -232,7 +232,11 @@ async function seedSDOTankJob() {
 
 			// Get and increment instance number for this component on this drawing
 			const instanceKey = `${componentData.drawingNumber}:${componentData.componentId}`;
-			const tracker = instanceTracker.get(instanceKey)!;
+			const tracker = instanceTracker.get(instanceKey);
+			if (!tracker) {
+				console.error(`No tracker found for instance key: ${instanceKey}`);
+				continue;
+			}
 			tracker.current++;
 			const instanceNumber = tracker.current;
 			const totalInstances = tracker.total;
@@ -252,7 +256,7 @@ async function seedSDOTankJob() {
 					instanceNumber,
 					totalInstancesOnDrawing: totalInstances,
 					displayId,
-					type: componentData.type || "PIPE",
+					type: (componentData.type as ComponentTypeType) || "SPOOL",
 					spec: componentData.spec || "",
 					size: componentData.size || "",
 					material: componentData.material || "",

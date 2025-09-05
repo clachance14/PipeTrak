@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { PrismaClient } from "@repo/database";
+import { PrismaClient, ComponentTypeType } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import { createMilestoneTemplatesForProject } from "./create-milestone-templates";
 import { resolveTemplateForComponent } from "./lib/template-resolver";
@@ -86,8 +86,8 @@ async function seedPipeTrak() {
 					id: createId(),
 					projectId: project.id,
 					number: "P-5001",
-					description: "Unit 5 Piping ISO - Area A",
 					revision: "A",
+					title: "Process Piping - Unit 5A",
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
@@ -97,8 +97,8 @@ async function seedPipeTrak() {
 					id: createId(),
 					projectId: project.id,
 					number: "P-5002",
-					description: "Unit 5 Piping ISO - Area B",
 					revision: "B",
+					title: "Process Piping - Unit 5B",
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
@@ -108,8 +108,8 @@ async function seedPipeTrak() {
 					id: createId(),
 					projectId: project.id,
 					number: "E-5001",
-					description: "Equipment Layout - Area A",
 					revision: "A",
+					title: "Equipment Layout - Heat Exchangers",
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
@@ -120,7 +120,13 @@ async function seedPipeTrak() {
 		console.log("Creating components...");
 		const areas = ["A", "B", "C"];
 		const systems = ["CS-01", "CS-02", "SS-01", "SS-02", "PS-01"];
-		const types = ["PIPE", "VALVE", "FLANGE", "ELBOW", "TEE"];
+		const types: ComponentTypeType[] = [
+			"SPOOL",
+			"VALVE",
+			"FLANGE",
+			"FITTING",
+			"PIPING_FOOTAGE"
+		];
 		const specs = ["CS-150", "CS-300", "SS-150", "SS-300"];
 		const sizes = ['2"', '3"', '4"', '6"', '8"', '10"', '12"'];
 		const materials = ["CS", "SS", "LTCS"];
@@ -210,6 +216,7 @@ async function seedPipeTrak() {
 						componentId: component.id,
 						milestoneOrder: i,
 						milestoneName: milestone.name,
+						weight: milestone.weight || 25, // Default weight if not specified
 						isCompleted,
 						completedAt: isCompleted ? new Date() : null,
 						completedBy: isCompleted ? user.id : null,

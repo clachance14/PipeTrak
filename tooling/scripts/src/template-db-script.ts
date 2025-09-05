@@ -24,34 +24,34 @@ async function yourScriptName() {
 	try {
 		// Example: Query existing data
 		console.log("📊 Checking existing data...");
-		const existingRecords = await db.yourTable.count();
-		console.log(`   Found ${existingRecords} existing records`);
+		// const existingRecords = await db.yourTable.count();
+		// console.log(`   Found ${existingRecords} existing records`);
 
 		// Example: Create new records
 		console.log("📝 Creating new records...");
-		const newRecord = await db.yourTable.create({
-			data: {
-				// Your data here
-				field1: "value1",
-				field2: "value2",
-				// ...
-			},
-		});
-		console.log(`   ✅ Created record with ID: ${newRecord.id}`);
+		// const newRecord = await db.yourTable.create({
+		// 	data: {
+		// 		// Your data here
+		// 		field1: "value1",
+		// 		field2: "value2",
+		// 		// ...
+		// 	},
+		// });
+		// console.log(`   ✅ Created record with ID: ${newRecord.id}`);
 
 		// Example: Update existing records
 		console.log("🔄 Updating existing records...");
-		const updateResult = await db.yourTable.updateMany({
-			where: {
-				// Your conditions here
-				field1: "some_condition",
-			},
-			data: {
-				// Your updates here
-				updatedAt: new Date(),
-			},
-		});
-		console.log(`   ✅ Updated ${updateResult.count} records`);
+		// const updateResult = await db.yourTable.updateMany({
+		// 	where: {
+		// 		// Your conditions here
+		// 		field1: "some_condition",
+		// 	},
+		// 	data: {
+		// 		// Your updates here
+		// 		updatedAt: new Date(),
+		// 	},
+		// });
+		// console.log(`   ✅ Updated ${updateResult.count} records`);
 
 		// Example: Batch operations
 		console.log("📦 Performing batch operations...");
@@ -61,62 +61,62 @@ async function yourScriptName() {
 			{ field1: "batch3", field2: "value3" },
 		];
 
-		for (const item of batchData) {
-			await db.yourTable.upsert({
-				where: { field1: item.field1 },
-				create: item,
-				update: { field2: item.field2 },
-			});
-			console.log(`   ✓ Processed: ${item.field1}`);
-		}
+		// for (const item of batchData) {
+		// 	await db.yourTable.upsert({
+		// 		where: { field1: item.field1 },
+		// 		create: item,
+		// 		update: { field2: item.field2 },
+		// 	});
+		// 	console.log(`   ✓ Processed: ${item.field1}`);
+		// }
 
 		// Example: Complex query with relations
 		console.log("🔍 Running complex queries...");
-		const complexResult = await db.yourTable.findMany({
-			where: {
-				// Your complex conditions
-				AND: [
-					{ field1: { not: null } },
-					{ field2: { contains: "search_term" } },
-				],
-			},
-			include: {
-				// Include relations
-				relatedTable: true,
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-			take: 10,
-		});
-		console.log(
-			`   📋 Found ${complexResult.length} records matching criteria`,
-		);
+		// const complexResult = await db.yourTable.findMany({
+		// 	where: {
+		// 		// Your complex conditions
+		// 		AND: [
+		// 			{ field1: { not: null } },
+		// 			{ field2: { contains: "search_term" } },
+		// 		],
+		// 	},
+		// 	include: {
+		// 		// Include relations
+		// 		relatedTable: true,
+		// 	},
+		// 	orderBy: {
+		// 		createdAt: "desc",
+		// 	},
+		// 	take: 10,
+		// });
+		// console.log(
+		// 	`   📋 Found ${complexResult.length} records matching criteria`,
+		// );
 
 		// Example: Transaction
 		console.log("💳 Performing transaction...");
-		await db.$transaction(async (tx) => {
-			// Multiple operations that must all succeed
-			const record1 = await tx.table1.create({
-				data: {
-					/* data */
-				},
-			});
-
-			await tx.table2.update({
-				where: { relatedId: record1.id },
-				data: {
-					/* data */
-				},
-			});
-
-			console.log("   ✅ Transaction completed successfully");
-		});
+		// await db.$transaction(async (tx) => {
+		// 	// Multiple operations that must all succeed
+		// 	const record1 = await tx.table1.create({
+		// 		data: {
+		// 			/* data */
+		// 		},
+		// 	});
+		// 
+		// 	await tx.table2.update({
+		// 		where: { relatedId: record1.id },
+		// 		data: {
+		// 			/* data */
+		// 		},
+		// 	});
+		// 
+		// 	console.log("   ✅ Transaction completed successfully");
+		// });
 
 		// Final summary
-		const finalCount = await db.yourTable.count();
+		// const finalCount = await db.yourTable.count();
 		console.log("\n📊 Final Summary:");
-		console.log(`   Total records: ${finalCount}`);
+		// console.log(`   Total records: ${finalCount}`);
 		console.log(`   Records processed: ${batchData.length}`);
 
 		console.log("\n🎉 Script completed successfully!");

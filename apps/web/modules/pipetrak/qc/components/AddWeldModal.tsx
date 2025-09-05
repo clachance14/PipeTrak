@@ -253,7 +253,7 @@ export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWe
                   <Calendar
                     mode="single"
                     selected={formData.dateWelded}
-                    onSelect={(date) => updateFormData("dateWelded", date)}
+                    onSelect={(date: Date | undefined) => updateFormData("dateWelded", date)}
                     initialFocus
                   />
                 </PopoverContent>

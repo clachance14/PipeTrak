@@ -45,19 +45,11 @@ async function seedWeldTypes() {
 				},
 			});
 
-			// Check if it was created or updated (this is a simple heuristic)
-			const isNew = result.createdAt === result.updatedAt;
-			if (isNew) {
-				created++;
-				console.log(
-					`   ✅ Created weld type: ${weldType.code} - ${weldType.description}`,
-				);
-			} else {
-				updated++;
-				console.log(
-					`   🔄 Updated weld type: ${weldType.code} - ${weldType.description}`,
-				);
-			}
+			// Log the result (upsert always creates or updates)
+			created++;
+			console.log(
+				`   ✅ Upserted weld type: ${weldType.code} - ${weldType.description}`,
+			);
 		}
 
 		console.log("\n📊 Summary:");

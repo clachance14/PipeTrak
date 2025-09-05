@@ -46,35 +46,52 @@ async function testProgressSummary() {
         data: {
           projectId: project.id,
           snapshotDate: new Date('2024-11-24'), // Sunday
-          data: {
-            groupBy: 'area',
-            data: [
-              {
-                area: 'TEST-01',
-                componentCount: 50,
-                milestones: {
-                  received: 100,
-                  installed: 85,
-                  punched: 70,
-                  tested: 50,
-                  restored: 25,
-                },
-                overallPercent: 66,
-              },
-            ],
-            totals: {
+          totalComponents: 50,
+          completedComponents: 33,
+          overallCompletionPercent: 66.0,
+          rocWeightedPercent: 68.5,
+          areaBreakdown: [
+            {
+              area: 'TEST-01',
               componentCount: 50,
-              milestones: {
-                received: 100,
-                installed: 85,
-                punched: 70,
-                tested: 50,
-                restored: 25,
-              },
-              overallPercent: 66,
+              completionPercent: 66.0,
+              completedComponents: 33,
             },
+          ],
+          systemBreakdown: [
+            {
+              system: 'CS-01',
+              componentCount: 25,
+              completionPercent: 70.0,
+              completedComponents: 17,
+            },
+            {
+              system: 'SS-01',
+              componentCount: 25,
+              completionPercent: 62.0,
+              completedComponents: 16,
+            },
+          ],
+          testPackageBreakdown: [
+            {
+              testPackage: 'TP-TEST',
+              componentCount: 50,
+              completionPercent: 66.0,
+              completedComponents: 33,
+            },
+          ],
+          dailyVelocity: 2.5,
+          weeklyVelocity: 17.5,
+          milestoneVelocity: {
+            Receive: 5.2,
+            Erect: 3.1,
+            Test: 2.8,
           },
-          status: 'FINAL',
+          stalledComponents7d: 2,
+          stalledComponents14d: 5,
+          stalledComponents21d: 8,
+          calculationDuration: 450,
+          generationMethod: 'manual',
         },
       });
       console.log(`✅ Created test snapshot for project: ${project.jobName}`);

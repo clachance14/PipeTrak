@@ -84,17 +84,17 @@ async function testExcelImportSimulation() {
 
     // Validate the data
     const mappings = [
-      { sourceColumn: 'componentId', targetField: 'componentId' },
-      { sourceColumn: 'type', targetField: 'type' },
-      { sourceColumn: 'workflowType', targetField: 'workflowType' },
-      { sourceColumn: 'drawingId', targetField: 'drawingId' },
-      { sourceColumn: 'spec', targetField: 'spec' },
-      { sourceColumn: 'size', targetField: 'size' },
-      { sourceColumn: 'material', targetField: 'material' },
-      { sourceColumn: 'area', targetField: 'area' },
-      { sourceColumn: 'system', targetField: 'system' },
-      { sourceColumn: 'description', targetField: 'description' },
-      { sourceColumn: 'totalQuantity', targetField: 'totalQuantity', transform: (val: any) => Number(val) || 1 }
+      { sourceColumn: 'componentId', targetField: 'componentId', required: false },
+      { sourceColumn: 'type', targetField: 'type', required: false },
+      { sourceColumn: 'workflowType', targetField: 'workflowType', required: false },
+      { sourceColumn: 'drawingId', targetField: 'drawingId', required: false },
+      { sourceColumn: 'spec', targetField: 'spec', required: false },
+      { sourceColumn: 'size', targetField: 'size', required: false },
+      { sourceColumn: 'material', targetField: 'material', required: false },
+      { sourceColumn: 'area', targetField: 'area', required: false },
+      { sourceColumn: 'system', targetField: 'system', required: false },
+      { sourceColumn: 'description', targetField: 'description', required: false },
+      { sourceColumn: 'totalQuantity', targetField: 'totalQuantity', required: false, transform: (val: any) => Number(val) || 1 }
     ];
 
     const validator = new DataValidator();

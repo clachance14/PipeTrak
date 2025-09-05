@@ -205,7 +205,7 @@ export function WeldMilestoneModal({
 								<Calendar
 									mode="single"
 									selected={formData.dateWelded}
-									onSelect={(date) =>
+									onSelect={(date: Date | undefined) =>
 										updateFormData("dateWelded", date)
 									}
 									initialFocus
