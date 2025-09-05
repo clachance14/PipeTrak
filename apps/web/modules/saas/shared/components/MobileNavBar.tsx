@@ -11,7 +11,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import {
 	BotMessageSquareIcon,
-	HomeIcon,
+	Home,
 	Menu,
 	Settings,
 	UserCog2Icon,
@@ -50,7 +50,7 @@ export function MobileNavBar() {
 		{
 			label: t("app.menu.start"),
 			href: basePath,
-			icon: HomeIcon,
+			icon: Home,
 			isActive: pathname === basePath,
 		},
 		{

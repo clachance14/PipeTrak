@@ -8,7 +8,7 @@ import { cn } from "@ui/lib";
 import {
 	BotMessageSquareIcon,
 	ChevronRight,
-	HomeIcon,
+	Home,
 	Settings,
 	UserCog2Icon,
 	UserCogIcon,
@@ -34,7 +34,7 @@ export function NavBar() {
 		{
 			label: t("app.menu.start"),
 			href: basePath,
-			icon: HomeIcon,
+			icon: Home,
 			isActive: pathname === basePath,
 		},
 		{
@@ -108,7 +108,7 @@ export function NavBar() {
 											},
 										)}
 									>
-										<ChevronRightIcon className="size-4" />
+										<ChevronRight className="size-4" />
 									</span>
 
 									<OrganzationSelect

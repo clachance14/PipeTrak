@@ -8,7 +8,7 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { HardDriveIcon, MoonIcon, SunIcon } from "lucide-react";
+import { HardDrive, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useIsClient } from "usehooks-ts";
@@ -22,17 +22,17 @@ export function ColorModeToggle() {
 		{
 			value: "system",
 			label: "System",
-			icon: HardDriveIcon,
+			icon: HardDrive,
 		},
 		{
 			value: "light",
 			label: "Light",
-			icon: SunIcon,
+			icon: Sun,
 		},
 		{
 			value: "dark",
 			label: "Dark",
-			icon: MoonIcon,
+			icon: Moon,
 		},
 	];
 
@@ -50,9 +50,9 @@ export function ColorModeToggle() {
 					aria-label="Color mode"
 				>
 					{resolvedTheme === "light" ? (
-						<SunIcon className="size-4" />
+						<Sun className="size-4" />
 					) : (
-						<MoonIcon className="size-4" />
+						<Moon className="size-4" />
 					)}
 				</Button>
 			</DropdownMenuTrigger>
