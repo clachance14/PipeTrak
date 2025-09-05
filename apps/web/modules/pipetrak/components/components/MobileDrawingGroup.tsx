@@ -199,7 +199,7 @@ export function MobileDrawingGroup({
 						<div className="flex items-center gap-2">
 							{/* Selection Checkbox */}
 							<div
-								onClick={(e) => {
+								onClick={(e: React.MouseEvent) => {
 									e.stopPropagation();
 									handleSelectAll();
 								}}
@@ -213,7 +213,7 @@ export function MobileDrawingGroup({
 									<Checkbox
 										checked={stats.allSelected}
 										onCheckedChange={handleSelectAll}
-										onClick={(e) => e.stopPropagation()}
+										onClick={(e: React.MouseEvent) => e.stopPropagation()}
 										className="h-6 w-6 md:h-7 md:w-7"
 									/>
 								)}
@@ -281,7 +281,7 @@ export function MobileDrawingGroup({
 									size="lg"
 									variant="secondary"
 									className="flex-1 min-h-[44px] text-base font-medium"
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent) => {
 										e.stopPropagation();
 										// Trigger bulk status update for selected components
 										components
@@ -304,7 +304,7 @@ export function MobileDrawingGroup({
 									size="lg"
 									variant="secondary"
 									className="flex-1 min-h-[44px] text-base font-medium"
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent) => {
 										e.stopPropagation();
 										// Trigger bulk status update for selected components
 										components
