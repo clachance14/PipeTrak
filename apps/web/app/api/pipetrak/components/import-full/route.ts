@@ -6,7 +6,7 @@ import {
 	ExcelProcessor,
 	type ComponentImportData,
 	DataValidator,
-	InstanceTracker,
+	calculateInstanceNumbers,
 } from "@repo/api/src/lib/file-processing";
 import { MilestoneTemplateMapper } from "@repo/api/src/lib/milestone-template-mapper";
 
@@ -467,7 +467,7 @@ export async function POST(request: NextRequest) {
 
 		// Call InstanceTracker to expand components based on quantity and assign instance numbers
 		const expandedComponents =
-			await InstanceTracker.calculateInstanceNumbers(
+			await calculateInstanceNumbers(
 				consolidatedComponents as ComponentImportData[],
 				existingComponentsMap,
 			);

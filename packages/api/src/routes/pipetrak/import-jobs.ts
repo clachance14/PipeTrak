@@ -11,8 +11,8 @@ import {
 	CSVProcessor,
 	ExcelProcessor,
 	DataValidator,
-	InstanceTracker,
-	BatchProcessor,
+	calculateInstanceNumbers,
+	processInBatches,
 	TemplateResolver,
 } from "../../lib/file-processing";
 
@@ -1106,7 +1106,7 @@ async function processImportJobInternal(
 		);
 
 		const componentsWithInstances =
-			await InstanceTracker.calculateInstanceNumbers(
+			await calculateInstanceNumbers(
 				componentsWithDrawingIds,
 				existingComponents,
 			);
@@ -1149,7 +1149,7 @@ async function processImportJobInternal(
 			`Import job ${jobId}: Using batch size ${batchSize} (has field welds: ${hasFieldWelds})`,
 		);
 
-		await BatchProcessor.processInBatches(
+		await processInBatches(
 			componentsWithInstances,
 			async (batch) => {
 				// Check if we've exceeded the maximum processing time

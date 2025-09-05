@@ -196,7 +196,7 @@ export function MilestoneDiscreteRenderer({
 						<Button
 							variant="ghost"
 							size="sm"
-							onClick={(e) => {
+							onClick={(e: React.MouseEvent) => {
 								e.stopPropagation();
 								onUndo2();
 							}}
