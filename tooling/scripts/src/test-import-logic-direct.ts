@@ -2,7 +2,7 @@
 
 import { db as prisma } from '../../../packages/database';
 import { MilestoneTemplateMapper } from '../../../packages/api/src/lib/milestone-template-mapper';
-import { CSVProcessor, DataValidator, InstanceTracker } from '../../../packages/api/src/lib/file-processing';
+import { CSVProcessor, DataValidator, calculateInstanceNumbers } from '../../../packages/api/src/lib/file-processing';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -48,17 +48,17 @@ async function testImportLogicDirect() {
 
     // Define column mappings - using correct property names
     const mappings = [
-      { sourceColumn: 'componentId', targetField: 'componentId' },
-      { sourceColumn: 'type', targetField: 'type' },
-      { sourceColumn: 'workflowType', targetField: 'workflowType' },
-      { sourceColumn: 'drawingId', targetField: 'drawingId' },
-      { sourceColumn: 'spec', targetField: 'spec' },
-      { sourceColumn: 'size', targetField: 'size' },
-      { sourceColumn: 'material', targetField: 'material' },
-      { sourceColumn: 'area', targetField: 'area' },
-      { sourceColumn: 'system', targetField: 'system' },
-      { sourceColumn: 'description', targetField: 'description' },
-      { sourceColumn: 'totalQuantity', targetField: 'totalQuantity', transform: (val: any) => Number(val) || 1 }
+      { sourceColumn: 'componentId', targetField: 'componentId', required: false },
+      { sourceColumn: 'type', targetField: 'type', required: false },
+      { sourceColumn: 'workflowType', targetField: 'workflowType', required: false },
+      { sourceColumn: 'drawingId', targetField: 'drawingId', required: false },
+      { sourceColumn: 'spec', targetField: 'spec', required: false },
+      { sourceColumn: 'size', targetField: 'size', required: false },
+      { sourceColumn: 'material', targetField: 'material', required: false },
+      { sourceColumn: 'area', targetField: 'area', required: false },
+      { sourceColumn: 'system', targetField: 'system', required: false },
+      { sourceColumn: 'description', targetField: 'description', required: false },
+      { sourceColumn: 'totalQuantity', targetField: 'totalQuantity', required: false, transform: (val: any) => Number(val) || 1 }
     ];
 
     // Validate the data
@@ -113,8 +113,8 @@ async function testImportLogicDirect() {
       drawingId: testDrawing.id
     }));
 
-    // Use InstanceTracker to handle expansion
-    const expandedComponents = await InstanceTracker.calculateInstanceNumbers(
+    // Use calculateInstanceNumbers function to handle expansion
+    const expandedComponents = await calculateInstanceNumbers(
       componentsWithDrawingIds as any[],
       new Map()
     );

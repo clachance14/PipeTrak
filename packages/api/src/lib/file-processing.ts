@@ -1,8 +1,8 @@
-import { z } from "zod";
-import { parse } from "csv-parse";
-import { Readable } from "stream";
-import * as ExcelJS from "exceljs";
+import { Readable } from "node:stream";
 import { db as prisma } from "@repo/database";
+import { parse } from "csv-parse";
+import * as ExcelJS from "exceljs";
+import { z } from "zod";
 
 // Types for file processing
 export interface FileMetadata {
@@ -81,7 +81,7 @@ export const ComponentImportSchema = z.object({
 		.transform((val) => {
 			if (typeof val === "string") {
 				const num = Number.parseInt(val);
-				return isNaN(num) ? undefined : num;
+				return Number.isNaN(num) ? undefined : num;
 			}
 			return val;
 		}),
@@ -146,7 +146,8 @@ export class CSVProcessor {
 
 			parser.on("readable", () => {
 				let record: any;
-				while ((record = parser.read()) !== null) {
+				record = parser.read();
+				while (record !== null) {
 					if (!headersParsed) {
 						headers = record;
 						headersParsed = true;
@@ -159,6 +160,7 @@ export class CSVProcessor {
 							rows.push(rowData);
 						}
 					}
+					record = parser.read();
 				}
 			});
 
@@ -225,7 +227,9 @@ export class ExcelProcessor {
 
 		// Process data rows
 		for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
-			if (rows.length >= (this.options.maxRows || 10000)) break;
+			if (rows.length >= (this.options.maxRows || 10000)) {
+				break;
+			}
 
 			const row = worksheet.getRow(rowNumber);
 			const rowData: any = {};
@@ -304,7 +308,7 @@ export class ExcelProcessor {
 			column.width = 15;
 		});
 
-		return workbook.xlsx.writeBuffer();
+		return workbook.xlsx.writeBuffer() as Promise<Buffer>;
 	}
 }
 
@@ -396,8 +400,12 @@ export class ColumnMapper {
 	}
 
 	private calculateSimilarity(str1: string, str2: string): number {
-		if (str1 === str2) return 1;
-		if (str1.includes(str2) || str2.includes(str1)) return 0.8;
+		if (str1 === str2) {
+			return 1;
+		}
+		if (str1.includes(str2) || str2.includes(str1)) {
+			return 0.8;
+		}
 
 		// Simple edit distance calculation
 		const len1 = str1.length;
@@ -406,8 +414,12 @@ export class ColumnMapper {
 			.fill(null)
 			.map(() => Array(len1 + 1).fill(null));
 
-		for (let i = 0; i <= len1; i++) matrix[0][i] = i;
-		for (let j = 0; j <= len2; j++) matrix[j][0] = j;
+		for (let i = 0; i <= len1; i++) {
+			matrix[0][i] = i;
+		}
+		for (let j = 0; j <= len2; j++) {
+			matrix[j][0] = j;
+		}
 
 		for (let j = 1; j <= len2; j++) {
 			for (let i = 1; i <= len1; i++) {
@@ -548,7 +560,9 @@ export class DataValidator {
 			// Ensure critical string fields are properly converted from Excel data types
 			// Excel might return numbers, booleans, or other types that need string methods
 			const ensureString = (value: any): string => {
-				if (value === null || value === undefined) return "";
+				if (value === null || value === undefined) {
+					return "";
+				}
 				return String(value).trim();
 			};
 
@@ -644,7 +658,11 @@ export class DataValidator {
 				// Validate X-ray percentage if provided
 				if (mappedData.xrayPercent !== undefined) {
 					const xrayValue = Number(mappedData.xrayPercent);
-					if (isNaN(xrayValue) || xrayValue < 0 || xrayValue > 100) {
+					if (
+						Number.isNaN(xrayValue) ||
+						xrayValue < 0 ||
+						xrayValue > 100
+					) {
 						rowErrors.push({
 							row: i + 1,
 							field: "xrayPercent",
@@ -714,7 +732,7 @@ export class DataValidator {
 				// Validate date format if provided
 				if (mappedData.dateWelded) {
 					const dateValue = new Date(mappedData.dateWelded);
-					if (isNaN(dateValue.getTime())) {
+					if (Number.isNaN(dateValue.getTime())) {
 						rowErrors.push({
 							row: i + 1,
 							field: "dateWelded",
@@ -841,241 +859,232 @@ export class DataValidator {
 }
 
 // Instance tracking utilities
-export class InstanceTracker {
-	static async calculateInstanceNumbers(
-		components: ComponentImportData[],
-		existingComponents: Map<
-			string,
-			Array<{
-				componentId: string;
-				instanceNumber: number;
-				drawingId?: string;
-				size?: string;
-			}>
-		> = new Map(),
-	): Promise<ComponentImportData[]> {
-		console.log(
-			`InstanceTracker: Starting instance calculation for ${components.length} components`,
-		);
+export async function calculateInstanceNumbers(
+	components: ComponentImportData[],
+	existingComponents: Map<
+		string,
+		Array<{
+			componentId: string;
+			instanceNumber: number;
+			drawingId?: string;
+			size?: string;
+		}>
+	> = new Map(),
+): Promise<ComponentImportData[]> {
+	console.log(
+		`InstanceTracker: Starting instance calculation for ${components.length} components`,
+	);
 
-		// Step 1: Expand components based on quantity
-		const expandedComponents = [];
-		for (const component of components) {
-			const quantity = Number(component.totalQuantity) || 1;
+	// Step 1: Expand components based on quantity
+	const expandedComponents = [];
+	for (const component of components) {
+		const quantity = Number(component.totalQuantity) || 1;
 
-			for (let q = 0; q < quantity; q++) {
-				expandedComponents.push({
-					...component,
-					_quantityIndex: q, // Track which quantity-based instance this is
-				});
-			}
+		for (let q = 0; q < quantity; q++) {
+			expandedComponents.push({
+				...component,
+				_quantityIndex: q, // Track which quantity-based instance this is
+			});
 		}
-
-		console.log(
-			`InstanceTracker: Expanded to ${expandedComponents.length} components after quantity expansion`,
-		);
-
-		// Step 2: Group by drawingId + componentId + size (PER DRAWING)
-		const instanceGroups = new Map<string, ComponentImportData[]>();
-
-		for (const component of expandedComponents) {
-			if (!component.drawingId) {
-				console.warn(
-					`InstanceTracker: Component ${component.componentId} has no drawingId, will be handled separately`,
-				);
-				continue;
-			}
-
-			// Create key with size (empty string if no size) - THIS IS PER DRAWING
-			const key = `${component.drawingId}|${component.componentId}|${(component as any).size || ""}`;
-
-			if (!instanceGroups.has(key)) {
-				instanceGroups.set(key, []);
-			}
-			instanceGroups.get(key)!.push(component);
-		}
-
-		console.log(
-			`InstanceTracker: Created ${instanceGroups.size} instance groups`,
-		);
-
-		// Step 3: Assign instance numbers PER DRAWING
-		const processedComponents = [];
-
-		for (const [key, groupComponents] of instanceGroups) {
-			const [drawingId, componentId, size] = key.split("|");
-
-			console.log(
-				`InstanceTracker: Processing group ${key} with ${groupComponents.length} new components`,
-			);
-
-			// Get existing instances with EXACTLY the same key (same drawing + component + size)
-			const existingInstances = existingComponents.get(key) || [];
-			console.log(
-				`InstanceTracker: Found ${existingInstances.length} existing instances for key ${key}`,
-			);
-
-			// Calculate next instance number starting from existing + 1
-			const nextInstanceNumber =
-				existingInstances.length > 0
-					? Math.max(
-							...existingInstances.map((c) => c.instanceNumber),
-						) + 1
-					: 1;
-
-			// Calculate total instances on THIS drawing
-			const totalInstancesOnThisDrawing =
-				existingInstances.length + groupComponents.length;
-
-			console.log(
-				`InstanceTracker: For group ${key}, starting instance number: ${nextInstanceNumber}, total instances on drawing: ${totalInstancesOnThisDrawing}`,
-			);
-
-			for (let i = 0; i < groupComponents.length; i++) {
-				const component = { ...groupComponents[i] };
-				const instanceNumber = nextInstanceNumber + i;
-
-				// Validate instance number is reasonable
-				if (instanceNumber > totalInstancesOnThisDrawing) {
-					console.error(
-						`InstanceTracker: ERROR - Instance number ${instanceNumber} exceeds total instances ${totalInstancesOnThisDrawing} for ${key}`,
-					);
-					console.error(
-						`InstanceTracker: Debug - existingInstances: ${existingInstances.length}, newComponents: ${groupComponents.length}, starting: ${nextInstanceNumber}`,
-					);
-					throw new Error(
-						`Invalid instance calculation: instance ${instanceNumber} > total ${totalInstancesOnThisDrawing} for component ${componentId} on drawing ${drawingId}`,
-					);
-				}
-
-				// Create display ID
-				let displayId = componentId;
-				if (size) {
-					displayId += ` ${size}`; // Include size in display
-				}
-				if (totalInstancesOnThisDrawing > 1) {
-					displayId += ` (${instanceNumber} of ${totalInstancesOnThisDrawing})`;
-				}
-
-				(component as any).instanceNumber = instanceNumber;
-				(component as any).totalInstancesOnDrawing =
-					totalInstancesOnThisDrawing;
-				(component as any).displayId = displayId;
-
-				console.log(
-					`InstanceTracker: Created component instance: ${displayId}, instance ${instanceNumber} of ${totalInstancesOnThisDrawing}`,
-				);
-
-				processedComponents.push(component);
-			}
-		}
-
-		// Handle components without drawing IDs
-		let componentsWithoutDrawing = 0;
-		for (const component of expandedComponents) {
-			if (!component.drawingId) {
-				processedComponents.push({
-					...component,
-					instanceNumber: 1,
-					totalInstancesOnDrawing: 1,
-					displayId: component.componentId,
-				} as any);
-				componentsWithoutDrawing++;
-			}
-		}
-
-		if (componentsWithoutDrawing > 0) {
-			console.warn(
-				`InstanceTracker: ${componentsWithoutDrawing} components processed without drawing IDs`,
-			);
-		}
-
-		console.log(
-			`InstanceTracker: Completed instance calculation. Returning ${processedComponents.length} processed components`,
-		);
-
-		return processedComponents;
 	}
+
+	console.log(
+		`InstanceTracker: Expanded to ${expandedComponents.length} components after quantity expansion`,
+	);
+
+	// Step 2: Group by drawingId + componentId + size (PER DRAWING)
+	const instanceGroups = new Map<string, ComponentImportData[]>();
+
+	for (const component of expandedComponents) {
+		if (!component.drawingId) {
+			console.warn(
+				`InstanceTracker: Component ${component.componentId} has no drawingId, will be handled separately`,
+			);
+			continue;
+		}
+
+		// Create key with size (empty string if no size) - THIS IS PER DRAWING
+		const key = `${component.drawingId}|${component.componentId}|${(component as any).size || ""}`;
+
+		if (!instanceGroups.has(key)) {
+			instanceGroups.set(key, []);
+		}
+		instanceGroups.get(key)?.push(component);
+	}
+
+	console.log(
+		`InstanceTracker: Created ${instanceGroups.size} instance groups`,
+	);
+
+	// Step 3: Assign instance numbers PER DRAWING
+	const processedComponents = [];
+
+	for (const [key, groupComponents] of instanceGroups) {
+		const [drawingId, componentId, size] = key.split("|");
+
+		console.log(
+			`InstanceTracker: Processing group ${key} with ${groupComponents.length} new components`,
+		);
+
+		// Get existing instances with EXACTLY the same key (same drawing + component + size)
+		const existingInstances = existingComponents.get(key) || [];
+		console.log(
+			`InstanceTracker: Found ${existingInstances.length} existing instances for key ${key}`,
+		);
+
+		// Calculate next instance number starting from existing + 1
+		const nextInstanceNumber =
+			existingInstances.length > 0
+				? Math.max(...existingInstances.map((c) => c.instanceNumber)) +
+					1
+				: 1;
+
+		// Calculate total instances on THIS drawing
+		const totalInstancesOnThisDrawing =
+			existingInstances.length + groupComponents.length;
+
+		console.log(
+			`InstanceTracker: For group ${key}, starting instance number: ${nextInstanceNumber}, total instances on drawing: ${totalInstancesOnThisDrawing}`,
+		);
+
+		for (let i = 0; i < groupComponents.length; i++) {
+			const component = { ...groupComponents[i] };
+			const instanceNumber = nextInstanceNumber + i;
+
+			// Validate instance number is reasonable
+			if (instanceNumber > totalInstancesOnThisDrawing) {
+				console.error(
+					`InstanceTracker: ERROR - Instance number ${instanceNumber} exceeds total instances ${totalInstancesOnThisDrawing} for ${key}`,
+				);
+				console.error(
+					`InstanceTracker: Debug - existingInstances: ${existingInstances.length}, newComponents: ${groupComponents.length}, starting: ${nextInstanceNumber}`,
+				);
+				throw new Error(
+					`Invalid instance calculation: instance ${instanceNumber} > total ${totalInstancesOnThisDrawing} for component ${componentId} on drawing ${drawingId}`,
+				);
+			}
+
+			// Create display ID
+			let displayId = componentId;
+			if (size) {
+				displayId += ` ${size}`; // Include size in display
+			}
+			if (totalInstancesOnThisDrawing > 1) {
+				displayId += ` (${instanceNumber} of ${totalInstancesOnThisDrawing})`;
+			}
+
+			(component as any).instanceNumber = instanceNumber;
+			(component as any).totalInstancesOnDrawing =
+				totalInstancesOnThisDrawing;
+			(component as any).displayId = displayId;
+
+			console.log(
+				`InstanceTracker: Created component instance: ${displayId}, instance ${instanceNumber} of ${totalInstancesOnThisDrawing}`,
+			);
+
+			processedComponents.push(component);
+		}
+	}
+
+	// Handle components without drawing IDs
+	let componentsWithoutDrawing = 0;
+	for (const component of expandedComponents) {
+		if (!component.drawingId) {
+			processedComponents.push({
+				...component,
+				instanceNumber: 1,
+				totalInstancesOnDrawing: 1,
+				displayId: component.componentId,
+			} as any);
+			componentsWithoutDrawing++;
+		}
+	}
+
+	if (componentsWithoutDrawing > 0) {
+		console.warn(
+			`InstanceTracker: ${componentsWithoutDrawing} components processed without drawing IDs`,
+		);
+	}
+
+	console.log(
+		`InstanceTracker: Completed instance calculation. Returning ${processedComponents.length} processed components`,
+	);
+
+	return processedComponents;
 }
 
 // Batch processing utilities
-export class BatchProcessor {
-	static async processInBatches<T, R>(
-		items: T[],
-		processor: (batch: T[]) => Promise<R[]>,
-		batchSize = 100,
-		onProgress?: (processed: number, total: number) => void,
-	): Promise<R[]> {
-		const results: R[] = [];
+export async function processInBatches<T, R>(
+	items: T[],
+	processor: (batch: T[]) => Promise<R[]>,
+	batchSize = 100,
+	onProgress?: (processed: number, total: number) => void,
+): Promise<R[]> {
+	const results: R[] = [];
 
-		for (let i = 0; i < items.length; i += batchSize) {
-			const batch = items.slice(i, i + batchSize);
-			const batchResults = await processor(batch);
-			results.push(...batchResults);
+	for (let i = 0; i < items.length; i += batchSize) {
+		const batch = items.slice(i, i + batchSize);
+		const batchResults = await processor(batch);
+		results.push(...batchResults);
 
-			if (onProgress) {
-				onProgress(Math.min(i + batchSize, items.length), items.length);
-			}
+		if (onProgress) {
+			onProgress(Math.min(i + batchSize, items.length), items.length);
 		}
-
-		return results;
 	}
+
+	return results;
 }
 
 // Error reporting utilities
-export class ErrorReporter {
-	static generateErrorReport(
-		errors: ValidationError[],
-		warnings: ValidationError[],
-	): {
-		summary: any;
-		csvData: string;
-	} {
-		const summary = {
-			totalErrors: errors.length,
-			totalWarnings: warnings.length,
-			errorsByField: ErrorReporter.groupErrorsByField(errors),
-			warningsByField: ErrorReporter.groupErrorsByField(warnings),
-		};
+export function generateErrorReport(
+	errors: ValidationError[],
+	warnings: ValidationError[],
+): {
+	summary: any;
+	csvData: string;
+} {
+	const summary = {
+		totalErrors: errors.length,
+		totalWarnings: warnings.length,
+		errorsByField: groupErrorsByField(errors),
+		warningsByField: groupErrorsByField(warnings),
+	};
 
-		// Generate CSV for detailed error report
-		const allIssues = [
-			...errors.map((e) => ({ ...e, type: "ERROR" })),
-			...warnings.map((w) => ({ ...w, type: "WARNING" })),
-		];
+	// Generate CSV for detailed error report
+	const allIssues = [
+		...errors.map((e) => ({ ...e, type: "ERROR" })),
+		...warnings.map((w) => ({ ...w, type: "WARNING" })),
+	];
 
-		const csvHeaders = ["Row", "Type", "Field", "Error", "Value"];
-		const csvRows = allIssues.map((issue) => [
-			issue.row,
-			issue.type,
-			issue.field,
-			issue.error,
-			String(issue.value || ""),
-		]);
+	const csvHeaders = ["Row", "Type", "Field", "Error", "Value"];
+	const csvRows = allIssues.map((issue) => [
+		issue.row,
+		issue.type,
+		issue.field,
+		issue.error,
+		String(issue.value || ""),
+	]);
 
-		const csvData = [
-			csvHeaders.join(","),
-			...csvRows.map((row) =>
-				row
-					.map((cell) => `"${String(cell).replace(/"/g, '""')}"`)
-					.join(","),
-			),
-		].join("\n");
+	const csvData = [
+		csvHeaders.join(","),
+		...csvRows.map((row) =>
+			row
+				.map((cell) => `"${String(cell).replace(/"/g, '""')}"`)
+				.join(","),
+		),
+	].join("\n");
 
-		return { summary, csvData };
-	}
+	return { summary, csvData };
+}
 
-	private static groupErrorsByField(
-		errors: ValidationError[],
-	): Record<string, number> {
-		return errors.reduce(
-			(acc, error) => {
-				acc[error.field] = (acc[error.field] || 0) + 1;
-				return acc;
-			},
-			{} as Record<string, number>,
-		);
-	}
+function groupErrorsByField(errors: ValidationError[]): Record<string, number> {
+	return errors.reduce(
+		(acc, error) => {
+			acc[error.field] = (acc[error.field] || 0) + 1;
+			return acc;
+		},
+		{} as Record<string, number>,
+	);
 }
 
 // Template resolution for component imports
