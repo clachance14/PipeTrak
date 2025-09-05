@@ -18,7 +18,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
+import { ChevronsUpDown, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { OrganizationLogo } from "./OrganizationLogo";
@@ -83,7 +83,7 @@ export function OrganzationSelect({ className }: { className?: string }) {
 						)}
 					</div>
 
-					<ChevronsUpDownIcon className="block size-4 opacity-50" />
+					<ChevronsUpDown className="block size-4 opacity-50" />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-full">
 					{!config.organizations.requireOrganization && (

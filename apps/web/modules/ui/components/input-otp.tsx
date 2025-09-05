@@ -2,7 +2,7 @@
 
 import { cn } from "@ui/lib";
 import { OTPInput, OTPInputContext } from "input-otp";
-import { MinusIcon } from "lucide-react";
+import { Minus } from "lucide-react";
 import * as React from "react";
 
 function InputOTP({
@@ -71,7 +71,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
 		// biome-ignore lint/a11y/useSemanticElements: This is a valid case
 		// biome-ignore lint/a11y/useFocusableInteractive: This is a valid case
 		<div data-slot="input-otp-separator" role="separator" {...props}>
-			<MinusIcon className="size-4" />
+			<Minus className="size-4" />
 		</div>
 	);
 }

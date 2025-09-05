@@ -1,5 +1,24 @@
 {
-	"extends": "@repo/tsconfig/base.json",
-	"include": ["**/*.ts"],
-	"exclude": ["dist", "build", "node_modules", "prisma/zod/**/*.ts", "supabase/**/*.ts", "scripts/**/*.ts"]
+  "extends": "@repo/tsconfig/base.json",
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "prisma/zod/**/*.ts",
+    "supabase/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true
+  }
 }

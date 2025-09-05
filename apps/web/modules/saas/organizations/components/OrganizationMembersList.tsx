@@ -31,7 +31,7 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
-import { LogOutIcon, MoreVertical, Trash } from "lucide-react";
+import { LogOut, MoreVertical, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -195,7 +195,7 @@ export function OrganizationMembersList({
 													)
 												}
 											>
-												<LogOutIcon className="mr-2 size-4" />
+												<LogOut className="mr-2 size-4" />
 												{t(
 													"organizations.settings.members.leaveOrganization",
 												)}

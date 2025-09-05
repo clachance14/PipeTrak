@@ -106,9 +106,15 @@ export const webhookHandler: WebhookHandler = async (req) => {
 			});
 		}
 
+		// Convert headers to plain object
+		const headersObj: Record<string, string> = {};
+		req.headers.forEach((value, key) => {
+			headersObj[key] = value;
+		});
+
 		const event = validateEvent(
 			await req.text(),
-			Object.fromEntries(req.headers.entries()),
+			headersObj,
 			polarWebhookSecret,
 		);
 

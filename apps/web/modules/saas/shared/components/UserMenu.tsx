@@ -20,14 +20,14 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import {
-	BookIcon,
-	HardDriveIcon,
-	HomeIcon,
-	LogOutIcon,
-	MoonIcon,
+	Book,
+	HardDrive,
+	Home,
+	LogOut,
+	Moon,
 	MoreVertical,
 	Settings,
-	SunIcon,
+	Sun,
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -44,17 +44,17 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 		{
 			value: "system",
 			label: "System",
-			icon: HardDriveIcon,
+			icon: HardDrive,
 		},
 		{
 			value: "light",
 			label: "Light",
-			icon: SunIcon,
+			icon: Sun,
 		},
 		{
 			value: "dark",
 			label: "Dark",
-			icon: MoonIcon,
+			icon: Moon,
 		},
 	];
 
@@ -117,7 +117,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 				{/* Color mode selection */}
 				<DropdownMenuSub>
 					<DropdownMenuSubTrigger>
-						<SunIcon className="mr-2 size-4" />
+						<Sun className="mr-2 size-4" />
 						{t("app.userMenu.colorMode")}
 					</DropdownMenuSubTrigger>
 					<DropdownMenuPortal>
@@ -154,20 +154,20 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 
 				<DropdownMenuItem asChild>
 					<a href="https://supastarter.dev/docs/nextjs">
-						<BookIcon className="mr-2 size-4" />
+						<Book className="mr-2 size-4" />
 						{t("app.userMenu.documentation")}
 					</a>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem asChild>
 					<Link href="/">
-						<HomeIcon className="mr-2 size-4" />
+						<Home className="mr-2 size-4" />
 						{t("app.userMenu.home")}
 					</Link>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem onClick={onLogout}>
-					<LogOutIcon className="mr-2 size-4" />
+					<LogOut className="mr-2 size-4" />
 					{t("app.userMenu.logout")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>

@@ -1,6 +1,14 @@
 {
-	"extends": "@repo/tsconfig/base.json",
-	"compilerOptions": {
-		"jsx": "preserve"
-	}
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true
+  }
 }

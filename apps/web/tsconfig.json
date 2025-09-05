@@ -1,29 +1,62 @@
 {
-	"extends": "@repo/tsconfig/nextjs.json",
-	"compilerOptions": {
-		"jsx": "preserve",
-		"moduleResolution": "bundler",
-		"types": ["react", "react-dom", "node"],
-		"plugins": [{ "name": "next" }],
-		"paths": {
-			"@analytics": ["./modules/analytics"],
-			"@marketing/*": ["./modules/marketing/*"],
-			"@saas/*": ["./modules/saas/*"],
-			"@ui/*": ["./modules/ui/*"],
-			"@pipetrak/*": ["./modules/pipetrak/*"],
-			"@i18n": ["./modules/i18n"],
-			"@i18n/*": ["./modules/i18n/*"],
-			"@shared/*": ["./modules/shared/*"],
-			"content-collections": ["./.content-collections/generated"]
-		}
-	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		"**/*.cjs",
-		"**/*.mjs",
-		".next/types/**/*.ts",
-		"types/global.d.ts"
-	],
-	"exclude": ["node_modules"]
+  "extends": "@repo/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "moduleResolution": "bundler",
+    "types": [
+      "react",
+      "react-dom",
+      "node"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@analytics": [
+        "./modules/analytics"
+      ],
+      "@marketing/*": [
+        "./modules/marketing/*"
+      ],
+      "@saas/*": [
+        "./modules/saas/*"
+      ],
+      "@ui/*": [
+        "./modules/ui/*"
+      ],
+      "@pipetrak/*": [
+        "./modules/pipetrak/*"
+      ],
+      "@i18n": [
+        "./modules/i18n"
+      ],
+      "@i18n/*": [
+        "./modules/i18n/*"
+      ],
+      "@shared/*": [
+        "./modules/shared/*"
+      ],
+      "content-collections": [
+        "./.content-collections/generated"
+      ]
+    },
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "skipLibCheck": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    ".next/types/**/*.ts",
+    "types/global.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

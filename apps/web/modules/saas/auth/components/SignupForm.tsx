@@ -19,8 +19,8 @@ import { Input } from "@ui/components/input";
 import {
 	AlertTriangleIcon,
 	ArrowRight,
-	EyeIcon,
-	EyeOffIcon,
+	Eye,
+	EyeOff,
 	MailboxIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -214,9 +214,9 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 														className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
 													>
 														{showPassword ? (
-															<EyeOffIcon className="size-4" />
+															<EyeOff className="size-4" />
 														) : (
-															<EyeIcon className="size-4" />
+															<Eye className="size-4" />
 														)}
 													</button>
 												</div>

@@ -1,5 +1,5 @@
 import { Button } from "@ui/components/button";
-import { ChevronLeftIcon, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type PaginatioProps = {
 	className?: string;
@@ -27,7 +27,7 @@ const Pagination = ({
 					disabled={currentPage === 1}
 					onClick={() => onChangeCurrentPage(currentPage - 1)}
 				>
-					<ChevronLeftIcon />
+					<ChevronLeft />
 				</Button>
 				<span className="text-gray-500 text-sm">
 					{currentPage * itemsPerPage - itemsPerPage + 1} -{" "}
@@ -42,7 +42,7 @@ const Pagination = ({
 					disabled={currentPage === numberOfPages}
 					onClick={() => onChangeCurrentPage(currentPage + 1)}
 				>
-					<ChevronRightIcon />
+					<ChevronRight />
 				</Button>
 			</div>
 		</div>
