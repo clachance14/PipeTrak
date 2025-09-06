@@ -20,7 +20,7 @@ interface FieldWeldImportResult {
 
 export function FieldWeldUploadWrapper({
   projectId,
-  organizationSlug,
+  organizationSlug: _organizationSlug,
 }: FieldWeldUploadWrapperProps) {
   const [isImporting, setIsImporting] = useState(false);
   const [importResult, setImportResult] = useState<FieldWeldImportResult | null>(null);
@@ -130,8 +130,8 @@ export function FieldWeldUploadWrapper({
       onFileRemove={handleFileRemove}
       onImportClick={handleImport}
       isImporting={isImporting}
-      importResult={importResult}
-      error={importError}
+      importResult={importResult || undefined}
+      error={importError || undefined}
     />
   );
 }

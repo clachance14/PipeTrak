@@ -57,7 +57,7 @@ export function DrawingTreeItem({
 					variant="ghost"
 					size="icon"
 					className={cn("p-0", isMobile ? "h-12 w-12" : "h-6 w-6")}
-					onClick={(e) => {
+					onClick={(e: React.MouseEvent) => {
 						e.stopPropagation();
 						onToggleExpand(drawing.id);
 					}}

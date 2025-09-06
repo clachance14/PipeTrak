@@ -31,7 +31,7 @@ import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { MobileBottomSheet } from "./MobileBottomSheet";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 interface MobileDashboardProps {
 	projectId: string;
@@ -73,7 +73,7 @@ export function MobileDashboard({
 	const loadComponents = async () => {
 		setLoading(true);
 		try {
-			const filters: ComponentFilters = {
+			const filters: ComponentFileFilters = {
 				search: searchQuery || undefined,
 			};
 

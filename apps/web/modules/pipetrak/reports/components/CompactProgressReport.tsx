@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { format, addDays, startOfWeek } from "date-fns";
 import { Badge } from "@ui/components/badge";
-import { Check, Clock, AlertTriangle } from "lucide-react";
-import { cn } from "@ui/lib";
+import { AlertTriangle } from "lucide-react";
 
 interface CompactProgressReportProps {
 	projectId: string;
@@ -385,7 +384,7 @@ export function CompactProgressReport({
 						</tr>
 					</thead>
 					<tbody>
-						{reportData.data.map((row, index) => {
+						{reportData.data.map((row, _index) => {
 							const key = getGroupKey(row);
 							return (
 								<tr key={key}>

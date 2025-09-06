@@ -99,10 +99,10 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 					console.log("[useImportProgress] Job data:", jobData);
 
 					const progress =
-						jobData.totalRows > 0
+						(jobData.totalRows || 0) > 0
 							? Math.round(
-									(jobData.processedRows /
-										jobData.totalRows) *
+									((jobData.processedRows || 0) /
+										(jobData.totalRows || 1)) *
 										100,
 								)
 							: 0;
@@ -114,7 +114,7 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 						status,
 						isComplete:
 							status === "completed" || status === "failed",
-						hasErrors: status === "failed" || jobData.errorRows > 0,
+						hasErrors: status === "failed" || (jobData.errorRows || 0) > 0,
 						jobData,
 						logs: [
 							{
@@ -197,7 +197,7 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 					return;
 				}
 
-				const realtimeConfig = await response.json();
+				await response.json(); // Get config (unused but needed for API call)
 
 				// Create Supabase client with the provided config
 				supabase = createClient();
@@ -376,10 +376,10 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 
 					const jobData = await response.json();
 					const progress =
-						jobData.totalRows > 0
+						(jobData.totalRows || 0) > 0
 							? Math.round(
-									(jobData.processedRows /
-										jobData.totalRows) *
+									((jobData.processedRows || 0) /
+										(jobData.totalRows || 1)) *
 										100,
 								)
 							: 0;
@@ -442,7 +442,7 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 									status === "failed",
 								hasErrors:
 									status === "failed" ||
-									jobData.errorRows > 0,
+									(jobData.errorRows || 0) > 0,
 								jobData,
 							};
 						}
@@ -454,7 +454,7 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 							isComplete:
 								status === "completed" || status === "failed",
 							hasErrors:
-								status === "failed" || jobData.errorRows > 0,
+								status === "failed" || (jobData.errorRows || 0) > 0,
 							jobData,
 						};
 					});

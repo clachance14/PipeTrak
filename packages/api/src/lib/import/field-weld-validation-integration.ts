@@ -3,15 +3,15 @@
  * This demonstrates the complete validation workflow for field weld imports
  */
 
-import { FieldWeldProcessor } from "./field-weld-processor.js";
-import {
-	type FieldWeldValidator,
-	createFieldWeldValidator,
-	type FieldWeldValidationReport,
-} from "./field-weld-validator.js";
+import type { ValidationResult } from "../file-processing.js";
 import type { ImportContext } from "./base-processor.js";
 import { ValidationStage } from "./base-processor.js";
-import type { ValidationResult } from "../file-processing.js";
+import { FieldWeldProcessor } from "./field-weld-processor.js";
+import {
+	createFieldWeldValidator,
+	type FieldWeldValidationReport,
+	type FieldWeldValidator,
+} from "./field-weld-validator.js";
 
 /**
  * Enhanced field weld import workflow with comprehensive validation
@@ -74,7 +74,7 @@ export class EnhancedFieldWeldImportWorkflow {
 			this.context.organizationId,
 			this.context.userId,
 			{
-				maxRows: this.processor["options"].maxRows,
+				maxRows: this.processor.options.maxRows,
 				strictMode: options?.strictMode ?? true,
 			},
 		);

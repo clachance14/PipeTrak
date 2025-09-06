@@ -105,7 +105,7 @@ export function useCreateWelder() {
       
       return response.json();
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate and refetch welders list
       queryClient.invalidateQueries({
         queryKey: ["welders", { projectId: variables.projectId }],
@@ -140,7 +140,7 @@ export function useUpdateWelder() {
       
       return response.json();
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate specific welder and welders list
       queryClient.invalidateQueries({
         queryKey: ["welder", variables.id],

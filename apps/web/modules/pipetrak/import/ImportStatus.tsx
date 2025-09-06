@@ -21,11 +21,7 @@ interface ImportStatusProps {
 	projectId: string;
 }
 
-interface ImportLog {
-	timestamp: string;
-	message: string;
-	type: "info" | "success" | "warning" | "error";
-}
+// Removed unused interface ImportLog
 
 export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 	const { progress, status, logs, isComplete, hasErrors, jobData } =
@@ -44,6 +40,8 @@ export function ImportStatus({ jobId, projectId }: ImportStatusProps) {
 
 			return () => clearInterval(interval);
 		}
+		// Return empty cleanup function for the else case
+		return () => {};
 	}, [isComplete]);
 
 	useEffect(() => {

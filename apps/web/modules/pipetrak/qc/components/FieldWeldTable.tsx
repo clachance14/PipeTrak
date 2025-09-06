@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation"; // Unused import
 import { MobileQCView } from "./MobileQCView";
 import {
   useReactTable,
@@ -95,7 +95,7 @@ interface FieldWeldTableProps {
 }
 
 export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTableProps) {
-  const router = useRouter();
+  // const router = useRouter(); // Unused but kept for future use
   const [data, setData] = useState<FieldWeldData[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -141,7 +141,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   const [showDebugPanel, setShowDebugPanel] = useState(false);
   
   // New filtering state
-  const [weldFilters, setWeldFilters] = useState<WeldFilterState>({
+  const [_weldFilters, _setWeldFilters] = useState<any>({ // WeldFilterState type not defined
     packageNumber: 'all',
     drawing: 'all',
     area: 'all',
@@ -206,7 +206,15 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   // Apply filters using the custom hook
   // Temporarily use basic filtering until useWeldFilters is implemented
   const filteredWelds = data; // TODO: implement proper filtering
-  const filterStats = null; // TODO: implement filter stats
+  const filterStats = { 
+    complete: 0, 
+    pending: 0, 
+    ndePending: 0, 
+    ndeAccept: 0, 
+    ndeReject: 0, 
+    pwhtRequired: 0, 
+    pwhtComplete: 0 
+  }; // TODO: implement filter stats
 
   // Column definitions with sort indicators
   const columns = useMemo<ColumnDef<FieldWeldData>[]>(
@@ -680,7 +688,7 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 size="sm"
                 variant="outline"
                 className="h-8 text-green-700 border-green-200 hover:bg-green-50 hover:border-green-300"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   setSelectedWeld(weld);
                   setShowMarkCompleteModal(true);

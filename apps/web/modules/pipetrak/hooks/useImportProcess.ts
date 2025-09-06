@@ -125,11 +125,11 @@ export function useImportProcess(
 
 			if (!response.ok) {
 				const errorData = await response.json();
-				throw new Error(errorData.error || "Failed to validate data");
+				throw new Error((errorData as any).error || "Failed to validate data");
 			}
 
 			const validation = await response.json();
-			return validation;
+			return validation as unknown as ValidationResult;
 		} catch (err: any) {
 			setError(err.message || "Failed to validate data");
 			return null;
@@ -175,7 +175,7 @@ export function useImportProcess(
 
 				const jobData = await response.json();
 
-				const importJob: ImportJob = {
+				const jobResult: ImportJob = {
 					id: jobData.id,
 					status: jobData.status,
 					successCount: 0,
@@ -183,8 +183,8 @@ export function useImportProcess(
 					errors: [],
 				};
 
-				setImportJob(importJob);
-				return importJob;
+				setImportJob(jobResult);
+				return jobResult;
 			}
 
 			// For components, use the bulk-import endpoint that works correctly
@@ -260,7 +260,7 @@ export function useImportProcess(
 				(result.summary?.created || 0) +
 				(result.summary?.updated || 0) +
 				(result.summary?.skipped || 0);
-			const importJob: ImportJob = {
+			const jobResult: ImportJob = {
 				id: `bulk-${Date.now()}-${totalProcessed}-${result.summary?.errors || 0}`, // Include stats in job ID
 				status: result.success ? "COMPLETED" : "FAILED",
 				successCount:
@@ -270,10 +270,10 @@ export function useImportProcess(
 				errors: result.errors || [],
 			};
 
-			console.log("Frontend startImport: Created ImportJob:", importJob);
+			console.log("Frontend startImport: Created ImportJob:", jobResult);
 
-			setImportJob(importJob);
-			return importJob;
+			setImportJob(jobResult);
+			return jobResult;
 		} catch (err: any) {
 			console.error("Component import error:", err);
 			setError(err.message || "Failed to start component import");
@@ -306,7 +306,7 @@ export function useImportProcess(
 
 			const jobData = await response.json();
 
-			const importJob: ImportJob = {
+			const jobResult: ImportJob = {
 				id: jobData.id,
 				status: jobData.status,
 				successCount:
@@ -315,8 +315,8 @@ export function useImportProcess(
 				errors: jobData.errors || [],
 			};
 
-			setImportJob(importJob);
-			return importJob;
+			setImportJob(jobResult);
+			return jobResult;
 		} catch (err: any) {
 			setError(err.message || "Failed to check import status");
 			return null;

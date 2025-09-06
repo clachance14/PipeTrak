@@ -27,7 +27,7 @@ import { ComponentList } from "./ComponentList";
 import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFilters } from "../../types";
+import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 interface TabletDashboardProps {
 	projectId: string;
@@ -69,7 +69,7 @@ export function TabletDashboard({
 	const loadComponents = async () => {
 		setLoading(true);
 		try {
-			const filters: ComponentFilters = {
+			const filters: ComponentFileFilters = {
 				search: searchQuery || undefined,
 				area: selectedArea ? [selectedArea] : undefined,
 			};

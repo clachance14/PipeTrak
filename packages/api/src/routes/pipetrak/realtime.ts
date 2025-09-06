@@ -1,17 +1,17 @@
+import { db } from "@repo/database";
 import { Hono } from "hono";
 import { validator } from "hono/validator";
 import { z } from "zod";
-import { authMiddleware } from "../../middleware/auth";
-import { db } from "@repo/database";
 import {
-	createRealtimeClient,
-	createProjectChannel,
-	updatePresence,
+	type BroadcastEvent,
 	broadcastEvent,
 	checkBroadcastRateLimit,
+	createProjectChannel,
+	createRealtimeClient,
 	type UserPresence,
-	type BroadcastEvent,
+	updatePresence,
 } from "../../lib/realtime";
+import { authMiddleware } from "../../middleware/auth";
 
 // Validation schemas
 const SubscribeSchema = z.object({
@@ -49,214 +49,229 @@ export const realtimeRouter = new Hono()
 	.use("*", authMiddleware)
 
 	// Subscribe to project realtime updates
-	.post("/subscribe", validator("json", (value) => SubscribeSchema.parse(value)), async (c) => {
-		try {
-			const { projectId, presence } = c.req.valid("json");
-			const user = c.get("user");
+	.post(
+		"/subscribe",
+		validator("json", (value) => SubscribeSchema.parse(value)),
+		async (c) => {
+			try {
+				const { projectId, presence } = c.req.valid("json");
+				const user = c.get("user");
 
-			// Verify user has access to project
-			const project = await db.project.findFirst({
-				where: { id: projectId },
-				include: { organization: true },
-			});
+				// Verify user has access to project
+				const project = await db.project.findFirst({
+					where: { id: projectId },
+					include: { organization: true },
+				});
 
-			if (!project) {
-				return c.json({ error: "Project not found" }, 404);
+				if (!project) {
+					return c.json({ error: "Project not found" }, 404);
+				}
+
+				// Check organization membership
+				const membership = await db.member.findFirst({
+					where: {
+						userId: user.id,
+						organizationId: project.organizationId,
+					},
+				});
+
+				if (!membership) {
+					return c.json({ error: "Access denied to project" }, 403);
+				}
+
+				// Return subscription configuration for client
+				return c.json({
+					success: true,
+					channelName: `project:${projectId}`,
+					userPresence: {
+						userId: user.id,
+						userName: user.name,
+						userEmail: user.email,
+						projectId,
+						...presence,
+					},
+					realtimeConfig: {
+						url: process.env.SUPABASE_URL,
+						anonKey: process.env.SUPABASE_ANON_KEY,
+					},
+				});
+			} catch (error) {
+				console.error("Realtime subscribe error:", error);
+				return c.json(
+					{ error: "Failed to setup realtime subscription" },
+					500,
+				);
 			}
+		},
+	)
 
-			// Check organization membership
-			const membership = await db.member.findFirst({
-				where: {
-					userId: user.id,
-					organizationId: project.organizationId,
-				},
-			});
+	// Update user presence
+	.post(
+		"/presence",
+		validator("json", (value) => PresenceUpdateSchema.parse(value)),
+		async (c) => {
+			try {
+				const data = c.req.valid("json");
+				const user = c.get("user");
 
-			if (!membership) {
-				return c.json({ error: "Access denied to project" }, 403);
-			}
+				// Verify access to project (same as subscribe)
+				const project = await db.project.findFirst({
+					where: { id: data.projectId },
+					include: { organization: true },
+				});
 
-			// Return subscription configuration for client
-			return c.json({
-				success: true,
-				channelName: `project:${projectId}`,
-				userPresence: {
+				if (!project) {
+					return c.json({ error: "Project not found" }, 404);
+				}
+
+				const membership = await db.member.findFirst({
+					where: {
+						userId: user.id,
+						organizationId: project.organizationId,
+					},
+				});
+
+				if (!membership) {
+					return c.json({ error: "Access denied to project" }, 403);
+				}
+
+				// Create realtime client and update presence
+				// Note: In a real implementation, you'd want to manage persistent connections
+				// rather than creating a new client for each request
+				const supabase = createRealtimeClient();
+				const channel = createProjectChannel(
+					supabase,
+					data.projectId,
+					user.id,
+				);
+
+				if (!channel) {
+					return c.json(
+						{ error: "Unable to establish realtime connection" },
+						503,
+					);
+				}
+
+				const presenceUpdate: Omit<UserPresence, "lastSeen"> = {
 					userId: user.id,
 					userName: user.name,
 					userEmail: user.email,
-					projectId,
-					...presence,
-				},
-				realtimeConfig: {
-					url: process.env.SUPABASE_URL,
-					anonKey: process.env.SUPABASE_ANON_KEY,
-				},
-			});
-		} catch (error) {
-			console.error("Realtime subscribe error:", error);
-			return c.json(
-				{ error: "Failed to setup realtime subscription" },
-				500,
-			);
-		}
-	})
+					projectId: data.projectId,
+					viewingDrawingId: data.viewingDrawingId,
+					editingComponentId: data.editingComponentId,
+					isTyping: data.isTyping,
+				};
 
-	// Update user presence
-	.post("/presence", validator("json", (value) => PresenceUpdateSchema.parse(value)), async (c) => {
-		try {
-			const data = c.req.valid("json");
-			const user = c.get("user");
+				// Subscribe and update presence
+				channel.subscribe(async (status) => {
+					if (status === "SUBSCRIBED") {
+						await updatePresence(channel, presenceUpdate);
+					}
+				});
 
-			// Verify access to project (same as subscribe)
-			const project = await db.project.findFirst({
-				where: { id: data.projectId },
-				include: { organization: true },
-			});
-
-			if (!project) {
-				return c.json({ error: "Project not found" }, 404);
+				return c.json({ success: true });
+			} catch (error) {
+				console.error("Presence update error:", error);
+				return c.json({ error: "Failed to update presence" }, 500);
 			}
-
-			const membership = await db.member.findFirst({
-				where: {
-					userId: user.id,
-					organizationId: project.organizationId,
-				},
-			});
-
-			if (!membership) {
-				return c.json({ error: "Access denied to project" }, 403);
-			}
-
-			// Create realtime client and update presence
-			// Note: In a real implementation, you'd want to manage persistent connections
-			// rather than creating a new client for each request
-			const supabase = createRealtimeClient();
-			const channel = createProjectChannel(
-				supabase,
-				data.projectId,
-				user.id,
-			);
-
-			if (!channel) {
-				return c.json(
-					{ error: "Unable to establish realtime connection" },
-					503,
-				);
-			}
-
-			const presenceUpdate: Omit<UserPresence, "lastSeen"> = {
-				userId: user.id,
-				userName: user.name,
-				userEmail: user.email,
-				projectId: data.projectId,
-				viewingDrawingId: data.viewingDrawingId,
-				editingComponentId: data.editingComponentId,
-				isTyping: data.isTyping,
-			};
-
-			// Subscribe and update presence
-			channel.subscribe(async (status) => {
-				if (status === "SUBSCRIBED") {
-					await updatePresence(channel, presenceUpdate);
-				}
-			});
-
-			return c.json({ success: true });
-		} catch (error) {
-			console.error("Presence update error:", error);
-			return c.json({ error: "Failed to update presence" }, 500);
-		}
-	})
+		},
+	)
 
 	// Broadcast custom event
-	.post("/broadcast", validator("json", (value) => BroadcastSchema.parse(value)), async (c) => {
-		try {
-			const data = c.req.valid("json");
-			const user = c.get("user");
+	.post(
+		"/broadcast",
+		validator("json", (value) => BroadcastSchema.parse(value)),
+		async (c) => {
+			try {
+				const data = c.req.valid("json");
+				const user = c.get("user");
 
-			// Rate limiting
-			if (!checkBroadcastRateLimit(user.id, 60)) {
-				return c.json({ error: "Rate limit exceeded" }, 429);
-			}
-
-			// Verify access to project
-			const project = await db.project.findFirst({
-				where: { id: data.projectId },
-				include: { organization: true },
-			});
-
-			if (!project) {
-				return c.json({ error: "Project not found" }, 404);
-			}
-
-			const membership = await db.member.findFirst({
-				where: {
-					userId: user.id,
-					organizationId: project.organizationId,
-				},
-			});
-
-			if (!membership) {
-				return c.json({ error: "Access denied to project" }, 403);
-			}
-
-			// Sanitize payload to prevent XSS
-			const sanitizedPayload = {
-				...data.payload,
-				// Remove any potentially dangerous HTML/scripts
-				message:
-					typeof data.payload.message === "string"
-						? data.payload.message.replace(
-								/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-								"",
-							)
-						: data.payload.message,
-			};
-
-			// Create broadcast event
-			const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
-				type: data.type,
-				payload: sanitizedPayload,
-				userId: user.id,
-			};
-
-			// Create realtime client and broadcast
-			const supabase = createRealtimeClient();
-			const channel = createProjectChannel(
-				supabase,
-				data.projectId,
-				user.id,
-			);
-
-			if (!channel) {
-				return c.json(
-					{ error: "Unable to establish realtime connection" },
-					503,
-				);
-			}
-
-			channel.subscribe(async (status) => {
-				if (status === "SUBSCRIBED") {
-					const result = await broadcastEvent(channel, broadcastData);
-
-					// Log broadcast for debugging
-					console.log(
-						`Broadcast ${data.type} to project ${data.projectId}:`,
-						result,
-					);
-
-					// Cleanup
-					setTimeout(() => channel.unsubscribe(), 1000);
+				// Rate limiting
+				if (!checkBroadcastRateLimit(user.id, 60)) {
+					return c.json({ error: "Rate limit exceeded" }, 429);
 				}
-			});
 
-			return c.json({ success: true });
-		} catch (error) {
-			console.error("Broadcast error:", error);
-			return c.json({ error: "Failed to broadcast event" }, 500);
-		}
-	})
+				// Verify access to project
+				const project = await db.project.findFirst({
+					where: { id: data.projectId },
+					include: { organization: true },
+				});
+
+				if (!project) {
+					return c.json({ error: "Project not found" }, 404);
+				}
+
+				const membership = await db.member.findFirst({
+					where: {
+						userId: user.id,
+						organizationId: project.organizationId,
+					},
+				});
+
+				if (!membership) {
+					return c.json({ error: "Access denied to project" }, 403);
+				}
+
+				// Sanitize payload to prevent XSS
+				const sanitizedPayload = {
+					...data.payload,
+					// Remove any potentially dangerous HTML/scripts
+					message:
+						typeof data.payload.message === "string"
+							? data.payload.message.replace(
+									/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+									"",
+								)
+							: data.payload.message,
+				};
+
+				// Create broadcast event
+				const broadcastData: Omit<BroadcastEvent, "timestamp"> = {
+					type: data.type,
+					payload: sanitizedPayload,
+					userId: user.id,
+				};
+
+				// Create realtime client and broadcast
+				const supabase = createRealtimeClient();
+				const channel = createProjectChannel(
+					supabase,
+					data.projectId,
+					user.id,
+				);
+
+				if (!channel) {
+					return c.json(
+						{ error: "Unable to establish realtime connection" },
+						503,
+					);
+				}
+
+				channel.subscribe(async (status) => {
+					if (status === "SUBSCRIBED") {
+						const result = await broadcastEvent(
+							channel,
+							broadcastData,
+						);
+
+						// Log broadcast for debugging
+						console.log(
+							`Broadcast ${data.type} to project ${data.projectId}:`,
+							result,
+						);
+
+						// Cleanup
+						setTimeout(() => channel.unsubscribe(), 1000);
+					}
+				});
+
+				return c.json({ success: true });
+			} catch (error) {
+				console.error("Broadcast error:", error);
+				return c.json({ error: "Failed to broadcast event" }, 500);
+			}
+		},
+	)
 
 	// Get active users for a project
 	.get("/active-users/:projectId", async (c) => {
@@ -368,10 +383,13 @@ export const realtimeRouter = new Hono()
 			const supabase = createRealtimeClient();
 
 			if (!supabase) {
-				return c.json({
-					status: "unhealthy",
-					reason: "Supabase realtime client is null"
-				}, 503);
+				return c.json(
+					{
+						status: "unhealthy",
+						reason: "Supabase realtime client is null",
+					},
+					503,
+				);
 			}
 
 			// Simple test to verify realtime is working
@@ -410,7 +428,8 @@ export const realtimeRouter = new Hono()
 			return c.json(
 				{
 					status: "unhealthy",
-					error: error instanceof Error ? error.message : String(error),
+					error:
+						error instanceof Error ? error.message : String(error),
 					timestamp: new Date().toISOString(),
 					services: {
 						supabaseRealtime: false,
@@ -463,7 +482,10 @@ export async function broadcastComponentUpdate(
 		const channel = createProjectChannel(supabase, projectId, userId);
 
 		if (!channel) {
-			console.warn("Cannot create realtime channel for project:", projectId);
+			console.warn(
+				"Cannot create realtime channel for project:",
+				projectId,
+			);
 			return;
 		}
 
@@ -501,7 +523,10 @@ export async function broadcastMilestoneCelebration(
 		const channel = createProjectChannel(supabase, projectId, completedBy);
 
 		if (!channel) {
-			console.warn("Cannot create realtime channel for project:", projectId);
+			console.warn(
+				"Cannot create realtime channel for project:",
+				projectId,
+			);
 			return;
 		}
 

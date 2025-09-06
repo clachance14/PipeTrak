@@ -1,13 +1,13 @@
 import { z } from "zod";
+import type { ValidationError, ValidationResult } from "../file-processing.js";
 import {
 	BaseImportProcessor,
+	FileValidator,
 	type FormatValidationResult,
 	type ParsedFileData,
 	type ProcessedImportData,
 	ValidationStage,
-	FileValidator,
 } from "./base-processor.js";
-import type { ValidationError, ValidationResult } from "../file-processing.js";
 
 /**
  * Field weld import data schema for WELD LOG.xlsx format
@@ -29,9 +29,15 @@ export const FieldWeldImportSchema = z.object({
 		.union([z.boolean(), z.string(), z.number()])
 		.optional()
 		.transform((val) => {
-			if (val === null || val === undefined) return undefined;
-			if (typeof val === "boolean") return val;
-			if (typeof val === "number") return val === 1;
+			if (val === null || val === undefined) {
+				return undefined;
+			}
+			if (typeof val === "boolean") {
+				return val;
+			}
+			if (typeof val === "number") {
+				return val === 1;
+			}
 			if (typeof val === "string") {
 				const lower = val.toLowerCase().trim();
 				return (
@@ -48,9 +54,15 @@ export const FieldWeldImportSchema = z.object({
 		.union([z.boolean(), z.string(), z.number()])
 		.optional()
 		.transform((val) => {
-			if (val === null || val === undefined) return undefined;
-			if (typeof val === "boolean") return val;
-			if (typeof val === "number") return val === 1;
+			if (val === null || val === undefined) {
+				return undefined;
+			}
+			if (typeof val === "boolean") {
+				return val;
+			}
+			if (typeof val === "number") {
+				return val === 1;
+			}
 			if (typeof val === "string") {
 				const lower = val.toLowerCase().trim();
 				return (
@@ -68,8 +80,12 @@ export const FieldWeldImportSchema = z.object({
 		.union([z.date(), z.string(), z.number()])
 		.optional()
 		.transform((val) => {
-			if (val === null || val === undefined) return undefined;
-			if (val instanceof Date) return val;
+			if (val === null || val === undefined) {
+				return undefined;
+			}
+			if (val instanceof Date) {
+				return val;
+			}
 
 			// Handle Excel date numbers (days since 1900-01-01)
 			if (typeof val === "number" && val > 0 && val < 100000) {
@@ -77,13 +93,13 @@ export const FieldWeldImportSchema = z.object({
 				const date = new Date(
 					excelEpoch.getTime() + (val - 1) * 24 * 60 * 60 * 1000,
 				);
-				return isNaN(date.getTime()) ? undefined : date;
+				return Number.isNaN(date.getTime()) ? undefined : date;
 			}
 
 			// Handle string dates
 			if (typeof val === "string" && val.trim() !== "") {
 				const date = new Date(val);
-				return isNaN(date.getTime()) ? undefined : date;
+				return Number.isNaN(date.getTime()) ? undefined : date;
 			}
 
 			return undefined;
@@ -249,9 +265,12 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 			// Check for data rows within limits
 			if (rows.length === 0) {
 				errors.push("No data rows found in file");
-			} else if (rows.length > this.options.maxRows!) {
+			} else if (
+				this.options.maxRows &&
+				rows.length > this.options.maxRows
+			) {
 				errors.push(
-					`File contains ${rows.length} rows, exceeding maximum of ${this.options.maxRows!} rows`,
+					`File contains ${rows.length} rows, exceeding maximum of ${this.options.maxRows} rows`,
 				);
 			}
 
@@ -845,12 +864,14 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 		}
 
 		if (typeof value === "number") {
-			return isNaN(value) ? null : value;
+			return Number.isNaN(value) ? null : value;
 		}
 
 		if (typeof value === "string") {
 			const trimmed = value.trim();
-			if (trimmed === "") return null;
+			if (trimmed === "") {
+				return null;
+			}
 
 			// Handle common formats in WELD LOG:
 			// "150 PSI", "150psi", "150", "5%", "1"" (weld size), "3"" (weld size)
@@ -879,11 +900,10 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 			const matches = numericPart.match(/^-?\d*\.?\d+/);
 			if (matches) {
 				const parsed = Number.parseFloat(matches[0]);
-				return isNaN(parsed) ? null : parsed;
+				return Number.isNaN(parsed) ? null : parsed;
 			}
 		}
 
 		return null;
 	}
-
 }

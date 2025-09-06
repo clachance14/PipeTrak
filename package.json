@@ -53,10 +53,10 @@
   },
   "dependencies": {},
   "overrides": {
-    "lucide-react": "0.456.0",
+    "lucide-react": "0.542.0",
     "react-hook-form": "7.53.0",
     "next-intl": "3.14.0",
-    "cmdk": "1.0.0",
+    "cmdk": "1.1.1",
     "usehooks-ts": "3.1.0",
     "@types/node": "^22.5.0"
   }

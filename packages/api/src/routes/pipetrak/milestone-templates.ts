@@ -1,6 +1,6 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
 import { Hono } from "hono";
+import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
 
 const MilestoneTemplateCreateSchema = z.object({
@@ -720,8 +720,7 @@ export const milestoneTemplatesRouter = new Hono()
 		try {
 			const templateId = c.req.param("id");
 			const body = await c.req.json();
-			const { componentIds, options } =
-				ApplyTemplateSchema.parse(body);
+			const { componentIds, options } = ApplyTemplateSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			if (!userId) {

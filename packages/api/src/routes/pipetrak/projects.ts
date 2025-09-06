@@ -1,8 +1,8 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
-import { Hono } from "hono";
-import { authMiddleware } from "../../middleware/auth";
 import { ProjectStatus } from "@repo/database/prisma/generated/client";
+import { Hono } from "hono";
+import { z } from "zod";
+import { authMiddleware } from "../../middleware/auth";
 
 // Project validation schemas
 const ProjectCreateSchema = z.object({

@@ -1,9 +1,9 @@
+import type { ComponentStatus, Prisma } from "@repo/database";
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
-import { Hono } from "hono";
-import { authMiddleware } from "../../middleware/auth";
-import type { Prisma, ComponentStatus } from "@repo/database";
 import type { ComponentType } from "@repo/database/prisma/generated/client";
+import { Hono } from "hono";
+import { z } from "zod";
+import { authMiddleware } from "../../middleware/auth";
 
 const DrawingCreateSchema = z.object({
 	projectId: z.string(),
@@ -223,7 +223,10 @@ export const drawingsRouter = new Hono()
 			const rootDrawings: any[] = [];
 
 			for (const drawing of drawingsWithCounts) {
-				const treeNode = drawingMap.get(drawing.id)!;
+				const treeNode = drawingMap.get(drawing.id);
+				if (!treeNode) {
+					continue;
+				}
 
 				if (drawing.parentId) {
 					const parent = drawingMap.get(drawing.parentId);
@@ -478,7 +481,9 @@ export const drawingsRouter = new Hono()
 							},
 						})) as any;
 
-						if (!currentDrawing) break;
+						if (!currentDrawing) {
+							break;
+						}
 					}
 
 					return {
@@ -1351,10 +1356,11 @@ async function checkCircularReference(
 
 		visited.add(currentId);
 
-		const parent: { parentId: string | null } | null = await prisma.drawing.findUnique({
-			where: { id: currentId },
-			select: { parentId: true },
-		});
+		const parent: { parentId: string | null } | null =
+			await prisma.drawing.findUnique({
+				where: { id: currentId },
+				select: { parentId: true },
+			});
 
 		currentId = parent?.parentId || null;
 	}

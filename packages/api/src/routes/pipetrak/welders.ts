@@ -1,6 +1,6 @@
+import { db } from "@repo/database";
 import { Hono } from "hono";
 import { z } from "zod";
-import { db } from "@repo/database";
 import { authMiddleware } from "../../middleware/auth";
 
 const welderCreateSchema = z.object({

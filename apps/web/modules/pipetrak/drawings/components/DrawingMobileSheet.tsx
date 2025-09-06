@@ -70,7 +70,7 @@ export function DrawingMobileSheet({
 			<SheetContent
 				side="bottom"
 				className="h-[85vh] p-0 rounded-t-xl"
-				onOpenAutoFocus={(e) => e.preventDefault()}
+				onOpenAutoFocus={(e: Event) => e.preventDefault()}
 			>
 				<div className="flex flex-col h-full">
 					{/* Header */}
@@ -164,7 +164,7 @@ export function DrawingMobileFAB({
 				<SheetContent
 					side="bottom"
 					className="h-[85vh] p-0 rounded-t-xl"
-					onOpenAutoFocus={(e) => e.preventDefault()}
+					onOpenAutoFocus={(e: Event) => e.preventDefault()}
 				>
 					<div className="flex flex-col h-full">
 						<SheetHeader className="px-4 py-3 border-b">

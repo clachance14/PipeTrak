@@ -1,12 +1,16 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
-import { Hono } from "hono";
-import { authMiddleware } from "../../middleware/auth";
 import {
-	WorkflowType,
+	type Component,
+	type ComponentMilestone,
 	ComponentStatus,
-	ComponentType,
+	type ComponentType,
+	type Drawing,
+	type MilestoneTemplate,
+	WorkflowType,
 } from "@repo/database/prisma/generated/client";
+import { Hono } from "hono";
+import { z } from "zod";
+import { authMiddleware } from "../../middleware/auth";
 import { broadcastComponentUpdate } from "./realtime";
 
 // Component validation schemas
@@ -87,13 +91,27 @@ export const componentsRouter = new Hono()
 			// Build where clause
 			const where: any = {};
 
-			if (filters.projectId) where.projectId = filters.projectId;
-			if (filters.drawingId) where.drawingId = filters.drawingId;
-			if (filters.area) where.area = filters.area;
-			if (filters.system) where.system = filters.system;
-			if (filters.testPackage) where.testPackage = filters.testPackage;
-			if (filters.status) where.status = filters.status;
-			if (filters.type) where.type = filters.type;
+			if (filters.projectId) {
+				where.projectId = filters.projectId;
+			}
+			if (filters.drawingId) {
+				where.drawingId = filters.drawingId;
+			}
+			if (filters.area) {
+				where.area = filters.area;
+			}
+			if (filters.system) {
+				where.system = filters.system;
+			}
+			if (filters.testPackage) {
+				where.testPackage = filters.testPackage;
+			}
+			if (filters.status) {
+				where.status = filters.status;
+			}
+			if (filters.type) {
+				where.type = filters.type;
+			}
 
 			if (search) {
 				where.OR = [
@@ -377,7 +395,7 @@ export const componentsRouter = new Hono()
 					where: { id: data.milestoneTemplateId },
 				});
 
-				if (template && template.milestones) {
+				if (template?.milestones) {
 					const milestoneData = template.milestones as any[];
 					const milestones = milestoneData.map(
 						(milestone, index) => ({
@@ -475,9 +493,11 @@ export const componentsRouter = new Hono()
 
 			// Update component - filter out undefined values
 			const updateData = Object.fromEntries(
-				Object.entries(updates).filter(([_, value]) => value !== undefined)
+				Object.entries(updates).filter(
+					([_, value]) => value !== undefined,
+				),
 			);
-			
+
 			const component = await prisma.component.update({
 				where: { id },
 				data: {
@@ -564,11 +584,8 @@ export const componentsRouter = new Hono()
 	.post("/bulk-update", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				componentIds,
-				updates,
-				options,
-			} = BulkUpdateSchema.parse(body);
+			const { componentIds, updates, options } =
+				BulkUpdateSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			// Verify user has access to all components
@@ -613,11 +630,17 @@ export const componentsRouter = new Hono()
 
 			// Filter out undefined values from updates
 			const cleanUpdates = Object.fromEntries(
-				Object.entries(updates).filter(([_, value]) => value !== undefined)
+				Object.entries(updates).filter(
+					([_, value]) => value !== undefined,
+				),
 			);
 
 			// Update all components in transaction if atomic mode
-			let updatedComponents;
+			let updatedComponents: (Component & {
+				drawing: Drawing;
+				milestones: ComponentMilestone[];
+				milestoneTemplate: MilestoneTemplate | null;
+			})[];
 			if (options.atomic) {
 				const updatePromises = componentIds.map((id) =>
 					prisma.component.update({
@@ -750,7 +773,7 @@ export const componentsRouter = new Hono()
 				);
 			}
 
-			let deletedComponent;
+			let deletedComponent: Component;
 			if (hardDelete) {
 				// Hard delete (cascades to milestones)
 				deletedComponent = await prisma.component.delete({
@@ -912,13 +935,21 @@ export const componentsRouter = new Hono()
 				];
 			}
 
-			if (filters.areas?.length) where.area = { in: filters.areas };
-			if (filters.systems?.length) where.system = { in: filters.systems };
-			if (filters.testPackages?.length)
+			if (filters.areas?.length) {
+				where.area = { in: filters.areas };
+			}
+			if (filters.systems?.length) {
+				where.system = { in: filters.systems };
+			}
+			if (filters.testPackages?.length) {
 				where.testPackage = { in: filters.testPackages };
-			if (filters.statuses?.length)
+			}
+			if (filters.statuses?.length) {
 				where.status = { in: filters.statuses };
-			if (filters.types?.length) where.type = { in: filters.types };
+			}
+			if (filters.types?.length) {
+				where.type = { in: filters.types };
+			}
 
 			if (filters.completionRange) {
 				where.completionPercent = {
@@ -1077,12 +1108,7 @@ export const componentsRouter = new Hono()
 	.post("/bulk-import", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				projectId,
-				components,
-				mappings,
-				options,
-			} = z
+			const { projectId, components, mappings, options } = z
 				.object({
 					projectId: z.string(),
 					components: z.array(z.record(z.any())),
@@ -1090,8 +1116,14 @@ export const componentsRouter = new Hono()
 					options: z
 						.object({
 							validateOnly: z.boolean().optional().default(false),
-							skipDuplicates: z.boolean().optional().default(false),
-							updateExisting: z.boolean().optional().default(false),
+							skipDuplicates: z
+								.boolean()
+								.optional()
+								.default(false),
+							updateExisting: z
+								.boolean()
+								.optional()
+								.default(false),
 							generateIds: z.boolean().optional().default(true),
 							rollbackOnError: z
 								.boolean()
@@ -1264,7 +1296,7 @@ export const componentsRouter = new Hono()
 				if (!componentsByDrawing.has(drawingId)) {
 					componentsByDrawing.set(drawingId, []);
 				}
-				componentsByDrawing.get(drawingId)!.push(comp);
+				componentsByDrawing.get(drawingId)?.push(comp);
 			});
 
 			// Process each drawing's components
@@ -1505,7 +1537,9 @@ async function recalculateComponentCompletion(componentId: string) {
 		},
 	});
 
-	if (!component) return;
+	if (!component) {
+		return;
+	}
 
 	let completionPercent = 0;
 	const milestoneData = component.milestoneTemplate.milestones as any[];

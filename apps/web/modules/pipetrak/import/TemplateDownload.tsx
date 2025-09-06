@@ -33,7 +33,7 @@ interface TemplateDownloadProps {
 	projectId: string;
 }
 
-export function TemplateDownload({ projectId }: TemplateDownloadProps) {
+export function TemplateDownload({ projectId: _projectId }: TemplateDownloadProps) {
 	const handleExcelDownload = () => {
 		const blob = generateImportTemplate();
 		const filename = `PipeTrak_Import_Template_${new Date().toISOString().split("T")[0]}.xlsx`;

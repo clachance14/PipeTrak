@@ -1,7 +1,7 @@
+import { db } from "@repo/database";
 import { Hono } from "hono";
 import { validator } from "hono/validator";
 import { z } from "zod";
-import { db } from "@repo/database";
 import { authMiddleware } from "../../middleware/auth";
 
 const fieldWeldCreateSchema = z.object({
@@ -60,303 +60,319 @@ export const fieldWeldsRouter = new Hono()
 	.use("*", authMiddleware)
 
 	// GET /field-welds - List field welds with filtering and pagination
-	.get("/", validator("query", (value) => fieldWeldQuerySchema.parse(value)), async (c) => {
-		const query = c.req.valid("query");
-		const {
-			projectId,
-			packageNumber,
-			welderId,
-			ndeResult,
-			pwhtRequired,
-			drawingId,
-			search,
-			page,
-			limit,
-		} = query;
-		
-		const pageNum = Number(page);
-		const limitNum = Number(limit);
-
-		try {
-			const where: any = {
+	.get(
+		"/",
+		validator("query", (value) => fieldWeldQuerySchema.parse(value)),
+		async (c) => {
+			const query = c.req.valid("query");
+			const {
 				projectId,
-				// Only show field welds where work has started (component has progress)
-				component: {
-					completionPercent: {
-						gt: 0,
+				packageNumber,
+				welderId,
+				ndeResult,
+				pwhtRequired,
+				drawingId,
+				search,
+				page,
+				limit,
+			} = query;
+
+			const pageNum = Number(page);
+			const limitNum = Number(limit);
+
+			try {
+				const where: any = {
+					projectId,
+					// Only show field welds where work has started (component has progress)
+					component: {
+						completionPercent: {
+							gt: 0,
+						},
 					},
-				},
-			};
+				};
 
-			// Apply filters
-			if (packageNumber) {
-				where.packageNumber = packageNumber;
-			}
+				// Apply filters
+				if (packageNumber) {
+					where.packageNumber = packageNumber;
+				}
 
-			if (welderId) {
-				where.welderId = welderId;
-			}
+				if (welderId) {
+					where.welderId = welderId;
+				}
 
-			if (ndeResult) {
-				where.ndeResult = ndeResult;
-			}
+				if (ndeResult) {
+					where.ndeResult = ndeResult;
+				}
 
-			if (pwhtRequired !== undefined) {
-				where.pwhtRequired = pwhtRequired;
-			}
+				if (pwhtRequired !== undefined) {
+					where.pwhtRequired = pwhtRequired;
+				}
 
-			if (drawingId) {
-				where.drawingId = drawingId;
-			}
+				if (drawingId) {
+					where.drawingId = drawingId;
+				}
 
-			// Search across weld ID and comments
-			if (search) {
-				where.OR = [
-					{ weldIdNumber: { contains: search, mode: "insensitive" } },
-					{ comments: { contains: search, mode: "insensitive" } },
-				];
-			}
-
-			const skip = (pageNum - 1) * limitNum;
-
-			const [fieldWelds, totalCount] = await Promise.all([
-				db.fieldWeld.findMany({
-					where,
-					include: {
-						welder: {
-							select: {
-								id: true,
-								stencil: true,
-								name: true,
+				// Search across weld ID and comments
+				if (search) {
+					where.OR = [
+						{
+							weldIdNumber: {
+								contains: search,
+								mode: "insensitive",
 							},
 						},
-						drawing: {
-							select: {
-								id: true,
-								number: true,
-								title: true,
+						{ comments: { contains: search, mode: "insensitive" } },
+					];
+				}
+
+				const skip = (pageNum - 1) * limitNum;
+
+				const [fieldWelds, totalCount] = await Promise.all([
+					db.fieldWeld.findMany({
+						where,
+						include: {
+							welder: {
+								select: {
+									id: true,
+									stencil: true,
+									name: true,
+								},
 							},
-						},
-						weldType: {
-							select: {
-								code: true,
-								description: true,
+							drawing: {
+								select: {
+									id: true,
+									number: true,
+									title: true,
+								},
 							},
-						},
-						component: {
-							select: {
-								id: true,
-								componentId: true,
-								displayId: true,
-								area: true,
-								system: true,
-								testPackage: true,
-								status: true,
-								completionPercent: true,
-								milestones: {
-									select: {
-										id: true,
-										milestoneName: true,
-										isCompleted: true,
-										completedAt: true,
-										milestoneOrder: true,
-										weight: true,
-									},
-									orderBy: {
-										milestoneOrder: "asc",
+							weldType: {
+								select: {
+									code: true,
+									description: true,
+								},
+							},
+							component: {
+								select: {
+									id: true,
+									componentId: true,
+									displayId: true,
+									area: true,
+									system: true,
+									testPackage: true,
+									status: true,
+									completionPercent: true,
+									milestones: {
+										select: {
+											id: true,
+											milestoneName: true,
+											isCompleted: true,
+											completedAt: true,
+											milestoneOrder: true,
+											weight: true,
+										},
+										orderBy: {
+											milestoneOrder: "asc",
+										},
 									},
 								},
 							},
 						},
+						orderBy: [
+							{ dateWelded: "desc" },
+							{ weldIdNumber: "asc" },
+						],
+						skip,
+						take: limitNum,
+					}),
+
+					db.fieldWeld.count({ where }),
+				]);
+
+				const totalPages = Math.ceil(totalCount / limitNum);
+
+				return c.json({
+					fieldWelds,
+					pagination: {
+						page: pageNum,
+						limit: limitNum,
+						totalCount,
+						totalPages,
+						hasNextPage: pageNum < totalPages,
+						hasPreviousPage: pageNum > 1,
 					},
-					orderBy: [{ dateWelded: "desc" }, { weldIdNumber: "asc" }],
-					skip,
-					take: limitNum,
-				}),
-
-				db.fieldWeld.count({ where }),
-			]);
-
-			const totalPages = Math.ceil(totalCount / limitNum);
-
-			return c.json({
-				fieldWelds,
-				pagination: {
-					page: pageNum,
-					limit: limitNum,
-					totalCount,
-					totalPages,
-					hasNextPage: pageNum < totalPages,
-					hasPreviousPage: pageNum > 1,
-				},
-			});
-		} catch (error: any) {
-			console.error("Error fetching field welds:", error);
-			return c.json({ error: "Failed to fetch field welds" }, 500);
-		}
-	})
+				});
+			} catch (error: any) {
+				console.error("Error fetching field welds:", error);
+				return c.json({ error: "Failed to fetch field welds" }, 500);
+			}
+		},
+	)
 
 	// POST /field-welds - Create a new field weld
-	.post("/", validator("json", (value) => fieldWeldCreateSchema.parse(value)), async (c) => {
-		const data = c.req.valid("json");
+	.post(
+		"/",
+		validator("json", (value) => fieldWeldCreateSchema.parse(value)),
+		async (c) => {
+			const data = c.req.valid("json");
 
-		try {
-			// Check if weld ID already exists for this project
-			const existingWeld = await db.fieldWeld.findFirst({
-				where: {
-					projectId: data.projectId,
-					weldIdNumber: data.weldIdNumber,
-				},
-			});
-
-			if (existingWeld) {
-				return c.json(
-					{
-						error: "A field weld with this ID already exists in this project",
-					},
-					400,
-				);
-			}
-
-			// Verify project exists
-			const project = await db.project.findUnique({
-				where: { id: data.projectId },
-			});
-
-			if (!project) {
-				return c.json({ error: "Project not found" }, 404);
-			}
-
-			// Verify drawing exists and get inherited fields
-			const drawing = await db.drawing.findUnique({
-				where: { id: data.drawingId },
-			});
-
-			if (!drawing) {
-				return c.json({ error: "Drawing not found" }, 404);
-			}
-
-			// Verify welder exists if provided
-			if (data.welderId) {
-				const welder = await db.welder.findFirst({
+			try {
+				// Check if weld ID already exists for this project
+				const existingWeld = await db.fieldWeld.findFirst({
 					where: {
-						id: data.welderId,
 						projectId: data.projectId,
-						active: true,
+						weldIdNumber: data.weldIdNumber,
 					},
 				});
 
-				if (!welder) {
+				if (existingWeld) {
 					return c.json(
-						{ error: "Welder not found or inactive" },
-						404,
+						{
+							error: "A field weld with this ID already exists in this project",
+						},
+						400,
 					);
 				}
-			}
 
-			// Verify weld type exists
-			const weldType = await db.weldType.findUnique({
-				where: { code: data.weldTypeCode },
-			});
+				// Verify project exists
+				const project = await db.project.findUnique({
+					where: { id: data.projectId },
+				});
 
-			if (!weldType) {
-				return c.json({ error: "Invalid weld type" }, 400);
-			}
+				if (!project) {
+					return c.json({ error: "Project not found" }, 404);
+				}
 
-			// Set default values for field weld records
-			const packageNumber = "TBD";
-			const testPressure = {};
-			const specCode = "TBD";
+				// Verify drawing exists and get inherited fields
+				const drawing = await db.drawing.findUnique({
+					where: { id: data.drawingId },
+				});
 
-			// Find default milestone template for FIELD_WELD
-			const milestoneTemplate = await db.milestoneTemplate.findFirst({
-				where: {
-					projectId: data.projectId,
-					name: { contains: "Weld", mode: "insensitive" },
-				},
-			});
+				if (!drawing) {
+					return c.json({ error: "Drawing not found" }, 404);
+				}
 
-			if (!milestoneTemplate) {
-				return c.json(
-					{
-						error: "No milestone template found for FIELD_WELD components",
-					},
-					400,
-				);
-			}
+				// Verify welder exists if provided
+				if (data.welderId) {
+					const welder = await db.welder.findFirst({
+						where: {
+							id: data.welderId,
+							projectId: data.projectId,
+							active: true,
+						},
+					});
 
-			// Create both Component and FieldWeld records in a transaction
-			const result = await db.$transaction(async (tx) => {
-				// Create Component record
-				await tx.component.create({
-					data: {
+					if (!welder) {
+						return c.json(
+							{ error: "Welder not found or inactive" },
+							404,
+						);
+					}
+				}
+
+				// Verify weld type exists
+				const weldType = await db.weldType.findUnique({
+					where: { code: data.weldTypeCode },
+				});
+
+				if (!weldType) {
+					return c.json({ error: "Invalid weld type" }, 400);
+				}
+
+				// Set default values for field weld records
+				const packageNumber = "TBD";
+				const testPressure = {};
+				const specCode = "TBD";
+
+				// Find default milestone template for FIELD_WELD
+				const milestoneTemplate = await db.milestoneTemplate.findFirst({
+					where: {
 						projectId: data.projectId,
-						drawingId: data.drawingId,
-						milestoneTemplateId: milestoneTemplate.id,
-						componentId: data.weldIdNumber, // Use weldId as componentId
-						weldId: data.weldIdNumber, // Set weldId for linking
-						type: "FIELD_WELD",
-						workflowType: "MILESTONE_DISCRETE",
-						area: "",
-						system: "",
-						testPackage: packageNumber,
-						displayId: data.weldIdNumber,
+						name: { contains: "Weld", mode: "insensitive" },
 					},
 				});
 
-				// Create FieldWeld record
-				const fieldWeld = await tx.fieldWeld.create({
-					data: {
-						...data,
-						packageNumber,
-						testPressure,
-						specCode,
-					},
-					include: {
-						welder: {
-							select: {
-								id: true,
-								stencil: true,
-								name: true,
+				if (!milestoneTemplate) {
+					return c.json(
+						{
+							error: "No milestone template found for FIELD_WELD components",
+						},
+						400,
+					);
+				}
+
+				// Create both Component and FieldWeld records in a transaction
+				const result = await db.$transaction(async (tx) => {
+					// Create Component record
+					await tx.component.create({
+						data: {
+							projectId: data.projectId,
+							drawingId: data.drawingId,
+							milestoneTemplateId: milestoneTemplate.id,
+							componentId: data.weldIdNumber, // Use weldId as componentId
+							weldId: data.weldIdNumber, // Set weldId for linking
+							type: "FIELD_WELD",
+							workflowType: "MILESTONE_DISCRETE",
+							area: "",
+							system: "",
+							testPackage: packageNumber,
+							displayId: data.weldIdNumber,
+						},
+					});
+
+					// Create FieldWeld record
+					const fieldWeld = await tx.fieldWeld.create({
+						data: {
+							...data,
+							packageNumber,
+							testPressure,
+							specCode,
+						},
+						include: {
+							welder: {
+								select: {
+									id: true,
+									stencil: true,
+									name: true,
+								},
+							},
+							drawing: {
+								select: {
+									id: true,
+									number: true,
+									title: true,
+								},
+							},
+							weldType: {
+								select: {
+									code: true,
+									description: true,
+								},
+							},
+							component: {
+								select: {
+									id: true,
+									componentId: true,
+									displayId: true,
+									area: true,
+									system: true,
+									testPackage: true,
+									status: true,
+									completionPercent: true,
+								},
 							},
 						},
-						drawing: {
-							select: {
-								id: true,
-								number: true,
-								title: true,
-							},
-						},
-						weldType: {
-							select: {
-								code: true,
-								description: true,
-							},
-						},
-						component: {
-							select: {
-								id: true,
-								componentId: true,
-								displayId: true,
-								area: true,
-								system: true,
-								testPackage: true,
-								status: true,
-								completionPercent: true,
-							},
-						},
-					},
+					});
+
+					return fieldWeld;
 				});
 
-				return fieldWeld;
-			});
-
-			return c.json({ fieldWeld: result }, 201);
-		} catch (error: any) {
-			console.error("Error creating field weld:", error);
-			return c.json({ error: "Failed to create field weld" }, 500);
-		}
-	})
+				return c.json({ fieldWeld: result }, 201);
+			} catch (error: any) {
+				console.error("Error creating field weld:", error);
+				return c.json({ error: "Failed to create field weld" }, 500);
+			}
+		},
+	)
 
 	// GET /field-welds/:id - Get a specific field weld
 	.get("/:id", async (c) => {
@@ -420,82 +436,86 @@ export const fieldWeldsRouter = new Hono()
 	})
 
 	// PUT /field-welds/:id - Update a field weld
-	.put("/:id", validator("json", (value) => fieldWeldUpdateSchema.parse(value)), async (c) => {
-		const id = c.req.param("id");
-		const updates = c.req.valid("json");
+	.put(
+		"/:id",
+		validator("json", (value) => fieldWeldUpdateSchema.parse(value)),
+		async (c) => {
+			const id = c.req.param("id");
+			const updates = c.req.valid("json");
 
-		try {
-			// Check if field weld exists
-			const existingWeld = await db.fieldWeld.findUnique({
-				where: { id },
-			});
+			try {
+				// Check if field weld exists
+				const existingWeld = await db.fieldWeld.findUnique({
+					where: { id },
+				});
 
-			if (!existingWeld) {
-				return c.json({ error: "Field weld not found" }, 404);
-			}
+				if (!existingWeld) {
+					return c.json({ error: "Field weld not found" }, 404);
+				}
 
-			// Verify welder exists if being updated
-			if (updates.welderId) {
-				const welder = await db.welder.findFirst({
-					where: {
-						id: updates.welderId,
-						projectId: existingWeld.projectId,
-						active: true,
+				// Verify welder exists if being updated
+				if (updates.welderId) {
+					const welder = await db.welder.findFirst({
+						where: {
+							id: updates.welderId,
+							projectId: existingWeld.projectId,
+							active: true,
+						},
+					});
+
+					if (!welder) {
+						return c.json(
+							{ error: "Welder not found or inactive" },
+							404,
+						);
+					}
+				}
+
+				// Verify weld type exists if being updated
+				if (updates.weldTypeCode) {
+					const weldType = await db.weldType.findUnique({
+						where: { code: updates.weldTypeCode },
+					});
+
+					if (!weldType) {
+						return c.json({ error: "Invalid weld type" }, 400);
+					}
+				}
+
+				const fieldWeld = await db.fieldWeld.update({
+					where: { id },
+					data: updates,
+					include: {
+						welder: {
+							select: {
+								id: true,
+								stencil: true,
+								name: true,
+							},
+						},
+						drawing: {
+							select: {
+								id: true,
+								number: true,
+								title: true,
+							},
+						},
+						weldType: {
+							select: {
+								code: true,
+								description: true,
+							},
+						},
 					},
 				});
 
-				if (!welder) {
-					return c.json(
-						{ error: "Welder not found or inactive" },
-						404,
-					);
-				}
+				return c.json({ fieldWeld });
+			} catch (error: any) {
+				console.error("Error updating field weld:", error);
+				return c.json({ error: "Failed to update field weld" }, 500);
 			}
-
-			// Verify weld type exists if being updated
-			if (updates.weldTypeCode) {
-				const weldType = await db.weldType.findUnique({
-					where: { code: updates.weldTypeCode },
-				});
-
-				if (!weldType) {
-					return c.json({ error: "Invalid weld type" }, 400);
-				}
-			}
-
-			const fieldWeld = await db.fieldWeld.update({
-				where: { id },
-				data: updates,
-				include: {
-					welder: {
-						select: {
-							id: true,
-							stencil: true,
-							name: true,
-						},
-					},
-					drawing: {
-						select: {
-							id: true,
-							number: true,
-							title: true,
-						},
-					},
-					weldType: {
-						select: {
-							code: true,
-							description: true,
-						},
-					},
-				},
-			});
-
-			return c.json({ fieldWeld });
-		} catch (error: any) {
-			console.error("Error updating field weld:", error);
-			return c.json({ error: "Failed to update field weld" }, 500);
-		}
-	})
+		},
+	)
 
 	// DELETE /field-welds/:id - Delete a field weld
 	.delete("/:id", async (c) => {
@@ -525,12 +545,13 @@ export const fieldWeldsRouter = new Hono()
 	// PUT /field-welds/bulk - Bulk update field welds
 	.put(
 		"/bulk",
-		validator(
-			"json",
-			(value) => z.object({
-				ids: z.array(z.string()),
-				updates: fieldWeldUpdateSchema,
-			}).parse(value),
+		validator("json", (value) =>
+			z
+				.object({
+					ids: z.array(z.string()),
+					updates: fieldWeldUpdateSchema,
+				})
+				.parse(value),
 		),
 		async (c) => {
 			const { ids, updates } = c.req.valid("json");
