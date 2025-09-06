@@ -5,6 +5,7 @@ import { authMiddleware } from "../../middleware/auth";
 import {
 	WorkflowType,
 	ComponentStatus,
+	ComponentType,
 } from "@repo/database/prisma/generated/client";
 import { broadcastComponentUpdate } from "./realtime";
 
@@ -358,6 +359,7 @@ export const componentsRouter = new Hono()
 			const component = await prisma.component.create({
 				data: {
 					...data,
+					type: data.type as ComponentType,
 					instanceNumber,
 					totalInstancesOnDrawing,
 					displayId,
@@ -565,7 +567,7 @@ export const componentsRouter = new Hono()
 			const {
 				componentIds,
 				updates,
-				options = {},
+				options,
 			} = BulkUpdateSchema.parse(body);
 			const userId = c.get("user")?.id;
 
@@ -1079,7 +1081,7 @@ export const componentsRouter = new Hono()
 				projectId,
 				components,
 				mappings,
-				options = {},
+				options,
 			} = z
 				.object({
 					projectId: z.string(),

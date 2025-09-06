@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Hono } from "hono";
 import { authMiddleware } from "../../middleware/auth";
 import type { Prisma, ComponentStatus } from "@repo/database";
+import type { ComponentType } from "@repo/database/prisma/generated/client";
 
 const DrawingCreateSchema = z.object({
 	projectId: z.string(),
@@ -65,7 +66,7 @@ function buildComponentFilters(filters: {
 	}
 
 	if (filters.type?.length) {
-		where.type = { in: filters.type };
+		where.type = { in: filters.type as ComponentType[] };
 	}
 
 	if (filters.area?.length) {
@@ -1340,7 +1341,7 @@ async function checkCircularReference(
 	drawingId: string,
 	proposedParentId: string,
 ): Promise<boolean> {
-	let currentId = proposedParentId;
+	let currentId: string | null = proposedParentId;
 	const visited = new Set<string>();
 
 	while (currentId) {
@@ -1350,7 +1351,7 @@ async function checkCircularReference(
 
 		visited.add(currentId);
 
-		const parent = await prisma.drawing.findUnique({
+		const parent: { parentId: string | null } | null = await prisma.drawing.findUnique({
 			where: { id: currentId },
 			select: { parentId: true },
 		});
