@@ -1,6 +1,6 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
 import { Hono } from "hono";
+import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
 import { broadcastMilestoneCelebration } from "./realtime";
 
@@ -51,7 +51,6 @@ const SyncQueueSchema = z.object({
 	),
 	lastSyncTimestamp: z.string().optional(),
 });
-
 
 // Note: Real-time features are handled at the application level using Supabase subscriptions
 // The API focuses on data operations while the frontend manages real-time subscriptions
@@ -322,8 +321,7 @@ class MilestoneBatchProcessor implements BatchProcessor<any, any> {
 			update.quantityValue !== undefined
 		) {
 			updateData.quantityComplete = update.quantityValue;
-			updateData.isCompleted =
-				update.quantityValue >= 0;
+			updateData.isCompleted = update.quantityValue >= 0;
 			if (updateData.isCompleted) {
 				updateData.completedAt = new Date();
 				updateData.completedBy = userId;
@@ -380,7 +378,7 @@ export const milestonesRouter = new Hono()
 			});
 
 			return c.json(milestones);
-		} catch (error) {
+		} catch (_error) {
 			return c.json({ error: "Failed to fetch milestones" }, 500);
 		}
 	})
@@ -497,8 +495,7 @@ export const milestonesRouter = new Hono()
 				"quantityValue" in body
 			) {
 				updateData.quantityComplete = body.quantityValue;
-				updateData.isCompleted =
-					body.quantityValue >= 0;
+				updateData.isCompleted = body.quantityValue >= 0;
 				if (updateData.isCompleted) {
 					updateData.completedAt = new Date();
 					updateData.completedBy = userId;
@@ -651,7 +648,7 @@ export const milestonesRouter = new Hono()
 			});
 
 			return c.json(milestone);
-		} catch (error) {
+		} catch (_error) {
 			return c.json({ error: "Failed to update milestone" }, 500);
 		}
 	})
@@ -750,7 +747,9 @@ export const milestonesRouter = new Hono()
 			const componentBatches = Array.from(_componentIds).reduce(
 				(batches, id, index) => {
 					const batchIndex = Math.floor(index / 10);
-					if (!batches[batchIndex]) batches[batchIndex] = [];
+					if (!batches[batchIndex]) {
+						batches[batchIndex] = [];
+					}
 					batches[batchIndex].push(id);
 					return batches;
 				},
@@ -759,7 +758,9 @@ export const milestonesRouter = new Hono()
 
 			for (const batch of componentBatches) {
 				await Promise.all(
-					batch.map((id: string) => recalculateComponentCompletion(id)),
+					batch.map((id: string) =>
+						recalculateComponentCompletion(id),
+					),
 				);
 			}
 
@@ -857,7 +858,7 @@ export const milestonesRouter = new Hono()
 
 					// Calculate what the new values would be
 					const mockProcessor = new MilestoneBatchProcessor(userId);
-					const newValues = mockProcessor["prepareUpdateData"](
+					const newValues = mockProcessor.prepareUpdateData(
 						update,
 						milestone,
 						userId,
@@ -1088,7 +1089,7 @@ export const milestonesRouter = new Hono()
 					hasMore: recentUpdates.length === limit,
 				},
 			});
-		} catch (error) {
+		} catch (_error) {
 			return c.json(
 				{
 					code: "INTERNAL_ERROR",
@@ -1116,7 +1117,11 @@ export const milestonesRouter = new Hono()
 				);
 			}
 
-			const { componentId: _componentId, action: _action, timestamp: _timestamp } = body;
+			const {
+				componentId: _componentId,
+				action: _action,
+				timestamp: _timestamp,
+			} = body;
 
 			// Verify user has access to the project
 			const project = await prisma.project.findFirst({
@@ -1159,7 +1164,7 @@ export const milestonesRouter = new Hono()
 				message: "Presence updated",
 				timestamp: new Date().toISOString(),
 			});
-		} catch (error) {
+		} catch (_error) {
 			return c.json(
 				{
 					code: "INTERNAL_ERROR",
@@ -1388,8 +1393,8 @@ export const milestonesRouter = new Hono()
 				},
 				include: {
 					user: {
-					select: { id: true, name: true, email: true }
-				},
+						select: { id: true, name: true, email: true },
+					},
 				},
 			});
 
@@ -1568,7 +1573,7 @@ export const milestonesRouter = new Hono()
 				milestoneStats,
 				recentUpdates,
 			});
-		} catch (error) {
+		} catch (_error) {
 			return c.json(
 				{ error: "Failed to fetch milestone statistics" },
 				500,
@@ -1688,7 +1693,11 @@ export const milestonesRouter = new Hono()
 
 							const weldIds = components
 								.filter((c) => c.weldId)
-								.map((c) => c.weldId!);
+								.map((c) => c.weldId)
+								.filter(
+									(weldId): weldId is string =>
+										weldId != null,
+								);
 							console.log(
 								`🔧 [DEBUG BULK] Found ${weldIds.length} weldIds:`,
 								weldIds,
@@ -1971,7 +1980,9 @@ async function batchRecalculateCompletionInTransaction(
 	tx: any,
 	_componentIds: string[],
 ) {
-	if (_componentIds.length === 0) return;
+	if (_componentIds.length === 0) {
+		return;
+	}
 
 	console.log(
 		`Recalculating completion for ${_componentIds.length} components within transaction`,
@@ -2016,7 +2027,9 @@ async function recalculateComponentCompletion(componentId: string) {
 		},
 	});
 
-	if (!component) return;
+	if (!component) {
+		return;
+	}
 
 	let completionPercent = 0;
 	const milestoneData = component.milestoneTemplate.milestones as any[];
@@ -2059,7 +2072,10 @@ async function recalculateComponentCompletion(componentId: string) {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
+			if (
+				(milestone as any).quantityTotal &&
+				(milestone as any).quantityTotal > 0
+			) {
 				const percentage =
 					((milestone.quantityValue || 0) /
 						(milestone as any).quantityTotal) *
@@ -2104,7 +2120,9 @@ async function recalculateComponentCompletionInTransaction(
 		},
 	});
 
-	if (!component) return;
+	if (!component) {
+		return;
+	}
 
 	let completionPercent = 0;
 	const milestoneData = component.milestoneTemplate.milestones as any[];
@@ -2147,7 +2165,10 @@ async function recalculateComponentCompletionInTransaction(
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
+			if (
+				(milestone as any).quantityTotal &&
+				(milestone as any).quantityTotal > 0
+			) {
 				const percentage =
 					((milestone.quantityValue || 0) /
 						(milestone as any).quantityTotal) *

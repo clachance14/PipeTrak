@@ -168,7 +168,7 @@ const FIELD_WELD_FIELDS = [
 
 export function ColumnMapper({
 	file,
-	projectId,
+	projectId: _projectId,
 	importType,
 	onMappingComplete,
 	onBack,

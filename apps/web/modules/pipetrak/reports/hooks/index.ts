@@ -20,6 +20,17 @@ export {
 } from "./useReportExport";
 
 export {
+	useReportFileFilters as useReportFilters,
+	useSimpleReportFileFilters,
+} from "./useReportFilters";
+
+export type {
+	ReportFileFilters,
+	ComponentDetailsFileFilters,
+	AuditFileFilters,
+} from "../types";
+
+export {
 	useProgressReport,
 	useRefreshProgressReport,
 	useComponentDetailsReport,

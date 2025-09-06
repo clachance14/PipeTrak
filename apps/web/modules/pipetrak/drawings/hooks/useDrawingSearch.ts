@@ -14,7 +14,7 @@ export function useDrawingSearch(
 	return useQuery({
 		queryKey: ["drawings", "search", projectId, query],
 		queryFn: async () => {
-			const response = await apiClient.pipetrak.drawings.project[
+			const response = await (apiClient.pipetrak.drawings.project as any)[
 				projectId
 			].search.$get({
 				query: { q: query, limit: "20" },

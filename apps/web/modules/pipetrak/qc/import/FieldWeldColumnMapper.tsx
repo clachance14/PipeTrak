@@ -376,7 +376,7 @@ export function FieldWeldColumnMapper({
                               {FIELD_OPTIONS.map(option => (
                                 <SelectItem key={option.value} value={option.value}>
                                   <div className="flex items-center gap-2">
-                                    {option.required && (
+                                    {('required' in option && option.required) && (
                                       <span className="text-destructive">*</span>
                                     )}
                                     {option.label}
@@ -401,10 +401,10 @@ export function FieldWeldColumnMapper({
                             </div>
                           )}
                           {validationStatus.status === 'warning' && (
-                            <AlertTriangle className="h-4 w-4 text-orange-500" title={validationStatus.message} />
+                            <AlertTriangle className="h-4 w-4 text-orange-500" aria-label={validationStatus.message} />
                           )}
                           {validationStatus.status === 'error' && (
-                            <AlertCircle className="h-4 w-4 text-destructive" title={validationStatus.message} />
+                            <AlertCircle className="h-4 w-4 text-destructive" aria-label={validationStatus.message} />
                           )}
                         </div>
                       </div>
@@ -450,7 +450,7 @@ export function FieldWeldColumnMapper({
                     {previewRows.map((row, index) => (
                       <TableRow key={index}>
                         <TableCell className="font-mono text-sm">{index + 1}</TableCell>
-                        {Object.entries(mappings).map(([columnLetter, fieldName]) => {
+                        {Object.entries(mappings).map(([columnLetter, _fieldName]) => {
                           const columnIndex = columnLetter === 'AA' ? 26 : columnLetter.charCodeAt(0) - 65;
                           const header = parsedData.headers[columnIndex];
                           const value = row[header];

@@ -15,7 +15,7 @@ export function useDrawingHierarchy(projectId: string) {
 		queryKey: ["drawings", "hierarchy", projectId],
 		queryFn: async () => {
 			const response =
-				await apiClient.pipetrak.drawings.project[
+				await (apiClient.pipetrak.drawings.project as any)[
 					projectId
 				].hierarchy.$get();
 

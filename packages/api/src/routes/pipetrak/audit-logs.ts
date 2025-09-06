@@ -1,6 +1,6 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
 import { Hono } from "hono";
+import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
 
 const AuditLogFilterSchema = z.object({
@@ -47,17 +47,27 @@ export const auditLogsRouter = new Hono()
 			// Build where clause
 			const where: any = { projectId: filters.projectId };
 
-			if (filters.entityType) where.entityType = filters.entityType;
-			if (filters.entityId) where.entityId = filters.entityId;
-			if (filters.action) where.action = filters.action;
-			if (filters.userId) where.userId = filters.userId;
+			if (filters.entityType) {
+				where.entityType = filters.entityType;
+			}
+			if (filters.entityId) {
+				where.entityId = filters.entityId;
+			}
+			if (filters.action) {
+				where.action = filters.action;
+			}
+			if (filters.userId) {
+				where.userId = filters.userId;
+			}
 
 			if (filters.startDate || filters.endDate) {
 				where.timestamp = {};
-				if (filters.startDate)
+				if (filters.startDate) {
 					where.timestamp.gte = new Date(filters.startDate);
-				if (filters.endDate)
+				}
+				if (filters.endDate) {
 					where.timestamp.lte = new Date(filters.endDate);
+				}
 			}
 
 			// Get total count
@@ -134,7 +144,7 @@ export const auditLogsRouter = new Hono()
 			}
 
 			return c.json(log);
-		} catch (error) {
+		} catch (_error) {
 			return c.json({ error: "Failed to fetch audit log" }, 500);
 		}
 	});

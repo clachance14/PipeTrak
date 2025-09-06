@@ -1,6 +1,6 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
 import { Hono } from "hono";
+import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";
 import { broadcastReportGeneration } from "./realtime";
 
@@ -200,7 +200,9 @@ const BulkReportGenerationSchema = z.object({
 
 // Helper functions for Progress Summary Report
 function calculateDeltas(currentData: any[], previousData: any[]): any {
-	if (!previousData || previousData.length === 0) return {};
+	if (!previousData || previousData.length === 0) {
+		return {};
+	}
 
 	const deltaMap: any = {};
 	const previousMap = new Map();
@@ -255,7 +257,9 @@ function calculateDeltas(currentData: any[], previousData: any[]): any {
 }
 
 function calculateOverallProgress(data: any[]): number {
-	if (!data || data.length === 0) return 0;
+	if (!data || data.length === 0) {
+		return 0;
+	}
 
 	let totalComponents = 0;
 	let weightedProgress = 0;
@@ -345,7 +349,9 @@ export const reportsRouter = new Hono()
 							? component.testPackage
 							: component.area;
 
-				if (!groupKey) return;
+				if (!groupKey) {
+					return;
+				}
 
 				if (!groupedData.has(groupKey)) {
 					groupedData.set(groupKey, {
@@ -363,8 +369,9 @@ export const reportsRouter = new Hono()
 					if (
 						m.effectiveDate &&
 						new Date(m.effectiveDate) > weekEndingDate
-					)
+					) {
 						return;
+					}
 
 					// Initialize milestone tracking if not exists
 					if (!group.milestoneData.has(m.milestoneName)) {
@@ -449,15 +456,15 @@ export const reportsRouter = new Hono()
 							: "area"]: key,
 					component_count: data.components.length,
 					received_percent:
-						Math.round(milestonePercentages["Receive"] * 100) / 100,
+						Math.round(milestonePercentages.Receive * 100) / 100,
 					installed_percent:
-						Math.round(milestonePercentages["Install"] * 100) / 100,
+						Math.round(milestonePercentages.Install * 100) / 100,
 					punched_percent:
-						Math.round(milestonePercentages["Punch"] * 100) / 100,
+						Math.round(milestonePercentages.Punch * 100) / 100,
 					tested_percent:
-						Math.round(milestonePercentages["Test"] * 100) / 100,
+						Math.round(milestonePercentages.Test * 100) / 100,
 					restored_percent:
-						Math.round(milestonePercentages["Restore"] * 100) / 100,
+						Math.round(milestonePercentages.Restore * 100) / 100,
 					overall_percent: Math.round(overallPercent * 100) / 100,
 				};
 
@@ -672,10 +679,10 @@ export const reportsRouter = new Hono()
 
 			// Broadcast real-time update
 			await broadcastReportGeneration(
-				projectId, 
-				"progress_summary", 
-				"completed", 
-				userId || "system"
+				projectId,
+				"progress_summary",
+				"completed",
+				userId || "system",
 			);
 
 			return c.json({
@@ -985,7 +992,9 @@ export const reportsRouter = new Hono()
 						limit: (pagination as any).limit || 100,
 						offset: (pagination as any).offset || 0,
 						hasMore:
-							((pagination as any).offset || 0) + ((pagination as any).limit || 100) < totalCount,
+							((pagination as any).offset || 0) +
+								((pagination as any).limit || 100) <
+							totalCount,
 					},
 					filters,
 				},
@@ -1133,12 +1142,8 @@ export const reportsRouter = new Hono()
 	.post("/generate/bulk", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				projectId,
-				reportTypes,
-				outputFormat,
-				deliveryMethod,
-			} = BulkReportGenerationSchema.parse(body);
+			const { projectId, reportTypes, outputFormat, deliveryMethod } =
+				BulkReportGenerationSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			// Verify project access

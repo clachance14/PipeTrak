@@ -186,7 +186,7 @@ export function FieldWeldCard({
   const pwhtStatus = getPwhtStatus();
 
   return (
-    <Card 
+    <div 
       ref={cardRef}
       className={cn(
         "relative transition-all duration-200",
@@ -216,7 +216,8 @@ export function FieldWeldCard({
         </>
       )}
 
-      <CardContent className="p-4 space-y-4">
+      <Card>
+        <CardContent className="p-4 space-y-4">
         {/* Header Row */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -256,7 +257,7 @@ export function FieldWeldCard({
                 })() && (
                   <DropdownMenuItem onClick={(e) => {
                     e.stopPropagation();
-                    onMarkComplete();
+                    onMarkComplete?.();
                   }}>
                     <Check className="mr-2 h-4 w-4 text-green-600" />
                     Mark Complete
@@ -427,9 +428,9 @@ export function FieldWeldCard({
               <Button
                 size="sm"
                 className="flex-1 h-12 bg-green-600 hover:bg-green-700 text-white"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
-                  onMarkComplete();
+                  onMarkComplete?.();
                 }}
               >
                 <Check className="mr-2 h-4 w-4" />
@@ -440,7 +441,7 @@ export function FieldWeldCard({
               <Button
                 size="sm"
                 className="flex-1 h-12 bg-green-600 hover:bg-green-700"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   onApprove();
                 }}
@@ -454,7 +455,7 @@ export function FieldWeldCard({
                 size="sm"
                 variant="error"
                 className="flex-1 h-12"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   onReject();
                 }}
@@ -474,7 +475,8 @@ export function FieldWeldCard({
             </p>
           </div>
         )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

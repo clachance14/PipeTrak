@@ -3,8 +3,8 @@
  * This file demonstrates how to use the field weld import processor
  */
 
-import { FieldWeldProcessor } from "./field-weld-processor.js";
 import { type ImportContext, ValidationStage } from "./base-processor.js";
+import { FieldWeldProcessor } from "./field-weld-processor.js";
 
 /**
  * Example: Process a WELD LOG Excel file

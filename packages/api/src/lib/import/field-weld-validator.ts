@@ -923,9 +923,15 @@ export class FieldWeldValidator {
 	 * Helper: Parse boolean values from various formats
 	 */
 	private parseBoolean(val: any): boolean | undefined {
-		if (val === null || val === undefined) return undefined;
-		if (typeof val === "boolean") return val;
-		if (typeof val === "number") return val === 1;
+		if (val === null || val === undefined) {
+			return undefined;
+		}
+		if (typeof val === "boolean") {
+			return val;
+		}
+		if (typeof val === "number") {
+			return val === 1;
+		}
 		if (typeof val === "string") {
 			const lower = val.toLowerCase().trim();
 			if (
@@ -933,15 +939,17 @@ export class FieldWeldValidator {
 				lower === "yes" ||
 				lower === "1" ||
 				lower === "x"
-			)
+			) {
 				return true;
+			}
 			if (
 				lower === "false" ||
 				lower === "no" ||
 				lower === "0" ||
 				lower === ""
-			)
+			) {
 				return false;
+			}
 		}
 		return undefined;
 	}
@@ -950,8 +958,12 @@ export class FieldWeldValidator {
 	 * Helper: Parse dates from Excel numbers and strings
 	 */
 	private parseDate(val: any): Date | undefined {
-		if (val === null || val === undefined) return undefined;
-		if (val instanceof Date) return val;
+		if (val === null || val === undefined) {
+			return undefined;
+		}
+		if (val instanceof Date) {
+			return val;
+		}
 
 		// Handle Excel date numbers (days since 1900-01-01)
 		if (typeof val === "number" && val > 0 && val < 100000) {
@@ -959,13 +971,13 @@ export class FieldWeldValidator {
 			const date = new Date(
 				excelEpoch.getTime() + (val - 1) * 24 * 60 * 60 * 1000,
 			);
-			return isNaN(date.getTime()) ? undefined : date;
+			return Number.isNaN(date.getTime()) ? undefined : date;
 		}
 
 		// Handle string dates
 		if (typeof val === "string" && val.trim() !== "") {
 			const date = new Date(val);
-			return isNaN(date.getTime()) ? undefined : date;
+			return Number.isNaN(date.getTime()) ? undefined : date;
 		}
 
 		return undefined;
@@ -975,12 +987,18 @@ export class FieldWeldValidator {
 	 * Helper: Normalize numeric values from various formats
 	 */
 	private normalizeNumericValue(value: any): number | null {
-		if (value === null || value === undefined) return null;
-		if (typeof value === "number") return isNaN(value) ? null : value;
+		if (value === null || value === undefined) {
+			return null;
+		}
+		if (typeof value === "number") {
+			return Number.isNaN(value) ? null : value;
+		}
 
 		if (typeof value === "string") {
 			const trimmed = value.trim();
-			if (trimmed === "") return null;
+			if (trimmed === "") {
+				return null;
+			}
 
 			// Handle common formats: "150 PSI", "150psi", "5%", etc.
 			let numericPart = trimmed;
@@ -992,7 +1010,7 @@ export class FieldWeldValidator {
 			const matches = numericPart.match(/^-?\d*\.?\d+/);
 			if (matches) {
 				const parsed = Number.parseFloat(matches[0]);
-				return isNaN(parsed) ? null : parsed;
+				return Number.isNaN(parsed) ? null : parsed;
 			}
 		}
 

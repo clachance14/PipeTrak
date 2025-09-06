@@ -1,5 +1,24 @@
 import { useMemo } from "react";
-import type { WeldFileFilterState } from "../components/WeldFileFilterBar";
+
+// Field weld filter state interface
+interface WeldFileFilterState {
+  search: string;
+  packageNumber: string;
+  drawing: string;
+  area: string;
+  system: string;
+  welder: string;
+  weldStatus: string;
+  ndeResult: string;
+  pwhtStatus: string;
+  weldType: string;
+  weldSize: string;
+  schedule: string;
+  dateWeldedFrom: string;
+  dateWeldedTo: string;
+  datePwhtFrom: string;
+  datePwhtTo: string;
+}
 
 // Field weld data structure
 interface FieldWeldData {

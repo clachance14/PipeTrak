@@ -1,8 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import type {
 	RealtimeChannel,
 	RealtimePostgresChangesPayload,
 } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
 // Types for realtime events
 export interface ComponentChangePayload {
@@ -162,7 +162,7 @@ export function subscribeToProjectChanges(
 						(payload.old as any)?.completionPercent ||
 						0,
 				};
-				callbacks.onComponentChange!(changePayload);
+				callbacks.onComponentChange?.(changePayload);
 			},
 		);
 	}
@@ -194,7 +194,7 @@ export function subscribeToProjectChanges(
 					completed_by: (payload.new as any)?.completedBy,
 					completed_at: (payload.new as any)?.completedAt,
 				};
-				callbacks.onMilestoneChange!(changePayload);
+				callbacks.onMilestoneChange?.(changePayload);
 			},
 		);
 	}
@@ -210,7 +210,7 @@ export function subscribeToProjectChanges(
 				filter: `projectId=eq.${projectId}`,
 			},
 			(payload: RealtimePostgresChangesPayload<any>) => {
-				callbacks.onDrawingChange!(payload);
+				callbacks.onDrawingChange?.(payload);
 			},
 		);
 	}
@@ -245,7 +245,7 @@ export function subscribeToProjectChanges(
 					total_rows: (payload.new as any)?.totalRows,
 					error_rows: (payload.new as any)?.errorRows,
 				};
-				callbacks.onImportJobChange!(changePayload);
+				callbacks.onImportJobChange?.(changePayload);
 			},
 		);
 	}
@@ -266,7 +266,7 @@ export function subscribeToProjectChanges(
 					action: payload.eventType as any,
 					data: (payload.new as any) || (payload.old as any) || {},
 				};
-				callbacks.onAuditLogChange!(changePayload);
+				callbacks.onAuditLogChange?.(changePayload);
 			},
 		);
 	}
@@ -294,7 +294,7 @@ export function subscribeToPresence(
 	if (callbacks.onPresenceSync) {
 		channel.on("presence", { event: "sync" }, () => {
 			const state = channel.presenceState<UserPresence>();
-			callbacks.onPresenceSync!(state);
+			callbacks.onPresenceSync?.(state);
 		});
 	}
 
@@ -303,7 +303,7 @@ export function subscribeToPresence(
 			"presence",
 			{ event: "join" },
 			({ key, currentPresences, newPresences }) => {
-				callbacks.onPresenceJoin!(
+				callbacks.onPresenceJoin?.(
 					key,
 					currentPresences as unknown as UserPresence[],
 					newPresences as unknown as UserPresence[],
@@ -317,7 +317,7 @@ export function subscribeToPresence(
 			"presence",
 			{ event: "leave" },
 			({ key, currentPresences, leftPresences }) => {
-				callbacks.onPresenceLeave!(
+				callbacks.onPresenceLeave?.(
 					key,
 					currentPresences as unknown as UserPresence[],
 					leftPresences as unknown as UserPresence[],
@@ -336,7 +336,7 @@ export function subscribeToBroadcasts(
 ) {
 	if (callbacks.onBroadcast) {
 		channel.on("broadcast", { event: "*" }, (payload) => {
-			callbacks.onBroadcast!(payload as unknown as BroadcastEvent);
+			callbacks.onBroadcast?.(payload as unknown as BroadcastEvent);
 		});
 	}
 }
@@ -452,7 +452,7 @@ export const conflictResolutionStrategies = {
 	maxValue: (conflict: ConflictData) => {
 		const userNum = Number(conflict.userValue);
 		const serverNum = Number(conflict.serverValue);
-		return isNaN(userNum) || isNaN(serverNum)
+		return Number.isNaN(userNum) || Number.isNaN(serverNum)
 			? conflict.serverValue
 			: Math.max(userNum, serverNum);
 	},

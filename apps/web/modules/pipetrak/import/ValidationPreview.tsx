@@ -82,8 +82,8 @@ interface ImportOptions {
 }
 
 export function ValidationPreview({
-	file,
-	mappings,
+	file: _file,
+	mappings: _mappings,
 	validation,
 	importType,
 	onConfirm,

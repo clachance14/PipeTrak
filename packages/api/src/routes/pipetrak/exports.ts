@@ -1,9 +1,9 @@
 import { db as prisma } from "@repo/database";
-import { z } from "zod";
-import { Hono } from "hono";
-import { authMiddleware } from "../../middleware/auth";
 import { ComponentStatus } from "@repo/database/prisma/generated/client";
 import * as ExcelJS from "exceljs";
+import { Hono } from "hono";
+import { z } from "zod";
+import { authMiddleware } from "../../middleware/auth";
 
 // Export validation schemas
 const ComponentExportSchema = z.object({
@@ -86,12 +86,8 @@ export const exportsRouter = new Hono()
 	.post("/components", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				projectId,
-				format,
-				filters,
-				options,
-			} = ComponentExportSchema.parse(body);
+			const { projectId, format, filters, options } =
+				ComponentExportSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			// Verify user has access to the project
@@ -124,12 +120,24 @@ export const exportsRouter = new Hono()
 				status: { not: "DELETED" },
 			};
 
-			if (filters.drawingId) where.drawingId = filters.drawingId;
-			if (filters.area) where.area = filters.area;
-			if (filters.system) where.system = filters.system;
-			if (filters.testPackage) where.testPackage = filters.testPackage;
-			if (filters.status) where.status = filters.status;
-			if (filters.type) where.type = filters.type;
+			if (filters.drawingId) {
+				where.drawingId = filters.drawingId;
+			}
+			if (filters.area) {
+				where.area = filters.area;
+			}
+			if (filters.system) {
+				where.system = filters.system;
+			}
+			if (filters.testPackage) {
+				where.testPackage = filters.testPackage;
+			}
+			if (filters.status) {
+				where.status = filters.status;
+			}
+			if (filters.type) {
+				where.type = filters.type;
+			}
 
 			if (filters.completionRange) {
 				where.completionPercent = {
@@ -238,10 +246,7 @@ export const exportsRouter = new Hono()
 	.post("/progress-report", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				projectId,
-				options,
-			} = ProgressReportSchema.parse(body);
+			const { projectId, options } = ProgressReportSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			// Verify user has access to the project
@@ -847,7 +852,7 @@ export const exportsRouter = new Hono()
 						options,
 					);
 					const lines = chunkCSV.split("\n");
-					csvOutput += "\n" + lines.slice(1).join("\n");
+					csvOutput += `\n${lines.slice(1).join("\n")}`;
 				}
 
 				offset += CHUNK_SIZE;
@@ -865,13 +870,7 @@ export const exportsRouter = new Hono()
 	.post("/progress-summary", async (c) => {
 		try {
 			const body = await c.req.json();
-			const {
-				projectId,
-				weekEnding,
-				groupBy,
-				format,
-				options,
-			} = z
+			const { projectId, weekEnding, groupBy, format, options } = z
 				.object({
 					projectId: z.string(),
 					weekEnding: z
@@ -959,7 +958,9 @@ export const exportsRouter = new Hono()
 							? component.testPackage
 							: component.area;
 
-				if (!groupKey) return;
+				if (!groupKey) {
+					return;
+				}
 
 				if (!groupedData.has(groupKey)) {
 					groupedData.set(groupKey, {
@@ -977,8 +978,9 @@ export const exportsRouter = new Hono()
 					if (
 						m.effectiveDate &&
 						new Date(m.effectiveDate) > weekEndingDate
-					)
+					) {
 						return;
+					}
 
 					// Initialize milestone tracking if not exists
 					if (!group.milestoneData.has(m.milestoneName)) {
@@ -1062,15 +1064,15 @@ export const exportsRouter = new Hono()
 							: "area"]: key,
 					component_count: data.components.length,
 					received_percent:
-						Math.round(milestonePercentages["Receive"] * 100) / 100,
+						Math.round(milestonePercentages.Receive * 100) / 100,
 					installed_percent:
-						Math.round(milestonePercentages["Install"] * 100) / 100,
+						Math.round(milestonePercentages.Install * 100) / 100,
 					punched_percent:
-						Math.round(milestonePercentages["Punch"] * 100) / 100,
+						Math.round(milestonePercentages.Punch * 100) / 100,
 					tested_percent:
-						Math.round(milestonePercentages["Test"] * 100) / 100,
+						Math.round(milestonePercentages.Test * 100) / 100,
 					restored_percent:
-						Math.round(milestonePercentages["Restore"] * 100) / 100,
+						Math.round(milestonePercentages.Restore * 100) / 100,
 					overall_percent: Math.round(overallPercent * 100) / 100,
 				};
 
@@ -1093,7 +1095,7 @@ export const exportsRouter = new Hono()
 						orderBy: { snapshotTime: "desc" },
 					});
 
-				if (previousSnapshot && previousSnapshot.snapshotDate) {
+				if (previousSnapshot?.snapshotDate) {
 					const snapshotData = previousSnapshot.snapshotDate as any;
 					previousWeekData = snapshotData.data || [];
 				}
@@ -1381,7 +1383,10 @@ async function generateComponentCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map(
+					(cell: any) =>
+						`"${String(cell || "").replace(/"/g, '""')}"`,
+				)
 				.join(","),
 		)
 		.join("\n");
@@ -1896,7 +1901,10 @@ async function generateCustomCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map(
+					(cell: any) =>
+						`"${String(cell || "").replace(/"/g, '""')}"`,
+				)
 				.join(","),
 		)
 		.join("\n");
@@ -2039,7 +2047,10 @@ async function generateROCProgressCSV(rocData: any): Promise<string> {
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map(
+					(cell: any) =>
+						`"${String(cell || "").replace(/"/g, '""')}"`,
+				)
 				.join(","),
 		)
 		.join("\n");
@@ -2251,7 +2262,10 @@ async function generateTestPackageCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map(
+					(cell: any) =>
+						`"${String(cell || "").replace(/"/g, '""')}"`,
+				)
 				.join(","),
 		)
 		.join("\n");
@@ -2576,7 +2590,7 @@ async function generateStreamedExcel(
 	await workbook.commit();
 
 	// Read the file back as buffer
-	const fs = require("fs");
+	const fs = require("node:fs");
 	const buffer = fs.readFileSync(`/tmp/streamed_${projectId}.xlsx`);
 
 	// Clean up temp file
@@ -2598,12 +2612,24 @@ async function getComponentChunk(
 		status: { not: "DELETED" },
 	};
 
-	if (filters.drawingId) where.drawingId = filters.drawingId;
-	if (filters.area) where.area = filters.area;
-	if (filters.system) where.system = filters.system;
-	if (filters.testPackage) where.testPackage = filters.testPackage;
-	if (filters.status) where.status = filters.status;
-	if (filters.type) where.type = filters.type;
+	if (filters.drawingId) {
+		where.drawingId = filters.drawingId;
+	}
+	if (filters.area) {
+		where.area = filters.area;
+	}
+	if (filters.system) {
+		where.system = filters.system;
+	}
+	if (filters.testPackage) {
+		where.testPackage = filters.testPackage;
+	}
+	if (filters.status) {
+		where.status = filters.status;
+	}
+	if (filters.type) {
+		where.type = filters.type;
+	}
 
 	if (filters.completionRange) {
 		where.completionPercent = {
@@ -2737,7 +2763,10 @@ async function generateProgressSummaryCSV(reportData: any): Promise<string> {
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map(
+					(cell: any) =>
+						`"${String(cell || "").replace(/"/g, '""')}"`,
+				)
 				.join(","),
 		)
 		.join("\n");
@@ -3262,7 +3291,9 @@ async function generateProgressSummaryPDF(reportData: any): Promise<Buffer> {
 // Helper functions for Progress Summary Report
 
 function calculateProgressDeltas(currentData: any[], previousData: any[]): any {
-	if (!previousData || previousData.length === 0) return {};
+	if (!previousData || previousData.length === 0) {
+		return {};
+	}
 
 	const deltaMap: any = {};
 	const previousMap = new Map();
@@ -3317,7 +3348,7 @@ function calculateProgressDeltas(currentData: any[], previousData: any[]): any {
 }
 
 function calculateWeightedTotals(data: any[]): any {
-	if (!data || data.length === 0)
+	if (!data || data.length === 0) {
 		return {
 			received: 0,
 			installed: 0,
@@ -3326,6 +3357,7 @@ function calculateWeightedTotals(data: any[]): any {
 			restored: 0,
 			overall: 0,
 		};
+	}
 
 	let totalComponents = 0;
 	let weightedReceived = 0;
@@ -3371,7 +3403,9 @@ function calculateWeightedTotals(data: any[]): any {
 }
 
 function formatDelta(delta: number | undefined): string {
-	if (!delta || delta === 0) return "(0%)";
+	if (!delta || delta === 0) {
+		return "(0%)";
+	}
 	const sign = delta > 0 ? "+" : "";
 	return `(${sign}${Math.round(delta)}%)`;
 }

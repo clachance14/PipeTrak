@@ -25,6 +25,7 @@ interface FieldWeldUploadProps {
       components: number;
       fieldWelds: number;
     };
+    errors?: string[];
   };
 }
 

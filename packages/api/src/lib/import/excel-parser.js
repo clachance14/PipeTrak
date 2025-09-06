@@ -63,8 +63,7 @@ async function parseExcel(buffer) {
 function calculateTotalInstances(rows) {
 	return rows.reduce((total, row) => {
 		// Look for quantity column (common variations)
-		const qty =
-			row["QTY"] || row["Quantity"] || row["QUANTITY"] || row["Qty"];
+		const qty = row.QTY || row.Quantity || row.QUANTITY || row.Qty;
 		const quantity = qty ? Number.parseInt(String(qty)) || 1 : 1;
 		return total + quantity;
 	}, 0);

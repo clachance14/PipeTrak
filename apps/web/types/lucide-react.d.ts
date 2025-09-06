@@ -45,6 +45,72 @@ declare module 'lucide-react' {
   export const X: Icon;
   export const Users: Icon;
   export const File: Icon;
+
+  // Missing icons identified from TypeScript errors
+  export const Smartphone: Icon;
+  export const Monitor: Icon;
+  export const ChevronUp: Icon;
+  export const Wifi: Icon;
+  export const CloudOff: Icon;
+  export const Activity: Icon;
+  export const Triangle: Icon;
+  export const HelpCircle: Icon;
+  export const TrendingUp: Icon;
+  export const Box: Icon;
+  export const Printer: Icon;
+  export const History: Icon;
+  export const List: Icon;
+  export const Grid3x3: Icon;
+  export const LayoutGrid: Icon;
+  export const ArrowUpDown: Icon;
+  export const Sparkles: Icon;
+  export const FileDown: Icon;
+  export const Info: Icon;
+  export const Table: Icon;
+  export const UserPlus: Icon;
+  export const Columns: Icon;
+  export const EyeOff: Icon;
+  export const FlameKindling: Icon;
+  export const XCircle: Icon;
+  export const ChevronsUpDown: Icon;
+  
+  // Additional missing icons from error messages
+  export const Trash2: Icon;
+  export const Plus: Icon;
+  export const Download: Icon;
+  export const Upload: Icon;
+  export const RefreshCw: Icon;
+  export const AlertTriangle: Icon;
+  export const Loader2: Icon;
+  export const FileSpreadsheet: Icon;
+  export const TrendingDown: Icon;
+  export const Calendar: Icon;
+  export const Settings: Icon;
+  export const MoreHorizontal: Icon;
+  export const Trash: Icon;
+  export const PencilIcon: Icon;
+  export const CheckCircle: Icon;
+  export const ShieldCheck: Icon;
+  export const ShieldX: Icon;
+  export const Shield: Icon;
+  export const Building: Icon;
+  export const Home: Icon;
+  export const CreditCard: Icon;
+  export const UserCog2Icon: Icon;
+  export const UserCogIcon: Icon;
+  export const Book: Icon;
+  export const HardDrive: Icon;
+  export const LogOut: Icon;
+  export const Moon: Icon;
+  export const Sun: Icon;
+  export const Cookie: Icon;
+  export const Languages: Icon;
+  export const UserCheck: Icon;
+  export const UserX: Icon;
+  export const Table2: Icon;
+  export const FileImage: Icon;
+  export const PieChart: Icon;
+  export const LineChart: Icon;
   
   // Re-export any other existing icons from the original module
   // This ensures we don't break icons that are already working

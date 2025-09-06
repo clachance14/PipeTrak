@@ -14,7 +14,7 @@ interface AuditReportContentProps {
  */
 export function AuditReportContent({
 	projectId,
-	initialFilters = {},
+	initialFilters: _initialFilters = {},
 }: AuditReportContentProps) {
 	return (
 		<div className="space-y-6">

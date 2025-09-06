@@ -208,7 +208,7 @@ export function generateBatchComponentIds(
 
 	components.forEach((component, index) => {
 		// If component already has an ID, use it
-		if (component.componentId && component.componentId.trim()) {
+		if (component.componentId?.trim()) {
 			results.push({
 				originalIndex: index,
 				componentId: component.componentId,

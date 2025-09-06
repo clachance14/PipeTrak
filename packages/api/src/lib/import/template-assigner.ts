@@ -1,5 +1,5 @@
 import { db as prisma } from "@repo/database";
-import type { MilestoneTemplate, MilestoneDefinition } from "./types";
+import type { MilestoneDefinition, MilestoneTemplate } from "./types";
 
 type ComponentType =
 	| "PIPE"
@@ -197,7 +197,7 @@ export class MilestoneTemplateAssigner {
 			if (!componentsByTemplate.has(templateId)) {
 				componentsByTemplate.set(templateId, []);
 			}
-			componentsByTemplate.get(templateId)!.push(component);
+			componentsByTemplate.get(templateId)?.push(component);
 		}
 
 		// Create milestones for each template group

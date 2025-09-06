@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { Card, CardContent } from "@ui/components/card";
@@ -82,7 +81,6 @@ interface MobileQCViewProps {
 }
 
 export function MobileQCView({ projectId, organizationSlug: _organizationSlug }: MobileQCViewProps) {
-  const router = useRouter();
   const [data, setData] = useState<FieldWeldData[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -227,7 +225,7 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
     }
   };
 
-  const handleEditWeld = (weldId: string) => {
+  const handleEditWeld = (_weldId: string) => {
     // For now, just show a toast. Can implement edit modal later
     toast.info("Edit functionality coming soon");
   };

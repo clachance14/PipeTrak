@@ -127,9 +127,8 @@ export function RealtimeManager({
 								},
 							);
 						} else if (presence.action === "editing_end") {
-							toast.dismiss(
-								`editing_${presence.userId}_${presence.componentId}`,
-							);
+							// Note: dismiss with ID not available in current sonner version
+							// toast.dismiss(`editing_${presence.userId}_${presence.componentId}`);
 						}
 					}
 					break;

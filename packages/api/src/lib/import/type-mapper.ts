@@ -126,7 +126,9 @@ export class ComponentTypeMapper {
 
 	// Fuzzy matching for types not in the exact map
 	mapType(excelType: string): ComponentType {
-		if (!excelType || typeof excelType !== "string") return "MISC";
+		if (!excelType || typeof excelType !== "string") {
+			return "MISC";
+		}
 
 		const normalized = excelType.toUpperCase().trim();
 
@@ -149,13 +151,18 @@ export class ComponentTypeMapper {
 		}
 
 		// 3. Keyword matching for common variations
-		if (this.containsKeyword(normalized, ["VALVE", "VLV"])) return "VALVE";
-		if (this.containsKeyword(normalized, ["SUPPORT", "HANG", "CLAMP"]))
+		if (this.containsKeyword(normalized, ["VALVE", "VLV"])) {
+			return "VALVE";
+		}
+		if (this.containsKeyword(normalized, ["SUPPORT", "HANG", "CLAMP"])) {
 			return "SUPPORT";
-		if (this.containsKeyword(normalized, ["GASKET", "GSKT", "SEAL"]))
+		}
+		if (this.containsKeyword(normalized, ["GASKET", "GSKT", "SEAL"])) {
 			return "GASKET";
-		if (this.containsKeyword(normalized, ["FLANGE", "FLG", "BLIND"]))
+		}
+		if (this.containsKeyword(normalized, ["FLANGE", "FLG", "BLIND"])) {
 			return "FLANGE";
+		}
 		if (
 			this.containsKeyword(normalized, [
 				"ELBOW",
@@ -163,8 +170,9 @@ export class ComponentTypeMapper {
 				"FITTING",
 				"REDUCER",
 			])
-		)
+		) {
 			return "FITTING";
+		}
 		if (
 			this.containsKeyword(normalized, [
 				"INSTRUMENT",
@@ -172,13 +180,16 @@ export class ComponentTypeMapper {
 				"PSV",
 				"TRANSMITTER",
 			])
-		)
+		) {
 			return "INSTRUMENT";
+		}
 		if (this.containsKeyword(normalized, ["PIPE", "SPOOL"])) {
 			// Distinguish between pipe and spool
 			return normalized.includes("SPOOL") ? "SPOOL" : "PIPE";
 		}
-		if (this.containsKeyword(normalized, ["WELD"])) return "FIELD_WELD";
+		if (this.containsKeyword(normalized, ["WELD"])) {
+			return "FIELD_WELD";
+		}
 
 		// 4. Default to MISC with warning
 		console.warn(`Unknown type: "${excelType}" → MISC`);
