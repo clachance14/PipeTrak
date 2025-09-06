@@ -60,7 +60,8 @@ export const fieldWeldsRouter = new Hono()
 	.use("*", authMiddleware)
 
 	// GET /field-welds - List field welds with filtering and pagination
-	.get("/", validator("query", fieldWeldQuerySchema), async (c) => {
+	.get("/", validator("query", (value) => fieldWeldQuerySchema.parse(value)), async (c) => {
+		const query = c.req.valid("query");
 		const {
 			projectId,
 			packageNumber,
@@ -71,7 +72,10 @@ export const fieldWeldsRouter = new Hono()
 			search,
 			page,
 			limit,
-		} = c.req.valid("query");
+		} = query;
+		
+		const pageNum = Number(page);
+		const limitNum = Number(limit);
 
 		try {
 			const where: any = {
@@ -113,7 +117,7 @@ export const fieldWeldsRouter = new Hono()
 				];
 			}
 
-			const skip = (page - 1) * limit;
+			const skip = (pageNum - 1) * limitNum;
 
 			const [fieldWelds, totalCount] = await Promise.all([
 				db.fieldWeld.findMany({
@@ -167,23 +171,23 @@ export const fieldWeldsRouter = new Hono()
 					},
 					orderBy: [{ dateWelded: "desc" }, { weldIdNumber: "asc" }],
 					skip,
-					take: limit,
+					take: limitNum,
 				}),
 
 				db.fieldWeld.count({ where }),
 			]);
 
-			const totalPages = Math.ceil(totalCount / limit);
+			const totalPages = Math.ceil(totalCount / limitNum);
 
 			return c.json({
 				fieldWelds,
 				pagination: {
-					page,
-					limit,
+					page: pageNum,
+					limit: limitNum,
 					totalCount,
 					totalPages,
-					hasNextPage: page < totalPages,
-					hasPreviousPage: page > 1,
+					hasNextPage: pageNum < totalPages,
+					hasPreviousPage: pageNum > 1,
 				},
 			});
 		} catch (error: any) {
@@ -193,7 +197,7 @@ export const fieldWeldsRouter = new Hono()
 	})
 
 	// POST /field-welds - Create a new field weld
-	.post("/", validator("json", fieldWeldCreateSchema), async (c) => {
+	.post("/", validator("json", (value) => fieldWeldCreateSchema.parse(value)), async (c) => {
 		const data = c.req.valid("json");
 
 		try {
@@ -268,7 +272,7 @@ export const fieldWeldsRouter = new Hono()
 			const milestoneTemplate = await db.milestoneTemplate.findFirst({
 				where: {
 					projectId: data.projectId,
-					componentType: "FIELD_WELD",
+					name: { contains: "Weld", mode: "insensitive" },
 				},
 			});
 
@@ -284,7 +288,7 @@ export const fieldWeldsRouter = new Hono()
 			// Create both Component and FieldWeld records in a transaction
 			const result = await db.$transaction(async (tx) => {
 				// Create Component record
-				const component = await tx.component.create({
+				await tx.component.create({
 					data: {
 						projectId: data.projectId,
 						drawingId: data.drawingId,
@@ -292,7 +296,7 @@ export const fieldWeldsRouter = new Hono()
 						componentId: data.weldIdNumber, // Use weldId as componentId
 						weldId: data.weldIdNumber, // Set weldId for linking
 						type: "FIELD_WELD",
-						workflowType: "milestone_discrete",
+						workflowType: "MILESTONE_DISCRETE",
 						area: "",
 						system: "",
 						testPackage: packageNumber,
@@ -416,7 +420,7 @@ export const fieldWeldsRouter = new Hono()
 	})
 
 	// PUT /field-welds/:id - Update a field weld
-	.put("/:id", validator("json", fieldWeldUpdateSchema), async (c) => {
+	.put("/:id", validator("json", (value) => fieldWeldUpdateSchema.parse(value)), async (c) => {
 		const id = c.req.param("id");
 		const updates = c.req.valid("json");
 
@@ -523,10 +527,10 @@ export const fieldWeldsRouter = new Hono()
 		"/bulk",
 		validator(
 			"json",
-			z.object({
+			(value) => z.object({
 				ids: z.array(z.string()),
 				updates: fieldWeldUpdateSchema,
-			}),
+			}).parse(value),
 		),
 		async (c) => {
 			const { ids, updates } = c.req.valid("json");

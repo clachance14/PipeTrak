@@ -5,6 +5,7 @@ import { authMiddleware } from "../../middleware/auth";
 import {
 	ImportStatus,
 	ComponentType,
+	AuditAction,
 } from "@repo/database/prisma/generated/client";
 import { broadcastImportProgress } from "./realtime";
 import {
@@ -16,34 +17,35 @@ import {
 	TemplateResolver,
 } from "../../lib/file-processing";
 
-const ImportJobCreateSchema = z.object({
-	projectId: z.string(),
-	filename: z.string(),
-	originalPath: z.string().optional(),
-});
+// Unused schemas - kept for potential future use
+// const ImportJobCreateSchema = z.object({
+//	projectId: z.string(),
+//	filename: z.string(),
+//	originalPath: z.string().optional(),
+// });
 
-const FileUploadSchema = z.object({
-	projectId: z.string(),
-});
+// const FileUploadSchema = z.object({
+//	projectId: z.string(),
+// });
 
-const ProcessImportSchema = z.object({
-	mappings: z.array(
-		z.object({
-			sourceColumn: z.string(),
-			targetField: z.string(),
-			required: z.boolean().optional(),
-		}),
-	),
-	options: z
-		.object({
-			skipRows: z.number().optional(),
-			maxRows: z.number().optional(),
-			rollbackOnError: z.boolean().optional(),
-			updateExisting: z.boolean().optional(),
-			batchSize: z.number().optional(),
-		})
-		.optional(),
-});
+// const ProcessImportSchema = z.object({
+//	mappings: z.array(
+//		z.object({
+//			sourceColumn: z.string(),
+//			targetField: z.string(),
+//			required: z.boolean().optional(),
+//		}),
+//	),
+//	options: z
+//		.object({
+//			skipRows: z.number().optional(),
+//			maxRows: z.number().optional(),
+//			rollbackOnError: z.boolean().optional(),
+//			updateExisting: z.boolean().optional(),
+//			batchSize: z.number().optional(),
+//		})
+//		.optional(),
+// });
 
 export const importJobsRouter = new Hono()
 	.use("*", authMiddleware)
@@ -57,7 +59,7 @@ export const importJobsRouter = new Hono()
 			const userId = c.get("user")?.id;
 			const body = await c.req.json();
 
-			const { uploadId, fileData, mappings, options } = body;
+			const { uploadId: _uploadId, fileData, mappings, options } = body;
 
 			if (!fileData || !mappings) {
 				return c.json(
@@ -535,7 +537,7 @@ export const importJobsRouter = new Hono()
 			}
 
 			// Update status to processing
-			const updatedJob = await prisma.importJob.update({
+			await prisma.importJob.update({
 				where: { id },
 				data: {
 					status: ImportStatus.PROCESSING,
@@ -566,9 +568,10 @@ export const importJobsRouter = new Hono()
 					// Insert or update component
 					await prisma.component.upsert({
 						where: {
-							projectId_componentId: {
-								projectId: job.projectId,
+							drawingId_componentId_instanceNumber: {
+								drawingId: componentData.drawingId,
 								componentId: componentData.componentId,
+								instanceNumber: componentData.instanceNumber || 1,
 							},
 						},
 						create: {
@@ -591,7 +594,7 @@ export const importJobsRouter = new Hono()
 			const finalStatus =
 				errorCount === 0 ? ImportStatus.COMPLETED : ImportStatus.FAILED;
 
-			const finalJob = await prisma.importJob.update({
+			await prisma.importJob.update({
 				where: { id },
 				data: {
 					status: finalStatus,
@@ -729,8 +732,6 @@ async function processImportJob(
 				{
 					status: ImportStatus.FAILED,
 					filename: uploadData.originalName,
-					errorMessage: userFriendlyMessage,
-					completed: true,
 				},
 				uploadData.userId,
 			);
@@ -936,7 +937,7 @@ async function processImportJobInternal(
 			existingComponentData = await prisma.component.findMany({
 				where: {
 					projectId: uploadData.projectId,
-					drawingId: { not: null }, // Only get components with drawings for instance tracking
+					drawingId: { not: null as any }, // Only get components with drawings for instance tracking
 				},
 				select: {
 					drawingId: true,
@@ -1202,7 +1203,7 @@ async function processImportJobInternal(
 					const uniqueWeldIds = [
 						...new Set(
 							fieldWeldComponents.map(
-								(fw) => fw.weldId || fw.componentId,
+								(fw) => fw.welderId || fw.componentId,
 							),
 						),
 					];
@@ -1253,7 +1254,9 @@ async function processImportJobInternal(
 
 					// Store component lookup for optimization
 					existingComponentsByWeldId = new Map(
-						existingComponents.map((c) => [c.weldId, c]),
+						existingComponents
+							.filter((c) => c.weldId !== null)
+							.map((c) => [c.weldId as string, c]),
 					);
 				}
 
@@ -1721,7 +1724,7 @@ async function processImportJobInternal(
 										try {
 											await tx.fieldWeld.update({
 												where: {
-													projectId_weldIdNumber: {
+													idx_field_weld_project_id: {
 														projectId:
 															uploadData.projectId,
 														weldIdNumber:
@@ -2007,7 +2010,7 @@ async function processImportJobInternal(
 									userId: uploadData.userId,
 									entityType: "component",
 									entityId: component.id,
-									action: "CREATE",
+									action: AuditAction.CREATE,
 									changes: {
 										source: "import",
 										importJobId: jobId,
@@ -2097,7 +2100,7 @@ async function processImportJobInternal(
 									userId: uploadData.userId,
 									entityType: "component",
 									entityId: existing.id,
-									action: "UPDATE",
+									action: AuditAction.UPDATE,
 									changes: {
 										source: "import",
 										importJobId: jobId,
@@ -2250,7 +2253,6 @@ async function processImportJobInternal(
 						filename: uploadData.originalName,
 						processedRows: processed,
 						totalRows: total,
-						progress: Math.round((processed / total) * 100),
 					},
 					uploadData.userId,
 				);
@@ -2297,8 +2299,6 @@ async function processImportJobInternal(
 				processedRows: successCount + errorCount,
 				totalRows: componentsWithInstances.length,
 				errorRows: errorCount,
-				progress: 100,
-				completed: true,
 			},
 			uploadData.userId,
 		);

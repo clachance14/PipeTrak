@@ -52,20 +52,6 @@ const SyncQueueSchema = z.object({
 	lastSyncTimestamp: z.string().optional(),
 });
 
-const BulkResultSchema = z.object({
-	successful: z.number(),
-	failed: z.number(),
-	transactionId: z.string().optional(),
-	results: z.array(
-		z.object({
-			componentId: z.string(),
-			milestoneName: z.string(),
-			success: z.boolean().optional(),
-			error: z.string().optional(),
-			milestone: z.any().optional(),
-		}),
-	),
-});
 
 // Note: Real-time features are handled at the application level using Supabase subscriptions
 // The API focuses on data operations while the frontend manages real-time subscriptions
@@ -756,12 +742,12 @@ export const milestonesRouter = new Hono()
 			});
 
 			// Collect affected components for completion recalculation
-			const componentIds = new Set(
+			const _componentIds = new Set(
 				results.filter((r) => r.success).map((r) => r.componentId),
 			);
 
 			// Recalculate completion for affected components in batches
-			const componentBatches = Array.from(componentIds).reduce(
+			const componentBatches = Array.from(_componentIds).reduce(
 				(batches, id, index) => {
 					const batchIndex = Math.floor(index / 10);
 					if (!batches[batchIndex]) batches[batchIndex] = [];
@@ -928,8 +914,7 @@ export const milestonesRouter = new Hono()
 	.post("/sync", async (c) => {
 		try {
 			const body = await c.req.json();
-			const { operations, lastSyncTimestamp } =
-				SyncQueueSchema.parse(body);
+			const { operations } = SyncQueueSchema.parse(body);
 			const userId = c.get("user")?.id;
 
 			if (!userId) {
@@ -1049,7 +1034,7 @@ export const milestonesRouter = new Hono()
 					entityType: "component_milestone",
 					action: "UPDATE",
 				},
-				orderBy: { createdAt: "desc" },
+				orderBy: { timestamp: "desc" },
 				take: limit,
 				skip: offset,
 				include: {
@@ -1131,7 +1116,7 @@ export const milestonesRouter = new Hono()
 				);
 			}
 
-			const { componentId, action, timestamp } = body;
+			const { componentId: _componentId, action: _action, timestamp: _timestamp } = body;
 
 			// Verify user has access to the project
 			const project = await prisma.project.findFirst({
@@ -1293,13 +1278,18 @@ export const milestonesRouter = new Hono()
 						completer: {
 							select: { id: true, name: true, email: true },
 						},
+						component: {
+							include: {
+								project: true,
+							},
+						},
 					},
 				});
 
 				// Create audit log for conflict resolution
 				await prisma.auditLog.create({
 					data: {
-						projectId: milestone.component.project.id,
+						projectId: updatedMilestone.component.project.id,
 						userId,
 						entityType: "component_milestone",
 						entityId: milestoneId,
@@ -1391,13 +1381,15 @@ export const milestonesRouter = new Hono()
 					userId,
 					entityType: "component_milestone",
 					action: "UPDATE",
-					createdAt: {
+					timestamp: {
 						gte: new Date(txRecord.startedAt),
 						lte: new Date(txRecord.completedAt || Date.now()),
 					},
 				},
 				include: {
-					changes: true,
+					user: {
+					select: { id: true, name: true, email: true }
+				},
 				},
 			});
 
@@ -1472,18 +1464,8 @@ export const milestonesRouter = new Hono()
 				return results;
 			});
 
-			// Collect affected components for completion recalculation
-			const affectedComponents = new Set(
-				auditLogs
-					.filter((log) => log.entityId)
-					.map((log) => log.entityId), // This would need to be mapped to componentId
-			);
-
-			// Recalculate component completion for affected components
-			// Note: This would need the actual componentIds, not milestone IDs
-			// for (const componentId of affectedComponents) {
-			//   await recalculateComponentCompletion(componentId);
-			// }
+			// Note: Component completion recalculation would be handled
+			// separately after the undo operation if needed
 
 			const successful = undoResults.filter((r) => r.success).length;
 			const failed = undoResults.filter((r) => !r.success).length;
@@ -1611,7 +1593,7 @@ export const milestonesRouter = new Hono()
 			}
 
 			// Parse request body
-			const { mode, milestoneName, componentIds, groups, projectId } =
+			const { mode, milestoneName, _componentIds, groups, projectId } =
 				body;
 
 			// Use database transaction to ensure atomicity
@@ -1630,15 +1612,15 @@ export const milestonesRouter = new Hono()
 					total: 0,
 				};
 
-				if (mode === "quick" && milestoneName && componentIds) {
+				if (mode === "quick" && milestoneName && _componentIds) {
 					// Quick mode - apply same milestone to all components
-					transactionResults.total = componentIds.length;
+					transactionResults.total = _componentIds.length;
 
 					// First, find all milestones that exist and user has access to
 					const validMilestones =
 						await tx.componentMilestone.findMany({
 							where: {
-								componentId: { in: componentIds },
+								componentId: { in: _componentIds },
 								milestoneName,
 								component: {
 									project: {
@@ -1656,12 +1638,12 @@ export const milestonesRouter = new Hono()
 					const validComponentIds = validMilestones.map(
 						(m) => m.componentId,
 					);
-					const invalidComponentIds = componentIds.filter(
+					const invalidComponentIds = _componentIds.filter(
 						(id: string) => !validComponentIds.includes(id),
 					);
 
 					// Add failed results for invalid components
-					invalidComponentIds.forEach((componentId) => {
+					invalidComponentIds.forEach((componentId: string) => {
 						transactionResults.failed.push({
 							componentId,
 							milestoneName,
@@ -1706,7 +1688,7 @@ export const milestonesRouter = new Hono()
 
 							const weldIds = components
 								.filter((c) => c.weldId)
-								.map((c) => c.weldId);
+								.map((c) => c.weldId!);
 							console.log(
 								`🔧 [DEBUG BULK] Found ${weldIds.length} weldIds:`,
 								weldIds,
@@ -1735,7 +1717,7 @@ export const milestonesRouter = new Hono()
 							});
 
 						// Add successful results
-						updatedMilestones.forEach((milestone) => {
+						updatedMilestones.forEach((milestone: any) => {
 							transactionResults.successful.push({
 								componentId: milestone.componentId,
 								milestoneName,
@@ -1754,13 +1736,13 @@ export const milestonesRouter = new Hono()
 					transactionResults.total = groups.reduce(
 						(sum: number, group: any) =>
 							sum +
-							(group.componentIds?.length || 0) *
+							(group._componentIds?.length || 0) *
 								(group.milestones?.length || 0),
 						0,
 					);
 
 					for (const group of groups) {
-						for (const componentId of group.componentIds || []) {
+						for (const componentId of group._componentIds || []) {
 							for (const milestoneName of group.milestones ||
 								[]) {
 								try {
@@ -1860,13 +1842,13 @@ export const milestonesRouter = new Hono()
 					// Batch recalculate completion for all affected components within transaction
 					const affectedComponents = new Set(
 						groups.flatMap(
-							(group: any) => group.componentIds || [],
+							(group: any) => group._componentIds || [],
 						),
 					);
 
 					await batchRecalculateCompletionInTransaction(
 						tx,
-						Array.from(affectedComponents),
+						Array.from(affectedComponents) as string[],
 					);
 				} else {
 					throw new Error("Invalid request format");
@@ -1900,7 +1882,7 @@ export const milestonesRouter = new Hono()
 											: undefined,
 									successful: results.successful.length,
 									failed: results.failed.length,
-									componentIds: results.successful.map(
+									_componentIds: results.successful.map(
 										(r) => r.componentId,
 									),
 								},
@@ -1957,50 +1939,50 @@ export const milestonesRouter = new Hono()
 		}
 	});
 
-// Helper function to batch recalculate component completion (optimized)
-async function batchRecalculateCompletion(componentIds: string[]) {
-	if (componentIds.length === 0) return;
-
-	// Process in chunks to avoid overwhelming the database
-	const chunkSize = 50;
-	const chunks = [];
-
-	for (let i = 0; i < componentIds.length; i += chunkSize) {
-		chunks.push(componentIds.slice(i, i + chunkSize));
-	}
-
-	for (const chunk of chunks) {
-		try {
-			// Use Promise.all with limited concurrency for this chunk
-			await Promise.all(
-				chunk.map((componentId) =>
-					recalculateComponentCompletion(componentId),
-				),
-			);
-		} catch (error) {
-			console.error("Failed to recalculate completion for chunk:", error);
-			// Continue with other chunks even if one fails
-		}
-	}
-}
+// Helper function to batch recalculate component completion (optimized) - unused but kept for future use
+// async function batchRecalculateCompletion(componentIds: string[]) {
+//	if (componentIds.length === 0) return;
+//
+//	// Process in chunks to avoid overwhelming the database
+//	const chunkSize = 50;
+//	const chunks = [];
+//
+//	for (let i = 0; i < componentIds.length; i += chunkSize) {
+//		chunks.push(componentIds.slice(i, i + chunkSize));
+//	}
+//
+//	for (const chunk of chunks) {
+//		try {
+//			// Use Promise.all with limited concurrency for this chunk
+//			await Promise.all(
+//				chunk.map((componentId: string) =>
+//					recalculateComponentCompletion(componentId),
+//				),
+//			);
+//		} catch (error) {
+//			console.error("Failed to recalculate completion for chunk:", error);
+//			// Continue with other chunks even if one fails
+//		}
+//	}
+// }
 
 // Helper function to batch recalculate component completion within a transaction
 async function batchRecalculateCompletionInTransaction(
 	tx: any,
-	componentIds: string[],
+	_componentIds: string[],
 ) {
-	if (componentIds.length === 0) return;
+	if (_componentIds.length === 0) return;
 
 	console.log(
-		`Recalculating completion for ${componentIds.length} components within transaction`,
+		`Recalculating completion for ${_componentIds.length} components within transaction`,
 	);
 
 	// Process in smaller chunks within transaction to avoid timeouts
 	const chunkSize = 25;
 	const chunks = [];
 
-	for (let i = 0; i < componentIds.length; i += chunkSize) {
-		chunks.push(componentIds.slice(i, i + chunkSize));
+	for (let i = 0; i < _componentIds.length; i += chunkSize) {
+		chunks.push(_componentIds.slice(i, i + chunkSize));
 	}
 
 	for (const chunk of chunks) {
@@ -2044,7 +2026,7 @@ async function recalculateComponentCompletion(componentId: string) {
 		let totalWeight = 0;
 		let completedWeight = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
@@ -2060,11 +2042,11 @@ async function recalculateComponentCompletion(componentId: string) {
 		let totalWeight = 0;
 		let weightedSum = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			weightedSum += (milestone.percentageComplete || 0) * weight;
+			weightedSum += (milestone.percentageValue || 0) * weight;
 		});
 
 		completionPercent = totalWeight > 0 ? weightedSum / totalWeight : 0;
@@ -2073,13 +2055,13 @@ async function recalculateComponentCompletion(componentId: string) {
 		let totalWeight = 0;
 		let weightedSum = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
 			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
 				const percentage =
-					((milestone.quantityComplete || 0) /
+					((milestone.quantityValue || 0) /
 						(milestone as any).quantityTotal) *
 					100;
 				weightedSum += percentage * weight;
@@ -2132,7 +2114,7 @@ async function recalculateComponentCompletionInTransaction(
 		let totalWeight = 0;
 		let completedWeight = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
@@ -2148,11 +2130,11 @@ async function recalculateComponentCompletionInTransaction(
 		let totalWeight = 0;
 		let weightedSum = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
-			weightedSum += (milestone.percentageComplete || 0) * weight;
+			weightedSum += (milestone.percentageValue || 0) * weight;
 		});
 
 		completionPercent = totalWeight > 0 ? weightedSum / totalWeight : 0;
@@ -2161,13 +2143,13 @@ async function recalculateComponentCompletionInTransaction(
 		let totalWeight = 0;
 		let weightedSum = 0;
 
-		component.milestones.forEach((milestone) => {
+		component.milestones.forEach((milestone: any) => {
 			const weight =
 				milestoneData[milestone.milestoneOrder - 1]?.weight || 1;
 			totalWeight += weight;
 			if ((milestone as any).quantityTotal && (milestone as any).quantityTotal > 0) {
 				const percentage =
-					((milestone.quantityComplete || 0) /
+					((milestone.quantityValue || 0) /
 						(milestone as any).quantityTotal) *
 					100;
 				weightedSum += percentage * weight;

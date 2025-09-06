@@ -720,7 +720,7 @@ export const milestoneTemplatesRouter = new Hono()
 		try {
 			const templateId = c.req.param("id");
 			const body = await c.req.json();
-			const { componentIds, options = {} } =
+			const { componentIds, options } =
 				ApplyTemplateSchema.parse(body);
 			const userId = c.get("user")?.id;
 

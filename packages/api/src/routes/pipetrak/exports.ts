@@ -89,8 +89,8 @@ export const exportsRouter = new Hono()
 			const {
 				projectId,
 				format,
-				filters = {},
-				options = {},
+				filters,
+				options,
 			} = ComponentExportSchema.parse(body);
 			const userId = c.get("user")?.id;
 
@@ -153,7 +153,7 @@ export const exportsRouter = new Hono()
 						select: { number: true, title: true, revision: true },
 					},
 					milestoneTemplate: {
-						select: { name: true, workflowType: true },
+						select: { name: true },
 					},
 					milestones: options.includeMilestones
 						? {
@@ -240,8 +240,7 @@ export const exportsRouter = new Hono()
 			const body = await c.req.json();
 			const {
 				projectId,
-				format,
-				options = {},
+				options,
 			} = ProgressReportSchema.parse(body);
 			const userId = c.get("user")?.id;
 
@@ -869,9 +868,9 @@ export const exportsRouter = new Hono()
 			const {
 				projectId,
 				weekEnding,
-				groupBy = "area",
-				format = "excel",
-				options = {},
+				groupBy,
+				format,
+				options,
 			} = z
 				.object({
 					projectId: z.string(),
@@ -949,7 +948,7 @@ export const exportsRouter = new Hono()
 			});
 
 			// Process data based on grouping - same logic as progress-summary endpoint
-			const currentWeekData = [];
+			const currentWeekData: any[] = [];
 			const groupedData = new Map();
 
 			components.forEach((component) => {
@@ -1094,8 +1093,8 @@ export const exportsRouter = new Hono()
 						orderBy: { snapshotTime: "desc" },
 					});
 
-				if (previousSnapshot && previousSnapshot.snapshotData) {
-					const snapshotData = previousSnapshot.snapshotData as any;
+				if (previousSnapshot && previousSnapshot.snapshotDate) {
+					const snapshotData = previousSnapshot.snapshotDate as any;
 					previousWeekData = snapshotData.data || [];
 				}
 			}
@@ -1382,7 +1381,7 @@ async function generateComponentCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
 				.join(","),
 		)
 		.join("\n");
@@ -1390,7 +1389,7 @@ async function generateComponentCSV(
 
 async function generateComponentExcel(
 	components: any[],
-	project: any,
+	_project: any,
 	options: any,
 ): Promise<Buffer> {
 	const workbook = new ExcelJS.Workbook();
@@ -1543,7 +1542,7 @@ async function generateComponentExcel(
 
 async function generateProgressReportExcel(data: any): Promise<Buffer> {
 	const workbook = new ExcelJS.Workbook();
-	const { project, components, drawings, statistics, options } = data;
+	const { project, components, drawings, statistics } = data;
 
 	// Set workbook properties
 	workbook.creator = "PipeTrak";
@@ -1853,7 +1852,7 @@ function buildIncludeOptions(columns: string[]): any {
 async function generateCustomCSV(
 	components: any[],
 	columns: string[],
-	options: any,
+	_options: any,
 ): Promise<string> {
 	// Map columns to headers and extract values
 	const headerMap: Record<string, string> = {
@@ -1897,7 +1896,7 @@ async function generateCustomCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
 				.join(","),
 		)
 		.join("\n");
@@ -1905,9 +1904,9 @@ async function generateCustomCSV(
 
 async function generateCustomExcel(
 	components: any[],
-	project: any,
+	_project: any,
 	columns: string[],
-	options: any,
+	_options: any,
 ): Promise<Buffer> {
 	const workbook = new ExcelJS.Workbook();
 	const worksheet = workbook.addWorksheet("Export");
@@ -2040,7 +2039,7 @@ async function generateROCProgressCSV(rocData: any): Promise<string> {
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
 				.join(","),
 		)
 		.join("\n");
@@ -2049,7 +2048,7 @@ async function generateROCProgressCSV(rocData: any): Promise<string> {
 async function generateROCProgressExcel(
 	rocData: any,
 	project: any,
-	options: any,
+	_options: any,
 ): Promise<Buffer> {
 	const workbook = new ExcelJS.Workbook();
 
@@ -2145,7 +2144,7 @@ async function generateROCProgressExcel(
 async function generateROCProgressPDF(
 	rocData: any,
 	project: any,
-	options: any,
+	_options: any,
 ): Promise<Buffer> {
 	// For PDF generation, we'll use a simple HTML-to-PDF approach
 	// In a production environment, you'd use a library like puppeteer or similar
@@ -2226,7 +2225,7 @@ async function generateROCProgressPDF(
 
 async function generateTestPackageCSV(
 	testPackageData: any,
-	options: any,
+	_options: any,
 ): Promise<string> {
 	const headers = [
 		"Test Package",
@@ -2252,7 +2251,7 @@ async function generateTestPackageCSV(
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
 				.join(","),
 		)
 		.join("\n");
@@ -2395,7 +2394,7 @@ async function generateTestPackageExcel(
 async function generateTestPackagePDF(
 	testPackageData: any,
 	project: any,
-	options: any,
+	_options: any,
 ): Promise<Buffer> {
 	// Simplified PDF content generation
 	const htmlContent = `
@@ -2502,7 +2501,7 @@ async function generateStreamedExcel(
 	projectId: string,
 	filters: any,
 	options: any,
-	project: any,
+	_project: any,
 	chunkSize: number,
 ): Promise<Buffer> {
 	const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
@@ -2589,7 +2588,7 @@ async function generateStreamedExcel(
 async function getComponentChunk(
 	projectId: string,
 	filters: any,
-	options: any,
+	_options: any,
 	offset: number,
 	limit: number,
 ): Promise<any[]> {
@@ -2738,7 +2737,7 @@ async function generateProgressSummaryCSV(reportData: any): Promise<string> {
 	return csvRows
 		.map((row) =>
 			row
-				.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
+				.map((cell: any) => `"${String(cell || "").replace(/"/g, '""')}"`)
 				.join(","),
 		)
 		.join("\n");
@@ -3028,7 +3027,6 @@ async function generateProgressSummaryPDF(reportData: any): Promise<Buffer> {
 		projectName,
 		jobNumber,
 		weekEnding,
-		organization,
 	} = reportData;
 
 	// Calculate weighted totals for summary
