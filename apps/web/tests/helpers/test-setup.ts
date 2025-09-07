@@ -21,8 +21,9 @@ interface TestComponent {
   id: string;
   componentId: string;
   type: string;
-  workflowType: string;
-  projectId: string;
+  workflowType: 'MILESTONE_DISCRETE' | 'MILESTONE_PERCENTAGE' | 'MILESTONE_QUANTITY';
+  status: string;
+  completionPercent: number;
 }
 
 // SQL query helper
@@ -101,13 +102,19 @@ export async function setupTestProject(project: TestProject, user: TestUser): Pr
     ])
   ]);
 
-  // Create test components with different workflow types
-  const components: TestComponent[] = [
+  // Create test components with different workflow types  
+  interface TestComponentWithProject extends TestComponent {
+    projectId: string;
+  }
+  
+  const components: TestComponentWithProject[] = [
     {
       id: 'comp-discrete-1',
       componentId: 'VALVE-001',
       type: 'Ball Valve',
       workflowType: 'MILESTONE_DISCRETE',
+      status: 'NOT_STARTED',
+      completionPercent: 0,
       projectId: project.id
     },
     {
@@ -115,6 +122,8 @@ export async function setupTestProject(project: TestProject, user: TestUser): Pr
       componentId: 'PIPE-001', 
       type: 'Steel Pipe',
       workflowType: 'MILESTONE_PERCENTAGE',
+      status: 'NOT_STARTED',
+      completionPercent: 0,
       projectId: project.id
     },
     {
@@ -122,6 +131,8 @@ export async function setupTestProject(project: TestProject, user: TestUser): Pr
       componentId: 'BOLT-001',
       type: 'Hex Bolt',
       workflowType: 'MILESTONE_QUANTITY',
+      status: 'NOT_STARTED',
+      completionPercent: 0,
       projectId: project.id
     }
   ];
@@ -219,8 +230,8 @@ export async function setupLargeDataset(projectId: string, componentCount = 1000
     const startIndex = batch * batchSize;
     const endIndex = Math.min(startIndex + batchSize, componentCount);
     
-    const componentInserts = [];
-    const milestoneInserts = [];
+    const componentInserts: string[] = [];
+    const milestoneInserts: string[] = [];
     
     for (let i = startIndex; i < endIndex; i++) {
       const componentId = randomUUID();
@@ -333,10 +344,10 @@ export async function seedMilestoneTestData(): Promise<void> {
     await executeSQL(`
       INSERT INTO "Project" (id, name, description, "organizationId", "createdAt", "updatedAt")
       VALUES ($1, $2, $3, $4, NOW(), NOW())
-    `, ['large-dataset', 'Large Dataset Project', 'Project for performance testing', orgId]);
+    `, [projectId, 'Large Dataset Project', 'Project for performance testing', orgId]);
 
     // Set up large dataset
-    await setupLargeDataset('large-dataset', 2000);
+    await setupLargeDataset(projectId, 2000);
     
     console.log('Milestone test data seeded successfully');
   } catch (error) {
@@ -366,9 +377,20 @@ export function generateTestComponentId(index: number): string {
   return `TEST-COMP-${String(index).padStart(6, '0')}`;
 }
 
+interface TestMilestone {
+  id: string;
+  componentId: string;
+  milestoneName: string;
+  milestoneOrder: number;
+  isCompleted: boolean;
+  percentageComplete: number | null;
+  quantityComplete: number | null;
+  quantityTotal: number | null;
+}
+
 export function generateTestMilestoneData(componentCount: number) {
-  const components = [];
-  const milestones = [];
+  const components: TestComponent[] = [];
+  const milestones: TestMilestone[] = [];
   
   const workflowTypes: Array<'MILESTONE_DISCRETE' | 'MILESTONE_PERCENTAGE' | 'MILESTONE_QUANTITY'> = 
     ['MILESTONE_DISCRETE', 'MILESTONE_PERCENTAGE', 'MILESTONE_QUANTITY'];
