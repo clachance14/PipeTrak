@@ -24,7 +24,7 @@ import type {
 export function generateProgressCharts(
 	data: ProgressReportResponse,
 ): ProgressChartData {
-	const { comprehensiveReport, rocWeightedProgress } = data.data;
+	const { comprehensiveReport, rocWeightedProgress: _rocWeightedProgress } = data.data;
 
 	// Time series data from trends
 	const timeSeriesData: ChartDataPoint[] =
