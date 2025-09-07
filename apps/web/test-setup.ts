@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach, beforeAll, afterAll, vi } from 'vitest';
+import { afterEach, beforeAll, afterAll, vi, expect } from 'vitest';
 import { setupServer } from 'msw/node';
 import { handlers } from './modules/pipetrak/components/__mocks__/msw-handlers';
 

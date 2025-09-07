@@ -10,13 +10,16 @@ import {
 } from "@ui/components/dropdown-menu";
 import { HardDrive, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
-import { useIsClient } from "usehooks-ts";
+import { useEffect, useState } from "react";
 
 export function ColorModeToggle() {
-	const { resolvedTheme, setTheme, theme } = useTheme();
+	const { setTheme, theme } = useTheme();
 	const [value, setValue] = useState<string>(theme ?? "system");
-	const isClient = useIsClient();
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
 	const colorModeOptions = [
 		{
@@ -49,7 +52,7 @@ export function ColorModeToggle() {
 					data-test="color-mode-toggle"
 					aria-label="Color mode"
 				>
-					{resolvedTheme === "light" ? (
+					{theme === "light" ? (
 						<Sun className="size-4" />
 					) : (
 						<Moon className="size-4" />

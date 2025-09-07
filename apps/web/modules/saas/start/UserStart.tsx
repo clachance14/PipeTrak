@@ -1,7 +1,7 @@
 "use client";
 
 import { config } from "@repo/config";
-import { OrganizationsGrid3x3 } from "@saas/organizations/components/OrganizationsGrid3x3";
+import { OrganizationsGrid3x3 } from "@saas/organizations/components/OrganizationsGrid";
 import { Card } from "@ui/components/card";
 
 export default function UserStart() {

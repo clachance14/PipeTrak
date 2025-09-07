@@ -74,7 +74,7 @@ export class EnhancedFieldWeldImportWorkflow {
 			this.context.organizationId,
 			this.context.userId,
 			{
-				maxRows: this.processor.options.maxRows,
+				maxRows: (this.processor as any).options.maxRows,
 				strictMode: options?.strictMode ?? true,
 			},
 		);

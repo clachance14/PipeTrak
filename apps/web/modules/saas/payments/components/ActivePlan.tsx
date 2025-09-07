@@ -4,7 +4,7 @@ import { usePlanData } from "@saas/payments/hooks/plan-data";
 import { usePurchases } from "@saas/payments/hooks/purchases";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { BadgeCheck, Check } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { CustomerPortalButton } from "../../settings/components/CustomerPortalButton";
 import { SubscriptionStatusBadge } from "../../settings/components/SubscriptionStatusBadge";
 
@@ -15,7 +15,6 @@ export function ActivePlan({
 	seats?: number;
 }) {
 	const t = useTranslations();
-	const format = useFormatter();
 	const { planData } = usePlanData();
 	const { activePlan } = usePurchases(organizationId);
 
@@ -66,10 +65,10 @@ export function ActivePlan({
 							className="mt-2 block font-medium text-2xl lg:text-3xl"
 							data-test="price-table-plan-price"
 						>
-							{format.number(price.amount, {
+							{new Intl.NumberFormat(undefined, {
 								style: "currency",
 								currency: price.currency,
-							})}
+							}).format(price.amount)}
 							{"interval" in price && (
 								<span className="font-normal text-xs opacity-60">
 									{" / "}

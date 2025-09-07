@@ -13,16 +13,14 @@ import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
 import { type Message, useChat } from "@ai-sdk/react";
 import { EllipsisIcon, PlusIcon, SendIcon } from "lucide-react";
-import { useFormatter } from "next-intl";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useCallback, useEffect, useMemo } from "react";
 
 export function AiChat({ organizationId }: { organizationId?: string }) {
-	const formatter = useFormatter();
 	const queryClient = useQueryClient();
 	const { data: chats, status: chatsStatus } =
 		useAiChatListQuery(organizationId);
-	const [chatId, setChatId] = useQueryState("chatId");
+	const [chatId, setChatId] = useQueryState("chatId", parseAsString);
 	const { data: currentChat } = useAiChatQuery(chatId ?? "new");
 	const createChatMutation = useCreateAiChatMutation();
 	const {
@@ -116,8 +114,8 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 											"Untitled chat"}
 									</span>
 									<small className="block font-normal">
-										{formatter.dateTime(
-											new Date(chat.createdAt),
+										{new Date(chat.createdAt).toLocaleString(
+											undefined,
 											{
 												dateStyle: "short",
 												timeStyle: "short",

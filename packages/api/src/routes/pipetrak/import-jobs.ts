@@ -94,7 +94,7 @@ export const importJobsRouter = new Hono()
 			let parseResult: {
 				headers: string[];
 				rows: any[];
-				metadata: FileMetadata;
+				metadata: any;
 			};
 			if (fileData.mimetype === "text/csv") {
 				const processor = new CSVProcessor(options);
