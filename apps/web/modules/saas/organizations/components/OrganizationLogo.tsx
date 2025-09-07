@@ -3,8 +3,7 @@
 import { config } from "@repo/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
-import { useMemo } from "react";
-import { useIsClient } from "usehooks-ts";
+import { useMemo, useEffect, useState } from "react";
 
 export const OrganizationLogo = ({
 	name,
@@ -16,7 +15,11 @@ export const OrganizationLogo = ({
 	logoUrl?: string | null;
 	className?: string;
 }) => {
-	const isClient = useIsClient();
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 	const avatarColors = useMemo(() => {
 		if (typeof window === "undefined") {
 			return [];

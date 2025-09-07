@@ -80,21 +80,25 @@ export function UserList() {
 		userId: string,
 		{ name }: { name: string },
 	) => {
-		const toastId = toast.loading(
-			t("admin.users.impersonation.impersonating", {
-				name,
-			}),
+		await toast.promise(
+			(async () => {
+				await authClient.admin.impersonateUser({
+					userId,
+				});
+				await refetch();
+				window.location.href = new URL(
+					"/app",
+					window.location.origin,
+				).toString();
+			})(),
+			{
+				loading: t("admin.users.impersonation.impersonating", {
+					name,
+				}),
+				success: t("admin.users.impersonation.success", { name }),
+				error: t("admin.users.impersonation.error"),
+			},
 		);
-
-		await authClient.admin.impersonateUser({
-			userId,
-		});
-		await refetch();
-		toast.dismiss(toastId);
-		window.location.href = new URL(
-			"/app",
-			window.location.origin,
-		).toString();
 	};
 
 	const deleteUser = async (id: string) => {

@@ -16,7 +16,7 @@ import {
 	PhoneIcon,
 	StarIcon,
 } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const plans = config.payments.plans as Config["payments"]["plans"];
@@ -33,7 +33,6 @@ export function PricingTable({
 	activePlanId?: string;
 }) {
 	const t = useTranslations();
-	const format = useFormatter();
 	const router = useRouter();
 	const localeCurrency = useLocaleCurrency();
 	const [loading, setLoading] = useState<PlanId | false>(false);
@@ -217,10 +216,10 @@ export function PricingTable({
 												className="block font-medium text-2xl lg:text-3xl"
 												data-test="price-table-plan-price"
 											>
-												{format.number(price.amount, {
+												{new Intl.NumberFormat(undefined, {
 													style: "currency",
 													currency: price.currency,
-												})}
+												}).format(price.amount)}
 												{"interval" in price && (
 													<span className="font-normal text-xs opacity-60">
 														{" / "}

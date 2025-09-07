@@ -29,6 +29,7 @@ const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
 		};
 
 		return (
+			// biome-ignore lint/a11y/useSemanticElements: Custom toggle group implementation
 			<div
 				ref={ref}
 				role="group"
@@ -41,30 +42,31 @@ const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
 			>
 				{React.Children.map(children, (child) => {
 					if (React.isValidElement(child)) {
+						const childProps = child.props as { value: string };
 						return React.cloneElement(
 							child as React.ReactElement<any>,
 							{
 								isActive:
 									type === "single"
-										? child.props.value === value
-										: value?.includes(child.props.value),
+										? childProps.value === value
+										: value?.includes(childProps.value),
 								onClick: () => {
 									if (type === "single") {
-										onValueChange?.(child.props.value);
+										onValueChange?.(childProps.value);
 									} else {
 										// Multiple selection logic (not used in our case)
 										const currentValue =
 											(value as string[]) || [];
 										const newValue = currentValue.includes(
-											child.props.value,
+											childProps.value,
 										)
 											? currentValue.filter(
 													(v) =>
-														v !== child.props.value,
+														v !== childProps.value,
 												)
 											: [
 													...currentValue,
-													child.props.value,
+													childProps.value,
 												];
 										onValueChange?.(newValue);
 									}
@@ -112,6 +114,7 @@ const ToggleGroupItem = React.forwardRef<
 		};
 
 		return (
+			// biome-ignore lint/a11y/useSemanticElements: Custom toggle button with radio semantics
 			<button
 				ref={ref}
 				type="button"

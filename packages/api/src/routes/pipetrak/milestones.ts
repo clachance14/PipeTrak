@@ -858,7 +858,7 @@ export const milestonesRouter = new Hono()
 
 					// Calculate what the new values would be
 					const mockProcessor = new MilestoneBatchProcessor(userId);
-					const newValues = mockProcessor.prepareUpdateData(
+					const newValues = (mockProcessor as any).prepareUpdateData(
 						update,
 						milestone,
 						userId,

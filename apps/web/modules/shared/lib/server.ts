@@ -11,7 +11,10 @@ export const getServerQueryClient = cache(createQueryClient);
 
 export const getServerApiClient = async () => {
 	const headersList = await headers();
-	const headerObject = Object.fromEntries(headersList.entries());
+	const headerObject: Record<string, string> = {};
+	headersList.forEach((value, key) => {
+		headerObject[key] = value;
+	});
 
 	// Extract the actual host from the request headers for dynamic port detection
 	const host = headersList.get("host");

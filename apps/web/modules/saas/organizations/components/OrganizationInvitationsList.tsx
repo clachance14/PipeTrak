@@ -34,7 +34,7 @@ import {
 	MoreVertical,
 	X,
 } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { toast } from "sonner";
 import { OrganizationRoleSelect } from "./OrganizationRoleSelect";
@@ -46,7 +46,6 @@ export function OrganizationInvitationsList({
 	const t = useTranslations();
 	const queryClient = useQueryClient();
 	const { user } = useSession();
-	const formatter = useFormatter();
 	const { data: organization } = useFullOrganizationQuery(organizationId);
 
 	const canUserEditInvitations = isOrganizationAdmin(organization, user);
@@ -129,8 +128,8 @@ export function OrganizationInvitationsList({
 								{t(
 									"organizations.settings.members.invitations.expiresAt",
 									{
-										date: formatter.dateTime(
-											new Date(row.original.expiresAt),
+										date: new Date(row.original.expiresAt).toLocaleString(
+											undefined,
 											{
 												dateStyle: "medium",
 												timeStyle: "short",

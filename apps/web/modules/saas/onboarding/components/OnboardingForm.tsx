@@ -19,8 +19,8 @@ export function OnboardingForm() {
 		? Number.parseInt(stepSearchParam, 10)
 		: 1;
 
-	// biome-ignore lint/correctness/noUnusedVariables: Will be used with more steps
-	const setStep = (step: number) => {
+	// @ts-expect-error: Will be used with more steps
+	const _setStep = (step: number) => {
 		router.replace(
 			withQuery(window.location.search ?? "", {
 				step,
