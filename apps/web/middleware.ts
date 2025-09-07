@@ -1,4 +1,3 @@
-import { getSessionCookie } from "better-auth/cookies";
 import { type NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { withQuery } from "ufo";
@@ -11,7 +10,7 @@ export default async function middleware(req: NextRequest) {
 	const { pathname, origin } = req.nextUrl;
 
 	console.log("[Middleware] Request path:", pathname);
-	const sessionCookie = getSessionCookie(req);
+	const sessionCookie = req.cookies.get("better-auth.session");
 	console.log("[Middleware] Session cookie exists:", !!sessionCookie);
 
 	if (pathname.startsWith("/app")) {
@@ -83,3 +82,5 @@ export const config = {
 		"/((?!api|image-proxy|images|fonts|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
 	],
 };
+
+export const runtime = "experimental-edge";

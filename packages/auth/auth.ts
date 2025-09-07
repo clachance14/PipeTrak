@@ -39,6 +39,7 @@ const getLocaleFromRequest = (request?: Request) => {
 const appUrl = getBaseUrl();
 
 export const auth = betterAuth({
+	secret: process.env.BETTER_AUTH_SECRET ?? "better-auth-fallback-secret",
 	baseURL: appUrl,
 	trustedOrigins: [appUrl],
 	appName: config.appName,
