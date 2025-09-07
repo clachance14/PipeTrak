@@ -386,9 +386,9 @@ export const exportHelpers = {
 	/**
 	 * Generate filename with timestamp
 	 */
-	generateFilename: (reportType: string, format: string): string => {
+	generateFilename: (reportType: string, fileFormat: string): string => {
 		const timestamp = format(new Date(), "yyyy-MM-dd-HHmm");
-		return `${reportType}-report-${timestamp}.${format}`;
+		return `${reportType}-report-${timestamp}.${fileFormat}`;
 	},
 
 	/**

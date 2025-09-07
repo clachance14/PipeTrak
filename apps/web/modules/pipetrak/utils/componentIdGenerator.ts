@@ -66,7 +66,6 @@ export const COMPONENT_TYPE_PREFIXES: Record<string, string> = {
 
 	// Generic
 	component: "COMP",
-	fitting: "FITTING",
 	other: "MISC",
 };
 
@@ -253,7 +252,7 @@ export function generateBatchComponentIds(
  * This would typically query the database to find the highest existing number
  */
 export async function getNextSequenceNumber(
-	projectId: string,
+	_projectId: string,
 	type: string,
 	existingIds: string[],
 ): Promise<number> {
