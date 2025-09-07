@@ -1,0 +1,14 @@
+(node:54979) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 106, reused 75, downloaded 28, added 0
+Packages: +112
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 112, reused 81, downloaded 31, added 112, done
+Unused devDependencies
+* rimraf
+Missing dependencies
+* dotenv: ./check-email-templates.js
+* node-fetch: ./debug-email.js
+* xlsx: ./examine-excel.js
+* ts-morph: ./scripts/fix-lucide-icons.ts

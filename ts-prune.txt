@@ -1,0 +1,1294 @@
+(node:54816) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 48, reused 31, downloaded 17, added 0
+Packages: +49
++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 49, reused 32, downloaded 17, added 49, done
+test-bulk-update.ts:115 - testBulkUpdate (used in module)
+config/index.ts:3 - config
+config/index.ts:182 - satisfies
+config/index.ts:182 - Config (used in module)
+apps/web/content-collections.ts:110 - default
+apps/web/middleware.ts:10 - default
+apps/web/middleware.ts:81 - config (used in module)
+apps/web/next.config.ts:62 - default
+apps/web/playwright.config.ts:10 - default
+apps/web/test-setup.ts:8 - server (used in module)
+apps/web/vitest.config.ts:5 - default
+packages/ai/index.ts:3 - textModel
+packages/ai/index.ts:4 - imageModel
+packages/ai/index.ts:5 - audioModel
+packages/api/index.ts:5 - ComponentImportData
+packages/api/index.ts:6 - ComponentInstanceData
+packages/api/index.ts:7 - ImportPreviewResult
+packages/api/index.ts:8 - ImportResult
+packages/api/index.ts:9 - MappingStats
+packages/api/index.ts:10 - MilestoneDefinition
+packages/api/index.ts:11 - MilestoneTemplate
+packages/api/index.ts:12 - ImportProgress
+packages/api/index.ts:22 - app
+packages/api/index.ts:80 - AppRouter
+packages/auth/client.ts:12 - authClient (used in module)
+packages/auth/client.ts:23 - AuthClientErrorCodes
+packages/auth/index.ts:41 - auth
+packages/auth/index.ts:269 - Session
+packages/auth/index.ts:271 - ActiveOrganization
+packages/auth/index.ts:275 - Organization
+packages/auth/index.ts:277 - OrganizationMemberRole
+packages/auth/index.ts:280 - OrganizationInvitationStatus
+packages/auth/index.ts:282 - OrganizationMetadata
+packages/auth/index.ts:5 - updateSeatsInOrganizationSubscription
+packages/i18n/index.ts:5 - importLocale
+packages/i18n/index.ts:9 - getMessagesForLocale
+packages/i18n/index.ts:4 - Messages
+packages/i18n/index.ts:6 - Locale
+packages/logs/index.ts:3 - logger
+packages/mail/index.ts:1 - sendEmail
+packages/mail/types.ts:3 - SendEmailParams (used in module)
+packages/mail/types.ts:12 - MailProvider
+packages/payments/index.ts:8 - setCustomerIdToEntity
+packages/payments/index.ts:25 - getCustomerIdFromEntity
+packages/payments/types.ts:29 - PaymentProvider
+packages/storage/types.ts:1 - CreateBucketHandler
+packages/utils/index.ts:1 - getBaseUrl
+apps/web/app/layout.tsx:15 - default
+apps/web/app/layout.tsx:7 - metadata
+apps/web/app/robots.ts:3 - default
+apps/web/app/sitemap.ts:15 - default
+apps/web/tests/run-welder-tests.ts:567 - WelderTestRunner (used in module)
+packages/ai/lib/index.ts:7 - promptListProductNames
+packages/auth/lib/helper.ts:3 - isOrganizationAdmin
+packages/database/drizzle/drizzle.config.ts:3 - default
+packages/database/drizzle/index.ts:13 - db
+packages/database/drizzle/index.ts:20 - AiChatSchema
+packages/database/drizzle/index.ts:21 - UserSchema
+packages/database/drizzle/index.ts:22 - UserUpdateSchema
+packages/database/drizzle/index.ts:25 - OrganizationSchema
+packages/database/drizzle/index.ts:26 - OrganizationUpdateSchema
+packages/database/drizzle/index.ts:29 - MemberSchema
+packages/database/drizzle/index.ts:30 - InvitationSchema
+packages/database/drizzle/index.ts:31 - PurchaseSchema
+packages/database/drizzle/index.ts:32 - Purchase
+packages/database/drizzle/index.ts:33 - PurchaseInsertSchema
+packages/database/drizzle/index.ts:34 - PurchaseUpdateSchema
+packages/database/drizzle/index.ts:37 - SessionSchema
+packages/database/drizzle/index.ts:38 - AccountSchema
+packages/database/drizzle/index.ts:39 - VerificationSchema
+packages/database/drizzle/index.ts:40 - PasskeySchema
+packages/database/prisma/index.ts:3 - PrismaClient
+packages/database/prisma/index.ts:3 - Prisma
+packages/database/prisma/index.ts:3 - ComponentStatus
+packages/database/prisma/index.ts:36 - db
+packages/mail/emails/EarlyAccessNotification.tsx:39 - default
+packages/mail/emails/EmailVerification.tsx:47 - default
+packages/mail/emails/ForgotPassword.tsx:44 - default
+packages/mail/emails/index.ts:8 - mailTemplates
+packages/mail/emails/MagicLink.tsx:44 - default
+packages/mail/emails/NewsletterSignup.tsx:28 - default
+packages/mail/emails/NewUser.tsx:56 - default
+packages/mail/emails/OrganizationInvitation.tsx:53 - default
+tooling/scripts/src/apply-drop-tables.ts:72 - dropPipeTrarkTables (used in module)
+tooling/scripts/src/create-milestone-templates.ts:209 - MILESTONE_TEMPLATES (used in module)
+tooling/scripts/src/create-milestone-templates.ts:210 - validateTemplate (used in module)
+tooling/scripts/src/deploy-realtime-system.ts:273 - deployRealtimeMigration (used in module)
+tooling/scripts/src/deploy-realtime-system.ts:273 - runSystemTest (used in module)
+tooling/scripts/src/deploy-realtime-system.ts:273 - testRealtimeConnection (used in module)
+tooling/scripts/src/import-excel.ts:136 - importExcelData (used in module)
+tooling/scripts/src/universal-import.ts:471 - importFile (used in module)
+tooling/scripts/src/universal-import.ts:471 - parseExcelFile (used in module)
+tooling/scripts/src/universal-import.ts:471 - parseCSVFile (used in module)
+tooling/scripts/src/universal-import.ts:471 - parseJSONFile (used in module)
+tooling/scripts/src/ux-welder-evaluation.ts:594 - runUXEvaluation (used in module)
+tooling/scripts/src/ux-welder-evaluation.ts:595 - analyzeAddWelderModal (used in module)
+tooling/scripts/src/ux-welder-evaluation.ts:596 - analyzeWelderTable (used in module)
+tooling/scripts/src/ux-welder-evaluation.ts:597 - analyzeAddWeldModal (used in module)
+apps/web/app/(saas)/layout.tsx:18 - default
+apps/web/app/auth/layout.tsx:8 - default
+apps/web/modules/i18n/request.ts:7 - default
+apps/web/modules/i18n/routing.ts:5 - routing (used in module)
+apps/web/modules/i18n/routing.ts:16 - LocaleLink
+apps/web/modules/i18n/routing.ts:17 - localeRedirect
+apps/web/modules/i18n/routing.ts:18 - useLocalePathname
+apps/web/modules/i18n/routing.ts:19 - useLocaleRouter
+apps/web/modules/pipetrak/index.ts:4 - DataTable
+apps/web/modules/pipetrak/index.ts:5 - LoadingStateComponent
+apps/web/modules/pipetrak/index.ts:6 - EmptyStateComponent
+apps/web/modules/pipetrak/index.ts:7 - SuccessStateComponent
+apps/web/modules/pipetrak/index.ts:4 - User
+apps/web/modules/pipetrak/index.ts:9 - Component
+apps/web/modules/pipetrak/index.ts:42 - ComponentMilestone
+apps/web/modules/pipetrak/index.ts:67 - MilestoneTemplate
+apps/web/modules/pipetrak/index.ts:80 - Drawing
+apps/web/modules/pipetrak/index.ts:103 - DrawingComponentCount
+apps/web/modules/pipetrak/index.ts:111 - DrawingTreeNode
+apps/web/modules/pipetrak/index.ts:116 - DrawingSearchResult
+apps/web/modules/pipetrak/index.ts:126 - DrawingNavigationState
+apps/web/modules/pipetrak/index.ts:134 - Project
+apps/web/modules/pipetrak/index.ts:156 - ComponentStatus
+apps/web/modules/pipetrak/index.ts:163 - WorkflowType
+apps/web/modules/pipetrak/index.ts:169 - ProjectStatus
+apps/web/modules/pipetrak/index.ts:176 - ImportJobStatus
+apps/web/modules/pipetrak/index.ts:184 - ImportJob
+apps/web/modules/pipetrak/index.ts:200 - AuditLog
+apps/web/modules/pipetrak/index.ts:216 - AuditAction
+apps/web/modules/pipetrak/index.ts:222 - MilestoneStatus
+apps/web/modules/pipetrak/index.ts:228 - ImportError
+apps/web/modules/pipetrak/index.ts:235 - ComponentWithMilestones
+apps/web/modules/pipetrak/index.ts:249 - TableColumn
+apps/web/modules/pipetrak/index.ts:258 - ImportPreview
+apps/web/modules/pipetrak/index.ts:268 - ApiResponse
+apps/web/modules/pipetrak/index.ts:274 - PaginatedResponse
+apps/web/modules/pipetrak/index.ts:285 - ComponentFileFilters
+apps/web/modules/pipetrak/index.ts:298 - ComponentProgress
+apps/web/modules/pipetrak/index.ts:306 - ProjectSummary
+apps/web/modules/pipetrak/index.ts:317 - LoadingState
+apps/web/modules/pipetrak/index.ts:322 - ErrorState
+apps/web/modules/pipetrak/index.ts:328 - SuccessState
+apps/web/modules/pipetrak/index.ts:334 - BulkEditPayload
+apps/web/modules/pipetrak/index.ts:345 - ComponentFormData
+apps/web/tests/helpers/test-setup.ts:207 - setupLargeDataset (used in module)
+apps/web/tests/helpers/test-setup.ts:325 - seedMilestoneTestData
+apps/web/tests/helpers/test-setup.ts:360 - createAuthenticatedSession
+apps/web/tests/helpers/test-setup.ts:376 - generateTestComponentId (used in module)
+apps/web/tests/helpers/test-setup.ts:400 - generateTestMilestoneData
+apps/web/tests/helpers/test-setup.ts:440 - checkDatabaseHealth
+apps/web/tests/helpers/test-setup.ts:455 - TestComponent (used in module)
+packages/api/src/lib/file-processing.ts:1039 - generateErrorReport
+packages/api/src/lib/file-processing.ts:31 - ColumnMapping (used in module)
+packages/api/src/lib/file-processing.ts:46 - ComponentImportSchema (used in module)
+packages/api/src/lib/file-processing.ts:116 - ComponentImportData (used in module)
+packages/api/src/lib/milestone-template-mapper.ts:379 - getTemplateForComponent
+packages/api/src/lib/milestone-template-mapper.ts:54 - MilestoneTemplate (used in module)
+packages/api/src/lib/realtime.ts:123 - subscribeToProjectChanges
+packages/api/src/lib/realtime.ts:278 - subscribeToPresence
+packages/api/src/lib/realtime.ts:331 - subscribeToBroadcasts
+packages/api/src/lib/realtime.ts:362 - trackPresence
+packages/api/src/lib/realtime.ts:396 - untrackPresence
+packages/api/src/lib/realtime.ts:413 - detectConflict
+packages/api/src/lib/realtime.ts:475 - createOptimisticUpdate
+packages/api/src/lib/realtime.ts:515 - cleanupRealtimeResources
+packages/api/src/lib/realtime.ts:524 - monitorRealtimeHealth
+packages/api/src/lib/realtime.ts:8 - ComponentChangePayload (used in module)
+packages/api/src/lib/realtime.ts:17 - MilestoneChangePayload (used in module)
+packages/api/src/lib/realtime.ts:27 - ImportJobPayload (used in module)
+packages/api/src/lib/realtime.ts:38 - AuditLogPayload (used in module)
+packages/api/src/lib/realtime.ts:404 - ConflictData (used in module)
+packages/api/src/lib/realtime.ts:438 - conflictResolutionStrategies
+packages/api/src/routes/auth.ts:9 - default
+packages/api/src/types/options.ts:1 - ImportOptions
+packages/api/src/types/options.ts:10 - ExportOptions
+packages/api/src/types/options.ts:18 - MilestoneOptions
+packages/auth/plugins/invitation-only/index.ts:7 - invitationOnlyPlugin
+packages/auth/plugins/invitation-only/index.ts:39 - satisfies
+packages/auth/plugins/invitation-only/index.ts:39 - BetterAuthPlugin (used in module)
+packages/database/drizzle/queries/index.ts:5 - getAiChatsByUserId
+packages/database/drizzle/queries/index.ts:21 - getAiChatsByOrganizationId
+packages/database/drizzle/queries/index.ts:37 - getAiChatById
+packages/database/drizzle/queries/index.ts:43 - createAiChat
+packages/database/drizzle/queries/index.ts:70 - updateAiChat
+packages/database/drizzle/queries/index.ts:86 - deleteAiChat
+packages/database/drizzle/queries/index.ts:7 - getOrganizations
+packages/database/drizzle/queries/index.ts:31 - countAllOrganizations
+packages/database/drizzle/queries/index.ts:35 - getOrganizationById
+packages/database/drizzle/queries/index.ts:45 - getInvitationById
+packages/database/drizzle/queries/index.ts:54 - getOrganizationBySlug
+packages/database/drizzle/queries/index.ts:60 - getOrganizationMembership
+packages/database/drizzle/queries/index.ts:76 - getOrganizationWithPurchasesAndMembersCount
+packages/database/drizzle/queries/index.ts:93 - getPendingInvitationByEmail
+packages/database/drizzle/queries/index.ts:100 - updateOrganization
+packages/database/drizzle/queries/index.ts:7 - getPurchasesByOrganizationId
+packages/database/drizzle/queries/index.ts:14 - getPurchasesByUserId
+packages/database/drizzle/queries/index.ts:20 - getPurchaseById
+packages/database/drizzle/queries/index.ts:26 - getPurchaseBySubscriptionId
+packages/database/drizzle/queries/index.ts:33 - createPurchase
+packages/database/drizzle/queries/index.ts:44 - updatePurchase
+packages/database/drizzle/queries/index.ts:55 - deletePurchaseBySubscriptionId
+packages/database/drizzle/queries/index.ts:7 - getUsers
+packages/database/drizzle/queries/index.ts:23 - countAllUsers
+packages/database/drizzle/queries/index.ts:27 - getUserById
+packages/database/drizzle/queries/index.ts:33 - getUserByEmail
+packages/database/drizzle/queries/index.ts:39 - createUser
+packages/database/drizzle/queries/index.ts:72 - getAccountById
+packages/database/drizzle/queries/index.ts:78 - createUserAccount
+packages/database/drizzle/queries/index.ts:108 - updateUser
+packages/database/drizzle/schema/index.ts:11 - user
+packages/database/drizzle/schema/index.ts:39 - session
+packages/database/drizzle/schema/index.ts:60 - account
+packages/database/drizzle/schema/index.ts:85 - verification
+packages/database/drizzle/schema/index.ts:96 - passkey
+packages/database/drizzle/schema/index.ts:113 - twoFactor
+packages/database/drizzle/schema/index.ts:124 - organization
+packages/database/drizzle/schema/index.ts:140 - member
+packages/database/drizzle/schema/index.ts:161 - invitation
+packages/database/drizzle/schema/index.ts:177 - purchase
+packages/database/drizzle/schema/index.ts:200 - aiChat
+packages/database/drizzle/schema/index.ts:219 - userRelations
+packages/database/drizzle/schema/index.ts:230 - organizationRelations
+packages/database/drizzle/schema/index.ts:237 - memberRelations
+packages/database/drizzle/schema/index.ts:248 - sessionRelations
+packages/database/drizzle/schema/index.ts:255 - accountRelations
+packages/database/drizzle/schema/index.ts:262 - passkeyRelations
+packages/database/drizzle/schema/index.ts:269 - invitationRelations
+packages/database/drizzle/schema/index.ts:280 - purchaseRelations
+packages/database/drizzle/schema/index.ts:291 - aiChatRelations
+packages/database/drizzle/schema/index.ts:302 - twoFactorRelations
+packages/database/drizzle/schema/mysql.ts:16 - purchaseTypeEnum (used in module)
+packages/database/drizzle/schema/mysql.ts:22 - user (used in module)
+packages/database/drizzle/schema/mysql.ts:42 - session (used in module)
+packages/database/drizzle/schema/mysql.ts:63 - account (used in module)
+packages/database/drizzle/schema/mysql.ts:84 - verification
+packages/database/drizzle/schema/mysql.ts:95 - passkey (used in module)
+packages/database/drizzle/schema/mysql.ts:112 - twoFactor (used in module)
+packages/database/drizzle/schema/mysql.ts:123 - organization (used in module)
+packages/database/drizzle/schema/mysql.ts:137 - member (used in module)
+packages/database/drizzle/schema/mysql.ts:160 - invitation (used in module)
+packages/database/drizzle/schema/mysql.ts:176 - purchase (used in module)
+packages/database/drizzle/schema/mysql.ts:195 - aiChat (used in module)
+packages/database/drizzle/schema/mysql.ts:210 - userRelations
+packages/database/drizzle/schema/mysql.ts:221 - organizationRelations
+packages/database/drizzle/schema/mysql.ts:228 - memberRelations
+packages/database/drizzle/schema/mysql.ts:239 - sessionRelations
+packages/database/drizzle/schema/mysql.ts:246 - accountRelations
+packages/database/drizzle/schema/mysql.ts:253 - passkeyRelations
+packages/database/drizzle/schema/mysql.ts:260 - invitationRelations
+packages/database/drizzle/schema/mysql.ts:271 - purchaseRelations
+packages/database/drizzle/schema/mysql.ts:282 - aiChatRelations
+packages/database/drizzle/schema/mysql.ts:293 - twoFactorRelations
+packages/database/drizzle/schema/postgres.ts:16 - purchaseTypeEnum (used in module)
+packages/database/drizzle/schema/postgres.ts:42 - session (used in module)
+packages/database/drizzle/schema/postgres.ts:84 - verification
+packages/database/drizzle/schema/postgres.ts:95 - passkey (used in module)
+packages/database/drizzle/schema/postgres.ts:112 - twoFactor (used in module)
+packages/database/drizzle/schema/postgres.ts:163 - invitation (used in module)
+packages/database/drizzle/schema/postgres.ts:219 - userRelations
+packages/database/drizzle/schema/postgres.ts:230 - organizationRelations
+packages/database/drizzle/schema/postgres.ts:237 - memberRelations
+packages/database/drizzle/schema/postgres.ts:248 - sessionRelations
+packages/database/drizzle/schema/postgres.ts:255 - accountRelations
+packages/database/drizzle/schema/postgres.ts:262 - passkeyRelations
+packages/database/drizzle/schema/postgres.ts:269 - invitationRelations
+packages/database/drizzle/schema/postgres.ts:280 - purchaseRelations
+packages/database/drizzle/schema/postgres.ts:291 - aiChatRelations
+packages/database/drizzle/schema/postgres.ts:302 - twoFactorRelations
+packages/database/prisma/queries/index.ts:4 - getAiChatsByUserId
+packages/database/prisma/queries/index.ts:22 - getAiChatsByOrganizationId
+packages/database/prisma/queries/index.ts:40 - getAiChatById
+packages/database/prisma/queries/index.ts:48 - createAiChat
+packages/database/prisma/queries/index.ts:66 - updateAiChat
+packages/database/prisma/queries/index.ts:86 - deleteAiChat
+packages/database/prisma/queries/index.ts:5 - getOrganizations
+packages/database/prisma/queries/index.ts:37 - countAllOrganizations
+packages/database/prisma/queries/index.ts:41 - getOrganizationById
+packages/database/prisma/queries/index.ts:51 - getInvitationById
+packages/database/prisma/queries/index.ts:60 - getOrganizationBySlug
+packages/database/prisma/queries/index.ts:66 - getOrganizationMembership
+packages/database/prisma/queries/index.ts:83 - getOrganizationWithPurchasesAndMembersCount
+packages/database/prisma/queries/index.ts:108 - getPendingInvitationByEmail
+packages/database/prisma/queries/index.ts:117 - updateOrganization
+packages/database/prisma/queries/index.ts:130 - getUserMemberships
+packages/database/prisma/queries/index.ts:139 - hasExistingMembership
+packages/database/prisma/queries/index.ts:8 - getPurchaseById
+packages/database/prisma/queries/index.ts:14 - getPurchasesByOrganizationId
+packages/database/prisma/queries/index.ts:22 - getPurchasesByUserId
+packages/database/prisma/queries/index.ts:30 - getPurchaseBySubscriptionId
+packages/database/prisma/queries/index.ts:38 - createPurchase
+packages/database/prisma/queries/index.ts:48 - updatePurchase
+packages/database/prisma/queries/index.ts:63 - deletePurchaseBySubscriptionId
+packages/database/prisma/queries/index.ts:5 - getUsers
+packages/database/prisma/queries/index.ts:27 - countAllUsers
+packages/database/prisma/queries/index.ts:31 - getUserById
+packages/database/prisma/queries/index.ts:39 - getUserByEmail
+packages/database/prisma/queries/index.ts:47 - createUser
+packages/database/prisma/queries/index.ts:73 - getAccountById
+packages/database/prisma/queries/index.ts:81 - createUserAccount
+packages/database/prisma/queries/index.ts:104 - updateUser
+packages/database/prisma/zod/index.ts:12 - NullableJsonInput (used in module)
+packages/database/prisma/zod/index.ts:14 - transformJsonNull (used in module)
+packages/database/prisma/zod/index.ts:20 - JsonValueSchema (used in module)
+packages/database/prisma/zod/index.ts:31 - JsonValueType
+packages/database/prisma/zod/index.ts:33 - NullableJsonValue (used in module)
+packages/database/prisma/zod/index.ts:38 - NullableJsonValueType
+packages/database/prisma/zod/index.ts:40 - InputJsonValueSchema (used in module)
+packages/database/prisma/zod/index.ts:51 - InputJsonValueType
+packages/database/prisma/zod/index.ts:56 - DecimalJsLikeSchema (used in module)
+packages/database/prisma/zod/index.ts:63 - DECIMAL_STRING_REGEX (used in module)
+packages/database/prisma/zod/index.ts:65 - isValidDecimalInput (used in module)
+packages/database/prisma/zod/index.ts:79 - TransactionIsolationLevelSchema
+packages/database/prisma/zod/index.ts:81 - UserScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:83 - SessionScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:85 - AccountScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:87 - VerificationScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:89 - PasskeyScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:91 - TwoFactorScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:93 - OrganizationScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:95 - MemberScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:97 - InvitationScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:99 - PurchaseScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:101 - AiChatScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:103 - ProjectScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:105 - DrawingScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:107 - MilestoneTemplateScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:109 - ComponentScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:111 - ComponentMilestoneScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:113 - ImportJobScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:115 - AuditLogScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:117 - ReportingCacheScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:119 - ROCConfigurationsScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:121 - ProgressSnapshotsScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:123 - ReportGenerationsScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:125 - WeldTypeScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:127 - WelderScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:129 - FieldWeldScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:131 - EarlyAccessLeadScalarFieldEnumSchema (used in module)
+packages/database/prisma/zod/index.ts:133 - SortOrderSchema (used in module)
+packages/database/prisma/zod/index.ts:135 - JsonNullValueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:137 - NullableJsonNullValueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:139 - QueryModeSchema (used in module)
+packages/database/prisma/zod/index.ts:141 - NullsOrderSchema (used in module)
+packages/database/prisma/zod/index.ts:143 - JsonNullValueFilterSchema
+packages/database/prisma/zod/index.ts:145 - PurchaseTypeSchema (used in module)
+packages/database/prisma/zod/index.ts:147 - PurchaseTypeType
+packages/database/prisma/zod/index.ts:149 - ProjectStatusSchema (used in module)
+packages/database/prisma/zod/index.ts:151 - ProjectStatusType
+packages/database/prisma/zod/index.ts:153 - WorkflowTypeSchema (used in module)
+packages/database/prisma/zod/index.ts:155 - WorkflowTypeType
+packages/database/prisma/zod/index.ts:157 - ComponentStatusSchema (used in module)
+packages/database/prisma/zod/index.ts:159 - ComponentStatusType
+packages/database/prisma/zod/index.ts:161 - ComponentTypeSchema (used in module)
+packages/database/prisma/zod/index.ts:163 - ComponentTypeType
+packages/database/prisma/zod/index.ts:165 - ImportStatusSchema (used in module)
+packages/database/prisma/zod/index.ts:167 - ImportStatusType
+packages/database/prisma/zod/index.ts:169 - AuditActionSchema (used in module)
+packages/database/prisma/zod/index.ts:171 - AuditActionType
+packages/database/prisma/zod/index.ts:173 - ReportTypeSchema (used in module)
+packages/database/prisma/zod/index.ts:175 - ReportTypeType
+packages/database/prisma/zod/index.ts:177 - ReportStatusSchema (used in module)
+packages/database/prisma/zod/index.ts:179 - ReportStatusType
+packages/database/prisma/zod/index.ts:181 - OutputFormatSchema (used in module)
+packages/database/prisma/zod/index.ts:183 - OutputFormatType
+packages/database/prisma/zod/index.ts:185 - DeliveryMethodSchema (used in module)
+packages/database/prisma/zod/index.ts:187 - DeliveryMethodType
+packages/database/prisma/zod/index.ts:189 - GenerationMethodSchema (used in module)
+packages/database/prisma/zod/index.ts:191 - GenerationMethodType
+packages/database/prisma/zod/index.ts:201 - UserSchema (used in module)
+packages/database/prisma/zod/index.ts:220 - User
+packages/database/prisma/zod/index.ts:226 - SessionSchema (used in module)
+packages/database/prisma/zod/index.ts:239 - Session
+packages/database/prisma/zod/index.ts:245 - AccountSchema (used in module)
+packages/database/prisma/zod/index.ts:262 - Account
+packages/database/prisma/zod/index.ts:268 - VerificationSchema (used in module)
+packages/database/prisma/zod/index.ts:277 - Verification
+packages/database/prisma/zod/index.ts:283 - PasskeySchema (used in module)
+packages/database/prisma/zod/index.ts:296 - Passkey
+packages/database/prisma/zod/index.ts:302 - TwoFactorSchema (used in module)
+packages/database/prisma/zod/index.ts:309 - TwoFactor
+packages/database/prisma/zod/index.ts:315 - OrganizationSchema (used in module)
+packages/database/prisma/zod/index.ts:325 - Organization
+packages/database/prisma/zod/index.ts:331 - MemberSchema (used in module)
+packages/database/prisma/zod/index.ts:339 - Member
+packages/database/prisma/zod/index.ts:345 - InvitationSchema (used in module)
+packages/database/prisma/zod/index.ts:355 - Invitation
+packages/database/prisma/zod/index.ts:361 - PurchaseSchema (used in module)
+packages/database/prisma/zod/index.ts:374 - Purchase
+packages/database/prisma/zod/index.ts:380 - AiChatSchema (used in module)
+packages/database/prisma/zod/index.ts:393 - AiChat
+packages/database/prisma/zod/index.ts:399 - ProjectSchema (used in module)
+packages/database/prisma/zod/index.ts:415 - Project
+packages/database/prisma/zod/index.ts:421 - DrawingSchema (used in module)
+packages/database/prisma/zod/index.ts:434 - Drawing
+packages/database/prisma/zod/index.ts:440 - MilestoneTemplateSchema (used in module)
+packages/database/prisma/zod/index.ts:455 - MilestoneTemplate
+packages/database/prisma/zod/index.ts:461 - ComponentSchema (used in module)
+packages/database/prisma/zod/index.ts:496 - Component
+packages/database/prisma/zod/index.ts:502 - ComponentMilestoneSchema (used in module)
+packages/database/prisma/zod/index.ts:519 - ComponentMilestone
+packages/database/prisma/zod/index.ts:525 - ImportJobSchema (used in module)
+packages/database/prisma/zod/index.ts:546 - ImportJob
+packages/database/prisma/zod/index.ts:552 - AuditLogSchema (used in module)
+packages/database/prisma/zod/index.ts:570 - AuditLog
+packages/database/prisma/zod/index.ts:576 - ReportingCacheSchema (used in module)
+packages/database/prisma/zod/index.ts:590 - ReportingCache
+packages/database/prisma/zod/index.ts:596 - ROCConfigurationsSchema (used in module)
+packages/database/prisma/zod/index.ts:610 - ROCConfigurations
+packages/database/prisma/zod/index.ts:616 - ProgressSnapshotsSchema (used in module)
+packages/database/prisma/zod/index.ts:640 - ProgressSnapshots
+packages/database/prisma/zod/index.ts:646 - ReportGenerationsSchema (used in module)
+packages/database/prisma/zod/index.ts:671 - ReportGenerations
+packages/database/prisma/zod/index.ts:677 - WeldTypeSchema (used in module)
+packages/database/prisma/zod/index.ts:685 - WeldType
+packages/database/prisma/zod/index.ts:691 - WelderSchema (used in module)
+packages/database/prisma/zod/index.ts:701 - Welder
+packages/database/prisma/zod/index.ts:707 - FieldWeldSchema (used in module)
+packages/database/prisma/zod/index.ts:734 - FieldWeld
+packages/database/prisma/zod/index.ts:740 - EarlyAccessLeadSchema (used in module)
+packages/database/prisma/zod/index.ts:758 - EarlyAccessLead
+packages/database/prisma/zod/index.ts:767 - UserIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:788 - UserArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:793 - UserCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:797 - UserCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:817 - UserSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:857 - SessionIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:861 - SessionArgsSchema
+packages/database/prisma/zod/index.ts:866 - SessionSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:883 - AccountIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:887 - AccountArgsSchema
+packages/database/prisma/zod/index.ts:892 - AccountSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:913 - VerificationSelectSchema
+packages/database/prisma/zod/index.ts:925 - PasskeyIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:929 - PasskeyArgsSchema
+packages/database/prisma/zod/index.ts:934 - PasskeySelectSchema (used in module)
+packages/database/prisma/zod/index.ts:951 - TwoFactorIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:955 - TwoFactorArgsSchema
+packages/database/prisma/zod/index.ts:960 - TwoFactorSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:971 - OrganizationIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:981 - OrganizationArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:986 - OrganizationCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:990 - OrganizationCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:999 - OrganizationSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1019 - MemberIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1024 - MemberArgsSchema
+packages/database/prisma/zod/index.ts:1029 - MemberSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1042 - InvitationIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1047 - InvitationArgsSchema
+packages/database/prisma/zod/index.ts:1052 - InvitationSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1067 - PurchaseIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1072 - PurchaseArgsSchema
+packages/database/prisma/zod/index.ts:1077 - PurchaseSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1095 - AiChatIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1100 - AiChatArgsSchema
+packages/database/prisma/zod/index.ts:1105 - AiChatSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1120 - ProjectIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1137 - ProjectArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1142 - ProjectCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1146 - ProjectCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1160 - ProjectSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1193 - DrawingIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1202 - DrawingArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1207 - DrawingCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1211 - DrawingCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1217 - DrawingSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1239 - MilestoneTemplateIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1245 - MilestoneTemplateArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1250 - MilestoneTemplateCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1254 - MilestoneTemplateCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1258 - MilestoneTemplateSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1276 - ComponentIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1287 - ComponentArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1292 - ComponentCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1296 - ComponentCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1302 - ComponentSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1348 - ComponentMilestoneIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1353 - ComponentMilestoneArgsSchema
+packages/database/prisma/zod/index.ts:1358 - ComponentMilestoneSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1380 - ImportJobIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1385 - ImportJobArgsSchema
+packages/database/prisma/zod/index.ts:1390 - ImportJobSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1413 - AuditLogIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1419 - AuditLogArgsSchema
+packages/database/prisma/zod/index.ts:1424 - AuditLogSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1445 - ReportingCacheIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1450 - ReportingCacheArgsSchema
+packages/database/prisma/zod/index.ts:1455 - ReportingCacheSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1474 - ROCConfigurationsIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1482 - ROCConfigurationsArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1487 - ROCConfigurationsCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1491 - ROCConfigurationsCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1495 - ROCConfigurationsSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1517 - ProgressSnapshotsIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1523 - ProgressSnapshotsArgsSchema
+packages/database/prisma/zod/index.ts:1528 - ProgressSnapshotsSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1558 - ReportGenerationsIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1563 - ReportGenerationsArgsSchema
+packages/database/prisma/zod/index.ts:1568 - ReportGenerationsSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1598 - WeldTypeIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1603 - WeldTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1608 - WeldTypeCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1612 - WeldTypeCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1616 - WeldTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1629 - WelderIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1635 - WelderArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1640 - WelderCountOutputTypeArgsSchema (used in module)
+packages/database/prisma/zod/index.ts:1644 - WelderCountOutputTypeSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1648 - WelderSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1664 - FieldWeldIncludeSchema (used in module)
+packages/database/prisma/zod/index.ts:1672 - FieldWeldArgsSchema
+packages/database/prisma/zod/index.ts:1677 - FieldWeldSelectSchema (used in module)
+packages/database/prisma/zod/index.ts:1712 - EarlyAccessLeadSelectSchema
+packages/database/prisma/zod/index.ts:1735 - UserWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1774 - UserOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1810 - UserWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1877 - UserOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1899 - UserScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1921 - SessionWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1938 - SessionOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1952 - SessionWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1981 - SessionOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:1997 - SessionScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2013 - AccountWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2034 - AccountOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2052 - AccountWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2076 - AccountOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2096 - AccountScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2116 - VerificationWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2128 - VerificationOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2137 - VerificationWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2152 - VerificationOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2164 - VerificationScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2176 - PasskeyWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2193 - PasskeyOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2207 - PasskeyWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2227 - PasskeyOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2245 - PasskeyScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2261 - TwoFactorWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2272 - TwoFactorOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2280 - TwoFactorWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2294 - TwoFactorOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2304 - TwoFactorScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2314 - OrganizationWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2333 - OrganizationOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2349 - OrganizationWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2380 - OrganizationOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2393 - OrganizationScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2406 - MemberWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2419 - MemberOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2429 - MemberWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2455 - MemberOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2466 - MemberScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2477 - InvitationWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2492 - InvitationOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2504 - InvitationWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2522 - InvitationOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2535 - InvitationScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2548 - PurchaseWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2566 - PurchaseOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2581 - PurchaseWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2611 - PurchaseOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2627 - PurchaseScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2643 - AiChatWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2658 - AiChatOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2670 - AiChatWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2688 - AiChatOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2701 - AiChatScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2714 - ProjectWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2746 - ProjectOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2775 - ProjectWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2820 - ProjectOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2839 - ProjectScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2858 - DrawingWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2879 - DrawingOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2897 - DrawingWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2931 - DrawingOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2947 - DrawingScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2963 - MilestoneTemplateWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2980 - MilestoneTemplateOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:2994 - MilestoneTemplateWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3024 - MilestoneTemplateOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3041 - MilestoneTemplateScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3056 - ComponentWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3101 - ComponentOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3143 - ComponentWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3217 - ComponentOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3257 - ComponentScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3295 - ComponentMilestoneWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3317 - ComponentMilestoneOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3336 - ComponentMilestoneWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3371 - ComponentMilestoneOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3393 - ComponentMilestoneScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3413 - ImportJobWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3436 - ImportJobOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3456 - ImportJobWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3482 - ImportJobOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3505 - ImportJobScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3526 - AuditLogWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3547 - AuditLogOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3565 - AuditLogWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3589 - AuditLogOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3607 - AuditLogScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3625 - ReportingCacheWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3644 - ReportingCacheOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3660 - ReportingCacheWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3692 - ReportingCacheOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3711 - ReportingCacheScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3728 - ROCConfigurationsWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3749 - ROCConfigurationsOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3767 - ROCConfigurationsWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3791 - ROCConfigurationsOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3808 - ROCConfigurationsScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3825 - ProgressSnapshotsWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3855 - ProgressSnapshotsOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3882 - ProgressSnapshotsWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3925 - ProgressSnapshotsOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3954 - ProgressSnapshotsScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:3981 - ReportGenerationsWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4011 - ReportGenerationsOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4038 - ReportGenerationsWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4071 - ReportGenerationsOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4101 - ReportGenerationsScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4129 - WeldTypeWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4141 - WeldTypeOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4150 - WeldTypeWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4174 - WeldTypeOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4185 - WeldTypeScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4196 - WelderWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4211 - WelderOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4223 - WelderWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4251 - WelderOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4264 - WelderScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4277 - FieldWeldWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4312 - FieldWeldOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4344 - FieldWeldWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4392 - FieldWeldOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4424 - FieldWeldScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4454 - EarlyAccessLeadWhereInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4475 - EarlyAccessLeadOrderByWithRelationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4493 - EarlyAccessLeadWhereUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4526 - EarlyAccessLeadOrderByWithAggregationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4547 - EarlyAccessLeadScalarWhereWithAggregatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4568 - UserCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4604 - UserUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4640 - UserUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4676 - UserUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4712 - UserCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4731 - UserUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4750 - UserUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4769 - SessionCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4782 - SessionUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4795 - SessionUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4808 - SessionUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4821 - SessionCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4834 - SessionUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4846 - SessionUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4859 - AccountCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4876 - AccountUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4893 - AccountUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4910 - AccountUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4927 - AccountCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4944 - AccountUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4960 - AccountUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4977 - VerificationCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4986 - VerificationUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:4995 - VerificationUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5004 - VerificationUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5013 - VerificationCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5022 - VerificationUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5031 - VerificationUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5040 - PasskeyCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5053 - PasskeyUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5066 - PasskeyUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5079 - PasskeyUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5092 - PasskeyCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5105 - PasskeyUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5117 - PasskeyUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5130 - TwoFactorCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5137 - TwoFactorUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5144 - TwoFactorUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5151 - TwoFactorUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5158 - TwoFactorCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5165 - TwoFactorUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5171 - TwoFactorUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5178 - OrganizationCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5194 - OrganizationUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5210 - OrganizationUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5226 - OrganizationUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5242 - OrganizationCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5252 - OrganizationUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5262 - OrganizationUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5272 - MemberCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5280 - MemberUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5288 - MemberUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5296 - MemberUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5304 - MemberCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5312 - MemberUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5318 - MemberUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5326 - InvitationCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5336 - InvitationUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5346 - InvitationUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5356 - InvitationUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5366 - InvitationCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5376 - InvitationUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5384 - InvitationUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5394 - PurchaseCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5407 - PurchaseUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5420 - PurchaseUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5433 - PurchaseUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5446 - PurchaseCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5459 - PurchaseUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5470 - PurchaseUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5483 - AiChatCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5493 - AiChatUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5503 - AiChatUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5513 - AiChatUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5523 - AiChatCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5533 - AiChatUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5541 - AiChatUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5551 - ProjectCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5578 - ProjectUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5605 - ProjectUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5632 - ProjectUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5659 - ProjectCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5675 - ProjectUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5689 - ProjectUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5705 - DrawingCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5721 - DrawingUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5737 - DrawingUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5753 - DrawingUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5769 - DrawingCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5782 - DrawingUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5793 - DrawingUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5806 - MilestoneTemplateCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5819 - MilestoneTemplateUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5832 - MilestoneTemplateUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5845 - MilestoneTemplateUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5858 - MilestoneTemplateCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5870 - MilestoneTemplateUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5881 - MilestoneTemplateUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5893 - ComponentCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5931 - ComponentUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:5969 - ComponentUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6007 - ComponentUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6045 - ComponentCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6080 - ComponentUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6111 - ComponentUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6146 - ComponentMilestoneCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6163 - ComponentMilestoneUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6180 - ComponentMilestoneUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6197 - ComponentMilestoneUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6214 - ComponentMilestoneCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6231 - ComponentMilestoneUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6246 - ComponentMilestoneUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6263 - ImportJobCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6281 - ImportJobUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6299 - ImportJobUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6317 - ImportJobUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6335 - ImportJobCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6353 - ImportJobUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6369 - ImportJobUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6387 - AuditLogCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6402 - AuditLogUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6417 - AuditLogUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6432 - AuditLogUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6447 - AuditLogCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6462 - AuditLogUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6474 - AuditLogUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6489 - ReportingCacheCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6503 - ReportingCacheUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6517 - ReportingCacheUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6531 - ReportingCacheUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6545 - ReportingCacheCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6559 - ReportingCacheUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6571 - ReportingCacheUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6585 - ROCConfigurationsCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6600 - ROCConfigurationsUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6615 - ROCConfigurationsUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6630 - ROCConfigurationsUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6645 - ROCConfigurationsCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6659 - ROCConfigurationsUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6670 - ROCConfigurationsUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6684 - ProgressSnapshotsCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6708 - ProgressSnapshotsUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6732 - ProgressSnapshotsUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6756 - ProgressSnapshotsUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6780 - ProgressSnapshotsCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6804 - ProgressSnapshotsUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6825 - ProgressSnapshotsUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6849 - ReportGenerationsCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6874 - ReportGenerationsUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6899 - ReportGenerationsUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6924 - ReportGenerationsUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6949 - ReportGenerationsCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6974 - ReportGenerationsUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:6997 - ReportGenerationsUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7022 - WeldTypeCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7031 - WeldTypeUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7040 - WeldTypeUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7049 - WeldTypeUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7058 - WeldTypeCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7066 - WeldTypeUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7074 - WeldTypeUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7082 - WelderCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7093 - WelderUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7104 - WelderUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7115 - WelderUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7126 - WelderCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7136 - WelderUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7145 - WelderUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7155 - FieldWeldCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7182 - FieldWeldUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7209 - FieldWeldUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7236 - FieldWeldUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7263 - FieldWeldCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7290 - FieldWeldUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7312 - FieldWeldUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7339 - EarlyAccessLeadCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7357 - EarlyAccessLeadUncheckedCreateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7375 - EarlyAccessLeadUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7393 - EarlyAccessLeadUncheckedUpdateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7411 - EarlyAccessLeadCreateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7429 - EarlyAccessLeadUpdateManyMutationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7447 - EarlyAccessLeadUncheckedUpdateManyInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7465 - StringFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7480 - BoolFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7485 - StringNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7500 - DateTimeFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7511 - BoolNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7516 - DateTimeNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7527 - SessionListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7533 - AccountListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7539 - PasskeyListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7545 - InvitationListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7551 - PurchaseListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7557 - MemberListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7563 - TwoFactorListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7569 - AiChatListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7575 - ProjectListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7581 - ComponentListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7587 - ComponentMilestoneListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7593 - ImportJobListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7599 - AuditLogListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7605 - ReportingCacheListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7611 - ROCConfigurationsListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7617 - ProgressSnapshotsListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7623 - ReportGenerationsListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7629 - SortOrderInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7634 - SessionOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7638 - AccountOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7642 - PasskeyOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7646 - InvitationOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7650 - PurchaseOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7654 - MemberOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7658 - TwoFactorOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7662 - AiChatOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7666 - ProjectOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7670 - ComponentOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7674 - ComponentMilestoneOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7678 - ImportJobOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7682 - AuditLogOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7686 - ReportingCacheOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7690 - ROCConfigurationsOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7694 - ProgressSnapshotsOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7698 - ReportGenerationsOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7702 - UserCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7721 - UserMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7740 - UserMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7759 - StringWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7777 - BoolWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7785 - StringNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7803 - DateTimeWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7817 - BoolNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7825 - DateTimeNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7839 - UserScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7844 - SessionCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7857 - SessionMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7870 - SessionMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7883 - AccountCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7900 - AccountMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7917 - AccountMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7934 - VerificationCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7943 - VerificationMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7952 - VerificationMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7961 - IntFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:7972 - PasskeyCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7985 - PasskeyAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:7989 - PasskeyMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8002 - PasskeyMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8015 - PasskeySumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8019 - IntWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8035 - TwoFactorCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8042 - TwoFactorMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8049 - TwoFactorMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8056 - OrganizationCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8066 - OrganizationMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8076 - OrganizationMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8086 - OrganizationScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8091 - MemberOrganizationIdUserIdCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8096 - MemberCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8104 - MemberMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8112 - MemberMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8120 - InvitationCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8130 - InvitationMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8140 - InvitationMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8150 - EnumPurchaseTypeFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8157 - OrganizationNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8162 - UserNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8167 - PurchaseCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8180 - PurchaseMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8193 - PurchaseMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8206 - EnumPurchaseTypeWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8216 - JsonFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8233 - AiChatCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8243 - AiChatMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8252 - AiChatMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8261 - JsonWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8281 - EnumProjectStatusFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8288 - DrawingListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8294 - MilestoneTemplateListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8300 - WelderListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8306 - FieldWeldListRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8312 - DrawingOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8316 - MilestoneTemplateOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8320 - WelderOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8324 - FieldWeldOrderByRelationAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8328 - ProjectUnique_org_job_numberCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8333 - ProjectCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8349 - ProjectMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8365 - ProjectMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8381 - EnumProjectStatusWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8391 - ProjectScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8396 - DrawingNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8401 - DrawingProjectIdNumberCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8406 - DrawingCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8419 - DrawingMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8432 - DrawingMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8445 - MilestoneTemplateProjectIdNameCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8450 - MilestoneTemplateCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8462 - MilestoneTemplateAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8466 - MilestoneTemplateMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8477 - MilestoneTemplateMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8488 - MilestoneTemplateSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8492 - IntNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8503 - EnumComponentTypeFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8510 - EnumWorkflowTypeFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8517 - FloatNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8528 - FloatFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8539 - EnumComponentStatusFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8546 - DrawingScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8551 - MilestoneTemplateScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8556 - ComponentDrawingIdComponentIdInstanceNumberCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8562 - ComponentCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8597 - ComponentAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8606 - ComponentMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8641 - ComponentMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8676 - ComponentSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8685 - IntNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8701 - EnumComponentTypeWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8711 - EnumWorkflowTypeWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8721 - FloatNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8737 - FloatWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8753 - EnumComponentStatusWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8763 - ComponentScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8768 - ComponentMilestoneComponentIdMilestoneNameCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8773 - ComponentMilestoneCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8790 - ComponentMilestoneAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8797 - ComponentMilestoneMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8814 - ComponentMilestoneMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8831 - ComponentMilestoneSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8838 - EnumImportStatusFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8845 - JsonNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8862 - ImportJobCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8880 - ImportJobAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8887 - ImportJobMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8904 - ImportJobMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8921 - ImportJobSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8928 - EnumImportStatusWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8938 - JsonNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8958 - EnumAuditActionFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8965 - ComponentNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:8970 - AuditLogCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8985 - AuditLogMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:8999 - AuditLogMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9013 - EnumAuditActionWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9023 - ReportingCacheIdx_cache_uniqueCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9029 - ReportingCacheCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9043 - ReportingCacheAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9048 - ReportingCacheMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9060 - ReportingCacheMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9072 - ReportingCacheSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9077 - ProjectNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9082 - ROCConfigurationsCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9096 - ROCConfigurationsMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9109 - ROCConfigurationsMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9122 - DecimalFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9133 - DecimalNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9144 - ROCConfigurationsNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9149 - ProgressSnapshotsIdx_snapshot_project_dateCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9154 - ProgressSnapshotsCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9178 - ProgressSnapshotsAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9191 - ProgressSnapshotsMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9211 - ProgressSnapshotsMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9231 - ProgressSnapshotsSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9244 - DecimalWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9260 - DecimalNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9276 - BigIntNullableFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9287 - ReportGenerationsCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9312 - ReportGenerationsAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9321 - ReportGenerationsMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9344 - ReportGenerationsMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9367 - ReportGenerationsSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9376 - BigIntNullableWithAggregatesFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9392 - WeldTypeCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9400 - WeldTypeMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9408 - WeldTypeMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9416 - WelderIdx_welder_project_stencilCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9421 - WelderCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9431 - WelderMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9441 - WelderMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9451 - StringNullableListFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9459 - WelderNullableScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9464 - WeldTypeScalarRelationFilterSchema (used in module)
+packages/database/prisma/zod/index.ts:9469 - FieldWeldIdx_field_weld_project_idCompoundUniqueInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9474 - FieldWeldCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9501 - FieldWeldAvgOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9505 - FieldWeldMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9530 - FieldWeldMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9555 - FieldWeldSumOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9559 - EarlyAccessLeadCountOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9577 - EarlyAccessLeadMaxOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9595 - EarlyAccessLeadMinOrderByAggregateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9613 - SessionCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9620 - AccountCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9627 - PasskeyCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9634 - InvitationCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9641 - PurchaseCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9648 - MemberCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9655 - TwoFactorCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9662 - AiChatCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9669 - ProjectCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9676 - ComponentCreateNestedManyWithoutInstallerInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9683 - ComponentMilestoneCreateNestedManyWithoutCompleterInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9690 - ImportJobCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9697 - AuditLogCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9704 - ReportingCacheCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9711 - ROCConfigurationsCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9718 - ProgressSnapshotsCreateNestedManyWithoutGeneratorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9725 - ReportGenerationsCreateNestedManyWithoutRequesterInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9732 - SessionUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9739 - AccountUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9746 - PasskeyUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9753 - InvitationUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9760 - PurchaseUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9767 - MemberUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9774 - TwoFactorUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9781 - AiChatUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9788 - ProjectUncheckedCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9795 - ComponentUncheckedCreateNestedManyWithoutInstallerInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9802 - ComponentMilestoneUncheckedCreateNestedManyWithoutCompleterInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9809 - ImportJobUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9816 - AuditLogUncheckedCreateNestedManyWithoutUserInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9823 - ReportingCacheUncheckedCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9830 - ROCConfigurationsUncheckedCreateNestedManyWithoutCreatorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9837 - ProgressSnapshotsUncheckedCreateNestedManyWithoutGeneratorInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9844 - ReportGenerationsUncheckedCreateNestedManyWithoutRequesterInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9851 - StringFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9855 - BoolFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9859 - NullableStringFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9863 - DateTimeFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9867 - NullableBoolFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9871 - NullableDateTimeFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9875 - SessionUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9889 - AccountUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9903 - PasskeyUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9917 - InvitationUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9931 - PurchaseUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9945 - MemberUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9959 - TwoFactorUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9973 - AiChatUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:9987 - ProjectUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10001 - ComponentUpdateManyWithoutInstallerNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10015 - ComponentMilestoneUpdateManyWithoutCompleterNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10029 - ImportJobUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10043 - AuditLogUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10057 - ReportingCacheUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10071 - ROCConfigurationsUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10085 - ProgressSnapshotsUpdateManyWithoutGeneratorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10099 - ReportGenerationsUpdateManyWithoutRequesterNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10113 - SessionUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10127 - AccountUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10141 - PasskeyUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10155 - InvitationUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10169 - PurchaseUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10183 - MemberUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10197 - TwoFactorUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10211 - AiChatUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10225 - ProjectUncheckedUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10239 - ComponentUncheckedUpdateManyWithoutInstallerNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10253 - ComponentMilestoneUncheckedUpdateManyWithoutCompleterNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10267 - ImportJobUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10281 - AuditLogUncheckedUpdateManyWithoutUserNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10295 - ReportingCacheUncheckedUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10309 - ROCConfigurationsUncheckedUpdateManyWithoutCreatorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10323 - ProgressSnapshotsUncheckedUpdateManyWithoutGeneratorNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10337 - ReportGenerationsUncheckedUpdateManyWithoutRequesterNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10351 - UserCreateNestedOneWithoutSessionsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10357 - UserUpdateOneRequiredWithoutSessionsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10365 - UserCreateNestedOneWithoutAccountsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10371 - UserUpdateOneRequiredWithoutAccountsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10379 - UserCreateNestedOneWithoutPasskeysInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10385 - IntFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10393 - UserUpdateOneRequiredWithoutPasskeysNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10401 - UserCreateNestedOneWithoutTwofactorsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10407 - UserUpdateOneRequiredWithoutTwofactorsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10415 - MemberCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10422 - InvitationCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10429 - PurchaseCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10436 - AiChatCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10443 - ProjectCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10450 - ROCConfigurationsCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10457 - MemberUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10464 - InvitationUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10471 - PurchaseUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10478 - AiChatUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10485 - ProjectUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10492 - ROCConfigurationsUncheckedCreateNestedManyWithoutOrganizationInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10499 - MemberUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10513 - InvitationUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10527 - PurchaseUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10541 - AiChatUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10555 - ProjectUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10569 - ROCConfigurationsUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10583 - MemberUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10597 - InvitationUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10611 - PurchaseUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10625 - AiChatUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10639 - ProjectUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10653 - ROCConfigurationsUncheckedUpdateManyWithoutOrganizationNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10667 - OrganizationCreateNestedOneWithoutMembersInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10673 - UserCreateNestedOneWithoutMembersInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10679 - OrganizationUpdateOneRequiredWithoutMembersNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10687 - UserUpdateOneRequiredWithoutMembersNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10695 - OrganizationCreateNestedOneWithoutInvitationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10701 - UserCreateNestedOneWithoutInvitationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10707 - OrganizationUpdateOneRequiredWithoutInvitationsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10715 - UserUpdateOneRequiredWithoutInvitationsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10723 - OrganizationCreateNestedOneWithoutPurchasesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10729 - UserCreateNestedOneWithoutPurchasesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10735 - EnumPurchaseTypeFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10739 - OrganizationUpdateOneWithoutPurchasesNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10749 - UserUpdateOneWithoutPurchasesNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10759 - OrganizationCreateNestedOneWithoutAiChatsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10765 - UserCreateNestedOneWithoutAiChatsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10771 - OrganizationUpdateOneWithoutAiChatsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10781 - UserUpdateOneWithoutAiChatsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10791 - OrganizationCreateNestedOneWithoutProjectsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10797 - UserCreateNestedOneWithoutCreatedProjectsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10803 - DrawingCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10810 - ComponentCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10817 - MilestoneTemplateCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10824 - ImportJobCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10831 - AuditLogCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10838 - ReportingCacheCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10845 - ROCConfigurationsCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10852 - ProgressSnapshotsCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10859 - ReportGenerationsCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10866 - WelderCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10873 - FieldWeldCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10880 - DrawingUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10887 - ComponentUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10894 - MilestoneTemplateUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10901 - ImportJobUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10908 - AuditLogUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10915 - ReportingCacheUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10922 - ROCConfigurationsUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10929 - ProgressSnapshotsUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10936 - ReportGenerationsUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10943 - WelderUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10950 - FieldWeldUncheckedCreateNestedManyWithoutProjectInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10957 - EnumProjectStatusFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10961 - OrganizationUpdateOneRequiredWithoutProjectsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10969 - UserUpdateOneRequiredWithoutCreatedProjectsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10977 - DrawingUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:10991 - ComponentUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11005 - MilestoneTemplateUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11019 - ImportJobUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11033 - AuditLogUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11047 - ReportingCacheUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11061 - ROCConfigurationsUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11075 - ProgressSnapshotsUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11089 - ReportGenerationsUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11103 - WelderUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11117 - FieldWeldUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11131 - DrawingUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11145 - ComponentUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11159 - MilestoneTemplateUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11173 - ImportJobUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11187 - AuditLogUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11201 - ReportingCacheUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11215 - ROCConfigurationsUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11229 - ProgressSnapshotsUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11243 - ReportGenerationsUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11257 - WelderUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11271 - FieldWeldUncheckedUpdateManyWithoutProjectNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11285 - ProjectCreateNestedOneWithoutDrawingsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11291 - DrawingCreateNestedOneWithoutChildrenInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11297 - DrawingCreateNestedManyWithoutParentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11304 - ComponentCreateNestedManyWithoutDrawingInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11311 - FieldWeldCreateNestedManyWithoutDrawingInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11318 - DrawingUncheckedCreateNestedManyWithoutParentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11325 - ComponentUncheckedCreateNestedManyWithoutDrawingInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11332 - FieldWeldUncheckedCreateNestedManyWithoutDrawingInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11339 - ProjectUpdateOneRequiredWithoutDrawingsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11347 - DrawingUpdateOneWithoutChildrenNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11357 - DrawingUpdateManyWithoutParentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11371 - ComponentUpdateManyWithoutDrawingNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11385 - FieldWeldUpdateManyWithoutDrawingNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11399 - DrawingUncheckedUpdateManyWithoutParentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11413 - ComponentUncheckedUpdateManyWithoutDrawingNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11427 - FieldWeldUncheckedUpdateManyWithoutDrawingNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11441 - ProjectCreateNestedOneWithoutMilestoneTemplatesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11447 - ComponentCreateNestedManyWithoutMilestoneTemplateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11454 - ComponentUncheckedCreateNestedManyWithoutMilestoneTemplateInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11461 - ProjectUpdateOneRequiredWithoutMilestoneTemplatesNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11469 - ComponentUpdateManyWithoutMilestoneTemplateNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11483 - ComponentUncheckedUpdateManyWithoutMilestoneTemplateNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11497 - ProjectCreateNestedOneWithoutComponentsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11503 - DrawingCreateNestedOneWithoutComponentsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11509 - MilestoneTemplateCreateNestedOneWithoutComponentsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11515 - UserCreateNestedOneWithoutInstalledComponentsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11521 - ComponentMilestoneCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11528 - AuditLogCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11535 - FieldWeldCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11542 - ComponentMilestoneUncheckedCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11549 - AuditLogUncheckedCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11556 - FieldWeldUncheckedCreateNestedManyWithoutComponentInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11563 - NullableIntFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11571 - EnumComponentTypeFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11575 - EnumWorkflowTypeFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11579 - NullableFloatFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11587 - FloatFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11595 - EnumComponentStatusFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11599 - ProjectUpdateOneRequiredWithoutComponentsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11607 - DrawingUpdateOneRequiredWithoutComponentsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11615 - MilestoneTemplateUpdateOneRequiredWithoutComponentsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11623 - UserUpdateOneWithoutInstalledComponentsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11633 - ComponentMilestoneUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11647 - AuditLogUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11661 - FieldWeldUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11675 - ComponentMilestoneUncheckedUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11689 - AuditLogUncheckedUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11703 - FieldWeldUncheckedUpdateManyWithoutComponentNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11717 - ComponentCreateNestedOneWithoutMilestonesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11723 - UserCreateNestedOneWithoutCompletedMilestonesInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11729 - ComponentUpdateOneRequiredWithoutMilestonesNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11737 - UserUpdateOneWithoutCompletedMilestonesNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11747 - ProjectCreateNestedOneWithoutImportJobsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11753 - UserCreateNestedOneWithoutImportJobsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11759 - EnumImportStatusFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11763 - ProjectUpdateOneRequiredWithoutImportJobsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11771 - UserUpdateOneRequiredWithoutImportJobsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11779 - ProjectCreateNestedOneWithoutAuditLogsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11785 - UserCreateNestedOneWithoutAuditLogsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11791 - ComponentCreateNestedOneWithoutAuditLogsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11797 - EnumAuditActionFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11801 - ProjectUpdateOneRequiredWithoutAuditLogsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11809 - UserUpdateOneRequiredWithoutAuditLogsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11817 - ComponentUpdateOneWithoutAuditLogsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11827 - ProjectCreateNestedOneWithoutReportingCacheInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11833 - UserCreateNestedOneWithoutReportingCacheCreatedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11839 - ProjectUpdateOneRequiredWithoutReportingCacheNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11847 - UserUpdateOneWithoutReportingCacheCreatedNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11857 - OrganizationCreateNestedOneWithoutRocConfigurationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11863 - ProjectCreateNestedOneWithoutRocConfigurationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11869 - UserCreateNestedOneWithoutRocConfigsCreatedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11875 - ProgressSnapshotsCreateNestedManyWithoutRocConfigInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11882 - ProgressSnapshotsUncheckedCreateNestedManyWithoutRocConfigInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11889 - OrganizationUpdateOneRequiredWithoutRocConfigurationsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11897 - ProjectUpdateOneWithoutRocConfigurationsNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11907 - UserUpdateOneRequiredWithoutRocConfigsCreatedNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11915 - ProgressSnapshotsUpdateManyWithoutRocConfigNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11929 - ProgressSnapshotsUncheckedUpdateManyWithoutRocConfigNestedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11943 - ProjectCreateNestedOneWithoutProgressSnapshotsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11949 - UserCreateNestedOneWithoutSnapshotsGeneratedInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11955 - ROCConfigurationsCreateNestedOneWithoutProgressSnapshotsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11961 - DecimalFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11969 - NullableDecimalFieldUpdateOperationsInputSchema (used in module)
+packages/database/prisma/zod/index.ts:11977 - ProjectUpdateOneRequiredWithoutProgressSnapshotsNestedInputSchema (used in module)

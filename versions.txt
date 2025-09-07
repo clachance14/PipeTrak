@@ -1,0 +1,7 @@
+Legend: production dependency, optional only, dev only
+
+supastarter-nextjs /home/clachance14/projects/PipeTrak
+
+devDependencies:
+@types/node 24.0.10
+typescript 5.8.3
