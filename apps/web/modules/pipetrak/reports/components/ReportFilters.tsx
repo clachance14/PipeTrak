@@ -398,7 +398,7 @@ export function ReportFilters({
 										from: dateRange.from,
 										to: dateRange.to,
 									}}
-									onSelect={(range) => {
+									onSelect={(range: { from?: Date; to?: Date } | undefined) => {
 										handleDateRangeChange(
 											range?.from,
 											range?.to,
