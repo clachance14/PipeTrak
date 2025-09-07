@@ -259,17 +259,27 @@ export function DrawingGroup({
 				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-center gap-3 min-w-0 flex-1">
 						{/* Selection Checkbox - Larger touch target for tablets */}
-						<button
-							type="button"
-							onClick={(e) => {
-								e.stopPropagation();
-								handleSelectAll();
-							}}
+						<div 
 							className="cursor-pointer p-1 -m-1 rounded-lg hover:bg-white/50 touch-manipulation" // 44px+ touch target
 						>
 							{stats.someSelected && !stats.allSelected ? (
 								// Custom indeterminate state
-								<div className="h-7 w-7 md:h-8 md:w-8 rounded border-2 border-primary bg-primary flex items-center justify-center">
+								<div 
+									role="button"
+									tabIndex={0}
+									className="h-7 w-7 md:h-8 md:w-8 rounded border-2 border-primary bg-primary flex items-center justify-center cursor-pointer"
+									onClick={(e) => {
+										e.stopPropagation();
+										handleSelectAll();
+									}}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter' || e.key === ' ') {
+											e.preventDefault();
+											e.stopPropagation();
+											handleSelectAll();
+										}
+									}}
+								>
 									<Minus className="h-5 w-5 text-primary-foreground" />
 								</div>
 							) : (
@@ -280,7 +290,7 @@ export function DrawingGroup({
 									className="h-7 w-7 md:h-8 md:w-8" // Larger for better touch interaction
 								/>
 							)}
-						</button>
+						</div>
 
 						{/* Drawing Info - Better responsive layout */}
 						<div className="flex items-center gap-2 min-w-0">
