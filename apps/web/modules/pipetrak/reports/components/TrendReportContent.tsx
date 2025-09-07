@@ -14,7 +14,7 @@ interface TrendReportContentProps {
  */
 export function TrendReportContent({
 	projectId,
-	initialFilters = {},
+	initialFilters: _initialFilters = {},
 }: TrendReportContentProps) {
 	return (
 		<div className="space-y-6">

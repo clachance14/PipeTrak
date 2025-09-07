@@ -104,7 +104,7 @@ export async function generateTrendAnalysis(
 		);
 	}
 
-	return response.json();
+	return response.json() as Promise<TrendAnalysisResponse>;
 }
 
 /**
@@ -122,7 +122,7 @@ export async function getAuditTrailReport(
 		throw new Error(error.error || "Failed to generate audit trail report");
 	}
 
-	return response.json();
+	return response.json() as unknown as Promise<AuditTrailResponse>;
 }
 
 /**
@@ -130,7 +130,7 @@ export async function getAuditTrailReport(
  */
 export async function getReportStatus(
 	projectId: string,
-	limit?: number,
+	_limit?: number,
 ): Promise<ReportStatusResponse> {
 	const response = await apiClient.pipetrak.reports.status[":projectId"].$get(
 		{
@@ -151,7 +151,7 @@ export async function getReportStatus(
  */
 export async function clearReportCache(
 	projectId: string,
-	reportType?: string,
+	_reportType?: string,
 ): Promise<{
 	success: boolean;
 	data: { deletedEntries: number; reportType: string };
@@ -181,13 +181,13 @@ export async function generateBulkReports(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(
 			error.error || "Failed to start bulk report generation",
 		);
 	}
 
-	return response.json();
+	return response.json() as unknown as Promise<BulkReportResponse>;
 }
 
 /**
@@ -203,7 +203,7 @@ export async function getReportFileFilterOptions(
 	});
 
 	if (!response.ok) {
-		const error = await response.json();
+		const error = await response.json() as { error?: string };
 		throw new Error(error.error || "Failed to get filter options");
 	}
 
@@ -219,8 +219,8 @@ export async function getReportFileFilterOptions(
  */
 export function buildComponentDetailsQuery(
 	filters: ComponentDetailsRequest["filters"] = {},
-	pagination: ComponentDetailsRequest["pagination"] = {},
-	sorting: ComponentDetailsRequest["sorting"] = {},
+	pagination: ComponentDetailsRequest["pagination"] = { limit: 10000, offset: 0 },
+	sorting: ComponentDetailsRequest["sorting"] = { field: "componentId", direction: "asc" },
 ): ComponentDetailsRequest {
 	return {
 		projectId: "", // Will be set by caller
@@ -228,13 +228,9 @@ export function buildComponentDetailsQuery(
 			...filters,
 		},
 		pagination: {
-			limit: 10000,
-			offset: 0,
 			...pagination,
 		},
 		sorting: {
-			field: "componentId",
-			direction: "asc",
 			...sorting,
 		},
 	};

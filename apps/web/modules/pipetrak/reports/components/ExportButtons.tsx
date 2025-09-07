@@ -50,9 +50,9 @@ interface ExportButtonsProps {
  */
 export function ExportButtons({
 	reportType,
-	projectId,
-	data,
-	filters,
+	projectId: _projectId,
+	data: _data,
+	filters: _filters,
 	disabled = false,
 	className,
 }: ExportButtonsProps) {
@@ -201,7 +201,7 @@ export function ExportButtons({
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
-						status="info"
+						variant="outline"
 						disabled={disabled || isExporting}
 						className="min-w-[120px]"
 					>

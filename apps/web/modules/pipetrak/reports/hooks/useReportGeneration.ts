@@ -34,7 +34,7 @@ export function useProgressReportGeneration() {
 		mutationFn: async (request: ProgressReportRequest) => {
 			return retryReportGeneration(() => generateProgressReport(request));
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			toast({
 				title: "Progress report generated",
 				description: `Report completed with ${data.data.comprehensiveReport.overview.totalComponents} components analyzed`,
@@ -69,7 +69,7 @@ export function useComponentReportGeneration() {
 				getComponentDetailsReport(request),
 			);
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			toast({
 				title: "Component report generated",
 				description: `Found ${data.data.components.length} components matching your criteria`,
@@ -103,7 +103,7 @@ export function useTestPackageReportGeneration() {
 				generateTestPackageReadiness(request),
 			);
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			const { readyPackages, totalPackages } = data.data.summary;
 			toast({
 				title: "Test package report generated",
@@ -136,7 +136,7 @@ export function useTrendReportGeneration() {
 		mutationFn: async (request: TrendAnalysisRequest) => {
 			return retryReportGeneration(() => generateTrendAnalysis(request));
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			const { averageDailyCompletion, projectedCompletionDate } =
 				data.data.velocityAnalysis;
 			toast({
@@ -172,7 +172,7 @@ export function useAuditReportGeneration() {
 		mutationFn: async (request: AuditTrailRequest) => {
 			return retryReportGeneration(() => getAuditTrailReport(request));
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			toast({
 				title: "Audit report generated",
 				description: `Found ${data.data.auditLogs.length} audit log entries`,
@@ -204,7 +204,7 @@ export function useBulkReportGeneration() {
 		mutationFn: async (request: BulkReportRequest) => {
 			return generateBulkReports(request);
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, request) => {
 			const reportCount = data.data.reportGenerationIds.length;
 			toast({
 				title: "Bulk report generation started",

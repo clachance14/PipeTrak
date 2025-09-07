@@ -5,6 +5,7 @@
 
 "use client";
 
+import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
@@ -194,7 +195,7 @@ export function useComponentDetailsReport(
  */
 export function useComponentDetailsPagination(
 	projectId: string,
-	initialFileFilters?: ComponentDetailsFileFilters,
+	_initialFileFilters?: ComponentDetailsFileFilters,
 ) {
 	const queryClient = useQueryClient();
 
@@ -398,7 +399,7 @@ export function useClearReportCache() {
 		}) => {
 			return clearReportCache(projectId, reportType);
 		},
-		onSuccess: (data, { projectId, reportType }) => {
+		onSuccess: (_data, { projectId, reportType }) => {
 			// Invalidate related queries
 			if (reportType) {
 				// Invalidate specific report type
@@ -544,16 +545,20 @@ export function useReportsRealtime(
 ) {
 	const queryClient = useQueryClient();
 
-	return useQuery({
+	const query = useQuery({
 		queryKey: [...reportsKeys.project(projectId), "realtime"],
 		queryFn: () => getReportStatus(projectId, 5), // Get latest 5 generations
 		enabled: !!projectId && options?.enabled !== false,
 		refetchInterval: options?.pollInterval || 30 * 1000, // Poll every 30 seconds
 		refetchIntervalInBackground: true,
-		onSuccess: (data) => {
+	});
+
+	// Handle success in a useEffect
+	React.useEffect(() => {
+		if (query.data) {
 			// Check for completed reports and refresh related queries
-			const recentCompletions = data.data.recentGenerations.filter(
-				(gen) =>
+			const recentCompletions = query.data.data.recentGenerations.filter(
+				(gen: any) =>
 					gen.status === "completed" &&
 					new Date(gen.completedAt || "").getTime() >
 						Date.now() - 60000, // Last minute
@@ -561,7 +566,7 @@ export function useReportsRealtime(
 
 			if (recentCompletions.length > 0) {
 				// Invalidate reports that were just completed
-				recentCompletions.forEach((completion) => {
+				recentCompletions.forEach((completion: any) => {
 					queryClient.invalidateQueries({
 						queryKey: [
 							...reportsKeys.project(projectId),
@@ -570,6 +575,8 @@ export function useReportsRealtime(
 					});
 				});
 			}
-		},
-	});
+		}
+	}, [query.data, queryClient, projectId]);
+
+	return query;
 }

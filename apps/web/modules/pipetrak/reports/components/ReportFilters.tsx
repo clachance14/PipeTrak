@@ -23,7 +23,7 @@ import { Label } from "@ui/components/label";
 import {
 	Filter,
 	X,
-	Calendar as Calendar,
+	Calendar as CalendarIcon,
 	ChevronDown,
 	ChevronUp,
 	Search,
@@ -31,12 +31,12 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@ui/lib";
-import type { ReportFilters, FilterOptionsResponse } from "../types";
+import type { ReportFileFilters, FileFilterOptionsResponse } from "../types";
 
 interface ReportFiltersProps {
-	filters: ReportFilters;
-	onFiltersChange: (filters: ReportFilters) => void;
-	filterOptions?: FilterOptionsResponse["data"];
+	filters: ReportFileFilters;
+	onFiltersChange: (filters: ReportFileFilters) => void;
+	filterOptions?: FileFilterOptionsResponse["data"];
 	isLoading?: boolean;
 	showAdvanced?: boolean;
 	searchQuery?: string;
@@ -70,7 +70,7 @@ export function ReportFilters({
 	});
 
 	const handleMultiSelectChange = (
-		key: keyof ReportFilters,
+		key: keyof ReportFileFilters,
 		value: string,
 		isSelected: boolean,
 	) => {
@@ -97,7 +97,7 @@ export function ReportFilters({
 				},
 			});
 		} else {
-			const { dateRange, ...filtersWithoutDate } = filters;
+			const { dateRange: _dateRange, ...filtersWithoutDate } = filters;
 			onFiltersChange(filtersWithoutDate);
 		}
 	};
@@ -112,7 +112,7 @@ export function ReportFilters({
 				},
 			});
 		} else {
-			const { completionRange, ...filtersWithoutCompletion } = filters;
+			const { completionRange: _completionRange, ...filtersWithoutCompletion } = filters;
 			onFiltersChange(filtersWithoutCompletion);
 		}
 	};
@@ -216,7 +216,7 @@ export function ReportFilters({
 								<SelectValue placeholder="Select areas" />
 							</SelectTrigger>
 							<SelectContent>
-								{filterOptions?.areas?.map((area) => {
+								{filterOptions?.areas?.map((area: string) => {
 									const isSelected =
 										filters.areas?.includes(area) || false;
 									return (
@@ -286,7 +286,7 @@ export function ReportFilters({
 								<SelectValue placeholder="Select systems" />
 							</SelectTrigger>
 							<SelectContent>
-								{filterOptions?.systems?.map((system) => {
+								{filterOptions?.systems?.map((system: string) => {
 									const isSelected =
 										filters.systems?.includes(system) ||
 										false;
@@ -364,7 +364,7 @@ export function ReportFilters({
 											"text-muted-foreground",
 									)}
 								>
-									<Calendar className="mr-2 h-4 w-4" />
+									<CalendarIcon className="mr-2 h-4 w-4" />
 									{dateRange.from ? (
 										dateRange.to ? (
 											<>
@@ -428,7 +428,7 @@ export function ReportFilters({
 										</SelectTrigger>
 										<SelectContent>
 											{filterOptions.testPackages.map(
-												(pkg) => {
+												(pkg: string) => {
 													const isSelected =
 														filters.testPackages?.includes(
 															pkg,
@@ -479,7 +479,7 @@ export function ReportFilters({
 										</SelectTrigger>
 										<SelectContent>
 											{filterOptions.componentTypes.map(
-												(type) => {
+												(type: string) => {
 													const isSelected =
 														filters.componentTypes?.includes(
 															type,
@@ -530,7 +530,7 @@ export function ReportFilters({
 										</SelectTrigger>
 										<SelectContent>
 											{filterOptions.statuses.map(
-												(status) => {
+												(status: string) => {
 													const isSelected =
 														filters.statuses?.includes(
 															status,

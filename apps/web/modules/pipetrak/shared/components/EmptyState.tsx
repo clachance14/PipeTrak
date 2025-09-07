@@ -2,12 +2,12 @@ import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import { cn } from "@ui/lib";
 import { Package, Search, FileX, AlertTriangle } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import type { Icon } from "lucide-react";
 
 interface EmptyStateProps {
 	title: string;
 	description?: string;
-	icon?: LucideIcon;
+	icon?: Icon;
 	actionLabel?: string;
 	onAction?: () => void;
 	variant?: "default" | "search" | "error" | "no-data";

@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@ui/hooks/use-toast";
 import type { ExportFormat, PrintOptions } from "../types";
 
-interface ExportOptions extends ExportFormat {
+export interface ExportOptions extends ExportFormat {
 	data: any;
 	reportType: string;
 	projectId: string;
