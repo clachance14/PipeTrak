@@ -14,7 +14,7 @@ interface TestPackageReportContentProps {
  */
 export function TestPackageReportContent({
 	projectId,
-	initialFilters = {},
+	initialFilters: _initialFilters = {},
 }: TestPackageReportContentProps) {
 	return (
 		<div className="space-y-6">

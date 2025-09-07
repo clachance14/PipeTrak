@@ -125,7 +125,7 @@ export function PrintableProgressReport({
 		};
 
 		generateReport();
-	}, [projectId, weekEnding, groupBy]);
+	}, [projectId, weekEnding, groupBy, options]);
 
 	// Auto-trigger print dialog after data loads
 	useEffect(() => {
@@ -137,6 +137,7 @@ export function PrintableProgressReport({
 			}, 1000);
 			return () => clearTimeout(timer);
 		}
+		return undefined;
 	}, [reportData, isLoading, error]);
 
 	// Helper functions

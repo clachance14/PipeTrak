@@ -54,6 +54,10 @@ export type {
 	ReportsUIState,
 } from "./types";
 
+// Export missing interface names that are used in components
+export type { ReportFileFilters as ReportFilters } from "./types";
+export type { FileFilterOptionsResponse as FilterOptionsResponse } from "./types";
+
 // ============================================================================
 // ROC Calculator Exports
 // ============================================================================
@@ -144,37 +148,37 @@ export {
 /**
  * Default report pagination settings
  */
-export const DEFAULT_REPORT_PAGINATION: ReportPagination = {
+export const DEFAULT_REPORT_PAGINATION = {
 	limit: 10000,
 	offset: 0,
-};
+} as const;
 
 /**
  * Default progress report options
  */
-export const DEFAULT_PROGRESS_OPTIONS: ProgressReportOptions = {
+export const DEFAULT_PROGRESS_OPTIONS = {
 	includeTrends: true,
 	includeVelocity: true,
 	includeForecasts: false,
 	cacheTimeout: 300, // 5 minutes
-};
+} as const;
 
 /**
  * Default test package options
  */
-export const DEFAULT_TEST_PACKAGE_OPTIONS: TestPackageOptions = {
+export const DEFAULT_TEST_PACKAGE_OPTIONS = {
 	includeBlockingComponents: true,
 	includeVelocityAnalysis: true,
 	includeForecast: true,
-};
+} as const;
 
 /**
  * Default trend analysis timeframe
  */
-export const DEFAULT_TREND_TIMEFRAME: TrendTimeframe = {
+export const DEFAULT_TREND_TIMEFRAME = {
 	days: 30,
-	granularity: "daily",
-};
+	granularity: "daily" as const,
+} as const;
 
 /**
  * Supported report types for bulk generation

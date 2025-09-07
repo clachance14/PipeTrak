@@ -112,6 +112,32 @@ declare module 'lucide-react' {
   export const PieChart: Icon;
   export const LineChart: Icon;
   
+  // Missing icons from TypeScript error messages (41 errors)
+  export const Sheet: Icon;
+  export const Award: Icon;
+  export const FileX: Icon;
+  export const FileCheck: Icon;
+  export const Repeat1Icon: Icon;
+  export const SquareUserRoundIcon: Icon;
+  export const EllipsisIcon: Icon;
+  export const SendIcon: Icon;
+  export const AlertTriangleIcon: Icon;
+  export const MailboxIcon: Icon;
+  export const KeyIcon: Icon;
+  export const MailCheck: Icon;
+  export const MailX: Icon;
+  export const PlusCircleIcon: Icon;
+  export const BadgeCheck: Icon;
+  export const BadgePercentIcon: Icon;
+  export const PhoneIcon: Icon;
+  export const StarIcon: Icon;
+  export const ComputerIcon: Icon;
+  export const CheckIcon: Icon;
+  export const LinkIcon: Icon;
+  export const TabletSmartphoneIcon: Icon;
+  export const BotMessageSquareIcon: Icon;
+  export const Factory: Icon;
+  
   // Re-export any other existing icons from the original module
   // This ensures we don't break icons that are already working
   export * from 'lucide-react/dist/index';

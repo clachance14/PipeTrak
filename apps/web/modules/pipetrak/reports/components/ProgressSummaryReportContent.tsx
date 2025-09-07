@@ -26,8 +26,9 @@ import {
 	Check,
 	Clock,
 	FileText,
-	Sheet,
+	// FileSpreadsheet, // Unused import - removed
 	FileImage,
+	Sheet,
 	Printer,
 } from "lucide-react";
 import { format, addDays, startOfWeek } from "date-fns";
@@ -96,8 +97,8 @@ export function ProgressSummaryReportContent({
 		"area",
 	);
 	const [showDeltas, setShowDeltas] = useState(true);
-	const [includeZeroProgress, setIncludeZeroProgress] = useState(true);
-	const [includeSubtotals, setIncludeSubtotals] = useState(true);
+	const [includeZeroProgress] = useState(true); // TODO: Implement toggle
+	const [includeSubtotals] = useState(true); // TODO: Implement toggle
 	const [includeGrandTotal, setIncludeGrandTotal] = useState(true);
 
 	// Export states
@@ -166,8 +167,8 @@ export function ProgressSummaryReportContent({
 	};
 
 	// Export functions
-	const handleExport = async (format: "csv" | "excel" | "pdf") => {
-		setIsExporting(format);
+	const handleExport = async (exportFormat: "csv" | "excel" | "pdf") => {
+		setIsExporting(exportFormat);
 
 		try {
 			const response = await fetch(
@@ -181,7 +182,7 @@ export function ProgressSummaryReportContent({
 						projectId,
 						weekEnding: format(weekEnding, "yyyy-MM-dd"),
 						groupBy,
-						format,
+						format: exportFormat,
 						options: {
 							showDeltas,
 							includeZeroProgress,
@@ -201,7 +202,7 @@ export function ProgressSummaryReportContent({
 			const url = window.URL.createObjectURL(blob);
 			const a = document.createElement("a");
 			a.href = url;
-			a.download = `PipeTrak_Progress_${reportData?.reportInfo.jobNumber}_WE_${format(weekEnding, "yyyy-MM-dd")}_${isFinal ? "FINAL" : "PRELIMINARY"}.${format === "excel" ? "xlsx" : format}`;
+			a.download = `PipeTrak_Progress_${reportData?.reportInfo.jobNumber}_WE_${format(weekEnding, "yyyy-MM-dd")}_${isFinal ? "FINAL" : "PRELIMINARY"}.${exportFormat === "excel" ? "xlsx" : exportFormat}`;
 			document.body.appendChild(a);
 			a.click();
 			window.URL.revokeObjectURL(url);
@@ -316,9 +317,9 @@ export function ProgressSummaryReportContent({
 					<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 						{/* Week Selection */}
 						<div className="space-y-2">
-							<label className="text-sm font-medium">
+							<div className="text-sm font-medium">
 								Week Ending (Sunday)
-							</label>
+							</div>
 							<Popover>
 								<PopoverTrigger asChild>
 									<Button
@@ -336,7 +337,7 @@ export function ProgressSummaryReportContent({
 									<Calendar
 										mode="single"
 										selected={weekEnding}
-										onSelect={(date) =>
+										onSelect={(date: Date | undefined) =>
 											date && setWeekEnding(date)
 										}
 										initialFocus
@@ -347,9 +348,9 @@ export function ProgressSummaryReportContent({
 
 						{/* Group By Selection */}
 						<div className="space-y-2">
-							<label className="text-sm font-medium">
+							<div className="text-sm font-medium">
 								Group By
-							</label>
+							</div>
 							<Select
 								value={groupBy}
 								onValueChange={(value: any) =>
@@ -375,15 +376,15 @@ export function ProgressSummaryReportContent({
 
 						{/* Options */}
 						<div className="space-y-2">
-							<label className="text-sm font-medium">
+							<div className="text-sm font-medium">
 								Report Options
-							</label>
+							</div>
 							<div className="space-y-2">
 								<div className="flex items-center space-x-2">
 									<Checkbox
 										id="showDeltas"
 										checked={showDeltas}
-										onCheckedChange={setShowDeltas}
+										onCheckedChange={(checked) => setShowDeltas(checked === true)}
 									/>
 									<label
 										htmlFor="showDeltas"
@@ -396,7 +397,7 @@ export function ProgressSummaryReportContent({
 									<Checkbox
 										id="includeGrandTotal"
 										checked={includeGrandTotal}
-										onCheckedChange={setIncludeGrandTotal}
+										onCheckedChange={(checked) => setIncludeGrandTotal(checked === true)}
 									/>
 									<label
 										htmlFor="includeGrandTotal"
@@ -410,9 +411,9 @@ export function ProgressSummaryReportContent({
 
 						{/* Actions */}
 						<div className="space-y-2">
-							<label className="text-sm font-medium">
+							<div className="text-sm font-medium">
 								Actions
-							</label>
+							</div>
 							<div className="flex flex-col gap-2">
 								<Button
 									status="info"
