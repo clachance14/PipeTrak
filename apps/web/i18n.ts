@@ -1,8 +1,13 @@
+import { cookies } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
 
-console.log("[i18n.ts] File loaded");
+console.log("[i18n.ts] File loaded (Edge-compatible version)");
 
-// Re-export the configuration from the modules directory
+// Edge Runtime compatible configuration - no workspace package imports
+const locales = ["en", "de"] as const;
+const defaultLocale = "en";
+const localeCookieName = "NEXT_LOCALE";
+
 export default getRequestConfig(async ({ requestLocale }) => {
 	console.log(
 		"[i18n.ts] getRequestConfig called with requestLocale:",
@@ -10,18 +15,35 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	);
 
 	try {
-		console.log("[i18n.ts] Attempting to import ./modules/i18n/request");
-		const { default: requestConfig } = await import(
-			"./modules/i18n/request"
-		);
-		console.log("[i18n.ts] Import successful, calling requestConfig");
+		let locale = await requestLocale;
 
-		const result = await requestConfig({ requestLocale });
-		console.log(
-			"[i18n.ts] Config generated successfully, locale:",
-			result.locale,
-		);
-		return result;
+		// If no locale from URL, check cookie
+		if (!locale) {
+			console.log("[i18n.ts] No requestLocale, checking cookie");
+			const cookieStore = await cookies();
+			locale = cookieStore.get(localeCookieName)?.value || defaultLocale;
+			console.log("[i18n.ts] Cookie locale:", locale);
+		}
+
+		// Validate locale
+		if (!locales.includes(locale as any)) {
+			console.log(
+				"[i18n.ts] Invalid locale, using default:",
+				defaultLocale,
+			);
+			locale = defaultLocale;
+		}
+
+		console.log("[i18n.ts] Loading messages for locale:", locale);
+
+		// Load messages directly from local files (Edge Runtime compatible)
+		const messages = (await import(`./messages/${locale}.json`)).default;
+
+		console.log("[i18n.ts] Config generated successfully, locale:", locale);
+		return {
+			locale,
+			messages,
+		};
 	} catch (error) {
 		console.error("[i18n.ts] Error during config generation:", error);
 		console.error(
