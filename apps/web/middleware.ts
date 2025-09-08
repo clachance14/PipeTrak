@@ -1,6 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
+	// Temporarily simplified middleware - just pass everything through
+	console.log("[Middleware] Simplified version - passing through:", req.nextUrl.pathname);
+	return NextResponse.next();
+	
+	/* Original middleware code temporarily disabled:
+	*/
 	console.log("[Middleware] Starting execution for:", req.nextUrl.pathname);
 
 	try {
@@ -48,6 +54,7 @@ export function middleware(req: NextRequest) {
 		// Return next() to avoid blocking all traffic
 		return NextResponse.next();
 	}
+	*/
 }
 
 export const config = {

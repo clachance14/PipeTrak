@@ -60,5 +60,5 @@ const nextConfig: NextConfig = {
 	},
 };
 
-// Re-enable next-intl wrapper now that config is separated from middleware
+// Re-enable next-intl wrapper
 export default withNextIntl(withContentCollections(nextConfig));
