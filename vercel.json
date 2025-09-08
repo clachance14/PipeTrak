@@ -1,5 +1,4 @@
 {
-	"rootDirectory": "apps/web",
 	"installCommand": "pnpm install --frozen-lockfile",
 	"buildCommand": "pnpm --filter @repo/web... build"
 }
