@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
+				source: "/",
+				destination: "/en",
+				permanent: false,
+			},
+			{
 				source: "/app/settings",
 				destination: "/app/settings/general",
 				permanent: true,
