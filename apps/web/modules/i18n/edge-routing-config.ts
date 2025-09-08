@@ -1,4 +1,3 @@
-import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
 import { edgeConfig } from "../../lib/edge-config";
 
@@ -11,10 +10,3 @@ export const routing = defineRouting({
 	localePrefix: edgeConfig.i18n.enabled ? "always" : "never",
 	localeDetection: edgeConfig.i18n.enabled,
 });
-
-export const {
-	Link: LocaleLink,
-	redirect: localeRedirect,
-	usePathname: useLocalePathname,
-	useRouter: useLocaleRouter,
-} = createNavigation(routing);

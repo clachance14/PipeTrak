@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { withQuery } from "ufo";
 import { edgeConfig as appConfig } from "./lib/edge-config";
-import { routing } from "./modules/i18n/edge-routing";
+import { routing } from "./modules/i18n/edge-routing-config";
 
 const intlMiddleware = createMiddleware(routing);
 
