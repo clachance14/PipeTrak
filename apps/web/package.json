@@ -129,6 +129,7 @@
 	"name": "@repo/web",
 	"private": true,
 	"scripts": {
+		"prebuild": "pnpm --filter @repo/database prisma:generate",
 		"build": "next build",
 		"dev": "next dev --turbo",
 		"test": "vitest",
