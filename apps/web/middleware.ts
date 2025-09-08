@@ -1,66 +1,21 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { withQuery } from "ufo";
-import { edgeConfig as appConfig } from "./lib/edge-config";
 
 export default async function middleware(req: NextRequest) {
 	try {
 		const { pathname, origin } = req.nextUrl;
 		const sessionCookie = req.cookies.get("better-auth.session");
 
+		// Test: Just handle app routes for now
 		if (pathname.startsWith("/app")) {
-			const response = NextResponse.next();
-
-			if (!appConfig.ui.saas.enabled) {
-				return NextResponse.redirect(new URL("/", origin));
-			}
-
 			if (!sessionCookie) {
-				return NextResponse.redirect(
-					new URL(
-						withQuery("/auth/login", {
-							redirectTo: pathname,
-						}),
-						origin,
-					),
-				);
+				return NextResponse.redirect(new URL("/auth/login", origin));
 			}
-
-			return response;
-		}
-
-		if (pathname.startsWith("/auth")) {
-			if (!appConfig.ui.saas.enabled) {
-				return NextResponse.redirect(new URL("/", origin));
-			}
-
-			// Only redirect away from signup if user already has a session cookie
-			if (sessionCookie && pathname === "/auth/signup") {
-				return NextResponse.redirect(new URL("/app", origin));
-			}
-
 			return NextResponse.next();
 		}
 
-		const pathsWithoutLocale = [
-			"/onboarding",
-			"/new-organization",
-			"/choose-plan",
-			"/organization-invitation",
-		];
-
-		if (pathsWithoutLocale.some((path) => pathname.startsWith(path))) {
-			return NextResponse.next();
-		}
-
-		if (!appConfig.ui.marketing.enabled) {
-			return NextResponse.redirect(new URL("/app", origin));
-		}
-
-		// Skip i18n handling in middleware to avoid Edge Runtime issues
-		// i18n will be handled at the page/layout level instead
+		// Let everything else through
 		return NextResponse.next();
 	} catch (error) {
-		// Log error but let request proceed to avoid blocking all traffic
 		console.error("[Middleware] Error:", error);
 		return NextResponse.next();
 	}
