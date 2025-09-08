@@ -60,6 +60,11 @@ dev-debug.log
 # MCP configuration
 .mcp.json
 
+# Environment variable documentation (contains secrets)
+VERCEL_ENV_VARS.md
+**/ENV_VARS*.md
+**/*env-vars*.md
+
 # Backup files
 *.backup
 .claude/settings.local.json.backup
