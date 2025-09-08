@@ -5,6 +5,9 @@ import { Newsletter } from "@marketing/home/components/Newsletter";
 import { PricingSection } from "@marketing/home/components/PricingSection";
 import { setRequestLocale } from "next-intl/server";
 
+// Force static generation
+export const dynamic = "force-static";
+
 export default async function Home({
 	params,
 }: {
