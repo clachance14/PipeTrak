@@ -1,16 +1,31 @@
 import { ContactForm } from "@marketing/home/components/ContactForm";
 import { config } from "@repo/config";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-export async function generateMetadata() {
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
+	setRequestLocale(locale);
+
 	const t = await getTranslations();
 	return {
 		title: t("contact.title"),
 	};
 }
 
-export default async function ContactPage() {
+export default async function ContactPage({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
+
+	// Enable static rendering
+	setRequestLocale(locale);
 	if (!config.contactForm.enabled) {
 		redirect("/");
 	}
