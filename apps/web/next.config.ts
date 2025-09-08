@@ -2,10 +2,10 @@ import { withContentCollections } from "@content-collections/next";
 // @ts-expect-error - PrismaPlugin is not typed
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 import type { NextConfig } from "next";
+import nextIntlPlugin from "next-intl/plugin";
 
-// Removed next-intl plugin to resolve Edge Runtime issues
-// import nextIntlPlugin from "next-intl/plugin";
-// const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
+// Re-enable next-intl plugin with new config path
+const withNextIntl = nextIntlPlugin("./i18n.ts");
 
 const nextConfig: NextConfig = {
 	transpilePackages: ["@repo/api", "@repo/auth", "@repo/database"],
@@ -60,5 +60,5 @@ const nextConfig: NextConfig = {
 	},
 };
 
-// Remove withNextIntl wrapper to resolve Edge Runtime issues
-export default withContentCollections(nextConfig);
+// Re-enable next-intl wrapper now that config is separated from middleware
+export default withNextIntl(withContentCollections(nextConfig));
