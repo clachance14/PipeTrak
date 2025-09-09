@@ -1,4 +1,4 @@
 {
 	"installCommand": "pnpm install --frozen-lockfile",
-	"buildCommand": "cd apps/web && pnpm --filter @repo/database prisma:generate && pnpm build"
+	"buildCommand": "pnpm --filter @repo/database prisma:generate && pnpm --filter @repo/web build"
 }
