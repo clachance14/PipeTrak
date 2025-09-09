@@ -1,4 +1,7 @@
 {
 	"installCommand": "pnpm install --frozen-lockfile",
-	"buildCommand": "pnpm --filter @repo/database prisma:generate && pnpm --filter @repo/web... build"
+	"buildCommand": "pnpm --filter @repo/database prisma:generate && pnpm --filter @repo/web... build",
+	"framework": "nextjs",
+	"rootDirectory": "apps/web",
+	"outputDirectory": ".next"
 }
