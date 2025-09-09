@@ -1,3 +1,6 @@
 {
+	"version": 2,
+	"buildCommand": "pnpm --filter @repo/database prisma:generate && pnpm --filter @repo/web build",
+	"installCommand": "pnpm install --frozen-lockfile",
 	"framework": "nextjs"
 }
