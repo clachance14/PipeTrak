@@ -324,6 +324,7 @@ export type ActiveOrganization = {
 	id: string;
 	name: string;
 	slug: string;
+	logo?: string | null;
 	metadata?: OrganizationMetadata;
 	members: Array<{
 		id: string;
@@ -332,7 +333,7 @@ export type ActiveOrganization = {
 		organizationId?: string;
 		createdAt?: Date;
 		user: {
-			id: string;
+			id?: string;
 			name: string;
 			email: string;
 			image?: string;
