@@ -318,17 +318,43 @@ export * from "./lib/organization";
 
 export type Session = typeof auth.$Infer.Session;
 
-// TODO: Fix these type definitions after better-auth is properly initialized
-// These types are causing TypeScript errors and will be restored once the auth system is working
-// export type ActiveOrganization = NonNullable<
-// 	Awaited<ReturnType<typeof auth.api.getFullOrganization>>
-// >;
+// Temporary type definitions to fix build errors
+// TODO: Replace with proper types once auth system is fully configured
+export type ActiveOrganization = {
+	id: string;
+	name: string;
+	slug: string;
+	metadata?: OrganizationMetadata;
+	members: Array<{
+		id: string;
+		role: OrganizationMemberRole;
+		userId: string;
+		organizationId?: string;
+		createdAt?: Date;
+		user: {
+			id: string;
+			name: string;
+			email: string;
+			image?: string;
+		};
+	}>;
+	invitations?: Array<{
+		id: string;
+		email: string;
+		role: OrganizationMemberRole;
+		status: OrganizationInvitationStatus;
+	}>;
+};
 
-// export type Organization = typeof auth.$Infer.Organization;
+export type Organization = {
+	id: string;
+	name: string;
+	slug: string;
+	metadata: OrganizationMetadata;
+};
 
-// export type OrganizationMemberRole =
-// 	ActiveOrganization["members"][number]["role"];
+export type OrganizationMemberRole = "owner" | "admin" | "member";
 
-// export type OrganizationInvitationStatus = typeof auth.$Infer.Invitation.status;
+export type OrganizationInvitationStatus = "pending" | "accepted" | "rejected" | "canceled";
 
 export type OrganizationMetadata = Record<string, unknown> | undefined;
