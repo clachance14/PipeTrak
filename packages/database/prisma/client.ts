@@ -1,10 +1,11 @@
-import { PrismaClient, Prisma, ComponentStatus } from "./generated/client";
+import { ComponentStatus, Prisma, PrismaClient } from "./generated/client";
 
 export { PrismaClient, Prisma, ComponentStatus };
 
 const prismaClientSingleton = () => {
 	// Build connection URL with pool configuration
-	const baseUrl = process.env.DATABASE_URL || "";
+	// Support both DATABASE_URL (dev) and POSTGRES_URL (Vercel production)
+	const baseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || "";
 	const urlWithPool = baseUrl.includes("?")
 		? `${baseUrl}&connection_limit=50&pool_timeout=60`
 		: `${baseUrl}?connection_limit=50&pool_timeout=60`;
