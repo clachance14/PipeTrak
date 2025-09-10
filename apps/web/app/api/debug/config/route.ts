@@ -84,10 +84,10 @@ export async function GET() {
       },
       
       // Configuration warnings
-      warnings: [],
+      warnings: [] as string[],
       
       // Development hints
-      hints: [],
+      hints: [] as string[],
     };
     
     // Add warnings for common issues
