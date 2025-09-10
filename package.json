@@ -1,65 +1,66 @@
 {
-  "name": "supastarter-nextjs",
-  "private": true,
-  "scripts": {
-    "build": "node scripts/validate-build.js && dotenv -c -- turbo build",
-    "dev": "dotenv -c -- turbo dev --concurrency 15",
-    "start": "dotenv -c -- turbo start",
-    "lint": "biome lint . ",
-    "check": "biome check",
-    "clean": "turbo clean",
-    "format": "biome format . --write",
-    "db:migrate": "pnpm --filter database migrate",
-    "db:push": "pnpm --filter database push",
-    "db:generate": "pnpm --filter database generate",
-    "db:studio": "pnpm --filter database studio",
-    "typecheck": "turbo run type-check",
-    "typecheck:watch": "turbo run type-check --watch",
-    "dev:typecheck": "pnpm -C apps/web exec tsc --noEmit --watch --preserveWatchOutput",
-    "check:all": "pnpm lint && pnpm typecheck && pnpm test",
-    "validate": "pnpm check:all",
-    "validate:build": "node scripts/validate-build.js",
-    "test": "turbo run test",
-    "prepare": "husky"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "packageManager": "pnpm@9.3.0",
-  "devDependencies": {
-    "@biomejs/biome": "2.1.0",
-    "@repo/tsconfig": "workspace:*",
-    "@types/node": "^24.0.10",
-    "chalk": "^4.1.2",
-    "dotenv-cli": "^8.0.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.6",
-    "rimraf": "^6.0.1",
-    "turbo": "^2.5.4",
-    "typescript": "5.8.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "biome check --write --unsafe",
-      "bash -c 'pnpm typecheck'"
-    ],
-    "*.{js,jsx,json,md}": [
-      "biome format --write"
-    ]
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.0.0",
-      "@types/react-dom": "19.0.0"
-    }
-  },
-  "dependencies": {},
-  "overrides": {
-    "lucide-react": "0.542.0",
-    "react-hook-form": "7.53.0",
-    "next-intl": "3.14.0",
-    "cmdk": "1.1.1",
-    "usehooks-ts": "3.1.0",
-    "@types/node": "^22.5.0"
-  }
+	"name": "supastarter-nextjs",
+	"private": true,
+	"scripts": {
+		"build": "node scripts/validate-build.js && dotenv -c -- turbo build",
+		"dev": "dotenv -c -- turbo dev --concurrency 15",
+		"start": "dotenv -c -- turbo start",
+		"lint": "biome lint . ",
+		"check": "biome check",
+		"clean": "turbo clean",
+		"format": "biome format . --write",
+		"db:migrate": "pnpm --filter database migrate",
+		"db:push": "pnpm --filter database push",
+		"db:generate": "pnpm --filter database generate",
+		"db:studio": "pnpm --filter database studio",
+		"typecheck": "turbo run type-check",
+		"typecheck:watch": "turbo run type-check --watch",
+		"dev:typecheck": "pnpm -C apps/web exec tsc --noEmit --watch --preserveWatchOutput",
+		"check:all": "pnpm lint && pnpm typecheck && pnpm test",
+		"validate": "pnpm check:all",
+		"validate:build": "node scripts/validate-build.js",
+		"test": "turbo run test",
+		"prepare": "husky",
+		"postinstall": "pnpm db:generate"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"packageManager": "pnpm@9.3.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.1.0",
+		"@repo/tsconfig": "workspace:*",
+		"@types/node": "^24.0.10",
+		"chalk": "^4.1.2",
+		"dotenv-cli": "^8.0.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.6",
+		"rimraf": "^6.0.1",
+		"turbo": "^2.5.4",
+		"typescript": "5.8.3"
+	},
+	"lint-staged": {
+		"*.{ts,tsx}": [
+			"biome check --write --unsafe",
+			"bash -c 'pnpm typecheck'"
+		],
+		"*.{js,jsx,json,md}": [
+			"biome format --write"
+		]
+	},
+	"pnpm": {
+		"overrides": {
+			"@types/react": "19.0.0",
+			"@types/react-dom": "19.0.0"
+		}
+	},
+	"dependencies": {},
+	"overrides": {
+		"lucide-react": "0.542.0",
+		"react-hook-form": "7.53.0",
+		"next-intl": "3.14.0",
+		"cmdk": "1.1.1",
+		"usehooks-ts": "3.1.0",
+		"@types/node": "^22.5.0"
+	}
 }
