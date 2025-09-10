@@ -344,6 +344,7 @@ export type ActiveOrganization = {
 		email: string;
 		role: OrganizationMemberRole;
 		status: OrganizationInvitationStatus;
+		expiresAt: string | Date;
 	}>;
 };
 
