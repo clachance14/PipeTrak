@@ -182,3 +182,7 @@ export const config = {
 } as const satisfies Config;
 
 export type { Config };
+
+// Export auth configuration utilities
+// Temporarily commented out while fixing module resolution issue
+// export * from "./auth-config";

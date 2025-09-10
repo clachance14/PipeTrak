@@ -1,5 +1,6 @@
 import { ClientProviders } from "@shared/components/ClientProviders";
 import { ConsentProvider } from "@shared/components/ConsentProvider";
+import { DevModeIndicator } from "../../../components/DevModeIndicator";
 import { cn } from "@ui/lib";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
@@ -31,6 +32,7 @@ export async function Document({
 						<ClientProviders>{children}</ClientProviders>
 					</ConsentProvider>
 				</NuqsAdapter>
+				<DevModeIndicator />
 			</body>
 		</html>
 	);
