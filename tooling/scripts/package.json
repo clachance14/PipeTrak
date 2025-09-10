@@ -5,9 +5,9 @@
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
 		"@repo/utils": "workspace:*",
-		"@supabase/supabase-js": "^2.54.0",
+		"@supabase/supabase-js": "^2.57.4",
 		"@types/pg": "^8.15.5",
-		"csv-parse": "^5.5.3",
+		"csv-parse": "^6.1.0",
 		"dotenv": "^17.1.0",
 		"pg": "^8.16.3",
 		"xlsx": "^0.18.5"
