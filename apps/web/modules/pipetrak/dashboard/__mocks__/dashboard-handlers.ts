@@ -3,18 +3,17 @@
  * Used in unit and integration tests to mock Supabase RPC calls
  */
 
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import {
-	smallDashboardData,
-	mediumDashboardMetrics,
-	largeDashboardMetrics,
-	emptyDashboardData,
 	allCompletedMetrics,
 	allStalledMetrics,
 	createErrorResponse,
+	emptyDashboardData,
 	generateRecentActivity,
+	largeDashboardMetrics,
+	mediumDashboardMetrics,
 	simulateApiDelay,
-	largeAreaSystemMatrix,
+	smallDashboardData,
 } from "../__fixtures__/dashboard-data";
 
 // Base URL for Supabase REST API
@@ -123,50 +122,6 @@ export const dashboardHandlers = [
 		}
 
 		return HttpResponse.json(metrics);
-	}),
-
-	// Area System Matrix RPC
-	http.post(`${API_BASE}/get_area_system_matrix`, async ({ request }) => {
-		if (shouldSimulateSlowResponse) {
-			await simulateApiDelay(responseDelayMs, responseDelayMs);
-		}
-
-		if (shouldSimulateError) {
-			return HttpResponse.json(createErrorResponse(errorMessage), {
-				status: 500,
-			});
-		}
-
-		const body = (await request.json()) as { project_id: string };
-		const projectId = body.project_id;
-
-		if (!projectId) {
-			return HttpResponse.json(
-				createErrorResponse("Project ID is required"),
-				{ status: 400 },
-			);
-		}
-
-		const scenario = getProjectScenario(projectId);
-		let matrix: any;
-
-		switch (scenario) {
-			case "empty":
-				matrix = emptyDashboardData.areaSystemMatrix;
-				break;
-			case "large":
-				matrix = largeAreaSystemMatrix;
-				break;
-			case "error":
-				return HttpResponse.json(
-					createErrorResponse("Project not found"),
-					{ status: 404 },
-				);
-			default:
-				matrix = smallDashboardData.areaSystemMatrix;
-		}
-
-		return HttpResponse.json(matrix);
 	}),
 
 	// Drawing Rollups RPC
@@ -346,7 +301,10 @@ export const dashboardHandlers = [
 export const dashboardErrorHandlers = [
 	...dashboardHandlers.map((handler) => {
 		// Override all handlers to return errors
-		if (typeof handler.info?.path === 'string' && handler.info.path.includes("/rpc/")) {
+		if (
+			typeof handler.info?.path === "string" &&
+			handler.info.path.includes("/rpc/")
+		) {
 			return http.post(handler.info.path, () => {
 				return HttpResponse.json(
 					createErrorResponse("Database connection failed"),
@@ -361,7 +319,10 @@ export const dashboardErrorHandlers = [
 export const dashboardSlowHandlers = [
 	...dashboardHandlers.map((handler) => {
 		// Override all handlers to simulate slow responses
-		if (typeof handler.info?.path === 'string' && handler.info.path.includes("/rpc/")) {
+		if (
+			typeof handler.info?.path === "string" &&
+			handler.info.path.includes("/rpc/")
+		) {
 			return http.post(handler.info.path, async ({ request }) => {
 				await simulateApiDelay(3000, 5000); // 3-5 second delay
 

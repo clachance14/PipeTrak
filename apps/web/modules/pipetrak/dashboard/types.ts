@@ -17,24 +17,6 @@ export interface DashboardMetrics {
 	generatedAt: number;
 }
 
-export interface AreaSystemMatrixItem {
-	area: string;
-	system: string;
-	totalCount: number;
-	completedCount: number;
-	completionPercent: number;
-	stalledCounts: {
-		stalled7Days: number;
-		stalled14Days: number;
-		stalled21Days: number;
-	};
-}
-
-export interface AreaSystemMatrix {
-	matrixData: AreaSystemMatrixItem[];
-	generatedAt: number;
-}
-
 export interface DrawingRollup {
 	drawingId: string;
 	drawingNumber: string;
@@ -92,7 +74,6 @@ export interface RecentActivity {
 
 export interface DashboardData {
 	metrics: DashboardMetrics | null;
-	areaSystemMatrix: AreaSystemMatrix | null;
 	drawingRollups: DrawingRollups | null;
 	testPackageReadiness: TestPackageReadiness | null;
 	recentActivity: RecentActivity | null;

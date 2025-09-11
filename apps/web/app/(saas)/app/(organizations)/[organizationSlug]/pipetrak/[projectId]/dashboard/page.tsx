@@ -1,10 +1,10 @@
-import { Suspense } from "react";
-import { notFound } from "next/navigation";
-import { getSession } from "@saas/auth/lib/server";
-import { getDashboardData } from "@pipetrak/dashboard/lib/data-loaders";
 import { ResponsiveDashboard } from "@pipetrak/dashboard/components/ResponsiveDashboard";
+import { getDashboardData } from "@pipetrak/dashboard/lib/data-loaders";
+import { getSession } from "@saas/auth/lib/server";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { AlertTriangle } from "lucide-react";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 interface DashboardPageProps {
 	params: Promise<{
@@ -77,7 +77,6 @@ async function DashboardContent({ projectId }: { projectId: string }) {
 	const {
 		project,
 		metrics,
-		areaSystemMatrix,
 		drawingRollups,
 		testPackageReadiness,
 		recentActivity,
@@ -87,7 +86,6 @@ async function DashboardContent({ projectId }: { projectId: string }) {
 		<ResponsiveDashboard
 			project={project}
 			metrics={metrics}
-			areaSystemMatrix={areaSystemMatrix}
 			drawingRollups={drawingRollups}
 			testPackageReadiness={testPackageReadiness}
 			recentActivity={recentActivity}

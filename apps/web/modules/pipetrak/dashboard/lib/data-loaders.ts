@@ -1,14 +1,16 @@
 import { db } from "@repo/database";
 import { createClient } from "../../../../lib/supabase/server";
 import type {
+	ComponentFileFilters,
+	ComponentWithMilestones,
+} from "../../types";
+import type {
 	DashboardData,
 	DashboardMetrics,
-	AreaSystemMatrix,
 	DrawingRollups,
-	TestPackageReadiness,
 	RecentActivity,
+	TestPackageReadiness,
 } from "../types";
-import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
 
 /**
  * Server-side data fetching functions for PipeTrak dashboard
@@ -16,7 +18,6 @@ import type { ComponentWithMilestones, ComponentFileFilters } from "../../types"
  *
  * DEPLOYED: All dashboard RPC functions are deployed and working with real data
  * - get_dashboard_metrics: Overall project KPIs and completion metrics
- * - get_area_system_matrix: Area/system progress matrix for grid view
  * - get_drawing_rollups: Drawing-level progress with hierarchy support
  * - get_test_package_readiness: Test package completion status
  * - get_recent_activity: Recent milestone and component update feed
@@ -55,7 +56,6 @@ export async function getDashboardData(
 			);
 			return {
 				metrics: null,
-				areaSystemMatrix: null,
 				drawingRollups: null,
 				testPackageReadiness: null,
 				recentActivity: null,
@@ -64,27 +64,19 @@ export async function getDashboardData(
 		}
 
 		// Fetch all dashboard data in parallel
-		const [
-			metricsResult,
-			matrixResult,
-			drawingsResult,
-			packagesResult,
-			activityResult,
-		] = await Promise.allSettled([
-			fetchDashboardMetrics(projectId),
-			fetchAreaSystemMatrix(projectId),
-			fetchDrawingRollups(projectId),
-			fetchTestPackageReadiness(projectId),
-			fetchRecentActivity(projectId),
-		]);
+		const [metricsResult, drawingsResult, packagesResult, activityResult] =
+			await Promise.allSettled([
+				fetchDashboardMetrics(projectId),
+				fetchDrawingRollups(projectId),
+				fetchTestPackageReadiness(projectId),
+				fetchRecentActivity(projectId),
+			]);
 
 		return {
 			metrics:
 				metricsResult.status === "fulfilled"
 					? metricsResult.value
 					: null,
-			areaSystemMatrix:
-				matrixResult.status === "fulfilled" ? matrixResult.value : null,
 			drawingRollups:
 				drawingsResult.status === "fulfilled"
 					? drawingsResult.value
@@ -103,7 +95,6 @@ export async function getDashboardData(
 		console.error("Error fetching dashboard data:", error);
 		return {
 			metrics: null,
-			areaSystemMatrix: null,
 			drawingRollups: null,
 			testPackageReadiness: null,
 			recentActivity: null,
@@ -172,84 +163,6 @@ export async function fetchDashboardMetrics(
 			},
 			generatedAt: Date.now(),
 		};
-	}
-}
-
-/**
- * Fetch area/system matrix data using RPC function
- */
-export async function fetchAreaSystemMatrix(
-	projectId: string,
-): Promise<AreaSystemMatrix | null> {
-	const supabase = await createClient();
-
-	try {
-		const { data, error } = await supabase.rpc("get_area_system_matrix", {
-			p_project_id: projectId,
-		});
-
-		if (!error && data) {
-			return data as AreaSystemMatrix;
-		}
-
-		// Log RPC failure and return fallback data if needed
-		console.warn("RPC get_area_system_matrix failed:", error?.message);
-		return {
-			matrixData: [
-				{
-					area: "Area 100",
-					system: "Piping",
-					totalCount: 60,
-					completedCount: 24,
-					completionPercent: 40,
-					stalledCounts: {
-						stalled7Days: 5,
-						stalled14Days: 3,
-						stalled21Days: 1,
-					},
-				},
-				{
-					area: "Area 100",
-					system: "Electrical",
-					totalCount: 40,
-					completedCount: 16,
-					completionPercent: 40,
-					stalledCounts: {
-						stalled7Days: 2,
-						stalled14Days: 1,
-						stalled21Days: 0,
-					},
-				},
-				{
-					area: "Area 200",
-					system: "Piping",
-					totalCount: 80,
-					completedCount: 32,
-					completionPercent: 40,
-					stalledCounts: {
-						stalled7Days: 6,
-						stalled14Days: 4,
-						stalled21Days: 2,
-					},
-				},
-				{
-					area: "Area 200",
-					system: "Electrical",
-					totalCount: 35,
-					completedCount: 14,
-					completionPercent: 40,
-					stalledCounts: {
-						stalled7Days: 3,
-						stalled14Days: 2,
-						stalled21Days: 1,
-					},
-				},
-			],
-			generatedAt: Date.now(),
-		};
-	} catch (error) {
-		console.error("Error calling get_area_system_matrix:", error);
-		return null;
 	}
 }
 
@@ -519,7 +432,8 @@ export async function fetchDashboardComponents(
 			"[fetchDashboardComponents] Successfully transformed components",
 		);
 		return {
-			components: transformedComponents as unknown as ComponentWithMilestones[],
+			components:
+				transformedComponents as unknown as ComponentWithMilestones[],
 			total,
 		};
 	} catch (error) {

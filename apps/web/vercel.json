@@ -1,5 +1,9 @@
 {
 	"version": 2,
 	"framework": "nextjs",
-	"installCommand": "pnpm install --frozen-lockfile"
+	"installCommand": "pnpm install --frozen-lockfile",
+	"buildCommand": "pnpm db:generate && pnpm run build",
+	"env": {
+		"PRISMA_GENERATE_DATAPROXY": "true"
+	}
 }

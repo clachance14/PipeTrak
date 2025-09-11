@@ -9,6 +9,9 @@ const withNextIntl = nextIntlPlugin("./i18n.ts");
 
 const nextConfig: NextConfig = {
 	transpilePackages: ["@repo/api", "@repo/auth", "@repo/database"],
+	experimental: {
+		serverComponentsExternalPackages: ["@prisma/client", "prisma"],
+	},
 	images: {
 		remotePatterns: [
 			{

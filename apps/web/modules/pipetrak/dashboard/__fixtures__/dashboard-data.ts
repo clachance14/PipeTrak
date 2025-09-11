@@ -4,15 +4,13 @@
  */
 
 import type {
-	DashboardMetrics,
-	AreaSystemMatrix,
-	AreaSystemMatrixItem,
-	DrawingRollups,
-	TestPackageReadiness,
-	RecentActivity,
 	ActivityItem,
 	DashboardData,
+	DashboardMetrics,
+	DrawingRollups,
 	KPICardData,
+	RecentActivity,
+	TestPackageReadiness,
 } from "../types";
 
 // Small dataset (10 components) - for unit tests
@@ -115,65 +113,6 @@ export const allStalledMetrics: DashboardMetrics = {
 		stalled14Days: 10,
 		stalled21Days: 10,
 	},
-	generatedAt: Date.now(),
-};
-
-// Area/System Matrix Data
-export const smallAreaSystemMatrix: AreaSystemMatrix = {
-	matrixData: [
-		{
-			area: "Area-01",
-			system: "System-01",
-			totalCount: 5,
-			completedCount: 3,
-			completionPercent: 60.0,
-			stalledCounts: {
-				stalled7Days: 1,
-				stalled14Days: 0,
-				stalled21Days: 0,
-			},
-		},
-		{
-			area: "Area-01",
-			system: "System-02",
-			totalCount: 3,
-			completedCount: 2,
-			completionPercent: 66.7,
-			stalledCounts: {
-				stalled7Days: 0,
-				stalled14Days: 1,
-				stalled21Days: 0,
-			},
-		},
-		{
-			area: "Area-02",
-			system: "System-01",
-			totalCount: 2,
-			completedCount: 1,
-			completionPercent: 50.0,
-			stalledCounts: {
-				stalled7Days: 0,
-				stalled14Days: 0,
-				stalled21Days: 0,
-			},
-		},
-	],
-	generatedAt: Date.now(),
-};
-
-export const largeAreaSystemMatrix: AreaSystemMatrix = {
-	matrixData: Array.from({ length: 100 }, (_, index) => ({
-		area: `Area-${String(Math.floor(index / 10) + 1).padStart(2, "0")}`,
-		system: `System-${String((index % 10) + 1).padStart(2, "0")}`,
-		totalCount: Math.floor(Math.random() * 50) + 10,
-		completedCount: Math.floor(Math.random() * 40) + 5,
-		completionPercent: Math.floor(Math.random() * 100),
-		stalledCounts: {
-			stalled7Days: Math.floor(Math.random() * 5),
-			stalled14Days: Math.floor(Math.random() * 3),
-			stalled21Days: Math.floor(Math.random() * 2),
-		},
-	})),
 	generatedAt: Date.now(),
 };
 
@@ -346,7 +285,6 @@ export const sampleKPICards: KPICardData[] = [
 // Complete Dashboard Data Sets
 export const smallDashboardData: DashboardData = {
 	metrics: smallDashboardMetrics,
-	areaSystemMatrix: smallAreaSystemMatrix,
 	drawingRollups: smallDrawingRollups,
 	testPackageReadiness: smallTestPackageReadiness,
 	recentActivity: smallRecentActivity,
@@ -361,7 +299,6 @@ export const smallDashboardData: DashboardData = {
 
 export const emptyDashboardData: DashboardData = {
 	metrics: emptyDashboardMetrics,
-	areaSystemMatrix: { matrixData: [], generatedAt: Date.now() },
 	drawingRollups: { drawings: [], generatedAt: Date.now() },
 	testPackageReadiness: { testPackages: [], generatedAt: Date.now() },
 	recentActivity: { activities: [], generatedAt: Date.now(), limit: 50 },
@@ -377,7 +314,6 @@ export const emptyDashboardData: DashboardData = {
 // Loading state data
 export const loadingDashboardData: DashboardData = {
 	metrics: null,
-	areaSystemMatrix: null,
 	drawingRollups: null,
 	testPackageReadiness: null,
 	recentActivity: null,
@@ -417,41 +353,6 @@ export function generateDashboardMetrics(
 			stalled14Days: Math.floor(stalledTotal * 0.3),
 			stalled21Days: Math.floor(stalledTotal * 0.2),
 		},
-		generatedAt: Date.now(),
-	};
-}
-
-export function generateAreaSystemMatrix(
-	areaCount: number,
-	systemCount: number,
-): AreaSystemMatrix {
-	const matrixData: AreaSystemMatrixItem[] = [];
-
-	for (let a = 1; a <= areaCount; a++) {
-		for (let s = 1; s <= systemCount; s++) {
-			const totalCount = Math.floor(Math.random() * 20) + 5;
-			const completedCount = Math.floor(
-				totalCount * (0.5 + Math.random() * 0.4),
-			);
-
-			matrixData.push({
-				area: `Area-${String(a).padStart(2, "0")}`,
-				system: `System-${String(s).padStart(2, "0")}`,
-				totalCount,
-				completedCount,
-				completionPercent:
-					Math.round((completedCount / totalCount) * 100 * 100) / 100,
-				stalledCounts: {
-					stalled7Days: Math.floor(Math.random() * 3),
-					stalled14Days: Math.floor(Math.random() * 2),
-					stalled21Days: Math.floor(Math.random() * 1),
-				},
-			});
-		}
-	}
-
-	return {
-		matrixData,
 		generatedAt: Date.now(),
 	};
 }
@@ -535,17 +436,5 @@ export function validateDashboardMetrics(metrics: DashboardMetrics): boolean {
 		metrics.completedComponents <= metrics.totalComponents &&
 		metrics.overallCompletionPercent >= 0 &&
 		metrics.overallCompletionPercent <= 100
-	);
-}
-
-export function validateAreaSystemMatrix(matrix: AreaSystemMatrix): boolean {
-	return (
-		Array.isArray(matrix.matrixData) &&
-		matrix.matrixData.every(
-			(item) =>
-				typeof item.totalCount === "number" &&
-				typeof item.completedCount === "number" &&
-				item.completedCount <= item.totalCount,
-		)
 	);
 }

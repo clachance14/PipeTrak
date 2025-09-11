@@ -1,28 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@ui/components/alert";
-import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
-import { AlertTriangle, LayoutGrid, BarChart3 } from "lucide-react";
-import { DashboardTopBar } from "./DashboardTopBar";
-import { KPIHeroBar } from "./KPIHeroBar";
-import { AreaSystemGrid } from "./AreaSystemGrid";
-import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
-import { DrawingHierarchy } from "./DrawingHierarchy";
-import { TestPackageTable } from "./TestPackageTable";
-import { ActivityFeed } from "./ActivityFeed";
-import { TabletDashboard } from "./TabletDashboard";
-import { MobileDashboard } from "./MobileDashboard";
-import { fetchDashboardComponentsClient } from "../lib/client-api";
+import { AlertTriangle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
+import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type {
 	DashboardMetrics,
-	AreaSystemMatrix,
 	DrawingRollups,
-	TestPackageReadiness,
 	RecentActivity,
+	TestPackageReadiness,
 } from "../types";
+import { ActivityFeed } from "./ActivityFeed";
+import { DashboardTopBar } from "./DashboardTopBar";
+import { DrawingHierarchy } from "./DrawingHierarchy";
+import { KPIHeroBar } from "./KPIHeroBar";
+import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
+import { MobileDashboard } from "./MobileDashboard";
+import { TabletDashboard } from "./TabletDashboard";
+import { TestPackageTable } from "./TestPackageTable";
 
 interface ResponsiveDashboardProps {
 	project: {
@@ -33,7 +30,6 @@ interface ResponsiveDashboardProps {
 		organizationId: string;
 	} | null;
 	metrics: DashboardMetrics | null;
-	areaSystemMatrix: AreaSystemMatrix | null;
 	drawingRollups: DrawingRollups | null;
 	testPackageReadiness: TestPackageReadiness | null;
 	recentActivity: RecentActivity | null;
@@ -50,7 +46,6 @@ interface ResponsiveDashboardProps {
 export function ResponsiveDashboard({
 	project,
 	metrics,
-	areaSystemMatrix,
 	drawingRollups,
 	testPackageReadiness,
 	recentActivity,
@@ -62,7 +57,6 @@ export function ResponsiveDashboard({
 	>("desktop");
 	const [components, setComponents] = useState<ComponentWithMilestones[]>([]);
 	const [loadingComponents, setLoadingComponents] = useState(false);
-	const [showMilestoneMatrix, setShowMilestoneMatrix] = useState(false);
 
 	// Detect screen size
 	useEffect(() => {
@@ -85,15 +79,17 @@ export function ResponsiveDashboard({
 		return () => window.removeEventListener("resize", checkScreenSize);
 	}, []);
 
-	// Load components for milestone matrix when needed
+	// Load components for milestone matrix
 	useEffect(() => {
-		if (showMilestoneMatrix && project?.id) {
+		if (project?.id) {
 			loadComponents();
 		}
-	}, [showMilestoneMatrix, project?.id]);
+	}, [project?.id]);
 
 	const loadComponents = async () => {
-		if (!project?.id) return;
+		if (!project?.id) {
+			return;
+		}
 
 		setLoadingComponents(true);
 		try {
@@ -186,46 +182,15 @@ export function ResponsiveDashboard({
 				/>
 			</div>
 
-			{/* Matrix View Toggle */}
-			<div className="flex justify-center">
-				<ToggleGroup
-					type="single"
-					value={showMilestoneMatrix ? "milestone" : "area"}
-					onValueChange={(value) =>
-						setShowMilestoneMatrix(value === "milestone")
-					}
-					className="bg-muted/50"
-				>
-					<ToggleGroupItem
-						value="area"
-						aria-label="Area × System View"
-					>
-						<LayoutGrid className="h-4 w-4 mr-2" />
-						Area × System
-					</ToggleGroupItem>
-					<ToggleGroupItem
-						value="milestone"
-						aria-label="Milestone Progress View"
-					>
-						<BarChart3 className="h-4 w-4 mr-2" />
-						Milestone Progress
-					</ToggleGroupItem>
-				</ToggleGroup>
-			</div>
-
 			{/* Interactive Dashboard Components */}
 			<div className="space-y-6">
-				{/* Matrix Grid3x3 - Full width */}
-				{showMilestoneMatrix ? (
-					<MilestoneProgressMatrix
-						components={components}
-						showSystems={true}
-						showTestPackages={true}
-						loading={loadingComponents}
-					/>
-				) : (
-					<AreaSystemGrid data={areaSystemMatrix} />
-				)}
+				{/* Milestone Progress Matrix - Full width */}
+				<MilestoneProgressMatrix
+					components={components}
+					showSystems={true}
+					showTestPackages={true}
+					loading={loadingComponents}
+				/>
 
 				{/* Two-column layout for Drawing Hierarchy and Test Package Readiness */}
 				<div className="grid gap-6 lg:grid-cols-2">
