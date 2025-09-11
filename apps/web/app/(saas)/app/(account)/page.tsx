@@ -1,4 +1,4 @@
-import { getSession, getOrganizationList } from "@saas/auth/lib/server";
+import { getOrganizationList, getSession } from "@saas/auth/lib/server";
 import { redirect } from "next/navigation";
 
 export default async function AppStartPage() {
@@ -22,6 +22,12 @@ export default async function AppStartPage() {
 		redirect("/new-organization");
 	}
 
-	// Redirect to organization home page
+	// Ensure we have a valid slug before redirecting
+	if (!activeOrganization.slug) {
+		console.error("Organization missing slug:", activeOrganization);
+		redirect("/new-organization");
+	}
+
+	// Redirect to organization home page which will then redirect to pipetrak
 	redirect(`/app/${activeOrganization.slug}`);
 }

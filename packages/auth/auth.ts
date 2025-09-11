@@ -1,4 +1,6 @@
 import { config } from "@repo/config";
+// Removed getBaseUrl import - using auth config's built-in version
+import { getAuthConfig, getAuthSecret } from "@repo/config/auth-config-simple";
 import {
 	db,
 	getInvitationById,
@@ -11,8 +13,6 @@ import type { Locale } from "@repo/i18n";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { cancelSubscription } from "@repo/payments";
-// Removed getBaseUrl import - using auth config's built-in version
-import { getAuthConfig, getAuthSecret } from "@repo/config/auth-config-simple";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import {
@@ -43,15 +43,21 @@ const authConfig = getAuthConfig();
 const appUrl = authConfig.baseURL;
 
 // Log startup information
-console.log(`🚀 Initializing PipeTrak Auth`);
+console.log("🚀 Initializing PipeTrak Auth");
 
 export const auth = betterAuth({
 	secret: getAuthSecret(),
 	baseURL: appUrl,
-	trustedOrigins: authConfig.trustAllOrigins ? ['*'] : authConfig.trustedOrigins,
+	trustedOrigins: authConfig.trustAllOrigins
+		? ["*"]
+		: authConfig.trustedOrigins,
 	appName: authConfig.appName,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
+		// Optimize for serverless environments
+		...(process.env.VERCEL && {
+			skipPreparedStatements: true,
+		}),
 	}),
 	advanced: {
 		database: {
@@ -74,7 +80,7 @@ export const auth = betterAuth({
 			if (authConfig.debugMode) {
 				console.log(`🔐 Auth hook (after): ${ctx.path}`);
 			}
-			
+
 			if (ctx.path.startsWith("/organization/accept-invitation")) {
 				const { invitationId } = ctx.body;
 
@@ -106,15 +112,18 @@ export const auth = betterAuth({
 			if (authConfig.debugMode) {
 				console.log(`🔐 Auth hook (before): ${ctx.path}`);
 			}
-			
+
 			// Development mock user bypass
 			if (authConfig.mockUser) {
-				console.log('🧪 Using mock user for development:', authConfig.mockUser.email);
+				console.log(
+					"🧪 Using mock user for development:",
+					authConfig.mockUser.email,
+				);
 				// Set mock session
 				ctx.context.session = {
-					session: { 
+					session: {
 						userId: authConfig.mockUser.id,
-						...authConfig.mockUser 
+						...authConfig.mockUser,
 					},
 					user: authConfig.mockUser,
 				};
@@ -167,7 +176,10 @@ export const auth = betterAuth({
 		changeEmail: {
 			enabled: true,
 			sendChangeEmailVerification: async (
-				{ user: { email, name }, url }: { user: { email: string; name: string }; url: string },
+				{
+					user: { email, name },
+					url,
+				}: { user: { email: string; name: string }; url: string },
 				request?: Request,
 			) => {
 				const locale = getLocaleFromRequest(request);
@@ -188,9 +200,18 @@ export const auth = betterAuth({
 		// Environment-aware email verification
 		// Development: Skip email verification for faster iteration
 		// Production: Require email verification for security
-		autoSignIn: authConfig.skipEmailVerification || !config.auth.enableSignup,
-		requireEmailVerification: authConfig.validation.requireEmailVerification && config.auth.enableSignup,
-		sendResetPassword: async ({ user, url }: { user: { email: string; name: string }; url: string }, request?: Request) => {
+		autoSignIn:
+			authConfig.skipEmailVerification || !config.auth.enableSignup,
+		requireEmailVerification:
+			authConfig.validation.requireEmailVerification &&
+			config.auth.enableSignup,
+		sendResetPassword: async (
+			{
+				user,
+				url,
+			}: { user: { email: string; name: string }; url: string },
+			request?: Request,
+		) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
 				to: user.email,
@@ -204,10 +225,15 @@ export const auth = betterAuth({
 		},
 	},
 	emailVerification: {
-		sendOnSignUp: authConfig.validation.requireEmailVerification && config.auth.enableSignup,
+		sendOnSignUp:
+			authConfig.validation.requireEmailVerification &&
+			config.auth.enableSignup,
 		autoSignInAfterVerification: true,
 		sendVerificationEmail: async (
-			{ user: { email, name }, url }: { user: { email: string; name: string }; url: string },
+			{
+				user: { email, name },
+				url,
+			}: { user: { email: string; name: string }; url: string },
 			request?: Request,
 		) => {
 			const locale = getLocaleFromRequest(request);
@@ -242,28 +268,32 @@ export const auth = betterAuth({
 		admin(),
 		// Conditionally enable features based on environment
 		...(authConfig.features.passkeys ? [passkey()] : []),
-		...(authConfig.features.magicLink ? [
-			magicLink({
-				disableSignUp: true,
-				sendMagicLink: async ({ email, url }, request) => {
-					const locale = getLocaleFromRequest(request);
-					
-					// In development, log magic link for debugging
-					if (authConfig.debugMode) {
-						console.log(`🔗 Magic link for ${email}: ${url}`);
-					}
-					
-					await sendEmail({
-						to: email,
-						templateId: "magicLink",
-						context: {
-							url,
+		...(authConfig.features.magicLink
+			? [
+					magicLink({
+						disableSignUp: true,
+						sendMagicLink: async ({ email, url }, request) => {
+							const locale = getLocaleFromRequest(request);
+
+							// In development, log magic link for debugging
+							if (authConfig.debugMode) {
+								console.log(
+									`🔗 Magic link for ${email}: ${url}`,
+								);
+							}
+
+							await sendEmail({
+								to: email,
+								templateId: "magicLink",
+								context: {
+									url,
+								},
+								locale,
+							});
 						},
-						locale,
-					});
-				},
-			})
-		] : []),
+					}),
+				]
+			: []),
 		organization({
 			allowUserToCreateOrganization: async (user) => {
 				// Only allow organization creation if user doesn't already belong to one
@@ -285,10 +315,12 @@ export const auth = betterAuth({
 
 				url.searchParams.set("invitationId", id);
 				url.searchParams.set("email", email);
-				
+
 				// In development, log invitation for debugging
 				if (authConfig.debugMode) {
-					console.log(`📧 Organization invitation for ${email}: ${url.toString()}`);
+					console.log(
+						`📧 Organization invitation for ${email}: ${url.toString()}`,
+					);
 				}
 
 				await sendEmail({
@@ -357,6 +389,10 @@ export type Organization = {
 
 export type OrganizationMemberRole = "owner" | "admin" | "member";
 
-export type OrganizationInvitationStatus = "pending" | "accepted" | "rejected" | "canceled";
+export type OrganizationInvitationStatus =
+	| "pending"
+	| "accepted"
+	| "rejected"
+	| "canceled";
 
 export type OrganizationMetadata = Record<string, unknown> | undefined;

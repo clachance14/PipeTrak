@@ -2,5 +2,13 @@
 	"version": 2,
 	"framework": "nextjs",
 	"installCommand": "pnpm install --frozen-lockfile",
-	"buildCommand": "pnpm run build"
+	"buildCommand": "pnpm run build",
+	"functions": {
+		"app/api/**/*.js": {
+			"maxDuration": 30
+		}
+	},
+	"env": {
+		"PRISMA_GENERATE_SKIP_AUTOINSTALL": "true"
+	}
 }
