@@ -4,6 +4,7 @@
 	"installCommand": "pnpm install --frozen-lockfile",
 	"buildCommand": "pnpm run build",
 	"env": {
-		"PRISMA_GENERATE_DATAPROXY": "true"
+		"PRISMA_GENERATE_DATAPROXY": "true",
+		"PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x"
 	}
 }
