@@ -1,4 +1,4 @@
-import { ComponentStatus, Prisma, PrismaClient } from "./generated/client";
+import { ComponentStatus, Prisma, PrismaClient } from "@prisma/client";
 
 export { PrismaClient, Prisma, ComponentStatus };
 

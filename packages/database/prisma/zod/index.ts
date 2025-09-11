@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Prisma } from '../generated/client';
+import { Prisma } from '@prisma/client';
 import Decimal from 'decimal.js';
 
 /////////////////////////////////////////
