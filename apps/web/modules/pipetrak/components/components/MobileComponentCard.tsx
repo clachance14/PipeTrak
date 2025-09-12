@@ -1,16 +1,11 @@
 "use client";
 
 import { Card, CardContent } from "@ui/components/card";
-import {
-	MapPin,
-	Check,
-	Clock,
-	AlertCircle,
-} from "lucide-react";
 import { cn } from "@ui/lib";
+import { AlertCircle, Check, Clock, MapPin } from "lucide-react";
 import type { ComponentWithMilestones } from "../../types";
-import { MilestoneButtonRow } from "../milestones/mobile/MilestoneButtonRow";
 import { useMilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
+import { MilestoneButtonRow } from "../milestones/mobile/MilestoneButtonRow";
 
 interface MobileComponentCardProps {
 	component: ComponentWithMilestones;
@@ -29,72 +24,58 @@ export function MobileComponentCard({
 	onSelect,
 	onClick,
 }: MobileComponentCardProps) {
-
 	// Access milestone update engine if available
 	const milestoneEngine = useMilestoneUpdateEngine?.() || null;
 
 	// Handle milestone updates using the engine directly
-	const handleMilestoneUpdate = async (milestoneId: string, value: boolean | number) => {
-		console.log('MobileComponentCard: handleMilestoneUpdate called', { milestoneId, value, componentId: component.id });
-		
+	const handleMilestoneUpdate = async (
+		milestoneId: string,
+		value: boolean | number,
+	) => {
+		console.log("MobileComponentCard: handleMilestoneUpdate called", {
+			milestoneId,
+			value,
+			componentId: component.id,
+		});
+
 		if (!milestoneEngine) {
-			console.error('MilestoneUpdateEngine not available');
+			console.error("MilestoneUpdateEngine not available");
 			return;
 		}
 
 		// Find the milestone to get its name
-		const milestone = component.milestones?.find(m => m.id === milestoneId);
+		const milestone = component.milestones?.find(
+			(m) => m.id === milestoneId,
+		);
 		if (!milestone) {
-			console.error('Milestone not found:', milestoneId);
+			console.error("Milestone not found:", milestoneId);
 			return;
 		}
 
 		try {
-			console.log('Calling milestoneEngine.updateMilestone', {
+			console.log("Calling milestoneEngine.updateMilestone", {
 				milestoneId,
 				componentId: component.id,
 				milestoneName: milestone.milestoneName,
 				workflowType: component.workflowType,
-				value
+				value,
 			});
-			
+
 			await milestoneEngine.updateMilestone(
 				milestoneId,
 				component.id,
 				milestone.milestoneName,
 				component.workflowType,
-				value
+				value,
 			);
-			console.log('Milestone updated successfully:', milestone.milestoneName, value);
+			console.log(
+				"Milestone updated successfully:",
+				milestone.milestoneName,
+				value,
+			);
 		} catch (error) {
-			console.error('Failed to update milestone:', error);
+			console.error("Failed to update milestone:", error);
 		}
-	};
-
-	const getStatusIcon = () => {
-		switch (component.status) {
-			case "COMPLETED":
-				return <Check className="h-5 w-5 text-fieldComplete" />;
-			case "IN_PROGRESS":
-				return <Clock className="h-5 w-5 text-blue-600" />;
-			default:
-				return <AlertCircle className="h-5 w-5 text-fieldPending" />;
-		}
-	};
-
-	const getStatusColor = () => {
-		switch (component.status) {
-			case "COMPLETED":
-				return "bg-fieldComplete/10 text-fieldComplete border-fieldComplete/20";
-			case "IN_PROGRESS":
-				return "bg-blue-100 text-blue-700 border-blue-200";
-			default:
-				return "bg-fieldPending/10 text-fieldPending border-fieldPending/20";
-		}
-	};
-
-	const formatStatus = (status: string) => {
-		return status.replace(/_/g, " ");
 	};
 
 
@@ -102,11 +83,10 @@ export function MobileComponentCard({
 		<Card
 			className={cn(
 				"relative w-full",
-				isSelected && "ring-2 ring-primary shadow-lg"
+				isSelected && "ring-2 ring-primary shadow-lg",
 			)}
 			onClick={onClick}
 		>
-
 			<CardContent className="p-2 space-y-1">
 				{/* Header Section - 24px */}
 				<div className="flex items-center justify-between gap-2 h-6">
@@ -150,7 +130,9 @@ export function MobileComponentCard({
 							{component.type}
 						</span>
 					)}
-					{component.size && <span className="truncate">• {component.size}</span>}
+					{component.size && (
+						<span className="truncate">• {component.size}</span>
+					)}
 					{component.area && (
 						<div className="flex items-center gap-0.5 truncate">
 							<MapPin className="h-2.5 w-2.5 flex-shrink-0" />
@@ -167,19 +149,27 @@ export function MobileComponentCard({
 						componentId={component.id}
 						componentType={component.type}
 						onMilestoneComplete={(milestoneId) => {
-							console.log('MobileComponentCard: onMilestoneComplete triggered', milestoneId);
+							console.log(
+								"MobileComponentCard: onMilestoneComplete triggered",
+								milestoneId,
+							);
 							handleMilestoneUpdate(milestoneId, true);
 						}}
 						onMilestoneUncomplete={(milestoneId) => {
-							console.log('MobileComponentCard: onMilestoneUncomplete triggered', milestoneId);
+							console.log(
+								"MobileComponentCard: onMilestoneUncomplete triggered",
+								milestoneId,
+							);
 							handleMilestoneUpdate(milestoneId, false);
 						}}
 						isLoading={milestoneEngine?.hasPendingUpdates}
-						hasError={(milestoneId) => milestoneEngine?.getOperationStatus(milestoneId) === 'error'}
+						hasError={(milestoneId) =>
+							milestoneEngine?.getOperationStatus(milestoneId) ===
+							"error"
+						}
 					/>
 				)}
-
-				</CardContent>
-			</Card>
-		);
+			</CardContent>
+		</Card>
+	);
 }
