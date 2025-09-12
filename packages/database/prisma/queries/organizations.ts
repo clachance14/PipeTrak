@@ -1,6 +1,5 @@
-import type { z } from "zod";
+import type { Prisma } from "@prisma/client";
 import { db } from "../client";
-import type { OrganizationUpdateInputSchema } from "../zod";
 
 export async function getOrganizations({
 	limit,
@@ -115,7 +114,7 @@ export async function getPendingInvitationByEmail(email: string) {
 }
 
 export async function updateOrganization(
-	organization: z.infer<typeof OrganizationUpdateInputSchema> & {
+	organization: Prisma.OrganizationUpdateInput & {
 		id: string;
 	},
 ) {
