@@ -146,7 +146,7 @@ export function MobileComponentCard({
 						milestones={component.milestones}
 						workflowType={component.workflowType}
 						componentId={component.id}
-						componentType={component.type}
+						componentType={component.type || undefined}
 						onMilestoneComplete={(milestoneId) => {
 							console.log(
 								"MobileComponentCard: onMilestoneComplete triggered",
