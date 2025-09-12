@@ -1,29 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { Card, CardContent } from "@ui/components/card";
-import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
-import { Button } from "@ui/components/button";
 import {
 	MapPin,
-	Package,
-	Wrench,
 	Check,
 	Clock,
 	AlertCircle,
-	MoreVertical,
-	CheckSquare,
-	Target,
 } from "lucide-react";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@ui/components/dropdown-menu";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
+import { MilestoneButtonRow } from "../milestones/mobile/MilestoneButtonRow";
+import { useMilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
 
 interface MobileComponentCardProps {
 	component: ComponentWithMilestones;
@@ -34,8 +21,6 @@ interface MobileComponentCardProps {
 	onEdit?: () => void;
 	onDuplicate?: () => void;
 	onDelete?: () => void;
-	onOpenMilestones?: () => void;
-	onOpenQuickSelector?: () => void;
 }
 
 export function MobileComponentCard({
@@ -43,40 +28,48 @@ export function MobileComponentCard({
 	isSelected,
 	onSelect,
 	onClick,
-	onQuickUpdate,
-	onOpenMilestones,
-	onOpenQuickSelector,
 }: MobileComponentCardProps) {
-	const [startX, setStartX] = useState(0);
-	const [currentX, setCurrentX] = useState(0);
-	const [isDragging, setIsDragging] = useState(false);
-	const [isButtonClick, setIsButtonClick] = useState(false);
 
-	// Calculate milestone statistics
-	const milestoneStats = useMemo(() => {
-		if (!component.milestones || component.milestones.length === 0) {
-			return { total: 0, completed: 0, current: null, nextPending: null };
+	// Access milestone update engine if available
+	const milestoneEngine = useMilestoneUpdateEngine?.() || null;
+
+	// Handle milestone updates using the engine directly
+	const handleMilestoneUpdate = async (milestoneId: string, value: boolean | number) => {
+		console.log('MobileComponentCard: handleMilestoneUpdate called', { milestoneId, value, componentId: component.id });
+		
+		if (!milestoneEngine) {
+			console.error('MilestoneUpdateEngine not available');
+			return;
 		}
 
-		const total = component.milestones.length;
-		const completed = component.milestones.filter(
-			(m) => m.isCompleted,
-		).length;
+		// Find the milestone to get its name
+		const milestone = component.milestones?.find(m => m.id === milestoneId);
+		if (!milestone) {
+			console.error('Milestone not found:', milestoneId);
+			return;
+		}
 
-		// Find current milestone (first incomplete)
-		const current = component.milestones.find((m) => !m.isCompleted);
-
-		// Find next pending milestone
-		const currentIndex = current
-			? component.milestones.indexOf(current)
-			: -1;
-		const nextPending =
-			currentIndex >= 0 && currentIndex < total - 1
-				? component.milestones[currentIndex + 1]
-				: null;
-
-		return { total, completed, current, nextPending };
-	}, [component.milestones]);
+		try {
+			console.log('Calling milestoneEngine.updateMilestone', {
+				milestoneId,
+				componentId: component.id,
+				milestoneName: milestone.milestoneName,
+				workflowType: component.workflowType,
+				value
+			});
+			
+			await milestoneEngine.updateMilestone(
+				milestoneId,
+				component.id,
+				milestone.milestoneName,
+				component.workflowType,
+				value
+			);
+			console.log('Milestone updated successfully:', milestone.milestoneName, value);
+		} catch (error) {
+			console.error('Failed to update milestone:', error);
+		}
+	};
 
 	const getStatusIcon = () => {
 		switch (component.status) {
@@ -104,365 +97,87 @@ export function MobileComponentCard({
 		return status.replace(/_/g, " ");
 	};
 
-	// Touch handlers for swipe gestures
-	const handleTouchStart = (e: React.TouchEvent) => {
-			setStartX(e.touches[0].clientX);
-			setCurrentX(e.touches[0].clientX);
-		};
 
-		const handleTouchMove = (e: React.TouchEvent) => {
-			setCurrentX(e.touches[0].clientX);
-			const diff = currentX - startX;
+	return (
+		<Card
+			className={cn(
+				"relative w-full",
+				isSelected && "ring-2 ring-primary shadow-lg"
+			)}
+			onClick={onClick}
+		>
 
-			// Start dragging if moved more than 10px
-			if (Math.abs(diff) > 10 && !isDragging) {
-				setIsDragging(true);
-			}
-		};
-
-		const handleTouchEnd = () => {
-			const diff = currentX - startX;
-
-			// Don't process touch if it was a button click
-			if (isButtonClick) {
-				setIsButtonClick(false);
-				setIsDragging(false);
-				setStartX(0);
-				setCurrentX(0);
-				return;
-			}
-
-			// Swipe right to select/deselect (threshold: 100px)
-			if (diff > 100) {
-				onSelect(!isSelected);
-			}
-			// Swipe left for quick status update (threshold: -100px)
-			else if (diff < -100 && onQuickUpdate) {
-				if (component.status === "NOT_STARTED") {
-					onQuickUpdate("IN_PROGRESS");
-				} else if (component.status === "IN_PROGRESS") {
-					onQuickUpdate("COMPLETED");
-				}
-			}
-			// If not a significant swipe, treat as tap
-			else if (Math.abs(diff) < 10) {
-				onClick();
-			}
-
-			setIsDragging(false);
-			setStartX(0);
-			setCurrentX(0);
-		};
-
-		return (
-			<Card
-				className={cn(
-					"relative transition-all duration-200 will-change-transform w-full",
-					isSelected && "ring-2 ring-primary shadow-lg",
-					isDragging && "opacity-90",
-				)}
-				onTouchStart={handleTouchStart}
-				onTouchMove={handleTouchMove}
-				onTouchEnd={handleTouchEnd}
-				style={{
-					transform: isDragging
-						? `translate3d(${currentX - startX}px, 0, 0)`
-						: "translate3d(0, 0, 0)",
-					backfaceVisibility: "hidden",
-					WebkitBackfaceVisibility: "hidden",
-				}}
-			>
-				{/* Swipe indicators - optimized with transforms */}
-				{isDragging && (
-					<>
-						{currentX - startX > 50 && (
-							<div
-								className="absolute left-0 top-0 bottom-0 w-16 bg-primary/20 flex items-center justify-center will-change-transform"
-								style={{
-									transform: "translateZ(0)",
-									backfaceVisibility: "hidden",
-								}}
-							>
-								<CheckSquare className="h-6 w-6 text-primary" />
-							</div>
-						)}
-						{currentX - startX < -50 && (
-							<div
-								className="absolute right-0 top-0 bottom-0 w-16 bg-blue-500/20 flex items-center justify-center will-change-transform"
-								style={{
-									transform: "translateZ(0)",
-									backfaceVisibility: "hidden",
-								}}
-							>
-								{component.status === "NOT_STARTED" ? (
-									<Clock className="h-6 w-6 text-blue-600" />
-								) : (
-									<Check className="h-6 w-6 text-fieldComplete" />
-								)}
-							</div>
-						)}
-					</>
-				)}
-
-				<CardContent className="p-4 md:p-6 space-y-4 md:space-y-5">
-					{/* Compact Header Row */}
-					<div className="flex items-center justify-between gap-2">
-						{/* Left side: Checkbox, ID, Drawing, Type/Size */}
-						<div className="flex items-center gap-2 flex-1 min-w-0">
-							<input
-								type="checkbox"
-								checked={isSelected}
-								onChange={(e) => {
-									e.stopPropagation();
-									setIsButtonClick(true);
-									onSelect(e.target.checked);
-								}}
-								className="h-7 w-7 md:h-8 md:w-8 rounded border-gray-300 flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
-								onClick={(e) => {
-									e.stopPropagation();
-									setIsButtonClick(true);
-								}}
-							/>
-							<div className="flex items-center gap-2 min-w-0">
-								<MapPin className="h-4 w-4 md:h-5 md:w-5 text-blue-600 flex-shrink-0" />
-								<span className="text-sm md:text-base text-blue-600 font-medium">
-									{component.drawingNumber}
-								</span>
-							</div>
-							<h3 className="font-semibold text-sm truncate">
-								{component.componentId}
-							</h3>
-						</div>
-
-						{/* Right side: Status icon and menu */}
-						<div className="flex items-center gap-1 flex-shrink-0">
-							{getStatusIcon()}
-							<DropdownMenu>
-								<DropdownMenuTrigger
-									asChild
-									onClick={(e: React.MouseEvent) => {
-										e.stopPropagation();
-										setIsButtonClick(true);
-									}}
-								>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="h-12 w-12"
-									>
-										<MoreVertical className="h-4 w-4" />
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="end">
-									{onQuickUpdate &&
-										component.status === "NOT_STARTED" && (
-											<DropdownMenuItem
-												onClick={(e: React.MouseEvent) => {
-													e.stopPropagation();
-													setIsButtonClick(true);
-													onQuickUpdate(
-														"IN_PROGRESS",
-													);
-												}}
-											>
-												<Clock className="mr-2 h-4 w-4" />
-												Start Work
-											</DropdownMenuItem>
-										)}
-									{onQuickUpdate &&
-										component.status === "IN_PROGRESS" && (
-											<DropdownMenuItem
-												onClick={(e: React.MouseEvent) => {
-													e.stopPropagation();
-													setIsButtonClick(true);
-													onQuickUpdate("COMPLETED");
-												}}
-											>
-												<Check className="mr-2 h-4 w-4" />
-												Mark Complete
-											</DropdownMenuItem>
-										)}
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
-					</div>
-
-					{/* Component details in a single line */}
-					<div className="flex items-center gap-2 text-xs text-muted-foreground">
-						{component.type && (
-							<span className="font-medium">
-								{component.type}
+			<CardContent className="p-2 space-y-1">
+				{/* Header Section - 24px */}
+				<div className="flex items-center justify-between gap-2 h-6">
+					{/* Left side: Checkbox, ID, Drawing */}
+					<div className="flex items-center gap-1.5 flex-1 min-w-0">
+						<input
+							type="checkbox"
+							checked={isSelected}
+							onChange={(e) => {
+								e.stopPropagation();
+								onSelect(e.target.checked);
+							}}
+							className="h-5 w-5 rounded border-gray-300 flex-shrink-0"
+							onClick={(e) => {
+								e.stopPropagation();
+							}}
+						/>
+						<div className="flex items-center gap-1.5 min-w-0">
+							<MapPin className="h-3 w-3 text-blue-600 flex-shrink-0" />
+							<span className="text-xs text-blue-600 font-medium truncate">
+								{component.drawingNumber}
 							</span>
-						)}
-						{component.size && <span>• {component.size}</span>}
-						{component.spec && <span>• {component.spec}</span>}
+						</div>
+						<h3 className="font-semibold text-xs truncate">
+							{component.componentId}
+						</h3>
 					</div>
 
-					{/* Description - only if exists */}
-					{component.description && (
-						<p className="text-xs text-muted-foreground line-clamp-1">
-							{component.description}
-						</p>
+					{/* Right side: Progress percentage */}
+					<div className="text-right flex-shrink-0">
+						<div className="text-sm font-bold text-primary">
+							{component.completionPercent || 0}%
+						</div>
+					</div>
+				</div>
+
+				{/* Meta Section - 16px */}
+				<div className="flex items-center gap-1.5 text-[10px] text-muted-foreground h-4 overflow-hidden">
+					{component.type && (
+						<span className="font-medium truncate">
+							{component.type}
+						</span>
 					)}
-
-					{/* Enhanced Milestone Section */}
-					{milestoneStats.total > 0 && (
-						<div className="milestone-section space-y-3 pt-3 border-t">
-							{/* Milestone Summary Header */}
-							<div className="flex items-center justify-between">
-								<div className="flex items-center gap-2 flex-1">
-									<Target className="h-4 w-4 text-blue-600" />
-									<div className="flex flex-col flex-1 min-w-0">
-										<span className="text-sm font-medium truncate">
-											{milestoneStats.current
-												?.milestoneName ||
-												"All Complete"}
-										</span>
-										<span className="text-xs text-muted-foreground">
-											{milestoneStats.completed}/
-											{milestoneStats.total} milestones (
-											{component.completionPercent || 0}%)
-										</span>
-									</div>
-								</div>
-								<div className="text-right">
-									<div className="text-lg font-bold text-primary">
-										{component.completionPercent || 0}%
-									</div>
-								</div>
-							</div>
-
-							{/* Progress bar */}
-							<Progress
-								value={component.completionPercent || 0}
-								className="h-3"
-							/>
-
-							{/* Quick Action Buttons */}
-							<div className="flex gap-2">
-								{/* Quick Milestone Selector Button - Primary action */}
-								{onOpenQuickSelector && (
-									<Button
-										size="sm"
-										className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
-										onClick={(e: React.MouseEvent) => {
-											e.stopPropagation();
-											e.preventDefault();
-											setIsButtonClick(true);
-											requestAnimationFrame(() => {
-												onOpenQuickSelector();
-											});
-										}}
-										onTouchStart={(e: React.TouchEvent) => {
-											e.stopPropagation();
-											setIsButtonClick(true);
-										}}
-										onTouchEnd={(e: React.TouchEvent) => {
-											e.stopPropagation();
-										}}
-									>
-										<Target className="mr-2 h-4 w-4" />
-										Update Status
-									</Button>
-								)}
-
-								{/* Fallback to full milestone editor */}
-								{!onOpenQuickSelector && onOpenMilestones && (
-									<Button
-										size="sm"
-										variant="secondary"
-										className="flex-1 h-12"
-										onClick={(e: React.MouseEvent) => {
-											e.stopPropagation();
-											e.preventDefault();
-											setIsButtonClick(true);
-											requestAnimationFrame(() => {
-												onOpenMilestones();
-											});
-										}}
-										onTouchStart={(e: React.TouchEvent) => {
-											e.stopPropagation();
-											setIsButtonClick(true);
-										}}
-										onTouchEnd={(e: React.TouchEvent) => {
-											e.stopPropagation();
-										}}
-									>
-										<Target className="mr-2 h-4 w-4" />
-										Update Milestones
-									</Button>
-								)}
-							</div>
+					{component.size && <span className="truncate">• {component.size}</span>}
+					{component.area && (
+						<div className="flex items-center gap-0.5 truncate">
+							<MapPin className="h-2.5 w-2.5 flex-shrink-0" />
+							<span className="truncate">{component.area}</span>
 						</div>
 					)}
+				</div>
 
-					{/* Compact Meta Information - Single line */}
-					<div className="flex items-center gap-3 text-xs text-muted-foreground">
-						{component.area && (
-							<div className="flex items-center gap-1">
-								<MapPin className="h-3 w-3" />
-								<span>{component.area}</span>
-							</div>
-						)}
-						{component.system && (
-							<div className="flex items-center gap-1">
-								<Package className="h-3 w-3" />
-								<span>{component.system}</span>
-							</div>
-						)}
-						{component.testPackage && (
-							<div className="flex items-center gap-1">
-								<Wrench className="h-3 w-3" />
-								<span>{component.testPackage}</span>
-							</div>
-						)}
-					</div>
+				{/* Milestone Button Section - 40px */}
+				{component.milestones && component.milestones.length > 0 && (
+					<MilestoneButtonRow
+						milestones={component.milestones}
+						workflowType={component.workflowType}
+						componentId={component.id}
+						onMilestoneComplete={(milestoneId) => {
+							console.log('MobileComponentCard: onMilestoneComplete triggered', milestoneId);
+							handleMilestoneUpdate(milestoneId, true);
+						}}
+						onMilestoneUncomplete={(milestoneId) => {
+							console.log('MobileComponentCard: onMilestoneUncomplete triggered', milestoneId);
+							handleMilestoneUpdate(milestoneId, false);
+						}}
+						isLoading={milestoneEngine?.hasPendingUpdates}
+						hasError={(milestoneId) => milestoneEngine?.getOperationStatus(milestoneId) === 'error'}
+					/>
+				)}
 
-					{/* Status and Quick Actions */}
-					<div className="flex items-center justify-between pt-2 border-t">
-						<Badge
-							status="info"
-							className={cn(
-								"text-xs py-0.5 px-2",
-								getStatusColor(),
-							)}
-						>
-							{formatStatus(component.status)}
-						</Badge>
-
-						{onQuickUpdate && (
-							<div>
-								{component.status === "NOT_STARTED" && (
-									<Button
-										size="sm"
-										variant="secondary"
-										className="h-12 px-4"
-										onClick={(e: React.MouseEvent) => {
-											e.stopPropagation();
-											setIsButtonClick(true);
-											onQuickUpdate("IN_PROGRESS");
-										}}
-									>
-										Start Work
-									</Button>
-								)}
-								{component.status === "IN_PROGRESS" && (
-									<Button
-										size="sm"
-										variant="secondary"
-										className="h-12 px-4"
-										onClick={(e: React.MouseEvent) => {
-											e.stopPropagation();
-											setIsButtonClick(true);
-											onQuickUpdate("COMPLETED");
-										}}
-									>
-										Complete
-									</Button>
-								)}
-							</div>
-						)}
-					</div>
 				</CardContent>
 			</Card>
 		);

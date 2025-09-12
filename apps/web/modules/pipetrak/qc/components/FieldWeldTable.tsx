@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-// import { useRouter } from "next/navigation"; // Unused import
 import { MobileQCView } from "./MobileQCView";
 import {
   useReactTable,
@@ -34,9 +33,7 @@ import {
 import { Download, Plus, RefreshCw, Check, ArrowUpDown, ArrowUp, ArrowDown, XCircle, Loader2 } from "lucide-react";
 import { AddWeldModal } from "./AddWeldModal";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
-// import { WeldFilterBar, type WeldFilterState } from "./WeldFilterBar"; // Commented out - component not found
 import { ColumnToggle, createDefaultColumns, loadColumnConfig, saveColumnConfig, type ColumnConfig } from "./ColumnToggle";
-// import { useWeldFilters } from "../hooks/useWeldFilters"; // Hook not found
 import { cn } from "@ui/lib";
 
 // Types based on our API response
@@ -95,7 +92,6 @@ interface FieldWeldTableProps {
 }
 
 export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTableProps) {
-  // const router = useRouter(); // Unused but kept for future use
   const [data, setData] = useState<FieldWeldData[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -105,9 +101,6 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
     ndeResult?: string;
     ndeDate?: string;
   }) => {
-    console.log('🚀 [DEBUG] Starting NDE update for weld:', fieldWeldId);
-    console.log('📤 [DEBUG] Request data:', ndeData);
-    
     const response = await fetch(`/api/pipetrak/field-welds/${fieldWeldId}/nde`, {
       method: 'PATCH',
       headers: {
@@ -116,19 +109,12 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
       body: JSON.stringify(ndeData),
     });
     
-    console.log('🌐 [DEBUG] Response status:', response.status, response.statusText);
-    
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ [DEBUG] Response error:', errorText);
       throw new Error(`Failed to update NDE data: ${response.status} ${errorText}`);
     }
     
     const responseData = await response.json();
-    console.log('📥 [DEBUG] Response data:', responseData);
-    console.log('🔍 [DEBUG] Response fieldWeld.ndeTypes:', responseData.fieldWeld?.ndeTypes);
-    console.log('🔍 [DEBUG] Response fieldWeld.ndeResult:', responseData.fieldWeld?.ndeResult);
-    
     return responseData;
   };
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -138,7 +124,6 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
   const [selectedWeld, setSelectedWeld] = useState<FieldWeldData | null>(null);
   const [showMarkCompleteModal, setShowMarkCompleteModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [showDebugPanel, setShowDebugPanel] = useState(false);
   
   // New filtering state
   const [_weldFilters, _setWeldFilters] = useState<any>({ // WeldFilterState type not defined
@@ -405,17 +390,8 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           const ndeTypesArray = (row.original as any).ndeTypes || [];
           const value = ndeTypesArray.length > 0 ? ndeTypesArray[0] : 'None';
           
-          // Debug logging for this cell
-          console.log(`📋 [DEBUG] NDE Type cell for weld ${row.original.weldIdNumber}:`);
-          console.log('  - Current value:', value);
-          console.log('  - Original ndeType:', row.original.ndeType);
-          console.log('  - Original ndeTypes:', ndeTypesArray);
-          console.log('  - ndeResult:', row.original.ndeResult);
           
           const handleChange = async (newValue: string) => {
-            console.log(`🎯 [DEBUG] NDE Type change for weld ${row.original.weldIdNumber}:`);
-            console.log('  - From:', value);
-            console.log('  - To:', newValue);
             
             setIsUpdating(true);
             try {
@@ -424,13 +400,10 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 ndeDate: new Date().toISOString()
               });
               
-              console.log('💾 [DEBUG] Updating local state after NDE type update');
               
               // Update the data with the response from the backend
               if (response.fieldWeld) {
-                console.log('✅ [DEBUG] Using backend response for update');
                 const newNdeTypesArray = response.fieldWeld.ndeTypes || [];
-                console.log('🔄 [DEBUG] New ndeTypes from response:', newNdeTypesArray);
                 
                 setData(prev => {
                   const updated = prev.map(item => 
@@ -444,11 +417,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                         } as any
                       : item
                   );
-                  console.log('📊 [DEBUG] Updated data array length:', updated.length);
                   return updated;
                 });
               } else {
-                console.log('⚠️ [DEBUG] No fieldWeld in response, using fallback update');
                 // Fallback to manual update if no response data
                 const newNdeTypesArray = newValue === 'None' ? [] : [newValue];
                 setData(prev => prev.map(item => 
@@ -462,10 +433,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 ));
               }
             } catch (error) {
-              console.error('❌ [DEBUG] Failed to update NDE type:', error);
+              // Error handled silently
             } finally {
               setIsUpdating(false);
-              console.log('🏁 [DEBUG] NDE Type update completed');
             }
           };
           
@@ -500,20 +470,11 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
           const ndeTypesArray = (row.original as any).ndeTypes || [];
           const ndeType = ndeTypesArray.length > 0 ? ndeTypesArray[0] : null;
           
-          // Debug logging for this cell
-          console.log(`📋 [DEBUG] NDE Result cell for weld ${row.original.weldIdNumber}:`);
-          console.log('  - Current value:', value);
-          console.log('  - ndeTypes:', ndeTypesArray);
-          console.log('  - ndeType:', ndeType);
-          console.log('  - Can edit:', ndeType && ndeType !== 'None');
           
           // Only allow editing if NDE type is selected and not "None"
           const canEdit = ndeType && ndeType !== 'None';
           
           const handleChange = async (newValue: string) => {
-            console.log(`🎯 [DEBUG] NDE Result change for weld ${row.original.weldIdNumber}:`);
-            console.log('  - From:', value);
-            console.log('  - To:', newValue);
             
             setIsUpdating(true);
             try {
@@ -522,14 +483,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 ndeDate: new Date().toISOString()
               });
               
-              console.log('💾 [DEBUG] Updating local state after NDE result update');
               
               // Update the data with the response from the backend
               if (response.fieldWeld) {
-                console.log('✅ [DEBUG] Using backend response for NDE result update');
-                console.log('🔄 [DEBUG] Response ndeResult:', response.fieldWeld.ndeResult);
-                console.log('🔄 [DEBUG] Response ndeTypes:', response.fieldWeld.ndeTypes);
-                console.log('🔄 [DEBUG] Response component:', response.fieldWeld.component);
                 
                 setData(prev => {
                   const updated = prev.map(item => 
@@ -545,11 +501,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                         } as any
                       : item
                   );
-                  console.log('📊 [DEBUG] Updated data array after NDE result change');
                   return updated;
                 });
               } else {
-                console.log('⚠️ [DEBUG] No fieldWeld in response, using fallback update');
                 // Fallback to manual update if no response data
                 setData(prev => prev.map(item => 
                   item.id === row.original.id 
@@ -560,12 +514,10 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
               
               // Handle Accept logic
               if (newValue === 'Accept') {
-                console.log('✅ [DEBUG] Weld accepted - milestones should be updated by backend');
               }
               
               // Handle Reject logic (placeholder for future implementation)
               if (newValue === 'Reject') {
-                console.log('❌ [DEBUG] Weld rejected - future workflow to be implemented');
                 // TODO: Future implementation
                 // - Create NCR (Non-Conformance Report)
                 // - Notify responsible parties
@@ -573,10 +525,9 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
                 // - Reset weld milestone
               }
             } catch (error) {
-              console.error('❌ [DEBUG] Failed to update NDE result:', error);
+              // Error handled silently
             } finally {
               setIsUpdating(false);
-              console.log('🏁 [DEBUG] NDE Result update completed');
             }
           };
           
@@ -728,16 +679,12 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
 
   // Fetch data
   const fetchFieldWelds = async () => {
-    console.log('🔄 [DEBUG] Starting to fetch field welds for project:', projectId);
     setLoading(true);
     try {
       const response = await fetch(`/api/pipetrak/field-welds?projectId=${projectId}`);
-      console.log('🌐 [DEBUG] Fetch response status:', response.status, response.statusText);
       
       if (response.ok) {
         const result = await response.json();
-        console.log('📥 [DEBUG] Raw field welds data:', result);
-        console.log('📊 [DEBUG] Field welds count:', result.fieldWelds?.length || 0);
         
         // Transform ndeTypes array to ndeType string for frontend compatibility
         const transformedFieldWelds = (result.fieldWelds || []).map((weld: any) => {
@@ -746,28 +693,16 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
             ndeType: weld.ndeTypes?.[0] || null, // Convert array to single string
           };
           
-          // Log transformation for first few items to debug
-          if (result.fieldWelds.indexOf(weld) < 3) {
-            console.log(`🔧 [DEBUG] Transforming weld ${weld.weldIdNumber}:`);
-            console.log('  - Original ndeTypes:', weld.ndeTypes);
-            console.log('  - Transformed ndeType:', transformed.ndeType);
-            console.log('  - ndeResult:', weld.ndeResult);
-            console.log('  - ndeDate:', weld.ndeDate);
-          }
           
           return transformed;
         });
         
-        console.log('✅ [DEBUG] Setting transformed data with ndeType field');
         setData(transformedFieldWelds);
-      } else {
-        console.error('❌ [DEBUG] Failed to fetch field welds:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error("❌ [DEBUG] Error fetching field welds:", error);
+      // Error handled silently
     } finally {
       setLoading(false);
-      console.log('🏁 [DEBUG] Finished fetching field welds');
     }
   };
 
@@ -858,14 +793,6 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
         </div>
 
         <div className="flex items-center space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => setShowDebugPanel(!showDebugPanel)}
-            className="bg-yellow-50 border-yellow-300 text-yellow-800 hover:bg-yellow-100"
-          >
-            🐛 Debug
-          </Button>
           <Button variant="outline" size="sm" onClick={fetchFieldWelds} disabled={loading}>
             <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           </Button>
@@ -880,41 +807,6 @@ export function FieldWeldTable({ projectId, organizationSlug }: FieldWeldTablePr
         </div>
       </div>
 
-      {/* Debug Panel */}
-      {showDebugPanel && (
-        <Card className="bg-yellow-50 border-yellow-300">
-          <CardContent className="p-4">
-            <h3 className="font-medium text-yellow-800 mb-3">🐛 Debug Information</h3>
-            <div className="text-sm space-y-2">
-              <div>
-                <strong>Total Field Welds:</strong> {data.length}
-              </div>
-              <div>
-                <strong>Sample Data (First 3 welds):</strong>
-              </div>
-              <div className="bg-white p-2 rounded border max-h-48 overflow-auto">
-                <pre className="text-xs">
-                  {JSON.stringify(
-                    data.slice(0, 3).map(weld => ({
-                      weldIdNumber: weld.weldIdNumber,
-                      ndeType: weld.ndeType,
-                      ndeTypes: (weld as any).ndeTypes,
-                      ndeResult: weld.ndeResult,
-                      ndeDate: weld.ndeDate,
-                      id: weld.id
-                    })), 
-                    null, 
-                    2
-                  )}
-                </pre>
-              </div>
-              <div className="text-xs text-yellow-700 mt-2">
-                <em>Note: Check console for detailed logs during updates</em>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Table */}
       <Card>

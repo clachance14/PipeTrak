@@ -3,7 +3,10 @@
  * Based on project-documentation/roc-component-type-matrix.md
  */
 
-import { ComponentType, WorkflowType } from "@prisma/client";
+import {
+	ComponentType,
+	WorkflowType,
+} from "@repo/database/prisma/generated/client";
 
 // Milestone weight distributions for different ROC templates
 export const ROC_MILESTONE_WEIGHTS = {

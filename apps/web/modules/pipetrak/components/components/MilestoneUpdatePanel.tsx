@@ -45,24 +45,24 @@ export function MilestoneUpdatePanel({
 
 	// Calculate overall progress
 	const totalCredits = milestones.reduce(
-		(sum, m) => sum + (m.creditWeight || 0),
+		(sum, m) => sum + (m.weight || 0),
 		0,
 	);
 	const earnedCredits = milestones.reduce((sum, m) => {
 		if (workflowType === "MILESTONE_DISCRETE") {
-			return sum + (m.isCompleted ? m.creditWeight || 0 : 0);
+			return sum + (m.isCompleted ? m.weight || 0 : 0);
 		}
 		if (workflowType === "MILESTONE_PERCENTAGE") {
 			return (
 				sum +
-				((m.percentageComplete || 0) / 100) * (m.creditWeight || 0)
+				((m.percentageComplete || 0) / 100) * (m.weight || 0)
 			);
 		}
 		const percent =
 			(m.quantityTotal || 0) > 0
 				? (m.quantityComplete || 0) / (m.quantityTotal || 1)
 				: 0;
-		return sum + percent * (m.creditWeight || 0);
+		return sum + percent * (m.weight || 0);
 	}, 0);
 
 	const overallProgress =

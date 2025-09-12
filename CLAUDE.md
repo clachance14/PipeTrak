@@ -135,6 +135,9 @@ For detailed information on specific systems, refer to these specialized guides:
   - Resend setup, template creation, email sending
 - **💾 Database & Schema**: `.claude/database/claude.md`
   - Supabase setup, migrations, component instance tracking
+- **📱 Mobile Interface Design**: `project-documentation/mobile-ux-guide.md`
+  - Direct-tap milestone system, field usability, construction workflow support
+  - **✅ Recent Update**: Direct milestone update implementation completed (Jan 2025)
 
 ### Project Management
 - **🚀 Deployment & Launch**: `.claude/deployment/claude.md`
@@ -204,6 +207,69 @@ This project uses Linear for bug tracking, feature requests, and documentation v
 
 For detailed Linear MCP commands and workflows, see `.claude/linear/claude.md`.
 
+## Vercel Deployment & Production
+
+### Working Configuration (January 2025)
+
+The application is successfully deployed on Vercel with the following critical fixes applied:
+
+#### Prisma Prepared Statement Errors - RESOLVED ✅
+- **Issue**: PostgreSQL "prepared statement already exists" errors in serverless environment
+- **Solution**: pgbouncer connection pooling + `skipPreparedStatements` in Better-Auth adapter
+- **Config Files**: `packages/database/prisma/client.ts`, `packages/auth/auth.ts`
+
+#### Organization Routing 404s - RESOLVED ✅
+- **Issue**: Users redirected to `/app/ics-inc` returning 404 due to database connection failures
+- **Solution**: Error-resilient redirect logic with fallback to PipeTrak routes
+- **Config Files**: Organization page components with try/catch error handling
+
+### Quick Troubleshooting Reference
+
+#### Database Connection Issues
+```bash
+# Check if prepared statement errors are occurring
+vercel logs --app=pipe-trak --since=1h | grep -i "prepared statement"
+
+# Test database connectivity
+curl -I https://pipe-trak.vercel.app/api/auth/session
+```
+
+#### Authentication Flow Issues
+1. Verify `BETTER_AUTH_SECRET` is set in Vercel environment
+2. Check organization slug exists in database
+3. Test redirect flow: Login → `/app` → `/app/{org}/pipetrak`
+4. Review error handling in organization page components
+
+### Environment Variables Required
+```bash
+# Production (Vercel automatically provides these)
+POSTGRES_URL=postgresql://...?pgbouncer=true
+BETTER_AUTH_SECRET=production-secret
+NEXT_PUBLIC_SITE_URL=https://pipe-trak.vercel.app
+
+# Automatically set by Vercel
+VERCEL=1
+VERCEL_ENV=production
+```
+
+### Detailed Documentation
+- **🏗️ Deployment Success Snapshot**: `.claude/vercel-deployment/SUCCESS_2025-01-11.md`
+- **🔐 Production Auth Flow**: `.claude/auth/PRODUCTION_AUTH_FLOW.md`  
+- **💾 Database Connection Guide**: `.claude/database/VERCEL_CONNECTION_GUIDE.md`
+
+### Linear Integration for Deployment Issues
+```bash
+# Create deployment issue
+mcp__linear__create_issue(
+  title: "Deployment Issue: [Brief Description]",
+  team: "PipeTrak",
+  project: "Database Optimization", 
+  labels: ["Bug", "DevOps", "Priority: High"]
+)
+```
+
+**Deployment Health**: ✅ All systems operational as of January 11, 2025
+
 ### Quick Reference Links
 
 For specialized topics, see the corresponding `.claude/` directories:
@@ -216,6 +282,8 @@ For specialized topics, see the corresponding `.claude/` directories:
 - **🚀 Deployment & Production**: `.claude/deployment/claude.md`
 - **🛠️ PipeTrak Business Logic**: `.claude/pipetrak/claude.md`
 - **📋 Linear Issue Tracking**: `.claude/linear/claude.md`
+- **📱 Mobile UX Documentation**: `project-documentation/`
+  - Mobile UX Guide, Milestone Dependencies, Implementation Guide
 
 ---
 

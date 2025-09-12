@@ -17,8 +17,6 @@ import {
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import { MobileComponentCard } from "./MobileComponentCard";
-import { QuickMilestoneSelector } from "../milestones/mobile/QuickMilestoneSelector";
-import { useQuickMilestoneSelector } from "../milestones/mobile/useQuickMilestoneSelector";
 import type { ComponentWithMilestones } from "../../types";
 
 interface MobileDrawingGroupProps {
@@ -32,12 +30,6 @@ interface MobileDrawingGroupProps {
 	onComponentClick: (componentId: string) => void;
 	onQuickUpdate: (componentId: string, status: string) => void;
 	onEdit: (componentId: string) => void;
-	onOpenMilestones?: (componentId: string) => void;
-	onMilestoneUpdate?: (
-		componentId: string,
-		milestoneId: string,
-		value: boolean | number,
-	) => void;
 }
 
 export function MobileDrawingGroup({
@@ -51,12 +43,7 @@ export function MobileDrawingGroup({
 	onComponentClick,
 	onQuickUpdate,
 	onEdit,
-	onOpenMilestones,
-	onMilestoneUpdate,
 }: MobileDrawingGroupProps) {
-	// Quick Milestone Selector state
-	const { isOpen, selectedComponent, openSelector, closeSelector } =
-		useQuickMilestoneSelector();
 	// Calculate drawing-level statistics including milestones
 	const stats = useMemo(() => {
 		const total = components.length;
@@ -168,15 +155,6 @@ export function MobileDrawingGroup({
 		onSelectAll(componentIds, !stats.allSelected);
 	};
 
-	// Handle milestone updates from Quick Milestone Selector
-	const handleMilestoneUpdate = (
-		milestoneId: string,
-		value: boolean | number,
-	) => {
-		if (selectedComponent && onMilestoneUpdate) {
-			onMilestoneUpdate(selectedComponent.id, milestoneId, value);
-		}
-	};
 
 	// Debug logging
 	console.log(
@@ -367,17 +345,6 @@ export function MobileDrawingGroup({
 											onQuickUpdate(component.id, status)
 										}
 										onEdit={() => onEdit(component.id)}
-										onOpenMilestones={
-											onOpenMilestones
-												? () =>
-														onOpenMilestones(
-															component.id,
-														)
-												: undefined
-										}
-										onOpenQuickSelector={() =>
-											openSelector(component)
-										}
 									/>
 								);
 							})}
@@ -386,15 +353,6 @@ export function MobileDrawingGroup({
 				</div>
 			) : null}
 
-			{/* Quick Milestone Selector - rendered at top level to overlay everything */}
-			{selectedComponent && (
-				<QuickMilestoneSelector
-					component={selectedComponent}
-					isOpen={isOpen}
-					onClose={closeSelector}
-					onMilestoneUpdate={handleMilestoneUpdate}
-				/>
-			)}
 		</div>
 	);
 }

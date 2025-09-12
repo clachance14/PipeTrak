@@ -56,7 +56,6 @@ export function MarkWeldCompleteModal({
 	onSuccess,
 	onMilestoneUpdate,
 }: MarkWeldCompleteModalProps) {
-	console.log("MarkWeldCompleteModal props:", { fieldWeld, open });
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [formData, setFormData] = useState<CompleteWeldFormData>({
@@ -73,13 +72,6 @@ export function MarkWeldCompleteModal({
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		
-		console.log("MarkWeldCompleteModal handleSubmit called with:", {
-			fieldWeldId: fieldWeld.id,
-			weldIdNumber: fieldWeld.weldIdNumber,
-			projectId: fieldWeld.projectId,
-			formData
-		});
 
 		// Validate required fields
 		const validationErrors: string[] = [];
@@ -87,7 +79,6 @@ export function MarkWeldCompleteModal({
 		// Check if fieldWeld.id is missing (this is the root cause of the bug)
 		if (!fieldWeld.id) {
 			validationErrors.push("Field weld ID is missing. Cannot complete weld without a valid weld record.");
-			console.error("Field weld ID is undefined:", fieldWeld);
 		}
 
 		if (!formData.welderId) {
@@ -151,16 +142,12 @@ export function MarkWeldCompleteModal({
 				});
 			} else {
 				const error = await response.json();
-				console.error("Failed to mark weld complete. Response status:", response.status);
-				console.error("Error details:", error);
 				setErrors([
 					error.message ||
 						"Failed to mark weld as complete. Please try again.",
 				]);
 			}
 		} catch (error) {
-			console.error("Error marking weld complete:", error);
-			console.error("Error details:", error instanceof Error ? error.message : error);
 			setErrors(["An unexpected error occurred. Please try again."]);
 		} finally {
 			setLoading(false);

@@ -108,7 +108,7 @@ function calculateComponentProgress(
 	let totalWeight = 0;
 
 	milestones.forEach((milestone) => {
-		const weight = milestone.creditWeight || 1;
+		const weight = milestone.weight || 1;
 		totalWeight += weight;
 
 		if (workflowType === "MILESTONE_DISCRETE") {

@@ -1,4 +1,4 @@
-import { Project, SyntaxKind, JsxOpeningElement, JsxSelfClosingElement, JsxClosingElement } from "ts-morph";
+import { Project, SyntaxKind, type JsxOpeningElement, type JsxSelfClosingElement, type JsxClosingElement } from "ts-morph";
 import path from "path";
 
 const project = new Project({

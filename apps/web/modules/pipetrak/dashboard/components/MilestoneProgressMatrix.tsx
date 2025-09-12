@@ -399,16 +399,16 @@ export function MilestoneProgressMatrix({
 				</CardHeader>
 				<CardContent>
 					<div className="animate-pulse space-y-4">
-						<div className="h-8 bg-gray-200 rounded w-1/4"></div>
+						<div className="h-8 bg-gray-200 rounded w-1/4" />
 						<div className="space-y-2">
 							{[...Array(4)].map((_, i) => (
 								<div key={i} className="flex space-x-2">
-									<div className="h-6 bg-gray-200 rounded w-32"></div>
+									<div className="h-6 bg-gray-200 rounded w-32" />
 									{[...Array(7)].map((_, j) => (
 										<div
 											key={j}
 											className="h-6 bg-gray-200 rounded w-16"
-										></div>
+										/>
 									))}
 								</div>
 							))}
@@ -700,19 +700,19 @@ export function MilestoneProgressMatrix({
 					</span>
 					<div className="flex gap-4">
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 bg-green-200 rounded"></div>
+							<div className="w-3 h-3 bg-green-200 rounded" />
 							<span>71-100% Complete</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 bg-yellow-200 rounded"></div>
+							<div className="w-3 h-3 bg-yellow-200 rounded" />
 							<span>31-70% Complete</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 bg-red-200 rounded"></div>
+							<div className="w-3 h-3 bg-red-200 rounded" />
 							<span>1-30% Complete</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 bg-gray-100 rounded"></div>
+							<div className="w-3 h-3 bg-gray-100 rounded" />
 							<span>Not Started</span>
 						</div>
 					</div>

@@ -119,11 +119,12 @@ export async function updateOrganization(
 		id: string;
 	},
 ) {
+	const { id, ...data } = organization;
 	return db.organization.update({
 		where: {
-			id: organization.id,
+			id,
 		},
-		data: organization,
+		data,
 	});
 }
 

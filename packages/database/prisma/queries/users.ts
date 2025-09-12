@@ -104,10 +104,11 @@ export async function createUserAccount({
 export async function updateUser(
 	user: z.infer<typeof UserUncheckedUpdateInputSchema> & { id: string },
 ) {
+	const { id, ...data } = user;
 	return await db.user.update({
 		where: {
-			id: user.id,
+			id,
 		},
-		data: user,
+		data,
 	});
 }

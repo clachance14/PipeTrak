@@ -176,14 +176,14 @@ export function MilestoneDiscreteRenderer({
 								Step {milestone.sequenceNumber} of{" "}
 								{milestone.totalInWorkflow || 1}
 							</Badge>
-							{milestone.creditWeight && (
+							{milestone.weight && (
 								<Badge
 									status="info"
 									className="text-xs"
 									role="img"
-									aria-label={`Worth ${milestone.creditWeight} credits`}
+									aria-label={`Worth ${milestone.weight} credits`}
 								>
-									{milestone.creditWeight} credits
+									{milestone.weight} credits
 								</Badge>
 							)}
 						</div>

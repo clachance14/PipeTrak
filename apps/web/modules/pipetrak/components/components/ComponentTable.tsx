@@ -26,7 +26,6 @@ import { DrawingGroup } from "./DrawingGroup";
 import { BulkUpdateModal } from "./BulkUpdateModal";
 import { BulkMilestoneModal } from "./BulkMilestoneModal";
 import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
-import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
 import { ComponentHoverCard } from "./ComponentHoverCard";
 import { FieldWeldQuickView } from "./FieldWeldQuickView";
 // import { FilterBar, type FilterState } from "./FilterBar"; // Commented out - component not found
@@ -75,7 +74,7 @@ import { toast } from "sonner";
 import { cn } from "@ui/lib";
 import { useRouter } from "next/navigation";
 import type { ComponentWithMilestones } from "../../types";
-import { ComponentStatus } from "../../types";
+import type { ComponentStatus } from "../../types";
 import { apiClient } from "@shared/lib/api-client";
 import { getBaseUrl } from "@repo/utils";
 
@@ -260,9 +259,6 @@ export function ComponentTable({
 	const [activePreset, setActivePreset] = useState<ViewPreset>(
 		getDefaultPreset(),
 	);
-	const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
-	const [selectedMobileComponent, setSelectedMobileComponent] =
-		useState<ComponentWithMilestones | null>(null);
 
 	// Default column IDs in the order they appear
 	const defaultColumnIds = [
@@ -1649,7 +1645,6 @@ export function ComponentTable({
 											onComponentClick={(componentId) => {
 												// Prevent navigation if any modal is open
 												if (
-													mobileSheetOpen ||
 													showMilestoneModal ||
 													showBulkUpdateModal ||
 													showBulkMilestoneModal
@@ -1677,17 +1672,6 @@ export function ComponentTable({
 												router.push(
 													`/app/pipetrak/${projectId}/components/${componentId}/edit`,
 												);
-											}}
-											onOpenMilestones={(componentId) => {
-												const component = data.find(
-													(c) => c.id === componentId,
-												);
-												if (component) {
-													setSelectedMobileComponent(
-														component,
-													);
-													setMobileSheetOpen(true);
-												}
 											}}
 										/>
 									),
@@ -1728,17 +1712,6 @@ export function ComponentTable({
 							isMobile={isMobile}
 						/>
 
-						{/* Mobile Milestone Sheet for individual component milestones */}
-						{selectedMobileComponent && (
-							<MobileMilestoneSheet
-								isOpen={mobileSheetOpen}
-								onClose={() => {
-									setMobileSheetOpen(false);
-									setSelectedMobileComponent(null);
-								}}
-								component={selectedMobileComponent}
-							/>
-						)}
 					</>
 				</MilestoneUpdateEngine>
 			</RealtimeManager>

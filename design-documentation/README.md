@@ -1,18 +1,30 @@
-# PipeTrak Design Documentation
+# PipeTrak Mobile Milestone UI Design System
 
 ## Overview
 
-This directory contains comprehensive UX/UI design specifications for PipeTrak's Milestone Update System, built on the Supastarter Next.js template with shadcn/ui components.
+This documentation provides comprehensive UX design specifications for PipeTrak's mobile milestone tracking system, built on the Supastarter Next.js template with shadcn/ui components. The design emphasizes direct-tap interactions, high-visibility status indicators, and glove-friendly touch targets for harsh industrial environments.
 
 ## Design Philosophy
 
 PipeTrak prioritizes **field-speed efficiency** for industrial construction workers while maintaining the Excel-like density that office users expect. Our design approach:
 
-- **Bold simplicity** with clear visual hierarchy
-- **Touch-first interaction** for gloved hands (52px+ targets)  
-- **Optimistic updates** with seamless error recovery
-- **Excel-like patterns** familiar to construction professionals
-- **WCAG AA compliance** with high contrast for outdoor visibility
+### Field-First Design
+- **High Contrast**: Optimized for bright sunlight visibility
+- **Large Touch Targets**: 56px minimum height for work glove compatibility
+- **Immediate Feedback**: Clear visual state changes within 50ms
+- **Durable Interactions**: Direct tap replacing swipe gestures
+
+### Industrial Aesthetic
+- **Functional Over Decorative**: Zero visual flourishes, maximum efficiency
+- **Status-Driven Colors**: Immediate comprehension of milestone states
+- **Dense Information Layout**: Excel-like density with clear affordances
+- **Mobile-First Responsive**: 360px minimum width, scales to tablet
+
+### Technical Integration
+- **Shadcn/UI Components**: All UI elements use existing component library
+- **Tailwind CSS Variables**: Leverages established design token system
+- **Accessibility Compliant**: WCAG AA minimum, optimized for screen readers
+- **Performance Optimized**: 60fps scrolling, <50ms interaction response
 
 ## Structure
 

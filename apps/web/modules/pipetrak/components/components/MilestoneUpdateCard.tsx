@@ -481,11 +481,11 @@ export function MilestoneUpdateCard({
 						<Badge status="info" className="text-xs h-4 px-1">
 							#{milestone.milestoneOrder || 1}
 						</Badge>
-						{milestone.creditWeight && (
+						{milestone.weight && (
 							<Badge
 										className="text-xs h-4 px-1"
 							>
-								{milestone.creditWeight}c
+								{milestone.weight}c
 							</Badge>
 						)}
 					</div>
@@ -534,9 +534,9 @@ export function MilestoneUpdateCard({
 								milestone.milestoneOrder ||
 								1}
 						</Badge>
-						{milestone.creditWeight && (
+						{milestone.weight && (
 							<Badge status="info" className="text-xs">
-								{milestone.creditWeight} credits
+								{milestone.weight} credits
 							</Badge>
 						)}
 					</CardTitle>

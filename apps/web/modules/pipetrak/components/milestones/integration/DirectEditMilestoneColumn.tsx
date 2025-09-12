@@ -53,13 +53,13 @@ function calculateOverallProgress(
 	if (!milestones || milestones.length === 0) return 0;
 
 	const totalProgress = milestones.reduce((sum, milestone) => {
-		const weight = milestone.creditWeight || 1;
+		const weight = milestone.weight || 1;
 		const progress = getCompletionPercent(milestone, workflowType);
 		return sum + progress * weight;
 	}, 0);
 
 	const totalWeight = milestones.reduce(
-		(sum, milestone) => sum + (milestone.creditWeight || 1),
+		(sum, milestone) => sum + (milestone.weight || 1),
 		0,
 	);
 

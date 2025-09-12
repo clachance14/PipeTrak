@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 // import { MilestoneEditor } from "@pipetrak/components/components/MilestoneEditor";
 import { MilestoneUpdateEngine } from "@pipetrak/components/milestones/core/MilestoneUpdateEngine";
 import { RealtimeManager } from "@pipetrak/components/milestones/realtime/RealtimeManager";
-import type { Component, ComponentMilestone } from "@prisma/client";
 import { Button } from "@ui/components/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import type {
+	Component,
+	ComponentMilestone,
+} from "@repo/database/prisma/generated/client";
 
 interface ComponentDetailClientProps {
 	component: Component & { milestones?: ComponentMilestone[] };

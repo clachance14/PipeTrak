@@ -1,5 +1,5 @@
-import { ComponentStatus } from "@prisma/client";
 import { db as prisma } from "@repo/database";
+import { ComponentStatus } from "@repo/database/prisma/generated/client";
 import * as ExcelJS from "exceljs";
 import { Hono } from "hono";
 import { z } from "zod";
