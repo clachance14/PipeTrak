@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@ui/components/card";
 import { cn } from "@ui/lib";
-import { AlertCircle, Check, Clock, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import type { ComponentWithMilestones } from "../../types";
 import { useMilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
 import { MilestoneButtonRow } from "../milestones/mobile/MilestoneButtonRow";
@@ -77,7 +77,6 @@ export function MobileComponentCard({
 			console.error("Failed to update milestone:", error);
 		}
 	};
-
 
 	return (
 		<Card
