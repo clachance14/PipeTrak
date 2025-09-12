@@ -280,7 +280,9 @@ export function InlineDiscreteMilestones({
 			<div className="flex items-center gap-1 flex-wrap">
 				{sortedMilestones.map((milestone, index) => {
 					// Check if milestone is locked (previous milestone not completed)
-					const isLocked =
+					// For field welds, the first milestone (Fit Up) should never be locked
+					const isLocked = 
+						component.type === "FIELD_WELD" && index === 0 ? false :
 						index > 0 && !sortedMilestones[index - 1].isCompleted;
 					const isPending = hasPendingUpdates(milestone.id);
 

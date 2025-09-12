@@ -9,6 +9,7 @@ export interface MilestoneButtonRowProps {
   milestones: ComponentMilestone[];
   workflowType: WorkflowType;
   componentId: string;
+  componentType?: string;
   onMilestoneClick?: (milestoneId: string) => void;
   onMilestoneComplete?: (milestoneId: string) => void;
   onMilestoneUncomplete?: (milestoneId: string) => void;
@@ -23,7 +24,8 @@ export interface MilestoneButtonRowProps {
 function canCompleteMilestone(
   milestone: ComponentMilestone,
   milestones: ComponentMilestone[],
-  workflowType: WorkflowType
+  workflowType: WorkflowType,
+  componentType?: string
 ): boolean {
   // Already completed milestones can be uncompleted
   if (milestone.isCompleted) {
@@ -77,8 +79,12 @@ function canCompleteMilestone(
   }
 
   // Field weld special cases
-  if (milestoneName.includes("FIT")) {
-    return receiveMilestone ? receiveMilestone.isCompleted : false;
+  const isFieldWeld = componentType === "FIELD_WELD" || 
+                     milestones.some(m => m.milestoneName.includes("Fit Up"));
+  
+  if (isFieldWeld && (milestoneName.includes("FIT") || milestoneName.includes("FIT UP"))) {
+    // First milestone for field welds - always available
+    return true;
   }
 
   if (milestoneName.includes("WELD")) {
@@ -145,13 +151,14 @@ function getMilestoneButtonState(
   milestones: ComponentMilestone[],
   workflowType: WorkflowType,
   isLoading: boolean,
-  hasError: boolean
+  hasError: boolean,
+  componentType?: string
 ): MilestoneButtonState {
   if (isLoading) return "loading";
   if (hasError) return "error";
   if (milestone.isCompleted) return "complete";
   
-  const canComplete = canCompleteMilestone(milestone, milestones, workflowType);
+  const canComplete = canCompleteMilestone(milestone, milestones, workflowType, componentType);
   
   if (!canComplete) {
     // Check if it's blocked by missing prerequisite
@@ -175,6 +182,7 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
   milestones,
   workflowType,
   componentId,
+  componentType,
   onMilestoneClick,
   onMilestoneComplete,
   onMilestoneUncomplete,
@@ -255,7 +263,8 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
           milestones,
           workflowType,
           milestoneIsLoading,
-          milestoneHasError
+          milestoneHasError,
+          componentType
         );
 
         return (

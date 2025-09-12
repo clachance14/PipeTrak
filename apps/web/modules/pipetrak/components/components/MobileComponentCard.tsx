@@ -165,6 +165,7 @@ export function MobileComponentCard({
 						milestones={component.milestones}
 						workflowType={component.workflowType}
 						componentId={component.id}
+						componentType={component.type}
 						onMilestoneComplete={(milestoneId) => {
 							console.log('MobileComponentCard: onMilestoneComplete triggered', milestoneId);
 							handleMilestoneUpdate(milestoneId, true);
