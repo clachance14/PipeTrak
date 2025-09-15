@@ -42,7 +42,7 @@ import {
   HIGH_PRIORITY_FIELDS,
   type ColumnDetectionResult,
   type ColumnMappings,
-} from "@repo/api/lib/import/field-weld-column-detector";
+} from "@repo/api";
 
 interface FieldWeldColumnMapperProps {
   /** Parsed Excel file data with headers and sample rows */
