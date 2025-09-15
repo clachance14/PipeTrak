@@ -8,6 +8,7 @@ import { importJobsRouter } from "./import-jobs";
 import { milestoneTemplatesRouter } from "./milestone-templates";
 import { milestonesRouter } from "./milestones";
 import { projectsRouter } from "./projects";
+import { qcMetricsRouter } from "./qc-metrics";
 import { realtimeRouter } from "./realtime";
 import { reportsRouter } from "./reports";
 import { weldersRouter } from "./welders";
@@ -24,4 +25,5 @@ export const pipetrakRouter = new Hono()
 	.route("/audit-logs", auditLogsRouter)
 	.route("/realtime", realtimeRouter)
 	.route("/welders", weldersRouter)
-	.route("/field-welds", fieldWeldsRouter);
+	.route("/field-welds", fieldWeldsRouter)
+	.route("/qc-metrics", qcMetricsRouter);

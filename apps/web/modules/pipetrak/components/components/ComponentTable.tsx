@@ -293,6 +293,7 @@ export function ComponentTable({
 		search: "",
 	});
 	const [showBulkMilestoneModal, setShowBulkMilestoneModal] = useState(false);
+	const [showWeldModal, setShowWeldModal] = useState(false);
 
 	// Track component selection count for reliable UI state
 	const [selectionCount, setSelectionCount] = useState(0);
@@ -1064,22 +1065,14 @@ export function ComponentTable({
 	// Debug function to test API connectivity
 	const testApiConnection = async () => {
 		try {
-			console.log("Testing API connection...");
-			console.log("Base URL from utils:", getBaseUrl());
 
 			// Test direct fetch first
 			const testResponse = await fetch(
 				`${getBaseUrl()}/api/pipetrak/components?projectId=${projectId}&limit=1`,
 			);
-			console.log(
-				"Direct fetch test:",
-				testResponse.status,
-				testResponse.statusText,
-			);
 
 			if (testResponse.ok) {
-				const testData = await testResponse.json();
-				console.log("Direct fetch successful, data:", testData);
+				await testResponse.json();
 			}
 		} catch (error) {
 			console.error("Direct fetch failed:", error);
@@ -1089,7 +1082,6 @@ export function ComponentTable({
 	const handleRefresh = async () => {
 		startTransition(async () => {
 			try {
-				console.log("Refreshing components for project:", projectId);
 
 				// Test connection first
 				await testApiConnection();
@@ -1270,13 +1262,7 @@ export function ComponentTable({
 		setSelectionCount(currentCount);
 
 		if (currentCount > 0) {
-			console.log("Selection active:", {
-				selectedCount: currentCount,
-				isMobile,
-				rowSelectionKeys: Object.keys(rowSelection),
-				mobileSelectedCount: mobileSelectedIds.size,
-				filteredDataCount: filteredData.length,
-			});
+			// Selection is active for bulk operations
 		}
 	}, [
 		selectedComponents.length,
@@ -1297,11 +1283,6 @@ export function ComponentTable({
 				return;
 			}
 
-			console.log("Starting bulk update with:", {
-				componentIds,
-				updates,
-			});
-			console.log("API base URL:", apiClient);
 
 			// Call the bulk update API endpoint with better error handling
 			let response;
@@ -1647,7 +1628,8 @@ export function ComponentTable({
 												if (
 													showMilestoneModal ||
 													showBulkUpdateModal ||
-													showBulkMilestoneModal
+													showBulkMilestoneModal ||
+													showWeldModal
 												) {
 													return;
 												}
@@ -1673,6 +1655,8 @@ export function ComponentTable({
 													`/app/pipetrak/${projectId}/components/${componentId}/edit`,
 												);
 											}}
+											projectId={projectId}
+											onWeldModalChange={setShowWeldModal}
 										/>
 									),
 								)}
@@ -2218,16 +2202,10 @@ export function ComponentTable({
 						onBulkUpdate={async (updates) => {
 							try {
 								// Create bulk update service with progress tracking
-								const service = createBulkUpdateService(
-									(progress) => {
-										console.log(
-											`Bulk update progress: ${progress.percentage}% - ${progress.message}`,
-										);
-									},
-								);
+								const service = createBulkUpdateService(() => {
+									// Progress updates handled silently
+								});
 
-								// Log the updates structure for debugging
-								console.log("Bulk update request:", updates);
 
 								// The updates object should already have the correct structure from BulkMilestoneModal
 								// It should contain: mode, projectId, and either milestoneName+componentIds or groups
@@ -2258,10 +2236,6 @@ export function ComponentTable({
 									total = 0,
 								} = result;
 
-								// Log results for debugging
-								console.log(
-									`Bulk update completed: ${successful.length} successful, ${failed.length} failed out of ${total} total`,
-								);
 
 								// Show appropriate feedback
 								if (failed.length === 0) {

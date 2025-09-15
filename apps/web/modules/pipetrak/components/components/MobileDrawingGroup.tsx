@@ -14,6 +14,8 @@ import {
 	AlertCircle,
 	Clock,
 	Minus,
+	Zap,
+	CheckSquare,
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import { MobileComponentCard } from "./MobileComponentCard";
@@ -30,6 +32,8 @@ interface MobileDrawingGroupProps {
 	onComponentClick: (componentId: string) => void;
 	onQuickUpdate: (componentId: string, status: string) => void;
 	onEdit: (componentId: string) => void;
+	projectId?: string;
+	onWeldModalChange?: (open: boolean) => void;
 }
 
 export function MobileDrawingGroup({
@@ -43,6 +47,8 @@ export function MobileDrawingGroup({
 	onComponentClick,
 	onQuickUpdate,
 	onEdit,
+	projectId,
+	onWeldModalChange,
 }: MobileDrawingGroupProps) {
 	// Calculate drawing-level statistics including milestones
 	const stats = useMemo(() => {
@@ -128,6 +134,28 @@ export function MobileDrawingGroup({
 		};
 	}, [components, selectedIds]);
 
+	// Extract unique areas, systems, and test packages for display
+	const uniqueData = useMemo(() => {
+		const areas = new Set(
+			components.map((c) => c.area).filter((area): area is string => Boolean(area))
+		);
+		const systems = new Set(
+			components.map((c) => c.system).filter((system): system is string => Boolean(system))
+		);
+		const testPackages = new Set(
+			components.map((c) => c.testPackage).filter((pkg): pkg is string => Boolean(pkg))
+		);
+
+		return {
+			areas: Array.from(areas).slice(0, 2), // Show fewer on mobile
+			systems: Array.from(systems).slice(0, 2),
+			testPackages: Array.from(testPackages).slice(0, 2),
+			hasMoreAreas: areas.size > 2,
+			hasMoreSystems: systems.size > 2,
+			hasMoreTestPackages: testPackages.size > 2,
+		};
+	}, [components]);
+
 	// Determine drawing status color
 	const getStatusColor = () => {
 		if (stats.completed === stats.total && stats.total > 0) {
@@ -156,10 +184,6 @@ export function MobileDrawingGroup({
 	};
 
 
-	// Debug logging
-	console.log(
-		`MobileDrawingGroup ${drawingNumber}: isExpanded=${isExpanded}, components=${components.length}`,
-	);
 
 	return (
 		<div className="space-y-2 w-full">
@@ -232,6 +256,46 @@ export function MobileDrawingGroup({
 								</div>
 							</div>
 						</div>
+
+						{/* Areas, Systems, and Test Packages - Mobile optimized */}
+						{(uniqueData.areas.length > 0 || uniqueData.systems.length > 0 || uniqueData.testPackages.length > 0) && (
+							<div className="overflow-x-auto">
+								<div className="flex items-center gap-2 w-max">
+									{/* Areas */}
+									{uniqueData.areas.length > 0 && (
+										<div className="flex items-center gap-1 whitespace-nowrap">
+											<MapPin className="h-3 w-3 text-blue-500" />
+											<span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-xs font-medium">
+												{uniqueData.areas.join(", ")}
+												{uniqueData.hasMoreAreas && ` +${Math.max(0, new Set(components.map(c => c.area).filter(Boolean)).size - 2)}`}
+											</span>
+										</div>
+									)}
+
+									{/* Systems */}
+									{uniqueData.systems.length > 0 && (
+										<div className="flex items-center gap-1 whitespace-nowrap">
+											<Zap className="h-3 w-3 text-green-500" />
+											<span className="bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded text-xs font-medium">
+												{uniqueData.systems.join(", ")}
+												{uniqueData.hasMoreSystems && ` +${Math.max(0, new Set(components.map(c => c.system).filter(Boolean)).size - 2)}`}
+											</span>
+										</div>
+									)}
+
+									{/* Test Packages */}
+									{uniqueData.testPackages.length > 0 && (
+										<div className="flex items-center gap-1 whitespace-nowrap">
+											<CheckSquare className="h-3 w-3 text-purple-500" />
+											<span className="bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded text-xs font-medium">
+												{uniqueData.testPackages.join(", ")}
+												{uniqueData.hasMoreTestPackages && ` +${Math.max(0, new Set(components.map(c => c.testPackage).filter(Boolean)).size - 2)}`}
+											</span>
+										</div>
+									)}
+								</div>
+							</div>
+						)}
 
 						{/* Compact Progress Bar - No text label */}
 						{stats.totalMilestones > 0 && (
@@ -318,36 +382,30 @@ export function MobileDrawingGroup({
 						</Card>
 					) : (
 						<>
-							{console.log(
-								`Rendering ${components.length} components for ${drawingNumber}`,
-							)}
-							{components.map((component) => {
-								console.log(
-									`Rendering component ${component.id}`,
-								);
-								return (
-									<MobileComponentCard
-										key={component.id}
-										component={component}
-										isSelected={selectedIds.has(
+							{components.map((component) => (
+								<MobileComponentCard
+									key={component.id}
+									component={component}
+									isSelected={selectedIds.has(
+										component.id,
+									)}
+									onSelect={(selected) =>
+										onSelectComponent(
 											component.id,
-										)}
-										onSelect={(selected) =>
-											onSelectComponent(
-												component.id,
-												selected,
-											)
-										}
-										onClick={() =>
-											onComponentClick(component.id)
-										}
-										onQuickUpdate={(status) =>
-											onQuickUpdate(component.id, status)
-										}
-										onEdit={() => onEdit(component.id)}
-									/>
-								);
-							})}
+											selected,
+										)
+									}
+									onClick={() =>
+										onComponentClick(component.id)
+									}
+									onQuickUpdate={(status) =>
+										onQuickUpdate(component.id, status)
+									}
+									onEdit={() => onEdit(component.id)}
+									projectId={projectId}
+									onWeldModalChange={onWeldModalChange}
+								/>
+							))}
 						</>
 					)}
 				</div>

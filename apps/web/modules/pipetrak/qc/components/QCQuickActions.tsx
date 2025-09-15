@@ -1,8 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { cn } from "@ui/lib";
 import { BarChart3, Upload, UserPlus } from "lucide-react";
 import Link from "next/link";
+import { AddWelderModal } from "./AddWelderModal";
 
 interface QCQuickActionsProps {
 	organizationSlug: string;
@@ -44,6 +48,22 @@ export function QCQuickActions({
 	projectId,
 	className,
 }: QCQuickActionsProps) {
+	const [isAddWelderModalOpen, setIsAddWelderModalOpen] = useState(false);
+
+	const handleActionClick = (actionId: string) => {
+		switch (actionId) {
+			case "add-welder":
+				setIsAddWelderModalOpen(true);
+				break;
+			case "generate-report":
+				// TODO: Implement generate report functionality
+				console.log("Generate report clicked");
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<div className={cn("space-y-4", className)}>
 			<h2 className="text-lg font-semibold">Quick Actions</h2>
@@ -79,7 +99,11 @@ export function QCQuickActions({
 										</Button>
 									</Link>
 								) : (
-									<Button className="w-full" disabled>
+									<Button
+										className="w-full"
+										onClick={() => handleActionClick(action.id)}
+										disabled={action.id === "generate-report"} // Keep generate report disabled for now
+									>
 										{action.buttonText}
 									</Button>
 								)}
@@ -88,6 +112,13 @@ export function QCQuickActions({
 					);
 				})}
 			</div>
+
+			{/* Add Welder Modal */}
+			<AddWelderModal
+				open={isAddWelderModalOpen}
+				onOpenChange={setIsAddWelderModalOpen}
+				projectId={projectId}
+			/>
 		</div>
 	);
 }

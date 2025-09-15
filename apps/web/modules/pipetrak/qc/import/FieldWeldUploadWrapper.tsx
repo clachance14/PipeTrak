@@ -14,8 +14,35 @@ interface FieldWeldImportResult {
   created?: {
     components: number;
     fieldWelds: number;
+    milestones: number;
+  };
+  updated?: {
+    components: number;
+    fieldWelds: number;
+  };
+  summary: {
+    totalRows: number;
+    validRows: number;
+    processedRows: number;
+    componentsCreated: number;
+    fieldWeldsCreated: number;
+    componentsUpdated: number;
+    fieldWeldsUpdated: number;
+    skippedRows: number;
+    duplicatesFound: number;
+    duplicatesSkipped: number;
+    duplicatesUpdated: number;
+    inheritanceApplied: {
+      testPressure: number;
+      specCode: number;
+    };
   };
   errors?: string[];
+  duplicateDetails?: {
+    weldIdNumber: string;
+    action: 'skipped' | 'updated' | 'error';
+    reason: string;
+  }[];
 }
 
 export function FieldWeldUploadWrapper({
@@ -25,6 +52,8 @@ export function FieldWeldUploadWrapper({
   const [isImporting, setIsImporting] = useState(false);
   const [importResult, setImportResult] = useState<FieldWeldImportResult | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  const [duplicateHandling, setDuplicateHandling] = useState<'error' | 'skip' | 'update'>('skip');
+  const [createMissingDrawings, setCreateMissingDrawings] = useState(true);
 
   const handleFileSelect = (file: File, validationResult: any) => {
     console.log("Upload successful:", { file: file.name, validationResult });
@@ -70,9 +99,10 @@ export function FieldWeldUploadWrapper({
           validatedRows: [] // Backend will parse Excel and populate this
         },
         options: {
-          skipErrors: false,
-          createMissingDrawings: true,
-          dryRun: false
+          skipErrors: duplicateHandling === 'skip', // Keep for backward compatibility
+          createMissingDrawings,
+          dryRun: false,
+          handleDuplicates: duplicateHandling
         }
       };
 
@@ -132,6 +162,10 @@ export function FieldWeldUploadWrapper({
       isImporting={isImporting}
       importResult={importResult || undefined}
       error={importError || undefined}
+      duplicateHandling={duplicateHandling}
+      onDuplicateHandlingChange={setDuplicateHandling}
+      createMissingDrawings={createMissingDrawings}
+      onCreateMissingDrawingsChange={setCreateMissingDrawings}
     />
   );
 }

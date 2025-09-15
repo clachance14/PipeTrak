@@ -15,6 +15,7 @@ export interface MilestoneButtonRowProps {
 	onMilestoneUncomplete?: (milestoneId: string) => void;
 	isLoading?: (milestoneId: string) => boolean;
 	hasError?: (milestoneId: string) => boolean;
+	hasRecentSuccess?: (milestoneId: string) => boolean;
 	className?: string;
 }
 
@@ -151,6 +152,7 @@ function getMilestoneButtonState(
 	workflowType: WorkflowType,
 	isLoading: boolean,
 	hasError: boolean,
+	hasRecentSuccess: boolean,
 	componentType?: string,
 ): MilestoneButtonState {
 	if (isLoading) {
@@ -158,6 +160,9 @@ function getMilestoneButtonState(
 	}
 	if (hasError) {
 		return "error";
+	}
+	if (hasRecentSuccess && milestone.isCompleted) {
+		return "success";
 	}
 	if (milestone.isCompleted) {
 		return "complete";
@@ -202,6 +207,7 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
 	onMilestoneUncomplete,
 	isLoading,
 	hasError,
+	hasRecentSuccess,
 	className,
 }: MilestoneButtonRowProps) {
 	// Sort milestones by order and pad to exactly 7 buttons
@@ -278,6 +284,7 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
 
 				const milestoneIsLoading = isLoading?.(milestone.id) || false;
 				const milestoneHasError = hasError?.(milestone.id) || false;
+				const milestoneHasRecentSuccess = hasRecentSuccess?.(milestone.id) || false;
 
 				const state = getMilestoneButtonState(
 					milestone,
@@ -285,6 +292,7 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
 					workflowType,
 					milestoneIsLoading,
 					milestoneHasError,
+					milestoneHasRecentSuccess,
 					componentType,
 				);
 

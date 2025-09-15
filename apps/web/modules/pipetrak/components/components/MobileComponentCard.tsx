@@ -3,9 +3,11 @@
 import { Card, CardContent } from "@ui/components/card";
 import { cn } from "@ui/lib";
 import { MapPin } from "lucide-react";
+import { useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 import { useMilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
 import { MilestoneButtonRow } from "../milestones/mobile/MilestoneButtonRow";
+import { WeldMilestoneModal } from "../milestones/WeldMilestoneModal";
 
 interface MobileComponentCardProps {
 	component: ComponentWithMilestones;
@@ -16,6 +18,8 @@ interface MobileComponentCardProps {
 	onEdit?: () => void;
 	onDuplicate?: () => void;
 	onDelete?: () => void;
+	projectId?: string;
+	onWeldModalChange?: (open: boolean) => void;
 }
 
 export function MobileComponentCard({
@@ -23,20 +27,21 @@ export function MobileComponentCard({
 	isSelected,
 	onSelect,
 	onClick,
+	projectId,
+	onWeldModalChange,
 }: MobileComponentCardProps) {
 	// Access milestone update engine if available
 	const milestoneEngine = useMilestoneUpdateEngine?.() || null;
+
+	// State for weld milestone modal
+	const [showWeldModal, setShowWeldModal] = useState(false);
+	const [selectedWeldMilestone, setSelectedWeldMilestone] = useState<any>(null);
 
 	// Handle milestone updates using the engine directly
 	const handleMilestoneUpdate = async (
 		milestoneId: string,
 		value: boolean | number,
 	) => {
-		console.log("MobileComponentCard: handleMilestoneUpdate called", {
-			milestoneId,
-			value,
-			componentId: component.id,
-		});
 
 		if (!milestoneEngine) {
 			console.error("MilestoneUpdateEngine not available");
@@ -52,25 +57,26 @@ export function MobileComponentCard({
 			return;
 		}
 
+		// For field weld components with "Weld Made" milestone, open the welder selection modal
+		if (
+			component.type === "FIELD_WELD" &&
+			milestone.milestoneName === "Weld Made" &&
+			value === true &&
+			projectId
+		) {
+			setSelectedWeldMilestone(milestone);
+			setShowWeldModal(true);
+			onWeldModalChange?.(true);
+			return;
+		}
+
 		try {
-			console.log("Calling milestoneEngine.updateMilestone", {
-				milestoneId,
-				componentId: component.id,
-				milestoneName: milestone.milestoneName,
-				workflowType: component.workflowType,
-				value,
-			});
 
 			await milestoneEngine.updateMilestone(
 				milestoneId,
 				component.id,
 				milestone.milestoneName,
 				component.workflowType,
-				value,
-			);
-			console.log(
-				"Milestone updated successfully:",
-				milestone.milestoneName,
 				value,
 			);
 		} catch (error) {
@@ -148,27 +154,90 @@ export function MobileComponentCard({
 						componentId={component.id}
 						componentType={component.type || undefined}
 						onMilestoneComplete={(milestoneId) => {
-							console.log(
-								"MobileComponentCard: onMilestoneComplete triggered",
-								milestoneId,
-							);
 							handleMilestoneUpdate(milestoneId, true);
 						}}
 						onMilestoneUncomplete={(milestoneId) => {
-							console.log(
-								"MobileComponentCard: onMilestoneUncomplete triggered",
-								milestoneId,
-							);
 							handleMilestoneUpdate(milestoneId, false);
 						}}
-						isLoading={milestoneEngine?.hasPendingUpdates}
-						hasError={(milestoneId) =>
-							milestoneEngine?.getOperationStatus(milestoneId) ===
-							"error"
-						}
+						isLoading={(milestoneId) => {
+							// Access React state object directly to ensure re-renders
+							return milestoneEngine?.operationStatuses?.[milestoneId] === "pending" || false;
+						}}
+						hasError={(milestoneId) => {
+							// Access React state object directly to ensure re-renders
+							return milestoneEngine?.operationStatuses?.[milestoneId] === "error" || false;
+						}}
+						hasRecentSuccess={(milestoneId) => {
+							// Access React state object directly to ensure re-renders
+							return milestoneEngine?.recentSuccesses?.[milestoneId] || false;
+						}}
 					/>
 				)}
 			</CardContent>
+
+			{/* Weld Milestone Modal for Field Welds */}
+			{selectedWeldMilestone && component.type === "FIELD_WELD" && projectId && (
+				<WeldMilestoneModal
+					open={showWeldModal}
+					onOpenChange={(open) => {
+						setShowWeldModal(open);
+						onWeldModalChange?.(open);
+					}}
+					component={{
+						id: component.id,
+						componentId: component.componentId,
+						displayId: component.displayId || component.componentId,
+						projectId: projectId,
+					}}
+					milestone={{
+						id: selectedWeldMilestone.id,
+						milestoneName: selectedWeldMilestone.milestoneName,
+						isCompleted: selectedWeldMilestone.isCompleted,
+					}}
+					onSuccess={async (data) => {
+						// Update the milestone with welder information using direct API call
+						if (selectedWeldMilestone && milestoneEngine) {
+							try {
+								await fetch(
+									`/api/pipetrak/milestones/${selectedWeldMilestone.id}`,
+									{
+										method: "PATCH",
+										headers: {
+											"Content-Type": "application/json",
+										},
+										body: JSON.stringify({
+											isCompleted: true,
+											welderId: data.welderId,
+											effectiveDate: data.dateWelded
+												.toISOString()
+												.split("T")[0],
+											comments: data.comments,
+										}),
+									},
+								);
+
+								// Also trigger the standard milestone update for optimistic updates and caching
+								await milestoneEngine.updateMilestone(
+									selectedWeldMilestone.id,
+									component.id,
+									selectedWeldMilestone.milestoneName,
+									component.workflowType,
+									true,
+								);
+							} catch (error) {
+								console.error(
+									"Failed to update weld milestone:",
+									error,
+								);
+								throw error; // Re-throw so modal can handle the error
+							}
+						}
+
+						setSelectedWeldMilestone(null);
+						onWeldModalChange?.(false);
+					}}
+				/>
+			)}
 		</Card>
 	);
 }

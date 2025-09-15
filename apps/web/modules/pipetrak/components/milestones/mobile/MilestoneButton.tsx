@@ -4,13 +4,14 @@ import { memo } from "react";
 import { cn } from "@ui/lib";
 import { Check, Clock, Lock, AlertCircle, Loader2 } from "lucide-react";
 
-export type MilestoneButtonState = 
+export type MilestoneButtonState =
   | "available"    // Can be completed
   | "complete"     // Already completed
   | "blocked"      // Blocked by dependency
   | "dependent"    // Waiting for prerequisite
   | "error"        // Error state
-  | "loading";     // Processing update
+  | "loading"      // Processing update
+  | "success";     // Recently completed successfully
 
 export interface MilestoneButtonProps {
   milestone: {
@@ -56,6 +57,7 @@ export const MilestoneButton = memo(function MilestoneButton({
   const getButtonContent = () => {
     switch (state) {
       case "complete":
+      case "success":
         return <Check className="h-3 w-3" />;
       case "loading":
         return <Loader2 className="h-3 w-3 animate-spin" />;
@@ -72,13 +74,20 @@ export const MilestoneButton = memo(function MilestoneButton({
 
   const getButtonStyles = () => {
     const baseStyles = "h-10 w-full min-w-[40px] flex flex-col items-center justify-center gap-0.5 p-0.5 text-xs font-medium rounded-md transition-all duration-200 active:scale-95";
-    
+
     switch (state) {
       case "complete":
         return cn(
           baseStyles,
           "bg-green-100 text-green-800 border border-green-200 hover:bg-green-200",
           isSelected && "ring-2 ring-green-500 ring-offset-1"
+        );
+      case "success":
+        return cn(
+          baseStyles,
+          "bg-green-500 text-white border border-green-600 shadow-lg transform scale-105",
+          "animate-pulse",
+          isSelected && "ring-2 ring-green-400 ring-offset-1"
         );
       case "available":
         return cn(
@@ -170,7 +179,7 @@ export const MilestoneButton = memo(function MilestoneButton({
     return name.slice(0, 3).toUpperCase();
   };
 
-  const isDisabled = state === "blocked" || state === "dependent" || state === "loading";
+  const isDisabled = state === "blocked" || state === "dependent" || state === "loading" || state === "success";
 
   return (
     <button
@@ -178,7 +187,7 @@ export const MilestoneButton = memo(function MilestoneButton({
       className={cn(getButtonStyles(), className)}
       onClick={handleClick}
       disabled={isDisabled}
-      title={`${milestone.milestoneName} - ${state === "complete" ? "Completed" : state === "blocked" ? "Blocked by dependency" : state === "dependent" ? "Waiting for prerequisite" : state === "error" ? "Error occurred" : state === "loading" ? "Processing..." : "Available"}`}
+      title={`${milestone.milestoneName} - ${state === "complete" ? "Completed" : state === "success" ? "Successfully updated!" : state === "blocked" ? "Blocked by dependency" : state === "dependent" ? "Waiting for prerequisite" : state === "error" ? "Error occurred" : state === "loading" ? "Processing..." : "Available"}`}
       aria-label={`Milestone ${milestone.milestoneOrder}: ${milestone.milestoneName}`}
     >
       {getButtonContent()}

@@ -268,7 +268,8 @@ export async function POST(request: NextRequest) {
 
 			if (componentGroups.has(key)) {
 				// Sum the quantities for duplicate entries
-				const existing = componentGroups.get(key)!;
+				const existing = componentGroups.get(key);
+				if (!existing) continue;
 				existing.quantity += comp.quantity;
 				console.log(
 					`Import V2: Merged duplicate ${comp.componentId} on ${comp.drawingId}, total qty now: ${existing.quantity}`,
@@ -362,7 +363,8 @@ export async function POST(request: NextRequest) {
 
 		for (const compData of groupedComponentList) {
 			const quantity = compData.quantity;
-			const drawingId = drawingIdMap.get(compData.drawingId)!;
+			const drawingId = drawingIdMap.get(compData.drawingId);
+			if (!drawingId) continue;
 			const existingKey = `${drawingId}:${compData.componentId}`;
 			const existingMaxInstance =
 				existingInstanceMap.get(existingKey) || 0;

@@ -23,9 +23,14 @@ interface MilestoneUpdateEngineContextValue {
 	getMilestoneState: (milestoneId: string) => ComponentMilestone | undefined;
 	getAllMilestoneStates: () => Map<string, ComponentMilestone>;
 	hasPendingUpdates: (milestoneId: string) => boolean;
+	hasRecentSuccess: (milestoneId: string) => boolean;
 	getOperationStatus: (
 		milestoneId: string,
 	) => "pending" | "success" | "error" | null;
+
+	// React state-based accessors (these will trigger re-renders)
+	operationStatuses: Record<string, "pending" | "success" | "error">;
+	recentSuccesses: Record<string, boolean>;
 
 	// Update methods
 	updateMilestone: (
@@ -156,7 +161,12 @@ export function MilestoneUpdateEngine({
 	);
 	const realtimeSubscriptionRef = useRef<any>(null);
 
-	// Initialize optimistic update manager
+	// React state to track operation statuses and trigger re-renders
+	// Using objects instead of Map/Set to ensure React detects changes
+	const [operationStatuses, setOperationStatuses] = useState<Record<string, "pending" | "success" | "error">>({});
+	const [recentSuccesses, setRecentSuccesses] = useState<Record<string, boolean>>({});
+
+	// Initialize optimistic update manager with React state callbacks
 	const updateManager = useMemo(() => {
 		const callbacks: UpdateCallback = {
 			onSuccess: (update, milestone) => {
@@ -166,11 +176,49 @@ export function MilestoneUpdateEngine({
 					milestone,
 				);
 
+				// Update React state to trigger re-render - using object spread for React detection
+				setOperationStatuses(prev => ({
+					...prev,
+					[update.milestoneId]: "success"
+				}));
+
+				// Add to recent successes for visual feedback
+				setRecentSuccesses(prev => ({
+					...prev,
+					[update.milestoneId]: true
+				}));
+
+				// Clear success state after delay to transition to normal complete state
+				setTimeout(() => {
+					setOperationStatuses(prev => {
+						const { [update.milestoneId]: removed, ...rest } = prev;
+						return rest;
+					});
+					setRecentSuccesses(prev => {
+						const { [update.milestoneId]: removed, ...rest } = prev;
+						return rest;
+					});
+				}, 2000);
+
 				// Show success feedback
 				toast.success(`${update.milestoneName} updated successfully`);
 			},
 
 			onError: (update, error) => {
+				// Update React state to show error
+				setOperationStatuses(prev => ({
+					...prev,
+					[update.milestoneId]: "error"
+				}));
+
+				// Clear error state after delay
+				setTimeout(() => {
+					setOperationStatuses(prev => {
+						const { [update.milestoneId]: removed, ...rest } = prev;
+						return rest;
+					});
+				}, 5000);
+
 				// Show error feedback
 				toast.error(
 					`Failed to update ${update.milestoneName}: ${error.message}`,
@@ -178,6 +226,12 @@ export function MilestoneUpdateEngine({
 			},
 
 			onConflict: (update) => {
+				// Clear loading state on conflict
+				setOperationStatuses(prev => {
+					const { [update.milestoneId]: removed, ...rest } = prev;
+					return rest;
+				});
+
 				// Show conflict resolution UI
 				toast.warning(
 					`Conflict detected for ${update.milestoneName}. Please resolve manually.`,
@@ -249,6 +303,12 @@ export function MilestoneUpdateEngine({
 			workflowType: WorkflowType,
 			value: boolean | number,
 		) => {
+			// Set loading state immediately in React to trigger re-render
+			setOperationStatuses(prev => ({
+				...prev,
+				[milestoneId]: "pending"
+			}));
+
 			const update: MilestoneUpdate = {
 				id: `${milestoneId}_${Date.now()}`,
 				componentId,
@@ -383,8 +443,12 @@ export function MilestoneUpdateEngine({
 		getAllMilestoneStates:
 			updateManager.getAllMilestoneStates.bind(updateManager),
 		hasPendingUpdates: updateManager.hasPendingUpdates.bind(updateManager),
+		hasRecentSuccess: (milestoneId: string) => Boolean(recentSuccesses[milestoneId]),
 		getOperationStatus:
 			updateManager.getOperationStatus.bind(updateManager),
+		// React state-based accessors for triggering re-renders
+		operationStatuses,
+		recentSuccesses,
 		updateMilestone,
 		bulkUpdateMilestones,
 		clearOptimisticState:

@@ -4,8 +4,11 @@ import { useState, useCallback } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/components/card";
 import { Button } from "@ui/components/button";
 import { Progress } from "@ui/components/progress";
-import { Upload, FileSpreadsheet, X, AlertCircle, Download, Check } from "lucide-react";
+import { Upload, FileSpreadsheet, X, AlertCircle, Download, Check, Settings } from "lucide-react";
 import { Alert, AlertDescription } from "@ui/components/alert";
+import { Label } from "@ui/components/label";
+import { RadioGroup, RadioGroupItem } from "@ui/components/radio-group";
+import { Checkbox } from "@ui/components/checkbox";
 import { cn } from "@ui/lib";
 // Using basic file validation instead of Excel parsing
 
@@ -24,9 +27,24 @@ interface FieldWeldUploadProps {
     created?: {
       components: number;
       fieldWelds: number;
+      milestones?: number;
+    };
+    updated?: {
+      components: number;
+      fieldWelds: number;
+    };
+    summary?: {
+      duplicatesFound: number;
+      duplicatesSkipped: number;
+      duplicatesUpdated: number;
     };
     errors?: string[];
   };
+  // Import options
+  duplicateHandling?: 'error' | 'skip' | 'update';
+  onDuplicateHandlingChange?: (value: 'error' | 'skip' | 'update') => void;
+  createMissingDrawings?: boolean;
+  onCreateMissingDrawingsChange?: (value: boolean) => void;
 }
 
 interface FieldWeldValidationResult {
@@ -51,6 +69,10 @@ export function FieldWeldUpload({
   className,
   isImporting = false,
   importResult,
+  duplicateHandling = 'skip',
+  onDuplicateHandlingChange,
+  createMissingDrawings = true,
+  onCreateMissingDrawingsChange,
 }: FieldWeldUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [validationResult, setValidationResult] = useState<FieldWeldValidationResult | null>(null);
@@ -276,15 +298,40 @@ export function FieldWeldUpload({
               <div className={`text-sm space-y-1 ${
                 importResult.success ? 'text-green-700' : 'text-yellow-700'
               }`}>
+                {/* Created items */}
                 {importResult.created?.fieldWelds ? (
-                  <p>✓ {importResult.created.fieldWelds} field welds imported</p>
-                ) : (
-                  <p>⚠ No field welds were imported</p>
-                )}
+                  <p>✓ {importResult.created.fieldWelds} field welds created</p>
+                ) : null}
                 {importResult.created?.components ? (
                   <p>✓ {importResult.created.components} components created</p>
                 ) : null}
-                
+
+                {/* Updated items */}
+                {importResult.updated?.fieldWelds ? (
+                  <p>🔄 {importResult.updated.fieldWelds} field welds updated</p>
+                ) : null}
+                {importResult.updated?.components ? (
+                  <p>🔄 {importResult.updated.components} components updated</p>
+                ) : null}
+
+                {/* Duplicate summary */}
+                {importResult.summary && importResult.summary.duplicatesFound > 0 && (
+                  <div className="mt-2 space-y-1">
+                    <p className="font-medium">Duplicate handling:</p>
+                    {importResult.summary.duplicatesSkipped > 0 && (
+                      <p>• {importResult.summary.duplicatesSkipped} duplicates skipped</p>
+                    )}
+                    {importResult.summary.duplicatesUpdated > 0 && (
+                      <p>• {importResult.summary.duplicatesUpdated} duplicates updated</p>
+                    )}
+                  </div>
+                )}
+
+                {/* If nothing was processed */}
+                {!importResult.created?.fieldWelds && !importResult.updated?.fieldWelds && (
+                  <p>⚠ No field welds were imported or updated</p>
+                )}
+
                 {/* Show errors if any */}
                 {importResult.errors && importResult.errors.length > 0 && (
                   <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded">
@@ -296,6 +343,57 @@ export function FieldWeldUpload({
                     </ul>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* Import Options */}
+          {onImportClick && !importResult?.success && (
+            <div className="p-4 border rounded-lg bg-gray-50 space-y-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Settings className="h-4 w-4 text-gray-600" />
+                <Label className="font-medium">Import Options</Label>
+              </div>
+
+              {/* Duplicate Handling */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">How to handle existing welds:</Label>
+                <RadioGroup
+                  value={duplicateHandling}
+                  onValueChange={onDuplicateHandlingChange}
+                  className="space-y-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="skip" id="skip" />
+                    <Label htmlFor="skip" className="text-sm cursor-pointer">
+                      <span className="font-medium">Skip duplicates</span> - Import only new welds
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="update" id="update" />
+                    <Label htmlFor="update" className="text-sm cursor-pointer">
+                      <span className="font-medium">Update existing</span> - Overwrite with new data
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="error" id="error" />
+                    <Label htmlFor="error" className="text-sm cursor-pointer">
+                      <span className="font-medium">Stop on duplicates</span> - Show error if duplicates found
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Create Missing Drawings */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="createDrawings"
+                  checked={createMissingDrawings}
+                  onCheckedChange={onCreateMissingDrawingsChange}
+                />
+                <Label htmlFor="createDrawings" className="text-sm cursor-pointer">
+                  Create missing drawings automatically
+                </Label>
               </div>
             </div>
           )}

@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
 		const buffer = Buffer.from(arrayBuffer);
 
 		// Parse file to get headers and metadata
-		let parseResult;
+		let parseResult: { headers: string[]; rows: any[]; metadata: any };
 		if (file.type === "text/csv") {
 			const processor = new CSVProcessor();
 			parseResult = await processor.parseCSV(buffer);

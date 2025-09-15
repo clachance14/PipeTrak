@@ -5,25 +5,26 @@ import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Alert, AlertDescription } from "@ui/components/alert";
-import { 
-  FileSpreadsheet, 
-  AlertCircle, 
+import {
+  FileSpreadsheet,
+  AlertCircle,
   Check,
   AlertTriangle,
   Sparkles,
   ArrowRight,
-  Table2,
-  Eye
+  Eye,
+  Cpu,
+  MapPin
 } from "lucide-react";
 import { cn } from "@ui/lib";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@ui/components/select";
-import { 
+import {
   Table,
   TableBody,
   TableCell,
@@ -32,6 +33,16 @@ import {
   TableRow,
 } from "@ui/components/table";
 import { ScrollArea } from "@ui/components/scroll-area";
+import {
+  autoDetectColumns,
+  getFieldDisplayName,
+  validateDetectionResult,
+  generateMappingSummary,
+  ESSENTIAL_FIELDS,
+  HIGH_PRIORITY_FIELDS,
+  type ColumnDetectionResult,
+  type ColumnMappings,
+} from "@repo/api/lib/import/field-weld-column-detector";
 
 interface FieldWeldColumnMapperProps {
   /** Parsed Excel file data with headers and sample rows */
@@ -44,7 +55,7 @@ interface FieldWeldColumnMapperProps {
       totalColumns?: number;
     };
   };
-  /** Current column mappings */
+  /** Current column mappings (index -> field) */
   mappings: Record<string, string>;
   /** Callback when mappings change */
   onMappingChange: (mappings: Record<string, string>) => void;
@@ -61,210 +72,155 @@ interface FieldWeldColumnMapperProps {
 }
 
 /**
- * WELD LOG column mapping based on FieldWeldProcessor
- * Maps Excel column positions (A-AA) to field names
- */
-const WELD_LOG_COLUMN_MAPPING = {
-  'A': { field: 'weldIdNumber', label: 'Weld ID Number', required: true },
-  'B': { field: 'welderStencil', label: 'Welder Stencil', required: false },
-  'C': { field: '', label: 'Column C', required: false },
-  'D': { field: 'drawingNumber', label: 'Drawing Number', required: true },
-  'E': { field: '', label: 'Column E', required: false },
-  'F': { field: 'testPackageNumber', label: 'Test Package Number', required: false },
-  'G': { field: 'testPressure', label: 'Test Pressure', required: false },
-  'H': { field: '', label: 'Column H', required: false },
-  'I': { field: 'weldSize', label: 'Weld Size', required: false },
-  'J': { field: 'specCode', label: 'Spec Code', required: false },
-  'K': { field: '', label: 'Column K', required: false },
-  'L': { field: '', label: 'Column L', required: false },
-  'M': { field: '', label: 'Column M', required: false },
-  'N': { field: '', label: 'Column N', required: false },
-  'O': { field: '', label: 'Column O', required: false },
-  'P': { field: '', label: 'Column P', required: false },
-  'Q': { field: '', label: 'Column Q', required: false },
-  'R': { field: 'pmiRequired', label: 'PMI Required', required: false },
-  'S': { field: 'pwhtRequired', label: 'PWHT Required', required: false },
-  'T': { field: 'xrayPercentage', label: 'X-ray Percentage', required: false },
-  'U': { field: 'weldType', label: 'Weld Type', required: false },
-  'V': { field: '', label: 'Column V', required: false },
-  'W': { field: '', label: 'Column W', required: false },
-  'X': { field: '', label: 'Column X', required: false },
-  'Y': { field: 'pmiCompleteDate', label: 'PMI Complete Date', required: false },
-  'Z': { field: '', label: 'Column Z', required: false },
-  'AA': { field: 'comments', label: 'Comments', required: false },
-} as const;
-
-/**
- * Available field options for mapping
+ * Available field options for manual mapping
  */
 const FIELD_OPTIONS = [
   { value: '', label: '-- Not Mapped --' },
-  { value: 'weldIdNumber', label: 'Weld ID Number', required: true },
-  { value: 'drawingNumber', label: 'Drawing Number', required: true },
+  { value: 'weldIdNumber', label: 'Weld ID Number', essential: true },
+  { value: 'drawingNumber', label: 'Drawing Number', essential: true },
+  { value: 'specCode', label: 'Spec Code', priority: true },
+  { value: 'xrayPercentage', label: 'X-Ray Percentage', priority: true },
+  { value: 'weldSize', label: 'Weld Size', priority: true },
+  { value: 'schedule', label: 'Schedule', priority: true },
+  { value: 'weldType', label: 'Weld Type', priority: true },
+  { value: 'baseMetal', label: 'Base Metal', priority: true },
   { value: 'welderStencil', label: 'Welder Stencil' },
   { value: 'testPackageNumber', label: 'Test Package Number' },
   { value: 'testPressure', label: 'Test Pressure' },
-  { value: 'specCode', label: 'Spec Code' },
-  { value: 'weldSize', label: 'Weld Size' },
   { value: 'pmiRequired', label: 'PMI Required (Boolean)' },
   { value: 'pwhtRequired', label: 'PWHT Required (Boolean)' },
-  { value: 'xrayPercentage', label: 'X-ray Percentage' },
-  { value: 'weldType', label: 'Weld Type' },
   { value: 'pmiCompleteDate', label: 'PMI Complete Date' },
+  { value: 'dateWelded', label: 'Date Welded' },
   { value: 'comments', label: 'Comments' },
 ] as const;
 
-export function FieldWeldColumnMapper({ 
-  parsedData, 
-  mappings, 
+export function FieldWeldColumnMapper({
+  parsedData,
+  mappings,
   onMappingChange,
-  onContinue, 
+  onContinue,
   onBack,
-  validationResults 
+  validationResults
 }: FieldWeldColumnMapperProps) {
-  const [autoMappedColumns, setAutoMappedColumns] = useState<Set<string>>(new Set());
+  const [detectionResult, setDetectionResult] = useState<ColumnDetectionResult | null>(null);
   const [showPreview, setShowPreview] = useState(true);
+  const [manualOverrides, setManualOverrides] = useState<Set<number>>(new Set());
 
-  // Convert column index to Excel column letter
+  // Convert our mappings format (index -> field) to the expected format (field -> index)
+  const convertMappingsToDetectionFormat = (mappings: Record<string, string>): ColumnMappings => {
+    const result: ColumnMappings = {};
+    Object.entries(mappings).forEach(([indexStr, field]) => {
+      if (field) {
+        result[Number(indexStr)] = field;
+      }
+    });
+    return result;
+  };
+
+  // Convert detection format back to our format
+  const convertDetectionToMappingsFormat = (detectionMappings: ColumnMappings): Record<string, string> => {
+    const result: Record<string, string> = {};
+    Object.entries(detectionMappings).forEach(([indexStr, field]) => {
+      result[indexStr] = field;
+    });
+    return result;
+  };
+
+  // Auto-detect columns on first load
+  useEffect(() => {
+    if (parsedData.headers.length > 0) {
+      const result = autoDetectColumns(parsedData.headers);
+      setDetectionResult(result);
+
+      // Only auto-apply if we don't have existing mappings
+      const existingMappingsCount = Object.values(mappings).filter(Boolean).length;
+      if (existingMappingsCount === 0) {
+        const newMappings = convertDetectionToMappingsFormat(result.mappings);
+        onMappingChange(newMappings);
+      }
+    }
+  }, [parsedData.headers]);
+
+  // Update detection result when mappings change manually
+  useEffect(() => {
+    if (detectionResult && Object.keys(mappings).length > 0) {
+      const updatedMappings = convertMappingsToDetectionFormat(mappings);
+      const updatedResult = {
+        ...detectionResult,
+        mappings: updatedMappings,
+      };
+      setDetectionResult(updatedResult);
+    }
+  }, [mappings]);
+
+  // Validation status
+  const validationStatus = useMemo(() => {
+    if (!detectionResult) return null;
+    return validateDetectionResult(detectionResult);
+  }, [detectionResult]);
+
+  // Mapping summary
+  const mappingSummary = useMemo(() => {
+    if (!detectionResult) return null;
+    return generateMappingSummary(detectionResult, parsedData.headers);
+  }, [detectionResult, parsedData.headers]);
+
+  const handleColumnMappingChange = (columnIndex: number, fieldValue: string) => {
+    const newMappings = { ...mappings };
+
+    // Remove any existing mapping to this field value
+    Object.keys(newMappings).forEach(key => {
+      if (newMappings[key] === fieldValue && Number(key) !== columnIndex) {
+        delete newMappings[key];
+      }
+    });
+
+    // Set new mapping or remove if empty
+    if (fieldValue) {
+      newMappings[columnIndex.toString()] = fieldValue;
+      setManualOverrides(prev => new Set([...prev, columnIndex]));
+    } else {
+      delete newMappings[columnIndex.toString()];
+      setManualOverrides(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(columnIndex);
+        return newSet;
+      });
+    }
+
+    onMappingChange(newMappings);
+  };
+
   const getColumnLetter = (index: number): string => {
     if (index < 26) {
       return String.fromCharCode(65 + index); // A-Z
     }
-    if (index === 26) {
-      return 'AA';
-    }
-    throw new Error(`Column index ${index} exceeds supported range (A-AA)`);
+    return `Col${index + 1}`; // Beyond Z
   };
 
-  // Auto-map columns based on headers and position
-  useEffect(() => {
-    const autoMappings: Record<string, string> = { ...mappings };
-    const mapped = new Set<string>();
-
-    parsedData.headers.forEach((header, index) => {
-      if (index >= 27) return; // Only handle A-AA columns
-      
-      const columnLetter = getColumnLetter(index);
-      const expectedMapping = WELD_LOG_COLUMN_MAPPING[columnLetter as keyof typeof WELD_LOG_COLUMN_MAPPING];
-      
-      // If position-based mapping has a field defined and not already mapped
-      if (expectedMapping.field && !Object.values(autoMappings).includes(expectedMapping.field)) {
-        const headerLower = header.toLowerCase().trim();
-        const expectedField = expectedMapping.field;
-        
-        // Auto-map based on position and header content validation
-        let shouldAutoMap = false;
-        
-        switch (expectedField) {
-          case 'weldIdNumber':
-            shouldAutoMap = columnLetter === 'A' && (
-              headerLower.includes('weld') && headerLower.includes('id') ||
-              headerLower.includes('weld') && headerLower.includes('number') ||
-              headerLower.includes('id') && headerLower.includes('number')
-            );
-            break;
-          case 'drawingNumber':
-            shouldAutoMap = columnLetter === 'D' && (
-              headerLower.includes('drawing') ||
-              headerLower.includes('isometric') ||
-              headerLower.includes('dwg')
-            );
-            break;
-          case 'welderStencil':
-            shouldAutoMap = columnLetter === 'B' && (
-              headerLower.includes('welder') ||
-              headerLower.includes('stencil')
-            );
-            break;
-          case 'testPackageNumber':
-            shouldAutoMap = columnLetter === 'F' && (
-              headerLower.includes('package') ||
-              headerLower.includes('test') && headerLower.includes('package')
-            );
-            break;
-          case 'testPressure':
-            shouldAutoMap = columnLetter === 'G' && (
-              headerLower.includes('pressure') ||
-              headerLower.includes('test') && headerLower.includes('pressure')
-            );
-            break;
-          case 'specCode':
-            shouldAutoMap = columnLetter === 'J' && (
-              headerLower.includes('spec') ||
-              headerLower.includes('specification')
-            );
-            break;
-          default:
-            // For other fields, be more flexible with auto-mapping
-            shouldAutoMap = headerLower.includes(expectedField.toLowerCase()) ||
-              (expectedMapping.label.toLowerCase().includes(headerLower) && headerLower.length > 2);
-        }
-        
-        if (shouldAutoMap) {
-          autoMappings[columnLetter] = expectedField;
-          mapped.add(columnLetter);
-        }
-      }
-    });
-
-    if (Object.keys(autoMappings).length !== Object.keys(mappings).length) {
-      onMappingChange(autoMappings);
-      setAutoMappedColumns(mapped);
-    }
-  }, [parsedData.headers]);
-
-  // Validation status for each column
-  const getColumnValidationStatus = (columnLetter: string): { status: 'valid' | 'warning' | 'error'; message?: string } => {
-    const mapping = mappings[columnLetter];
-    const expectedMapping = WELD_LOG_COLUMN_MAPPING[columnLetter as keyof typeof WELD_LOG_COLUMN_MAPPING];
-    
-    if (expectedMapping.required && !mapping) {
-      return { status: 'error', message: 'Required field not mapped' };
-    }
-    
-    if (mapping && expectedMapping.field !== mapping && expectedMapping.required) {
-      return { status: 'warning', message: 'Different field mapped than expected' };
-    }
-    
-    return { status: 'valid' };
+  const getFieldPriority = (field: string): 'essential' | 'priority' | 'optional' => {
+    if (ESSENTIAL_FIELDS.includes(field as any)) return 'essential';
+    if (HIGH_PRIORITY_FIELDS.includes(field as any)) return 'priority';
+    return 'optional';
   };
 
-  // Overall validation status
-  const overallValidation = useMemo(() => {
-    const requiredFields = ['weldIdNumber', 'drawingNumber'];
-    const mappedFields = Object.values(mappings).filter(Boolean);
-    const missingRequired = requiredFields.filter(field => !mappedFields.includes(field));
-    
-    return {
-      isValid: missingRequired.length === 0,
-      missingRequired,
-      mappedCount: mappedFields.length,
-      totalColumns: parsedData.headers.length
-    };
-  }, [mappings, parsedData.headers.length]);
-
-  const handleColumnMappingChange = (columnLetter: string, fieldValue: string) => {
-    const newMappings = { ...mappings };
-    
-    // Remove any existing mapping to this field value
-    Object.keys(newMappings).forEach(key => {
-      if (newMappings[key] === fieldValue && key !== columnLetter) {
-        delete newMappings[key];
-      }
-    });
-    
-    // Set new mapping or remove if empty
-    if (fieldValue) {
-      newMappings[columnLetter] = fieldValue;
-    } else {
-      delete newMappings[columnLetter];
-    }
-    
-    onMappingChange(newMappings);
+  const isFieldMapped = (field: string): boolean => {
+    return Object.values(mappings).includes(field);
   };
 
   // Get first 10 rows for preview
   const previewRows = parsedData.rows.slice(0, 10);
+
+  if (!detectionResult) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center space-y-2">
+          <Cpu className="h-8 w-8 animate-pulse text-primary mx-auto" />
+          <p className="text-muted-foreground">Analyzing column headers...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -280,12 +236,10 @@ export function FieldWeldColumnMapper({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {autoMappedColumns.size > 0 && (
-            <Badge status="info" className="gap-1">
-              <Sparkles className="h-3 w-3" />
-              {autoMappedColumns.size} auto-mapped
-            </Badge>
-          )}
+          <Badge status="info" className="gap-1">
+            <Cpu className="h-3 w-3" />
+            Smart Detection
+          </Badge>
           <Button
             variant="outline"
             size="sm"
@@ -298,113 +252,199 @@ export function FieldWeldColumnMapper({
         </div>
       </div>
 
-      {/* Column Mapping Section */}
+      {/* Auto-Detection Results */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Table2 className="h-5 w-5" />
-            Column Mapping
+            <Sparkles className="h-5 w-5" />
+            Auto-Detection Results
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Map Excel columns (A-AA) to field weld data fields. Required fields are highlighted.
+            Smart column detection found {mappingSummary?.mapped.length || 0} matching fields
           </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {/* Required Fields Alert */}
-            <Alert className="border-orange-200 bg-orange-50">
-              <AlertTriangle className="h-4 w-4 text-orange-600" />
-              <AlertDescription>
-                <strong>Required Fields:</strong> Weld ID (Column A) and Drawing Number (Column D) must be mapped for successful import.
-              </AlertDescription>
-            </Alert>
+            {/* Validation Status */}
+            {validationStatus && (
+              <Alert
+                className={cn(
+                  "border-2",
+                  validationStatus.status === 'ready' && "border-green-200 bg-green-50",
+                  validationStatus.status === 'warning' && "border-orange-200 bg-orange-50",
+                  validationStatus.status === 'error' && "border-red-200 bg-red-50"
+                )}
+              >
+                {validationStatus.status === 'ready' && <Check className="h-4 w-4 text-green-600" />}
+                {validationStatus.status === 'warning' && <AlertTriangle className="h-4 w-4 text-orange-600" />}
+                {validationStatus.status === 'error' && <AlertCircle className="h-4 w-4 text-red-600" />}
+                <AlertDescription>
+                  <div className="space-y-2">
+                    <p className="font-medium">{validationStatus.message}</p>
+                    {validationStatus.recommendations.length > 0 && (
+                      <ul className="list-disc list-inside space-y-1 text-sm">
+                        {validationStatus.recommendations.map((rec, index) => (
+                          <li key={index}>{rec}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
 
-            {/* Mapping Grid3x3 */}
+            {/* Field Summary */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+                <div className="text-2xl font-bold text-green-700">
+                  {detectionResult.essentialFields.found.length}
+                </div>
+                <div className="text-sm text-green-600">Essential Fields</div>
+                <div className="text-xs text-muted-foreground">
+                  of {ESSENTIAL_FIELDS.length} required
+                </div>
+              </div>
+              <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="text-2xl font-bold text-blue-700">
+                  {detectionResult.optionalFields.found.length}
+                </div>
+                <div className="text-sm text-blue-600">Optional Fields</div>
+                <div className="text-xs text-muted-foreground">additional data</div>
+              </div>
+              <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="text-2xl font-bold text-gray-700">
+                  {mappingSummary?.unmapped.length || 0}
+                </div>
+                <div className="text-sm text-gray-600">Unmapped</div>
+                <div className="text-xs text-muted-foreground">will be skipped</div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Column Mapping Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MapPin className="h-5 w-5" />
+            Column Mapping
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Review and adjust the automatically detected field mappings below
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {/* Mapping Grid */}
             <div className="grid gap-3">
-              <div className="grid grid-cols-4 gap-4 text-sm font-medium text-muted-foreground border-b pb-2">
-                <div>Excel Column</div>
+              <div className="grid grid-cols-5 gap-4 text-sm font-medium text-muted-foreground border-b pb-2">
+                <div>Column</div>
                 <div>Header</div>
                 <div>Mapped Field</div>
+                <div>Priority</div>
                 <div>Status</div>
               </div>
-              
+
               <ScrollArea className="h-96">
                 <div className="space-y-2">
-                  {parsedData.headers.slice(0, 27).map((header, index) => {
+                  {parsedData.headers.map((header, index) => {
                     const columnLetter = getColumnLetter(index);
-                    const expectedMapping = WELD_LOG_COLUMN_MAPPING[columnLetter as keyof typeof WELD_LOG_COLUMN_MAPPING];
-                    const validationStatus = getColumnValidationStatus(columnLetter);
-                    const currentMapping = mappings[columnLetter] || '';
-                    const isAutoMapped = autoMappedColumns.has(columnLetter);
-                    
+                    const currentMapping = mappings[index.toString()] || '';
+                    const priority = currentMapping ? getFieldPriority(currentMapping) : 'optional';
+                    const isManualOverride = manualOverrides.has(index);
+                    const isAutoDetected = !isManualOverride && currentMapping;
+
                     return (
-                      <div key={columnLetter} className="grid grid-cols-4 gap-4 items-center p-2 rounded-lg hover:bg-muted/50">
-                        {/* Column Letter */}
-                        <div className="font-mono font-medium">
+                      <div key={index} className="grid grid-cols-5 gap-4 items-center p-3 rounded-lg hover:bg-muted/50 border">
+                        {/* Column Letter/Number */}
+                        <div className="font-mono font-medium text-sm">
                           {columnLetter}
-                          {expectedMapping.required && (
-                            <Badge status="error" className="ml-2 text-xs">
-                              Required
-                            </Badge>
-                          )}
                         </div>
-                        
+
                         {/* Header */}
                         <div className="text-sm">
-                          <p className="truncate" title={header}>{header}</p>
-                          {expectedMapping.field && (
+                          <p className="truncate font-medium" title={header}>{header}</p>
+                          {currentMapping && (
                             <p className="text-xs text-muted-foreground">
-                              Expected: {expectedMapping.label}
+                              Maps to: {getFieldDisplayName(currentMapping)}
                             </p>
                           )}
                         </div>
-                        
+
                         {/* Field Mapping */}
                         <div>
                           <Select
                             value={currentMapping}
-                            onValueChange={(value) => handleColumnMappingChange(columnLetter, value)}
+                            onValueChange={(value) => handleColumnMappingChange(index, value)}
                           >
                             <SelectTrigger className={cn(
                               "w-full",
-                              validationStatus.status === 'error' && "border-destructive",
-                              validationStatus.status === 'warning' && "border-orange-400"
+                              priority === 'essential' && currentMapping && "border-green-400 bg-green-50",
+                              priority === 'priority' && currentMapping && "border-blue-400 bg-blue-50"
                             )}>
                               <SelectValue placeholder="Select field" />
                             </SelectTrigger>
                             <SelectContent>
-                              {FIELD_OPTIONS.map(option => (
-                                <SelectItem key={option.value} value={option.value}>
-                                  <div className="flex items-center gap-2">
-                                    {('required' in option && option.required) && (
-                                      <span className="text-destructive">*</span>
-                                    )}
-                                    {option.label}
-                                  </div>
-                                </SelectItem>
-                              ))}
+                              {FIELD_OPTIONS.map(option => {
+                                const isAlreadyMapped = option.value && isFieldMapped(option.value) && currentMapping !== option.value;
+                                return (
+                                  <SelectItem
+                                    key={option.value}
+                                    value={option.value}
+                                    disabled={isAlreadyMapped}
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      {option.essential && (
+                                        <span className="text-red-500 font-bold">*</span>
+                                      )}
+                                      {option.priority && !option.essential && (
+                                        <span className="text-blue-500">•</span>
+                                      )}
+                                      <span className={cn(isAlreadyMapped && "text-muted-foreground")}>
+                                        {option.label}
+                                      </span>
+                                      {isAlreadyMapped && (
+                                        <span className="text-xs text-muted-foreground">(mapped)</span>
+                                      )}
+                                    </div>
+                                  </SelectItem>
+                                );
+                              })}
                             </SelectContent>
                           </Select>
                         </div>
-                        
+
+                        {/* Priority Badge */}
+                        <div>
+                          {priority === 'essential' && (
+                            <Badge status="error" className="text-xs">Essential</Badge>
+                          )}
+                          {priority === 'priority' && (
+                            <Badge status="warning" className="text-xs">Priority</Badge>
+                          )}
+                          {priority === 'optional' && currentMapping && (
+                            <Badge status="info" className="text-xs">Optional</Badge>
+                          )}
+                        </div>
+
                         {/* Status */}
                         <div className="flex items-center gap-2">
-                          {validationStatus.status === 'valid' && currentMapping && (
+                          {currentMapping && (
                             <div className="flex items-center gap-1">
                               <Check className="h-4 w-4 text-green-600" />
-                              {isAutoMapped && (
+                              {isAutoDetected && (
                                 <Badge status="info" className="text-xs gap-1">
-                                  <Sparkles className="h-2 w-2" />
+                                  <Cpu className="h-2 w-2" />
                                   Auto
                                 </Badge>
                               )}
+                              {isManualOverride && (
+                                <Badge status="default" className="text-xs">
+                                  Manual
+                                </Badge>
+                              )}
                             </div>
-                          )}
-                          {validationStatus.status === 'warning' && (
-                            <AlertTriangle className="h-4 w-4 text-orange-500" aria-label={validationStatus.message} />
-                          )}
-                          {validationStatus.status === 'error' && (
-                            <AlertCircle className="h-4 w-4 text-destructive" aria-label={validationStatus.message} />
                           )}
                         </div>
                       </div>
@@ -436,11 +476,15 @@ export function FieldWeldColumnMapper({
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-12">#</TableHead>
-                      {Object.entries(mappings).map(([columnLetter, fieldName]) => (
-                        <TableHead key={columnLetter} className="min-w-32">
+                      {Object.entries(mappings)
+                        .filter(([_, fieldName]) => fieldName)
+                        .map(([columnIndex, fieldName]) => (
+                        <TableHead key={columnIndex} className="min-w-32">
                           <div className="space-y-1">
-                            <div className="font-medium">{fieldName}</div>
-                            <div className="text-xs text-muted-foreground">Column {columnLetter}</div>
+                            <div className="font-medium">{getFieldDisplayName(fieldName)}</div>
+                            <div className="text-xs text-muted-foreground">
+                              Col {getColumnLetter(Number(columnIndex))}
+                            </div>
                           </div>
                         </TableHead>
                       ))}
@@ -450,13 +494,14 @@ export function FieldWeldColumnMapper({
                     {previewRows.map((row, index) => (
                       <TableRow key={index}>
                         <TableCell className="font-mono text-sm">{index + 1}</TableCell>
-                        {Object.entries(mappings).map(([columnLetter, _fieldName]) => {
-                          const columnIndex = columnLetter === 'AA' ? 26 : columnLetter.charCodeAt(0) - 65;
-                          const header = parsedData.headers[columnIndex];
+                        {Object.entries(mappings)
+                          .filter(([_, fieldName]) => fieldName)
+                          .map(([columnIndex, _fieldName]) => {
+                          const header = parsedData.headers[Number(columnIndex)];
                           const value = row[header];
-                          
+
                           return (
-                            <TableCell key={columnLetter} className="max-w-40">
+                            <TableCell key={columnIndex} className="max-w-40">
                               <div className="truncate" title={String(value || '')}>
                                 {value || <span className="text-muted-foreground">—</span>}
                               </div>
@@ -494,22 +539,17 @@ export function FieldWeldColumnMapper({
       <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            {overallValidation.isValid ? (
+            {validationStatus?.canProceed ? (
               <Check className="h-5 w-5 text-green-600" />
             ) : (
               <AlertCircle className="h-5 w-5 text-destructive" />
             )}
             <span className="font-medium">
-              {overallValidation.isValid ? 'Ready for Import' : 'Mapping Required'}
+              {validationStatus?.canProceed ? 'Ready for Import' : 'Mapping Required'}
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            {overallValidation.mappedCount} of {overallValidation.totalColumns} columns mapped
-            {!overallValidation.isValid && overallValidation.missingRequired.length > 0 && (
-              <span className="text-destructive">
-                • Missing: {overallValidation.missingRequired.join(', ')}
-              </span>
-            )}
+            {mappingSummary?.summary}
           </p>
         </div>
       </div>
@@ -519,9 +559,9 @@ export function FieldWeldColumnMapper({
         <Button variant="outline" onClick={onBack}>
           Back
         </Button>
-        <Button 
+        <Button
           onClick={onContinue}
-          disabled={!overallValidation.isValid}
+          disabled={!validationStatus?.canProceed}
           className="gap-2"
         >
           Continue to Validation

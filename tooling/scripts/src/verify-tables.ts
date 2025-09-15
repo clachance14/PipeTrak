@@ -1,15 +1,10 @@
 import { Client } from "pg";
-import * as path from "path";
+import * as path from "node:path";
 import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, "../../../.env") });
 
-interface TableInfo {
-	table_name: string;
-	column_count: number;
-	has_indexes: boolean;
-}
 
 async function verifyTables() {
 	console.log("🔍 Verifying PipeTrak tables...\n");
