@@ -352,7 +352,8 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 				const mappedRow: any = {};
 
 				// Map columns based on intelligent detection
-				Object.entries(mappings!).forEach(([columnIndex, fieldName]) => {
+				if (mappings) {
+					Object.entries(mappings).forEach(([columnIndex, fieldName]) => {
 					const header = headers[Number(columnIndex)];
 					const value = row[header];
 
@@ -372,7 +373,8 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 				mappedRow._columnMapping = {}; // Store which columns had data
 
 				// Record which original columns contained data (for debugging/validation)
-				Object.entries(mappings!).forEach(([columnIndex, fieldName]) => {
+				if (mappings) {
+					Object.entries(mappings).forEach(([columnIndex, fieldName]) => {
 					const header = headers[Number(columnIndex)];
 					if (
 						row[header] !== null &&
@@ -385,7 +387,8 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 							value: row[header],
 						};
 					}
-				});
+					});
+				}
 
 				return mappedRow;
 			});

@@ -285,8 +285,8 @@ export class FieldWeldValidator {
 				}
 
 				// Categorize row result
-				if (rowErrors.length === 0) {
-					report.validRows.push(validatedData!);
+				if (rowErrors.length === 0 && validatedData) {
+					report.validRows.push(validatedData);
 					if (rowWarnings.length > 0) {
 						report.warnings.push(...rowWarnings);
 					}

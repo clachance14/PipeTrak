@@ -191,11 +191,11 @@ export function MilestoneUpdateEngine({
 				// Clear success state after delay to transition to normal complete state
 				setTimeout(() => {
 					setOperationStatuses(prev => {
-						const { [update.milestoneId]: removed, ...rest } = prev;
+						const { [update.milestoneId]: _removed, ...rest } = prev;
 						return rest;
 					});
 					setRecentSuccesses(prev => {
-						const { [update.milestoneId]: removed, ...rest } = prev;
+						const { [update.milestoneId]: _removed, ...rest } = prev;
 						return rest;
 					});
 				}, 2000);
@@ -214,7 +214,7 @@ export function MilestoneUpdateEngine({
 				// Clear error state after delay
 				setTimeout(() => {
 					setOperationStatuses(prev => {
-						const { [update.milestoneId]: removed, ...rest } = prev;
+						const { [update.milestoneId]: _removed, ...rest } = prev;
 						return rest;
 					});
 				}, 5000);
@@ -228,7 +228,7 @@ export function MilestoneUpdateEngine({
 			onConflict: (update) => {
 				// Clear loading state on conflict
 				setOperationStatuses(prev => {
-					const { [update.milestoneId]: removed, ...rest } = prev;
+					const { [update.milestoneId]: _removed, ...rest } = prev;
 					return rest;
 				});
 

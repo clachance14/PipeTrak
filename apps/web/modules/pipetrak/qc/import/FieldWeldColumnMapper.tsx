@@ -13,7 +13,7 @@ import {
   Sparkles,
   ArrowRight,
   Eye,
-  Cpu,
+  Settings,
   MapPin
 } from "lucide-react";
 import { cn } from "@ui/lib";
@@ -215,7 +215,7 @@ export function FieldWeldColumnMapper({
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center space-y-2">
-          <Cpu className="h-8 w-8 animate-pulse text-primary mx-auto" />
+          <Settings className="h-8 w-8 animate-pulse text-primary mx-auto" />
           <p className="text-muted-foreground">Analyzing column headers...</p>
         </div>
       </div>
@@ -237,7 +237,7 @@ export function FieldWeldColumnMapper({
         </div>
         <div className="flex items-center gap-2">
           <Badge status="info" className="gap-1">
-            <Cpu className="h-3 w-3" />
+            <Settings className="h-3 w-3" />
             Smart Detection
           </Badge>
           <Button
@@ -435,7 +435,7 @@ export function FieldWeldColumnMapper({
                               <Check className="h-4 w-4 text-green-600" />
                               {isAutoDetected && (
                                 <Badge status="info" className="text-xs gap-1">
-                                  <Cpu className="h-2 w-2" />
+                                  <Settings className="h-2 w-2" />
                                   Auto
                                 </Badge>
                               )}

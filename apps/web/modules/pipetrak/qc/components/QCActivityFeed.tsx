@@ -91,6 +91,7 @@ export function QCActivityFeed({
 						{filterOptions.map((filter) => (
 							<button
 								key={filter.value}
+								type="button"
 								className={cn(
 									"text-xs px-3 py-1.5 rounded-full font-medium transition-colors",
 									filter.active
