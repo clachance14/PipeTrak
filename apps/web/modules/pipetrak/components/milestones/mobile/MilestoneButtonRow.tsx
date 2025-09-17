@@ -20,17 +20,146 @@ export interface MilestoneButtonRowProps {
 }
 
 /**
- * Determines if a milestone can be completed based on PipeTrak business rules
+ * Determines if a milestone can be uncompleted based on PipeTrak business rules
  */
-function canCompleteMilestone(
+function canUncompleteMilestone(
 	milestone: ComponentMilestone,
 	milestones: ComponentMilestone[],
 	_workflowType: WorkflowType,
 	componentType?: string,
 ): boolean {
-	// Already completed milestones can be uncompleted
+	if (!milestone.isCompleted) {
+		return false;
+	}
+
+	const sortedMilestones = [...milestones].sort(
+		(a, b) => a.milestoneOrder - b.milestoneOrder,
+	);
+
+	const milestoneName = milestone.milestoneName.toUpperCase();
+
+	// Check if any dependent milestones are completed
+	// If any milestone that depends on this one is completed, prevent uncomplete
+
+	// RECEIVE blocks all other milestone uncomplete
+	if (milestoneName.includes("RECEIVE") || milestoneName.includes("REC")) {
+		const dependentMilestones = sortedMilestones.filter(
+			(m) =>
+				m.id !== milestone.id &&
+				m.isCompleted &&
+				!m.milestoneName.toUpperCase().includes("RECEIVE") &&
+				!m.milestoneName.toUpperCase().includes("REC"),
+		);
+		return dependentMilestones.length === 0;
+	}
+
+	// Field weld special cases
+	const isFieldWeld =
+		componentType === "FIELD_WELD" ||
+		milestones.some((m) => m.milestoneName.includes("Fit Up"));
+
+	if (isFieldWeld) {
+		if (milestoneName.includes("FIT") || milestoneName.includes("FIT UP")) {
+			// FIT blocks WELD uncomplete
+			const weldMilestone = sortedMilestones.find(
+				(m) =>
+					m.isCompleted &&
+					m.milestoneName.toUpperCase().includes("WELD") &&
+					!m.milestoneName.toUpperCase().includes("FIT"),
+			);
+			return !weldMilestone;
+		}
+
+		if (milestoneName.includes("WELD") && !milestoneName.includes("FIT")) {
+			// WELD blocks VT uncomplete
+			const vtMilestone = sortedMilestones.find(
+				(m) =>
+					m.isCompleted &&
+					(m.milestoneName.toUpperCase().includes("VT") ||
+						m.milestoneName.toUpperCase().includes("VISUAL")),
+			);
+			return !vtMilestone;
+		}
+
+		if (milestoneName.includes("VT") || milestoneName.includes("VISUAL")) {
+			// VT blocks RT/UT uncomplete
+			const ndtMilestone = sortedMilestones.find(
+				(m) =>
+					m.isCompleted &&
+					(m.milestoneName.toUpperCase().includes("RT") ||
+						m.milestoneName.toUpperCase().includes("UT") ||
+						m.milestoneName.toUpperCase().includes("RADIO") ||
+						m.milestoneName.toUpperCase().includes("ULTRA")),
+			);
+			return !ndtMilestone;
+		}
+	}
+
+	// For ERECT, CONNECT, SUPPORT - check if PUNCH is completed
+	if (
+		milestoneName.includes("ERECT") ||
+		milestoneName.includes("CONNECT") ||
+		milestoneName.includes("SUPPORT")
+	) {
+		const punchMilestone = sortedMilestones.find(
+			(m) =>
+				m.isCompleted &&
+				m.milestoneName.toUpperCase().includes("PUNCH"),
+		);
+		return !punchMilestone;
+	}
+
+	// PUNCH blocks TEST uncomplete
+	if (milestoneName.includes("PUNCH")) {
+		const testMilestone = sortedMilestones.find(
+			(m) =>
+				m.isCompleted &&
+				m.milestoneName.toUpperCase().includes("TEST"),
+		);
+		return !testMilestone;
+	}
+
+	// TEST blocks RESTORE uncomplete
+	if (milestoneName.includes("TEST")) {
+		const restoreMilestone = sortedMilestones.find(
+			(m) =>
+				m.isCompleted &&
+				m.milestoneName.toUpperCase().includes("RESTORE"),
+		);
+		return !restoreMilestone;
+	}
+
+	// For NDT milestones, check if PUNCH is completed
+	if (
+		milestoneName.includes("RT") ||
+		milestoneName.includes("UT") ||
+		milestoneName.includes("RADIO") ||
+		milestoneName.includes("ULTRA")
+	) {
+		const punchMilestone = sortedMilestones.find(
+			(m) =>
+				m.isCompleted &&
+				m.milestoneName.toUpperCase().includes("PUNCH"),
+		);
+		return !punchMilestone;
+	}
+
+	// RESTORE is always uncompletable (final milestone)
+	return true;
+}
+
+/**
+ * Determines if a milestone can be completed based on PipeTrak business rules
+ */
+function canCompleteMilestone(
+	milestone: ComponentMilestone,
+	milestones: ComponentMilestone[],
+	workflowType: WorkflowType,
+	componentType?: string,
+): boolean {
+	// For completed milestones, check if they can be uncompleted
 	if (milestone.isCompleted) {
-		return true;
+		return canUncompleteMilestone(milestone, milestones, workflowType, componentType);
 	}
 
 	const sortedMilestones = [...milestones].sort(

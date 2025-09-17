@@ -93,7 +93,7 @@ function QCActivitySkeleton() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-lg">Recent Activity</CardTitle>
+				<CardTitle className="text-lg">Recent Welds</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{[1, 2, 3].map((i) => (

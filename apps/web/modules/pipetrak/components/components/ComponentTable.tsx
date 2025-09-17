@@ -67,8 +67,6 @@ import {
 	Check,
 	Settings,
 	Wrench,
-	AlertTriangle,
-	Clock,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@ui/lib";
@@ -156,14 +154,16 @@ function EditableCell({
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div
+					<button
+						type="button"
 						onDoubleClick={() => setIsEditing(true)}
-						className="w-full h-full flex items-center px-2 cursor-text hover:bg-gray-50 text-sm"
+						onClick={() => setIsEditing(true)}
+						className="w-full h-full flex items-center px-2 cursor-text hover:bg-gray-50 text-sm border-none bg-transparent"
 					>
 						<span className={shouldTruncate ? "truncate" : ""}>
 							{displayValue}
 						</span>
-					</div>
+					</button>
 				</TooltipTrigger>
 				{displayValue !== "-" && (
 					<TooltipContent>
@@ -685,126 +685,17 @@ export function ComponentTable({
 					const displayValue = (value as string) || "-";
 					const isFieldWeld = displayValue === "FIELD_WELD";
 
-					// Get QC status for field welds
-					const getFieldWeldBadges = () => {
-						if (
-							!isFieldWeld ||
-							!component.fieldWelds ||
-							component.fieldWelds.length === 0
-						) {
-							return null;
-						}
-
-						const fieldWeld = component.fieldWelds[0];
-						const badges = [];
-
-						// NDE status badge
-						if (fieldWeld.ndeResult) {
-							switch (fieldWeld.ndeResult.toLowerCase()) {
-								case "accept":
-									badges.push(
-										<Badge
-											key="nde"
-											status="info"
-											className="h-4 text-xs bg-green-100 text-green-800"
-										>
-											<Check className="h-2 w-2 mr-1" />
-											NDE OK
-										</Badge>,
-									);
-									break;
-								case "reject":
-									badges.push(
-										<Badge
-											key="nde"
-											status="error"
-											className="h-4 text-xs"
-										>
-											<AlertTriangle className="h-2 w-2 mr-1" />
-											NDE Reject
-										</Badge>,
-									);
-									break;
-								case "repair":
-									badges.push(
-										<Badge
-											key="nde"
-											status="info"
-											className="h-4 text-xs bg-orange-100 text-orange-800"
-										>
-											<AlertTriangle className="h-2 w-2 mr-1" />
-											Repair
-										</Badge>,
-									);
-									break;
-							}
-						} else {
-							badges.push(
-								<Badge
-									key="nde"
-									status="info"
-									className="h-4 text-xs"
-								>
-									<Clock className="h-2 w-2 mr-1" />
-									NDE Pending
-								</Badge>,
-							);
-						}
-
-						// PWHT status badge
-						if (fieldWeld.pwhtRequired) {
-							if (fieldWeld.datePwht) {
-								badges.push(
-									<Badge
-										key="pwht"
-										status="info"
-										className="h-4 text-xs bg-blue-100 text-blue-800"
-									>
-										<Wrench className="h-2 w-2 mr-1" />
-										PWHT OK
-									</Badge>,
-								);
-							} else {
-								badges.push(
-									<Badge
-										key="pwht"
-										status="info"
-										className="h-4 text-xs bg-yellow-100 text-yellow-800"
-									>
-										<Wrench className="h-2 w-2 mr-1" />
-										PWHT Req
-									</Badge>,
-								);
-							}
-						}
-
-						return badges;
-					};
-
-					const fieldWeldBadges = getFieldWeldBadges();
-
 					const typeDisplay = (
-						<div
+						<button
+							type="button"
 							onDoubleClick={() => setIsEditing(true)}
-							className="w-full min-h-[52px] flex flex-col gap-1 px-2 py-1 cursor-text hover:bg-gray-50"
+							onClick={() => setIsEditing(true)}
+							className="w-full min-h-[52px] flex flex-col gap-1 px-2 py-1 cursor-text hover:bg-gray-50 border-none bg-transparent text-left"
 						>
-							<div className="flex items-center gap-2">
-								{isFieldWeld && (
-									<div title="Field Weld">
-										<Wrench className="h-4 w-4 text-orange-500 flex-shrink-0" />
-									</div>
-								)}
-								<span className="text-sm font-medium">
-									{isFieldWeld ? "Field Weld" : displayValue}
-								</span>
-							</div>
-
-							{fieldWeldBadges && fieldWeldBadges.length > 0 && (
-								<div className="flex flex-wrap gap-1">
-									{fieldWeldBadges}
-								</div>
-							)}
-						</div>
+							<span className="text-sm font-medium">
+								{isFieldWeld ? "Field Weld" : displayValue}
+							</span>
+						</button>
 					);
 
 					// Wrap field welds in quick view, others in tooltip
@@ -1086,7 +977,7 @@ export function ComponentTable({
 				// Test connection first
 				await testApiConnection();
 
-				let response;
+				let response: any;
 				try {
 					response = await apiClient.pipetrak.components.$get({
 						query: {
@@ -1285,7 +1176,7 @@ export function ComponentTable({
 
 
 			// Call the bulk update API endpoint with better error handling
-			let response;
+			let response: any;
 			try {
 				response = await apiClient.pipetrak.components[
 					"bulk-update"
@@ -2209,8 +2100,6 @@ export function ComponentTable({
 
 								// The updates object should already have the correct structure from BulkMilestoneModal
 								// It should contain: mode, projectId, and either milestoneName+componentIds or groups
-								let result;
-
 								if (!updates.mode) {
 									throw new Error("Update mode is required");
 								}
@@ -2220,7 +2109,7 @@ export function ComponentTable({
 								}
 
 								// Execute the bulk update with the properly structured request
-								result =
+								const result: any =
 									await service.performBulkUpdate(updates);
 
 								// Validate results before proceeding

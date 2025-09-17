@@ -1,10 +1,11 @@
-import { apiClient } from "@shared/lib/api-client";
+import { getServerApiClient } from "@shared/lib/server";
 
 export interface QCMetrics {
 	totalWelds: number;
 	acceptedWelds: number;
 	rejectedWelds: number;
 	pendingWelds: number;
+	completedWelds: number;
 	acceptanceRate: number;
 	pwhtRequired: number;
 	pwhtComplete: number;
@@ -43,6 +44,7 @@ export interface QCSummaryResponse {
  */
 export async function getQCMetrics(projectId: string): Promise<QCMetrics> {
 	try {
+		const apiClient = await getServerApiClient();
 		const response = await apiClient.pipetrak["qc-metrics"][":projectId"].$get({
 			param: { projectId },
 		});
@@ -66,6 +68,7 @@ export async function getQCMetrics(projectId: string): Promise<QCMetrics> {
  */
 export async function getQCSummary(projectId: string): Promise<QCSummary> {
 	try {
+		const apiClient = await getServerApiClient();
 		const response = await apiClient.pipetrak["qc-metrics"][":projectId"]["summary"].$get({
 			param: { projectId },
 		});
@@ -92,6 +95,7 @@ function getDefaultMetrics(): QCMetrics {
 		acceptedWelds: 0,
 		rejectedWelds: 0,
 		pendingWelds: 0,
+		completedWelds: 0,
 		acceptanceRate: 0,
 		pwhtRequired: 0,
 		pwhtComplete: 0,
@@ -133,6 +137,10 @@ export function formatQCMetrics(metrics: QCMetrics) {
 					type: "increase" as const,
 				}
 				: undefined,
+		},
+		completedWelds: {
+			value: metrics.completedWelds.toLocaleString(),
+			label: "Welds made",
 		},
 		acceptanceRate: {
 			value: `${metrics.acceptanceRate}%`,

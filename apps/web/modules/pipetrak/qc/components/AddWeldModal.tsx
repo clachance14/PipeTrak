@@ -41,6 +41,8 @@ interface WeldFormData {
   comments?: string;
 }
 
+const NO_WELDERS_VALUE = "__NO_WELDERS__";
+
 export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWeldModalProps) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
@@ -249,7 +251,7 @@ export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWe
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+				<PopoverContent className="min-w-[18rem] p-0">
                   <Calendar
                     mode="single"
                     selected={formData.dateWelded}
@@ -264,8 +266,14 @@ export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWe
             <div className="space-y-2">
               <Label htmlFor="welder">Welder *</Label>
               <Select
+                disabled={welders.length === 0}
                 value={formData.welderId}
-                onValueChange={(value) => updateFormData("welderId", value)}
+                onValueChange={(value) => {
+                  if (value === NO_WELDERS_VALUE) {
+                    return;
+                  }
+                  updateFormData("welderId", value);
+                }}
                 required
               >
                 <SelectTrigger>
@@ -283,7 +291,7 @@ export function AddWeldModal({ open, onOpenChange, projectId, onSuccess }: AddWe
                     </SelectItem>
                   ))}
                   {!weldersLoading && welders.length === 0 && (
-                    <SelectItem value="" disabled>
+                    <SelectItem value={NO_WELDERS_VALUE} disabled>
                       No active welders found
                     </SelectItem>
                   )}

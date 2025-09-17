@@ -795,6 +795,9 @@ importers:
       '@repo/logs':
         specifier: workspace:*
         version: link:../logs
+      '@supabase/supabase-js':
+        specifier: ^2.46.1
+        version: 2.57.2
     devDependencies:
       '@biomejs/biome':
         specifier: 2.1.0

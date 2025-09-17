@@ -220,8 +220,16 @@ export function OrganizationMembersList({
 		},
 	];
 
+	const visibleMembers = (organization?.members ?? []).filter((member) => {
+		// Hide organization owners from other members
+		if (member.role === "owner" && member.userId !== user?.id) {
+			return false;
+		}
+		return true;
+	});
+
 	const table = useReactTable({
-		data: organization?.members ?? [],
+		data: visibleMembers,
 		columns,
 		manualPagination: true,
 		onSortingChange: setSorting,

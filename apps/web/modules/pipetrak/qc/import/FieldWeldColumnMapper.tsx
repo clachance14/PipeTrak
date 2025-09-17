@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
@@ -94,6 +94,26 @@ const FIELD_OPTIONS = [
   { value: 'comments', label: 'Comments' },
 ] as const;
 
+const convertMappingsToDetectionFormat = (mappings: Record<string, string>): ColumnMappings => {
+  const result: ColumnMappings = {};
+  Object.entries(mappings).forEach(([indexStr, field]) => {
+    if (field) {
+      result[Number(indexStr)] = field;
+    }
+  });
+  return result;
+};
+
+const convertDetectionToMappingsFormat = (
+  detectionMappings: ColumnMappings,
+): Record<string, string> => {
+  const result: Record<string, string> = {};
+  Object.entries(detectionMappings).forEach(([indexStr, field]) => {
+    result[indexStr] = field;
+  });
+  return result;
+};
+
 export function FieldWeldColumnMapper({
   parsedData,
   mappings,
@@ -105,26 +125,11 @@ export function FieldWeldColumnMapper({
   const [detectionResult, setDetectionResult] = useState<ColumnDetectionResult | null>(null);
   const [showPreview, setShowPreview] = useState(true);
   const [manualOverrides, setManualOverrides] = useState<Set<number>>(new Set());
+  const hasInitialMappingsRef = useRef(Object.values(mappings).some(Boolean));
 
-  // Convert our mappings format (index -> field) to the expected format (field -> index)
-  const convertMappingsToDetectionFormat = (mappings: Record<string, string>): ColumnMappings => {
-    const result: ColumnMappings = {};
-    Object.entries(mappings).forEach(([indexStr, field]) => {
-      if (field) {
-        result[Number(indexStr)] = field;
-      }
-    });
-    return result;
-  };
-
-  // Convert detection format back to our format
-  const convertDetectionToMappingsFormat = (detectionMappings: ColumnMappings): Record<string, string> => {
-    const result: Record<string, string> = {};
-    Object.entries(detectionMappings).forEach(([indexStr, field]) => {
-      result[indexStr] = field;
-    });
-    return result;
-  };
+  useEffect(() => {
+    hasInitialMappingsRef.current = Object.values(mappings).some(Boolean);
+  }, [mappings]);
 
   // Auto-detect columns on first load
   useEffect(() => {
@@ -133,13 +138,12 @@ export function FieldWeldColumnMapper({
       setDetectionResult(result);
 
       // Only auto-apply if we don't have existing mappings
-      const existingMappingsCount = Object.values(mappings).filter(Boolean).length;
-      if (existingMappingsCount === 0) {
+      if (!hasInitialMappingsRef.current) {
         const newMappings = convertDetectionToMappingsFormat(result.mappings);
         onMappingChange(newMappings);
       }
     }
-  }, [parsedData.headers]);
+  }, [onMappingChange, parsedData.headers]);
 
   // Update detection result when mappings change manually
   useEffect(() => {
@@ -151,7 +155,7 @@ export function FieldWeldColumnMapper({
       };
       setDetectionResult(updatedResult);
     }
-  }, [mappings]);
+  }, [detectionResult, mappings]);
 
   // Validation status
   const validationStatus = useMemo(() => {
@@ -192,10 +196,16 @@ export function FieldWeldColumnMapper({
   };
 
   const getColumnLetter = (index: number): string => {
-    if (index < 26) {
-      return String.fromCharCode(65 + index); // A-Z
+    let columnIndex = index;
+    let result = "";
+
+    while (columnIndex >= 0) {
+      const remainder = columnIndex % 26;
+      result = String.fromCharCode(65 + remainder) + result;
+      columnIndex = Math.floor(columnIndex / 26) - 1;
     }
-    return `Col${index + 1}`; // Beyond Z
+
+    return result;
   };
 
   const getFieldPriority = (field: string): 'essential' | 'priority' | 'optional' => {
@@ -387,7 +397,7 @@ export function FieldWeldColumnMapper({
                             </SelectTrigger>
                             <SelectContent>
                               {FIELD_OPTIONS.map(option => {
-                                const isAlreadyMapped = option.value && isFieldMapped(option.value) && currentMapping !== option.value;
+                                const isAlreadyMapped = Boolean(option.value && isFieldMapped(option.value) && currentMapping !== option.value);
                                 return (
                                   <SelectItem
                                     key={option.value}
@@ -395,10 +405,10 @@ export function FieldWeldColumnMapper({
                                     disabled={isAlreadyMapped}
                                   >
                                     <div className="flex items-center gap-2">
-                                      {option.essential && (
+                                      {"essential" in option && option.essential && (
                                         <span className="text-red-500 font-bold">*</span>
                                       )}
-                                      {option.priority && !option.essential && (
+                                      {"priority" in option && option.priority && !("essential" in option && option.essential) && (
                                         <span className="text-blue-500">•</span>
                                       )}
                                       <span className={cn(isAlreadyMapped && "text-muted-foreground")}>

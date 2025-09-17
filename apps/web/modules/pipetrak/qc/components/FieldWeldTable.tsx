@@ -51,6 +51,7 @@ import {
 } from "./ColumnToggle";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
 import { MobileQCView } from "./MobileQCView";
+import type { FieldWeldRecord } from "../types";
 
 // Cell components to avoid hooks-in-cell issues
 interface NDETypeCellProps {
@@ -277,54 +278,7 @@ function NDEResultCell({
 }
 
 // Types based on our API response
-interface FieldWeldData {
-	id: string;
-	weldIdNumber: string;
-	dateWelded?: string;
-	weldSize: string;
-	schedule: string;
-	ndeType?: "Visual" | "RT" | "UT" | "MT" | "PT" | "None";
-	ndeResult?: "Accept" | "Reject";
-	ndeDate?: string;
-	ndeInspector?: string;
-	pwhtRequired: boolean;
-	datePwht?: string;
-	comments?: string;
-	packageNumber: string;
-	welder?: {
-		id: string;
-		stencil: string;
-		name: string;
-	};
-	drawing: {
-		id: string;
-		number: string;
-		title: string;
-	};
-	weldType: {
-		code: string;
-		description: string;
-	};
-	component?: {
-		id: string;
-		componentId: string;
-		displayId: string;
-		area: string;
-		system: string;
-		testPackage: string;
-		status: string;
-		completionPercent: number;
-		milestones: Array<{
-			id: string;
-			milestoneName: string;
-			isCompleted: boolean;
-			completedAt?: string;
-			completedBy?: string;
-			milestoneOrder: number;
-			weight: number;
-		}>;
-	};
-}
+type FieldWeldData = FieldWeldRecord;
 
 interface FieldWeldTableProps {
 	projectId: string;
@@ -567,30 +521,32 @@ export function FieldWeldTable({
 				},
 			},
 			{
-				accessorKey: "component.area",
+				id: "area",
 				header: "Area",
+				accessorFn: (row) => row.drawingArea ?? row.component?.area ?? "",
 				cell: ({ row }) => {
-					const area = row.original.component?.area;
-					if (!area || area.trim() === "") {
+					const area =
+						row.original.drawingArea?.trim?.() ||
+						row.original.component?.area?.trim?.();
+					if (!area) {
 						return (
-							<div className="text-sm text-muted-foreground">
-								-
-							</div>
+							<div className="text-sm text-muted-foreground">-</div>
 						);
 					}
 					return <Badge status="info">{area}</Badge>;
 				},
 			},
 			{
-				accessorKey: "component.system",
+				id: "system",
 				header: "System",
+				accessorFn: (row) => row.drawingSystem ?? row.component?.system ?? "",
 				cell: ({ row }) => {
-					const system = row.original.component?.system;
-					if (!system || system.trim() === "") {
+					const system =
+						row.original.drawingSystem?.trim?.() ||
+						row.original.component?.system?.trim?.();
+					if (!system) {
 						return (
-							<div className="text-sm text-muted-foreground">
-								-
-							</div>
+							<div className="text-sm text-muted-foreground">-</div>
 						);
 					}
 					return <Badge status="info">{system}</Badge>;
@@ -680,6 +636,70 @@ export function FieldWeldTable({
 							</div>
 						</div>
 					);
+				},
+			},
+			{
+				id: "xrayPercent",
+				header: "X-Ray %",
+				accessorFn: (row) => row.xrayPercent ?? null,
+				cell: ({ row }) => {
+					const value = row.original.xrayPercent;
+					if (value === null || value === undefined) {
+						return (
+							<div className="text-sm text-muted-foreground">-</div>
+						);
+					}
+					return <Badge status="info">{`${value}%`}</Badge>;
+				},
+			},
+			{
+				id: "weldType",
+				header: "Weld Type",
+				cell: ({ row }) => {
+					const weldType = row.original.weldType;
+					if (!weldType) {
+						return (
+							<div className="text-sm text-muted-foreground">-</div>
+						);
+					}
+					return (
+						<div className="text-sm">
+							<div className="font-medium">{weldType.code}</div>
+							{weldType.description && (
+								<div className="text-muted-foreground">
+									{weldType.description}
+								</div>
+							)}
+						</div>
+					);
+				},
+			},
+			{
+				id: "specCode",
+				header: "Spec",
+				accessorFn: (row) => row.specCode ?? "",
+				cell: ({ row }) => {
+					const spec = row.original.specCode?.trim?.();
+					if (!spec) {
+						return (
+							<div className="text-sm text-muted-foreground">-</div>
+						);
+					}
+					return <Badge status="info">{spec}</Badge>;
+				},
+			},
+			{
+				id: "baseMetal",
+				header: "Base Metal",
+				accessorFn: (row) => row.baseMetal ?? "",
+				cell: ({ row }) => {
+					const baseMetal = row.original.baseMetal?.trim?.();
+					if (!baseMetal) {
+						return (
+							<div className="text-sm text-muted-foreground">-</div>
+						);
+					}
+					return <div className="text-sm">{baseMetal}</div>;
 				},
 			},
 			{
@@ -850,11 +870,23 @@ export function FieldWeldTable({
 				const result = await response.json();
 
 				// Transform ndeTypes array to ndeType string for frontend compatibility
-				const transformedFieldWelds = (result.fieldWelds || []).map(
+				const transformedFieldWelds: FieldWeldData[] = (result.fieldWelds || []).map(
 					(weld: any) => {
-						const transformed = {
+						const parentDrawing = weld.drawing?.parent;
+						const grandParentDrawing = parentDrawing?.parent;
+						const areaFromParent = parentDrawing?.title?.trim?.() || parentDrawing?.number?.trim?.() || null;
+						const systemFromHierarchy =
+							grandParentDrawing?.title?.trim?.() ||
+							grandParentDrawing?.number?.trim?.() ||
+							parentDrawing?.title?.trim?.() ||
+							parentDrawing?.number?.trim?.() ||
+							null;
+
+						const transformed: FieldWeldData = {
 							...weld,
 							ndeType: weld.ndeTypes?.[0] || null, // Convert array to single string
+							drawingArea: areaFromParent ?? weld.component?.area ?? null,
+							drawingSystem: systemFromHierarchy ?? weld.component?.system ?? null,
 						};
 
 						return transformed;

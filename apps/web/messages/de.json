@@ -53,7 +53,9 @@
 			},
 			"impersonate": "Imitieren",
 			"impersonation": {
-				"impersonating": "Ich gebe mich als {name} aus..."
+				"impersonating": "Ich gebe mich als {name} aus...",
+				"success": "Du agierst jetzt als {name}.",
+				"error": "{name} konnte nicht imitiert werden. Bitte versuche es erneut."
 			},
 			"loading": "Benutzer werden geladen...",
 			"resendVerificationMail": {

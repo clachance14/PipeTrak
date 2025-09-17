@@ -58,6 +58,8 @@ interface WeldFormData {
 	comments?: string;
 }
 
+const NO_WELDERS_VALUE = "__NO_WELDERS__";
+
 export function WeldMilestoneModal({
 	open,
 	onOpenChange,
@@ -198,8 +200,8 @@ export function WeldMilestoneModal({
 									)}
 								</Button>
 							</PopoverTrigger>
-							<PopoverContent
-								className="w-auto p-0"
+						<PopoverContent
+							className="min-w-[18rem] p-0"
 								align="start"
 							>
 								<Calendar
@@ -217,13 +219,17 @@ export function WeldMilestoneModal({
 					{/* Welder Selection */}
 					<div className="space-y-2">
 						<Label htmlFor="welder">Welder *</Label>
-						<Select
-							value={formData.welderId}
-							onValueChange={(value) =>
-								updateFormData("welderId", value)
+					<Select
+						disabled={welders.length === 0}
+						value={formData.welderId}
+						onValueChange={(value) => {
+							if (value === NO_WELDERS_VALUE) {
+								return;
 							}
-							required
-						>
+							updateFormData("welderId", value);
+						}}
+						required
+					>
 							<SelectTrigger>
 								<SelectValue
 									placeholder={
@@ -247,11 +253,11 @@ export function WeldMilestoneModal({
 										</div>
 									</SelectItem>
 								))}
-								{!weldersLoading && welders.length === 0 && (
-									<SelectItem value="" disabled>
-										No active welders found
-									</SelectItem>
-								)}
+							{!weldersLoading && welders.length === 0 && (
+								<SelectItem value={NO_WELDERS_VALUE} disabled>
+									No active welders found
+								</SelectItem>
+							)}
 							</SelectContent>
 						</Select>
 						{welders.length === 0 && !weldersLoading && (

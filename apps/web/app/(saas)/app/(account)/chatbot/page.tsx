@@ -1,9 +1,17 @@
 import { AiChat } from "@saas/ai/components/AiChat";
 import { aiChatListQueryKey, aiChatQueryKey } from "@saas/ai/lib/api";
+import { getSession } from "@saas/auth/lib/server";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { getServerApiClient, getServerQueryClient } from "@shared/lib/server";
+import { redirect } from "next/navigation";
 
 export default async function AiDemoPage() {
+	const session = await getSession();
+
+	if (session?.user.email?.toLowerCase() !== "clachance14@hotmail.com") {
+		redirect("/app");
+	}
+
 	const queryClient = getServerQueryClient();
 	const apiClient = await getServerApiClient();
 

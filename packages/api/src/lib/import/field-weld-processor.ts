@@ -1,18 +1,18 @@
 import { z } from "zod";
-import type { ValidationError, ValidationResult } from "../file-processing.js";
+import type { ValidationError, ValidationResult } from "../file-processing";
 import {
 	BaseImportProcessor,
 	FileValidator,
 	type FormatValidationResult,
 	type ParsedFileData,
 	type ProcessedImportData,
-} from "./base-processor.js";
+} from "./base-processor";
 import {
 	autoDetectColumns,
 	validateDetectionResult,
 	type ColumnDetectionResult,
 	type ColumnMappings,
-} from "./field-weld-column-detector.js";
+} from "./field-weld-column-detector";
 
 /**
  * Enhanced Field weld import data schema - flexible for any column layout
@@ -354,18 +354,19 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 				// Map columns based on intelligent detection
 				if (mappings) {
 					Object.entries(mappings).forEach(([columnIndex, fieldName]) => {
-					const header = headers[Number(columnIndex)];
-					const value = row[header];
+						const header = headers[Number(columnIndex)];
+						const value = row[header];
 
-					// Only include non-empty values to handle sparse data efficiently
-					if (value !== null && value !== undefined && value !== "") {
-						// Clean and normalize the value
-						const cleanedValue = this.cleanValue(value, fieldName);
-						if (cleanedValue !== null && cleanedValue !== undefined) {
-							mappedRow[fieldName] = cleanedValue;
+						// Only include non-empty values to handle sparse data efficiently
+						if (value !== null && value !== undefined && value !== "") {
+							// Clean and normalize the value
+							const cleanedValue = this.cleanValue(value, fieldName);
+							if (cleanedValue !== null && cleanedValue !== undefined) {
+								mappedRow[fieldName] = cleanedValue;
+							}
 						}
-					}
-				});
+					});
+				}
 
 				// Add essential metadata for validation and processing
 				mappedRow._rowIndex = index + 2; // Excel row number (1-indexed + header)
@@ -375,18 +376,18 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 				// Record which original columns contained data (for debugging/validation)
 				if (mappings) {
 					Object.entries(mappings).forEach(([columnIndex, fieldName]) => {
-					const header = headers[Number(columnIndex)];
-					if (
-						row[header] !== null &&
-						row[header] !== undefined &&
-						row[header] !== ""
-					) {
-						mappedRow._columnMapping[this.getColumnLetter(Number(columnIndex))] = {
-							header,
-							field: fieldName,
-							value: row[header],
-						};
-					}
+						const header = headers[Number(columnIndex)];
+						if (
+							row[header] !== null &&
+							row[header] !== undefined &&
+							row[header] !== ""
+						) {
+							mappedRow._columnMapping[this.getColumnLetter(Number(columnIndex))] = {
+								header,
+								field: fieldName,
+								value: row[header],
+							};
+						}
 					});
 				}
 
@@ -559,13 +560,16 @@ export class FieldWeldProcessor extends BaseImportProcessor<FieldWeldImportData>
 	 * Convert column index to Excel column reference
 	 */
 	private getColumnLetter(index: number): string {
-		if (index < 26) {
-			return String.fromCharCode(65 + index); // A-Z
+		let columnIndex = index;
+		let result = "";
+
+		while (columnIndex >= 0) {
+			const remainder = columnIndex % 26;
+			result = String.fromCharCode(65 + remainder) + result;
+			columnIndex = Math.floor(columnIndex / 26) - 1;
 		}
-		// Handle beyond Z (AA, AB, etc.)
-		const firstLetter = Math.floor(index / 26) - 1;
-		const secondLetter = index % 26;
-		return String.fromCharCode(65 + firstLetter) + String.fromCharCode(65 + secondLetter);
+
+		return result;
 	}
 
 	/**

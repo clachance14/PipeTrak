@@ -1,5 +1,4 @@
-import type { Prisma } from "@prisma/client";
-import { db } from "../client";
+import { db, type Prisma } from "../client";
 
 export async function getOrganizations({
 	limit,

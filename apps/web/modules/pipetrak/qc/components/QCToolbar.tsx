@@ -93,7 +93,7 @@ export function QCToolbar({
 								{getDateRangeText()}
 							</Button>
 						</PopoverTrigger>
-						<PopoverContent className="w-auto p-0" align="start">
+						<PopoverContent className="min-w-[18rem] p-0" align="start">
 							<div className="p-3 border-b">
 								<div className="flex gap-2">
 									<Button

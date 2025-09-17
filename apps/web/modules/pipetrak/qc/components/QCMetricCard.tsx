@@ -5,7 +5,7 @@ interface QCMetricCardProps {
 	title: string;
 	value: string | number;
 	label: string;
-	color: "blue" | "green" | "orange" | "purple";
+	color: "blue" | "green" | "orange" | "purple" | "teal";
 	trend?: {
 		value: string;
 		type: "increase" | "decrease" | "neutral";
@@ -33,6 +33,11 @@ const colorMap = {
 		dot: "bg-purple-500",
 		trendBg: "bg-purple-50",
 		trendText: "text-purple-600",
+	},
+	teal: {
+		dot: "bg-teal-500",
+		trendBg: "bg-teal-50",
+		trendText: "text-teal-600",
 	},
 };
 

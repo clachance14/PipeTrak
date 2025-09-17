@@ -1,6 +1,6 @@
 import { AiChat } from "@saas/ai/components/AiChat";
 import { aiChatListQueryKey, aiChatQueryKey } from "@saas/ai/lib/api";
-import { getActiveOrganization } from "@saas/auth/lib/server";
+import { getActiveOrganization, getSession } from "@saas/auth/lib/server";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { getServerApiClient, getServerQueryClient } from "@shared/lib/server";
 import { redirect } from "next/navigation";
@@ -11,6 +11,11 @@ export default async function AiDemoPage({
 	params: Promise<{ organizationSlug: string }>;
 }) {
 	const { organizationSlug } = await params;
+	const session = await getSession();
+
+	if (session?.user.email?.toLowerCase() !== "clachance14@hotmail.com") {
+		redirect(`/app/${organizationSlug}`);
+	}
 	const organization = await getActiveOrganization(organizationSlug);
 	const queryClient = getServerQueryClient();
 	const apiClient = await getServerApiClient();

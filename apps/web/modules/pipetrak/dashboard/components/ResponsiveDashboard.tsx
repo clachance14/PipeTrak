@@ -96,7 +96,7 @@ export function ResponsiveDashboard({
 			const result = await fetchDashboardComponentsClient(
 				project.id,
 				{},
-				500,
+				10000,
 				0,
 			);
 			setComponents(result.components);

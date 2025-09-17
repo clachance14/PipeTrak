@@ -22,7 +22,10 @@ export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
-	const { activeOrganization } = useActiveOrganization();
+	const { activeOrganization, isOrganizationAdmin } = useActiveOrganization();
+
+	const canAccessAiChatbot =
+		user?.email?.toLowerCase() === "clachance14@hotmail.com";
 
 	const { useSidebarLayout } = config.ui.saas;
 
@@ -37,15 +40,21 @@ export function NavBar() {
 			icon: Home,
 			isActive: pathname === basePath,
 		},
-		{
-			label: t("app.menu.aiChatbot"),
-			href: activeOrganization
-				? `/app/${activeOrganization.slug}/chatbot`
-				: "/app/chatbot",
-			icon: BotMessageSquareIcon,
-			isActive: pathname.includes("/chatbot"),
-		},
-		...(activeOrganization && !config.organizations.hideOrganization
+		...(canAccessAiChatbot
+			? [
+					{
+						label: t("app.menu.aiChatbot"),
+						href: activeOrganization
+							? `/app/${activeOrganization.slug}/chatbot`
+							: "/app/chatbot",
+						icon: BotMessageSquareIcon,
+						isActive: pathname.includes("/chatbot"),
+					},
+				]
+			: []),
+		...(activeOrganization &&
+			!config.organizations.hideOrganization &&
+			isOrganizationAdmin
 			? [
 					{
 						label: t("app.menu.organizationSettings"),

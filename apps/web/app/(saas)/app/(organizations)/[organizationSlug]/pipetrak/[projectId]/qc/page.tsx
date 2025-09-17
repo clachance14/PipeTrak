@@ -68,13 +68,19 @@ export default async function QCPage({ params }: QCPageProps) {
 			</div>
 
 			{/* QC Metrics Overview */}
-			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
 				<QCMetricCard
 					title="Total Field Welds"
 					value={formattedMetrics.totalWelds.value}
 					label={formattedMetrics.totalWelds.label}
 					color="blue"
 					trend={formattedMetrics.totalWelds.trend}
+				/>
+				<QCMetricCard
+					title="Completed Welds"
+					value={formattedMetrics.completedWelds.value}
+					label={formattedMetrics.completedWelds.label}
+					color="teal"
 				/>
 				<QCMetricCard
 					title="Acceptance Rate"
@@ -131,7 +137,7 @@ function QCActivitySkeleton() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-lg">Recent Activity</CardTitle>
+				<CardTitle className="text-lg">Recent Welds</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{[1, 2, 3].map((i) => (

@@ -36,6 +36,7 @@ export const qcMetricsRouter = new Hono()
 				weldsLastWeek,
 				weldsLastTwoWeeks,
 				acceptanceRateLastWeek,
+				acceptanceRateLastTwoWeeks,
 			] = await Promise.all([
 				// Total field welds
 				db.fieldWeld.count({
@@ -119,6 +120,19 @@ export const qcMetricsRouter = new Hono()
 					},
 					select: { ndeResult: true },
 				}),
+
+				// Acceptance rate for welds completed 1-2 weeks ago (for comparison)
+				db.fieldWeld.findMany({
+					where: {
+						projectId,
+						ndeDate: {
+							gte: twoWeeksAgo,
+							lt: oneWeekAgo,
+						},
+						ndeResult: { in: ["Accept", "Reject"] },
+					},
+					select: { ndeResult: true },
+				}),
 			]);
 
 			// Calculate metrics
@@ -148,6 +162,20 @@ export const qcMetricsRouter = new Hono()
 						)
 					: 0;
 
+			// Calculate acceptance rate for 1-2 weeks ago
+			const twoWeeksAgoAccepted = acceptanceRateLastTwoWeeks.filter(
+				(w) => w.ndeResult === "Accept",
+			).length;
+			const twoWeeksAgoRejected = acceptanceRateLastTwoWeeks.filter(
+				(w) => w.ndeResult === "Reject",
+			).length;
+			const twoWeeksAgoAcceptanceRate =
+				twoWeeksAgoAccepted + twoWeeksAgoRejected > 0
+					? Math.round(
+							(twoWeeksAgoAccepted / (twoWeeksAgoAccepted + twoWeeksAgoRejected)) * 100,
+						)
+					: 0;
+
 			// Calculate trends
 			const weldsWeekOverWeekChange =
 				weldsLastTwoWeeks > 0
@@ -156,7 +184,13 @@ export const qcMetricsRouter = new Hono()
 						? 100
 						: 0;
 
-			const acceptanceRateChange = lastWeekAcceptanceRate - acceptanceRate;
+			// Fix reversed acceptance rate change calculation - now properly compares week-over-week
+			const acceptanceRateChange =
+				twoWeeksAgoAcceptanceRate > 0
+					? Math.round(((lastWeekAcceptanceRate - twoWeeksAgoAcceptanceRate) / twoWeeksAgoAcceptanceRate) * 100)
+					: lastWeekAcceptanceRate > 0
+						? 100
+						: 0;
 
 			return c.json({
 				metrics: {

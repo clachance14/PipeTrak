@@ -1,85 +1,136 @@
--- Hard delete script for Project with Job Number 5932
--- Updated to handle FieldWeld and Welder tables
--- First, find the project ID(s) with this job number
-
--- Step 1: Find the project ID for job number 5932
-SELECT id, "jobName", "jobNumber", "organizationId"
-FROM public."Project"
-WHERE "jobNumber" = '5932';
-
--- Once you have the project ID from above, use this complete deletion script
--- Replace 'PROJECT_ID_HERE' with the actual ID from the query above
+-- Hard delete script for removing all data associated with project job number 5932
+-- Run this script against the production database ONLY after taking the appropriate backups.
+-- It removes the project row and every dependent record (components, welders, reports, etc.).
 
 BEGIN;
 
--- Store the project ID in a variable (PostgreSQL)
 DO $$
 DECLARE
-    project_id_to_delete TEXT;
+    target_job_number CONSTANT TEXT := '5932';
+    project_record RECORD;
+    deleted_count BIGINT;
 BEGIN
-    -- Get the project ID for job number 5932
-    SELECT id INTO project_id_to_delete
-    FROM public."Project"
-    WHERE "jobNumber" = '5932'
-    LIMIT 1;
+    IF NOT EXISTS (
+        SELECT 1 FROM public."Project" WHERE "jobNumber" = target_job_number
+    ) THEN
+        RAISE NOTICE 'No projects found with job number %.', target_job_number;
+        RETURN;
+    END IF;
 
-    IF project_id_to_delete IS NULL THEN
-        RAISE NOTICE 'No project found with job number 5932';
-    ELSE
-        RAISE NOTICE 'Deleting project ID: %', project_id_to_delete;
+    FOR project_record IN
+        SELECT id,
+               "jobName",
+               "jobNumber",
+               "organizationId"
+        FROM public."Project"
+        WHERE "jobNumber" = target_job_number
+    LOOP
+        RAISE NOTICE 'Deleting project % (job % / org % / name %).',
+            project_record.id,
+            project_record."jobNumber",
+            project_record."organizationId",
+            project_record."jobName";
 
-        -- Delete Audit Logs
-        DELETE FROM public."AuditLog" WHERE "projectId" = project_id_to_delete;
+        -- Remove audit logs first so they do not reference deleted components/milestones
+        DELETE FROM public."AuditLog"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % audit log rows.', deleted_count;
 
-        -- Delete Component Milestones
+        -- Delete milestone progress entries tied to this project's components
         DELETE FROM public."ComponentMilestone"
         WHERE "componentId" IN (
-            SELECT id FROM public."Component" WHERE "projectId" = project_id_to_delete
+            SELECT id FROM public."Component" WHERE "projectId" = project_record.id
         );
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % component milestone rows.', deleted_count;
 
-        -- Delete Field Welds (MUST come before Components due to FK constraint)
-        DELETE FROM public."field_weld" WHERE "projectId" = project_id_to_delete;
+        -- Delete field weld QC data BEFORE components because of weldIdNumber FK linkage
+        DELETE FROM public."field_weld"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % field weld rows (by project).', deleted_count;
 
-        -- Delete Components
-        DELETE FROM public."Component" WHERE "projectId" = project_id_to_delete;
+        -- Safety: delete any field welds still tied to components via weldIdNumber
+        DELETE FROM public."field_weld"
+        WHERE "weldIdNumber" IN (
+            SELECT "weldId"
+            FROM public."Component"
+            WHERE "projectId" = project_record.id
+              AND "weldId" IS NOT NULL
+        );
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % field weld rows (by weldIdNumber).', deleted_count;
 
-        -- Delete Welders (can be done after Field Welds are deleted)
-        DELETE FROM public."welder" WHERE "projectId" = project_id_to_delete;
+        -- Delete components after field welds and milestones are gone
+        DELETE FROM public."Component"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % component rows.', deleted_count;
 
-        -- Delete Drawings (handle hierarchy)
-        UPDATE public."Drawing" SET "parentId" = NULL WHERE "projectId" = project_id_to_delete;
-        DELETE FROM public."Drawing" WHERE "projectId" = project_id_to_delete;
+        -- Delete welders that belonged to this project
+        DELETE FROM public."welder"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % welder rows.', deleted_count;
 
-        -- Delete Milestone Templates
-        DELETE FROM public."MilestoneTemplate" WHERE "projectId" = project_id_to_delete;
+        -- Break drawing hierarchy links before deleting drawings
+        UPDATE public."Drawing"
+        SET "parentId" = NULL
+        WHERE "projectId" = project_record.id
+          AND "parentId" IS NOT NULL;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Cleared % drawing parent links.', deleted_count;
 
-        -- Delete Import Jobs
-        DELETE FROM public."ImportJob" WHERE "projectId" = project_id_to_delete;
+        DELETE FROM public."Drawing"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % drawing rows.', deleted_count;
 
-        -- Delete Report Generations
-        DELETE FROM public."ReportGenerations" WHERE "projectId" = project_id_to_delete;
+        -- Remove milestone templates after components are deleted
+        DELETE FROM public."MilestoneTemplate"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % milestone template rows.', deleted_count;
 
-        -- Delete Progress Snapshots
-        DELETE FROM public."ProgressSnapshots" WHERE "projectId" = project_id_to_delete;
+        -- Remove import job history
+        DELETE FROM public."ImportJob"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % import job rows.', deleted_count;
 
-        -- Delete ROC Configurations
-        DELETE FROM public."ROCConfigurations" WHERE "projectId" = project_id_to_delete;
+        -- Remove generated reports, caches, snapshots, and ROC configuration records
+        DELETE FROM public."ReportGenerations"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % report generation rows.', deleted_count;
 
-        -- Delete Reporting Cache
-        DELETE FROM public."ReportingCache" WHERE "projectId" = project_id_to_delete;
+        DELETE FROM public."ProgressSnapshots"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % progress snapshot rows.', deleted_count;
 
-        -- Finally delete the Project itself
-        DELETE FROM public."Project" WHERE id = project_id_to_delete;
+        DELETE FROM public."ReportingCache"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % reporting cache rows.', deleted_count;
 
-        RAISE NOTICE 'Project with job number 5932 (ID: %) has been deleted', project_id_to_delete;
-    END IF;
-END $$;
+        DELETE FROM public."ROCConfigurations"
+        WHERE "projectId" = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % ROC configuration rows.', deleted_count;
 
--- Verify deletion
-SELECT
-    'Project with Job Number 5932' as check,
-    COUNT(*) as remaining_count
-FROM public."Project"
-WHERE "jobNumber" = '5932';
+        -- Finally delete the project itself
+        DELETE FROM public."Project"
+        WHERE id = project_record.id;
+        GET DIAGNOSTICS deleted_count = ROW_COUNT;
+        RAISE NOTICE '  - Deleted % project rows.', deleted_count;
+    END LOOP;
+END $$ LANGUAGE plpgsql;
 
 COMMIT;
+
+-- Verification: confirm no projects remain with job number 5932
+SELECT COUNT(*) AS remaining_projects
+FROM public."Project"
+WHERE "jobNumber" = '5932';

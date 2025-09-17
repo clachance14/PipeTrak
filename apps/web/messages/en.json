@@ -53,7 +53,9 @@
 			},
 			"impersonate": "Impersonate",
 			"impersonation": {
-				"impersonating": "Impersonating as {name}..."
+				"impersonating": "Impersonating as {name}...",
+				"success": "You are now impersonating {name}.",
+				"error": "Could not impersonate {name}. Please try again."
 			},
 			"loading": "Loading users...",
 			"resendVerificationMail": {

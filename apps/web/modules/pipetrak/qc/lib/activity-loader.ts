@@ -1,18 +1,21 @@
 import { db } from "@repo/database";
-import type { AuditAction } from "@repo/database/prisma/generated/client";
 import { formatDistanceToNow } from "date-fns";
 
 export interface QCActivityItem {
 	id: string;
-	user: {
+	weldNumber: string;
+	welder: {
+		name: string | null;
+		stencil: string | null;
+	};
+	dateWelded: string | null;
+	effectiveDate: string | null;
+	updatedBy: {
 		name: string;
 		initials: string;
-	};
-	action: string;
-	target: string;
-	type: "added" | "completed" | "updated" | "report" | "import";
-	timestamp: string;
-	rawTimestamp: Date;
+	} | null;
+	updatedAt: string;
+	relativeUpdatedAt: string;
 }
 
 function getInitials(name: string): string {
@@ -23,100 +26,50 @@ function getInitials(name: string): string {
 		.substring(0, 2);
 }
 
-function formatActivity(
-	auditLog: {
+function mapMilestoneToActivity(
+	milestone: {
 		id: string;
-		timestamp: Date;
-		user: { name: string };
-		action: AuditAction;
-		entityType: string;
-		entityId: string;
-		changes: any;
-		component?: { componentId: string; displayId: string | null } | null;
+		effectiveDate: Date;
+		completedAt: Date | null;
+		completer: { name: string | null } | null;
+		component: {
+			displayId: string | null;
+			weldId: string | null;
+			fieldWelds: Array<{
+				id: string;
+				weldIdNumber: string;
+				dateWelded: Date | null;
+				welder: {
+					name: string | null;
+					stencil: string | null;
+				} | null;
+			}>;
+		};
 	},
 ): QCActivityItem {
-	const userName = auditLog.user.name || "Unknown User";
-	const initials = getInitials(userName);
-
-	// Determine activity type and description based on entity type and action
-	let activityType: QCActivityItem["type"] = "updated";
-	let actionDescription = "";
-	let target = "";
-
-	switch (auditLog.entityType) {
-		case "FieldWeld":
-			target = `Field Weld ${auditLog.entityId.substring(0, 8)}`;
-			switch (auditLog.action) {
-				case "CREATE":
-					activityType = "added";
-					actionDescription = "added field weld";
-					break;
-				case "UPDATE": {
-					// Check if it's a completion by looking at changes
-					const changes = auditLog.changes as Record<string, any>;
-					if (changes?.status?.new === "COMPLETED") {
-						activityType = "completed";
-						actionDescription = "completed field weld";
-					} else {
-						actionDescription = "updated field weld";
-					}
-					break;
-				}
-				case "IMPORT":
-					activityType = "import";
-					actionDescription = "imported field weld";
-					break;
-				default:
-					actionDescription = "modified field weld";
-			}
-			break;
-
-		case "Welder":
-			target = auditLog.entityId;
-			switch (auditLog.action) {
-				case "CREATE":
-					activityType = "added";
-					actionDescription = "registered new welder";
-					break;
-				case "UPDATE":
-					actionDescription = "updated welder info";
-					break;
-				default:
-					actionDescription = "modified welder";
-			}
-			break;
-
-		case "Component":
-			target = auditLog.component?.displayId || auditLog.component?.componentId || `Component ${auditLog.entityId.substring(0, 8)}`;
-			switch (auditLog.action) {
-				case "BULK_MILESTONE_UPDATE":
-					activityType = "updated";
-					actionDescription = "updated milestones for";
-					break;
-				case "UPDATE":
-					actionDescription = "updated component";
-					break;
-				default:
-					actionDescription = "modified component";
-			}
-			break;
-
-		default:
-			target = auditLog.entityId.substring(0, 8);
-			actionDescription = `${auditLog.action.toLowerCase()} ${auditLog.entityType.toLowerCase()}`;
-	}
+	const fieldWeld = milestone.component.fieldWelds[0];
+	const weldNumber = fieldWeld?.weldIdNumber ?? milestone.component.weldId ?? milestone.component.displayId ?? "Unknown";
+	const welder = fieldWeld?.welder ?? { name: null, stencil: null };
+	const updatedAt = milestone.completedAt ?? milestone.effectiveDate;
+	const userName = milestone.completer?.name ?? "Unknown";
 
 	return {
-		id: auditLog.id,
-		user: {
-			name: userName,
-			initials,
+		id: milestone.id,
+		weldNumber,
+		welder: {
+			name: welder?.name ?? null,
+			stencil: welder?.stencil ?? null,
 		},
-		action: actionDescription,
-		target,
-		type: activityType,
-		timestamp: formatDistanceToNow(auditLog.timestamp, { addSuffix: true }),
-		rawTimestamp: auditLog.timestamp,
+		dateWelded: fieldWeld?.dateWelded ? fieldWeld.dateWelded.toISOString() : null,
+		effectiveDate: milestone.effectiveDate.toISOString(),
+		updatedBy: milestone.completer
+			? {
+				name: userName,
+				initials: getInitials(userName),
+			}
+			: null,
+		updatedAt: updatedAt.toISOString(),
+		relativeUpdatedAt: formatDistanceToNow(updatedAt, { addSuffix: true }),
 	};
 }
 
@@ -126,41 +79,55 @@ export async function getQCActivityFeed(
 	dateRange?: { from: Date; to: Date },
 ): Promise<QCActivityItem[]> {
 	try {
-		// Get recent audit logs for QC-related activities
-		const auditLogs = await db.auditLog.findMany({
+		const milestones = await db.componentMilestone.findMany({
 			where: {
-				projectId,
-				entityType: {
-					in: ["FieldWeld", "Welder", "Component"],
+				milestoneName: "Weld Made",
+				isCompleted: true,
+				component: {
+					projectId,
+					type: "FIELD_WELD",
 				},
 				...(dateRange && {
-					timestamp: {
+					effectiveDate: {
 						gte: dateRange.from,
 						lte: dateRange.to,
 					},
 				}),
 			},
+			orderBy: [
+				{ effectiveDate: "desc" },
+				{ completedAt: "desc" },
+			],
+			take: limit,
 			include: {
-				user: {
-					select: {
-						name: true,
-					},
+				completer: {
+					select: { name: true },
 				},
 				component: {
 					select: {
-						componentId: true,
 						displayId: true,
+						weldId: true,
+						fieldWelds: {
+							take: 1,
+							orderBy: { updatedAt: "desc" },
+							select: {
+								id: true,
+								weldIdNumber: true,
+								dateWelded: true,
+								welder: {
+									select: {
+										name: true,
+										stencil: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
-			orderBy: {
-				timestamp: "desc",
-			},
-			take: limit,
 		});
 
-		// Transform audit logs into activity items
-		return auditLogs.map(formatActivity);
+		return milestones.map(mapMilestoneToActivity);
 	} catch (error) {
 		console.error("Error fetching QC activity feed:", error);
 		return [];
@@ -174,51 +141,12 @@ export async function getQCActivityByType(
 	limit = 20,
 	dateRange?: { from: Date; to: Date },
 ): Promise<QCActivityItem[]> {
-	try {
-		const entityTypeMap = {
-			welds: ["FieldWeld"],
-			welders: ["Welder"],
-			components: ["Component"],
-			all: ["FieldWeld", "Welder", "Component"],
-		};
-
-		const auditLogs = await db.auditLog.findMany({
-			where: {
-				projectId,
-				entityType: {
-					in: entityTypeMap[filterType],
-				},
-				...(dateRange && {
-					timestamp: {
-						gte: dateRange.from,
-						lte: dateRange.to,
-					},
-				}),
-			},
-			include: {
-				user: {
-					select: {
-						name: true,
-					},
-				},
-				component: {
-					select: {
-						componentId: true,
-						displayId: true,
-					},
-				},
-			},
-			orderBy: {
-				timestamp: "desc",
-			},
-			take: limit,
-		});
-
-		return auditLogs.map(formatActivity);
-	} catch (error) {
-		console.error("Error fetching filtered QC activity:", error);
-		return [];
+	// Legacy signature retained for future filter extensions. For now, defer to weld activity.
+	if (filterType === "welds" || filterType === "all") {
+		return getQCActivityFeed(projectId, limit, dateRange);
 	}
+
+	return [];
 }
 
 // Get activity statistics for the project
