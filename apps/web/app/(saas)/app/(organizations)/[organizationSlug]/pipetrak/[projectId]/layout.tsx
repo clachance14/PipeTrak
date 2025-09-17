@@ -56,17 +56,17 @@ export default async function PipeTrakProjectLayout({
 	return (
 		<div className="space-y-4">
 			{/* Project Switcher */}
-			<div className="mb-4">
+			<div className="mb-4 pt-4 px-6 lg:px-8">
 				<ProjectSwitcher />
 			</div>
 
 			{/* Mobile and Tablet tabs - hide Import and Reports */}
-			<div className="block lg:hidden">
+			<div className="block lg:hidden px-6 lg:px-8">
 				<TabGroup items={mobileItems} />
 			</div>
 
 			{/* Desktop only tabs - show all (1024px and up) */}
-			<div className="hidden lg:block">
+			<div className="hidden lg:block px-6 lg:px-8">
 				<TabGroup items={desktopItems} />
 			</div>
 

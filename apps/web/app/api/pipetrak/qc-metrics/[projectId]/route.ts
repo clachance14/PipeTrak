@@ -1,6 +1,6 @@
-import { getSession } from "@saas/auth/lib/server";
 import { db } from "@repo/database";
-import { NextRequest, NextResponse } from "next/server";
+import { getSession } from "@saas/auth/lib/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 interface QCMetrics {
 	totalWelds: number;
@@ -27,14 +27,14 @@ interface RouteParams {
 	}>;
 }
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: RouteParams
-) {
+export async function GET(_request: NextRequest, { params }: RouteParams) {
 	try {
 		const session = await getSession();
 		if (!session) {
-			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+			return NextResponse.json(
+				{ error: "Unauthorized" },
+				{ status: 401 },
+			);
 		}
 
 		const { projectId } = await params;
@@ -51,9 +51,15 @@ export async function GET(
 
 		// Calculate metrics
 		const totalWelds = weldsData.length;
-		const acceptedWelds = weldsData.filter((weld: any) => weld.qcStatus === "ACCEPTED").length;
-		const rejectedWelds = weldsData.filter((weld: any) => weld.qcStatus === "REJECTED").length;
-		const pendingWelds = weldsData.filter((weld: any) => weld.qcStatus === "PENDING" || !weld.qcStatus).length;
+		const acceptedWelds = weldsData.filter(
+			(weld: any) => weld.qcStatus === "ACCEPTED",
+		).length;
+		const rejectedWelds = weldsData.filter(
+			(weld: any) => weld.qcStatus === "REJECTED",
+		).length;
+		const pendingWelds = weldsData.filter(
+			(weld: any) => weld.qcStatus === "PENDING" || !weld.qcStatus,
+		).length;
 
 		const completedWelds = await db.component.count({
 			where: {
@@ -67,15 +73,25 @@ export async function GET(
 				},
 			},
 		});
-		const acceptanceRate = totalWelds > 0 ? Math.round((acceptedWelds / totalWelds) * 100) : 0;
+		const acceptanceRate =
+			totalWelds > 0 ? Math.round((acceptedWelds / totalWelds) * 100) : 0;
 
 		// PWHT metrics
-		const pwhtRequired = weldsData.filter((weld: any) => weld.pwhtRequired).length;
-		const pwhtComplete = weldsData.filter((weld: any) => weld.pwhtComplete).length;
-		const pwhtCompletionRate = pwhtRequired > 0 ? Math.round((pwhtComplete / pwhtRequired) * 100) : 0;
+		const pwhtRequired = weldsData.filter(
+			(weld: any) => weld.pwhtRequired,
+		).length;
+		const pwhtComplete = weldsData.filter(
+			(weld: any) => weld.pwhtComplete,
+		).length;
+		const pwhtCompletionRate =
+			pwhtRequired > 0
+				? Math.round((pwhtComplete / pwhtRequired) * 100)
+				: 0;
 
 		// Active welders
-		const activeWelders = new Set(weldsData.map((weld: any) => weld.welderId).filter(Boolean)).size;
+		const activeWelders = new Set(
+			weldsData.map((weld: any) => weld.welderId).filter(Boolean),
+		).size;
 
 		// TODO: Implement trend calculations with historical data
 		const trends = {
@@ -106,7 +122,10 @@ export async function GET(
 		});
 
 		if (!project) {
-			return NextResponse.json({ error: "Project not found" }, { status: 404 });
+			return NextResponse.json(
+				{ error: "Project not found" },
+				{ status: 404 },
+			);
 		}
 
 		return NextResponse.json({
@@ -117,7 +136,7 @@ export async function GET(
 		console.error("Error fetching QC metrics:", error);
 		return NextResponse.json(
 			{ error: "Internal server error" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }

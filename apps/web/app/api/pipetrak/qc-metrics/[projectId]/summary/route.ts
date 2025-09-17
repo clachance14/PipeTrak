@@ -1,6 +1,6 @@
-import { getSession } from "@saas/auth/lib/server";
 import { db } from "@repo/database";
-import { NextRequest, NextResponse } from "next/server";
+import { getSession } from "@saas/auth/lib/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 interface QCSummary {
 	totalWelds: number;
@@ -15,14 +15,14 @@ interface RouteParams {
 	}>;
 }
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: RouteParams
-) {
+export async function GET(_request: NextRequest, { params }: RouteParams) {
 	try {
 		const session = await getSession();
 		if (!session) {
-			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+			return NextResponse.json(
+				{ error: "Unauthorized" },
+				{ status: 401 },
+			);
 		}
 
 		const { projectId } = await params;
@@ -39,10 +39,19 @@ export async function GET(
 
 		// Calculate summary metrics
 		const totalWelds = weldsData.length;
-		const inspectedWelds = weldsData.filter((weld: any) => weld.qcStatus && weld.qcStatus !== "PENDING").length;
-		const acceptedWelds = weldsData.filter((weld: any) => weld.qcStatus === "ACCEPTED").length;
-		const acceptanceRate = inspectedWelds > 0 ? Math.round((acceptedWelds / inspectedWelds) * 100) : 0;
-		const activeWelders = new Set(weldsData.map((weld: any) => weld.welderId).filter(Boolean)).size;
+		const inspectedWelds = weldsData.filter(
+			(weld: any) => weld.qcStatus && weld.qcStatus !== "PENDING",
+		).length;
+		const acceptedWelds = weldsData.filter(
+			(weld: any) => weld.qcStatus === "ACCEPTED",
+		).length;
+		const acceptanceRate =
+			inspectedWelds > 0
+				? Math.round((acceptedWelds / inspectedWelds) * 100)
+				: 0;
+		const activeWelders = new Set(
+			weldsData.map((weld: any) => weld.welderId).filter(Boolean),
+		).size;
 
 		const summary: QCSummary = {
 			totalWelds,
@@ -58,7 +67,7 @@ export async function GET(
 		console.error("Error fetching QC summary:", error);
 		return NextResponse.json(
 			{ error: "Internal server error" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }

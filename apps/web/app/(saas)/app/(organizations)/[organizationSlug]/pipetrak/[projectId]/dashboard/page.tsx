@@ -23,7 +23,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
 	console.log("[Dashboard Page] Project ID:", projectId);
 
 	return (
-		<div className="container mx-auto px-4 lg:px-6 space-y-6">
+		<div className="container mx-auto px-6 lg:px-8 py-6 space-y-6">
 			<Suspense fallback={<DashboardSkeleton />}>
 				<DashboardContent projectId={projectId} />
 			</Suspense>
@@ -97,7 +97,7 @@ async function DashboardContent({ projectId }: { projectId: string }) {
 // Loading skeleton component
 function DashboardSkeleton() {
 	return (
-		<div className="space-y-6 animate-pulse px-4 lg:px-6">
+		<div className="space-y-6 animate-pulse">
 			{/* Top bar skeleton */}
 			<div className="flex items-center justify-between gap-4 py-4">
 				<div className="h-10 bg-gray-200 rounded w-[280px]" />
