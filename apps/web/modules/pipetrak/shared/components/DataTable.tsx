@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@ui/components/button";
+import { Skeleton } from "@ui/components/skeleton";
 import {
 	Table,
 	TableBody,
@@ -8,15 +10,13 @@ import {
 	TableHeader,
 	TableRow,
 } from "@ui/components/table";
-import { Button } from "@ui/components/button";
-import { Skeleton } from "@ui/components/skeleton";
+import { cn } from "@ui/lib";
 import {
 	ChevronLeft,
 	ChevronRight,
 	ChevronsLeft,
 	ChevronsRight,
 } from "lucide-react";
-import { cn } from "@ui/lib";
 import type { TableColumn } from "../../types";
 
 interface DataTableProps<T> {

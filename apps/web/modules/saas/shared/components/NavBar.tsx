@@ -53,8 +53,8 @@ export function NavBar() {
 				]
 			: []),
 		...(activeOrganization &&
-			!config.organizations.hideOrganization &&
-			isOrganizationAdmin
+		!config.organizations.hideOrganization &&
+		isOrganizationAdmin
 			? [
 					{
 						label: t("app.menu.organizationSettings"),

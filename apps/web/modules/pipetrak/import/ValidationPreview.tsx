@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
 import {
 	Card,
 	CardContent,
@@ -8,12 +10,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
-import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { Checkbox } from "@ui/components/checkbox";
 import { Label } from "@ui/components/label";
+import { ScrollArea } from "@ui/components/scroll-area";
 import {
 	Table,
 	TableBody,
@@ -22,15 +21,16 @@ import {
 	TableHeader,
 	TableRow,
 } from "@ui/components/table";
-import { ScrollArea } from "@ui/components/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import {
-	Check,
-	XCircle,
-	FileSpreadsheet,
 	AlertTriangle,
 	ArrowRight,
+	Check,
 	Download,
+	FileSpreadsheet,
+	XCircle,
 } from "lucide-react";
+import React, { useState } from "react";
 
 interface ValidationPreviewProps {
 	file: File;

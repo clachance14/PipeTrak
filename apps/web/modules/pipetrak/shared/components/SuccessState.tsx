@@ -1,8 +1,8 @@
 import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import { cn } from "@ui/lib";
-import { Check, Download, FileCheck, Upload } from "lucide-react";
 import type { Icon } from "lucide-react";
+import { Check, Download, FileCheck, Upload } from "lucide-react";
 
 interface SuccessStateProps {
 	title: string;

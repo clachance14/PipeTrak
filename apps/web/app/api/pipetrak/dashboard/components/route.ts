@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getSession } from "@saas/auth/lib/server";
 import { fetchDashboardComponents } from "@pipetrak/dashboard/lib/data-loaders";
+import { getSession } from "@saas/auth/lib/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
 	console.log("[API] Dashboard components endpoint called");

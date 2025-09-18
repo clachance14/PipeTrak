@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { apiClient } from "@shared/lib/api-client";
+import { useEffect, useState } from "react";
 import { createClient } from "../../../lib/supabase/client";
 
 interface ImportProgressState {
@@ -114,7 +114,8 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 						status,
 						isComplete:
 							status === "completed" || status === "failed",
-						hasErrors: status === "failed" || (jobData.errorRows || 0) > 0,
+						hasErrors:
+							status === "failed" || (jobData.errorRows || 0) > 0,
 						jobData,
 						logs: [
 							{
@@ -454,7 +455,8 @@ export function useImportProgress(jobId?: string, projectId?: string) {
 							isComplete:
 								status === "completed" || status === "failed",
 							hasErrors:
-								status === "failed" || (jobData.errorRows || 0) > 0,
+								status === "failed" ||
+								(jobData.errorRows || 0) > 0,
 							jobData,
 						};
 					});

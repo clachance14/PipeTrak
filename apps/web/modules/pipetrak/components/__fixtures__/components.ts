@@ -1,10 +1,10 @@
 import type {
-	ComponentWithMilestones,
 	ComponentMilestone,
+	ComponentWithMilestones,
 	Drawing,
 	Project,
 } from "../../types";
-import { ProjectStatus, ComponentStatus, WorkflowType } from "../../types";
+import { ComponentStatus, ProjectStatus, WorkflowType } from "../../types";
 
 export const mockProject: Project = {
 	id: "test-project-id",

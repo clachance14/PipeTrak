@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { FieldWeldTable } from "@pipetrak/qc/components/FieldWeldTable";
+import type { Metadata } from "next";
 
 interface FieldWeldsPageProps {
 	params: Promise<{

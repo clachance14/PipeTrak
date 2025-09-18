@@ -19,6 +19,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
 type SubmitHandler<T> = (data: T) => void | Promise<void>;
+
 import { toast } from "sonner";
 import { z } from "zod";
 

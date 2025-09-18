@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
+import { Calendar } from "@ui/components/calendar";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Checkbox } from "@ui/components/checkbox";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@ui/components/popover";
 import {
 	Select,
 	SelectContent,
@@ -10,28 +18,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Calendar } from "@ui/components/calendar";
+import { cn } from "@ui/lib";
+import { addDays, format, startOfWeek } from "date-fns";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@ui/components/popover";
-import { Badge } from "@ui/components/badge";
-import { Alert, AlertDescription } from "@ui/components/alert";
-import { Checkbox } from "@ui/components/checkbox";
-import {
-	Calendar as CalendarIcon,
-	RefreshCw,
 	AlertCircle,
+	Calendar as CalendarIcon,
 	Check,
 	Clock,
-	FileText,
 	FileImage,
-	Sheet,
+	FileText,
 	Printer,
+	RefreshCw,
+	Sheet,
 } from "lucide-react";
-import { format, addDays, startOfWeek } from "date-fns";
-import { cn } from "@ui/lib";
+import React, { useEffect, useState } from "react";
 
 interface ProgressSummaryReportContentProps {
 	projectId: string;
@@ -154,15 +154,26 @@ export function ProgressSummaryReportContent({
 	// Print function
 	const handlePrint = () => {
 		// Build URL with current configuration
-		const printUrl = new URL(window.location.origin + window.location.pathname + '/print');
-		printUrl.searchParams.set('weekEnding', format(weekEnding, 'yyyy-MM-dd'));
-		printUrl.searchParams.set('groupBy', groupBy);
-		printUrl.searchParams.set('showDeltas', showDeltas.toString());
-		printUrl.searchParams.set('includeZeroProgress', includeZeroProgress.toString());
-		printUrl.searchParams.set('includeGrandTotal', includeGrandTotal.toString());
+		const printUrl = new URL(
+			window.location.origin + window.location.pathname + "/print",
+		);
+		printUrl.searchParams.set(
+			"weekEnding",
+			format(weekEnding, "yyyy-MM-dd"),
+		);
+		printUrl.searchParams.set("groupBy", groupBy);
+		printUrl.searchParams.set("showDeltas", showDeltas.toString());
+		printUrl.searchParams.set(
+			"includeZeroProgress",
+			includeZeroProgress.toString(),
+		);
+		printUrl.searchParams.set(
+			"includeGrandTotal",
+			includeGrandTotal.toString(),
+		);
 
 		// Open in new window for printing
-		window.open(printUrl.toString(), '_blank');
+		window.open(printUrl.toString(), "_blank");
 	};
 
 	// Export functions
@@ -329,8 +340,8 @@ export function ProgressSummaryReportContent({
 										{format(weekEnding, "PPP")}
 									</Button>
 								</PopoverTrigger>
-							<PopoverContent
-								className="min-w-[18rem] p-0"
+								<PopoverContent
+									className="min-w-[18rem] p-0"
 									align="start"
 								>
 									<Calendar
@@ -347,9 +358,7 @@ export function ProgressSummaryReportContent({
 
 						{/* Group By Selection */}
 						<div className="space-y-2">
-							<div className="text-sm font-medium">
-								Group By
-							</div>
+							<div className="text-sm font-medium">Group By</div>
 							<Select
 								value={groupBy}
 								onValueChange={(value: any) =>
@@ -383,7 +392,9 @@ export function ProgressSummaryReportContent({
 									<Checkbox
 										id="showDeltas"
 										checked={showDeltas}
-										onCheckedChange={(checked) => setShowDeltas(checked === true)}
+										onCheckedChange={(checked) =>
+											setShowDeltas(checked === true)
+										}
 									/>
 									<label
 										htmlFor="showDeltas"
@@ -396,7 +407,11 @@ export function ProgressSummaryReportContent({
 									<Checkbox
 										id="includeGrandTotal"
 										checked={includeGrandTotal}
-										onCheckedChange={(checked) => setIncludeGrandTotal(checked === true)}
+										onCheckedChange={(checked) =>
+											setIncludeGrandTotal(
+												checked === true,
+											)
+										}
 									/>
 									<label
 										htmlFor="includeGrandTotal"
@@ -410,9 +425,7 @@ export function ProgressSummaryReportContent({
 
 						{/* Actions */}
 						<div className="space-y-2">
-							<div className="text-sm font-medium">
-								Actions
-							</div>
+							<div className="text-sm font-medium">Actions</div>
 							<div className="flex flex-col gap-2">
 								<Button
 									status="info"

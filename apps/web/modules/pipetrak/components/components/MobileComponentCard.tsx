@@ -35,14 +35,14 @@ export function MobileComponentCard({
 
 	// State for weld milestone modal
 	const [showWeldModal, setShowWeldModal] = useState(false);
-	const [selectedWeldMilestone, setSelectedWeldMilestone] = useState<any>(null);
+	const [selectedWeldMilestone, setSelectedWeldMilestone] =
+		useState<any>(null);
 
 	// Handle milestone updates using the engine directly
 	const handleMilestoneUpdate = async (
 		milestoneId: string,
 		value: boolean | number,
 	) => {
-
 		if (!milestoneEngine) {
 			console.error("MilestoneUpdateEngine not available");
 			return;
@@ -71,7 +71,6 @@ export function MobileComponentCard({
 		}
 
 		try {
-
 			await milestoneEngine.updateMilestone(
 				milestoneId,
 				component.id,
@@ -161,83 +160,99 @@ export function MobileComponentCard({
 						}}
 						isLoading={(milestoneId) => {
 							// Access React state object directly to ensure re-renders
-							return milestoneEngine?.operationStatuses?.[milestoneId] === "pending" || false;
+							return (
+								milestoneEngine?.operationStatuses?.[
+									milestoneId
+								] === "pending" || false
+							);
 						}}
 						hasError={(milestoneId) => {
 							// Access React state object directly to ensure re-renders
-							return milestoneEngine?.operationStatuses?.[milestoneId] === "error" || false;
+							return (
+								milestoneEngine?.operationStatuses?.[
+									milestoneId
+								] === "error" || false
+							);
 						}}
 						hasRecentSuccess={(milestoneId) => {
 							// Access React state object directly to ensure re-renders
-							return milestoneEngine?.recentSuccesses?.[milestoneId] || false;
+							return (
+								milestoneEngine?.recentSuccesses?.[
+									milestoneId
+								] || false
+							);
 						}}
 					/>
 				)}
 			</CardContent>
 
 			{/* Weld Milestone Modal for Field Welds */}
-			{selectedWeldMilestone && component.type === "FIELD_WELD" && projectId && (
-				<WeldMilestoneModal
-					open={showWeldModal}
-					onOpenChange={(open) => {
-						setShowWeldModal(open);
-						onWeldModalChange?.(open);
-					}}
-					component={{
-						id: component.id,
-						componentId: component.componentId,
-						displayId: component.displayId || component.componentId,
-						projectId: projectId,
-					}}
-					milestone={{
-						id: selectedWeldMilestone.id,
-						milestoneName: selectedWeldMilestone.milestoneName,
-						isCompleted: selectedWeldMilestone.isCompleted,
-					}}
-					onSuccess={async (data) => {
-						// Update the milestone with welder information using direct API call
-						if (selectedWeldMilestone && milestoneEngine) {
-							try {
-								await fetch(
-									`/api/pipetrak/milestones/${selectedWeldMilestone.id}`,
-									{
-										method: "PATCH",
-										headers: {
-											"Content-Type": "application/json",
+			{selectedWeldMilestone &&
+				component.type === "FIELD_WELD" &&
+				projectId && (
+					<WeldMilestoneModal
+						open={showWeldModal}
+						onOpenChange={(open) => {
+							setShowWeldModal(open);
+							onWeldModalChange?.(open);
+						}}
+						component={{
+							id: component.id,
+							componentId: component.componentId,
+							displayId:
+								component.displayId || component.componentId,
+							projectId: projectId,
+						}}
+						milestone={{
+							id: selectedWeldMilestone.id,
+							milestoneName: selectedWeldMilestone.milestoneName,
+							isCompleted: selectedWeldMilestone.isCompleted,
+						}}
+						onSuccess={async (data) => {
+							// Update the milestone with welder information using direct API call
+							if (selectedWeldMilestone && milestoneEngine) {
+								try {
+									await fetch(
+										`/api/pipetrak/milestones/${selectedWeldMilestone.id}`,
+										{
+											method: "PATCH",
+											headers: {
+												"Content-Type":
+													"application/json",
+											},
+											body: JSON.stringify({
+												isCompleted: true,
+												welderId: data.welderId,
+												effectiveDate: data.dateWelded
+													.toISOString()
+													.split("T")[0],
+												comments: data.comments,
+											}),
 										},
-										body: JSON.stringify({
-											isCompleted: true,
-											welderId: data.welderId,
-											effectiveDate: data.dateWelded
-												.toISOString()
-												.split("T")[0],
-											comments: data.comments,
-										}),
-									},
-								);
+									);
 
-								// Also trigger the standard milestone update for optimistic updates and caching
-								await milestoneEngine.updateMilestone(
-									selectedWeldMilestone.id,
-									component.id,
-									selectedWeldMilestone.milestoneName,
-									component.workflowType,
-									true,
-								);
-							} catch (error) {
-								console.error(
-									"Failed to update weld milestone:",
-									error,
-								);
-								throw error; // Re-throw so modal can handle the error
+									// Also trigger the standard milestone update for optimistic updates and caching
+									await milestoneEngine.updateMilestone(
+										selectedWeldMilestone.id,
+										component.id,
+										selectedWeldMilestone.milestoneName,
+										component.workflowType,
+										true,
+									);
+								} catch (error) {
+									console.error(
+										"Failed to update weld milestone:",
+										error,
+									);
+									throw error; // Re-throw so modal can handle the error
+								}
 							}
-						}
 
-						setSelectedWeldMilestone(null);
-						onWeldModalChange?.(false);
-					}}
-				/>
-			)}
+							setSelectedWeldMilestone(null);
+							onWeldModalChange?.(false);
+						}}
+					/>
+				)}
 		</Card>
 	);
 }

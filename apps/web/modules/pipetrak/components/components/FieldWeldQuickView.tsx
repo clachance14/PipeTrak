@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
@@ -10,18 +9,19 @@ import {
 	PopoverTrigger,
 } from "@ui/components/popover";
 import { TooltipProvider } from "@ui/components/tooltip";
+import { format } from "date-fns";
 import {
-	Zap,
-	Flame,
+	AlertTriangle,
 	Check,
 	CircleX,
 	Clock,
-	AlertTriangle,
 	ExternalLink,
-	User,
 	FileText,
+	Flame,
+	User,
+	Zap,
 } from "lucide-react";
-import { format } from "date-fns";
+import { useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface FieldWeldQuickViewProps {

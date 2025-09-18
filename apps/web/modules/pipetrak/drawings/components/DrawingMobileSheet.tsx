@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Layers, X } from "lucide-react";
 import { Button } from "@ui/components/button";
 import {
 	Sheet,
@@ -11,10 +9,12 @@ import {
 	SheetTrigger,
 } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
+import { Layers, X } from "lucide-react";
+import { useState } from "react";
 import type { DrawingTreeNode } from "../../types";
-import { DrawingTreeView } from "./DrawingTreeView";
-import { DrawingBreadcrumbsMobile } from "./DrawingBreadcrumbs";
 import { ComponentCountBadge } from "./ComponentCountBadge";
+import { DrawingBreadcrumbsMobile } from "./DrawingBreadcrumbs";
+import { DrawingTreeView } from "./DrawingTreeView";
 
 interface DrawingMobileSheetProps {
 	projectId: string;

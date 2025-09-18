@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { PageHeader } from "@saas/shared/components/PageHeader";
-import { LoadingState } from "@pipetrak/shared/components";
 import { ComponentReportContent } from "@pipetrak/reports/components/ComponentReportContent";
+import { LoadingState } from "@pipetrak/shared/components";
+import { PageHeader } from "@saas/shared/components/PageHeader";
+import { Suspense } from "react";
 
 interface ComponentReportPageProps {
 	params: Promise<{

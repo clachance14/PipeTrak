@@ -1,22 +1,15 @@
 "use client";
 
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
 import {
 	HoverCard,
 	HoverCardContent,
 	HoverCardTrigger,
 } from "@ui/components/hover-card";
-import { Badge } from "@ui/components/badge";
 import { Separator } from "@ui/components/separator";
-import { Button } from "@ui/components/button";
-import {
-	FileText,
-	Package,
-	Layers,
-	Calendar,
-	Clock,
-	Edit,
-} from "lucide-react";
 import { cn } from "@ui/lib";
+import { Calendar, Clock, Edit, FileText, Layers, Package } from "lucide-react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface ComponentHoverCardProps {
@@ -64,7 +57,9 @@ export function ComponentHoverCard({
 						</div>
 						<Badge
 							status={
-								component.status === "COMPLETED" ? "success" : "info"
+								component.status === "COMPLETED"
+									? "success"
+									: "info"
 							}
 						>
 							{component.status}

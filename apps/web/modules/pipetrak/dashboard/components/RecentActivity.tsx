@@ -7,8 +7,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { Check, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { Check, Clock } from "lucide-react";
 
 interface RecentActivityProps {
 	activities: {

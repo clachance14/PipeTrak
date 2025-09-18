@@ -1,27 +1,27 @@
 "use client";
 
-import React, { memo, useCallback, useEffect, useRef } from "react";
-import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
+import { Card, CardContent } from "@ui/components/card";
 import { Skeleton } from "@ui/components/skeleton";
+import { cn } from "@ui/lib";
 import {
+	AlertCircle,
 	Check,
 	Clock,
-	AlertCircle,
-	Lock,
 	Loader2,
-	X,
+	Lock,
 	RefreshCw,
 	WifiOff,
+	X,
 } from "lucide-react";
-import { cn } from "@ui/lib";
-import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
-import { getCompletionPercent } from "./TouchMilestoneCard";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import type {
 	ComponentMilestone,
 	ComponentWithMilestones,
 	WorkflowType,
 } from "../../../types";
+import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { getCompletionPercent } from "./TouchMilestoneCard";
 
 interface QuickMilestoneSelectorProps {
 	component: ComponentWithMilestones;

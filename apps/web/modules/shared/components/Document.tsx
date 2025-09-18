@@ -1,11 +1,11 @@
 import { ClientProviders } from "@shared/components/ClientProviders";
 import { ConsentProvider } from "@shared/components/ConsentProvider";
-import { DevModeIndicator } from "../../../components/DevModeIndicator";
 import { cn } from "@ui/lib";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { PropsWithChildren } from "react";
+import { DevModeIndicator } from "../../../components/DevModeIndicator";
 
 export async function Document({
 	children,

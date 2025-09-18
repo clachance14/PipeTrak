@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
 	experimental: {
 		serverComponentsExternalPackages: ["@prisma/client", "prisma"],
 	},
+	// Vercel deployment optimizations for Prisma
+	...(process.env.VERCEL && {
+		output: "standalone",
+		outputFileTracing: true,
+	}),
 	// Development optimizations to reduce ENOENT errors
 	...(process.env.NODE_ENV === "development" && {
 		onDemandEntries: {
@@ -73,6 +78,14 @@ const nextConfig: NextConfig = {
 
 		if (isServer) {
 			config.plugins.push(new PrismaPlugin());
+
+			// Ensure Prisma query engine binaries are included in output
+			config.resolve.alias = {
+				...config.resolve.alias,
+				"@prisma/client": require.resolve(
+					"@repo/database/prisma/generated/client",
+				),
+			};
 		}
 
 		// Development-specific optimizations to reduce ENOENT errors

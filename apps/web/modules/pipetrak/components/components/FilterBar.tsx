@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Input } from "@ui/components/input";
 import {
 	Select,
 	SelectContent,
@@ -8,11 +10,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
-import { Input } from "@ui/components/input";
-import { Filter, X, Search, RotateCcw } from "lucide-react";
 import { cn } from "@ui/lib";
+import { Filter, RotateCcw, Search, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 export interface FilterState {
@@ -168,9 +168,7 @@ export function FilterBar({
 							<RotateCcw className="h-4 w-4 mr-2" />
 							Clear All
 							{activeFilterCount > 0 && (
-								<Badge
-											className="ml-2 text-xs"
-								>
+								<Badge className="ml-2 text-xs">
 									{activeFilterCount}
 								</Badge>
 							)}

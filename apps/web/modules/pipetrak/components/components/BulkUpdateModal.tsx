@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Checkbox } from "@ui/components/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -9,13 +11,11 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@ui/components/dialog";
-import { Button } from "@ui/components/button";
 import { Label } from "@ui/components/label";
-import { Textarea } from "@ui/components/textarea";
 import { Progress } from "@ui/components/progress";
-import { Badge } from "@ui/components/badge";
-import { Checkbox } from "@ui/components/checkbox";
-import { Package, MapPin, Wrench, FileText, Users, Clock } from "lucide-react";
+import { Textarea } from "@ui/components/textarea";
+import { Clock, FileText, MapPin, Package, Users, Wrench } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { ComponentWithMilestones } from "../../types";
 import { AutocompleteField } from "./AutocompleteField";
@@ -73,49 +73,43 @@ export function BulkUpdateModal({
 					// Extract unique values for each field
 					const areas: string[] = Array.from(
 						new Set(
-							(
-								components
-									.map((c: any) => c.area)
-									.filter(
-										(value: any) =>
-											value && typeof value === "string",
-										)
-									.filter(
-										(value: string) => value.trim().length > 0,
-									)
-							) as string[],
+							components
+								.map((c: any) => c.area)
+								.filter(
+									(value: any) =>
+										value && typeof value === "string",
+								)
+								.filter(
+									(value: string) => value.trim().length > 0,
+								) as string[],
 						),
 					).sort();
 
 					const systems: string[] = Array.from(
 						new Set(
-							(
-								components
-									.map((c: any) => c.system)
-									.filter(
-										(value: any) =>
-											value && typeof value === "string",
-										)
-									.filter(
-										(value: string) => value.trim().length > 0,
-									)
-							) as string[],
+							components
+								.map((c: any) => c.system)
+								.filter(
+									(value: any) =>
+										value && typeof value === "string",
+								)
+								.filter(
+									(value: string) => value.trim().length > 0,
+								) as string[],
 						),
 					).sort();
 
 					const testPackages: string[] = Array.from(
 						new Set(
-							(
-								components
-									.map((c: any) => c.testPackage)
-									.filter(
-										(value: any) =>
-											value && typeof value === "string",
-										)
-									.filter(
-										(value: string) => value.trim().length > 0,
-									)
-							) as string[],
+							components
+								.map((c: any) => c.testPackage)
+								.filter(
+									(value: any) =>
+										value && typeof value === "string",
+								)
+								.filter(
+									(value: string) => value.trim().length > 0,
+								) as string[],
 						),
 					).sort();
 

@@ -1,9 +1,9 @@
 import { apiClient } from "@shared/lib/api-client";
 import type { ComponentWithMilestones } from "../../types";
 import type {
-	ComponentGroup,
-	BulkUpdateSelections,
 	BulkUpdateResult,
+	BulkUpdateSelections,
+	ComponentGroup,
 } from "./bulk-update-utils";
 
 export interface BulkUpdateProgress {

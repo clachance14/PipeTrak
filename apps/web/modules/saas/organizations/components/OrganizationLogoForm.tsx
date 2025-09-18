@@ -5,8 +5,8 @@ import { useActiveOrganization } from "@saas/organizations/hooks/use-active-orga
 import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
-import { apiClient } from "@shared/lib/api-client";
 import { Spinner } from "@shared/components/Spinner";
+import { apiClient } from "@shared/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -68,7 +68,9 @@ export function OrganizationLogoForm() {
 			}
 
 			// Update organization logo using our custom API endpoint
-			const updateResponse = await apiClient.organizations[":organizationId"].logo.$patch({
+			const updateResponse = await apiClient.organizations[
+				":organizationId"
+			].logo.$patch({
 				param: { organizationId: activeOrganization.id },
 				json: { logoPath: path },
 			});

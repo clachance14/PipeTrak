@@ -7,69 +7,68 @@
 // Type Exports
 // ============================================================================
 
+// Export missing interface names that are used in components
 export type {
-	// Request Types
-	ProgressReportRequest,
-	ComponentDetailsRequest,
-	TestPackageReadinessRequest,
-	TrendAnalysisRequest,
-	AuditTrailRequest,
-	BulkReportRequest,
-	// Response Types
-	ProgressReportResponse,
-	ComponentDetailsResponse,
-	TestPackageReadinessResponse,
-	TrendAnalysisResponse,
-	AuditTrailResponse,
-	BulkReportResponse,
-	ReportStatusResponse,
-	FileFilterOptionsResponse,
-	// Data Types
-	ROCWeightedProgress,
-	ProgressReportData,
-	ComponentDetail,
-	TestPackageDetail,
-	TrendDataPoint,
-	AuditLogEntry,
-	ReportGeneration,
-	// Chart Data Types
-	ProgressChartData,
-	ROCChartData,
-	ChartDataPoint,
-	// FileFilter and Configuration Types
-	ReportFileFilters,
-	ComponentDetailsFileFilters,
-	ReportPagination,
-	ReportSorting,
-	ProgressReportOptions,
-	TestPackageOptions,
-	TrendTimeframe,
-	TrendOptions,
 	AuditFileFilters,
+	AuditLogEntry,
+	AuditTrailRequest,
+	AuditTrailResponse,
 	BulkReportOptions,
+	BulkReportRequest,
+	BulkReportResponse,
+	ChartDataPoint,
+	ComponentDetail,
+	ComponentDetailsFileFilters,
+	ComponentDetailsRequest,
+	ComponentDetailsResponse,
 	// Export Configuration
 	ExportFormat,
+	FileFilterOptionsResponse,
+	FileFilterOptionsResponse as FilterOptionsResponse,
 	PrintOptions,
+	// Chart Data Types
+	ProgressChartData,
+	ProgressReportData,
+	ProgressReportOptions,
+	// Request Types
+	ProgressReportRequest,
+	// Response Types
+	ProgressReportResponse,
+	// FileFilter and Configuration Types
+	ReportFileFilters,
+	ReportFileFilters as ReportFilters,
+	ReportGeneration,
+	ReportPagination,
+	ReportSorting,
+	ReportStatusResponse,
 	// UI State
 	ReportsUIState,
+	ROCChartData,
+	// Data Types
+	ROCWeightedProgress,
+	TestPackageDetail,
+	TestPackageOptions,
+	TestPackageReadinessRequest,
+	TestPackageReadinessResponse,
+	TrendAnalysisRequest,
+	TrendAnalysisResponse,
+	TrendDataPoint,
+	TrendOptions,
+	TrendTimeframe,
 } from "./types";
-
-// Export missing interface names that are used in components
-export type { ReportFileFilters as ReportFilters } from "./types";
-export type { FileFilterOptionsResponse as FilterOptionsResponse } from "./types";
 
 // ============================================================================
 // ROC Calculator Exports
 // ============================================================================
 
 export {
-	calculateROCWeight,
 	calculateComponentROCProgress,
 	calculateOverallROCProgress,
-	compareROCvsStandardProgress,
-	calculateROCVelocity,
-	identifyCriticalPathComponents,
 	calculateROCEfficiency,
+	calculateROCVelocity,
+	calculateROCWeight,
+	compareROCvsStandardProgress,
+	identifyCriticalPathComponents,
 } from "./lib/roc-calculator";
 
 // ============================================================================
@@ -77,15 +76,15 @@ export {
 // ============================================================================
 
 export {
+	calculateSummaryStats,
+	formatComponentDetails,
+	formatTestPackageReadiness,
+	generateInsights,
 	generateProgressCharts,
 	generateROCCharts,
 	generateTrendCharts,
-	formatComponentDetails,
-	formatTestPackageReadiness,
 	prepareExcelExport,
 	preparePDFContent,
-	calculateSummaryStats,
-	generateInsights,
 } from "./lib/report-generator";
 
 // ============================================================================
@@ -93,20 +92,20 @@ export {
 // ============================================================================
 
 export {
+	buildComponentDetailsQuery,
+	// Query builders
+	buildProgressReportQuery,
+	buildTrendAnalysisQuery,
+	clearReportCache,
+	generateBulkReports,
 	// Client-side API functions
 	generateProgressReport,
-	getComponentDetailsReport,
 	generateTestPackageReadiness,
 	generateTrendAnalysis,
 	getAuditTrailReport,
-	getReportStatus,
-	clearReportCache,
-	generateBulkReports,
+	getComponentDetailsReport,
 	getReportFileFilterOptions,
-	// Query builders
-	buildProgressReportQuery,
-	buildComponentDetailsQuery,
-	buildTrendAnalysisQuery,
+	getReportStatus,
 	// Utilities
 	handleReportAPIError,
 	retryReportGeneration,
@@ -117,28 +116,28 @@ export {
 // ============================================================================
 
 export {
+	// Audit trail hooks
+	useAuditTrail,
+	// Bulk operations
+	useBulkReportGeneration,
+	useClearReportCache,
+	useComponentDetailsPagination,
+	// Component details hooks
+	useComponentDetailsReport,
 	// Progress report hooks
 	useProgressReport,
 	useRefreshProgressReport,
-	// Component details hooks
-	useComponentDetailsReport,
-	useComponentDetailsPagination,
+	// FileFilter options
+	useReportFileFilterOptions,
+	// Cache and status management
+	useReportStatus,
+	// Combined dashboard hooks
+	useReportsDashboard,
+	useReportsRealtime,
 	// Test package readiness hooks
 	useTestPackageReadiness,
 	// Trend analysis hooks
 	useTrendAnalysis,
-	// Audit trail hooks
-	useAuditTrail,
-	// Cache and status management
-	useReportStatus,
-	useClearReportCache,
-	// Bulk operations
-	useBulkReportGeneration,
-	// FileFilter options
-	useReportFileFilterOptions,
-	// Combined dashboard hooks
-	useReportsDashboard,
-	useReportsRealtime,
 } from "./hooks/useReportsData";
 
 // ============================================================================

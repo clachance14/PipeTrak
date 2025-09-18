@@ -1,6 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@ui/components/accordion";
+import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Checkbox } from "@ui/components/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -9,13 +19,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@ui/components/dialog";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
+import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
 import { ScrollArea } from "@ui/components/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Checkbox } from "@ui/components/checkbox";
-import { Label } from "@ui/components/label";
 import {
 	Select,
 	SelectContent,
@@ -23,30 +29,24 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@ui/components/accordion";
-import {
-	Clock,
-	Check,
 	AlertCircle,
-	Settings,
+	Check,
+	Clock,
 	Package,
+	Settings,
 	Wrench,
 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { ComponentWithMilestones } from "../../types";
-import { FailureDetailsModal } from "./FailureDetailsModal";
 import {
+	type BulkUpdateResult,
+	type BulkUpdateSelections,
 	groupComponentsByTemplate,
 	validateBulkUpdate,
-	type BulkUpdateSelections,
-	type BulkUpdateResult,
 } from "../lib/bulk-update-utils";
+import { FailureDetailsModal } from "./FailureDetailsModal";
 
 interface BulkMilestoneModalProps {
 	isOpen: boolean;
@@ -735,7 +735,8 @@ export function BulkMilestoneModal({
 													milestones: [],
 												});
 											}
-											const group = retryGroups.get(key)!;
+											const group = retryGroups.get(key);
+											if (!group) return;
 											if (
 												!group.componentIds.includes(
 													failure.componentId,

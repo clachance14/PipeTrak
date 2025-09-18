@@ -1,11 +1,11 @@
-import { http, HttpResponse, delay } from "msw";
-import {
-	mockMilestones,
-	mockMilestoneStats,
-	testScenarios,
-	performanceTestData,
-} from "../__fixtures__/milestones";
+import { delay, HttpResponse, http } from "msw";
 import type { ComponentMilestone } from "../../types";
+import {
+	mockMilestoneStats,
+	mockMilestones,
+	performanceTestData,
+	testScenarios,
+} from "../__fixtures__/milestones";
 
 const API_BASE = "http://localhost:3000/api/pipetrak";
 
@@ -454,17 +454,13 @@ export const milestoneHandlers = [
 	),
 
 	// Update presence
-	http.post(
-		`${API_BASE}/milestones/presence/:projectId`,
-		async () => {
-
-			return HttpResponse.json({
-				success: true,
-				message: "Presence updated",
-				timestamp: new Date().toISOString(),
-			});
-		},
-	),
+	http.post(`${API_BASE}/milestones/presence/:projectId`, async () => {
+		return HttpResponse.json({
+			success: true,
+			message: "Presence updated",
+			timestamp: new Date().toISOString(),
+		});
+	}),
 
 	// Resolve conflict
 	http.post(

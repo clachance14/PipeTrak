@@ -26,29 +26,31 @@ function getInitials(name: string): string {
 		.substring(0, 2);
 }
 
-function mapMilestoneToActivity(
-	milestone: {
-		id: string;
-		effectiveDate: Date;
-		completedAt: Date | null;
-		completer: { name: string | null } | null;
-		component: {
-			displayId: string | null;
-			weldId: string | null;
-			fieldWelds: Array<{
-				id: string;
-				weldIdNumber: string;
-				dateWelded: Date | null;
-				welder: {
-					name: string | null;
-					stencil: string | null;
-				} | null;
-			}>;
-		};
-	},
-): QCActivityItem {
+function mapMilestoneToActivity(milestone: {
+	id: string;
+	effectiveDate: Date;
+	completedAt: Date | null;
+	completer: { name: string | null } | null;
+	component: {
+		displayId: string | null;
+		weldId: string | null;
+		fieldWelds: Array<{
+			id: string;
+			weldIdNumber: string;
+			dateWelded: Date | null;
+			welder: {
+				name: string | null;
+				stencil: string | null;
+			} | null;
+		}>;
+	};
+}): QCActivityItem {
 	const fieldWeld = milestone.component.fieldWelds[0];
-	const weldNumber = fieldWeld?.weldIdNumber ?? milestone.component.weldId ?? milestone.component.displayId ?? "Unknown";
+	const weldNumber =
+		fieldWeld?.weldIdNumber ??
+		milestone.component.weldId ??
+		milestone.component.displayId ??
+		"Unknown";
 	const welder = fieldWeld?.welder ?? { name: null, stencil: null };
 	const updatedAt = milestone.completedAt ?? milestone.effectiveDate;
 	const userName = milestone.completer?.name ?? "Unknown";
@@ -60,13 +62,15 @@ function mapMilestoneToActivity(
 			name: welder?.name ?? null,
 			stencil: welder?.stencil ?? null,
 		},
-		dateWelded: fieldWeld?.dateWelded ? fieldWeld.dateWelded.toISOString() : null,
+		dateWelded: fieldWeld?.dateWelded
+			? fieldWeld.dateWelded.toISOString()
+			: null,
 		effectiveDate: milestone.effectiveDate.toISOString(),
 		updatedBy: milestone.completer
 			? {
-				name: userName,
-				initials: getInitials(userName),
-			}
+					name: userName,
+					initials: getInitials(userName),
+				}
 			: null,
 		updatedAt: updatedAt.toISOString(),
 		relativeUpdatedAt: formatDistanceToNow(updatedAt, { addSuffix: true }),
@@ -94,10 +98,7 @@ export async function getQCActivityFeed(
 					},
 				}),
 			},
-			orderBy: [
-				{ effectiveDate: "desc" },
-				{ completedAt: "desc" },
-			],
+			orderBy: [{ effectiveDate: "desc" }, { completedAt: "desc" }],
 			take: limit,
 			include: {
 				completer: {

@@ -4,12 +4,7 @@ import { SettingsMenu } from "@saas/settings/components/SettingsMenu";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { SidebarContentLayout } from "@saas/shared/components/SidebarContentLayout";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import {
-	CreditCard,
-	LockKeyhole,
-	Settings,
-	TriangleAlert,
-} from "lucide-react";
+import { CreditCard, LockKeyhole, Settings, TriangleAlert } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";

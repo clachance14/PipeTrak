@@ -1,25 +1,25 @@
 "use client";
 
-import { useMemo } from "react";
-import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
 import { Button } from "@ui/components/button";
+import { Card, CardContent } from "@ui/components/card";
 import { Checkbox } from "@ui/components/checkbox";
+import { Progress } from "@ui/components/progress";
+import { cn } from "@ui/lib";
 import {
+	AlertCircle,
+	Check,
+	CheckSquare,
 	ChevronDown,
 	ChevronRight,
-	MapPin,
-	Check,
-	AlertCircle,
 	Clock,
+	MapPin,
 	Minus,
 	Zap,
-	CheckSquare,
 } from "lucide-react";
-import { cn } from "@ui/lib";
-import { MobileComponentCard } from "./MobileComponentCard";
+import { useMemo } from "react";
 import type { ComponentWithMilestones } from "../../types";
+import { MobileComponentCard } from "./MobileComponentCard";
 
 interface MobileDrawingGroupProps {
 	drawingNumber: string;
@@ -137,13 +137,19 @@ export function MobileDrawingGroup({
 	// Extract unique areas, systems, and test packages for display
 	const uniqueData = useMemo(() => {
 		const areas = new Set(
-			components.map((c) => c.area).filter((area): area is string => Boolean(area))
+			components
+				.map((c) => c.area)
+				.filter((area): area is string => Boolean(area)),
 		);
 		const systems = new Set(
-			components.map((c) => c.system).filter((system): system is string => Boolean(system))
+			components
+				.map((c) => c.system)
+				.filter((system): system is string => Boolean(system)),
 		);
 		const testPackages = new Set(
-			components.map((c) => c.testPackage).filter((pkg): pkg is string => Boolean(pkg))
+			components
+				.map((c) => c.testPackage)
+				.filter((pkg): pkg is string => Boolean(pkg)),
 		);
 
 		return {
@@ -183,8 +189,6 @@ export function MobileDrawingGroup({
 		onSelectAll(componentIds, !stats.allSelected);
 	};
 
-
-
 	return (
 		<div className="space-y-2 w-full">
 			{/* Drawing Header Card */}
@@ -201,10 +205,20 @@ export function MobileDrawingGroup({
 						<div className="flex items-center gap-2">
 							{/* Selection Checkbox */}
 							<div
+								role="button"
+								tabIndex={0}
 								onClick={(e: React.MouseEvent) => {
 									e.stopPropagation();
 									handleSelectAll();
 								}}
+								onKeyDown={(e: React.KeyboardEvent) => {
+									if (e.key === "Enter" || e.key === " ") {
+										e.preventDefault();
+										e.stopPropagation();
+										handleSelectAll();
+									}
+								}}
+								aria-label={stats.allSelected ? "Deselect all components" : "Select all components"}
 								className="cursor-pointer"
 							>
 								{stats.someSelected && !stats.allSelected ? (
@@ -215,16 +229,21 @@ export function MobileDrawingGroup({
 									<Checkbox
 										checked={stats.allSelected}
 										onCheckedChange={handleSelectAll}
-										onClick={(e: React.MouseEvent) => e.stopPropagation()}
+										onClick={(e: React.MouseEvent) =>
+											e.stopPropagation()
+										}
 										className="h-6 w-6 md:h-7 md:w-7"
 									/>
 								)}
 							</div>
 
 							{/* Drawing Info - Single Line */}
-							<div
-								className="flex-1 cursor-pointer flex items-center justify-between"
+							<button
+								type="button"
+								className="flex-1 cursor-pointer flex items-center justify-between text-left bg-transparent border-none p-0"
 								onClick={onToggleExpand}
+								aria-expanded={isExpanded}
+								aria-label={`${isExpanded ? "Collapse" : "Expand"} drawing ${drawingNumber || "No Drawing"}`}
 							>
 								<div className="flex items-center gap-2">
 									<MapPin className="h-4 w-4 text-blue-600" />
@@ -254,11 +273,13 @@ export function MobileDrawingGroup({
 										<ChevronRight className="h-4 w-4 text-gray-500" />
 									)}
 								</div>
-							</div>
+							</button>
 						</div>
 
 						{/* Areas, Systems, and Test Packages - Mobile optimized */}
-						{(uniqueData.areas.length > 0 || uniqueData.systems.length > 0 || uniqueData.testPackages.length > 0) && (
+						{(uniqueData.areas.length > 0 ||
+							uniqueData.systems.length > 0 ||
+							uniqueData.testPackages.length > 0) && (
 							<div className="overflow-x-auto">
 								<div className="flex items-center gap-2 w-max">
 									{/* Areas */}
@@ -267,7 +288,8 @@ export function MobileDrawingGroup({
 											<MapPin className="h-3 w-3 text-blue-500" />
 											<span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-xs font-medium">
 												{uniqueData.areas.join(", ")}
-												{uniqueData.hasMoreAreas && ` +${Math.max(0, new Set(components.map(c => c.area).filter(Boolean)).size - 2)}`}
+												{uniqueData.hasMoreAreas &&
+													` +${Math.max(0, new Set(components.map((c) => c.area).filter(Boolean)).size - 2)}`}
 											</span>
 										</div>
 									)}
@@ -278,7 +300,8 @@ export function MobileDrawingGroup({
 											<Zap className="h-3 w-3 text-green-500" />
 											<span className="bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded text-xs font-medium">
 												{uniqueData.systems.join(", ")}
-												{uniqueData.hasMoreSystems && ` +${Math.max(0, new Set(components.map(c => c.system).filter(Boolean)).size - 2)}`}
+												{uniqueData.hasMoreSystems &&
+													` +${Math.max(0, new Set(components.map((c) => c.system).filter(Boolean)).size - 2)}`}
 											</span>
 										</div>
 									)}
@@ -288,8 +311,11 @@ export function MobileDrawingGroup({
 										<div className="flex items-center gap-1 whitespace-nowrap">
 											<CheckSquare className="h-3 w-3 text-purple-500" />
 											<span className="bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded text-xs font-medium">
-												{uniqueData.testPackages.join(", ")}
-												{uniqueData.hasMoreTestPackages && ` +${Math.max(0, new Set(components.map(c => c.testPackage).filter(Boolean)).size - 2)}`}
+												{uniqueData.testPackages.join(
+													", ",
+												)}
+												{uniqueData.hasMoreTestPackages &&
+													` +${Math.max(0, new Set(components.map((c) => c.testPackage).filter(Boolean)).size - 2)}`}
 											</span>
 										</div>
 									)}
@@ -381,36 +407,31 @@ export function MobileDrawingGroup({
 							</CardContent>
 						</Card>
 					) : (
-						<>
-							{components.map((component) => (
-								<MobileComponentCard
-									key={component.id}
-									component={component}
-									isSelected={selectedIds.has(
+						components.map((component) => (
+							<MobileComponentCard
+								key={component.id}
+								component={component}
+								isSelected={selectedIds.has(component.id)}
+								onSelect={(selected) =>
+									onSelectComponent(
 										component.id,
-									)}
-									onSelect={(selected) =>
-										onSelectComponent(
-											component.id,
-											selected,
-										)
-									}
-									onClick={() =>
-										onComponentClick(component.id)
-									}
-									onQuickUpdate={(status) =>
-										onQuickUpdate(component.id, status)
-									}
-									onEdit={() => onEdit(component.id)}
-									projectId={projectId}
-									onWeldModalChange={onWeldModalChange}
-								/>
-							))}
-						</>
+										selected,
+									)
+								}
+								onClick={() =>
+									onComponentClick(component.id)
+								}
+								onQuickUpdate={(status) =>
+									onQuickUpdate(component.id, status)
+								}
+								onEdit={() => onEdit(component.id)}
+								projectId={projectId}
+								onWeldModalChange={onWeldModalChange}
+							/>
+						))
 					)}
 				</div>
 			) : null}
-
 		</div>
 	);
 }

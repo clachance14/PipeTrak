@@ -1,6 +1,6 @@
 import { config } from "@repo/config";
-import { NavBar } from "@saas/shared/components/NavBar";
 import { MobileNavBar } from "@saas/shared/components/MobileNavBar";
+import { NavBar } from "@saas/shared/components/NavBar";
 import { cn } from "@ui/lib";
 import type { PropsWithChildren } from "react";
 

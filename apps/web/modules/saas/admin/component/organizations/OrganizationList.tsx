@@ -97,11 +97,11 @@ export function OrganizationList() {
 						organizationId: id,
 					}),
 				});
-				
+
 				if (!response.ok) {
 					throw new Error("Failed to delete organization");
 				}
-				
+
 				const text = await response.text();
 				let data = null;
 				if (text) {
@@ -111,9 +111,11 @@ export function OrganizationList() {
 						// Response is not JSON, treat as success
 					}
 				}
-				
+
 				if (data && data.error) {
-					throw new Error(data.error.message || "Failed to delete organization");
+					throw new Error(
+						data.error.message || "Failed to delete organization",
+					);
 				}
 			},
 			{

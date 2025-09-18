@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Input } from "@ui/components/input";
 import { Badge } from "@ui/components/badge";
-import { Switch } from "@ui/components/switch";
+import { Input } from "@ui/components/input";
 import { ScrollArea } from "@ui/components/scroll-area";
-import { Search, Triangle, Check, Circle, Clock } from "lucide-react";
+import { Switch } from "@ui/components/switch";
 import { cn } from "@ui/lib";
+import { Check, Circle, Clock, Search, Triangle } from "lucide-react";
+import { useMemo, useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface ComponentListProps {
@@ -172,6 +172,15 @@ function ComponentListItem({
 				onClick ? "cursor-pointer" : "",
 			)}
 			onClick={onClick}
+			onKeyDown={onClick ? (e: React.KeyboardEvent) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onClick();
+				}
+			} : undefined}
+			tabIndex={onClick ? 0 : undefined}
+			role={onClick ? "button" : undefined}
+			aria-label={onClick ? `View component ${component.componentId}` : undefined}
 		>
 			{/* Header */}
 			<div className="flex items-start justify-between mb-3">

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@ui/components/button";
-import { PlusIcon } from "lucide-react";
 import { AddWelderModal } from "@pipetrak/qc/components/AddWelderModal";
 import { WelderTable } from "@pipetrak/qc/components/WelderTable";
+import { Button } from "@ui/components/button";
+import { PlusIcon } from "lucide-react";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export default function WeldersPage() {
 	const [showAddModal, setShowAddModal] = useState(false);

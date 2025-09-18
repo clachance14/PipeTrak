@@ -21,8 +21,8 @@ import {
 import { ChevronsUpDown, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { OrganizationLogo } from "./OrganizationLogo";
 import { OrganizationDisplay } from "./OrganizationDisplay";
+import { OrganizationLogo } from "./OrganizationLogo";
 
 export function OrganzationSelect({ className }: { className?: string }) {
 	const t = useTranslations();
@@ -37,8 +37,8 @@ export function OrganzationSelect({ className }: { className?: string }) {
 	}
 
 	// Only show dropdown for the admin user, others see simple display
-	const isAdminUser = user.email === 'clachance14@hotmail.com';
-	
+	const isAdminUser = user.email === "clachance14@hotmail.com";
+
 	if (!isAdminUser) {
 		return <OrganizationDisplay className={className} />;
 	}

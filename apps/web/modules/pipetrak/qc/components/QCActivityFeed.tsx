@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Avatar, AvatarFallback } from "@ui/components/avatar";
-import { cn } from "@ui/lib";
 import type { QCActivityItem } from "@pipetrak/qc/lib/activity-loader";
+import { Avatar, AvatarFallback } from "@ui/components/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { cn } from "@ui/lib";
 import { format } from "date-fns";
 
 interface QCActivityFeedProps {
@@ -36,9 +36,12 @@ export function QCActivityFeed({
 									d="M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.712-3.714M14 40v-4a9.971 9.971 0 01.712-3.714"
 								/>
 							</svg>
-							<p className="text-sm font-medium">No weld activity yet</p>
+							<p className="text-sm font-medium">
+								No weld activity yet
+							</p>
 							<p className="text-sm">
-								Start by adding welders or importing field weld data
+								Start by adding welders or importing field weld
+								data
 							</p>
 						</div>
 					</div>
@@ -57,7 +60,8 @@ export function QCActivityFeed({
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{activities.map((activity) => {
-					const weldDateIso = activity.dateWelded ?? activity.effectiveDate;
+					const weldDateIso =
+						activity.dateWelded ?? activity.effectiveDate;
 					const weldDate = weldDateIso ? new Date(weldDateIso) : null;
 					return (
 						<div
@@ -74,16 +78,18 @@ export function QCActivityFeed({
 									Weld {activity.weldNumber}
 								</p>
 								<p className="text-sm text-muted-foreground">
-									{activity.welder.name || activity.welder.stencil
-										? (
-											<>
-												{activity.welder.name ?? "Welder not assigned"}
-												{activity.welder.stencil
-													? ` (${activity.welder.stencil})`
+									{activity.welder.name ||
+									activity.welder.stencil ? (
+										<>
+											{activity.welder.name ??
+												"Welder not assigned"}
+											{activity.welder.stencil
+												? ` (${activity.welder.stencil})`
 												: ""}
-											</>
-										)
-									: "Welder not assigned"}
+										</>
+									) : (
+										"Welder not assigned"
+									)}
 								</p>
 								<p className="text-xs text-muted-foreground">
 									{weldDate
@@ -94,7 +100,10 @@ export function QCActivityFeed({
 							<div className="text-xs text-muted-foreground text-left lg:text-right">
 								{activity.updatedBy ? (
 									<p>
-										Marked complete by <span className="font-medium text-foreground">{activity.updatedBy.name}</span>
+										Marked complete by{" "}
+										<span className="font-medium text-foreground">
+											{activity.updatedBy.name}
+										</span>
 									</p>
 								) : (
 									<p>Marked complete (user not recorded)</p>

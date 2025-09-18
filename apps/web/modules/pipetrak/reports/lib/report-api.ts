@@ -5,20 +5,20 @@
 
 import { apiClient } from "@shared/lib/api-client";
 import type {
-	ProgressReportRequest,
-	ProgressReportResponse,
-	ComponentDetailsRequest,
-	ComponentDetailsResponse,
-	TestPackageReadinessRequest,
-	TestPackageReadinessResponse,
-	TrendAnalysisRequest,
-	TrendAnalysisResponse,
 	AuditTrailRequest,
 	AuditTrailResponse,
 	BulkReportRequest,
 	BulkReportResponse,
-	ReportStatusResponse,
+	ComponentDetailsRequest,
+	ComponentDetailsResponse,
 	FileFilterOptionsResponse,
+	ProgressReportRequest,
+	ProgressReportResponse,
+	ReportStatusResponse,
+	TestPackageReadinessRequest,
+	TestPackageReadinessResponse,
+	TrendAnalysisRequest,
+	TrendAnalysisResponse,
 } from "../types";
 
 // ============================================================================
@@ -36,7 +36,7 @@ export async function generateProgressReport(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to generate progress report");
 	}
 
@@ -56,7 +56,7 @@ export async function getComponentDetailsReport(
 	);
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate component details report",
 		);
@@ -78,7 +78,7 @@ export async function generateTestPackageReadiness(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate test package readiness report",
 		);
@@ -98,7 +98,7 @@ export async function generateTrendAnalysis(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate trend analysis report",
 		);
@@ -118,7 +118,7 @@ export async function getAuditTrailReport(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to generate audit trail report");
 	}
 
@@ -139,7 +139,7 @@ export async function getReportStatus(
 	);
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to get report status");
 	}
 
@@ -163,7 +163,7 @@ export async function clearReportCache(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to clear report cache");
 	}
 
@@ -181,7 +181,7 @@ export async function generateBulkReports(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to start bulk report generation",
 		);
@@ -203,7 +203,7 @@ export async function getReportFileFilterOptions(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to get filter options");
 	}
 
@@ -219,8 +219,14 @@ export async function getReportFileFilterOptions(
  */
 export function buildComponentDetailsQuery(
 	filters: ComponentDetailsRequest["filters"] = {},
-	pagination: ComponentDetailsRequest["pagination"] = { limit: 10000, offset: 0 },
-	sorting: ComponentDetailsRequest["sorting"] = { field: "componentId", direction: "asc" },
+	pagination: ComponentDetailsRequest["pagination"] = {
+		limit: 10000,
+		offset: 0,
+	},
+	sorting: ComponentDetailsRequest["sorting"] = {
+		field: "componentId",
+		direction: "asc",
+	},
 ): ComponentDetailsRequest {
 	return {
 		projectId: "", // Will be set by caller

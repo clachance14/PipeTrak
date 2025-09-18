@@ -158,8 +158,9 @@ export class OptimisticUpdateManager {
 		// Keep success status longer to allow UI feedback, then clean up
 		setTimeout(() => {
 			// Only clean up if no new operations are pending for this milestone
-			const hasPendingOps = Array.from(this.state.pendingUpdates.values())
-				.some(u => u.milestoneId === update.milestoneId);
+			const hasPendingOps = Array.from(
+				this.state.pendingUpdates.values(),
+			).some((u) => u.milestoneId === update.milestoneId);
 			if (!hasPendingOps) {
 				this.state.operationStatus.delete(updateId);
 				// Now it's safe to remove optimistic state since server state is authoritative
@@ -237,9 +238,9 @@ export class OptimisticUpdateManager {
 			([updateId, status]) => {
 				if (status !== "success") return false;
 				// Check if this update ID belongs to the milestone
-				const milestoneFromId = updateId.split('_')[0];
+				const milestoneFromId = updateId.split("_")[0];
 				return milestoneFromId === milestoneId;
-			}
+			},
 		);
 	}
 

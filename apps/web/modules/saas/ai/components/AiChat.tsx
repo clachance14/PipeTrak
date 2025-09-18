@@ -1,5 +1,6 @@
 "use client";
 
+import { type Message, useChat } from "@ai-sdk/react";
 import {
 	aiChatListQueryKey,
 	useAiChatListQuery,
@@ -11,7 +12,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
-import { type Message, useChat } from "@ai-sdk/react";
 import { EllipsisIcon, PlusIcon, SendIcon } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useCallback, useEffect, useMemo } from "react";
@@ -114,13 +114,12 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 											"Untitled chat"}
 									</span>
 									<small className="block font-normal">
-										{new Date(chat.createdAt).toLocaleString(
-											undefined,
-											{
-												dateStyle: "short",
-												timeStyle: "short",
-											},
-										)}
+										{new Date(
+											chat.createdAt,
+										).toLocaleString(undefined, {
+											dateStyle: "short",
+											timeStyle: "short",
+										})}
 									</small>
 								</span>
 							</Button>

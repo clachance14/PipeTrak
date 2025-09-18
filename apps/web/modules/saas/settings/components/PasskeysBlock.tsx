@@ -82,10 +82,13 @@ export function PasskeysBlock() {
 									{passkey.deviceType} {passkey.name}
 								</strong>
 								<small className="block text-foreground/60 text-xs leading-tight">
-									{new Date(passkey.createdAt).toLocaleString(undefined, {
-										dateStyle: "medium",
-										timeStyle: "short",
-									})}
+									{new Date(passkey.createdAt).toLocaleString(
+										undefined,
+										{
+											dateStyle: "medium",
+											timeStyle: "short",
+										},
+									)}
 								</small>
 							</div>
 							<Button

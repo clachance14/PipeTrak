@@ -131,6 +131,12 @@ export function MilestoneDiscreteRenderer({
 				onClick={() =>
 					!isLocked && !isUpdating && handleToggle(!currentValue)
 				}
+				onKeyDown={(e: React.KeyboardEvent) => {
+					if ((e.key === "Enter" || e.key === " ") && !isLocked && !isUpdating) {
+						e.preventDefault();
+						handleToggle(!currentValue);
+					}
+				}}
 				role="checkbox"
 				tabIndex={isLocked ? -1 : 0}
 				aria-checked={currentValue}

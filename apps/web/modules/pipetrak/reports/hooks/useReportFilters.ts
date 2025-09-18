@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 import { getReportFileFilterOptions } from "../lib/report-api";
 import type {
-	ReportFileFilters,
-	ComponentDetailsFileFilters,
 	AuditFileFilters,
+	ComponentDetailsFileFilters,
+	ReportFileFilters,
 } from "../types";
 
 interface UseReportFileFiltersOptions {
@@ -123,7 +123,10 @@ export function useReportFileFilters({
 				params.set("systems", newFileFilters.systems.join(","));
 			}
 			if (newFileFilters.testPackages?.length) {
-				params.set("testPackages", newFileFilters.testPackages.join(","));
+				params.set(
+					"testPackages",
+					newFileFilters.testPackages.join(","),
+				);
 			}
 			if (newFileFilters.componentTypes?.length) {
 				params.set(
@@ -347,7 +350,9 @@ export function useReportFileFilters({
 /**
  * Simplified hook for basic filter management without URL persistence
  */
-export function useSimpleReportFileFilters(initialFileFilters: ReportFileFilters = {}) {
+export function useSimpleReportFileFilters(
+	initialFileFilters: ReportFileFilters = {},
+) {
 	return useReportFileFilters({
 		projectId: "",
 		initialFileFilters,

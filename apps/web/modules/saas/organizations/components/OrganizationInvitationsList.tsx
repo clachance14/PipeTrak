@@ -27,13 +27,7 @@ import {
 } from "@ui/components/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/table";
 import { cn } from "@ui/lib";
-import {
-	Check,
-	Clock,
-	MailX,
-	MoreVertical,
-	X,
-} from "lucide-react";
+import { Check, Clock, MailX, MoreVertical, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { toast } from "sonner";
@@ -128,13 +122,12 @@ export function OrganizationInvitationsList({
 								{t(
 									"organizations.settings.members.invitations.expiresAt",
 									{
-										date: new Date(row.original.expiresAt).toLocaleString(
-											undefined,
-											{
-												dateStyle: "medium",
-												timeStyle: "short",
-											},
-										),
+										date: new Date(
+											row.original.expiresAt,
+										).toLocaleString(undefined, {
+											dateStyle: "medium",
+											timeStyle: "short",
+										}),
 									},
 								)}
 							</span>

@@ -1,14 +1,14 @@
+import {
+	type ComponentImportData,
+	CSVProcessor,
+	calculateInstanceNumbers,
+	DataValidator,
+	ExcelProcessor,
+} from "@repo/api/src/lib/file-processing";
+import { MilestoneTemplateMapper } from "@repo/api/src/lib/milestone-template-mapper";
 import { db as prisma } from "@repo/database";
 import { getSession } from "@saas/auth/lib/server";
 import { type NextRequest, NextResponse } from "next/server";
-import {
-	CSVProcessor,
-	ExcelProcessor,
-	type ComponentImportData,
-	DataValidator,
-	calculateInstanceNumbers,
-} from "@repo/api/src/lib/file-processing";
-import { MilestoneTemplateMapper } from "@repo/api/src/lib/milestone-template-mapper";
 
 // Helper function to create milestones for newly created components
 // Now handles components with different milestone templates
@@ -466,11 +466,10 @@ export async function POST(request: NextRequest) {
 		const startTime = Date.now();
 
 		// Call InstanceTracker to expand components based on quantity and assign instance numbers
-		const expandedComponents =
-			await calculateInstanceNumbers(
-				consolidatedComponents as ComponentImportData[],
-				existingComponentsMap,
-			);
+		const expandedComponents = await calculateInstanceNumbers(
+			consolidatedComponents as ComponentImportData[],
+			existingComponentsMap,
+		);
 
 		console.log(
 			`Import-full: InstanceTracker expanded ${consolidatedComponents.length} consolidated components to ${expandedComponents.length} instances`,

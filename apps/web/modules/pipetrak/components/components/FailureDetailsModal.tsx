@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Checkbox } from "@ui/components/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -9,12 +13,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@ui/components/dialog";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
 import { ScrollArea } from "@ui/components/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Checkbox } from "@ui/components/checkbox";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import {
 	Table,
 	TableBody,
@@ -25,17 +24,18 @@ import {
 } from "@ui/components/table";
 import {
 	AlertTriangle,
-	RefreshCw,
-	Download,
-	Copy,
 	Check,
 	CircleX,
 	Clock,
+	Copy,
+	Download,
+	RefreshCw,
 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import type {
-	BulkUpdateResult,
 	BulkUpdateFailure,
+	BulkUpdateResult,
 } from "../lib/bulk-update-utils";
 
 interface FailureDetailsModalProps {

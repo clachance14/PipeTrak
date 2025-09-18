@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import {
-	TrendingUp,
-	Package,
-	FileText,
-	Check,
 	AlertTriangle,
+	Check,
+	FileText,
+	Package,
+	TrendingUp,
 } from "lucide-react";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
 

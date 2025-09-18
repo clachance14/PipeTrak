@@ -3,8 +3,8 @@ export { ComponentTable } from "./components/ComponentTable";
 
 // Actions
 export {
-	getComponents,
-	getComponent,
-	updateComponentMilestone,
 	bulkUpdateComponents,
+	getComponent,
+	getComponents,
+	updateComponentMilestone,
 } from "./lib/actions";

@@ -1,30 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@ui/components/button";
-import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@ui/components/popover";
-import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
-import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
-import {
-	Check,
-	Clock,
-	AlertCircle,
-	ChevronRight,
-	MoreVertical,
-	Loader2,
-} from "lucide-react";
+import { Progress } from "@ui/components/progress";
 import { cn } from "@ui/lib";
+import {
+	AlertCircle,
+	Check,
+	ChevronRight,
+	Clock,
+	Loader2,
+	MoreVertical,
+} from "lucide-react";
+import { useState } from "react";
 import type {
-	ComponentWithMilestones,
 	ComponentMilestone,
+	ComponentWithMilestones,
 	WorkflowType,
 } from "../../../types";
+import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
 
 interface TableMilestoneColumnProps {
 	component: ComponentWithMilestones;

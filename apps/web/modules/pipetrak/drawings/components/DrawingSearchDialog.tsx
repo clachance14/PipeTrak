@@ -1,16 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { Search, FileText, Clock, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useDebounce } from "@saas/shared/hooks/use-debounce";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@ui/components/dialog";
+import { Badge } from "@ui/components/badge";
 import {
 	Command,
 	CommandEmpty,
@@ -20,9 +11,18 @@ import {
 	CommandList,
 	CommandSeparator,
 } from "@ui/components/command";
-import { Badge } from "@ui/components/badge";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@ui/components/dialog";
 import { Skeleton } from "@ui/components/skeleton";
 import { cn } from "@ui/lib";
+import { ChevronRight, Clock, FileText, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import type { DrawingSearchResult } from "../../types";
 
 interface DrawingSearchDialogProps {
@@ -275,6 +275,7 @@ export function DrawingSearchTrigger({
 	return (
 		<>
 			<button
+				type="button"
 				onClick={() => setOpen(true)}
 				className={cn(
 					"flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground",

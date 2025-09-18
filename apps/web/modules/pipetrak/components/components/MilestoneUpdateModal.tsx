@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, memo, useMemo } from "react";
-import { MilestoneUpdatePanel } from "./MilestoneUpdatePanel";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogDescription,
 } from "@ui/components/dialog";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { memo, useMemo, useState } from "react";
 import type { ComponentWithMilestones, WorkflowType } from "../../types";
+import { MilestoneUpdatePanel } from "./MilestoneUpdatePanel";
 
 interface MilestoneUpdateModalProps {
 	components: ComponentWithMilestones[];

@@ -1,16 +1,16 @@
 "use client";
 
-import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { cn } from "@ui/lib";
 import {
+	AlertTriangle,
+	CloudOff,
+	RefreshCw,
+	Upload,
 	Wifi,
 	WifiOff,
-	RefreshCw,
-	CloudOff,
-	Upload,
-	AlertTriangle,
 } from "lucide-react";
-import { cn } from "@ui/lib";
 
 interface OfflineIndicatorProps {
 	isOnline: boolean;

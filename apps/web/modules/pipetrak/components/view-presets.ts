@@ -1,7 +1,7 @@
 import type {
-	VisibilityState,
-	ColumnSizingState,
 	ColumnOrderState,
+	ColumnSizingState,
+	VisibilityState,
 } from "@tanstack/react-table";
 
 export interface ViewPreset {

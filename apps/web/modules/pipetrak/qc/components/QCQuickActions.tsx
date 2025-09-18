@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { cn } from "@ui/lib";
 import { BarChart3, Upload, UserPlus } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { AddWelderModal } from "./AddWelderModal";
 
 interface QCQuickActionsProps {
@@ -101,8 +101,12 @@ export function QCQuickActions({
 								) : (
 									<Button
 										className="w-full"
-										onClick={() => handleActionClick(action.id)}
-										disabled={action.id === "generate-report"} // Keep generate report disabled for now
+										onClick={() =>
+											handleActionClick(action.id)
+										}
+										disabled={
+											action.id === "generate-report"
+										} // Keep generate report disabled for now
 									>
 										{action.buttonText}
 									</Button>

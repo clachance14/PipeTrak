@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getSession } from "@saas/auth/lib/server";
 import { db } from "@repo/database";
+import { getSession } from "@saas/auth/lib/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const createProjectSchema = z.object({

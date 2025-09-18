@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import { LoadingState } from "@pipetrak/shared/components";
 import { CompactProgressReport } from "@pipetrak/reports/components/CompactProgressReport";
+import { LoadingState } from "@pipetrak/shared/components";
+import { Suspense } from "react";
 
 interface ProgressPrintPageProps {
 	params: Promise<{

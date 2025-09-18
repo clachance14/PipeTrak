@@ -1,12 +1,12 @@
-import { PageHeader } from "@saas/shared/components/PageHeader";
-import { Suspense } from "react";
-import { LoadingState, EmptyState } from "@pipetrak/shared/components";
 import { ComponentTable } from "@pipetrak/components/components/ComponentTable";
 import { getComponents } from "@pipetrak/components/lib/actions";
+import { EmptyState, LoadingState } from "@pipetrak/shared/components";
 import { getSession } from "@saas/auth/lib/server";
-import { redirect } from "next/navigation";
-import Link from "next/link";
+import { PageHeader } from "@saas/shared/components/PageHeader";
 import { Button } from "@ui/components/button";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 interface ComponentsPageProps {
 	params: Promise<{

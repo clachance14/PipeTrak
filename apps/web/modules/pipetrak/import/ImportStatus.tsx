@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Card, CardContent } from "@ui/components/card";
 import { Progress } from "@ui/components/progress";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import { ScrollArea } from "@ui/components/scroll-area";
 import {
-	Loader2,
-	Check,
-	XCircle,
 	AlertTriangle,
-	FileSpreadsheet,
+	Check,
 	Clock,
+	FileSpreadsheet,
+	Loader2,
 	TrendingUp,
+	XCircle,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useImportProgress } from "../hooks/useImportProgress";
 
 interface ImportStatusProps {

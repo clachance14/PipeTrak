@@ -1,35 +1,35 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
 import {
-	useReactTable,
-	getCoreRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
-	flexRender,
 	type ColumnDef,
-	type SortingState,
-	type VisibilityState,
-	type RowSelectionState,
 	type ColumnSizingState,
+	flexRender,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getSortedRowModel,
+	type RowSelectionState,
+	type SortingState,
+	useReactTable,
+	type VisibilityState,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { Card, CardContent, CardHeader } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
+import { Card, CardContent, CardHeader } from "@ui/components/card";
 import { Checkbox } from "@ui/components/checkbox";
+import { Progress } from "@ui/components/progress";
+import { cn } from "@ui/lib";
 import {
-	MapPin,
-	Package,
-	Check,
 	AlertCircle,
+	Check,
+	CheckSquare,
 	Clock,
+	MapPin,
 	// @ts-ignore - Minus exists at runtime but TypeScript declarations are incomplete
 	Minus,
+	Package,
 	Zap,
-	CheckSquare,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import { useMemo, useRef, useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface DrawingGroupProps {
@@ -114,13 +114,19 @@ export function DrawingGroup({
 	// Extract unique areas, systems, and test packages for display
 	const uniqueData = useMemo(() => {
 		const areas = new Set(
-			components.map((c) => c.area).filter((area): area is string => Boolean(area))
+			components
+				.map((c) => c.area)
+				.filter((area): area is string => Boolean(area)),
 		);
 		const systems = new Set(
-			components.map((c) => c.system).filter((system): system is string => Boolean(system))
+			components
+				.map((c) => c.system)
+				.filter((system): system is string => Boolean(system)),
 		);
 		const testPackages = new Set(
-			components.map((c) => c.testPackage).filter((pkg): pkg is string => Boolean(pkg))
+			components
+				.map((c) => c.testPackage)
+				.filter((pkg): pkg is string => Boolean(pkg)),
 		);
 
 		return {
@@ -209,7 +215,8 @@ export function DrawingGroup({
 		onSortingChange: setSorting,
 		onRowSelectionChange: handleLocalRowSelectionChange,
 		onColumnSizingChange: (updater) => {
-			const newSizing = typeof updater === 'function' ? updater(columnSizing) : updater;
+			const newSizing =
+				typeof updater === "function" ? updater(columnSizing) : updater;
 			onColumnSizingChange(newSizing);
 		},
 		getCoreRowModel: getCoreRowModel(),
@@ -283,12 +290,12 @@ export function DrawingGroup({
 				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-center gap-3 min-w-0 flex-1">
 						{/* Selection Checkbox - Larger touch target for tablets */}
-						<div 
+						<div
 							className="cursor-pointer p-1 -m-1 rounded-lg hover:bg-white/50 touch-manipulation" // 44px+ touch target
 						>
 							{stats.someSelected && !stats.allSelected ? (
 								// Custom indeterminate state
-								<div 
+								<div
 									role="button"
 									tabIndex={0}
 									className="h-7 w-7 md:h-8 md:w-8 rounded border-2 border-primary bg-primary flex items-center justify-center cursor-pointer"
@@ -297,7 +304,10 @@ export function DrawingGroup({
 										handleSelectAll();
 									}}
 									onKeyDown={(e) => {
-										if (e.key === 'Enter' || e.key === ' ') {
+										if (
+											e.key === "Enter" ||
+											e.key === " "
+										) {
 											e.preventDefault();
 											e.stopPropagation();
 											handleSelectAll();
@@ -310,7 +320,9 @@ export function DrawingGroup({
 								<Checkbox
 									checked={stats.allSelected}
 									onCheckedChange={handleSelectAll}
-									onClick={(e: React.MouseEvent) => e.stopPropagation()}
+									onClick={(e: React.MouseEvent) =>
+										e.stopPropagation()
+									}
 									className="h-7 w-7 md:h-8 md:w-8" // Larger for better touch interaction
 								/>
 							)}
@@ -324,9 +336,13 @@ export function DrawingGroup({
 							</h3>
 							<div className="flex items-center gap-1 ml-auto md:ml-0">
 								{isExpanded ? (
-									<span className="h-6 w-6 text-gray-500 text-center">↓</span>
+									<span className="h-6 w-6 text-gray-500 text-center">
+										↓
+									</span>
 								) : (
-									<span className="h-6 w-6 text-gray-500 text-center">→</span>
+									<span className="h-6 w-6 text-gray-500 text-center">
+										→
+									</span>
 								)}
 							</div>
 						</div>
@@ -353,7 +369,9 @@ export function DrawingGroup({
 						</div>
 
 						{/* Areas, Systems, and Test Packages - NEW */}
-						{(uniqueData.areas.length > 0 || uniqueData.systems.length > 0 || uniqueData.testPackages.length > 0) && (
+						{(uniqueData.areas.length > 0 ||
+							uniqueData.systems.length > 0 ||
+							uniqueData.testPackages.length > 0) && (
 							<div className="flex items-center gap-3 flex-wrap ml-4 hidden md:flex">
 								{/* Areas */}
 								{uniqueData.areas.length > 0 && (
@@ -369,7 +387,16 @@ export function DrawingGroup({
 										))}
 										{uniqueData.hasMoreAreas && (
 											<Badge className="bg-blue-100 text-blue-600 border-blue-300 text-xs px-2 py-0.5 font-semibold">
-												+{Math.max(0, new Set(components.map(c => c.area).filter(Boolean)).size - 3)} more
+												+
+												{Math.max(
+													0,
+													new Set(
+														components
+															.map((c) => c.area)
+															.filter(Boolean),
+													).size - 3,
+												)}{" "}
+												more
 											</Badge>
 										)}
 									</div>
@@ -389,7 +416,18 @@ export function DrawingGroup({
 										))}
 										{uniqueData.hasMoreSystems && (
 											<Badge className="bg-green-100 text-green-600 border-green-300 text-xs px-2 py-0.5 font-semibold">
-												+{Math.max(0, new Set(components.map(c => c.system).filter(Boolean)).size - 3)} more
+												+
+												{Math.max(
+													0,
+													new Set(
+														components
+															.map(
+																(c) => c.system,
+															)
+															.filter(Boolean),
+													).size - 3,
+												)}{" "}
+												more
 											</Badge>
 										)}
 									</div>
@@ -409,7 +447,19 @@ export function DrawingGroup({
 										))}
 										{uniqueData.hasMoreTestPackages && (
 											<Badge className="bg-purple-100 text-purple-600 border-purple-300 text-xs px-2 py-0.5 font-semibold">
-												+{Math.max(0, new Set(components.map(c => c.testPackage).filter(Boolean)).size - 3)} more
+												+
+												{Math.max(
+													0,
+													new Set(
+														components
+															.map(
+																(c) =>
+																	c.testPackage,
+															)
+															.filter(Boolean),
+													).size - 3,
+												)}{" "}
+												more
 											</Badge>
 										)}
 									</div>
@@ -566,7 +616,9 @@ export function DrawingGroup({
 																>
 																	<div className="flex items-center gap-1 group">
 																		{isDraggable && (
-																			<span className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-move text-center">⋮⋮</span>
+																			<span className="h-4 w-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-move text-center">
+																				⋮⋮
+																			</span>
 																		)}
 																		{header.isPlaceholder
 																			? null

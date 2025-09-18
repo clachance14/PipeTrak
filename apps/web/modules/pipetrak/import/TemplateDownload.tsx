@@ -1,5 +1,8 @@
 "use client";
 
+import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
 import {
 	Card,
 	CardContent,
@@ -7,33 +10,32 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import {
-	FileSpreadsheet,
-	Download,
-	Check,
-	Info,
-	FileText,
-	Table,
-	List,
 	AlertCircle,
+	Check,
+	Download,
+	FileSpreadsheet,
+	FileText,
+	Info,
+	List,
+	Table,
 	Zap,
 } from "lucide-react";
 import {
-	generateImportTemplate,
-	generateFieldWeldTemplate,
-	generateCSVTemplate,
 	downloadFile,
+	generateCSVTemplate,
+	generateFieldWeldTemplate,
+	generateImportTemplate,
 } from "../utils/templateGenerator";
 
 interface TemplateDownloadProps {
 	projectId: string;
 }
 
-export function TemplateDownload({ projectId: _projectId }: TemplateDownloadProps) {
+export function TemplateDownload({
+	projectId: _projectId,
+}: TemplateDownloadProps) {
 	const handleExcelDownload = () => {
 		const blob = generateImportTemplate();
 		const filename = `PipeTrak_Import_Template_${new Date().toISOString().split("T")[0]}.xlsx`;

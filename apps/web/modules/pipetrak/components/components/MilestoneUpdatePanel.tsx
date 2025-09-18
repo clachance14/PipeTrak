@@ -1,26 +1,20 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { MilestoneUpdateCard } from "./MilestoneUpdateCard";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Button } from "@ui/components/button";
-import { Progress } from "@ui/components/progress";
+import { apiClient } from "@shared/lib/api-client";
 import { Badge } from "@ui/components/badge";
-import { toast } from "sonner";
-import {
-	Check,
-	AlertCircle,
-	RefreshCw,
-	Save,
-	Package,
-} from "lucide-react";
+import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Progress } from "@ui/components/progress";
 import { cn } from "@ui/lib";
+import { AlertCircle, Check, Package, RefreshCw, Save } from "lucide-react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import type {
-	ComponentWithMilestones,
 	ComponentMilestone,
+	ComponentWithMilestones,
 	WorkflowType,
 } from "../../types";
-import { apiClient } from "@shared/lib/api-client";
+import { MilestoneUpdateCard } from "./MilestoneUpdateCard";
 
 interface MilestoneUpdatePanelProps {
 	component: ComponentWithMilestones;
@@ -53,10 +47,7 @@ export function MilestoneUpdatePanel({
 			return sum + (m.isCompleted ? m.weight || 0 : 0);
 		}
 		if (workflowType === "MILESTONE_PERCENTAGE") {
-			return (
-				sum +
-				((m.percentageComplete || 0) / 100) * (m.weight || 0)
-			);
+			return sum + ((m.percentageComplete || 0) / 100) * (m.weight || 0);
 		}
 		const percent =
 			(m.quantityTotal || 0) > 0
@@ -219,12 +210,16 @@ export function MilestoneUpdatePanel({
 				}
 
 				const data = await response.json();
-				const milestonesWithDateConversion = data.milestones.map((milestone: any) => ({
-					...milestone,
-					completedAt: milestone.completedAt ? new Date(milestone.completedAt) : null,
-					createdAt: new Date(milestone.createdAt),
-					updatedAt: new Date(milestone.updatedAt),
-				}));
+				const milestonesWithDateConversion = data.milestones.map(
+					(milestone: any) => ({
+						...milestone,
+						completedAt: milestone.completedAt
+							? new Date(milestone.completedAt)
+							: null,
+						createdAt: new Date(milestone.createdAt),
+						updatedAt: new Date(milestone.updatedAt),
+					}),
+				);
 				setMilestones(milestonesWithDateConversion);
 				setPendingUpdates(new Map());
 				toast.success("Milestones refreshed");

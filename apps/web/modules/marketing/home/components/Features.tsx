@@ -2,14 +2,7 @@
 
 import { MobileIcon } from "@radix-ui/react-icons";
 import { cn } from "@ui/lib";
-import {
-	BarChart3,
-	Cloud,
-	File,
-	Layers,
-	WifiOff,
-	Wand2,
-} from "lucide-react";
+import { BarChart3, Cloud, File, Layers, Wand2, WifiOff } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 import { type JSXElementConstructor, type ReactNode, useState } from "react";
 import heroImage from "../../../../public/images/hero.svg";

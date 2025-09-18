@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronRight, ChevronDown, FileText } from "lucide-react";
 import { Button } from "@ui/components/button";
 import { cn } from "@ui/lib";
+import { ChevronDown, ChevronRight, FileText } from "lucide-react";
 import type { DrawingTreeNode } from "../../types";
 import { ComponentCountBadge } from "./ComponentCountBadge";
 
@@ -41,7 +41,7 @@ export function DrawingTreeItem({
 			}}
 			onClick={() => onSelect(drawing.id)}
 			onKeyDown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
+				if (e.key === "Enter" || e.key === " ") {
 					onSelect(drawing.id);
 				}
 			}}

@@ -1,19 +1,19 @@
 "use client";
 
-import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
 import { Button } from "@ui/components/button";
+import { Card, CardContent } from "@ui/components/card";
+import { Progress } from "@ui/components/progress";
+import { cn } from "@ui/lib";
 import {
+	AlertCircle,
+	Check,
+	Clock,
+	FileText,
 	MapPin,
 	Package,
 	Wrench,
-	FileText,
-	Check,
-	Clock,
-	AlertCircle,
 } from "lucide-react";
-import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
 
 interface ComponentCardProps {

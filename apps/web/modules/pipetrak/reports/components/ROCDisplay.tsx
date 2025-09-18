@@ -1,16 +1,16 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Progress } from "@ui/components/progress";
+import { cn } from "@ui/lib";
 import {
-	TrendingUp,
-	TrendingDown,
+	AlertCircle,
+	Award,
+	Info,
 	Minus,
 	Target,
-	Award,
-	AlertCircle,
-	Info,
+	TrendingDown,
+	TrendingUp,
 } from "lucide-react";
-import { cn } from "@ui/lib";
 import type { ROCWeightedProgress } from "../types";
 
 interface ROCDisplayProps {

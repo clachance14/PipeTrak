@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
 import { Button } from "@ui/components/button";
 import { Checkbox } from "@ui/components/checkbox";
 import { Input } from "@ui/components/input";
 import { Progress } from "@ui/components/progress";
 import { Slider } from "@ui/components/slider";
-import { Save, Check } from "lucide-react";
-import { updateComponentMilestone } from "../lib/actions";
+import { Check, Save } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import { MarkWeldCompleteModal } from "../../qc/components/MarkWeldCompleteModal";
 import type { Component, ComponentMilestone } from "../../types";
-import { toast } from "sonner";
+import { updateComponentMilestone } from "../lib/actions";
 
 interface MilestoneEditorProps {
 	component: Component;
@@ -183,8 +183,9 @@ export function MilestoneEditor({
 						? edited.isCompleted
 						: milestone.isCompleted;
 				return (
-					<div
-						className="flex items-center gap-3 cursor-pointer select-none py-3 px-3 -mx-1 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[48px]"
+					<button
+						type="button"
+						className="flex items-center gap-3 cursor-pointer select-none py-3 px-3 -mx-1 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[48px] w-full text-left bg-transparent border-none"
 						onClick={() =>
 							!isSaving &&
 							handleMilestoneChange(
@@ -193,19 +194,8 @@ export function MilestoneEditor({
 								!isCompleted,
 							)
 						}
-						role="button"
-						tabIndex={0}
-						onKeyDown={(e) => {
-							if (e.key === "Enter" || e.key === " ") {
-								e.preventDefault();
-								!isSaving &&
-									handleMilestoneChange(
-										milestone.id,
-										"isCompleted",
-										!isCompleted,
-									);
-							}
-						}}
+						disabled={isSaving}
+						aria-label={`Toggle ${milestone.name} milestone`}
 					>
 						<Checkbox
 							checked={isCompleted}
@@ -228,7 +218,7 @@ export function MilestoneEditor({
 						{isCompleted && (
 							<Check className="h-4 w-4 text-green-600" />
 						)}
-					</div>
+					</button>
 				);
 			}
 

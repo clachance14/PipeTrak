@@ -3,7 +3,7 @@
 import { config } from "@repo/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import BoringAvatar from "boring-avatars";
-import { useMemo, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const OrganizationLogo = ({
 	name,
