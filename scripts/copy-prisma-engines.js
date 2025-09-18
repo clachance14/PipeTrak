@@ -33,9 +33,12 @@ const targetDirs = [
 		"generated",
 		"client",
 	),
-	// Fallback for Prisma's runtime lookup inside the app directory
+	// Vercel expected paths from runtime error logs
 	path.join(repoRoot, "apps", "web", "prisma", "generated", "client"),
 	path.join(repoRoot, "apps", "web", ".prisma", "client"),
+	path.join(repoRoot, "apps", "web", ".next", "server"),
+	// Additional Vercel runtime paths
+	path.join(nextDir, "standalone", "packages", "database", "prisma", "generated", "client"),
 	// Temp directory used during lambda execution
 	"/tmp/prisma-engines",
 ];

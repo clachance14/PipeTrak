@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
 	transpilePackages: ["@repo/api", "@repo/auth", "@repo/database"],
 	experimental: {
 		serverComponentsExternalPackages: ["@prisma/client", "prisma"],
+		...(process.env.VERCEL && {
+			outputFileTracingIncludes: {
+				"/api/**/*": [
+					"../../packages/database/prisma/generated/client/**/*",
+					"./prisma/generated/client/**/*",
+				],
+			},
+		}),
 	},
 	// Vercel deployment optimizations for Prisma
 	...(process.env.VERCEL && {
@@ -86,6 +94,18 @@ const nextConfig: NextConfig = {
 					"@repo/database/prisma/generated/client",
 				),
 			};
+
+			// Add Prisma binaries to webpack externals
+			if (process.env.VERCEL) {
+				config.externals = [
+					...(config.externals || []),
+					// Keep Prisma client internal but ensure binaries are accessible
+					{
+						"./query-engine-rhel-openssl-3.0.x": "commonjs ./query-engine-rhel-openssl-3.0.x",
+						"./libquery_engine-rhel-openssl-3.0.x.so.node": "commonjs ./libquery_engine-rhel-openssl-3.0.x.so.node",
+					},
+				];
+			}
 		}
 
 		// Development-specific optimizations to reduce ENOENT errors

@@ -10,7 +10,8 @@ const prismaClientSingleton = () => {
 		? `${baseUrl}&connection_limit=50&pool_timeout=60`
 		: `${baseUrl}?connection_limit=50&pool_timeout=60`;
 
-	return new PrismaClient({
+	// Configure Prisma client with Vercel-specific settings
+	const clientConfig: any = {
 		log:
 			process.env.NODE_ENV === "development"
 				? ["error", "warn"]
@@ -20,7 +21,18 @@ const prismaClientSingleton = () => {
 				url: urlWithPool,
 			},
 		},
-	});
+	};
+
+	// Add explicit binary targets for Vercel
+	if (process.env.VERCEL) {
+		clientConfig.__internal = {
+			engine: {
+				binaryPath: "./query-engine-rhel-openssl-3.0.x",
+			},
+		};
+	}
+
+	return new PrismaClient(clientConfig);
 };
 
 declare global {
