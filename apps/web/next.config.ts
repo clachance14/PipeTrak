@@ -14,8 +14,8 @@ const nextConfig: NextConfig = {
 		...(process.env.VERCEL && {
 			outputFileTracingIncludes: {
 				"/api/**/*": [
-					"../../packages/database/prisma/generated/client/**/*",
-					"./prisma/generated/client/**/*",
+					"../../packages/database/prisma/generated/client/**/*.so.node",
+					"./prisma/generated/client/**/*.so.node",
 				],
 			},
 		}),
@@ -95,14 +95,16 @@ const nextConfig: NextConfig = {
 				),
 			};
 
-			// Add Prisma binaries to webpack externals
+			// Add Prisma library engines to webpack externals
 			if (process.env.VERCEL) {
 				config.externals = [
 					...(config.externals || []),
-					// Keep Prisma client internal but ensure binaries are accessible
+					// Keep Prisma client internal but ensure library engines are accessible
 					{
-						"./query-engine-rhel-openssl-3.0.x": "commonjs ./query-engine-rhel-openssl-3.0.x",
-						"./libquery_engine-rhel-openssl-3.0.x.so.node": "commonjs ./libquery_engine-rhel-openssl-3.0.x.so.node",
+						"./libquery_engine-rhel-openssl-3.0.x.so.node":
+							"commonjs ./libquery_engine-rhel-openssl-3.0.x.so.node",
+						"./libquery_engine-debian-openssl-3.0.x.so.node":
+							"commonjs ./libquery_engine-debian-openssl-3.0.x.so.node",
 					},
 				];
 			}
