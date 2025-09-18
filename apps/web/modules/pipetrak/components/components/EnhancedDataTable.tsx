@@ -305,40 +305,45 @@ export function EnhancedDataTable({
 					</div>
 				);
 			}
-			default:
+			default: {
+				const isEditable = enableEditing && column.editable !== false;
 				return (
-					<div
-						role={enableEditing && column.editable !== false ? "button" : undefined}
-						tabIndex={enableEditing && column.editable !== false ? 0 : undefined}
+					<button
 						className={cn(
-							"flex items-center",
-							enableEditing &&
-								column.editable !== false &&
+							"group flex w-full items-center text-left",
+							isEditable &&
 								"cursor-pointer hover:bg-muted/50 rounded px-2 -mx-2",
 						)}
 						style={{ minHeight: `${touchTargetSize}px` }}
 						onClick={() => {
-							if (enableEditing && column.editable !== false) {
+							if (isEditable) {
 								handleCellDoubleClick(item.id, column.key, value);
 							}
 						}}
-						onDoubleClick={() =>
-							handleCellDoubleClick(item.id, column.key, value)
+						onDoubleClick={() => {
+							if (isEditable) {
+								handleCellDoubleClick(item.id, column.key, value);
+							}
+						}}
+						onKeyDown={(event) => {
+							if (isEditable && (event.key === "Enter" || event.key === " ")) {
+								event.preventDefault();
+								handleCellDoubleClick(item.id, column.key, value);
+							}
+						}}
+						type="button"
+						disabled={!isEditable}
+						aria-label={
+							isEditable ? `Edit ${column.label || column.key}` : undefined
 						}
-						onKeyDown={(e: React.KeyboardEvent) => {
-							if (enableEditing && column.editable !== false && (e.key === "Enter" || e.key === " ")) {
-								e.preventDefault();
-								handleCellDoubleClick(item.id, column.key, value);
-							}
-						}}
-						{...(enableEditing && column.editable !== false ? { "aria-label": `Edit ${column.header || column.key}` } : {})}
 					>
 						{value?.toString() || "-"}
-						{enableEditing && column.editable !== false && (
-							<Edit className="ml-2 h-3 w-3 opacity-0 hover:opacity-50" />
+						{isEditable && (
+							<Edit className="ml-2 h-3 w-3 opacity-0 group-hover:opacity-50" />
 						)}
-					</div>
+					</button>
 				);
+			}
 		}
 	};
 
