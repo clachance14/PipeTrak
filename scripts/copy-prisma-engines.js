@@ -53,10 +53,9 @@ const targetDirs = [
 	"/tmp/prisma-engines",
 ];
 
-// Engine files to copy (library engines only for Vercel compatibility)
+// Engine files to copy (binary engine for Vercel)
 const engineFiles = [
-	"libquery_engine-rhel-openssl-3.0.x.so.node",
-	"libquery_engine-debian-openssl-3.0.x.so.node",
+	"query-engine-rhel-openssl-3.0.x",
 ];
 
 function copyFile(src, dest) {
@@ -70,7 +69,8 @@ function copyFile(src, dest) {
 		// Copy file if source exists
 		if (fs.existsSync(src)) {
 			fs.copyFileSync(src, dest);
-			// Library files (.so.node) don't need to be executable
+			// Make binary executable
+			fs.chmodSync(dest, 0o755);
 			console.log(
 				`✅ Copied: ${path.relative(process.cwd(), src)} → ${path.relative(process.cwd(), dest)}`,
 			);

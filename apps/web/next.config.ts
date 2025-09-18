@@ -14,8 +14,7 @@ const nextConfig: NextConfig = {
 		...(process.env.VERCEL && {
 			outputFileTracingIncludes: {
 				"/api/**/*": [
-					"../../packages/database/prisma/generated/client/**/*.so.node",
-					"./prisma/generated/client/**/*.so.node",
+					"../../packages/database/prisma/generated/client/query-engine-*",
 				],
 			},
 		}),
@@ -95,18 +94,14 @@ const nextConfig: NextConfig = {
 				),
 			};
 
-			// Add Prisma library engines to webpack externals
+			// Prisma binary engine handling for Vercel
 			if (process.env.VERCEL) {
-				config.externals = [
-					...(config.externals || []),
-					// Keep Prisma client internal but ensure library engines are accessible
-					{
-						"./libquery_engine-rhel-openssl-3.0.x.so.node":
-							"commonjs ./libquery_engine-rhel-openssl-3.0.x.so.node",
-						"./libquery_engine-debian-openssl-3.0.x.so.node":
-							"commonjs ./libquery_engine-debian-openssl-3.0.x.so.node",
-					},
-				];
+				// Let Next.js handle the binary bundling automatically
+				config.resolve.fallback = {
+					...config.resolve.fallback,
+					fs: false,
+					path: false,
+				};
 			}
 		}
 
