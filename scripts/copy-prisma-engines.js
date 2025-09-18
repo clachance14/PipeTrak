@@ -38,7 +38,17 @@ const targetDirs = [
 	path.join(repoRoot, "apps", "web", ".prisma", "client"),
 	path.join(repoRoot, "apps", "web", ".next", "server"),
 	// Additional Vercel runtime paths
-	path.join(nextDir, "standalone", "packages", "database", "prisma", "generated", "client"),
+	path.join(
+		nextDir,
+		"standalone",
+		"packages",
+		"database",
+		"prisma",
+		"generated",
+		"client",
+	),
+	// Vercel serverless function root directory
+	path.join(nextDir, "standalone"),
 	// Temp directory used during lambda execution
 	"/tmp/prisma-engines",
 ];

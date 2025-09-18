@@ -23,14 +23,7 @@ const prismaClientSingleton = () => {
 		},
 	};
 
-	// Add explicit binary targets for Vercel
-	if (process.env.VERCEL) {
-		clientConfig.__internal = {
-			engine: {
-				binaryPath: "./query-engine-rhel-openssl-3.0.x",
-			},
-		};
-	}
+	// Library engine type handles Vercel compatibility automatically
 
 	return new PrismaClient(clientConfig);
 };
