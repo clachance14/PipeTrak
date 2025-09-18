@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import {
 	Select,
 	SelectContent,
@@ -9,8 +8,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Plus, Folder } from "lucide-react";
-import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { Folder, Plus } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { CreateProjectModal } from "./CreateProjectModal";
 
 interface Project {
@@ -38,7 +38,9 @@ export function ProjectSwitcher() {
 	}, [activeOrganization, projectId]);
 
 	const fetchProjects = async () => {
-		if (!activeOrganization) return;
+		if (!activeOrganization) {
+			return;
+		}
 
 		try {
 			const response = await fetch(
@@ -92,7 +94,7 @@ export function ProjectSwitcher() {
 			<div className="flex items-center gap-2">
 				<Folder className="h-4 w-4 text-muted-foreground" />
 				<Select value={projectId} onValueChange={handleProjectChange}>
-					<SelectTrigger className="w-full max-w-md min-w-0">
+					<SelectTrigger className="w-full max-w-2xl min-w-0">
 						<SelectValue className="block overflow-hidden">
 							{currentProject ? (
 								<span className="block truncate text-left">

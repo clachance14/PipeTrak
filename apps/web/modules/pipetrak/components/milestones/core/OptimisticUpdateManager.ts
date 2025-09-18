@@ -150,15 +150,22 @@ export class OptimisticUpdateManager {
 			return;
 		}
 
-		// Success - clean up optimistic state
-		this.state.optimisticMilestones.delete(update.milestoneId);
+		// Success - keep the optimistic state but mark as confirmed
+		// Don't delete optimistic state immediately to maintain UI feedback
 		this.state.pendingUpdates.delete(updateId);
 		this.state.operationStatus.set(updateId, "success");
 
-		// Cleanup status after delay
+		// Keep success status longer to allow UI feedback, then clean up
 		setTimeout(() => {
-			this.state.operationStatus.delete(updateId);
-		}, 5000);
+			// Only clean up if no new operations are pending for this milestone
+			const hasPendingOps = Array.from(this.state.pendingUpdates.values())
+				.some(u => u.milestoneId === update.milestoneId);
+			if (!hasPendingOps) {
+				this.state.operationStatus.delete(updateId);
+				// Now it's safe to remove optimistic state since server state is authoritative
+				this.state.optimisticMilestones.delete(update.milestoneId);
+			}
+		}, 2000); // Keep success state for 2 seconds for user feedback
 
 		this.callbacks.onSuccess?.(update, serverMilestone);
 		this.persistState();
@@ -219,6 +226,20 @@ export class OptimisticUpdateManager {
 	hasPendingUpdates(milestoneId: string): boolean {
 		return Array.from(this.state.pendingUpdates.values()).some(
 			(update) => update.milestoneId === milestoneId,
+		);
+	}
+
+	/**
+	 * Check if milestone has recent success status
+	 */
+	hasRecentSuccess(milestoneId: string): boolean {
+		return Array.from(this.state.operationStatus.entries()).some(
+			([updateId, status]) => {
+				if (status !== "success") return false;
+				// Check if this update ID belongs to the milestone
+				const milestoneFromId = updateId.split('_')[0];
+				return milestoneFromId === milestoneId;
+			}
 		);
 	}
 

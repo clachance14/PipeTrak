@@ -11,14 +11,14 @@
 
 "use client";
 
-import React, { useState } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Badge } from "@ui/components/badge";
-import { QuickMilestoneSelector } from "./QuickMilestoneSelector";
-import { useQuickMilestoneSelector } from "./useQuickMilestoneSelector";
+import React, { useState } from "react";
 import type { ComponentWithMilestones, WorkflowType } from "../../../types";
 import { ComponentStatus } from "../../../types";
+import { QuickMilestoneSelector } from "./QuickMilestoneSelector";
+import { useQuickMilestoneSelector } from "./useQuickMilestoneSelector";
 
 // Mock component data for demonstration
 const mockComponent: ComponentWithMilestones = {
@@ -39,7 +39,6 @@ const mockComponent: ComponentWithMilestones = {
 			isCompleted: true,
 			milestoneOrder: 1,
 			sequenceNumber: 1,
-			creditWeight: 10,
 			weight: 10,
 			percentageComplete: 0,
 			quantityComplete: 0,
@@ -55,7 +54,6 @@ const mockComponent: ComponentWithMilestones = {
 			isCompleted: false,
 			milestoneOrder: 2,
 			sequenceNumber: 2,
-			creditWeight: 15,
 			weight: 15,
 			percentageComplete: 0,
 			quantityComplete: 0,
@@ -71,7 +69,6 @@ const mockComponent: ComponentWithMilestones = {
 			isCompleted: false,
 			milestoneOrder: 3,
 			sequenceNumber: 3,
-			creditWeight: 25,
 			weight: 25,
 			percentageComplete: 0,
 			quantityComplete: 0,

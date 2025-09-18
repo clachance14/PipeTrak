@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@aws-sdk/client-s3": "3.437.0",
 		"@aws-sdk/s3-request-presigner": "3.437.0",
+		"@supabase/supabase-js": "^2.46.1",
 		"@repo/config": "workspace:*",
 		"@repo/logs": "workspace:*"
 	},

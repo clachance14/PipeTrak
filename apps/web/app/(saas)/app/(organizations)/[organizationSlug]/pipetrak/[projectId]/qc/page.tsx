@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { TabGroup } from "@saas/shared/components/TabGroup";
+import { QCMetricCard } from "@pipetrak/qc/components/QCMetricCard";
+import { QCQuickActions } from "@pipetrak/qc/components/QCQuickActions";
+import { QCDashboardClient } from "@pipetrak/qc/components/QCDashboardClient";
+import { getQCActivityFeed } from "@pipetrak/qc/lib/activity-loader";
+import { getQCMetrics, formatQCMetrics } from "@pipetrak/qc/lib/qc-metrics-loader";
+import { Suspense } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 
 interface QCPageProps {
 	params: Promise<{
@@ -16,8 +23,38 @@ export const metadata: Metadata = {
 export default async function QCPage({ params }: QCPageProps) {
 	const { organizationSlug, projectId } = await params;
 
+	// Load real QC metrics from database
+	const qcMetrics = await getQCMetrics(projectId);
+	const formattedMetrics = formatQCMetrics(qcMetrics);
+
+	// QC Navigation tabs with counts
+	const qcTabs = [
+		{
+			label: "Overview",
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/qc`,
+			segment: "qc",
+		},
+		{
+			label: "Field Welds",
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/qc/field-welds`,
+			segment: "field-welds",
+			badge: qcMetrics.totalWelds.toLocaleString(),
+		},
+		{
+			label: "Welders",
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/qc/welders`,
+			segment: "welders",
+			badge: qcMetrics.activeWelders.toString(),
+		},
+		{
+			label: "Reports",
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/qc/reports`,
+			segment: "reports",
+		},
+	];
+
 	return (
-		<div className="space-y-6">
+		<div className="container mx-auto px-4 lg:px-6 space-y-6">
 			{/* QC Header */}
 			<div className="flex items-center justify-between">
 				<div>
@@ -30,168 +67,89 @@ export default async function QCPage({ params }: QCPageProps) {
 				</div>
 			</div>
 
-			{/* QC Overview Dashboard */}
-			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-				{/* Total Field Welds */}
-				<div className="rounded-lg border bg-card p-6">
-					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 rounded-full bg-blue-500" />
-						<h3 className="font-semibold">Total Field Welds</h3>
-					</div>
-					<div className="mt-2">
-						<div className="text-2xl font-bold">0</div>
-						<p className="text-sm text-muted-foreground">
-							Across all packages
-						</p>
-					</div>
-				</div>
-
-				{/* Acceptance Rate */}
-				<div className="rounded-lg border bg-card p-6">
-					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 rounded-full bg-green-500" />
-						<h3 className="font-semibold">Acceptance Rate</h3>
-					</div>
-					<div className="mt-2">
-						<div className="text-2xl font-bold">--</div>
-						<p className="text-sm text-muted-foreground">
-							NDE pass rate
-						</p>
-					</div>
-				</div>
-
-				{/* PWHT Status */}
-				<div className="rounded-lg border bg-card p-6">
-					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 rounded-full bg-orange-500" />
-						<h3 className="font-semibold">PWHT Complete</h3>
-					</div>
-					<div className="mt-2">
-						<div className="text-2xl font-bold">0</div>
-						<p className="text-sm text-muted-foreground">
-							Post-weld heat treatment
-						</p>
-					</div>
-				</div>
-
-				{/* Active Welders */}
-				<div className="rounded-lg border bg-card p-6">
-					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 rounded-full bg-purple-500" />
-						<h3 className="font-semibold">Active Welders</h3>
-					</div>
-					<div className="mt-2">
-						<div className="text-2xl font-bold">0</div>
-						<p className="text-sm text-muted-foreground">
-							Qualified welders
-						</p>
-					</div>
-				</div>
+			{/* QC Metrics Overview */}
+			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+				<QCMetricCard
+					title="Total Field Welds"
+					value={formattedMetrics.totalWelds.value}
+					label={formattedMetrics.totalWelds.label}
+					color="blue"
+					trend={formattedMetrics.totalWelds.trend}
+				/>
+				<QCMetricCard
+					title="Completed Welds"
+					value={formattedMetrics.completedWelds.value}
+					label={formattedMetrics.completedWelds.label}
+					color="teal"
+				/>
+				<QCMetricCard
+					title="Acceptance Rate"
+					value={formattedMetrics.acceptanceRate.value}
+					label={formattedMetrics.acceptanceRate.label}
+					color="green"
+					trend={formattedMetrics.acceptanceRate.trend}
+				/>
+				<QCMetricCard
+					title="PWHT Complete"
+					value={formattedMetrics.pwhtComplete.value}
+					label={formattedMetrics.pwhtComplete.label}
+					color="orange"
+					trend={formattedMetrics.pwhtComplete.trend}
+				/>
+				<QCMetricCard
+					title="Active Welders"
+					value={formattedMetrics.activeWelders.value}
+					label={formattedMetrics.activeWelders.label}
+					color="purple"
+				/>
 			</div>
 
 			{/* QC Navigation Tabs */}
-			<div className="border-b border-border">
-				<nav
-					className="-mb-px flex space-x-8"
-					aria-label="QC Navigation"
-				>
-					<a
-						href={`/app/${organizationSlug}/pipetrak/${projectId}/qc`}
-						className="border-transparent py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-					>
-						Overview
-					</a>
-					<a
-						href={`/app/${organizationSlug}/pipetrak/${projectId}/qc/field-welds`}
-						className="border-transparent py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-					>
-						Field Welds
-					</a>
-					<a
-						href={`/app/${organizationSlug}/pipetrak/${projectId}/qc/welders`}
-						className="border-transparent py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-					>
-						Welders
-					</a>
-					<a
-						href={`/app/${organizationSlug}/pipetrak/${projectId}/qc/reports`}
-						className="border-transparent py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-					>
-						Reports
-					</a>
-				</nav>
-			</div>
+			<TabGroup items={qcTabs} />
 
 			{/* Quick Actions */}
-			<div className="space-y-4">
-				<h2 className="text-lg font-semibold">Quick Actions</h2>
-				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-					<div className="rounded-lg border bg-card p-6">
-						<h3 className="font-semibold mb-2">Add Welder</h3>
-						<p className="text-sm text-muted-foreground mb-4">
-							Register a new welder for this project
-						</p>
-						<button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4">
-							Add Welder
-						</button>
-					</div>
+			<QCQuickActions
+				organizationSlug={organizationSlug}
+				projectId={projectId}
+			/>
 
-					<div className="rounded-lg border bg-card p-6">
-						<h3 className="font-semibold mb-2">
-							Import Field Welds
-						</h3>
-						<p className="text-sm text-muted-foreground mb-4">
-							Bulk import field weld data from Excel
-						</p>
-						<Link
-							href={`/app/${organizationSlug}/pipetrak/${projectId}/qc/import`}
-							className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
-						>
-							Import Welds
-						</Link>
-					</div>
+			{/* Date Range Filter and Activity Feed */}
+			<Suspense fallback={<QCActivitySkeleton />}>
+				<QCActivityContentWithFilters projectId={projectId} />
+			</Suspense>
+		</div>
+	);
+}
 
-					<div className="rounded-lg border bg-card p-6">
-						<h3 className="font-semibold mb-2">Generate Report</h3>
-						<p className="text-sm text-muted-foreground mb-4">
-							Create QC status reports and summaries
-						</p>
-						<button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4">
-							Generate Report
-						</button>
-					</div>
-				</div>
-			</div>
+// Server component for loading initial activity data
+async function QCActivityContentWithFilters({ projectId }: { projectId: string }) {
+	const initialActivities = await getQCActivityFeed(projectId, 15);
+	return (
+		<QCDashboardClient 
+			projectId={projectId}
+			initialActivities={initialActivities}
+		/>
+	);
+}
 
-			{/* Recent Activity */}
-			<div className="space-y-4">
-				<h2 className="text-lg font-semibold">Recent Activity</h2>
-				<div className="rounded-lg border bg-card p-6">
-					<div className="text-center py-12">
-						<div className="text-muted-foreground">
-							<svg
-								className="mx-auto h-12 w-12 text-gray-400"
-								stroke="currentColor"
-								fill="none"
-								viewBox="0 0 48 48"
-								aria-hidden="true"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.712-3.714M14 40v-4a9.971 9.971 0 01.712-3.714M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.712-3.714M14 40v-4a9.971 9.971 0 01.712-3.714"
-								/>
-							</svg>
-							<p className="mt-2 text-sm">No QC activity yet</p>
-							<p className="text-sm">
-								Start by adding welders or importing field weld
-								data
-							</p>
+// Loading skeleton for activity feed
+function QCActivitySkeleton() {
+	return (
+		<Card>
+			<CardHeader>
+				<CardTitle className="text-lg">Recent Welds</CardTitle>
+			</CardHeader>
+			<CardContent className="space-y-4">
+				{[1, 2, 3].map((i) => (
+					<div key={i} className="flex gap-3 p-3 rounded-lg bg-muted/30 animate-pulse">
+						<div className="h-9 w-9 rounded-full bg-muted" />
+						<div className="flex-1 space-y-2">
+							<div className="h-4 bg-muted rounded w-3/4" />
+							<div className="h-3 bg-muted rounded w-1/4" />
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+				))}
+			</CardContent>
+		</Card>
 	);
 }

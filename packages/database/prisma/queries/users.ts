@@ -1,6 +1,4 @@
-import type { z } from "zod";
-import { db } from "../client";
-import type { UserUncheckedUpdateInputSchema } from "../zod";
+import { db, type Prisma } from "../client";
 
 export async function getUsers({
 	limit,
@@ -102,12 +100,13 @@ export async function createUserAccount({
 }
 
 export async function updateUser(
-	user: z.infer<typeof UserUncheckedUpdateInputSchema> & { id: string },
+	user: Prisma.UserUpdateInput & { id: string },
 ) {
+	const { id, ...data } = user;
 	return await db.user.update({
 		where: {
-			id: user.id,
+			id,
 		},
-		data: user,
+		data,
 	});
 }

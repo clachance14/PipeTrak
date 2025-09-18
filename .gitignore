@@ -33,6 +33,9 @@ yarn-error.log*
 # turbo
 .turbo
 
+# vercel build output
+.vercel/output/
+
 # ui
 dist/
 

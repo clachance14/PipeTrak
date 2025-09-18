@@ -8,7 +8,7 @@ const mockMilestone: Milestone = {
   id: "milestone-1",
   name: "Fabrication",
   sequenceNumber: 1,
-  creditWeight: 10,
+  weight: 10,
   workflowType: "DISCRETE",
   isComplete: false,
   percentComplete: 0,

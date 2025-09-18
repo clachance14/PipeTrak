@@ -29,7 +29,7 @@ async function seedWeldTypes() {
 
 		// Use upsert to avoid duplicates
 		let created = 0;
-		let updated = 0;
+		const updated = 0;
 
 		for (const weldType of weldTypes) {
 			const result = await db.weldType.upsert({

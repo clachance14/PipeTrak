@@ -43,6 +43,8 @@ interface TabletDashboardProps {
  * Tablet Dashboard (768-1024px) - UPDATE-FIRST Layout
  * Focus on quick updates and component management, minimal analytics
  */
+const ALL_AREAS_VALUE = "__ALL_AREAS__";
+
 export function TabletDashboard({
 	projectId,
 	projectName,
@@ -55,7 +57,7 @@ export function TabletDashboard({
 	const [components, setComponents] = useState<ComponentWithMilestones[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [selectedArea, setSelectedArea] = useState<string>("");
+	const [selectedArea, setSelectedArea] = useState<string>(ALL_AREAS_VALUE);
 	const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
 	const [showFilters, setShowFilters] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
@@ -71,7 +73,10 @@ export function TabletDashboard({
 		try {
 			const filters: ComponentFileFilters = {
 				search: searchQuery || undefined,
-				area: selectedArea ? [selectedArea] : undefined,
+				area:
+					selectedArea === ALL_AREAS_VALUE
+						? undefined
+						: [selectedArea],
 			};
 
 			const result = await fetchDashboardComponentsClient(
@@ -146,7 +151,11 @@ export function TabletDashboard({
 
 	// Extract unique areas for filter
 	const uniqueAreas = Array.from(
-		new Set(components.map((c) => c.area).filter(Boolean)),
+		new Set(
+			components
+				.map((c) => c.area)
+				.filter((area): area is string => Boolean(area)),
+		),
 	).sort();
 
 	return (
@@ -236,13 +245,13 @@ export function TabletDashboard({
 								>
 									<Filter className="h-4 w-4" />
 									Area
-									{selectedArea && (
-										<Badge
-											status="info"
-											className="ml-1"
-										>
-											{selectedArea}
-										</Badge>
+										{selectedArea !== ALL_AREAS_VALUE && (
+											<Badge
+												status="info"
+												className="ml-1"
+											>
+												{selectedArea}
+											</Badge>
 									)}
 								</Button>
 
@@ -269,12 +278,12 @@ export function TabletDashboard({
 										<SelectValue placeholder="All Areas" />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="">
+										<SelectItem value={ALL_AREAS_VALUE}>
 											All Areas
 										</SelectItem>
 										{uniqueAreas.map((area) => (
-											<SelectItem key={area || 'unknown'} value={area || ''}>
-												{area || 'Unknown'}
+											<SelectItem key={area} value={area}>
+												{area}
 											</SelectItem>
 										))}
 									</SelectContent>

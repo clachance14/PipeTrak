@@ -1,32 +1,26 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { Button } from "@ui/components/button";
 import { Progress } from "@ui/components/progress";
 import {
 	Tooltip,
 	TooltipContent,
-	TooltipTrigger,
 	TooltipProvider,
+	TooltipTrigger,
 } from "@ui/components/tooltip";
-import {
-	Check,
-	Circle,
-	Lock,
-	Loader2,
-	AlertTriangle,
-} from "lucide-react";
 import { cn } from "@ui/lib";
-import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { AlertTriangle, Check, Circle, Loader2, Lock } from "lucide-react";
+import { useMemo, useState } from "react";
+import type {
+	ComponentMilestone,
+	ComponentWithMilestones,
+} from "../../../types";
 import {
 	getMilestoneAbbreviation,
 	getMilestoneTooltip,
 } from "../../../utils/milestone-abbreviations";
+import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
 import { WeldMilestoneModal } from "../WeldMilestoneModal";
-import type {
-	ComponentWithMilestones,
-	ComponentMilestone,
-} from "../../../types";
 
 interface InlineDiscreteMilestonesProps {
 	component: ComponentWithMilestones;
@@ -57,7 +51,9 @@ function MilestonePill({
 	);
 
 	const handleClick = async () => {
-		if (isLocked || isUpdating || isPending) return;
+		if (isLocked || isUpdating || isPending) {
+			return;
+		}
 
 		setIsUpdating(true);
 		try {
@@ -70,8 +66,12 @@ function MilestonePill({
 	};
 
 	const getButtonVariant = () => {
-		if (isLocked) return "secondary";
-		if (milestone.isCompleted) return "primary";
+		if (isLocked) {
+			return "secondary";
+		}
+		if (milestone.isCompleted) {
+			return "primary";
+		}
 		return "outline";
 	};
 
@@ -149,8 +149,7 @@ export function InlineDiscreteMilestones({
 	className,
 	onMilestoneUpdate,
 }: InlineDiscreteMilestonesProps) {
-	const { updateMilestone, hasPendingUpdates } =
-		useMilestoneUpdateEngine();
+	const { updateMilestone, hasPendingUpdates } = useMilestoneUpdateEngine();
 	const [showWeldModal, setShowWeldModal] = useState(false);
 	const [selectedWeldMilestone, setSelectedWeldMilestone] =
 		useState<ComponentMilestone | null>(null);
@@ -280,8 +279,12 @@ export function InlineDiscreteMilestones({
 			<div className="flex items-center gap-1 flex-wrap">
 				{sortedMilestones.map((milestone, index) => {
 					// Check if milestone is locked (previous milestone not completed)
+					// For field welds, the first milestone (Fit Up) should never be locked
 					const isLocked =
-						index > 0 && !sortedMilestones[index - 1].isCompleted;
+						component.type === "FIELD_WELD" && index === 0
+							? false
+							: index > 0 &&
+								!sortedMilestones[index - 1].isCompleted;
 					const isPending = hasPendingUpdates(milestone.id);
 
 					return (

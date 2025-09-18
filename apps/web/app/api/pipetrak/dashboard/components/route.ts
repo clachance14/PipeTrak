@@ -44,12 +44,24 @@ export async function GET(request: NextRequest) {
 		const drawing = searchParams.get("drawing");
 		const search = searchParams.get("search");
 
-		if (area) filters.area = area.split(",");
-		if (system) filters.system = system.split(",");
-		if (status) filters.status = status.split(",");
-		if (testPackage) filters.testPackage = testPackage.split(",");
-		if (drawing) filters.drawing = drawing.split(",");
-		if (search) filters.search = search;
+		if (area) {
+			filters.area = area.split(",");
+		}
+		if (system) {
+			filters.system = system.split(",");
+		}
+		if (status) {
+			filters.status = status.split(",");
+		}
+		if (testPackage) {
+			filters.testPackage = testPackage.split(",");
+		}
+		if (drawing) {
+			filters.drawing = drawing.split(",");
+		}
+		if (search) {
+			filters.search = search;
+		}
 
 		const limit = Number.parseInt(searchParams.get("limit") || "100");
 		const offset = Number.parseInt(searchParams.get("offset") || "0");

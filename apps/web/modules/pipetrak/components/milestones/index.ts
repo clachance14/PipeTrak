@@ -1,38 +1,37 @@
 // Core milestone rendering components
+
+// Bulk update functionality
+export { EnhancedBulkUpdateModal } from "./bulk/EnhancedBulkUpdateModal";
 export { MilestoneDiscreteRenderer } from "./core/MilestoneDiscreteRenderer";
 export { MilestonePercentageRenderer } from "./core/MilestonePercentageRenderer";
 export { MilestoneQuantityRenderer } from "./core/MilestoneQuantityRenderer";
-export { MilestoneWorkflowRenderer } from "./core/MilestoneWorkflowRenderer";
 
 // State management and orchestration
 export {
 	MilestoneUpdateEngine,
-	useMilestoneUpdateEngine,
-	useMilestone,
 	useComponentMilestones,
+	useMilestone,
+	useMilestoneUpdateEngine,
 } from "./core/MilestoneUpdateEngine";
+export { MilestoneWorkflowRenderer } from "./core/MilestoneWorkflowRenderer";
 export {
-	OptimisticUpdateManager,
 	type MilestoneUpdate,
 	type OptimisticState,
+	OptimisticUpdateManager,
 	type UpdateCallback,
 } from "./core/OptimisticUpdateManager";
-
-// Bulk update functionality
-export { EnhancedBulkUpdateModal } from "./bulk/EnhancedBulkUpdateModal";
 
 // Table integration
 export { TableMilestoneColumn } from "./integration/TableMilestoneColumn";
 
 // Mobile components
 export { MobileMilestoneSheet } from "./mobile/MobileMilestoneSheet";
-export { TouchMilestoneCard } from "./mobile/TouchMilestoneCard";
-export { SwipeActions } from "./mobile/SwipeActions";
 export { OfflineIndicator } from "./mobile/OfflineIndicator";
+export { TouchMilestoneCard } from "./mobile/TouchMilestoneCard";
 
 // Real-time functionality
 export {
 	RealtimeManager,
-	useRealtime,
 	usePresenceTracking,
+	useRealtime,
 } from "./realtime/RealtimeManager";

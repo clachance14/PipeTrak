@@ -7,7 +7,7 @@ async function verifyFunction() {
 		throw new Error("DATABASE_URL or DIRECT_URL must be set");
 	}
 
-	console.log("Using database URL:", databaseUrl.substring(0, 30) + "...");
+	console.log("Using database URL:", `${databaseUrl.substring(0, 30)}...`);
 
 	const url = new URL(databaseUrl);
 	const client = new Client({

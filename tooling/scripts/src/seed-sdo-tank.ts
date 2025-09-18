@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { db as prisma, ComponentTypeType } from "@repo/database";
+import { db as prisma, type ComponentTypeType } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import * as fs from "fs";
 import * as path from "path";

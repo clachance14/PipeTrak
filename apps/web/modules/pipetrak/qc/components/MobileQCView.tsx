@@ -26,54 +26,10 @@ import { AddWeldModal } from "./AddWeldModal";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
 import { toast } from "sonner";
 import { cn } from "@ui/lib";
+import type { FieldWeldRecord } from "../types";
 
 // Types from FieldWeldTable
-interface FieldWeldData {
-  id: string;
-  weldIdNumber: string;
-  dateWelded?: string;
-  weldSize: string;
-  schedule: string;
-  ndeType?: 'Visual' | 'RT' | 'UT' | 'MT' | 'PT' | 'None';
-  ndeResult?: 'Accept' | 'Reject';
-  ndeDate?: string;
-  ndeInspector?: string;
-  pwhtRequired: boolean;
-  datePwht?: string;
-  comments?: string;
-  packageNumber: string;
-  welder?: {
-    id: string;
-    stencil: string;
-    name: string;
-  };
-  component?: {
-    id: string;
-    componentId: string;
-    displayId: string;
-    area: string;
-    system: string;
-    testPackage: string;
-    status: string;
-    completionPercent: number;
-    milestones: Array<{
-      id: string;
-      milestoneName: string;
-      isCompleted: boolean;
-      completedAt?: string;
-      completedBy?: string;
-    }>;
-  };
-  drawing: {
-    id: string;
-    number: string;
-    title: string;
-  };
-  weldType: {
-    code: string;
-    description: string;
-  };
-}
+type FieldWeldData = FieldWeldRecord;
 
 interface MobileQCViewProps {
   projectId: string;
@@ -142,7 +98,26 @@ export function MobileQCView({ projectId, organizationSlug: _organizationSlug }:
       const response = await fetch(`/api/pipetrak/field-welds?projectId=${projectId}`);
       if (response.ok) {
         const result = await response.json();
-        setData(result.fieldWelds || []);
+        const normalized: FieldWeldData[] = (result.fieldWelds || []).map((weld: any) => {
+          const parentDrawing = weld.drawing?.parent;
+          const grandParentDrawing = parentDrawing?.parent;
+          const areaFromParent = parentDrawing?.title?.trim?.() || parentDrawing?.number?.trim?.() || null;
+          const systemFromHierarchy =
+            grandParentDrawing?.title?.trim?.() ||
+            grandParentDrawing?.number?.trim?.() ||
+            parentDrawing?.title?.trim?.() ||
+            parentDrawing?.number?.trim?.() ||
+            null;
+
+          return {
+            ...weld,
+            ndeType: weld.ndeTypes?.[0] || null,
+            drawingArea: areaFromParent ?? weld.component?.area ?? null,
+            drawingSystem: systemFromHierarchy ?? weld.component?.system ?? null,
+          } as FieldWeldData;
+        });
+
+        setData(normalized);
       } else {
         toast.error("Failed to fetch field welds");
       }

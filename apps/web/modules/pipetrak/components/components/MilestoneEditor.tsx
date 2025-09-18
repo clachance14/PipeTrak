@@ -337,7 +337,7 @@ export function MilestoneEditor({
 							className="h-7 px-2 text-xs"
 						>
 							{isSaving ? (
-								<>Saving...</>
+								"Saving..."
 							) : (
 								<>
 									<Save className="mr-1 h-3 w-3" />

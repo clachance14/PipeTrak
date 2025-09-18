@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { PrismaClient, ComponentTypeType } from "@repo/database";
+import { PrismaClient, type ComponentTypeType } from "@repo/database";
 import { createId } from "@paralleldrive/cuid2";
 import { createMilestoneTemplatesForProject } from "./create-milestone-templates";
 import { resolveTemplateForComponent } from "./lib/template-resolver";

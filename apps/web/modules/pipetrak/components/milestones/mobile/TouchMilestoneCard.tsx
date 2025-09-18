@@ -137,12 +137,12 @@ export function TouchMilestoneCard({
 											Step {milestone.sequenceNumber}
 										</Badge>
 									)}
-									{milestone.creditWeight && (
+									{milestone.weight && (
 										<Badge
 											status="info"
 											className="text-xs"
 										>
-											{milestone.creditWeight} credits
+											{milestone.weight} credits
 										</Badge>
 									)}
 								</div>

@@ -1,3 +1,4 @@
+import { db as prisma } from "@repo/database";
 import {
 	type Component,
 	type ComponentMilestone,
@@ -6,8 +7,7 @@ import {
 	type Drawing,
 	type MilestoneTemplate,
 	WorkflowType,
-} from "@prisma/client";
-import { db as prisma } from "@repo/database";
+} from "@repo/database/prisma/generated/client";
 import { Hono } from "hono";
 import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";

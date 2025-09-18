@@ -26,7 +26,6 @@ import {
 	Check,
 	Clock,
 	FileText,
-	// FileSpreadsheet, // Unused import - removed
 	FileImage,
 	Sheet,
 	Printer,
@@ -330,8 +329,8 @@ export function ProgressSummaryReportContent({
 										{format(weekEnding, "PPP")}
 									</Button>
 								</PopoverTrigger>
-								<PopoverContent
-									className="w-auto p-0"
+							<PopoverContent
+								className="min-w-[18rem] p-0"
 									align="start"
 								>
 									<Calendar

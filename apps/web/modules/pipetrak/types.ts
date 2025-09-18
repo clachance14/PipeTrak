@@ -56,7 +56,6 @@ export interface ComponentMilestone {
 	completer?: User | null;
 	// Additional fields for UI rendering
 	weight: number; // ROC weight (0-100) from database
-	creditWeight?: number; // Credit weight for progress calculations
 	quantityRequired?: number; // Required quantity for milestone
 	sequenceNumber?: number;
 	totalInWorkflow?: number;

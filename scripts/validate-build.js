@@ -84,7 +84,7 @@ function validateEnvironment() {
     
     if (foundDevVars.length > 0) {
       hasErrors = true;
-      log(`SECURITY ERROR: Development variables found in production build:`, 'error');
+      log("SECURITY ERROR: Development variables found in production build:", 'error');
       foundDevVars.forEach(varName => {
         log(`  - ${varName}=${process.env[varName]}`, 'error');
       });

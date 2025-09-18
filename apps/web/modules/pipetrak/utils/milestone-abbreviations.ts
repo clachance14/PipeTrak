@@ -19,8 +19,9 @@ const MILESTONE_ABBREVIATIONS: Record<string, string> = {
 
 	// Field Weld (5 milestones)
 	"Fit-up Ready": "FIT",
+	"Fit Up": "FIT",
 	Weld: "WLD",
-	"Weld Made": "WM",
+	"Weld Made": "WLD",
 
 	// Insulation (2 milestones)
 	Insulate: "INS",
@@ -40,8 +41,9 @@ const MILESTONE_ABBREVIATIONS: Record<string, string> = {
 	restore: "RST",
 	install: "INS",
 	"fit-up ready": "FIT",
+	"fit up": "FIT",
 	weld: "WLD",
-	"weld made": "WM",
+	"weld made": "WLD",
 	insulate: "INS",
 	"metal out": "MTO",
 	primer: "PRM",
@@ -79,11 +81,16 @@ export function generateAbbreviation(milestoneName: string): string {
  * Get milestone abbreviation with caching
  */
 export function getMilestoneAbbreviation(milestoneName: string): string {
-	if (!milestoneName) return "UNK";
+	if (!milestoneName) {
+		return "UNK";
+	}
 
 	// Check cache first
 	if (abbreviationCache.has(milestoneName)) {
-		return abbreviationCache.get(milestoneName)!;
+		const cached = abbreviationCache.get(milestoneName);
+		if (cached) {
+			return cached;
+		}
 	}
 
 	// Generate and cache
@@ -97,7 +104,9 @@ export function getMilestoneAbbreviation(milestoneName: string): string {
  * Smart abbreviation generation for unknown milestone names
  */
 function generateSmartAbbreviation(name: string): string {
-	if (!name) return "UNK";
+	if (!name) {
+		return "UNK";
+	}
 
 	// Clean the name
 	const cleaned = name.trim();

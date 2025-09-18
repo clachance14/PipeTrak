@@ -3,7 +3,7 @@
  * Temporary fix while cmdk types are resolved
  */
 declare module 'cmdk' {
-  import { FC, ReactNode, HTMLAttributes, ForwardRefExoticComponent, RefAttributes } from 'react';
+  import { ReactNode, HTMLAttributes, ForwardRefExoticComponent, RefAttributes } from 'react';
   
   interface CommandProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;

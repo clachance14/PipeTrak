@@ -1,6 +1,9 @@
 import { z } from "zod";
 import type { ValidationError } from "../file-processing.js";
-import type { FieldWeldImportData } from "./types.js";
+import type { FieldWeldImportData } from "./field-weld-processor.js";
+import type {
+	ColumnDetectionResult,
+} from "./field-weld-column-detector.js";
 
 /**
  * Validation categories for field weld import
@@ -32,7 +35,7 @@ export interface DrawingReference {
 }
 
 /**
- * Validation context for field weld import
+ * Flexible validation context for field weld import
  */
 export interface FieldWeldValidationContext {
 	projectId: string;
@@ -43,10 +46,12 @@ export interface FieldWeldValidationContext {
 	maxFileSize: number;
 	maxRows: number;
 	strictMode: boolean;
+	detectionResult?: ColumnDetectionResult; // Optional: column detection results
+	flexibleMode: boolean; // New: allows import with only essential fields
 }
 
 /**
- * Detailed validation report with categorized results
+ * Flexible validation report with column detection results
  */
 export interface FieldWeldValidationReport {
 	isValid: boolean;
@@ -57,6 +62,9 @@ export interface FieldWeldValidationReport {
 		errorCount: number;
 		warningCount: number;
 		infoCount: number;
+		essentialFieldsFound: number;
+		priorityFieldsFound: number;
+		skippedColumns: number;
 	};
 	errors: FieldWeldValidationError[];
 	warnings: FieldWeldValidationError[];
@@ -65,6 +73,13 @@ export interface FieldWeldValidationReport {
 	invalidRows: any[];
 	duplicateWeldIds: string[];
 	missingDrawings: string[];
+	columnMappings: {
+		detected: Record<number, string>;
+		essential: string[];
+		priority: string[];
+		optional: string[];
+		skipped: string[];
+	};
 	inheritanceApplied: {
 		testPressure: number;
 		specCode: number;
@@ -85,12 +100,12 @@ export class FieldWeldValidator {
 	}
 
 	/**
-	 * Main validation method that orchestrates all validation steps
+	 * Main validation method - flexible approach focusing on essential fields
 	 */
 	async validateFieldWelds(rows: any[]): Promise<FieldWeldValidationReport> {
 		const startTime = Date.now();
 
-		// Initialize report structure
+		// Initialize flexible report structure
 		const report: FieldWeldValidationReport = {
 			isValid: false,
 			summary: {
@@ -100,6 +115,9 @@ export class FieldWeldValidator {
 				errorCount: 0,
 				warningCount: 0,
 				infoCount: 0,
+				essentialFieldsFound: 0,
+				priorityFieldsFound: 0,
+				skippedColumns: 0,
 			},
 			errors: [],
 			warnings: [],
@@ -108,12 +126,27 @@ export class FieldWeldValidator {
 			invalidRows: [],
 			duplicateWeldIds: [],
 			missingDrawings: [],
+			columnMappings: {
+				detected: {},
+				essential: [],
+				priority: [],
+				optional: [],
+				skipped: [],
+			},
 			inheritanceApplied: {
 				testPressure: 0,
 				specCode: 0,
 			},
 			recommendations: [],
 		};
+
+		// Add column mapping information if available
+		if (this.context.detectionResult) {
+			report.columnMappings.detected = this.context.detectionResult.mappings;
+			report.columnMappings.essential = this.context.detectionResult.essentialFields.found;
+			report.columnMappings.skipped = this.context.detectionResult.warnings;
+			report.summary.essentialFieldsFound = this.context.detectionResult.essentialFields.found.length;
+		}
 
 		// Pre-validation checks
 		await this.performPreValidationChecks(rows, report);
@@ -252,8 +285,8 @@ export class FieldWeldValidator {
 				}
 
 				// Categorize row result
-				if (rowErrors.length === 0) {
-					report.validRows.push(validatedData!);
+				if (rowErrors.length === 0 && validatedData) {
+					report.validRows.push(validatedData);
 					if (rowWarnings.length > 0) {
 						report.warnings.push(...rowWarnings);
 					}
@@ -1073,7 +1106,7 @@ export class FieldWeldValidator {
 }
 
 /**
- * Factory function to create field weld validator with context
+ * Enhanced factory function with flexible validation options
  */
 export async function createFieldWeldValidator(
 	projectId: string,
@@ -1082,6 +1115,8 @@ export async function createFieldWeldValidator(
 	options?: {
 		maxRows?: number;
 		strictMode?: boolean;
+		flexibleMode?: boolean;
+		detectionResult?: ColumnDetectionResult;
 		supabaseClient?: any;
 	},
 ): Promise<FieldWeldValidator> {
@@ -1110,7 +1145,9 @@ export async function createFieldWeldValidator(
 		validDrawings,
 		maxFileSize: 100 * 1024 * 1024, // 100MB
 		maxRows: options?.maxRows || 20000,
-		strictMode: options?.strictMode ?? true,
+		strictMode: options?.strictMode ?? false, // Default to flexible mode
+		flexibleMode: options?.flexibleMode ?? true, // Enable flexible mode by default
+		detectionResult: options?.detectionResult,
 	};
 
 	return new FieldWeldValidator(context);

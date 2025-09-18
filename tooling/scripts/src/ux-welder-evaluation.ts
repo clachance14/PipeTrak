@@ -5,8 +5,8 @@
  * Systematic field usability testing for construction foremen
  */
 
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 interface EvaluationResult {
 	component: string;
@@ -41,7 +41,7 @@ interface UXGradingCriteria {
 	};
 }
 
-const GRADING_CRITERIA: UXGradingCriteria = {
+const _GRADING_CRITERIA: UXGradingCriteria = {
 	maxScore: 100,
 	categories: {
 		mobileTouchability: 30, // Touch targets, spacing, contrast, typography, feedback, thumb reach
@@ -62,7 +62,9 @@ const GRADE_THRESHOLDS = {
 
 function calculateGrade(score: number): string {
 	for (const [grade, threshold] of Object.entries(GRADE_THRESHOLDS)) {
-		if (score >= threshold) return grade;
+		if (score >= threshold) {
+			return grade;
+		}
 	}
 	return "F";
 }
@@ -73,7 +75,7 @@ const ROUTES_TO_TEST = [
 	"/app/[org]/pipetrak/[projectId]/qc/field-welds",
 ];
 
-const BREAKPOINTS_TO_TEST = [
+const _BREAKPOINTS_TO_TEST = [
 	{ name: "mobile-se", width: 375 },
 	{ name: "mobile-standard", width: 390 },
 	{ name: "tablet-ipad", width: 768 },
@@ -167,7 +169,7 @@ function analyzeAddWelderModal(): EvaluationResult {
 	const hasInlineErrors =
 		content.includes("text-destructive") &&
 		content.includes("validationErrors");
-	const errorHandlingScore = hasInlineErrors ? 5 : 2;
+	const _errorHandlingScore = hasInlineErrors ? 5 : 2;
 
 	if (!hasInlineErrors) {
 		issues.push({
@@ -257,7 +259,7 @@ function analyzeWelderTable(): EvaluationResult {
 
 	// Search Functionality Analysis
 	const hasSearchIcon = content.includes("<Search");
-	const searchScore = hasSearchIcon ? 5 : 2;
+	const _searchScore = hasSearchIcon ? 5 : 2;
 	if (!hasSearchIcon) {
 		issues.push({
 			category: "business-logic",
@@ -271,7 +273,7 @@ function analyzeWelderTable(): EvaluationResult {
 	// Information Hierarchy Analysis
 	const hasStatusBadges =
 		content.includes("Badge") && content.includes("status=");
-	const hasProgressiveDisclosure =
+	const _hasProgressiveDisclosure =
 		content.includes("Dialog") || content.includes("Sheet");
 
 	if (!hasStatusBadges) {
@@ -300,7 +302,7 @@ function analyzeWelderTable(): EvaluationResult {
 
 	// Empty State Analysis
 	const hasEmptyState = content.includes("No welders found");
-	const emptyStateScore = hasEmptyState ? 5 : 1;
+	const _emptyStateScore = hasEmptyState ? 5 : 1;
 
 	// Calculate score
 	let score = 95; // Start high for this component as it has good mobile responsiveness
@@ -341,7 +343,7 @@ function analyzeAddWeldModal(): EvaluationResult {
 	// Welder Selection Analysis
 	const hasWelderValidation =
 		content.includes("!formData.welderId") && content.includes("alert");
-	const welderValidationScore = hasWelderValidation ? 8 : 3;
+	const _welderValidationScore = hasWelderValidation ? 8 : 3;
 
 	if (!hasWelderValidation) {
 		issues.push({
@@ -371,7 +373,7 @@ function analyzeAddWeldModal(): EvaluationResult {
 	// Complex Input Analysis (Calendar, Dropdowns)
 	const hasCalendarPopover =
 		content.includes("Popover") && content.includes("Calendar");
-	const calendarScore = hasCalendarPopover ? 5 : 8; // Deduct points for complex interaction
+	const _calendarScore = hasCalendarPopover ? 5 : 8; // Deduct points for complex interaction
 
 	if (hasCalendarPopover) {
 		issues.push({
@@ -403,7 +405,7 @@ function analyzeAddWeldModal(): EvaluationResult {
 	const hasWelderPlaceholder =
 		content.includes("Select welder") ||
 		content.includes("Loading welders");
-	const welderDropdownScore = hasWelderPlaceholder ? 8 : 5;
+	const _welderDropdownScore = hasWelderPlaceholder ? 8 : 5;
 
 	// Error Message Analysis
 	const hasUserFriendlyErrors =
@@ -421,7 +423,7 @@ function analyzeAddWeldModal(): EvaluationResult {
 	// Business Logic - Welder Integration
 	const hasWelderIntegration =
 		content.includes("useWelders") && content.includes("active: true");
-	const businessLogicScore = hasWelderIntegration ? 10 : 5;
+	const _businessLogicScore = hasWelderIntegration ? 10 : 5;
 
 	// Calculate score
 	let score = 85; // Start with moderate score
@@ -500,7 +502,9 @@ function runUXEvaluation(): void {
 							? "⚠️"
 							: "ℹ️";
 				report += `${icon} **${severity}**: ${issue.description}\n`;
-				if (issue.element) report += `   - Element: ${issue.element}\n`;
+				if (issue.element) {
+					report += `   - Element: ${issue.element}\n`;
+				}
 				report += `   - Recommendation: ${issue.recommendation}\n\n`;
 			}
 		} else {

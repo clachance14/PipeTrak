@@ -1,52 +1,31 @@
 "use client";
 
+import { getBaseUrl } from "@repo/utils";
+import { apiClient } from "@shared/lib/api-client";
 import {
-	useState,
-	useMemo,
-	useCallback,
-	useTransition,
-	useEffect,
-	useRef,
-} from "react";
-import {
-	useReactTable,
-	getCoreRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
 	type ColumnDef,
-	type SortingState,
 	type ColumnFiltersState,
-	type VisibilityState,
-	type RowSelectionState,
-	type ColumnSizingState,
 	type ColumnOrderState,
+	type ColumnSizingState,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getSortedRowModel,
+	type RowSelectionState,
+	type SortingState,
+	useReactTable,
+	type VisibilityState,
 } from "@tanstack/react-table";
-import { MobileDrawingGroup } from "./MobileDrawingGroup";
-import { DrawingGroup } from "./DrawingGroup";
-import { BulkUpdateModal } from "./BulkUpdateModal";
-import { BulkMilestoneModal } from "./BulkMilestoneModal";
-import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
-import { MobileMilestoneSheet } from "../milestones/mobile/MobileMilestoneSheet";
-import { ComponentHoverCard } from "./ComponentHoverCard";
-import { FieldWeldQuickView } from "./FieldWeldQuickView";
-// import { FilterBar, type FilterState } from "./FilterBar"; // Commented out - component not found
-import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditMilestoneColumn";
-import { InlineDiscreteMilestones } from "../milestones/integration/InlineDiscreteMilestones";
-import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
-import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
-import { applyComponentFileFilters } from "../lib/bulk-update-utils";
-import { createBulkUpdateService } from "../lib/bulk-update-service";
-import {
-	VIEW_PRESETS,
-	applyViewPreset,
-	getSavedPreset,
-	getDefaultPreset,
-	type ViewPreset,
-} from "../view-presets";
-import { Button } from "@ui/components/button";
-import { Input } from "@ui/components/input";
-import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Card, CardContent } from "@ui/components/card";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@ui/components/dropdown-menu";
+import { Input } from "@ui/components/input";
 import { Progress } from "@ui/components/progress";
 import {
 	Tooltip,
@@ -54,43 +33,68 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@ui/components/tooltip";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-	DropdownMenuCheckboxItem,
-} from "@ui/components/dropdown-menu";
-import {
-	Download,
-	Upload,
-	RefreshCw,
-	Check,
-	Settings,
-	Wrench,
-	AlertTriangle,
-	Clock,
-} from "lucide-react";
-import { toast } from "sonner";
 import { cn } from "@ui/lib";
+import {
+	Check,
+	Download,
+	RefreshCw,
+	Settings,
+	Upload,
+	Wrench,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { ComponentWithMilestones } from "../../types";
-import { ComponentStatus } from "../../types";
-import { apiClient } from "@shared/lib/api-client";
-import { getBaseUrl } from "@repo/utils";
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	useTransition,
+} from "react";
+import { toast } from "sonner";
+import type { ComponentStatus, ComponentWithMilestones } from "../../types";
+import { createBulkUpdateService } from "../lib/bulk-update-service";
+import { applyComponentFileFilters } from "../lib/bulk-update-utils";
+import { MilestoneUpdateEngine } from "../milestones/core/MilestoneUpdateEngine";
+// import { FilterBar, type FilterState } from "./FilterBar"; // Commented out - component not found
+import { DirectEditMilestoneColumn } from "../milestones/integration/DirectEditMilestoneColumn";
+import { InlineDiscreteMilestones } from "../milestones/integration/InlineDiscreteMilestones";
+import { RealtimeManager } from "../milestones/realtime/RealtimeManager";
+import {
+	applyViewPreset,
+	getDefaultPreset,
+	getSavedPreset,
+	VIEW_PRESETS,
+	type ViewPreset,
+} from "../view-presets";
+import { BulkMilestoneModal } from "./BulkMilestoneModal";
+import { BulkUpdateModal } from "./BulkUpdateModal";
+import { ComponentHoverCard } from "./ComponentHoverCard";
+import { DrawingGroup } from "./DrawingGroup";
+import { FieldWeldQuickView } from "./FieldWeldQuickView";
+import { MilestoneUpdateModal } from "./MilestoneUpdateModal";
+import { MobileDrawingGroup } from "./MobileDrawingGroup";
 
-// Augment TanStack Table meta to include our updateData helper used by editable cells
-declare module "@tanstack/react-table" {
-	interface TableMeta<TData> {
-		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
-	}
-}
+// Note: TableMeta updateData helper is used by editable cells
 
 interface ComponentTableProps {
 	components: ComponentWithMilestones[];
 	projectId: string;
 	userId?: string;
 }
+
+type ComponentUpdate = Partial<ComponentWithMilestones> & { id: string };
+
+const isComponentUpdate = (
+	component: unknown,
+): component is ComponentUpdate => {
+	if (typeof component !== "object" || component === null) {
+		return false;
+	}
+
+	const candidate = component as { id?: unknown };
+	return typeof candidate.id === "string";
+};
 
 // Editable cell component for inline editing
 function EditableCell({
@@ -112,7 +116,11 @@ function EditableCell({
 	const onBlur = () => {
 		setIsEditing(false);
 		if (value !== initialValue) {
-			table.options.meta?.updateData(row.index, column.id, value);
+			(table.options.meta as any)?.updateData(
+				row.index,
+				column.id,
+				value,
+			);
 		}
 	};
 
@@ -157,14 +165,16 @@ function EditableCell({
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div
+					<button
+						type="button"
 						onDoubleClick={() => setIsEditing(true)}
-						className="w-full h-full flex items-center px-2 cursor-text hover:bg-gray-50 text-sm"
+						onClick={() => setIsEditing(true)}
+						className="w-full h-full flex items-center px-2 cursor-text hover:bg-gray-50 text-sm border-none bg-transparent"
 					>
 						<span className={shouldTruncate ? "truncate" : ""}>
 							{displayValue}
 						</span>
-					</div>
+					</button>
 				</TooltipTrigger>
 				{displayValue !== "-" && (
 					<TooltipContent>
@@ -228,6 +238,120 @@ function ProgressCell({ getValue }: { getValue: () => any }) {
 	);
 }
 
+// Type cell component with field weld indicators
+function TypeCell({
+	getValue,
+	row,
+	column,
+	table,
+	projectId,
+}: {
+	getValue: () => any;
+	row: any;
+	column: any;
+	table: any;
+	projectId: string;
+}) {
+	const initialValue = getValue();
+	const [value, setValue] = useState(initialValue);
+	const [isEditing, setIsEditing] = useState(false);
+	const inputRef = useRef<HTMLInputElement>(null);
+	const component = row.original;
+
+	// Get organization slug from URL for field weld quick view
+	const organizationSlug =
+		typeof window !== "undefined"
+			? window.location.pathname.split("/")[2]
+			: "";
+
+	const onBlur = () => {
+		setIsEditing(false);
+		if (value !== initialValue) {
+			(table.options.meta as any)?.updateData(
+				row.index,
+				column.id,
+				value,
+			);
+		}
+	};
+
+	const onKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Enter") {
+			onBlur();
+		} else if (e.key === "Escape") {
+			setValue(initialValue);
+			setIsEditing(false);
+		}
+	};
+
+	useEffect(() => {
+		if (isEditing && inputRef.current) {
+			inputRef.current.focus();
+			inputRef.current.select();
+		}
+	}, [isEditing]);
+
+	useEffect(() => {
+		setValue(initialValue);
+	}, [initialValue]);
+
+	if (isEditing) {
+		return (
+			<input
+				ref={inputRef}
+				value={(value as string) || ""}
+				onChange={(e) => setValue(e.target.value)}
+				onBlur={onBlur}
+				onKeyDown={onKeyDown}
+				className="w-full px-2 py-1 text-sm border-2 border-blue-500 rounded focus:outline-none"
+			/>
+		);
+	}
+
+	const displayValue = (value as string) || "-";
+	const isFieldWeld = displayValue === "FIELD_WELD";
+
+	const typeDisplay = (
+		<button
+			type="button"
+			onDoubleClick={() => setIsEditing(true)}
+			onClick={() => setIsEditing(true)}
+			className="w-full min-h-[52px] flex flex-col gap-1 px-2 py-1 cursor-text hover:bg-gray-50 border-none bg-transparent text-left"
+		>
+			<span className="text-sm font-medium">
+				{isFieldWeld ? "Field Weld" : displayValue}
+			</span>
+		</button>
+	);
+
+	// Wrap field welds in quick view, others in tooltip
+	if (isFieldWeld) {
+		return (
+			<FieldWeldQuickView
+				component={component}
+				organizationSlug={organizationSlug}
+				projectId={projectId}
+			>
+				{typeDisplay}
+			</FieldWeldQuickView>
+		);
+	}
+
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>{typeDisplay}</TooltipTrigger>
+				<TooltipContent>
+					<p>Component Type: {displayValue}</p>
+					<p className="text-xs text-muted-foreground mt-1">
+						Double-click to edit
+					</p>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	);
+}
+
 export function ComponentTable({
 	components: initialComponents,
 	projectId,
@@ -260,9 +384,6 @@ export function ComponentTable({
 	const [activePreset, setActivePreset] = useState<ViewPreset>(
 		getDefaultPreset(),
 	);
-	const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
-	const [selectedMobileComponent, setSelectedMobileComponent] =
-		useState<ComponentWithMilestones | null>(null);
 
 	// Default column IDs in the order they appear
 	const defaultColumnIds = [
@@ -297,6 +418,7 @@ export function ComponentTable({
 		search: "",
 	});
 	const [showBulkMilestoneModal, setShowBulkMilestoneModal] = useState(false);
+	const [showWeldModal, setShowWeldModal] = useState(false);
 
 	// Track component selection count for reliable UI state
 	const [selectionCount, setSelectionCount] = useState(0);
@@ -417,7 +539,7 @@ export function ComponentTable({
 						localStorage.removeItem("pipetrak-column-order");
 						localStorage.removeItem("pipetrak-active-preset");
 					}
-				} catch (e) {
+				} catch (_e) {
 					// Invalid saved data, clear it
 					localStorage.removeItem("pipetrak-column-visibility");
 				}
@@ -442,7 +564,9 @@ export function ComponentTable({
 	// Save column sizes to localStorage when they change (only after initial load)
 	useEffect(() => {
 		// Skip saving on initial mount or if sizes haven't been loaded yet
-		if (!hasLoadedSizesRef.current) return;
+		if (!hasLoadedSizesRef.current) {
+			return;
+		}
 
 		if (Object.keys(columnSizing).length > 0) {
 			localStorage.setItem(
@@ -455,7 +579,9 @@ export function ComponentTable({
 	// Save column order to localStorage when it changes
 	useEffect(() => {
 		// Skip saving on initial mount or if sizes haven't been loaded yet
-		if (!hasLoadedSizesRef.current) return;
+		if (!hasLoadedSizesRef.current) {
+			return;
+		}
 
 		if (columnOrder.length > 0) {
 			localStorage.setItem(
@@ -467,7 +593,9 @@ export function ComponentTable({
 
 	// Save expanded drawings to localStorage when they change
 	useEffect(() => {
-		if (!hasLoadedSizesRef.current) return;
+		if (!hasLoadedSizesRef.current) {
+			return;
+		}
 
 		localStorage.setItem(
 			"pipetrak-expanded-drawings",
@@ -477,7 +605,9 @@ export function ComponentTable({
 
 	// Save column visibility to localStorage when it changes
 	useEffect(() => {
-		if (!hasLoadedSizesRef.current) return;
+		if (!hasLoadedSizesRef.current) {
+			return;
+		}
 
 		if (Object.keys(columnVisibility).length > 0) {
 			localStorage.setItem(
@@ -628,217 +758,7 @@ export function ComponentTable({
 			{
 				accessorKey: "type",
 				header: "Type",
-				cell: ({ getValue, row, column, table }) => {
-					const initialValue = getValue();
-					const [value, setValue] = useState(initialValue);
-					const [isEditing, setIsEditing] = useState(false);
-					const inputRef = useRef<HTMLInputElement>(null);
-					const component = row.original;
-
-					// Get organization slug from URL for field weld quick view
-					const organizationSlug =
-						typeof window !== "undefined"
-							? window.location.pathname.split("/")[2]
-							: "";
-
-					const onBlur = () => {
-						setIsEditing(false);
-						if (value !== initialValue) {
-							table.options.meta?.updateData(
-								row.index,
-								column.id,
-								value,
-							);
-						}
-					};
-
-					const onKeyDown = (e: React.KeyboardEvent) => {
-						if (e.key === "Enter") {
-							onBlur();
-						} else if (e.key === "Escape") {
-							setValue(initialValue);
-							setIsEditing(false);
-						}
-					};
-
-					useEffect(() => {
-						if (isEditing && inputRef.current) {
-							inputRef.current.focus();
-							inputRef.current.select();
-						}
-					}, [isEditing]);
-
-					useEffect(() => {
-						setValue(initialValue);
-					}, [initialValue]);
-
-					if (isEditing) {
-						return (
-							<input
-								ref={inputRef}
-								value={(value as string) || ""}
-								onChange={(e) => setValue(e.target.value)}
-								onBlur={onBlur}
-								onKeyDown={onKeyDown}
-								className="w-full px-2 py-1 text-sm border-2 border-blue-500 rounded focus:outline-none"
-							/>
-						);
-					}
-
-					const displayValue = (value as string) || "-";
-					const isFieldWeld = displayValue === "FIELD_WELD";
-
-					// Get QC status for field welds
-					const getFieldWeldBadges = () => {
-						if (
-							!isFieldWeld ||
-							!component.fieldWelds ||
-							component.fieldWelds.length === 0
-						) {
-							return null;
-						}
-
-						const fieldWeld = component.fieldWelds[0];
-						const badges = [];
-
-						// NDE status badge
-						if (fieldWeld.ndeResult) {
-							switch (fieldWeld.ndeResult.toLowerCase()) {
-								case "accept":
-									badges.push(
-										<Badge
-											key="nde"
-											status="info"
-											className="h-4 text-xs bg-green-100 text-green-800"
-										>
-											<Check className="h-2 w-2 mr-1" />
-											NDE OK
-										</Badge>,
-									);
-									break;
-								case "reject":
-									badges.push(
-										<Badge
-											key="nde"
-											status="error"
-											className="h-4 text-xs"
-										>
-											<AlertTriangle className="h-2 w-2 mr-1" />
-											NDE Reject
-										</Badge>,
-									);
-									break;
-								case "repair":
-									badges.push(
-										<Badge
-											key="nde"
-											status="info"
-											className="h-4 text-xs bg-orange-100 text-orange-800"
-										>
-											<AlertTriangle className="h-2 w-2 mr-1" />
-											Repair
-										</Badge>,
-									);
-									break;
-							}
-						} else {
-							badges.push(
-								<Badge
-									key="nde"
-									status="info"
-									className="h-4 text-xs"
-								>
-									<Clock className="h-2 w-2 mr-1" />
-									NDE Pending
-								</Badge>,
-							);
-						}
-
-						// PWHT status badge
-						if (fieldWeld.pwhtRequired) {
-							if (fieldWeld.datePwht) {
-								badges.push(
-									<Badge
-										key="pwht"
-										status="info"
-										className="h-4 text-xs bg-blue-100 text-blue-800"
-									>
-										<Wrench className="h-2 w-2 mr-1" />
-										PWHT OK
-									</Badge>,
-								);
-							} else {
-								badges.push(
-									<Badge
-										key="pwht"
-										status="info"
-										className="h-4 text-xs bg-yellow-100 text-yellow-800"
-									>
-										<Wrench className="h-2 w-2 mr-1" />
-										PWHT Req
-									</Badge>,
-								);
-							}
-						}
-
-						return badges;
-					};
-
-					const fieldWeldBadges = getFieldWeldBadges();
-
-					const typeDisplay = (
-						<div
-							onDoubleClick={() => setIsEditing(true)}
-							className="w-full min-h-[52px] flex flex-col gap-1 px-2 py-1 cursor-text hover:bg-gray-50"
-						>
-							<div className="flex items-center gap-2">
-								{isFieldWeld && (
-									<div title="Field Weld">
-										<Wrench className="h-4 w-4 text-orange-500 flex-shrink-0" />
-									</div>
-								)}
-								<span className="text-sm font-medium">
-									{isFieldWeld ? "Field Weld" : displayValue}
-								</span>
-							</div>
-
-							{fieldWeldBadges && fieldWeldBadges.length > 0 && (
-								<div className="flex flex-wrap gap-1">
-									{fieldWeldBadges}
-								</div>
-							)}
-						</div>
-					);
-
-					// Wrap field welds in quick view, others in tooltip
-					if (isFieldWeld) {
-						return (
-							<FieldWeldQuickView
-								component={component}
-								organizationSlug={organizationSlug}
-								projectId={projectId}
-							>
-								{typeDisplay}
-							</FieldWeldQuickView>
-						);
-					}
-
-					return (
-						<TooltipProvider>
-							<Tooltip>
-								<TooltipTrigger asChild>
-									{typeDisplay}
-								</TooltipTrigger>
-								<TooltipContent>
-									<p>Component Type: {displayValue}</p>
-									<p className="text-xs text-muted-foreground mt-1">
-										Double-click to edit
-									</p>
-								</TooltipContent>
-							</Tooltip>
-						</TooltipProvider>
-					);
-				},
+				cell: (props) => <TypeCell {...props} projectId={projectId} />,
 				size: 250,
 				minSize: 180,
 				maxSize: 350,
@@ -988,17 +908,22 @@ export function ComponentTable({
 				value: any,
 			) => {
 				const component = filteredData[rowIndex];
-				if (!component) return;
+				if (!component) {
+					return;
+				}
 
 				try {
 					// Call API to update component
 					const response = await apiClient.pipetrak.components[
 						":id"
-					].$patch({
-						param: { id: component.id },
-					}, {
-						[columnId]: value,
-					});
+					].$patch(
+						{
+							param: { id: component.id },
+						},
+						{
+							[columnId]: value,
+						},
+					);
 
 					if (!response.ok) {
 						throw new Error("Failed to update component");
@@ -1068,22 +993,13 @@ export function ComponentTable({
 	// Debug function to test API connectivity
 	const testApiConnection = async () => {
 		try {
-			console.log("Testing API connection...");
-			console.log("Base URL from utils:", getBaseUrl());
-
 			// Test direct fetch first
 			const testResponse = await fetch(
 				`${getBaseUrl()}/api/pipetrak/components?projectId=${projectId}&limit=1`,
 			);
-			console.log(
-				"Direct fetch test:",
-				testResponse.status,
-				testResponse.statusText,
-			);
 
 			if (testResponse.ok) {
-				const testData = await testResponse.json();
-				console.log("Direct fetch successful, data:", testData);
+				await testResponse.json();
 			}
 		} catch (error) {
 			console.error("Direct fetch failed:", error);
@@ -1093,12 +1009,10 @@ export function ComponentTable({
 	const handleRefresh = async () => {
 		startTransition(async () => {
 			try {
-				console.log("Refreshing components for project:", projectId);
-
 				// Test connection first
 				await testApiConnection();
 
-				let response;
+				let response: any;
 				try {
 					response = await apiClient.pipetrak.components.$get({
 						query: {
@@ -1210,13 +1124,10 @@ export function ComponentTable({
 		};
 	}, [filteredData]);
 
-
-
 	const handleDragEnd = () => {
 		setDraggedColumn(null);
 		setTargetColumn(null);
 	};
-
 
 	// Select All Filtered handler
 	const selectAllFiltered = useCallback(() => {
@@ -1274,13 +1185,7 @@ export function ComponentTable({
 		setSelectionCount(currentCount);
 
 		if (currentCount > 0) {
-			console.log("Selection active:", {
-				selectedCount: currentCount,
-				isMobile,
-				rowSelectionKeys: Object.keys(rowSelection),
-				mobileSelectedCount: mobileSelectedIds.size,
-				filteredDataCount: filteredData.length,
-			});
+			// Selection is active for bulk operations
 		}
 	}, [
 		selectedComponents.length,
@@ -1301,14 +1206,8 @@ export function ComponentTable({
 				return;
 			}
 
-			console.log("Starting bulk update with:", {
-				componentIds,
-				updates,
-			});
-			console.log("API base URL:", apiClient);
-
 			// Call the bulk update API endpoint with better error handling
-			let response;
+			let response: any;
 			try {
 				response = await apiClient.pipetrak.components[
 					"bulk-update"
@@ -1343,7 +1242,8 @@ export function ComponentTable({
 				const errorData = await response.json();
 				console.error("Bulk update API error:", errorData);
 				throw new Error(
-					('message' in errorData ? errorData.message : undefined) || "Failed to update components",
+					("message" in errorData ? errorData.message : undefined) ||
+						"Failed to update components",
 				);
 			}
 
@@ -1351,34 +1251,56 @@ export function ComponentTable({
 
 			// Update local state with the actual updated components
 			if (result.components && Array.isArray(result.components)) {
-				setData((prev) => {
-					const updatedComponentsMap = new Map(
-						result.components.map((comp: any) => [comp.id, comp]),
-					);
+				const updates: ComponentUpdate[] =
+					result.components.filter(isComponentUpdate);
 
-					return prev.map((c) => {
-						const updated = updatedComponentsMap.get(c.id);
-						if (updated) {
-							return {
+				if (updates.length > 0) {
+					const updatedComponentsMap = new Map<
+						string,
+						ComponentUpdate
+					>(updates.map((comp) => [comp.id, comp]));
+
+					setData((prev) =>
+						prev.map((component): ComponentWithMilestones => {
+							const updated = updatedComponentsMap.get(
+								component.id,
+							);
+							if (!updated) {
+								return component;
+							}
+
+							const descriptionFromAttributes =
+								`${updated.type ?? ""} ${updated.spec ?? ""} ${updated.size ?? ""}`.trim() ||
+								undefined;
+
+							const merged: ComponentWithMilestones = {
+								...component,
 								...updated,
+								milestones:
+									updated.milestones ?? component.milestones,
 								drawingNumber:
-									updated.drawing?.number ||
-									updated.drawingId ||
+									updated.drawing?.number ??
+									updated.drawingId ??
+									component.drawingNumber ??
 									"-",
 								description:
-									updated.description ||
-									`${updated.type || ""} ${updated.spec || ""} ${updated.size || ""}`.trim() ||
+									updated.description ??
+									descriptionFromAttributes ??
+									component.description ??
 									"-",
 							};
-						}
-						return c;
-					});
-				});
+
+							return merged;
+						}),
+					);
+				}
 			}
 
 			// Show success message
-			const successful = ('successful' in result ? result.successful : undefined) || 0;
-			const failed = ('failed' in result ? result.failed : undefined) || 0;
+			const successful =
+				("successful" in result ? result.successful : undefined) || 0;
+			const failed =
+				("failed" in result ? result.failed : undefined) || 0;
 			if (failed === 0) {
 				toast.success(
 					`Successfully updated ${successful} component${successful !== 1 ? "s" : ""}`,
@@ -1425,15 +1347,19 @@ export function ComponentTable({
 			if (!groups.has(drawingKey)) {
 				groups.set(drawingKey, []);
 			}
-			groups.get(drawingKey)!.push(component);
+			groups.get(drawingKey)?.push(component);
 		});
 
 		// Sort drawings alphabetically
 		return new Map(
 			[...groups.entries()].sort((a, b) => {
 				// Put "NO_DRAWING" at the end
-				if (a[0] === "NO_DRAWING") return 1;
-				if (b[0] === "NO_DRAWING") return -1;
+				if (a[0] === "NO_DRAWING") {
+					return 1;
+				}
+				if (b[0] === "NO_DRAWING") {
+					return -1;
+				}
 				return a[0].localeCompare(b[0]);
 			}),
 		);
@@ -1485,261 +1411,232 @@ export function ComponentTable({
 					components={data}
 					onComponentUpdate={handleComponentMilestoneUpdate}
 				>
-					<>
-						<div className="space-y-4 pb-20 w-full px-4">
-							{/* Mobile header with search and bulk actions */}
-							<div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b pb-4">
-								<div className="space-y-3">
-									<div className="flex gap-2">
-										<div className="relative flex-1">
-											<Settings className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-											<Input
-												placeholder="Search components..."
-												value={globalFilter}
-												onChange={(e) =>
-													setGlobalFilter(
-														e.target.value,
+					<div className="space-y-4 pb-20 w-full px-4">
+						{/* Mobile header with search and bulk actions */}
+						<div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b pb-4">
+							<div className="space-y-3">
+								<div className="flex gap-2">
+									<div className="relative flex-1">
+										<Settings className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+										<Input
+											placeholder="Search components..."
+											value={globalFilter}
+											onChange={(e) =>
+												setGlobalFilter(e.target.value)
+											}
+											className="pl-9"
+										/>
+									</div>
+									<Button
+										size="icon"
+										variant="secondary"
+										onClick={toggleAllDrawings}
+										title={
+											expandedDrawings.size ===
+											componentsByDrawing.size
+												? "Collapse All"
+												: "Expand All"
+										}
+									>
+										{expandedDrawings.size ===
+										componentsByDrawing.size ? (
+											<span className="h-4 w-4 text-center">
+												↑
+											</span>
+										) : (
+											<span className="h-4 w-4 text-center">
+												↓
+											</span>
+										)}
+									</Button>
+								</div>
+
+								{/* Bulk actions bar */}
+								{mobileSelectedIds.size > 0 && (
+									<div className="flex items-center justify-between bg-primary/10 rounded-lg p-3">
+										<span className="text-sm font-medium">
+											{mobileSelectedIds.size} selected
+										</span>
+										<div className="flex gap-2">
+											<Button
+												size="sm"
+												variant="ghost"
+												onClick={() =>
+													setMobileSelectedIds(
+														new Set(),
 													)
 												}
-												className="pl-9"
-											/>
+											>
+												Clear
+											</Button>
+											<Button
+												size="sm"
+												onClick={() =>
+													setShowBulkUpdateModal(true)
+												}
+											>
+												Bulk Update
+											</Button>
+											<Button
+												size="sm"
+												variant="secondary"
+												onClick={() =>
+													setShowMilestoneModal(true)
+												}
+											>
+												Milestones
+											</Button>
 										</div>
-										<Button
-											size="icon"
-											variant="secondary"
-											onClick={toggleAllDrawings}
-											title={
-												expandedDrawings.size ===
-												componentsByDrawing.size
-													? "Collapse All"
-													: "Expand All"
-											}
-										>
-											{expandedDrawings.size ===
-											componentsByDrawing.size ? (
-												<span className="h-4 w-4 text-center">↑</span>
-											) : (
-												<span className="h-4 w-4 text-center">↓</span>
-											)}
-										</Button>
 									</div>
-
-									{/* Bulk actions bar */}
-									{mobileSelectedIds.size > 0 && (
-										<div className="flex items-center justify-between bg-primary/10 rounded-lg p-3">
-											<span className="text-sm font-medium">
-												{mobileSelectedIds.size}{" "}
-												selected
-											</span>
-											<div className="flex gap-2">
-												<Button
-													size="sm"
-													variant="ghost"
-													onClick={() =>
-														setMobileSelectedIds(
-															new Set(),
-														)
-													}
-												>
-													Clear
-												</Button>
-												<Button
-													size="sm"
-													onClick={() =>
-														setShowBulkUpdateModal(
-															true,
-														)
-													}
-												>
-													Bulk Update
-												</Button>
-												<Button
-													size="sm"
-													variant="secondary"
-													onClick={() =>
-														setShowMilestoneModal(
-															true,
-														)
-													}
-												>
-													Milestones
-												</Button>
-											</div>
-										</div>
-									)}
-								</div>
-							</div>
-
-							{/* Mobile stats */}
-							<div className="grid grid-cols-3 gap-2">
-								<Card>
-									<CardContent className="p-3">
-										<p className="text-xs text-muted-foreground">
-											Drawings
-										</p>
-										<p className="text-lg font-bold">
-											{componentsByDrawing.size}
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardContent className="p-3">
-										<p className="text-xs text-muted-foreground">
-											Components
-										</p>
-										<p className="text-lg font-bold">
-											{stats.total}
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardContent className="p-3">
-										<p className="text-xs text-muted-foreground">
-											Complete
-										</p>
-										<p className="text-lg font-bold">
-											{stats.completed}
-										</p>
-									</CardContent>
-								</Card>
-							</div>
-
-							{/* Drawing groups */}
-							<div className="space-y-4">
-								{Array.from(componentsByDrawing.entries()).map(
-									([drawingNumber, components]) => (
-										<MobileDrawingGroup
-											key={drawingNumber}
-											drawingNumber={
-												drawingNumber === "NO_DRAWING"
-													? ""
-													: drawingNumber
-											}
-											components={components}
-											isExpanded={expandedDrawings.has(
-												drawingNumber,
-											)}
-											onToggleExpand={() =>
-												toggleDrawing(drawingNumber)
-											}
-											selectedIds={mobileSelectedIds}
-											onSelectComponent={(
-												componentId,
-												selected,
-											) => {
-												const newSelection = new Set(
-													mobileSelectedIds,
-												);
-												if (selected) {
-													newSelection.add(
-														componentId,
-													);
-												} else {
-													newSelection.delete(
-														componentId,
-													);
-												}
-												setMobileSelectedIds(
-													newSelection,
-												);
-											}}
-											onSelectAll={
-												handleSelectAllInDrawing
-											}
-											onComponentClick={(componentId) => {
-												// Prevent navigation if any modal is open
-												if (
-													mobileSheetOpen ||
-													showMilestoneModal ||
-													showBulkUpdateModal ||
-													showBulkMilestoneModal
-												) {
-													return;
-												}
-												router.push(
-													`/app/pipetrak/${projectId}/components/${componentId}`,
-												);
-											}}
-											onQuickUpdate={(
-												componentId,
-												status,
-											) => {
-												setData((prev) =>
-													prev.map((c) =>
-														c.id === componentId
-															? { ...c, status: status as ComponentStatus }
-															: c,
-													),
-												);
-												toast.success("Status updated");
-											}}
-											onEdit={(componentId) => {
-												router.push(
-													`/app/pipetrak/${projectId}/components/${componentId}/edit`,
-												);
-											}}
-											onOpenMilestones={(componentId) => {
-												const component = data.find(
-													(c) => c.id === componentId,
-												);
-												if (component) {
-													setSelectedMobileComponent(
-														component,
-													);
-													setMobileSheetOpen(true);
-												}
-											}}
-										/>
-									),
 								)}
 							</div>
-
-							{/* Mobile floating action button for filters */}
-							<Button
-								className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg"
-								size="icon"
-								onClick={() => {
-									// TODO: Show filter modal
-									toast.info("Filter modal coming soon");
-								}}
-							>
-								<Settings className="h-6 w-6" />
-							</Button>
 						</div>
 
-						{/* Bulk Update Modal */}
-						<BulkUpdateModal
-							isOpen={showBulkUpdateModal}
-							onClose={() => setShowBulkUpdateModal(false)}
-							selectedComponents={selectedComponents}
-							onUpdate={handleBulkUpdateSubmit}
-							projectId={projectId}
-						/>
+						{/* Mobile stats */}
+						<div className="grid grid-cols-3 gap-2">
+							<Card>
+								<CardContent className="p-3">
+									<p className="text-xs text-muted-foreground">
+										Drawings
+									</p>
+									<p className="text-lg font-bold">
+										{componentsByDrawing.size}
+									</p>
+								</CardContent>
+							</Card>
+							<Card>
+								<CardContent className="p-3">
+									<p className="text-xs text-muted-foreground">
+										Components
+									</p>
+									<p className="text-lg font-bold">
+										{stats.total}
+									</p>
+								</CardContent>
+							</Card>
+							<Card>
+								<CardContent className="p-3">
+									<p className="text-xs text-muted-foreground">
+										Complete
+									</p>
+									<p className="text-lg font-bold">
+										{stats.completed}
+									</p>
+								</CardContent>
+							</Card>
+						</div>
 
-						{/* Milestone Update Modal */}
-						<MilestoneUpdateModal
-							components={selectedComponents}
-							isOpen={showMilestoneModal}
-							onClose={() => setShowMilestoneModal(false)}
-							onUpdate={() => {
-								// Refresh data after milestone updates
-								handleRefresh();
+						{/* Drawing groups */}
+						<div className="space-y-4">
+							{Array.from(componentsByDrawing.entries()).map(
+								([drawingNumber, components]) => (
+									<MobileDrawingGroup
+										key={drawingNumber}
+										drawingNumber={
+											drawingNumber === "NO_DRAWING"
+												? ""
+												: drawingNumber
+										}
+										components={components}
+										isExpanded={expandedDrawings.has(
+											drawingNumber,
+										)}
+										onToggleExpand={() =>
+											toggleDrawing(drawingNumber)
+										}
+										selectedIds={mobileSelectedIds}
+										onSelectComponent={(
+											componentId,
+											selected,
+										) => {
+											const newSelection = new Set(
+												mobileSelectedIds,
+											);
+											if (selected) {
+												newSelection.add(componentId);
+											} else {
+												newSelection.delete(
+													componentId,
+												);
+											}
+											setMobileSelectedIds(newSelection);
+										}}
+										onSelectAll={handleSelectAllInDrawing}
+										onComponentClick={(componentId) => {
+											// Prevent navigation if any modal is open
+											if (
+												showMilestoneModal ||
+												showBulkUpdateModal ||
+												showBulkMilestoneModal ||
+												showWeldModal
+											) {
+												return;
+											}
+											router.push(
+												`/app/pipetrak/${projectId}/components/${componentId}`,
+											);
+										}}
+										onQuickUpdate={(
+											componentId,
+											status,
+										) => {
+											setData((prev) =>
+												prev.map((c) =>
+													c.id === componentId
+														? {
+																...c,
+																status: status as ComponentStatus,
+															}
+														: c,
+												),
+											);
+											toast.success("Status updated");
+										}}
+										onEdit={(componentId) => {
+											router.push(
+												`/app/pipetrak/${projectId}/components/${componentId}/edit`,
+											);
+										}}
+										projectId={projectId}
+										onWeldModalChange={setShowWeldModal}
+									/>
+								),
+							)}
+						</div>
+
+						{/* Mobile floating action button for filters */}
+						<Button
+							className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg"
+							size="icon"
+							onClick={() => {
+								// TODO: Show filter modal
+								toast.info("Filter modal coming soon");
 							}}
-							isMobile={isMobile}
-						/>
+						>
+							<Settings className="h-6 w-6" />
+						</Button>
+					</div>
 
-						{/* Mobile Milestone Sheet for individual component milestones */}
-						{selectedMobileComponent && (
-							<MobileMilestoneSheet
-								isOpen={mobileSheetOpen}
-								onClose={() => {
-									setMobileSheetOpen(false);
-									setSelectedMobileComponent(null);
-								}}
-								component={selectedMobileComponent}
-							/>
-						)}
-					</>
+					{/* Bulk Update Modal */}
+					<BulkUpdateModal
+						isOpen={showBulkUpdateModal}
+						onClose={() => setShowBulkUpdateModal(false)}
+						selectedComponents={selectedComponents}
+						onUpdate={handleBulkUpdateSubmit}
+						projectId={projectId}
+					/>
+
+					{/* Milestone Update Modal */}
+					<MilestoneUpdateModal
+						components={selectedComponents}
+						isOpen={showMilestoneModal}
+						onClose={() => setShowMilestoneModal(false)}
+						onUpdate={() => {
+							// Refresh data after milestone updates
+							handleRefresh();
+						}}
+						isMobile={isMobile}
+					/>
 				</MilestoneUpdateEngine>
 			</RealtimeManager>
 		);
@@ -2098,12 +1995,16 @@ export function ComponentTable({
 					>
 						{expandedDrawings.size === componentsByDrawing.size ? (
 							<>
-								<span className="h-4 w-4 mr-2 text-center">↑</span>
+								<span className="h-4 w-4 mr-2 text-center">
+									↑
+								</span>
 								Collapse All
 							</>
 						) : (
 							<>
-								<span className="h-4 w-4 mr-2 text-center">↓</span>
+								<span className="h-4 w-4 mr-2 text-center">
+									↓
+								</span>
 								Expand All
 							</>
 						)}
@@ -2220,125 +2121,109 @@ export function ComponentTable({
 				components={data}
 				onComponentUpdate={handleComponentMilestoneUpdate}
 			>
-				<>
-					<Card className="bg-white border border-gray-200 shadow-sm rounded-lg">
-						<CardContent className="p-4 md:p-6 lg:p-8">
-							{tableContent}
-						</CardContent>
-					</Card>
+				<Card className="bg-white border border-gray-200 shadow-sm rounded-lg">
+					<CardContent className="p-4 md:p-6 lg:p-8">
+						{tableContent}
+					</CardContent>
+				</Card>
 
-					{/* Bulk Update Modal for desktop */}
-					<BulkUpdateModal
-						isOpen={showBulkUpdateModal}
-						onClose={() => setShowBulkUpdateModal(false)}
-						selectedComponents={selectedComponents}
-						onUpdate={handleBulkUpdateSubmit}
-						projectId={projectId}
-					/>
+				{/* Bulk Update Modal for desktop */}
+				<BulkUpdateModal
+					isOpen={showBulkUpdateModal}
+					onClose={() => setShowBulkUpdateModal(false)}
+					selectedComponents={selectedComponents}
+					onUpdate={handleBulkUpdateSubmit}
+					projectId={projectId}
+				/>
 
-					{/* New Bulk Milestone Modal for desktop */}
-					<BulkMilestoneModal
-						selectedComponents={selectedComponents}
-						isOpen={showBulkMilestoneModal}
-						onClose={() => setShowBulkMilestoneModal(false)}
-						projectId={projectId}
-						onBulkUpdate={async (updates) => {
-							try {
-								// Create bulk update service with progress tracking
-								const service = createBulkUpdateService(
-									(progress) => {
-										console.log(
-											`Bulk update progress: ${progress.percentage}% - ${progress.message}`,
-										);
-									},
-								);
+				{/* New Bulk Milestone Modal for desktop */}
+				<BulkMilestoneModal
+					selectedComponents={selectedComponents}
+					isOpen={showBulkMilestoneModal}
+					onClose={() => setShowBulkMilestoneModal(false)}
+					projectId={projectId}
+					onBulkUpdate={async (updates) => {
+						try {
+							// Create bulk update service with progress tracking
+							const service = createBulkUpdateService(() => {
+								// Progress updates handled silently
+							});
 
-								// Log the updates structure for debugging
-								console.log("Bulk update request:", updates);
-
-								// The updates object should already have the correct structure from BulkMilestoneModal
-								// It should contain: mode, projectId, and either milestoneName+componentIds or groups
-								let result;
-
-								if (!updates.mode) {
-									throw new Error("Update mode is required");
-								}
-
-								if (!updates.projectId) {
-									updates.projectId = projectId;
-								}
-
-								// Execute the bulk update with the properly structured request
-								result =
-									await service.performBulkUpdate(updates);
-
-								// Validate results before proceeding
-								if (!result || typeof result !== "object") {
-									throw new Error(
-										"Invalid response from bulk update service",
-									);
-								}
-
-								const {
-									successful = [],
-									failed = [],
-									total = 0,
-								} = result;
-
-								// Log results for debugging
-								console.log(
-									`Bulk update completed: ${successful.length} successful, ${failed.length} failed out of ${total} total`,
-								);
-
-								// Show appropriate feedback
-								if (failed.length === 0) {
-									toast.success(
-										`Successfully updated ${successful.length} component${successful.length !== 1 ? "s" : ""}`,
-									);
-								} else if (successful.length === 0) {
-									toast.error(
-										`Failed to update all ${total} components`,
-									);
-									if (failed.length > 0 && failed[0].error) {
-										console.error(
-											"First failure reason:",
-											failed[0].error,
-										);
-									}
-								} else {
-									toast.warning(
-										`Updated ${successful.length} of ${total} components. ${failed.length} failed.`,
-									);
-								}
-
-								// Only refresh data if we had some successful updates
-								if (successful.length > 0) {
-									// Wait longer for the database transaction to fully commit and replicate
-									await new Promise((resolve) =>
-										setTimeout(resolve, 1000),
-									);
-									handleRefresh();
-								} else if (failed.length > 0) {
-									// For debugging - log the first few failures
-									console.error(
-										"Bulk update failures:",
-										failed.slice(0, 3),
-									);
-								}
-
-								return result;
-							} catch (error) {
-								console.error("Bulk update failed:", error);
-								toast.error(
-									error instanceof Error
-										? error.message
-										: "Failed to update components",
-								);
-								throw error;
+							// The updates object should already have the correct structure from BulkMilestoneModal
+							// It should contain: mode, projectId, and either milestoneName+componentIds or groups
+							if (!updates.mode) {
+								throw new Error("Update mode is required");
 							}
-						}}
-					/>
-				</>
+
+							if (!updates.projectId) {
+								updates.projectId = projectId;
+							}
+
+							// Execute the bulk update with the properly structured request
+							const result: any =
+								await service.performBulkUpdate(updates);
+
+							// Validate results before proceeding
+							if (!result || typeof result !== "object") {
+								throw new Error(
+									"Invalid response from bulk update service",
+								);
+							}
+
+							const {
+								successful = [],
+								failed = [],
+								total = 0,
+							} = result;
+
+							// Show appropriate feedback
+							if (failed.length === 0) {
+								toast.success(
+									`Successfully updated ${successful.length} component${successful.length !== 1 ? "s" : ""}`,
+								);
+							} else if (successful.length === 0) {
+								toast.error(
+									`Failed to update all ${total} components`,
+								);
+								if (failed.length > 0 && failed[0].error) {
+									console.error(
+										"First failure reason:",
+										failed[0].error,
+									);
+								}
+							} else {
+								toast.warning(
+									`Updated ${successful.length} of ${total} components. ${failed.length} failed.`,
+								);
+							}
+
+							// Only refresh data if we had some successful updates
+							if (successful.length > 0) {
+								// Wait longer for the database transaction to fully commit and replicate
+								await new Promise((resolve) =>
+									setTimeout(resolve, 1000),
+								);
+								handleRefresh();
+							} else if (failed.length > 0) {
+								// For debugging - log the first few failures
+								console.error(
+									"Bulk update failures:",
+									failed.slice(0, 3),
+								);
+							}
+
+							return result;
+						} catch (error) {
+							console.error("Bulk update failed:", error);
+							toast.error(
+								error instanceof Error
+									? error.message
+									: "Failed to update components",
+							);
+							throw error;
+						}
+					}}
+				/>
 			</MilestoneUpdateEngine>
 		</RealtimeManager>
 	);

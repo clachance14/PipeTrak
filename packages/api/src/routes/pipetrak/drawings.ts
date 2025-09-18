@@ -1,6 +1,6 @@
-import type { ComponentType } from "@prisma/client";
 import type { ComponentStatus, Prisma } from "@repo/database";
 import { db as prisma } from "@repo/database";
+import type { ComponentType } from "@repo/database/prisma/generated/client";
 import { Hono } from "hono";
 import { z } from "zod";
 import { authMiddleware } from "../../middleware/auth";

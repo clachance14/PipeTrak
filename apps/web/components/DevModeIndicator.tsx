@@ -64,11 +64,10 @@ export function DevModeIndicator() {
   const getStatusColor = () => {
     if (devInfo.environment === 'local') {
       return 'bg-green-500 text-white';
-    } else if (devInfo.environment === 'vercel-dev') {
+    }if (devInfo.environment === 'vercel-dev') {
       return 'bg-yellow-500 text-black';
-    } else {
-      return 'bg-red-500 text-white';
     }
+      return 'bg-red-500 text-white';
   };
 
   const getStatusIcon = () => {

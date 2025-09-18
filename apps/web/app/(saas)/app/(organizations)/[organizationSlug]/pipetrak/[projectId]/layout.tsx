@@ -1,9 +1,10 @@
-import { TabGroup } from "@saas/shared/components/TabGroup";
 import { ProjectSwitcher } from "@pipetrak/projects/ProjectSwitcher";
+import { TabGroup } from "@saas/shared/components/TabGroup";
 import type { PropsWithChildren } from "react";
 
 interface PipeTrakProjectLayoutProps extends PropsWithChildren {
 	params: Promise<{
+		organizationSlug: string;
 		projectId: string;
 	}>;
 }
@@ -14,24 +15,25 @@ export default async function PipeTrakProjectLayout({
 }: PipeTrakProjectLayoutProps) {
 	console.log("[PipeTrak Layout] Rendering layout...");
 	console.log("[PipeTrak Layout] Raw params:", params);
-	const { projectId } = await params;
+	const { organizationSlug, projectId } = await params;
+	console.log("[PipeTrak Layout] Organization Slug:", organizationSlug);
 	console.log("[PipeTrak Layout] Project ID:", projectId);
 
 	// Core tabs for mobile - Dashboard, Components, QC
 	const mobileItems = [
 		{
 			label: "Dashboard",
-			href: `/app/pipetrak/${projectId}/dashboard`,
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/dashboard`,
 			segment: "dashboard",
 		},
 		{
 			label: "Components",
-			href: `/app/pipetrak/${projectId}/components`,
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/components`,
 			segment: "components",
 		},
 		{
 			label: "QC",
-			href: `/app/pipetrak/${projectId}/qc`,
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/qc`,
 			segment: "qc",
 		},
 	];
@@ -41,12 +43,12 @@ export default async function PipeTrakProjectLayout({
 		...mobileItems,
 		{
 			label: "Import",
-			href: `/app/pipetrak/${projectId}/import`,
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/import`,
 			segment: "import",
 		},
 		{
 			label: "Reports",
-			href: `/app/pipetrak/${projectId}/reports`,
+			href: `/app/${organizationSlug}/pipetrak/${projectId}/reports`,
 			segment: "reports",
 		},
 	];
@@ -54,17 +56,17 @@ export default async function PipeTrakProjectLayout({
 	return (
 		<div className="space-y-4">
 			{/* Project Switcher */}
-			<div className="mb-4">
+			<div className="mb-4 pt-4 px-6 lg:px-8">
 				<ProjectSwitcher />
 			</div>
 
 			{/* Mobile and Tablet tabs - hide Import and Reports */}
-			<div className="block lg:hidden">
+			<div className="block lg:hidden px-6 lg:px-8">
 				<TabGroup items={mobileItems} />
 			</div>
 
 			{/* Desktop only tabs - show all (1024px and up) */}
-			<div className="hidden lg:block">
+			<div className="hidden lg:block px-6 lg:px-8">
 				<TabGroup items={desktopItems} />
 			</div>
 

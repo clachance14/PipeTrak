@@ -33,8 +33,7 @@ export function Hero() {
 	};
 
 	return (
-		<>
-			<div className="relative max-w-full overflow-x-hidden bg-gradient-to-b from-white to-gray-50">
+		<div className="relative max-w-full overflow-x-hidden bg-gradient-to-b from-white to-gray-50">
 				{/* Background decoration */}
 				<div className="absolute left-1/2 top-0 z-0 ml-[-500px] h-[500px] w-[1000px] rounded-full bg-gradient-to-r from-green-100 to-blue-100 opacity-30 blur-[150px]" />
 
@@ -132,7 +131,5 @@ export function Hero() {
 					</div>
 				</div>
 			</div>
-
-		</>
 	);
 }

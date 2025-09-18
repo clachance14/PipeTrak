@@ -193,9 +193,9 @@ export function MilestoneQuantityRenderer({
 								Step {milestone.sequenceNumber} of{" "}
 								{milestone.totalInWorkflow || 1}
 							</Badge>
-							{milestone.creditWeight && (
+							{milestone.weight && (
 								<Badge status="info" className="text-xs">
-									{milestone.creditWeight} credits
+									{milestone.weight} credits
 								</Badge>
 							)}
 						</div>

@@ -26,6 +26,8 @@ import {
 	Clock,
 	// @ts-ignore - Minus exists at runtime but TypeScript declarations are incomplete
 	Minus,
+	Zap,
+	CheckSquare,
 } from "lucide-react";
 import { cn } from "@ui/lib";
 import type { ComponentWithMilestones } from "../../types";
@@ -108,6 +110,28 @@ export function DrawingGroup({
 			someSelected,
 		};
 	}, [components, rowSelection]);
+
+	// Extract unique areas, systems, and test packages for display
+	const uniqueData = useMemo(() => {
+		const areas = new Set(
+			components.map((c) => c.area).filter((area): area is string => Boolean(area))
+		);
+		const systems = new Set(
+			components.map((c) => c.system).filter((system): system is string => Boolean(system))
+		);
+		const testPackages = new Set(
+			components.map((c) => c.testPackage).filter((pkg): pkg is string => Boolean(pkg))
+		);
+
+		return {
+			areas: Array.from(areas).slice(0, 3),
+			systems: Array.from(systems).slice(0, 3),
+			testPackages: Array.from(testPackages).slice(0, 3),
+			hasMoreAreas: areas.size > 3,
+			hasMoreSystems: systems.size > 3,
+			hasMoreTestPackages: testPackages.size > 3,
+		};
+	}, [components]);
 
 	// Filter out the drawingNumber column since it's redundant in the group
 	const filteredColumns = useMemo(() => {
@@ -286,7 +310,7 @@ export function DrawingGroup({
 								<Checkbox
 									checked={stats.allSelected}
 									onCheckedChange={handleSelectAll}
-									onClick={(e) => e.stopPropagation()}
+									onClick={(e: React.MouseEvent) => e.stopPropagation()}
 									className="h-7 w-7 md:h-8 md:w-8" // Larger for better touch interaction
 								/>
 							)}
@@ -327,6 +351,71 @@ export function DrawingGroup({
 								</Badge>
 							)}
 						</div>
+
+						{/* Areas, Systems, and Test Packages - NEW */}
+						{(uniqueData.areas.length > 0 || uniqueData.systems.length > 0 || uniqueData.testPackages.length > 0) && (
+							<div className="flex items-center gap-3 flex-wrap ml-4 hidden md:flex">
+								{/* Areas */}
+								{uniqueData.areas.length > 0 && (
+									<div className="flex items-center gap-1">
+										<MapPin className="h-3 w-3 text-blue-500" />
+										{uniqueData.areas.map((area) => (
+											<Badge
+												key={area}
+												className="bg-blue-50 text-blue-700 border-blue-200 text-xs px-2 py-0.5"
+											>
+												{area}
+											</Badge>
+										))}
+										{uniqueData.hasMoreAreas && (
+											<Badge className="bg-blue-100 text-blue-600 border-blue-300 text-xs px-2 py-0.5 font-semibold">
+												+{Math.max(0, new Set(components.map(c => c.area).filter(Boolean)).size - 3)} more
+											</Badge>
+										)}
+									</div>
+								)}
+
+								{/* Systems */}
+								{uniqueData.systems.length > 0 && (
+									<div className="flex items-center gap-1">
+										<Zap className="h-3 w-3 text-green-500" />
+										{uniqueData.systems.map((system) => (
+											<Badge
+												key={system}
+												className="bg-green-50 text-green-700 border-green-200 text-xs px-2 py-0.5"
+											>
+												{system}
+											</Badge>
+										))}
+										{uniqueData.hasMoreSystems && (
+											<Badge className="bg-green-100 text-green-600 border-green-300 text-xs px-2 py-0.5 font-semibold">
+												+{Math.max(0, new Set(components.map(c => c.system).filter(Boolean)).size - 3)} more
+											</Badge>
+										)}
+									</div>
+								)}
+
+								{/* Test Packages */}
+								{uniqueData.testPackages.length > 0 && (
+									<div className="flex items-center gap-1">
+										<CheckSquare className="h-3 w-3 text-purple-500" />
+										{uniqueData.testPackages.map((pkg) => (
+											<Badge
+												key={pkg}
+												className="bg-purple-50 text-purple-700 border-purple-200 text-xs px-2 py-0.5"
+											>
+												{pkg}
+											</Badge>
+										))}
+										{uniqueData.hasMoreTestPackages && (
+											<Badge className="bg-purple-100 text-purple-600 border-purple-300 text-xs px-2 py-0.5 font-semibold">
+												+{Math.max(0, new Set(components.map(c => c.testPackage).filter(Boolean)).size - 3)} more
+											</Badge>
+										)}
+									</div>
+								)}
+							</div>
+						)}
 					</div>
 
 					{/* Progress and Status - Responsive layout for tablets */}

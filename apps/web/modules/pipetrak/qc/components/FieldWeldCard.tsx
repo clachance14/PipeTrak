@@ -25,54 +25,10 @@ import {
   DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { cn } from "@ui/lib";
+import type { FieldWeldRecord } from "../types";
 
 // Types based on the FieldWeldTable component
-interface FieldWeldData {
-  id: string;
-  weldIdNumber: string;
-  dateWelded?: string;
-  weldSize: string;
-  schedule: string;
-  ndeType?: 'Visual' | 'RT' | 'UT' | 'MT' | 'PT' | 'None';
-  ndeResult?: 'Accept' | 'Reject';
-  ndeDate?: string;
-  ndeInspector?: string;
-  pwhtRequired: boolean;
-  datePwht?: string;
-  comments?: string;
-  packageNumber: string;
-  welder?: {
-    id: string;
-    stencil: string;
-    name: string;
-  };
-  component?: {
-    id: string;
-    componentId: string;
-    displayId: string;
-    area: string;
-    system: string;
-    testPackage: string;
-    status: string;
-    completionPercent: number;
-    milestones: Array<{
-      id: string;
-      milestoneName: string;
-      isCompleted: boolean;
-      completedAt?: string;
-      completedBy?: string;
-    }>;
-  };
-  drawing: {
-    id: string;
-    number: string;
-    title: string;
-  };
-  weldType: {
-    code: string;
-    description: string;
-  };
-}
+type FieldWeldData = FieldWeldRecord;
 
 interface FieldWeldCardProps {
   fieldWeld: FieldWeldData;
@@ -184,6 +140,12 @@ export function FieldWeldCard({
   };
 
   const pwhtStatus = getPwhtStatus();
+  const areaLabel = fieldWeld.drawingArea ?? fieldWeld.component?.area ?? "-";
+  const systemLabel = fieldWeld.drawingSystem ?? fieldWeld.component?.system ?? "-";
+  const weldTypeLabel = fieldWeld.weldType?.description
+    ?? fieldWeld.weldType?.code
+    ?? fieldWeld.weldTypeCode
+    ?? "Unknown weld type";
 
   return (
     <div 
@@ -235,7 +197,7 @@ export function FieldWeldCard({
               <Zap className="h-4 w-4 text-orange-500 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-lg">{fieldWeld.weldIdNumber}</h3>
-                <p className="text-sm text-muted-foreground">{fieldWeld.weldType.description}</p>
+                <p className="text-sm text-muted-foreground">{weldTypeLabel}</p>
               </div>
             </div>
           </div>
@@ -399,13 +361,21 @@ export function FieldWeldCard({
         </div>
 
         {/* Component Info if available */}
-        {fieldWeld.component && (
+        {(fieldWeld.component || areaLabel !== "-" || systemLabel !== "-") && (
           <div className="pt-3 border-t space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Component: {fieldWeld.component.componentId}</span>
+              {fieldWeld.component ? (
+                <span className="text-sm font-medium">
+                  Component: {fieldWeld.component.componentId}
+                </span>
+              ) : (
+                <span className="text-sm font-medium text-muted-foreground">
+                  Drawing Context
+                </span>
+              )}
               <div className="flex gap-2 text-xs text-muted-foreground">
-                <span>Area: {fieldWeld.component.area}</span>
-                <span>System: {fieldWeld.component.system}</span>
+                <span>Area: {areaLabel}</span>
+                <span>System: {systemLabel}</span>
               </div>
             </div>
           </div>

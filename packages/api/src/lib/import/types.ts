@@ -38,7 +38,10 @@ export interface FieldWeldImportData {
 	// Additional optional fields from WELD LOG
 	weldSize?: string;
 	xrayPercentage?: string;
+	schedule?: string;
+	baseMetal?: string;
 	weldType?: string;
+	weldTypeCode?: string;
 }
 
 // Enhanced component import data that includes field weld fields

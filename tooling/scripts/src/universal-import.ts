@@ -12,8 +12,8 @@
 
 import { db as prisma } from "@repo/database";
 import { logger } from "@repo/logs";
-import { promises as fs } from "fs";
-import * as path from "path";
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
 import * as XLSX from "xlsx";
 import { parse as parseCSV } from "csv-parse/sync";
 import {

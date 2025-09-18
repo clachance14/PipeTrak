@@ -109,7 +109,7 @@ export default function PipeTrakPage() {
 	}
 
 	return (
-		<div className="space-y-8">
+		<div className="space-y-8 p-6">
 			<PageHeader
 				title="PipeTrak Projects"
 				subtitle={`Manage construction projects for ${activeOrganization.name}`}
@@ -141,15 +141,6 @@ export default function PipeTrakPage() {
 								<PlusIcon className="h-4 w-4 mr-2" />
 								Create New Project
 							</Button>
-							<div className="text-sm text-muted-foreground">
-								<p className="font-mono bg-muted p-2 rounded">
-									pnpm --filter scripts seed-sdo-tank
-								</p>
-								<p className="mt-2">
-									Run this command to seed the SDO Tank sample
-									project
-								</p>
-							</div>
 						</CardContent>
 					</Card>
 				</div>

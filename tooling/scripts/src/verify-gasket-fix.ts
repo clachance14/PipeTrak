@@ -53,7 +53,7 @@ async function verifyGasketFix() {
 		}
 	}
 
-	console.log("\n" + "=".repeat(50));
+	console.log(`\n${"=".repeat(50)}`);
 
 	// Check if milestones are correct
 	const expectedMilestones = [

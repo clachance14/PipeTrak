@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { FieldWeldRecord } from "../types";
 
 // Field weld filter state interface
 interface WeldFileFilterState {
@@ -20,52 +21,7 @@ interface WeldFileFilterState {
   datePwhtTo: string;
 }
 
-// Field weld data structure
-interface FieldWeldData {
-  id: string;
-  weldIdNumber: string;
-  dateWelded?: string;
-  weldSize: string;
-  schedule: string;
-  ndeResult?: string;
-  pwhtRequired: boolean;
-  datePwht?: string;
-  comments?: string;
-  packageNumber: string;
-  welder?: {
-    id: string;
-    stencil: string;
-    name: string;
-  };
-  drawing: {
-    id: string;
-    number: string;
-    title: string;
-  };
-  weldType: {
-    code: string;
-    description: string;
-  };
-  component?: {
-    id: string;
-    componentId: string;
-    displayId: string;
-    area: string;
-    system: string;
-    testPackage: string;
-    status: string;
-    completionPercent: number;
-    milestones: Array<{
-      id: string;
-      milestoneName: string;
-      isCompleted: boolean;
-      completedAt?: string;
-      completedBy?: string;
-      milestoneOrder: number;
-      weight: number;
-    }>;
-  };
-}
+type FieldWeldData = FieldWeldRecord;
 
 interface UseWeldFileFiltersProps {
   fieldWelds: FieldWeldData[];
@@ -75,6 +31,9 @@ interface UseWeldFileFiltersProps {
 export function useWeldFileFilters({ fieldWelds, filters }: UseWeldFileFiltersProps) {
   const filteredWelds = useMemo(() => {
     return fieldWelds.filter(weld => {
+      const weldTypeCode = weld.weldType?.code ?? weld.weldTypeCode ?? '';
+      const weldTypeDescription = weld.weldType?.description ?? '';
+
       // Search filter - searches across multiple fields
       if (filters.search) {
         const searchTerm = filters.search.toLowerCase();
@@ -83,14 +42,14 @@ export function useWeldFileFilters({ fieldWelds, filters }: UseWeldFileFiltersPr
           weld.packageNumber,
           weld.drawing.number,
           weld.drawing.title,
-          weld.component?.area,
-          weld.component?.system,
+          weld.drawingArea,
+          weld.drawingSystem,
           weld.welder?.stencil,
           weld.welder?.name,
           weld.weldSize,
           weld.schedule,
-          weld.weldType.code,
-          weld.weldType.description,
+          weldTypeCode,
+          weldTypeDescription,
           weld.comments,
         ].filter(Boolean).join(' ').toLowerCase();
 
@@ -115,14 +74,16 @@ export function useWeldFileFilters({ fieldWelds, filters }: UseWeldFileFiltersPr
 
       // Area filter
       if (filters.area !== 'all') {
-        if (weld.component?.area !== filters.area) {
+        const weldArea = weld.drawingArea ?? weld.component?.area;
+        if (weldArea !== filters.area) {
           return false;
         }
       }
 
       // System filter
       if (filters.system !== 'all') {
-        if (weld.component?.system !== filters.system) {
+        const weldSystem = weld.drawingSystem ?? weld.component?.system;
+        if (weldSystem !== filters.system) {
           return false;
         }
       }
@@ -183,7 +144,7 @@ export function useWeldFileFilters({ fieldWelds, filters }: UseWeldFileFiltersPr
 
       // Weld Type filter
       if (filters.weldType !== 'all') {
-        if (weld.weldType.code !== filters.weldType) {
+        if (weldTypeCode !== filters.weldType) {
           return false;
         }
       }

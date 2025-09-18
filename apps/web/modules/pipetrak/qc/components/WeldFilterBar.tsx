@@ -18,53 +18,10 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { cn } from "@ui/lib";
+import type { FieldWeldRecord } from "../types";
 
 // Field weld data structure from FieldWeldTable.tsx
-interface FieldWeldData {
-  id: string;
-  weldIdNumber: string;
-  dateWelded?: string;
-  weldSize: string;
-  schedule: string;
-  ndeResult?: string;
-  pwhtRequired: boolean;
-  datePwht?: string;
-  comments?: string;
-  packageNumber: string;
-  welder?: {
-    id: string;
-    stencil: string;
-    name: string;
-  };
-  drawing: {
-    id: string;
-    number: string;
-    title: string;
-  };
-  weldType: {
-    code: string;
-    description: string;
-  };
-  component?: {
-    id: string;
-    componentId: string;
-    displayId: string;
-    area: string;
-    system: string;
-    testPackage: string;
-    status: string;
-    completionPercent: number;
-    milestones: Array<{
-      id: string;
-      milestoneName: string;
-      isCompleted: boolean;
-      completedAt?: string;
-      completedBy?: string;
-      milestoneOrder: number;
-      weight: number;
-    }>;
-  };
-}
+type FieldWeldData = FieldWeldRecord;
 
 export interface WeldFilterState {
   packageNumber: string;
@@ -196,10 +153,12 @@ export function WeldFilterBar({
     fieldWelds.forEach(weld => {
       if (weld.packageNumber && weld.packageNumber !== "TBD") packageNumbers.add(weld.packageNumber);
       if (weld.drawing.number) drawings.add(weld.drawing.number);
-      if (weld.component?.area) areas.add(weld.component.area);
-      if (weld.component?.system) systems.add(weld.component.system);
+      const areaValue = weld.drawingArea ?? weld.component?.area;
+      if (areaValue) areas.add(areaValue);
+      const systemValue = weld.drawingSystem ?? weld.component?.system;
+      if (systemValue) systems.add(systemValue);
       if (weld.welder?.stencil) welders.add(weld.welder.stencil);
-      if (weld.weldType.code) weldTypes.add(weld.weldType.code);
+      if (weld.weldType?.code) weldTypes.add(weld.weldType.code);
       if (weld.weldSize) weldSizes.add(weld.weldSize);
       if (weld.schedule) schedules.add(weld.schedule);
     });

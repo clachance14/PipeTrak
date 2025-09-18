@@ -52,7 +52,7 @@ async function createComponentMilestones(
 		if (!componentsByTemplate.has(templateId)) {
 			componentsByTemplate.set(templateId, []);
 		}
-		componentsByTemplate.get(templateId)!.push(component);
+		componentsByTemplate.get(templateId)?.push(component);
 	});
 
 	console.log(
@@ -189,7 +189,7 @@ export async function POST(request: NextRequest) {
 		// Parse the file completely
 		const buffer = Buffer.from(fileData.buffer, "base64");
 
-		let parseResult;
+		let parseResult: { headers: string[]; rows: any[]; metadata: any };
 		if (fileData.mimetype === "text/csv") {
 			const processor = new CSVProcessor();
 			parseResult = await processor.parseCSV(buffer);
@@ -391,7 +391,7 @@ export async function POST(request: NextRequest) {
 			if (!existingComponentsMap.has(trackerKey)) {
 				existingComponentsMap.set(trackerKey, []);
 			}
-			existingComponentsMap.get(trackerKey)!.push({
+			existingComponentsMap.get(trackerKey)?.push({
 				componentId: comp.componentId,
 				instanceNumber: comp.instanceNumber,
 				drawingId: comp.drawingId,
@@ -421,7 +421,7 @@ export async function POST(request: NextRequest) {
 			if (!componentGroups.has(consolidationKey)) {
 				componentGroups.set(consolidationKey, []);
 			}
-			componentGroups.get(consolidationKey)!.push(comp);
+			componentGroups.get(consolidationKey)?.push(comp);
 		});
 
 		// Consolidate duplicates by summing quantities
@@ -823,9 +823,9 @@ export async function POST(request: NextRequest) {
 		const totalTime = Date.now() - startTime;
 		console.log("Import-full: ✅ Batch operations completed successfully");
 		console.log("Import-full: Performance Summary:", {
-			totalProcessingTime: totalTime + "ms",
-			databaseTime: dbTime + "ms",
-			analysisTime: processingTime + "ms",
+			totalProcessingTime: `${totalTime}ms`,
+			databaseTime: `${dbTime}ms`,
+			analysisTime: `${processingTime}ms`,
 			componentsPerSecond: Math.round(
 				(componentsToCreate.length + componentsToUpdate.length) /
 					(totalTime / 1000),

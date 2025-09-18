@@ -481,29 +481,302 @@
 		}
 	},
 	"component-tokens": {
-		"milestone-card": {
+		"component-card": {
+			"height": {
+				"total": {
+					"value": "112px",
+					"type": "dimension",
+					"description": "Total component card height - optimized for mobile visibility"
+				},
+				"header": {
+					"value": "32px",
+					"type": "dimension",
+					"description": "Component card header section height"
+				},
+				"meta": {
+					"value": "24px",
+					"type": "dimension",
+					"description": "Component card meta section height"
+				},
+				"milestones": {
+					"value": "56px",
+					"type": "dimension",
+					"description": "Component card milestone section height - glove-friendly"
+				}
+			},
 			"padding": {
-				"value": "1rem",
-				"type": "spacing",
-				"description": "Standard milestone card padding"
+				"x": {
+					"value": "16px",
+					"type": "dimension",
+					"description": "Component card horizontal padding"
+				},
+				"header-y": {
+					"value": "8px",
+					"type": "dimension",
+					"description": "Header section vertical padding"
+				},
+				"meta-y": {
+					"value": "4px",
+					"type": "dimension",
+					"description": "Meta section vertical padding"
+				}
 			},
 			"border-radius": {
-				"value": "0.75rem",
+				"value": "0px",
 				"type": "borderRadius",
-				"description": "Milestone card border radius"
+				"description": "Edge-to-edge mobile design - no border radius"
 			},
-			"min-height": {
-				"compact": {
-					"value": "80px",
-					"type": "size"
+			"separation": {
+				"value": "1px",
+				"type": "dimension",
+				"description": "Separation between component cards"
+			}
+		},
+		"milestone-button": {
+			"height": {
+				"base": {
+					"value": "56px",
+					"type": "dimension",
+					"description": "Milestone button height - base mobile (glove optimized)"
 				},
-				"default": {
-					"value": "120px",
-					"type": "size"
+				"tablet": {
+					"value": "64px",
+					"type": "dimension",
+					"description": "Milestone button height - tablet"
+				}
+			},
+			"width": {
+				"base": {
+					"value": "51px",
+					"type": "dimension",
+					"description": "Milestone button width - base mobile (360px/7)"
 				},
-				"large": {
-					"value": "160px",
-					"type": "size"
+				"sm": {
+					"value": "54px",
+					"type": "dimension",
+					"description": "Milestone button width - small mobile (375px/7)"
+				},
+				"lg": {
+					"value": "59px",
+					"type": "dimension",
+					"description": "Milestone button width - large mobile (414px/7)"
+				},
+				"tablet": {
+					"value": "110px",
+					"type": "dimension",
+					"description": "Milestone button width - tablet (768px/7)"
+				}
+			},
+			"padding": {
+				"x": {
+					"value": "4px",
+					"type": "dimension",
+					"description": "Milestone button horizontal padding"
+				},
+				"y": {
+					"value": "8px",
+					"type": "dimension",
+					"description": "Milestone button vertical padding"
+				}
+			},
+			"border": {
+				"width": {
+					"value": "2px",
+					"type": "dimension",
+					"description": "Milestone button border width - prominent for field visibility"
+				}
+			},
+			"status-icon": {
+				"size": {
+					"value": "12px",
+					"type": "dimension",
+					"description": "Status icon size within milestone buttons"
+				},
+				"position": {
+					"top": {
+						"value": "4px",
+						"type": "dimension",
+						"description": "Status icon position from top of button"
+					},
+					"right": {
+						"value": "4px",
+						"type": "dimension",
+						"description": "Status icon position from right of button"
+					}
+				}
+			}
+		},
+		"milestone-colors": {
+			"available": {
+				"background": {
+					"value": "#ffffff",
+					"type": "color",
+					"description": "Available milestone background - high contrast for sunlight"
+				},
+				"border": {
+					"value": "#10b981",
+					"type": "color",
+					"description": "Available milestone border - green indicates ready state"
+				},
+				"text": {
+					"value": "#1a1a1a",
+					"type": "color",
+					"description": "Available milestone text - dark for maximum contrast"
+				}
+			},
+			"complete": {
+				"background": {
+					"value": "#10b981",
+					"type": "color",
+					"description": "Complete milestone background - green fill indicates completion"
+				},
+				"border": {
+					"value": "#10b981",
+					"type": "color",
+					"description": "Complete milestone border - matches background"
+				},
+				"text": {
+					"value": "#ffffff",
+					"type": "color",
+					"description": "Complete milestone text - white on green for high contrast"
+				}
+			},
+			"blocked": {
+				"background": {
+					"value": "#6b7280",
+					"type": "color",
+					"description": "Blocked milestone background - gray indicates unavailable"
+				},
+				"border": {
+					"value": "#6b7280",
+					"type": "color",
+					"description": "Blocked milestone border - matches background"
+				},
+				"text": {
+					"value": "#ffffff",
+					"type": "color",
+					"description": "Blocked milestone text - white on gray"
+				}
+			},
+			"dependent": {
+				"background": {
+					"value": "#10b981",
+					"type": "color",
+					"description": "Dependent milestone background - green indicates available with dependencies"
+				},
+				"border": {
+					"value": "#eab308",
+					"type": "color",
+					"description": "Dependent milestone border - yellow warning for dependencies"
+				},
+				"text": {
+					"value": "#ffffff",
+					"type": "color",
+					"description": "Dependent milestone text - white for readability"
+				}
+			},
+			"error": {
+				"background": {
+					"value": "#ffffff",
+					"type": "color",
+					"description": "Error milestone background - white for error visibility"
+				},
+				"border": {
+					"value": "#ef4444",
+					"type": "color",
+					"description": "Error milestone border - red indicates failed state"
+				},
+				"text": {
+					"value": "#1a1a1a",
+					"type": "color",
+					"description": "Error milestone text - dark for readability on white"
+				}
+			},
+			"loading": {
+				"background": {
+					"value": "#f3f4f6",
+					"type": "color",
+					"description": "Loading milestone background - light gray for loading state"
+				},
+				"border": {
+					"value": "#d1d5db",
+					"type": "color",
+					"description": "Loading milestone border - medium gray"
+				},
+				"text": {
+					"value": "#6b7280",
+					"type": "color",
+					"description": "Loading milestone text - muted gray"
+				}
+			}
+		},
+		"badges": {
+			"type": {
+				"background": {
+					"value": "#f1f5f9",
+					"type": "color",
+					"description": "Type badge background - light slate"
+				},
+				"text": {
+					"value": "#475569",
+					"type": "color",
+					"description": "Type badge text - dark slate"
+				},
+				"border": {
+					"value": "#cbd5e1",
+					"type": "color",
+					"description": "Type badge border - medium slate"
+				}
+			},
+			"area": {
+				"background": {
+					"value": "#dbeafe",
+					"type": "color",
+					"description": "Area badge background - light blue"
+				},
+				"text": {
+					"value": "#1e40af",
+					"type": "color",
+					"description": "Area badge text - dark blue"
+				},
+				"border": {
+					"value": "#93c5fd",
+					"type": "color",
+					"description": "Area badge border - medium blue"
+				}
+			},
+			"testPackage": {
+				"background": {
+					"value": "#faf5ff",
+					"type": "color",
+					"description": "Test package badge background - light purple"
+				},
+				"text": {
+					"value": "#7c3aed",
+					"type": "color",
+					"description": "Test package badge text - dark purple"
+				},
+				"border": {
+					"value": "#c4b5fd",
+					"type": "color",
+					"description": "Test package badge border - medium purple"
+				}
+			},
+			"priority": {
+				"background": {
+					"value": "#fef2f2",
+					"type": "color",
+					"description": "Priority badge background - light red"
+				},
+				"text": {
+					"value": "#dc2626",
+					"type": "color",
+					"description": "Priority badge text - dark red"
+				},
+				"border": {
+					"value": "#fca5a5",
+					"type": "color",
+					"description": "Priority badge border - medium red"
 				}
 			}
 		},

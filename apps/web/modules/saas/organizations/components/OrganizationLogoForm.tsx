@@ -1,11 +1,11 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
+import { apiClient } from "@shared/lib/api-client";
 import { Spinner } from "@shared/components/Spinner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -55,7 +55,7 @@ export function OrganizationLogoForm() {
 				bucket: config.storage.bucketNames.avatars,
 			});
 
-			const response = await fetch(signedUrl, {
+			const uploadResponse = await fetch(signedUrl, {
 				method: "PUT",
 				body: croppedImageData,
 				headers: {
@@ -63,19 +63,18 @@ export function OrganizationLogoForm() {
 				},
 			});
 
-			if (!response.ok) {
+			if (!uploadResponse.ok) {
 				throw new Error("Failed to upload image");
 			}
 
-			const { error } = await authClient.organization.update({
-				organizationId: activeOrganization.id,
-				data: {
-					logo: path,
-				},
+			// Update organization logo using our custom API endpoint
+			const updateResponse = await apiClient.organizations[":organizationId"].logo.$patch({
+				param: { organizationId: activeOrganization.id },
+				json: { logoPath: path },
 			});
 
-			if (error) {
-				throw error;
+			if (!updateResponse.ok) {
+				throw new Error("Failed to update organization logo");
 			}
 
 			toast.success(t("settings.account.avatar.notifications.success"));
