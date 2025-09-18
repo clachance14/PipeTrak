@@ -95,7 +95,7 @@ export function MilestoneUpdateCard({
 								setTempValue(!isChecked);
 							}
 						}}
-						aria-label={`${milestone.name} - ${isChecked ? "completed" : "not completed"}`}
+						aria-label={`${milestone.milestoneName} - ${isChecked ? "completed" : "not completed"}`}
 					>
 						<Checkbox
 							checked={isChecked}
@@ -148,7 +148,7 @@ export function MilestoneUpdateCard({
 							setTempValue(!isChecked);
 						}
 					}}
-					aria-label={`${milestone.name} - ${isChecked ? "completed" : "not completed"}`}
+					aria-label={`${milestone.milestoneName} - ${isChecked ? "completed" : "not completed"}`}
 				>
 					<Checkbox
 						checked={isChecked}

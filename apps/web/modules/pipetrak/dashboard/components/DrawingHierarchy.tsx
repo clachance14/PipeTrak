@@ -52,10 +52,14 @@ function DrawingNode({ node, level, isExpanded, onToggle }: DrawingNodeProps) {
 						onToggle();
 					}
 				} : undefined}
-				{...(hasChildren ? {
-					"aria-expanded": isExpanded,
-					"aria-label": `${isExpanded ? "Collapse" : "Expand"} ${drawing.drawingNumber || "drawing"}`
-				} : {})}
+				{...(hasChildren
+					? {
+						"aria-expanded": isExpanded,
+						"aria-label": `${
+							isExpanded ? "Collapse" : "Expand"
+						} ${node.drawingNumber || "drawing"}`,
+					}
+					: {})}
 			>
 				{/* Expand/collapse button */}
 				<div className="flex-shrink-0 w-4 h-4">

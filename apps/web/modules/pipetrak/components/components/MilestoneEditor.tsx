@@ -195,7 +195,7 @@ export function MilestoneEditor({
 							)
 						}
 						disabled={isSaving}
-						aria-label={`Toggle ${milestone.name} milestone`}
+						aria-label={`Toggle ${milestone.milestoneName} milestone`}
 					>
 						<Checkbox
 							checked={isCompleted}
