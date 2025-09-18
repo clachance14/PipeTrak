@@ -1,22 +1,22 @@
 "use client";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, {
 	createContext,
-	useContext,
 	useCallback,
+	useContext,
 	useEffect,
 	useMemo,
-	useState,
 	useRef,
+	useState,
 } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-	OptimisticUpdateManager,
-	type MilestoneUpdate,
-	type UpdateCallback,
-} from "./OptimisticUpdateManager";
 import { toast } from "sonner";
 import type { ComponentMilestone, WorkflowType } from "../../../types";
+import {
+	type MilestoneUpdate,
+	OptimisticUpdateManager,
+	type UpdateCallback,
+} from "./OptimisticUpdateManager";
 
 interface MilestoneUpdateEngineContextValue {
 	// State accessors
@@ -163,8 +163,12 @@ export function MilestoneUpdateEngine({
 
 	// React state to track operation statuses and trigger re-renders
 	// Using objects instead of Map/Set to ensure React detects changes
-	const [operationStatuses, setOperationStatuses] = useState<Record<string, "pending" | "success" | "error">>({});
-	const [recentSuccesses, setRecentSuccesses] = useState<Record<string, boolean>>({});
+	const [operationStatuses, setOperationStatuses] = useState<
+		Record<string, "pending" | "success" | "error">
+	>({});
+	const [recentSuccesses, setRecentSuccesses] = useState<
+		Record<string, boolean>
+	>({});
 
 	// Initialize optimistic update manager with React state callbacks
 	const updateManager = useMemo(() => {
@@ -177,25 +181,27 @@ export function MilestoneUpdateEngine({
 				);
 
 				// Update React state to trigger re-render - using object spread for React detection
-				setOperationStatuses(prev => ({
+				setOperationStatuses((prev) => ({
 					...prev,
-					[update.milestoneId]: "success"
+					[update.milestoneId]: "success",
 				}));
 
 				// Add to recent successes for visual feedback
-				setRecentSuccesses(prev => ({
+				setRecentSuccesses((prev) => ({
 					...prev,
-					[update.milestoneId]: true
+					[update.milestoneId]: true,
 				}));
 
 				// Clear success state after delay to transition to normal complete state
 				setTimeout(() => {
-					setOperationStatuses(prev => {
-						const { [update.milestoneId]: _removed, ...rest } = prev;
+					setOperationStatuses((prev) => {
+						const { [update.milestoneId]: _removed, ...rest } =
+							prev;
 						return rest;
 					});
-					setRecentSuccesses(prev => {
-						const { [update.milestoneId]: _removed, ...rest } = prev;
+					setRecentSuccesses((prev) => {
+						const { [update.milestoneId]: _removed, ...rest } =
+							prev;
 						return rest;
 					});
 				}, 2000);
@@ -206,15 +212,16 @@ export function MilestoneUpdateEngine({
 
 			onError: (update, error) => {
 				// Update React state to show error
-				setOperationStatuses(prev => ({
+				setOperationStatuses((prev) => ({
 					...prev,
-					[update.milestoneId]: "error"
+					[update.milestoneId]: "error",
 				}));
 
 				// Clear error state after delay
 				setTimeout(() => {
-					setOperationStatuses(prev => {
-						const { [update.milestoneId]: _removed, ...rest } = prev;
+					setOperationStatuses((prev) => {
+						const { [update.milestoneId]: _removed, ...rest } =
+							prev;
 						return rest;
 					});
 				}, 5000);
@@ -227,7 +234,7 @@ export function MilestoneUpdateEngine({
 
 			onConflict: (update) => {
 				// Clear loading state on conflict
-				setOperationStatuses(prev => {
+				setOperationStatuses((prev) => {
 					const { [update.milestoneId]: _removed, ...rest } = prev;
 					return rest;
 				});
@@ -304,9 +311,9 @@ export function MilestoneUpdateEngine({
 			value: boolean | number,
 		) => {
 			// Set loading state immediately in React to trigger re-render
-			setOperationStatuses(prev => ({
+			setOperationStatuses((prev) => ({
 				...prev,
-				[milestoneId]: "pending"
+				[milestoneId]: "pending",
 			}));
 
 			const update: MilestoneUpdate = {
@@ -420,7 +427,7 @@ export function MilestoneUpdateEngine({
 		if (projectId) {
 			subscribeToProject(projectId);
 		}
-		
+
 		return () => {
 			// Clean up subscription on unmount or projectId change
 			if (realtimeSubscriptionRef.current) {
@@ -443,7 +450,8 @@ export function MilestoneUpdateEngine({
 		getAllMilestoneStates:
 			updateManager.getAllMilestoneStates.bind(updateManager),
 		hasPendingUpdates: updateManager.hasPendingUpdates.bind(updateManager),
-		hasRecentSuccess: (milestoneId: string) => Boolean(recentSuccesses[milestoneId]),
+		hasRecentSuccess: (milestoneId: string) =>
+			Boolean(recentSuccesses[milestoneId]),
 		getOperationStatus:
 			updateManager.getOperationStatus.bind(updateManager),
 		// React state-based accessors for triggering re-renders

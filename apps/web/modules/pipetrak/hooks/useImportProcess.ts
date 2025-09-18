@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { apiClient } from "@shared/lib/api-client";
+import { useState } from "react";
 
 interface ImportJob {
 	id: string;
@@ -125,7 +125,9 @@ export function useImportProcess(
 
 			if (!response.ok) {
 				const errorData = await response.json();
-				throw new Error((errorData as any).error || "Failed to validate data");
+				throw new Error(
+					(errorData as any).error || "Failed to validate data",
+				);
 			}
 
 			const validation = await response.json();

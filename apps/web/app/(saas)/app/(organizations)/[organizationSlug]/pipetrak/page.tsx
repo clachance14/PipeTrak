@@ -1,6 +1,10 @@
 "use client";
 
+import { CreateProjectModal } from "@pipetrak/projects/CreateProjectModal";
+import { useSession } from "@saas/auth/hooks/use-session";
+import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { PageHeader } from "@saas/shared/components/PageHeader";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Card,
@@ -9,23 +13,19 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import {
-	PlusIcon,
-	Folder,
-	MapPin,
-	Calendar,
-	BarChart3,
 	AlertCircle,
+	BarChart3,
 	Building2,
+	Calendar,
+	Folder,
 	Loader2,
+	MapPin,
+	PlusIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CreateProjectModal } from "@pipetrak/projects/CreateProjectModal";
-import { useSession } from "@saas/auth/hooks/use-session";
-import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
+import { useEffect, useState } from "react";
 
 interface Project {
 	id: string;

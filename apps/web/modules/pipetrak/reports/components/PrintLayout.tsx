@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { cn } from "@ui/lib";
+import type { ReactNode } from "react";
 
 interface PrintLayoutProps {
 	children: ReactNode;

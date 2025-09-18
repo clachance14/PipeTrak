@@ -1,20 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@ui/components/card";
-import { Button } from "@ui/components/button";
-import { Separator } from "@ui/components/separator";
 import { Alert, AlertDescription } from "@ui/components/alert";
-import { ReportHeader } from "./ReportHeader";
-// import { ReportFilters } from "./ReportFilters"; // Temporarily disabled
-import { ProgressChart } from "./ProgressChart";
-import { ROCDisplay } from "./ROCDisplay";
-import { ExportButtons } from "./ExportButtons";
-import { PrintLayout } from "./PrintLayout";
+import { Button } from "@ui/components/button";
+import { Card, CardContent } from "@ui/components/card";
+import { Separator } from "@ui/components/separator";
+import { AlertCircle, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useProgressReportGeneration, useReportFilters } from "../hooks";
 import { transformers } from "../lib/report-utils";
-import { RefreshCw, AlertCircle } from "lucide-react";
 import type { ProgressReportResponse, TrendDataPoint } from "../types";
+import { ExportButtons } from "./ExportButtons";
+import { PrintLayout } from "./PrintLayout";
+// import { ReportFilters } from "./ReportFilters"; // Temporarily disabled
+import { ProgressChart } from "./ProgressChart";
+import { ReportHeader } from "./ReportHeader";
+import { ROCDisplay } from "./ROCDisplay";
 
 interface ProgressReportContentProps {
 	projectId: string;
@@ -106,10 +106,12 @@ export function ProgressReportContent({
 		: undefined;
 
 	const trendData: TrendDataPoint[] =
-		reportData?.data.comprehensiveReport.trends?.dailyProgress?.map((point) => ({
-			...point,
-			dailyVelocity: 0, // Will be calculated from velocity metrics
-		})) || [];
+		reportData?.data.comprehensiveReport.trends?.dailyProgress?.map(
+			(point) => ({
+				...point,
+				dailyVelocity: 0, // Will be calculated from velocity metrics
+			}),
+		) || [];
 
 	return (
 		<PrintLayout
@@ -151,7 +153,8 @@ export function ProgressReportContent({
 							showAdvanced={true}
 						/> */}
 						<div className="text-sm text-muted-foreground">
-							Report filters temporarily disabled - hook implementation mismatch
+							Report filters temporarily disabled - hook
+							implementation mismatch
 						</div>
 					</div>
 					<div className="lg:w-auto">

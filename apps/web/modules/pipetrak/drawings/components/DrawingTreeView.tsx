@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
-import { Search } from "lucide-react";
 import { Input } from "@ui/components/input";
 import { ScrollArea } from "@ui/components/scroll-area";
 import { Skeleton } from "@ui/components/skeleton";
 import { cn } from "@ui/lib";
+import { Search } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import type { DrawingTreeNode } from "../../types";
 import { DrawingTreeItem } from "./DrawingTreeItem";
 
@@ -146,6 +146,7 @@ export function DrawingTreeView({
 				</div>
 				<div className="flex gap-2 mt-2">
 					<button
+						type="button"
 						onClick={handleExpandAll}
 						className={cn(
 							"text-muted-foreground hover:text-foreground",
@@ -160,6 +161,7 @@ export function DrawingTreeView({
 						<span className="text-xs text-muted-foreground">·</span>
 					)}
 					<button
+						type="button"
 						onClick={handleCollapseAll}
 						className={cn(
 							"text-muted-foreground hover:text-foreground",

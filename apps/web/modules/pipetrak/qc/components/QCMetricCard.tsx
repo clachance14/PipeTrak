@@ -66,7 +66,9 @@ export function QCMetricCard({
 		>
 			<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 				<div className="flex items-center gap-2">
-					<div className={cn("h-2.5 w-2.5 rounded-full", colors.dot)} />
+					<div
+						className={cn("h-2.5 w-2.5 rounded-full", colors.dot)}
+					/>
 					<h3 className="text-sm font-medium text-muted-foreground">
 						{title}
 					</h3>

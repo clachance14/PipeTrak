@@ -1,6 +1,6 @@
-import * as React from "react";
-import { ChevronRight } from "lucide-react";
 import { cn } from "@ui/lib";
+import { ChevronRight } from "lucide-react";
+import * as React from "react";
 
 const Breadcrumb = React.forwardRef<
 	HTMLElement,
@@ -57,8 +57,6 @@ const BreadcrumbPage = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<span
 		ref={ref}
-		role="link"
-		aria-disabled="true"
 		aria-current="page"
 		className={cn("font-normal text-foreground", className)}
 		{...props}

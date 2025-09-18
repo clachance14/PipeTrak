@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "../../../../../lib/supabase/client";
 import type { ComponentMilestone } from "../../../types";
@@ -338,11 +338,12 @@ export function RealtimeManager({
 		return () => {
 			if (
 				presenceRef.current &&
-				presenceRef.current.action === "editing_start"
+				presenceRef.current.action === "editing_start" &&
+				presenceRef.current.componentId
 			) {
 				// Broadcast editing end when component unmounts
 				broadcastPresence(
-					presenceRef.current.componentId!,
+					presenceRef.current.componentId,
 					"editing_end",
 				);
 			}

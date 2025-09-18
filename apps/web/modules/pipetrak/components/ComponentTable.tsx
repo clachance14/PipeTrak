@@ -1,18 +1,18 @@
 "use client";
 
-import { DataTable } from "../shared/components/DataTable";
 import { Button } from "@ui/components/button";
-import { Edit, MoreHorizontal, Target } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import { TableMilestoneColumn } from "./milestones/integration/TableMilestoneColumn";
-import { MilestoneUpdateEngine } from "./milestones/core/MilestoneUpdateEngine";
-import { RealtimeManager } from "./milestones/realtime/RealtimeManager";
+import { Edit, MoreHorizontal, Target } from "lucide-react";
+import { DataTable } from "../shared/components/DataTable";
 import type { ComponentWithMilestones, TableColumn } from "../types";
+import { MilestoneUpdateEngine } from "./milestones/core/MilestoneUpdateEngine";
+import { TableMilestoneColumn } from "./milestones/integration/TableMilestoneColumn";
+import { RealtimeManager } from "./milestones/realtime/RealtimeManager";
 
 interface ComponentTableProps {
 	components: ComponentWithMilestones[];

@@ -1,10 +1,10 @@
 "use client";
 
-import { QCToolbar } from "./QCToolbar";
-import { QCActivityFeed } from "./QCActivityFeed";
-import { useState, useTransition } from "react";
 import type { QCActivityItem } from "@pipetrak/qc/lib/activity-loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { useState, useTransition } from "react";
+import { QCActivityFeed } from "./QCActivityFeed";
+import { QCToolbar } from "./QCToolbar";
 
 // TODO: Uncomment when date range functionality is re-enabled
 // Custom DateRange type since react-day-picker v9+ doesn't export it
@@ -22,7 +22,8 @@ export function QCDashboardClient({
 	projectId,
 	initialActivities,
 }: QCDashboardClientProps) {
-	const [activities, setActivities] = useState<QCActivityItem[]>(initialActivities);
+	const [activities, setActivities] =
+		useState<QCActivityItem[]>(initialActivities);
 	const [isPending, startTransition] = useTransition();
 
 	// TODO: Uncomment when date range functionality is re-enabled
@@ -40,7 +41,9 @@ export function QCDashboardClient({
 			// 	}
 			// }
 
-			const response = await fetch(`/api/pipetrak/qc/activity?${params.toString()}`);
+			const response = await fetch(
+				`/api/pipetrak/qc/activity?${params.toString()}`,
+			);
 			if (response.ok) {
 				const data = await response.json();
 				setActivities(data.activities || []);
@@ -78,7 +81,7 @@ export function QCDashboardClient({
 				onRefresh={handleRefresh}
 				onExport={handleExport}
 			/>
-			
+
 			{isPending ? (
 				<QCActivitySkeleton />
 			) : (
@@ -97,7 +100,10 @@ function QCActivitySkeleton() {
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{[1, 2, 3].map((i) => (
-					<div key={i} className="flex gap-3 p-3 rounded-lg bg-muted/30 animate-pulse">
+					<div
+						key={i}
+						className="flex gap-3 p-3 rounded-lg bg-muted/30 animate-pulse"
+					>
 						<div className="h-9 w-9 rounded-full bg-muted" />
 						<div className="flex-1 space-y-2">
 							<div className="h-4 bg-muted rounded w-3/4" />

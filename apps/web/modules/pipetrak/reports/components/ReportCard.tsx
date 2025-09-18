@@ -1,18 +1,18 @@
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { cn } from "@ui/lib";
 import {
 	ArrowRight,
-	Clock,
-	FileText,
 	BarChart3,
 	Check,
-	TrendingUp,
+	Clock,
+	FileText,
 	Shield,
+	TrendingUp,
 	Zap,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import Link from "next/link";
 
 interface ReportCardProps {
 	title: string;

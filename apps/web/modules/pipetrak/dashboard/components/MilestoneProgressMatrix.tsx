@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Button } from "@ui/components/button";
 import {
 	Card,
 	CardContent,
@@ -8,7 +8,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import {
 	Sheet,
 	SheetContent,
@@ -16,16 +15,17 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@ui/components/sheet";
+import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import {
-	MapPin,
-	Package,
+	BarChart3,
 	Box,
 	Download,
+	MapPin,
+	Package,
 	Printer,
 	Settings,
-	BarChart3,
 } from "lucide-react";
-import { Button } from "@ui/components/button";
+import { useMemo, useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface MilestoneProgressMatrixProps {
@@ -649,8 +649,18 @@ export function MilestoneProgressMatrix({
 															)
 														}
 														onKeyDown={(e) => {
-															if ((e.key === 'Enter' || e.key === ' ') && stats) {
-																handleCellClick(row.rowKey, milestone, stats);
+															if (
+																(e.key ===
+																	"Enter" ||
+																	e.key ===
+																		" ") &&
+																stats
+															) {
+																handleCellClick(
+																	row.rowKey,
+																	milestone,
+																	stats,
+																);
 															}
 														}}
 													>

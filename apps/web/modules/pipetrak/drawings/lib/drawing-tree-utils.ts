@@ -1,7 +1,7 @@
 import type {
-	DrawingTreeNode,
 	Drawing,
 	DrawingComponentCount,
+	DrawingTreeNode,
 } from "../../types";
 
 /**

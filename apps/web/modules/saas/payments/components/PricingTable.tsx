@@ -216,10 +216,14 @@ export function PricingTable({
 												className="block font-medium text-2xl lg:text-3xl"
 												data-test="price-table-plan-price"
 											>
-												{new Intl.NumberFormat(undefined, {
-													style: "currency",
-													currency: price.currency,
-												}).format(price.amount)}
+												{new Intl.NumberFormat(
+													undefined,
+													{
+														style: "currency",
+														currency:
+															price.currency,
+													},
+												).format(price.amount)}
 												{"interval" in price && (
 													<span className="font-normal text-xs opacity-60">
 														{" / "}

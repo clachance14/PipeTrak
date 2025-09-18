@@ -1,4 +1,4 @@
-import { getSession, getOrganizationList } from "@saas/auth/lib/server";
+import { getOrganizationList, getSession } from "@saas/auth/lib/server";
 import { redirect } from "next/navigation";
 
 interface PipeTrakRedirectPageProps {

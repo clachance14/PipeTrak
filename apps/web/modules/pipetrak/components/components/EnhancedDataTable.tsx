@@ -1,6 +1,10 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Checkbox } from "@ui/components/checkbox";
+import { Input } from "@ui/components/input";
 import {
 	Table,
 	TableBody,
@@ -9,22 +13,18 @@ import {
 	TableHeader,
 	TableRow,
 } from "@ui/components/table";
-import { Button } from "@ui/components/button";
-import { Input } from "@ui/components/input";
-import { Checkbox } from "@ui/components/checkbox";
-import { Badge } from "@ui/components/badge";
 import { cn } from "@ui/lib";
 import {
 	ChevronLeft,
 	ChevronRight,
 	ChevronsLeft,
 	ChevronsRight,
-	Pin,
 	Edit,
+	Pin,
 	Save,
 	X,
 } from "lucide-react";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import type {
 	Component,
@@ -268,12 +268,12 @@ export function EnhancedDataTable({
 
 		switch (column.type) {
 			case "status": {
-					const statusVariant =
-						value === "COMPLETED"
-							? "success"
-							: value === "IN_PROGRESS"
-								? "info"
-								: "warning";
+				const statusVariant =
+					value === "COMPLETED"
+						? "success"
+						: value === "IN_PROGRESS"
+							? "info"
+							: "warning";
 				return (
 					<Badge status={statusVariant as any} className="text-xs">
 						{value as string}
@@ -308,6 +308,8 @@ export function EnhancedDataTable({
 			default:
 				return (
 					<div
+						role={enableEditing && column.editable !== false ? "button" : undefined}
+						tabIndex={enableEditing && column.editable !== false ? 0 : undefined}
 						className={cn(
 							"flex items-center",
 							enableEditing &&
@@ -315,9 +317,21 @@ export function EnhancedDataTable({
 								"cursor-pointer hover:bg-muted/50 rounded px-2 -mx-2",
 						)}
 						style={{ minHeight: `${touchTargetSize}px` }}
+						onClick={() => {
+							if (enableEditing && column.editable !== false) {
+								handleCellDoubleClick(item.id, column.key, value);
+							}
+						}}
 						onDoubleClick={() =>
 							handleCellDoubleClick(item.id, column.key, value)
 						}
+						onKeyDown={(e: React.KeyboardEvent) => {
+							if (enableEditing && column.editable !== false && (e.key === "Enter" || e.key === " ")) {
+								e.preventDefault();
+								handleCellDoubleClick(item.id, column.key, value);
+							}
+						}}
+						{...(enableEditing && column.editable !== false ? { "aria-label": `Edit ${column.header || column.key}` } : {})}
 					>
 						{value?.toString() || "-"}
 						{enableEditing && column.editable !== false && (

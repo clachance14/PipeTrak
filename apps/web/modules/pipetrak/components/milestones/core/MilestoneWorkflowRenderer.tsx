@@ -1,11 +1,11 @@
 "use client";
 
-import { MilestoneDiscreteRenderer } from "./MilestoneDiscreteRenderer";
-import { MilestonePercentageRenderer } from "./MilestonePercentageRenderer";
-import { MilestoneQuantityRenderer } from "./MilestoneQuantityRenderer";
 import { Alert, AlertDescription } from "@ui/components/alert";
 import { AlertTriangle } from "lucide-react";
 import type { ComponentMilestone, WorkflowType } from "../../../types";
+import { MilestoneDiscreteRenderer } from "./MilestoneDiscreteRenderer";
+import { MilestonePercentageRenderer } from "./MilestonePercentageRenderer";
+import { MilestoneQuantityRenderer } from "./MilestoneQuantityRenderer";
 
 interface MilestoneWorkflowRendererProps {
 	milestone: ComponentMilestone;

@@ -1,25 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Badge } from "@ui/components/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
-import { ComponentTable } from "../../ComponentTable";
-import { EnhancedBulkUpdateModal } from "../bulk/EnhancedBulkUpdateModal";
-import { MobileMilestoneSheet } from "../mobile/MobileMilestoneSheet";
-import { MilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
-import { RealtimeManager } from "../realtime/RealtimeManager";
 import {
+	Check,
+	Monitor,
 	Package,
+	Smartphone,
 	Target,
 	Users,
-	Smartphone,
-	Monitor,
 	Zap,
-	Check,
 } from "lucide-react";
+import { useState } from "react";
 import type { ComponentWithMilestones } from "../../../types";
+import { ComponentTable } from "../../ComponentTable";
+import { EnhancedBulkUpdateModal } from "../bulk/EnhancedBulkUpdateModal";
+import { MilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { MobileMilestoneSheet } from "../mobile/MobileMilestoneSheet";
+import { RealtimeManager } from "../realtime/RealtimeManager";
 
 interface MilestoneSystemDemoProps {
 	projectId: string;
@@ -116,7 +116,8 @@ export function MilestoneSystemDemo({
 		),
 		completedMilestones: components.reduce(
 			(sum, c) =>
-				sum + (c.milestones?.filter((m: any) => m.isCompleted).length || 0),
+				sum +
+				(c.milestones?.filter((m: any) => m.isCompleted).length || 0),
 			0,
 		),
 	};

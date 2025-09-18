@@ -1,13 +1,13 @@
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import {
+	generateMockComponents,
 	mockComponents,
 	mockProject,
-	generateMockComponents,
 } from "../__fixtures__/components";
 import {
-	milestoneHandlers,
-	milestoneErrorHandlers,
 	milestoneDelayHandlers,
+	milestoneErrorHandlers,
+	milestoneHandlers,
 } from "./milestone-handlers";
 
 const API_BASE = "http://localhost:3000/api/pipetrak";
@@ -82,7 +82,11 @@ export const handlers = [
 		}
 
 		// Simulate update
-		const updated = { ...component, ...(updates && typeof updates === 'object' ? updates : {}), updatedAt: new Date() };
+		const updated = {
+			...component,
+			...(updates && typeof updates === "object" ? updates : {}),
+			updatedAt: new Date(),
+		};
 
 		return HttpResponse.json(updated);
 	}),
@@ -93,7 +97,11 @@ export const handlers = [
 
 		const updatedComponents = mockComponents
 			.filter((c) => componentIds.includes(c.id))
-			.map((c) => ({ ...c, ...(updates && typeof updates === 'object' ? updates : {}), updatedAt: new Date() }));
+			.map((c) => ({
+				...c,
+				...(updates && typeof updates === "object" ? updates : {}),
+				updatedAt: new Date(),
+			}));
 
 		return HttpResponse.json({
 			updated: updatedComponents.length,
@@ -108,7 +116,7 @@ export const handlers = [
 		// Simulate milestone update
 		return HttpResponse.json({
 			id: params.id,
-			...(updates && typeof updates === 'object' ? updates : {}),
+			...(updates && typeof updates === "object" ? updates : {}),
 			updatedAt: new Date(),
 		});
 	}),

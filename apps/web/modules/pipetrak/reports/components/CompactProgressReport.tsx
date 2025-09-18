@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { format, addDays, startOfWeek } from "date-fns";
 import { Badge } from "@ui/components/badge";
+import { addDays, format, startOfWeek } from "date-fns";
 import { AlertTriangle } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 interface CompactProgressReportProps {
 	projectId: string;
@@ -110,7 +110,9 @@ export function CompactProgressReport({
 
 				if (!response.ok) {
 					const errorData = await response.json();
-					throw new Error(errorData.error || "Failed to generate report");
+					throw new Error(
+						errorData.error || "Failed to generate report",
+					);
 				}
 
 				const result = await response.json();
@@ -154,7 +156,9 @@ export function CompactProgressReport({
 			<div className="min-h-screen bg-white flex items-center justify-center">
 				<div className="text-center text-red-600">
 					<AlertTriangle className="w-12 h-12 mx-auto mb-4" />
-					<p className="text-lg font-semibold mb-2">Report Generation Failed</p>
+					<p className="text-lg font-semibold mb-2">
+						Report Generation Failed
+					</p>
 					<p>{error}</p>
 				</div>
 			</div>
@@ -323,10 +327,13 @@ export function CompactProgressReport({
 				<div className="compact-header">
 					<div>
 						<h1 className="compact-title">
-							Weekly Progress Summary - {reportData.reportInfo.projectName}
+							Weekly Progress Summary -{" "}
+							{reportData.reportInfo.projectName}
 						</h1>
 						<div className="compact-subtitle">
-							Job #{reportData.reportInfo.jobNumber} • Week Ending {format(weekEndingDate, "MMM d, yyyy")} • {reportData.reportInfo.organization}
+							Job #{reportData.reportInfo.jobNumber} • Week Ending{" "}
+							{format(weekEndingDate, "MMM d, yyyy")} •{" "}
+							{reportData.reportInfo.organization}
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
@@ -334,7 +341,11 @@ export function CompactProgressReport({
 							{isFinal ? "FINAL" : "PRELIMINARY"}
 						</Badge>
 						<div className="text-xs">
-							Generated: {format(new Date(reportData.reportInfo.generatedAt), "M/d/yy h:mm a")}
+							Generated:{" "}
+							{format(
+								new Date(reportData.reportInfo.generatedAt),
+								"M/d/yy h:mm a",
+							)}
 						</div>
 					</div>
 				</div>
@@ -345,19 +356,25 @@ export function CompactProgressReport({
 						<span className="compact-summary-value">
 							{Math.round(reportData.summary.overallProgress)}%
 						</span>
-						<span className="compact-summary-label">Overall Progress</span>
+						<span className="compact-summary-label">
+							Overall Progress
+						</span>
 					</div>
 					<div className="compact-summary-item">
 						<span className="compact-summary-value">
 							{reportData.summary.totalComponents.toLocaleString()}
 						</span>
-						<span className="compact-summary-label">Total Components</span>
+						<span className="compact-summary-label">
+							Total Components
+						</span>
 					</div>
 					<div className="compact-summary-item">
 						<span className="compact-summary-value">
 							{getGroupColumnName()}
 						</span>
-						<span className="compact-summary-label">Grouped By</span>
+						<span className="compact-summary-label">
+							Grouped By
+						</span>
 					</div>
 					<div className="compact-summary-item">
 						<span className="compact-summary-value">
@@ -373,7 +390,9 @@ export function CompactProgressReport({
 				<table className="compact-table">
 					<thead>
 						<tr>
-							<th style={{ width: "20%" }}>{getGroupColumnName()}</th>
+							<th style={{ width: "20%" }}>
+								{getGroupColumnName()}
+							</th>
 							<th style={{ width: "10%" }}>Budget</th>
 							<th style={{ width: "12%" }}>Received</th>
 							<th style={{ width: "12%" }}>Installed</th>
@@ -391,11 +410,17 @@ export function CompactProgressReport({
 									<td>{key}</td>
 									<td>{row.component_count}</td>
 									<td>{Math.round(row.received_percent)}%</td>
-									<td>{Math.round(row.installed_percent)}%</td>
+									<td>
+										{Math.round(row.installed_percent)}%
+									</td>
 									<td>{Math.round(row.punched_percent)}%</td>
 									<td>{Math.round(row.tested_percent)}%</td>
 									<td>{Math.round(row.restored_percent)}%</td>
-									<td><strong>{Math.round(row.overall_percent)}%</strong></td>
+									<td>
+										<strong>
+											{Math.round(row.overall_percent)}%
+										</strong>
+									</td>
 								</tr>
 							);
 						})}
@@ -405,10 +430,12 @@ export function CompactProgressReport({
 				{/* Compact Footer */}
 				<div className="compact-footer">
 					<div>
-						PipeTrak Progress Summary Report • Data as of {format(tuesday9AM, "EEEE, MMMM d, yyyy 'at' h:mm a")}
+						PipeTrak Progress Summary Report • Data as of{" "}
+						{format(tuesday9AM, "EEEE, MMMM d, yyyy 'at' h:mm a")}
 					</div>
 					<div>
-						{reportData.reportInfo.reportStatus} Report • Page 1 of 1
+						{reportData.reportInfo.reportStatus} Report • Page 1 of
+						1
 					</div>
 				</div>
 			</div>

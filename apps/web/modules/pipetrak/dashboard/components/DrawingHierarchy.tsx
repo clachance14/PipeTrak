@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { ChevronRight, ChevronDown, FileText } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -9,11 +7,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { ScrollArea } from "@ui/components/scroll-area";
 import { Progress } from "@ui/components/progress";
-import { buildDrawingTree } from "../lib/utils";
+import { ScrollArea } from "@ui/components/scroll-area";
 import { cn } from "@ui/lib";
-import type { DrawingRollups, DrawingRollup } from "../types";
+import { ChevronDown, ChevronRight, FileText } from "lucide-react";
+import { useMemo, useState } from "react";
+import { buildDrawingTree } from "../lib/utils";
+import type { DrawingRollup, DrawingRollups } from "../types";
 
 interface DrawingHierarchyProps {
 	data: DrawingRollups | null;
@@ -37,12 +37,25 @@ function DrawingNode({ node, level, isExpanded, onToggle }: DrawingNodeProps) {
 	return (
 		<div className="space-y-1">
 			<div
+				role={hasChildren ? "button" : undefined}
+				tabIndex={hasChildren ? 0 : undefined}
 				className={cn(
-					"flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer",
+					"flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-colors",
+					hasChildren && "cursor-pointer",
 					level > 0 && "bg-muted/25",
 				)}
 				style={{ marginLeft: `${indent}px` }}
 				onClick={hasChildren ? onToggle : undefined}
+				onKeyDown={hasChildren ? (e: React.KeyboardEvent) => {
+					if (e.key === "Enter" || e.key === " ") {
+						e.preventDefault();
+						onToggle();
+					}
+				} : undefined}
+				{...(hasChildren ? {
+					"aria-expanded": isExpanded,
+					"aria-label": `${isExpanded ? "Collapse" : "Expand"} ${drawing.drawingNumber || "drawing"}`
+				} : {})}
 			>
 				{/* Expand/collapse button */}
 				<div className="flex-shrink-0 w-4 h-4">

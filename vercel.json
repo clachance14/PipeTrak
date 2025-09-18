@@ -1,6 +1,11 @@
 {
 	"version": 2,
-	"buildCommand": "pnpm --filter @repo/database prisma:generate && pnpm --filter @repo/web build",
+	"buildCommand": "pnpm --filter @repo/database prisma:generate && node scripts/copy-prisma-engines.js && pnpm --filter @repo/web build",
 	"installCommand": "pnpm install --frozen-lockfile",
-	"framework": "nextjs"
+	"framework": "nextjs",
+	"functions": {
+		"apps/web/app/api/**/*.ts": {
+			"maxDuration": 60
+		}
+	}
 }

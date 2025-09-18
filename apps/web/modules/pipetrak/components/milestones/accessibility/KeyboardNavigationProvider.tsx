@@ -2,10 +2,10 @@
 
 import React, {
 	createContext,
-	useContext,
 	useCallback,
-	useRef,
+	useContext,
 	useEffect,
+	useRef,
 } from "react";
 
 interface KeyboardNavigationContextValue {
@@ -295,7 +295,7 @@ export function KeyboardNavigationProvider({
 			<div
 				ref={containerRef}
 				role={role}
-				aria-label={ariaLabel}
+				{...(role && { "aria-label": ariaLabel })}
 				className={className}
 				tabIndex={-1}
 			>

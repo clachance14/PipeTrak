@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@shared/lib/api-client";
+import { useQuery } from "@tanstack/react-query";
 import type { DrawingTreeNode } from "../../types";
 
 interface DrawingHierarchyResponse {
@@ -14,10 +14,9 @@ export function useDrawingHierarchy(projectId: string) {
 	return useQuery({
 		queryKey: ["drawings", "hierarchy", projectId],
 		queryFn: async () => {
-			const response =
-				await (apiClient.pipetrak.drawings.project as any)[
-					projectId
-				].hierarchy.$get();
+			const response = await (apiClient.pipetrak.drawings.project as any)[
+				projectId
+			].hierarchy.$get();
 
 			if (!response.ok) {
 				throw new Error("Failed to fetch drawing hierarchy");

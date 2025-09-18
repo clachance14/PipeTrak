@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
-import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useSession } from "@saas/auth/hooks/use-session";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createClientWithAuth } from "../../../lib/supabase/client";
 
 // Types for realtime events
@@ -125,14 +125,21 @@ export function useComponentUpdates(
 				(payload) => {
 					const newData = payload.new as ComponentPayloadData | null;
 					const oldData = payload.old as ComponentPayloadData | null;
-					
+
 					const update: ComponentUpdate = {
 						type: "component",
-						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
+						action: payload.eventType as
+							| "INSERT"
+							| "UPDATE"
+							| "DELETE",
 						component_id: newData?.id || oldData?.id || "",
-						drawing_id: newData?.drawingId || oldData?.drawingId || "",
+						drawing_id:
+							newData?.drawingId || oldData?.drawingId || "",
 						status: newData?.status || oldData?.status || "",
-						completion_percent: newData?.completionPercent || oldData?.completionPercent || 0,
+						completion_percent:
+							newData?.completionPercent ||
+							oldData?.completionPercent ||
+							0,
 					};
 
 					setUpdates((prev) => [...prev.slice(-19), update]); // Keep last 20 updates
@@ -190,12 +197,19 @@ export function useMilestoneUpdates(
 				(payload) => {
 					const newData = payload.new as MilestonePayloadData | null;
 					const oldData = payload.old as MilestonePayloadData | null;
-					
+
 					const update: MilestoneUpdate = {
 						type: "milestone",
-						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
-						component_id: newData?.componentId || oldData?.componentId || "",
-						milestone_name: newData?.milestoneName || oldData?.milestoneName || "",
+						action: payload.eventType as
+							| "INSERT"
+							| "UPDATE"
+							| "DELETE",
+						component_id:
+							newData?.componentId || oldData?.componentId || "",
+						milestone_name:
+							newData?.milestoneName ||
+							oldData?.milestoneName ||
+							"",
 						is_completed: newData?.isCompleted || false,
 						completed_by: newData?.completedBy,
 						completed_at: newData?.completedAt,
@@ -540,10 +554,13 @@ export function useImportJobUpdates(
 				(payload) => {
 					const newData = payload.new as ImportJobPayloadData | null;
 					const oldData = payload.old as ImportJobPayloadData | null;
-					
+
 					const update: ImportJobUpdate = {
 						type: "import_job",
-						action: payload.eventType as "INSERT" | "UPDATE" | "DELETE",
+						action: payload.eventType as
+							| "INSERT"
+							| "UPDATE"
+							| "DELETE",
 						job_id: newData?.id || oldData?.id || "",
 						status: newData?.status || oldData?.status || "",
 						filename: newData?.filename || oldData?.filename || "",

@@ -1,37 +1,40 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { Badge } from "@ui/components/badge";
 import { Progress } from "@ui/components/progress";
 import { ScrollArea } from "@ui/components/scroll-area";
-import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 } from "@ui/components/select";
+import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
+import { cn } from "@ui/lib";
 import {
-	ChevronDown,
-	Search,
-	RefreshCw,
-	Triangle,
 	Check,
+	ChevronDown,
 	Circle,
 	Clock,
-	MapPin,
-	List,
 	Grid3x3,
+	List,
+	MapPin,
+	RefreshCw,
+	Search,
+	Triangle,
 } from "lucide-react";
-import { cn } from "@ui/lib";
-import { QuickStatsChips } from "./QuickStatsChips";
-import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
-import { MobileBottomSheet } from "./MobileBottomSheet";
+import { useEffect, useState } from "react";
+import type {
+	ComponentFileFilters,
+	ComponentWithMilestones,
+} from "../../types";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
+import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
+import { MobileBottomSheet } from "./MobileBottomSheet";
+import { QuickStatsChips } from "./QuickStatsChips";
 
 interface MobileDashboardProps {
 	projectId: string;
@@ -371,6 +374,15 @@ function MobileComponentCard({ component, onTap }: MobileComponentCardProps) {
 		<div
 			className="bg-white rounded-lg border p-4 active:bg-gray-50 transition-colors cursor-pointer"
 			onClick={onTap}
+			onKeyDown={(e: React.KeyboardEvent) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onTap();
+				}
+			}}
+			tabIndex={0}
+			role="button"
+			aria-label={`View component ${component.componentId}`}
 			style={{ minHeight: "88px" }} // Minimum touch target
 		>
 			{/* Header */}

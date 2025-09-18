@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Drawing, Component } from "../../types";
+import type { Component, Drawing } from "../../types";
 
 interface DrawingDetailsResponse {
 	drawing: Drawing & {

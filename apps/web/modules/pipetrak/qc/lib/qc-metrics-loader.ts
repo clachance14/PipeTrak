@@ -45,7 +45,9 @@ export interface QCSummaryResponse {
 export async function getQCMetrics(projectId: string): Promise<QCMetrics> {
 	try {
 		const apiClient = await getServerApiClient();
-		const response = await apiClient.pipetrak["qc-metrics"][":projectId"].$get({
+		const response = await apiClient.pipetrak["qc-metrics"][
+			":projectId"
+		].$get({
 			param: { projectId },
 		});
 
@@ -69,7 +71,9 @@ export async function getQCMetrics(projectId: string): Promise<QCMetrics> {
 export async function getQCSummary(projectId: string): Promise<QCSummary> {
 	try {
 		const apiClient = await getServerApiClient();
-		const response = await apiClient.pipetrak["qc-metrics"][":projectId"]["summary"].$get({
+		const response = await apiClient.pipetrak["qc-metrics"][":projectId"][
+			"summary"
+		].$get({
 			param: { projectId },
 		});
 
@@ -131,12 +135,13 @@ export function formatQCMetrics(metrics: QCMetrics) {
 		totalWelds: {
 			value: metrics.totalWelds.toLocaleString(),
 			label: "Across all packages",
-			trend: metrics.trends.weldsWeekOverWeekChange > 0
-				? {
-					value: `${metrics.trends.weldsWeekOverWeekChange}%`,
-					type: "increase" as const,
-				}
-				: undefined,
+			trend:
+				metrics.trends.weldsWeekOverWeekChange > 0
+					? {
+							value: `${metrics.trends.weldsWeekOverWeekChange}%`,
+							type: "increase" as const,
+						}
+					: undefined,
 		},
 		completedWelds: {
 			value: metrics.completedWelds.toLocaleString(),
@@ -145,26 +150,30 @@ export function formatQCMetrics(metrics: QCMetrics) {
 		acceptanceRate: {
 			value: `${metrics.acceptanceRate}%`,
 			label: "NDE pass rate",
-			trend: Math.abs(metrics.trends.acceptanceRateChange) > 0
-				? {
-					value: `${Math.abs(metrics.trends.acceptanceRateChange)}%`,
-					type: metrics.trends.acceptanceRateChange > 0
-						? "increase" as const
-						: "decrease" as const,
-				}
-				: undefined,
+			trend:
+				Math.abs(metrics.trends.acceptanceRateChange) > 0
+					? {
+							value: `${Math.abs(metrics.trends.acceptanceRateChange)}%`,
+							type:
+								metrics.trends.acceptanceRateChange > 0
+									? ("increase" as const)
+									: ("decrease" as const),
+						}
+					: undefined,
 		},
 		pwhtComplete: {
 			value: metrics.pwhtComplete.toLocaleString(),
 			label: "Post-weld heat treatment",
-			trend: metrics.pwhtCompletionRate > 0
-				? {
-					value: `${metrics.pwhtCompletionRate}%`,
-					type: metrics.pwhtCompletionRate > 80
-						? "increase" as const
-						: "neutral" as const,
-				}
-				: undefined,
+			trend:
+				metrics.pwhtCompletionRate > 0
+					? {
+							value: `${metrics.pwhtCompletionRate}%`,
+							type:
+								metrics.pwhtCompletionRate > 80
+									? ("increase" as const)
+									: ("neutral" as const),
+						}
+					: undefined,
 		},
 		activeWelders: {
 			value: metrics.activeWelders.toString(),

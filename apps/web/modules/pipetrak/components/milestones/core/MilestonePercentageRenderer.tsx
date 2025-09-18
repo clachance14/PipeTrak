@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
-import { Slider } from "@ui/components/slider";
 import { Progress } from "@ui/components/progress";
-import { Badge } from "@ui/components/badge";
+import { Slider } from "@ui/components/slider";
+import { cn } from "@ui/lib";
 import {
+	AlertCircle,
 	Check,
 	Clock,
-	AlertCircle,
-	Lock,
 	Loader2,
-	Undo2,
+	Lock,
 	Minus,
 	Plus,
+	Undo2,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import { useCallback, useState } from "react";
 import type { ComponentMilestone } from "../../../types";
 
 interface MilestonePercentageRendererProps {

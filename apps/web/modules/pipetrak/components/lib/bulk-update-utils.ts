@@ -45,7 +45,10 @@ export function groupComponentsByTemplate(
 		if (!templateMap.has(templateId)) {
 			templateMap.set(templateId, []);
 		}
-		templateMap.get(templateId)!.push(component);
+		const existingArray = templateMap.get(templateId);
+		if (existingArray) {
+			existingArray.push(component);
+		}
 	});
 
 	// Convert to ComponentGroup array

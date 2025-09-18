@@ -1,7 +1,6 @@
 import { db } from "@repo/database";
 
 export async function getProjectDashboard(projectId: string) {
-
 	// Get project details
 	const project = await db.project.findUnique({
 		where: { id: projectId },
@@ -45,8 +44,10 @@ export async function getProjectDashboard(projectId: string) {
 
 	const overallProgress =
 		totalComponents > 0
-			? components.reduce((sum: any, c: any) => sum + c.completionPercent, 0) /
-				totalComponents
+			? components.reduce(
+					(sum: any, c: any) => sum + c.completionPercent,
+					0,
+				) / totalComponents
 			: 0;
 
 	// Get progress by area
@@ -155,7 +156,6 @@ export async function getProjectDashboard(projectId: string) {
 }
 
 export async function getProjectSummary(projectId: string) {
-
 	const summary = await db.component.aggregate({
 		where: { projectId },
 		_count: true,

@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { Badge } from "@ui/components/badge";
-import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import {
 	Select,
 	SelectContent,
@@ -12,22 +10,27 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
+import { ToggleGroup, ToggleGroupItem } from "@ui/components/toggle-group";
 import {
+	Check,
+	Filter,
+	Grid3x3,
+	List,
+	MoreVertical,
+	Plus,
 	RefreshCw,
 	Search,
-	Plus,
-	Check,
-	MoreVertical,
-	Filter,
-	List,
-	Grid3x3,
 } from "lucide-react";
-import { QuickStatsChips } from "./QuickStatsChips";
-import { ComponentList } from "./ComponentList";
-import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
+import { useEffect, useState } from "react";
+import type {
+	ComponentFileFilters,
+	ComponentWithMilestones,
+} from "../../types";
 import { fetchDashboardComponentsClient } from "../lib/client-api";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
-import type { ComponentWithMilestones, ComponentFileFilters } from "../../types";
+import { ComponentList } from "./ComponentList";
+import { MilestoneProgressMatrix } from "./MilestoneProgressMatrix";
+import { QuickStatsChips } from "./QuickStatsChips";
 
 interface TabletDashboardProps {
 	projectId: string;
@@ -245,13 +248,10 @@ export function TabletDashboard({
 								>
 									<Filter className="h-4 w-4" />
 									Area
-										{selectedArea !== ALL_AREAS_VALUE && (
-											<Badge
-												status="info"
-												className="ml-1"
-											>
-												{selectedArea}
-											</Badge>
+									{selectedArea !== ALL_AREAS_VALUE && (
+										<Badge status="info" className="ml-1">
+											{selectedArea}
+										</Badge>
 									)}
 								</Button>
 

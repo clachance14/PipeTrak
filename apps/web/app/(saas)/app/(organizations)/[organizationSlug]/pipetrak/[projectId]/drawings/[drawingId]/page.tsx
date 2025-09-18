@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { LoadingState } from "@pipetrak/shared/components";
 import { ComponentTable } from "@pipetrak/components";
 import {
-	DrawingBreadcrumbs,
 	ComponentCountBadge,
-	useDrawingDetails,
+	DrawingBreadcrumbs,
 	DrawingTreeView,
+	useDrawingDetails,
 	useDrawingHierarchy,
 } from "@pipetrak/drawings";
+import { LoadingState } from "@pipetrak/shared/components";
 import { Alert, AlertDescription } from "@ui/components/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
 import { Button } from "@ui/components/button";
-import { ArrowLeft, AlertCircle, FileText, Download } from "lucide-react";
+import { Progress } from "@ui/components/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/components/tabs";
 import { cn } from "@ui/lib";
+import { AlertCircle, ArrowLeft, Download, FileText } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface DrawingDetailPageProps {
 	params: Promise<{
@@ -327,7 +327,8 @@ function DrawingDetailContent({
 														type="button"
 														onClick={() =>
 															handleNavigateToDrawing(
-																drawing.parent?.id || '',
+																drawing.parent
+																	?.id || "",
 															)
 														}
 														className="font-medium text-primary hover:underline"

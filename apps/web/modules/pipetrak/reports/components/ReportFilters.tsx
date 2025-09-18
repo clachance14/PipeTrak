@@ -1,9 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Button } from "@ui/components/button";
 import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Calendar } from "@ui/components/calendar";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Input } from "@ui/components/input";
+import { Label } from "@ui/components/label";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@ui/components/popover";
 import {
 	Select,
 	SelectContent,
@@ -11,27 +18,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Calendar } from "@ui/components/calendar";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@ui/components/popover";
 import { Separator } from "@ui/components/separator";
-import { Input } from "@ui/components/input";
-import { Label } from "@ui/components/label";
+import { cn } from "@ui/lib";
+import { format } from "date-fns";
 import {
-	Filter,
-	X,
 	Calendar as CalendarIcon,
 	ChevronDown,
 	ChevronUp,
-	Search,
+	Filter,
 	RotateCcw,
+	Search,
+	X,
 } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@ui/lib";
-import type { ReportFileFilters, FileFilterOptionsResponse } from "../types";
+import { useState } from "react";
+import type { FileFilterOptionsResponse, ReportFileFilters } from "../types";
 
 interface ReportFiltersProps {
 	filters: ReportFileFilters;
@@ -112,7 +112,10 @@ export function ReportFilters({
 				},
 			});
 		} else {
-			const { completionRange: _completionRange, ...filtersWithoutCompletion } = filters;
+			const {
+				completionRange: _completionRange,
+				...filtersWithoutCompletion
+			} = filters;
 			onFiltersChange(filtersWithoutCompletion);
 		}
 	};
@@ -286,38 +289,40 @@ export function ReportFilters({
 								<SelectValue placeholder="Select systems" />
 							</SelectTrigger>
 							<SelectContent>
-								{filterOptions?.systems?.map((system: string) => {
-									const isSelected =
-										filters.systems?.includes(system) ||
-										false;
-									return (
-										<SelectItem
-											key={system}
-											value={system}
-											onClick={(e) => {
-												e.preventDefault();
-												handleMultiSelectChange(
-													"systems",
-													system,
-													!isSelected,
-												);
-											}}
-											className="cursor-pointer"
-										>
-											<div className="flex items-center gap-2">
-												<div
-													className={cn(
-														"w-4 h-4 border rounded",
-														isSelected
-															? "bg-primary border-primary"
-															: "border-muted-foreground",
-													)}
-												/>
-												{system}
-											</div>
-										</SelectItem>
-									);
-								})}
+								{filterOptions?.systems?.map(
+									(system: string) => {
+										const isSelected =
+											filters.systems?.includes(system) ||
+											false;
+										return (
+											<SelectItem
+												key={system}
+												value={system}
+												onClick={(e) => {
+													e.preventDefault();
+													handleMultiSelectChange(
+														"systems",
+														system,
+														!isSelected,
+													);
+												}}
+												className="cursor-pointer"
+											>
+												<div className="flex items-center gap-2">
+													<div
+														className={cn(
+															"w-4 h-4 border rounded",
+															isSelected
+																? "bg-primary border-primary"
+																: "border-muted-foreground",
+														)}
+													/>
+													{system}
+												</div>
+											</SelectItem>
+										);
+									},
+								)}
 							</SelectContent>
 						</Select>
 						{filters.systems?.length && (
@@ -386,8 +391,8 @@ export function ReportFilters({
 									)}
 								</Button>
 							</PopoverTrigger>
-						<PopoverContent
-							className="min-w-[18rem] p-0"
+							<PopoverContent
+								className="min-w-[18rem] p-0"
 								align="start"
 							>
 								<Calendar
@@ -398,7 +403,11 @@ export function ReportFilters({
 										from: dateRange.from,
 										to: dateRange.to,
 									}}
-									onSelect={(range: { from?: Date; to?: Date } | undefined) => {
+									onSelect={(
+										range:
+											| { from?: Date; to?: Date }
+											| undefined,
+									) => {
 										handleDateRangeChange(
 											range?.from,
 											range?.to,

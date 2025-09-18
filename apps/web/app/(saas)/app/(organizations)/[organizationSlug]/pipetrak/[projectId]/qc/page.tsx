@@ -1,12 +1,15 @@
-import type { Metadata } from "next";
-import { TabGroup } from "@saas/shared/components/TabGroup";
+import { QCDashboardClient } from "@pipetrak/qc/components/QCDashboardClient";
 import { QCMetricCard } from "@pipetrak/qc/components/QCMetricCard";
 import { QCQuickActions } from "@pipetrak/qc/components/QCQuickActions";
-import { QCDashboardClient } from "@pipetrak/qc/components/QCDashboardClient";
 import { getQCActivityFeed } from "@pipetrak/qc/lib/activity-loader";
-import { getQCMetrics, formatQCMetrics } from "@pipetrak/qc/lib/qc-metrics-loader";
-import { Suspense } from "react";
+import {
+	formatQCMetrics,
+	getQCMetrics,
+} from "@pipetrak/qc/lib/qc-metrics-loader";
+import { TabGroup } from "@saas/shared/components/TabGroup";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
 interface QCPageProps {
 	params: Promise<{
@@ -122,10 +125,14 @@ export default async function QCPage({ params }: QCPageProps) {
 }
 
 // Server component for loading initial activity data
-async function QCActivityContentWithFilters({ projectId }: { projectId: string }) {
+async function QCActivityContentWithFilters({
+	projectId,
+}: {
+	projectId: string;
+}) {
 	const initialActivities = await getQCActivityFeed(projectId, 15);
 	return (
-		<QCDashboardClient 
+		<QCDashboardClient
 			projectId={projectId}
 			initialActivities={initialActivities}
 		/>
@@ -141,7 +148,10 @@ function QCActivitySkeleton() {
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{[1, 2, 3].map((i) => (
-					<div key={i} className="flex gap-3 p-3 rounded-lg bg-muted/30 animate-pulse">
+					<div
+						key={i}
+						className="flex gap-3 p-3 rounded-lg bg-muted/30 animate-pulse"
+					>
 						<div className="h-9 w-9 rounded-full bg-muted" />
 						<div className="flex-1 space-y-2">
 							<div className="h-4 bg-muted rounded w-3/4" />

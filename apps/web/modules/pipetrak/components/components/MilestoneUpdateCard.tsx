@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
 import { Checkbox } from "@ui/components/checkbox";
 import { Input } from "@ui/components/input";
 import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
 import { Slider } from "@ui/components/slider";
-import { Badge } from "@ui/components/badge";
-import { Check, Circle, Clock, AlertCircle, Lock } from "lucide-react";
 import { cn } from "@ui/lib";
+import { AlertCircle, Check, Circle, Clock, Lock } from "lucide-react";
+import { useState } from "react";
 import type { ComponentMilestone, WorkflowType } from "../../types";
 
 interface MilestoneUpdateCardProps {
@@ -78,6 +78,8 @@ export function MilestoneUpdateCard({
 			return (
 				<div className="space-y-1">
 					<div
+						role="button"
+						tabIndex={isLocked ? -1 : 0}
 						className={cn(
 							"flex items-center gap-2 p-1 rounded border cursor-pointer transition-colors",
 							isLocked && "opacity-50 cursor-not-allowed",
@@ -87,6 +89,13 @@ export function MilestoneUpdateCard({
 							minHeight: `${Math.max(40, touchTargetSize - 12)}px`,
 						}}
 						onClick={() => !isLocked && setTempValue(!isChecked)}
+						onKeyDown={(e: React.KeyboardEvent) => {
+							if (!isLocked && (e.key === "Enter" || e.key === " ")) {
+								e.preventDefault();
+								setTempValue(!isChecked);
+							}
+						}}
+						aria-label={`${milestone.name} - ${isChecked ? "completed" : "not completed"}`}
 					>
 						<Checkbox
 							checked={isChecked}
@@ -124,6 +133,8 @@ export function MilestoneUpdateCard({
 		return (
 			<div className="space-y-4">
 				<div
+					role="button"
+					tabIndex={isLocked ? -1 : 0}
 					className={cn(
 						"flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-colors",
 						isLocked && "opacity-50 cursor-not-allowed",
@@ -131,6 +142,13 @@ export function MilestoneUpdateCard({
 					)}
 					style={{ minHeight: `${touchTargetSize}px` }}
 					onClick={() => !isLocked && setTempValue(!isChecked)}
+					onKeyDown={(e: React.KeyboardEvent) => {
+						if (!isLocked && (e.key === "Enter" || e.key === " ")) {
+							e.preventDefault();
+							setTempValue(!isChecked);
+						}
+					}}
+					aria-label={`${milestone.name} - ${isChecked ? "completed" : "not completed"}`}
 				>
 					<Checkbox
 						checked={isChecked}
@@ -154,7 +172,7 @@ export function MilestoneUpdateCard({
 							Save
 						</Button>
 						<Button
-								onClick={() => setTempValue(null)}
+							onClick={() => setTempValue(null)}
 							style={{ minHeight: `${touchTargetSize}px` }}
 						>
 							Cancel
@@ -302,7 +320,7 @@ export function MilestoneUpdateCard({
 								Save {tempValue}%
 							</Button>
 							<Button
-										onClick={() => setTempValue(null)}
+								onClick={() => setTempValue(null)}
 								style={{ minHeight: `${touchTargetSize}px` }}
 							>
 								Cancel
@@ -457,7 +475,7 @@ export function MilestoneUpdateCard({
 								Save {tempValue} {milestone.unit}
 							</Button>
 							<Button
-										onClick={() => setTempValue(null)}
+								onClick={() => setTempValue(null)}
 								style={{ minHeight: `${touchTargetSize}px` }}
 							>
 								Cancel
@@ -482,17 +500,13 @@ export function MilestoneUpdateCard({
 							#{milestone.milestoneOrder || 1}
 						</Badge>
 						{milestone.weight && (
-							<Badge
-										className="text-xs h-4 px-1"
-							>
+							<Badge className="text-xs h-4 px-1">
 								{milestone.weight}c
 							</Badge>
 						)}
 					</div>
 					{isLocked && (
-						<Badge
-								className="text-xs text-muted-foreground h-4 px-1"
-						>
+						<Badge className="text-xs text-muted-foreground h-4 px-1">
 							<Lock className="h-3 w-3 mr-1" />
 							Locked
 						</Badge>
@@ -541,9 +555,7 @@ export function MilestoneUpdateCard({
 						)}
 					</CardTitle>
 					{isLocked && (
-						<Badge
-								className="text-xs text-muted-foreground"
-						>
+						<Badge className="text-xs text-muted-foreground">
 							<Lock className="h-3 w-3 mr-1" />
 							Locked
 						</Badge>

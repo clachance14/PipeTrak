@@ -125,7 +125,6 @@ async function parseExcelHeadersAndSample(
 	});
 }
 
-
 /**
  * Parse a CSV line handling quoted fields
  */

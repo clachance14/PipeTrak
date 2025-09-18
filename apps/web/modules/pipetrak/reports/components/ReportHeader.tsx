@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@ui/components/card";
 import { Badge } from "@ui/components/badge";
-import { Clock, Building2, FileText } from "lucide-react";
+import { Card, CardContent } from "@ui/components/card";
+import { Building2, Clock, FileText } from "lucide-react";
 
 interface ReportHeaderProps {
 	title: string;

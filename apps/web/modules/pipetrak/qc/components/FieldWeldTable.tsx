@@ -41,6 +41,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import type { FieldWeldRecord } from "../types";
 import { AddWeldModal } from "./AddWeldModal";
 import {
 	type ColumnConfig,
@@ -51,7 +52,6 @@ import {
 } from "./ColumnToggle";
 import { MarkWeldCompleteModal } from "./MarkWeldCompleteModal";
 import { MobileQCView } from "./MobileQCView";
-import type { FieldWeldRecord } from "../types";
 
 // Cell components to avoid hooks-in-cell issues
 interface NDETypeCellProps {
@@ -523,14 +523,17 @@ export function FieldWeldTable({
 			{
 				id: "area",
 				header: "Area",
-				accessorFn: (row) => row.drawingArea ?? row.component?.area ?? "",
+				accessorFn: (row) =>
+					row.drawingArea ?? row.component?.area ?? "",
 				cell: ({ row }) => {
 					const area =
 						row.original.drawingArea?.trim?.() ||
 						row.original.component?.area?.trim?.();
 					if (!area) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return <Badge status="info">{area}</Badge>;
@@ -539,14 +542,17 @@ export function FieldWeldTable({
 			{
 				id: "system",
 				header: "System",
-				accessorFn: (row) => row.drawingSystem ?? row.component?.system ?? "",
+				accessorFn: (row) =>
+					row.drawingSystem ?? row.component?.system ?? "",
 				cell: ({ row }) => {
 					const system =
 						row.original.drawingSystem?.trim?.() ||
 						row.original.component?.system?.trim?.();
 					if (!system) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return <Badge status="info">{system}</Badge>;
@@ -646,7 +652,9 @@ export function FieldWeldTable({
 					const value = row.original.xrayPercent;
 					if (value === null || value === undefined) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return <Badge status="info">{`${value}%`}</Badge>;
@@ -659,7 +667,9 @@ export function FieldWeldTable({
 					const weldType = row.original.weldType;
 					if (!weldType) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return (
@@ -682,7 +692,9 @@ export function FieldWeldTable({
 					const spec = row.original.specCode?.trim?.();
 					if (!spec) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return <Badge status="info">{spec}</Badge>;
@@ -696,7 +708,9 @@ export function FieldWeldTable({
 					const baseMetal = row.original.baseMetal?.trim?.();
 					if (!baseMetal) {
 						return (
-							<div className="text-sm text-muted-foreground">-</div>
+							<div className="text-sm text-muted-foreground">
+								-
+							</div>
 						);
 					}
 					return <div className="text-sm">{baseMetal}</div>;
@@ -870,28 +884,35 @@ export function FieldWeldTable({
 				const result = await response.json();
 
 				// Transform ndeTypes array to ndeType string for frontend compatibility
-				const transformedFieldWelds: FieldWeldData[] = (result.fieldWelds || []).map(
-					(weld: any) => {
-						const parentDrawing = weld.drawing?.parent;
-						const grandParentDrawing = parentDrawing?.parent;
-						const areaFromParent = parentDrawing?.title?.trim?.() || parentDrawing?.number?.trim?.() || null;
-						const systemFromHierarchy =
-							grandParentDrawing?.title?.trim?.() ||
-							grandParentDrawing?.number?.trim?.() ||
-							parentDrawing?.title?.trim?.() ||
-							parentDrawing?.number?.trim?.() ||
-							null;
+				const transformedFieldWelds: FieldWeldData[] = (
+					result.fieldWelds || []
+				).map((weld: any) => {
+					const parentDrawing = weld.drawing?.parent;
+					const grandParentDrawing = parentDrawing?.parent;
+					const areaFromParent =
+						parentDrawing?.title?.trim?.() ||
+						parentDrawing?.number?.trim?.() ||
+						null;
+					const systemFromHierarchy =
+						grandParentDrawing?.title?.trim?.() ||
+						grandParentDrawing?.number?.trim?.() ||
+						parentDrawing?.title?.trim?.() ||
+						parentDrawing?.number?.trim?.() ||
+						null;
 
-						const transformed: FieldWeldData = {
-							...weld,
-							ndeType: weld.ndeTypes?.[0] || null, // Convert array to single string
-							drawingArea: areaFromParent ?? weld.component?.area ?? null,
-							drawingSystem: systemFromHierarchy ?? weld.component?.system ?? null,
-						};
+					const transformed: FieldWeldData = {
+						...weld,
+						ndeType: weld.ndeTypes?.[0] || null, // Convert array to single string
+						drawingArea:
+							areaFromParent ?? weld.component?.area ?? null,
+						drawingSystem:
+							systemFromHierarchy ??
+							weld.component?.system ??
+							null,
+					};
 
-						return transformed;
-					},
-				);
+					return transformed;
+				});
 
 				setData(transformedFieldWelds);
 			}

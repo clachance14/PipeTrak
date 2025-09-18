@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
@@ -11,17 +10,18 @@ import { Sheet, SheetContent, SheetTrigger } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import {
 	BotMessageSquareIcon,
+	Factory,
 	Home,
 	Menu,
 	Settings,
 	UserCog2Icon,
 	UserCogIcon,
 	X,
-	Factory,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { OrganzationSelect } from "../../organizations/components/OrganizationSelect";
 
 export function MobileNavBar() {
@@ -69,8 +69,8 @@ export function MobileNavBar() {
 				]
 			: []),
 		...(activeOrganization &&
-			!config.organizations.hideOrganization &&
-			isOrganizationAdmin
+		!config.organizations.hideOrganization &&
+		isOrganizationAdmin
 			? [
 					{
 						label: t("app.menu.organizationSettings"),

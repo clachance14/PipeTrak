@@ -6,13 +6,13 @@
 import "server-only";
 import { getServerApiClient } from "@shared/lib/server";
 import type {
-	ProgressReportRequest,
-	ProgressReportResponse,
 	ComponentDetailsRequest,
 	ComponentDetailsResponse,
+	FileFilterOptionsResponse,
+	ProgressReportRequest,
+	ProgressReportResponse,
 	TestPackageReadinessRequest,
 	TestPackageReadinessResponse,
-	FileFilterOptionsResponse,
 } from "../types";
 
 /**
@@ -28,7 +28,7 @@ export async function generateProgressReportServer(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to generate progress report");
 	}
 
@@ -50,7 +50,7 @@ export async function getComponentDetailsReportServer(
 	);
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate component details report",
 		);
@@ -74,7 +74,7 @@ export async function generateTestPackageReadinessServer(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(
 			error.error || "Failed to generate test package readiness report",
 		);
@@ -98,7 +98,7 @@ export async function getReportFileFilterOptionsServer(
 	});
 
 	if (!response.ok) {
-		const error = await response.json() as { error?: string };
+		const error = (await response.json()) as { error?: string };
 		throw new Error(error.error || "Failed to get filter options");
 	}
 

@@ -13,6 +13,9 @@ coverage
 out/
 build
 .swc/
+apps/web/prisma/
+apps/web/.prisma/
+
 
 # misc
 .DS_Store

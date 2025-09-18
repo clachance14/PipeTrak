@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
-import { Progress } from "@ui/components/progress";
 import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/card";
+import { Progress } from "@ui/components/progress";
 import {
 	Table,
 	TableBody,
@@ -14,21 +13,22 @@ import {
 	TableHeader,
 	TableRow,
 } from "@ui/components/table";
-import { ReportHeader } from "./ReportHeader";
+import {
+	AlertCircle,
+	ArrowUpDown,
+	ChevronLeft,
+	ChevronRight,
+	Filter,
+	RefreshCw,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useComponentReportGeneration } from "../hooks"; // useReportFilters removed - hook not found
+import { transformers } from "../lib/report-utils";
+import type { ComponentDetailsResponse, ReportSorting } from "../types";
 // import { ReportFilters } from "./ReportFilters"; // Component not found
 import { ExportButtons } from "./ExportButtons";
 import { PrintLayout } from "./PrintLayout";
-import { useComponentReportGeneration } from "../hooks"; // useReportFilters removed - hook not found
-import { transformers } from "../lib/report-utils";
-import {
-	RefreshCw,
-	AlertCircle,
-	ChevronLeft,
-	ChevronRight,
-	ArrowUpDown,
-	Filter,
-} from "lucide-react";
-import type { ComponentDetailsResponse, ReportSorting } from "../types";
+import { ReportHeader } from "./ReportHeader";
 
 interface ComponentReportContentProps {
 	projectId: string;
@@ -204,7 +204,8 @@ export function ComponentReportContent({
 							showAdvanced={true}
 						/> */}
 						<div className="text-sm text-muted-foreground">
-							Report filters temporarily disabled - component implementation needed
+							Report filters temporarily disabled - component
+							implementation needed
 						</div>
 					</div>
 					<div className="lg:w-auto">

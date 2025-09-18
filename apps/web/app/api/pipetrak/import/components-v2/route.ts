@@ -1,19 +1,19 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getSession } from "@saas/auth/lib/server";
-import { db as prisma } from "@repo/database";
-import { ComponentTypeMapper } from "@repo/api/src/lib/import/type-mapper";
-import { MilestoneTemplateAssigner } from "@repo/api/src/lib/import/template-assigner";
-import {
-	parseExcel,
-	calculateTotalInstances,
-	detectColumnMapping,
-} from "@repo/api/src/lib/import/excel-parser";
 import type {
 	ComponentImportData,
 	ComponentInstanceData,
 	ImportPreviewResult,
 	ImportResult,
 } from "@repo/api";
+import {
+	calculateTotalInstances,
+	detectColumnMapping,
+	parseExcel,
+} from "@repo/api/src/lib/import/excel-parser";
+import { MilestoneTemplateAssigner } from "@repo/api/src/lib/import/template-assigner";
+import { ComponentTypeMapper } from "@repo/api/src/lib/import/type-mapper";
+import { db as prisma } from "@repo/database";
+import { getSession } from "@saas/auth/lib/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 type ComponentType =
 	| "PIPE"
@@ -346,13 +346,11 @@ export async function POST(request: NextRequest) {
 		if (existingComponents.length > 0) {
 			console.log(
 				"Import V2: Sample existing components:",
-				existingComponents
-					.slice(0, 3)
-					.map((c) => ({
-						drawingId: c.drawingId,
-						componentId: c.componentId,
-						instanceNumber: c.instanceNumber,
-					})),
+				existingComponents.slice(0, 3).map((c) => ({
+					drawingId: c.drawingId,
+					componentId: c.componentId,
+					instanceNumber: c.instanceNumber,
+				})),
 			);
 		}
 

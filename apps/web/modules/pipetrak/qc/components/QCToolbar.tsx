@@ -2,11 +2,12 @@
 
 import { Button } from "@ui/components/button";
 import { Card } from "@ui/components/card";
+import { cn } from "@ui/lib";
 // TODO: Uncomment these imports when date range functionality is re-enabled
 // import { Popover, PopoverContent, PopoverTrigger } from "@ui/components/popover";
 // import { Calendar } from "@ui/components/calendar";
-import { RefreshCw, Download, Settings } from "lucide-react";
-import { cn } from "@ui/lib";
+import { Download, RefreshCw, Settings } from "lucide-react";
+
 // TODO: Uncomment these imports when date range functionality is re-enabled
 // import { useState } from "react";
 // import { format, subDays, startOfDay, endOfDay } from "date-fns";
@@ -31,7 +32,7 @@ export function QCToolbar({
 	// TODO: Uncomment when date range functionality is re-enabled
 	// onDateRangeChange,
 	onRefresh,
-	onExport
+	onExport,
 }: QCToolbarProps) {
 	// TODO: Uncomment when date range functionality is re-enabled
 	// const [date, setDate] = useState<DateRange | undefined>({
@@ -131,7 +132,7 @@ export function QCToolbar({
 					</Popover>
 				</div> */}
 				<div />
-				
+
 				<div className="flex items-center gap-2">
 					<Button
 						variant="outline"

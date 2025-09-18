@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Alert, AlertDescription } from "@ui/components/alert";
+import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
 import { Label } from "@ui/components/label";
 import {
@@ -10,14 +11,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Badge } from "@ui/components/badge";
-import { Alert, AlertDescription } from "@ui/components/alert";
 import {
-	FileSpreadsheet,
 	AlertCircle,
-	Sparkles,
 	ArrowRight,
+	FileSpreadsheet,
+	Sparkles,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { parseFileHeaders } from "../utils/fileParser";
 
 interface ColumnMapperProps {

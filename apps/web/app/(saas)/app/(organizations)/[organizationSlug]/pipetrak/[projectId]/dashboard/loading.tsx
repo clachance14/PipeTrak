@@ -1,5 +1,5 @@
-import { Skeleton } from "@ui/components/skeleton";
 import { Card, CardContent, CardHeader } from "@ui/components/card";
+import { Skeleton } from "@ui/components/skeleton";
 
 /**
  * Dashboard loading skeleton

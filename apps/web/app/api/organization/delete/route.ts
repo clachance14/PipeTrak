@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 		if (!session?.user) {
 			return NextResponse.json(
 				{ error: "Unauthorized" },
-				{ status: 401 }
+				{ status: 401 },
 			);
 		}
 
@@ -22,14 +22,16 @@ export async function POST(request: NextRequest) {
 		if (!organizationId) {
 			return NextResponse.json(
 				{ error: "Organization ID is required" },
-				{ status: 400 }
+				{ status: 400 },
 			);
 		}
 
 		// Check if the user has permission to delete this organization
 		// First check if user is a global admin
-		const isAdmin = session.user.role === "admin" || session.user.role === "super-admin";
-		
+		const isAdmin =
+			session.user.role === "admin" ||
+			session.user.role === "super-admin";
+
 		if (!isAdmin) {
 			// If not admin, check if they're an owner of this organization
 			const membership = await db.member.findFirst({
@@ -42,15 +44,17 @@ export async function POST(request: NextRequest) {
 			if (!membership) {
 				return NextResponse.json(
 					{ error: "You are not a member of this organization" },
-					{ status: 403 }
+					{ status: 403 },
 				);
 			}
 
 			// Check if the user is an owner (only owners can delete organizations)
 			if (membership.role !== "owner") {
 				return NextResponse.json(
-					{ error: `Only organization owners can delete organizations. Your role: ${membership.role}` },
-					{ status: 403 }
+					{
+						error: `Only organization owners can delete organizations. Your role: ${membership.role}`,
+					},
+					{ status: 403 },
 				);
 			}
 		}
@@ -67,7 +71,7 @@ export async function POST(request: NextRequest) {
 		console.error("Error deleting organization:", error);
 		return NextResponse.json(
 			{ error: "Failed to delete organization" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }

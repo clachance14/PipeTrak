@@ -132,8 +132,10 @@
 	"name": "@repo/web",
 	"private": true,
 	"scripts": {
+		"postinstall": "pnpm --filter @repo/database prisma:generate",
 		"prebuild": "pnpm --filter @repo/database prisma:generate",
 		"build": "next build",
+		"postbuild": "node ../../scripts/copy-prisma-engines.js",
 		"dev": "next dev --turbo",
 		"test": "vitest",
 		"test:ui": "vitest --ui",

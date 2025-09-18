@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Checkbox } from "@ui/components/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -9,11 +11,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@ui/components/dialog";
-import { Button } from "@ui/components/button";
-import { Label } from "@ui/components/label";
 import { Input } from "@ui/components/input";
-import { Checkbox } from "@ui/components/checkbox";
-import { Badge } from "@ui/components/badge";
+import { Label } from "@ui/components/label";
 import { Progress } from "@ui/components/progress";
 import { ScrollArea } from "@ui/components/scroll-area";
 import {
@@ -24,18 +23,19 @@ import {
 	SelectValue,
 } from "@ui/components/select";
 import { Slider } from "@ui/components/slider";
-import {
-	Users,
-	Clock,
-	Check,
-	Eye,
-	Play,
-	Undo2,
-	Package,
-	Target,
-} from "lucide-react";
-import { toast } from "sonner";
 import { cn } from "@ui/lib";
+import {
+	Check,
+	Clock,
+	Eye,
+	Package,
+	Play,
+	Target,
+	Undo2,
+	Users,
+} from "lucide-react";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import type { ComponentWithMilestones, WorkflowType } from "../../../types";
 
 interface BulkUpdatePreview {
@@ -114,8 +114,9 @@ export function EnhancedBulkUpdateModal({
 		selectedComponents.forEach((component) => {
 			component.milestones?.forEach((milestone) => {
 				const key = milestone.milestoneName;
-				if (milestoneMap.has(key)) {
-					milestoneMap.get(key)!.count++;
+				const existing = milestoneMap.get(key);
+				if (existing) {
+					existing.count++;
 				} else {
 					milestoneMap.set(key, {
 						name: milestone.milestoneName,
@@ -284,11 +285,7 @@ export function EnhancedBulkUpdateModal({
 				</h4>
 				<div className="flex flex-wrap gap-2">
 					{selectedComponents.slice(0, 8).map((comp) => (
-						<Badge
-							key={comp.id}
-							status="info"
-							className="text-xs"
-						>
+						<Badge key={comp.id} status="info" className="text-xs">
 							{comp.componentId}
 						</Badge>
 					))}

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Activity, Filter, Wrench } from "lucide-react";
+import { Avatar, AvatarFallback } from "@ui/components/avatar";
+import { Badge } from "@ui/components/badge";
 import {
 	Card,
 	CardContent,
@@ -17,13 +17,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ui/components/select";
-import { Badge } from "@ui/components/badge";
-import { Avatar, AvatarFallback } from "@ui/components/avatar";
-import {
-	formatRelativeTime,
-	generateSparklinePath,
-} from "../lib/utils";
-import type { RecentActivity, ActivityItem } from "../types";
+import { Activity, Filter, Wrench } from "lucide-react";
+import { useMemo, useState } from "react";
+import { formatRelativeTime, generateSparklinePath } from "../lib/utils";
+import type { ActivityItem, RecentActivity } from "../types";
 
 interface ActivityFeedProps {
 	data: RecentActivity | null;
@@ -47,7 +44,6 @@ function ActivityItemComponent({ activity }: ActivityItemComponentProps) {
 		) : (
 			<Activity className="w-3 h-3" />
 		);
-
 
 	return (
 		<div className="flex items-start gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
@@ -167,37 +163,36 @@ function ActivitySparkline({ activities }: { activities: ActivityItem[] }) {
 export function ActivityFeed({ data }: ActivityFeedProps) {
 	const [userFilter, setUserFilter] = useState<string>("all");
 
-	const { filteredActivities, uniqueUsers } =
-		useMemo(() => {
-			if (!data?.activities?.length) {
-				return {
-					filteredActivities: [],
-					uniqueUsers: [],
-				};
-			}
-
-			let filtered = [...data.activities];
-
-			// Extract unique values for filters (simplified - would need component data for area/system)
-			const uniqueUsers = [
-				...new Set(data.activities.map((a) => a.userName)),
-			].sort();
-
-			// Apply filters
-			if (userFilter !== "all") {
-				filtered = filtered.filter(
-					(activity) => activity.userName === userFilter,
-				);
-			}
-
-			// Sort by timestamp (most recent first)
-			filtered.sort((a, b) => b.timestamp - a.timestamp);
-
+	const { filteredActivities, uniqueUsers } = useMemo(() => {
+		if (!data?.activities?.length) {
 			return {
-				filteredActivities: filtered,
-				uniqueUsers,
+				filteredActivities: [],
+				uniqueUsers: [],
 			};
-		}, [data, userFilter]);
+		}
+
+		let filtered = [...data.activities];
+
+		// Extract unique values for filters (simplified - would need component data for area/system)
+		const uniqueUsers = [
+			...new Set(data.activities.map((a) => a.userName)),
+		].sort();
+
+		// Apply filters
+		if (userFilter !== "all") {
+			filtered = filtered.filter(
+				(activity) => activity.userName === userFilter,
+			);
+		}
+
+		// Sort by timestamp (most recent first)
+		filtered.sort((a, b) => b.timestamp - a.timestamp);
+
+		return {
+			filteredActivities: filtered,
+			uniqueUsers,
+		};
+	}, [data, userFilter]);
 
 	const stats = useMemo(() => {
 		if (!data?.activities?.length) {

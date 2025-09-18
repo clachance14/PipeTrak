@@ -77,10 +77,12 @@ export function MarkWeldCompleteModal({
 
 		// Validate required fields
 		const validationErrors: string[] = [];
-		
+
 		// Check if fieldWeld.id is missing (this is the root cause of the bug)
 		if (!fieldWeld.id) {
-			validationErrors.push("Field weld ID is missing. Cannot complete weld without a valid weld record.");
+			validationErrors.push(
+				"Field weld ID is missing. Cannot complete weld without a valid weld record.",
+			);
 		}
 
 		if (!formData.welderId) {
@@ -129,8 +131,15 @@ export function MarkWeldCompleteModal({
 
 			if (response.ok) {
 				// If we have a milestone update callback, call it as well
-				if (onMilestoneUpdate && formData.welderId && formData.dateWelded) {
-					await onMilestoneUpdate(formData.welderId, formData.dateWelded);
+				if (
+					onMilestoneUpdate &&
+					formData.welderId &&
+					formData.dateWelded
+				) {
+					await onMilestoneUpdate(
+						formData.welderId,
+						formData.dateWelded,
+					);
 				}
 
 				toast.success("Weld marked as complete successfully");
@@ -214,8 +223,8 @@ export function MarkWeldCompleteModal({
 									)}
 								</Button>
 							</PopoverTrigger>
-						<PopoverContent
-							className="min-w-[18rem] p-0"
+							<PopoverContent
+								className="min-w-[18rem] p-0"
 								align="start"
 							>
 								<Calendar
@@ -233,17 +242,17 @@ export function MarkWeldCompleteModal({
 					{/* Welder Selection */}
 					<div className="space-y-2">
 						<Label htmlFor="welder">Welder *</Label>
-					<Select
-						disabled={welders.length === 0}
-						value={formData.welderId}
-						onValueChange={(value) => {
-							if (value === NO_WELDERS_VALUE) {
-								return;
-							}
-							updateFormData("welderId", value);
-						}}
-						required
-					>
+						<Select
+							disabled={welders.length === 0}
+							value={formData.welderId}
+							onValueChange={(value) => {
+								if (value === NO_WELDERS_VALUE) {
+									return;
+								}
+								updateFormData("welderId", value);
+							}}
+							required
+						>
 							<SelectTrigger>
 								<SelectValue
 									placeholder={
@@ -267,11 +276,14 @@ export function MarkWeldCompleteModal({
 										</div>
 									</SelectItem>
 								))}
-							{!weldersLoading && welders.length === 0 && (
-								<SelectItem value={NO_WELDERS_VALUE} disabled>
-									No active welders found
-								</SelectItem>
-							)}
+								{!weldersLoading && welders.length === 0 && (
+									<SelectItem
+										value={NO_WELDERS_VALUE}
+										disabled
+									>
+										No active welders found
+									</SelectItem>
+								)}
 							</SelectContent>
 						</Select>
 						{welders.length === 0 && !weldersLoading && (

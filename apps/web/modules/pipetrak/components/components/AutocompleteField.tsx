@@ -1,13 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Check, ChevronDown, Plus } from "lucide-react";
 import { Button } from "@ui/components/button";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@ui/components/popover";
 import {
 	Command,
 	CommandEmpty,
@@ -16,7 +9,14 @@ import {
 	CommandItem,
 	CommandList,
 } from "@ui/components/command";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@ui/components/popover";
 import { cn } from "@ui/lib";
+import { Check, ChevronDown, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface AutocompleteFieldProps {
 	value: string;

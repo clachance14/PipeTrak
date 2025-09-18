@@ -1,25 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { Progress } from "@ui/components/progress";
 import { Badge } from "@ui/components/badge";
 import { Button } from "@ui/components/button";
-import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
-import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { Progress } from "@ui/components/progress";
+import { cn } from "@ui/lib";
 import {
-	Check,
-	Clock,
 	AlertCircle,
-	Loader2,
+	Check,
 	ChevronDown,
 	ChevronRight,
+	Clock,
+	Loader2,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import { useState } from "react";
 import type {
-	ComponentWithMilestones,
 	ComponentMilestone,
+	ComponentWithMilestones,
 	WorkflowType,
 } from "../../../types";
+import { useMilestoneUpdateEngine } from "../core/MilestoneUpdateEngine";
+import { MilestoneWorkflowRenderer } from "../core/MilestoneWorkflowRenderer";
 
 interface DirectEditMilestoneColumnProps {
 	component: ComponentWithMilestones;

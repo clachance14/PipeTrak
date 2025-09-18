@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import { LoadingState } from "@pipetrak/shared/components";
 import { getComponent } from "@pipetrak/components/lib/actions";
+import { LoadingState } from "@pipetrak/shared/components";
 import { getSession } from "@saas/auth/lib/server";
-import { redirect, notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { Suspense } from "react";
 
 interface ComponentDetailPageProps {
 	params: Promise<{

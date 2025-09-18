@@ -2,7 +2,7 @@
 
 import { Badge } from "@ui/components/badge";
 import { ScrollArea, ScrollBar } from "@ui/components/scroll-area";
-import { TrendingUp, Package, AlertTriangle } from "lucide-react";
+import { AlertTriangle, Package, TrendingUp } from "lucide-react";
 import type { DashboardMetrics, TestPackageReadiness } from "../types";
 
 interface QuickStatsChipsProps {

@@ -113,8 +113,7 @@ function canUncompleteMilestone(
 	if (milestoneName.includes("PUNCH")) {
 		const testMilestone = sortedMilestones.find(
 			(m) =>
-				m.isCompleted &&
-				m.milestoneName.toUpperCase().includes("TEST"),
+				m.isCompleted && m.milestoneName.toUpperCase().includes("TEST"),
 		);
 		return !testMilestone;
 	}
@@ -159,7 +158,12 @@ function canCompleteMilestone(
 ): boolean {
 	// For completed milestones, check if they can be uncompleted
 	if (milestone.isCompleted) {
-		return canUncompleteMilestone(milestone, milestones, workflowType, componentType);
+		return canUncompleteMilestone(
+			milestone,
+			milestones,
+			workflowType,
+			componentType,
+		);
 	}
 
 	const sortedMilestones = [...milestones].sort(
@@ -413,7 +417,8 @@ export const MilestoneButtonRow = memo(function MilestoneButtonRow({
 
 				const milestoneIsLoading = isLoading?.(milestone.id) || false;
 				const milestoneHasError = hasError?.(milestone.id) || false;
-				const milestoneHasRecentSuccess = hasRecentSuccess?.(milestone.id) || false;
+				const milestoneHasRecentSuccess =
+					hasRecentSuccess?.(milestone.id) || false;
 
 				const state = getMilestoneButtonState(
 					milestone,

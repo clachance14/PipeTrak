@@ -1,7 +1,7 @@
 import type {
-	DrawingTreeNode,
-	DrawingComponentCount,
 	Drawing,
+	DrawingComponentCount,
+	DrawingTreeNode,
 } from "../../types";
 
 // Sample component counts for different statuses

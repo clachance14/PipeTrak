@@ -40,7 +40,7 @@ export function DeleteOrganizationForm() {
 							organizationId: activeOrganization.id,
 						}),
 					});
-					
+
 					if (!response.ok) {
 						toast.error(
 							t(
@@ -49,7 +49,7 @@ export function DeleteOrganizationForm() {
 						);
 						return;
 					}
-					
+
 					const text = await response.text();
 					let data = null;
 					if (text) {
@@ -59,7 +59,7 @@ export function DeleteOrganizationForm() {
 							// Response is not JSON, treat as success
 						}
 					}
-					
+
 					// Check if there's an error in the response data
 					if (data && data.error) {
 						toast.error(
@@ -69,7 +69,6 @@ export function DeleteOrganizationForm() {
 						);
 						return;
 					}
-					
 				} catch (err) {
 					toast.error(
 						t(

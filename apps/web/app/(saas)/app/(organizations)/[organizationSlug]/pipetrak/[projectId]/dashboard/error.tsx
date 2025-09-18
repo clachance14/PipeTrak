@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Alert, AlertDescription } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
 	Card,
@@ -9,8 +9,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@ui/components/card";
-import { Alert, AlertDescription } from "@ui/components/alert";
-import { RefreshCw, Home, Bug, Shield } from "lucide-react";
+import { Bug, Home, RefreshCw, Shield } from "lucide-react";
+import { useEffect } from "react";
 
 interface DashboardErrorProps {
 	error: Error & { digest?: string };

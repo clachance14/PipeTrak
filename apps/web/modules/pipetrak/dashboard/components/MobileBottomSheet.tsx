@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Badge } from "@ui/components/badge";
+import { Button } from "@ui/components/button";
+import { Progress } from "@ui/components/progress";
+import { ScrollArea } from "@ui/components/scroll-area";
 import {
 	Sheet,
 	SheetContent,
@@ -8,21 +11,18 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@ui/components/sheet";
-import { Button } from "@ui/components/button";
-import { Badge } from "@ui/components/badge";
 import { Switch } from "@ui/components/switch";
-import { Progress } from "@ui/components/progress";
-import { ScrollArea } from "@ui/components/scroll-area";
+import { cn } from "@ui/lib";
 import {
 	Check,
 	Circle,
-	MapPin,
-	FileText,
-	Triangle,
 	Edit,
+	FileText,
 	History,
+	MapPin,
+	Triangle,
 } from "lucide-react";
-import { cn } from "@ui/lib";
+import { useState } from "react";
 import type { ComponentWithMilestones } from "../../types";
 
 interface MobileBottomSheetProps {

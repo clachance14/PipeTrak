@@ -3,7 +3,7 @@
  * Implements weighted progress calculations for PipeTrak components
  */
 
-import type { ROCWeightedProgress, ComponentDetail } from "../types";
+import type { ComponentDetail, ROCWeightedProgress } from "../types";
 
 // ============================================================================
 // ROC Weight Calculations
