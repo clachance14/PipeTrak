@@ -72,6 +72,34 @@ const logPrismaEngineProbe = (context: string) => {
 			),
 		},
 		{
+			label: "next-standalone-package",
+			file: path.join(
+				cwd,
+				".next",
+				"standalone",
+				"packages",
+				"database",
+				"prisma",
+				"generated",
+				"client",
+				"query-engine-rhel-openssl-3.0.x",
+			),
+		},
+		{
+			label: "next-standalone-app",
+			file: path.join(
+				cwd,
+				".next",
+				"standalone",
+				"apps",
+				"web",
+				"prisma",
+				"generated",
+				"client",
+				"query-engine-rhel-openssl-3.0.x",
+			),
+		},
+		{
 			label: "tmp",
 			file: path.join("/tmp", "prisma-engines", "query-engine-rhel-openssl-3.0.x"),
 		},
@@ -80,6 +108,31 @@ const logPrismaEngineProbe = (context: string) => {
 			file: path.join(
 				prismaDir,
 				"generated",
+				"client",
+				"query-engine-rhel-openssl-3.0.x",
+			),
+		},
+		{
+			label: "root-packages",
+			file: path.join(
+				cwd,
+				"..",
+				"..",
+				"packages",
+				"database",
+				"prisma",
+				"generated",
+				"client",
+				"query-engine-rhel-openssl-3.0.x",
+			),
+		},
+		{
+			label: "root-dot-prisma",
+			file: path.join(
+				cwd,
+				"..",
+				"..",
+				".prisma",
 				"client",
 				"query-engine-rhel-openssl-3.0.x",
 			),
@@ -105,6 +158,27 @@ const logPrismaEngineProbe = (context: string) => {
 			};
 		}
 	});
+
+	const existingBinary = runtimeBinaries.find(
+		(binary) => binary.exists && binary.size > 0,
+	);
+
+	if (existingBinary) {
+		const currentBinary = process.env.PRISMA_QUERY_ENGINE_BINARY;
+		const binaryPath = existingBinary.path;
+		if (currentBinary && currentBinary !== binaryPath) {
+			try {
+				const stat = fs.statSync(currentBinary, { throwIfNoEntry: false });
+				if (!stat?.isFile()) {
+					process.env.PRISMA_QUERY_ENGINE_BINARY = binaryPath;
+				}
+			} catch {
+				process.env.PRISMA_QUERY_ENGINE_BINARY = binaryPath;
+			}
+		} else if (!currentBinary) {
+			process.env.PRISMA_QUERY_ENGINE_BINARY = binaryPath;
+		}
+	}
 
 	const envOverrides = {
 		PRISMA_QUERY_ENGINE_LIBRARY: process.env.PRISMA_QUERY_ENGINE_LIBRARY,
