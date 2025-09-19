@@ -14,7 +14,9 @@ const nextConfig: NextConfig = {
 		...(process.env.VERCEL && {
 			outputFileTracingIncludes: {
 				"/api/**/*": [
-					"../../packages/database/prisma/generated/client/query-engine-*",
+					"../../packages/database/prisma/generated/client/**/*",
+					"./prisma/generated/client/**/*",
+					"./.prisma/client/**/*",
 				],
 			},
 		}),
