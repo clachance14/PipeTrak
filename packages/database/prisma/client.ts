@@ -7,25 +7,6 @@ export { PrismaClient, Prisma, ComponentStatus };
 
 const hasLoggedEngineProbe = { value: false };
 
-const copyFile = (src: string, dest: string) => {
-	try {
-		const srcStat = fs.statSync(src, { throwIfNoEntry: false });
-		if (!srcStat?.isFile()) {
-			return { success: false as const, reason: "source-not-file" };
-		}
-		const destDir = path.dirname(dest);
-		fs.mkdirSync(destDir, { recursive: true });
-		fs.copyFileSync(src, dest);
-		fs.chmodSync(dest, 0o755);
-		return { success: true as const };
-	} catch (error) {
-		return {
-			success: false as const,
-			reason: error instanceof Error ? error.message : String(error),
-		};
-	}
-};
-
 const logPrismaEngineProbe = (context: string) => {
 	if (hasLoggedEngineProbe.value) {
 		return;
@@ -182,76 +163,13 @@ const logPrismaEngineProbe = (context: string) => {
 		(binary) => binary.exists && binary.size > 0,
 	);
 
-	let binarySelection: {
-		from?: string;
-		target?: string;
-		copyResult?: Record<string, unknown>;
-	} | undefined;
+	let binarySelection: { selected?: string } | undefined;
 
 	if (existingBinary) {
 		const binaryPath = existingBinary.path;
-		const binaryName = path.basename(binaryPath);
-		const tmpBinaryPath = path.join(
-			"/tmp",
-			"prisma-engines",
-			binaryName,
-		);
-		const copyResult = copyFile(binaryPath, tmpBinaryPath);
-		if (copyResult.success) {
-			process.env.PRISMA_QUERY_ENGINE_BINARY = tmpBinaryPath;
-			binarySelection = { from: binaryPath, target: tmpBinaryPath };
-		} else {
-			process.env.PRISMA_QUERY_ENGINE_BINARY = binaryPath;
-			binarySelection = {
-				from: binaryPath,
-				target: binaryPath,
-				copyResult,
-			};
-		}
+		process.env.PRISMA_QUERY_ENGINE_BINARY = binaryPath;
+		binarySelection = { selected: binaryPath };
 	}
-
-	const schemaCandidates = [
-		path.join(__dirname, "generated", "client", "schema.prisma"),
-		path.join(cwd, "packages", "database", "prisma", "generated", "client", "schema.prisma"),
-		existingBinary
-			? path.join(path.dirname(existingBinary.path), "schema.prisma")
-			: undefined,
-		path.join(cwd, "..", "..", "packages", "database", "prisma", "generated", "client", "schema.prisma"),
-	].filter(Boolean) as string[];
-
-	const schemaPath = schemaCandidates.find((candidate) =>
-		fs.existsSync(candidate),
-	);
-
-	let schemaSelection:
-		| {
-				from?: string;
-				target?: string;
-				copyResult?: Record<string, unknown>;
-			}
-		| undefined;
-
-	if (schemaPath) {
-		const tmpSchemaPath = path.join(
-			"/tmp",
-			"prisma-engines",
-			"schema.prisma",
-		);
-		const copyResult = copyFile(schemaPath, tmpSchemaPath);
-		if (copyResult.success) {
-			process.env.PRISMA_SCHEMA_PATH = tmpSchemaPath;
-			schemaSelection = { from: schemaPath, target: tmpSchemaPath };
-		} else {
-			process.env.PRISMA_SCHEMA_PATH = schemaPath;
-			schemaSelection = {
-				from: schemaPath,
-				target: schemaPath,
-				copyResult,
-			};
-		}
-	}
-
-	process.env.PRISMA_CLIENT_ENGINE_TYPE = "binary";
 
 	const envOverrides = {
 		PRISMA_QUERY_ENGINE_LIBRARY: process.env.PRISMA_QUERY_ENGINE_LIBRARY,
@@ -260,8 +178,6 @@ const logPrismaEngineProbe = (context: string) => {
 		VERCEL: process.env.VERCEL,
 		VERCEL_ENV: process.env.VERCEL_ENV,
 		REGION: process.env.VERCEL_REGION,
-		PRISMA_SCHEMA_PATH: process.env.PRISMA_SCHEMA_PATH,
-		PRISMA_CLIENT_ENGINE_TYPE: process.env.PRISMA_CLIENT_ENGINE_TYPE,
 	};
 
 	console.error(
@@ -274,7 +190,6 @@ const logPrismaEngineProbe = (context: string) => {
 				envOverrides,
 				runtimeBinaries,
 				binarySelection,
-				schemaSelection,
 			},
 			null,
 			2,
