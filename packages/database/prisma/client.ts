@@ -205,6 +205,24 @@ const prismaClientSingleton = () => {
 		? `${baseUrl}&connection_limit=50&pool_timeout=60`
 		: `${baseUrl}?connection_limit=50&pool_timeout=60`;
 
+	if (!baseUrl && process.env.VERCEL) {
+		console.error(
+			"[PRISMA_ENGINE_DEBUG] missing-database-url",
+			JSON.stringify(
+				{
+					env: {
+						hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
+						hasPostgresUrl: Boolean(process.env.POSTGRES_URL),
+						hasPostgresPrismaUrl: Boolean(process.env.POSTGRES_PRISMA_URL),
+						hasSupabaseDbUrl: Boolean(process.env.SUPABASE_DB_URL),
+					},
+				},
+				null,
+				2,
+			),
+		);
+	}
+
 	// Configure Prisma client with Vercel-specific settings
 	const clientConfig: any = {
 		log:
