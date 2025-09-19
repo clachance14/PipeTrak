@@ -106,3 +106,4 @@ apps/web/app/api/pipetrak/welders/
 **/*.test.tsx
 **/*.spec.ts
 **/*.spec.tsx
+.vercel

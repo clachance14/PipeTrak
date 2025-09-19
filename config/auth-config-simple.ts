@@ -46,16 +46,30 @@ export interface AuthConfiguration {
 	};
 }
 
+function sanitizeUrl(value?: string | null) {
+	const trimmed = value?.trim();
+	if (!trimmed || trimmed.includes("${VERCEL_URL}")) {
+		return null;
+	}
+	return trimmed;
+}
+
 function getBaseUrl() {
-	if (process.env.NEXT_PUBLIC_SITE_URL) {
-		return process.env.NEXT_PUBLIC_SITE_URL;
+	const siteUrl = sanitizeUrl(process.env.NEXT_PUBLIC_SITE_URL);
+	if (siteUrl) {
+		return siteUrl;
 	}
-	if (process.env.VERCEL_URL) {
-		return `https://${process.env.VERCEL_URL}`;
+
+	const vercelUrl = sanitizeUrl(process.env.VERCEL_URL);
+	if (vercelUrl) {
+		return `https://${vercelUrl}`;
 	}
-	if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-		return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+
+	const publicVercelUrl = sanitizeUrl(process.env.NEXT_PUBLIC_VERCEL_URL);
+	if (publicVercelUrl) {
+		return `https://${publicVercelUrl}`;
 	}
+
 	return `http://localhost:${process.env.PORT ?? 3000}`;
 }
 
