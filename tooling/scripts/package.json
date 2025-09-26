@@ -13,11 +13,11 @@
 		"xlsx": "^0.18.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.0",
+		"@biomejs/biome": "2.2.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "^24.0.10",
+		"@types/node": "^24.5.2",
 		"nanoid": "^5.1.5",
-		"tsx": "^4.20.3"
+		"tsx": "^4.20.6"
 	},
 	"name": "@repo/scripts",
 	"private": true,
